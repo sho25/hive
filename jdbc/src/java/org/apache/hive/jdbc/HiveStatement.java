@@ -1128,6 +1128,12 @@ name|status
 operator|.
 name|isHasResultSet
 argument_list|()
+operator|&&
+operator|!
+name|stmtHandle
+operator|.
+name|isHasResultSet
+argument_list|()
 condition|)
 block|{
 return|return

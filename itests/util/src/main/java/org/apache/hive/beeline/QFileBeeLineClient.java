@@ -338,9 +338,9 @@ argument_list|()
 operator|+
 literal|"`;"
 block|,
-literal|"set hive.in.test.short.logs=true;"
+literal|"set hive.testing.short.logs=true;"
 block|,
-literal|"set hive.in.test.remove.logs=false;"
+literal|"set hive.testing.remove.logs=false;"
 block|,         }
 argument_list|,
 name|qFile
@@ -384,7 +384,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"set hive.in.test.short.logs=false;"
+literal|"set hive.testing.short.logs=false;"
 block|,
 literal|"!set verbose true"
 block|,

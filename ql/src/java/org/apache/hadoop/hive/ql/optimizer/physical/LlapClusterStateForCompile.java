@@ -155,7 +155,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -173,7 +173,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 import|;
 end_import
 
@@ -570,7 +570,7 @@ return|return;
 comment|// Don't fail; this is best-effort.
 block|}
 block|}
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|instances
 decl_stmt|;
 try|try
@@ -614,7 +614,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|ServiceInstance
+name|LlapServiceInstance
 name|si
 range|:
 name|instances

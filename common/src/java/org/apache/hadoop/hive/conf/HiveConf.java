@@ -3267,9 +3267,9 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|HIVE_IN_TEST_SHORT_LOGS
+name|HIVE_TESTING_SHORT_LOGS
 argument_list|(
-literal|"hive.in.test.short.logs"
+literal|"hive.testing.short.logs"
 argument_list|,
 literal|false
 argument_list|,
@@ -3280,9 +3280,9 @@ operator|+
 literal|"returned"
 argument_list|)
 block|,
-name|HIVE_IN_TEST_REMOVE_LOGS
+name|HIVE_TESTING_REMOVE_LOGS
 argument_list|(
-literal|"hive.in.test.remove.logs"
+literal|"hive.testing.remove.logs"
 argument_list|,
 literal|true
 argument_list|,
@@ -7571,6 +7571,39 @@ literal|"Whether or not to use a binary search to find the entries in an index t
 argument_list|)
 block|,
 comment|// Statistics
+name|HIVE_STATS_ESTIMATE_STATS
+argument_list|(
+literal|"hive.stats.estimate"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Estimate statistics in absence of statistics."
+argument_list|)
+block|,
+name|HIVE_STATS_NDV_ESTIMATE_PERC
+argument_list|(
+literal|"hive.stats.ndv.estimate.percent"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|20
+argument_list|,
+literal|"This many percentage of rows will be estimated as count distinct in absence of statistics."
+argument_list|)
+block|,
+name|HIVE_STATS_NUM_NULLS_ESTIMATE_PERC
+argument_list|(
+literal|"hive.stats.num.nulls.estimate.percent"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|5
+argument_list|,
+literal|"This many percentage of rows will be estimated as number of nulls in absence of statistics."
+argument_list|)
+block|,
 name|HIVESTATSAUTOGATHER
 argument_list|(
 literal|"hive.stats.autogather"
@@ -12983,6 +13016,24 @@ argument_list|,
 literal|"The deny ACL for LLAP daemon management."
 argument_list|)
 block|,
+name|LLAP_PLUGIN_ACL
+argument_list|(
+literal|"hive.llap.plugin.acl"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"The ACL for LLAP plugin AM endpoint."
+argument_list|)
+block|,
+name|LLAP_PLUGIN_ACL_DENY
+argument_list|(
+literal|"hive.llap.plugin.acl.blocked"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The deny ACL for LLAP plugin AM endpoint."
+argument_list|)
+block|,
 name|LLAP_REMOTE_TOKEN_REQUIRES_SIGNING
 argument_list|(
 literal|"hive.llap.remote.token.requires.signing"
@@ -13053,6 +13104,24 @@ argument_list|,
 literal|"Number of RPC handlers for LLAP daemon."
 argument_list|,
 literal|"llap.daemon.rpc.num.handlers"
+argument_list|)
+block|,
+name|LLAP_PLUGIN_RPC_PORT
+argument_list|(
+literal|"hive.llap.plugin.rpc.port"
+argument_list|,
+literal|15005
+argument_list|,
+literal|"RPC port for AM LLAP daemon plugin endpoint."
+argument_list|)
+block|,
+name|LLAP_PLUGIN_RPC_NUM_HANDLERS
+argument_list|(
+literal|"hive.llap.plugin.rpc.num.handlers"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of RPC handlers for AM LLAP plugin endpoint."
 argument_list|)
 block|,
 name|LLAP_DAEMON_WORK_DIRS
@@ -15738,11 +15807,15 @@ name|restrictList
 argument_list|,
 name|restrictedVar
 lambda|->
-name|restrictedVar
+name|name
+operator|!=
+literal|null
+operator|&&
+name|name
 operator|.
 name|startsWith
 argument_list|(
-name|name
+name|restrictedVar
 argument_list|)
 argument_list|)
 condition|)
@@ -15826,11 +15899,20 @@ name|name
 parameter_list|)
 block|{
 return|return
-name|hiddenSet
+name|Iterables
 operator|.
-name|contains
+name|any
 argument_list|(
+name|hiddenSet
+argument_list|,
+name|hiddenVar
+lambda|->
 name|name
+operator|.
+name|startsWith
+argument_list|(
+name|hiddenVar
+argument_list|)
 argument_list|)
 return|;
 block|}

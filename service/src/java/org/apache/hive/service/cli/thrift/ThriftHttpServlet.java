@@ -63,6 +63,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|security
+operator|.
+name|SecureRandom
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Arrays
@@ -96,16 +106,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Random
 import|;
 end_import
 
@@ -711,11 +711,11 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
-name|Random
+name|SecureRandom
 name|RAN
 init|=
 operator|new
-name|Random
+name|SecureRandom
 argument_list|()
 decl_stmt|;
 specifier|private

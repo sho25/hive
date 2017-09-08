@@ -203,7 +203,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstance
+name|LlapServiceInstance
 import|;
 end_import
 
@@ -221,7 +221,7 @@ name|llap
 operator|.
 name|registry
 operator|.
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 import|;
 end_import
 
@@ -418,13 +418,13 @@ name|Configuration
 name|conf
 decl_stmt|;
 specifier|private
-name|ServiceInstanceSet
+name|LlapServiceInstanceSet
 name|activeInstances
 decl_stmt|;
 specifier|private
 name|Collection
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|lastKnownInstances
 decl_stmt|;
@@ -433,7 +433,7 @@ name|LlapManagementProtocolClientImpl
 name|client
 decl_stmt|;
 specifier|private
-name|ServiceInstance
+name|LlapServiceInstance
 name|clientInstance
 decl_stmt|;
 specifier|public
@@ -515,7 +515,7 @@ literal|null
 return|;
 name|Iterator
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|llaps
 init|=
@@ -841,7 +841,7 @@ specifier|private
 specifier|synchronized
 name|List
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|getLlapServices
 parameter_list|(
@@ -892,7 +892,7 @@ expr_stmt|;
 block|}
 name|Collection
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 name|daemons
 init|=
@@ -929,7 +929,7 @@ return|return
 operator|new
 name|ArrayList
 argument_list|<
-name|ServiceInstance
+name|LlapServiceInstance
 argument_list|>
 argument_list|(
 name|lastKnownInstances

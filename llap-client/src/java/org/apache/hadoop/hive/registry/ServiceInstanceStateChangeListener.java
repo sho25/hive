@@ -13,8 +13,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
-operator|.
 name|registry
 package|;
 end_package
@@ -27,12 +25,17 @@ begin_interface
 specifier|public
 interface|interface
 name|ServiceInstanceStateChangeListener
+parameter_list|<
+name|InstanceType
+extends|extends
+name|ServiceInstance
+parameter_list|>
 block|{
 comment|/**    * Called when new {@link ServiceInstance} is created.    *    * @param serviceInstance - created service instance    */
 name|void
 name|onCreate
 parameter_list|(
-name|ServiceInstance
+name|InstanceType
 name|serviceInstance
 parameter_list|)
 function_decl|;
@@ -40,7 +43,7 @@ comment|/**    * Called when an existing {@link ServiceInstance} is updated.    
 name|void
 name|onUpdate
 parameter_list|(
-name|ServiceInstance
+name|InstanceType
 name|serviceInstance
 parameter_list|)
 function_decl|;
@@ -48,7 +51,7 @@ comment|/**    * Called when an existing {@link ServiceInstance} is removed.    
 name|void
 name|onRemove
 parameter_list|(
-name|ServiceInstance
+name|InstanceType
 name|serviceInstance
 parameter_list|)
 function_decl|;

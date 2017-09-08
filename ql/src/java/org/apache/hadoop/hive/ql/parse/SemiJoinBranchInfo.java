@@ -50,6 +50,13 @@ specifier|private
 name|boolean
 name|isHint
 decl_stmt|;
+comment|// Default value is true, however, if an optimization deems this edge
+comment|// important, it should set this to false. This does not guarantee that
+comment|// the edge will stay, however, it increases the chances.
+specifier|private
+name|boolean
+name|shouldRemove
+decl_stmt|;
 specifier|public
 name|SemiJoinBranchInfo
 parameter_list|(
@@ -66,6 +73,10 @@ expr_stmt|;
 name|isHint
 operator|=
 literal|false
+expr_stmt|;
+name|shouldRemove
+operator|=
+literal|true
 expr_stmt|;
 block|}
 specifier|public
@@ -90,6 +101,12 @@ name|isHint
 operator|=
 name|isHint
 expr_stmt|;
+name|shouldRemove
+operator|=
+operator|!
+name|isHint
+expr_stmt|;
+comment|// If hint is true, shouldRemove is redundant anyway
 block|}
 specifier|public
 name|TableScanOperator
@@ -108,6 +125,40 @@ block|{
 return|return
 name|isHint
 return|;
+block|}
+specifier|public
+name|boolean
+name|getShouldRemove
+parameter_list|()
+block|{
+return|return
+name|shouldRemove
+return|;
+block|}
+specifier|public
+name|void
+name|setShouldRemove
+parameter_list|(
+name|boolean
+name|shouldRemove
+parameter_list|)
+block|{
+comment|// The state only changes from true->false
+comment|// Once set to false, it may not change back to true
+if|if
+condition|(
+name|this
+operator|.
+name|shouldRemove
+condition|)
+block|{
+name|this
+operator|.
+name|shouldRemove
+operator|=
+name|shouldRemove
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
