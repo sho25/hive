@@ -23008,10 +23008,16 @@ operator|.
 name|isEnabled
 argument_list|()
 operator|||
+operator|(
 name|tableMask
 operator|.
 name|isEnabled
 argument_list|()
+operator|&&
+name|analyzeRewrite
+operator|==
+literal|null
+operator|)
 condition|)
 block|{
 if|if
@@ -69777,10 +69783,16 @@ operator|.
 name|isEnabled
 argument_list|()
 operator|&&
+operator|(
 name|tableMask
 operator|.
 name|isEnabled
 argument_list|()
+operator|&&
+name|analyzeRewrite
+operator|==
+literal|null
+operator|)
 condition|)
 block|{
 comment|// Here we rewrite the * and also the masking table
