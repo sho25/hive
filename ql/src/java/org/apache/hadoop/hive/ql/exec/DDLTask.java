@@ -27068,6 +27068,13 @@ condition|(
 name|tbl
 operator|!=
 literal|null
+operator|&&
+name|dropTbl
+operator|.
+name|getExpectedType
+argument_list|()
+operator|!=
+literal|null
 condition|)
 block|{
 if|if
