@@ -55,6 +55,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|tools
+operator|.
+name|SQLGenerator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|After
@@ -938,14 +956,10 @@ throws|throws
 name|Exception
 block|{
 comment|//teseted on Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
-name|TxnHandler
-operator|.
 name|SQLGenerator
 name|sqlGenerator
 init|=
 operator|new
-name|TxnHandler
-operator|.
 name|SQLGenerator
 argument_list|(
 name|DatabaseProduct
@@ -1167,8 +1181,6 @@ expr_stmt|;
 name|sqlGenerator
 operator|=
 operator|new
-name|TxnHandler
-operator|.
 name|SQLGenerator
 argument_list|(
 name|DatabaseProduct
@@ -1380,8 +1392,6 @@ expr_stmt|;
 name|sqlGenerator
 operator|=
 operator|new
-name|TxnHandler
-operator|.
 name|SQLGenerator
 argument_list|(
 name|DatabaseProduct

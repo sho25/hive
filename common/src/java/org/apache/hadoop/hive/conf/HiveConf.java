@@ -4187,6 +4187,39 @@ operator|+
 literal|" interface. Both the metastore event and corresponding listener method will be invoked in the same JDO transaction."
 argument_list|)
 block|,
+name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
+argument_list|(
+literal|"hive.notification.sequence.lock.max.retries"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Number of retries required to acquire a lock when getting the next notification sequential ID for entries "
+operator|+
+literal|"in the NOTIFICATION_LOG table."
+argument_list|)
+block|,
+name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
+argument_list|(
+literal|"hive.notification.sequence.lock.retry.sleep.interval"
+argument_list|,
+literal|500
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Sleep interval between retries to acquire a notification lock as described part of property "
+operator|+
+name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
+operator|.
+name|name
+argument_list|()
+argument_list|)
+block|,
 name|METASTORE_EVENT_DB_LISTENER_TTL
 argument_list|(
 literal|"hive.metastore.event.db.listener.timetolive"

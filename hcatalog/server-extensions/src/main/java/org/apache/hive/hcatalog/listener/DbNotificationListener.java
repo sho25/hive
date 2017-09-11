@@ -979,16 +979,6 @@ name|cleaner
 init|=
 literal|null
 decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|Object
-name|NOTIFICATION_TBL_LOCK
-init|=
-operator|new
-name|Object
-argument_list|()
-decl_stmt|;
 comment|// This is the same object as super.conf, but it's convenient to keep a copy of it as a
 comment|// HiveConf rather than a Configuration.
 specifier|private
@@ -3448,11 +3438,6 @@ name|getMessageFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
-synchronized|synchronized
-init|(
-name|NOTIFICATION_TBL_LOCK
-init|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -3482,7 +3467,6 @@ argument_list|(
 name|event
 argument_list|)
 expr_stmt|;
-block|}
 comment|// Set the DB_NOTIFICATION_EVENT_ID for future reference by other listeners.
 if|if
 condition|(
@@ -3591,11 +3575,6 @@ condition|(
 literal|true
 condition|)
 block|{
-synchronized|synchronized
-init|(
-name|NOTIFICATION_TBL_LOCK
-init|)
-block|{
 name|rs
 operator|.
 name|cleanNotificationEvents
@@ -3603,7 +3582,6 @@ argument_list|(
 name|ttl
 argument_list|)
 expr_stmt|;
-block|}
 name|LOG
 operator|.
 name|debug
