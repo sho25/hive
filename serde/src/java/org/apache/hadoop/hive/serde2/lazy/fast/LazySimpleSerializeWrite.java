@@ -1097,7 +1097,7 @@ name|finishPrimitive
 argument_list|()
 expr_stmt|;
 block|}
-comment|/*    * STRING.    *     * Can be used to write CHAR and VARCHAR when the caller takes responsibility for    * truncation/padding issues.    */
+comment|/*    * STRING.    *    * Can be used to write CHAR and VARCHAR when the caller takes responsibility for    * truncation/padding issues.    */
 annotation|@
 name|Override
 specifier|public
@@ -1114,16 +1114,6 @@ block|{
 name|beginPrimitive
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|v
-operator|.
-name|equals
-argument_list|(
-name|nullSequenceBytes
-argument_list|)
-condition|)
-block|{     }
 name|LazyUtils
 operator|.
 name|writeEscaped
