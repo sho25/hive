@@ -2759,6 +2759,48 @@ literal|"Must use HiveInputFormat to read ACID tables "
 operator|+
 literal|"(set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat)"
 argument_list|)
+block|,
+name|CONCATENATE_UNSUPPORTED_FILE_FORMAT
+argument_list|(
+literal|30030
+argument_list|,
+literal|"Concatenate/Merge only supported for RCFile and ORCFile formats"
+argument_list|)
+block|,
+name|CONCATENATE_UNSUPPORTED_TABLE_BUCKETED
+argument_list|(
+literal|30031
+argument_list|,
+literal|"Concatenate/Merge can not be performed on bucketed tables"
+argument_list|)
+block|,
+name|CONCATENATE_UNSUPPORTED_PARTITION_ARCHIVED
+argument_list|(
+literal|30032
+argument_list|,
+literal|"Concatenate/Merge can not be performed on archived partitions"
+argument_list|)
+block|,
+name|CONCATENATE_UNSUPPORTED_TABLE_NON_NATIVE
+argument_list|(
+literal|30033
+argument_list|,
+literal|"Concatenate/Merge can not be performed on non-native tables"
+argument_list|)
+block|,
+name|CONCATENATE_UNSUPPORTED_TABLE_NOT_MANAGED
+argument_list|(
+literal|30034
+argument_list|,
+literal|"Concatenate/Merge can only be performed on managed tables"
+argument_list|)
+block|,
+name|CONCATENATE_UNSUPPORTED_TABLE_TRANSACTIONAL
+argument_list|(
+literal|30035
+argument_list|,
+literal|"Concatenate/Merge can not be performed on transactional tables"
+argument_list|)
 block|;
 specifier|private
 name|int

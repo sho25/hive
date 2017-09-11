@@ -794,7 +794,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|Pattern
@@ -808,7 +808,7 @@ literal|"[0-9]+_[0-9]+"
 argument_list|)
 decl_stmt|;
 comment|/**    * @see org.apache.hadoop.hive.ql.exec.Utilities#COPY_KEYWORD    */
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|Pattern
