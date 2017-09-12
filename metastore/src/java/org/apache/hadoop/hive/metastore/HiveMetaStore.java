@@ -24160,9 +24160,9 @@ name|short
 name|max_parts
 parameter_list|)
 throws|throws
-name|MetaException
-throws|,
 name|NoSuchObjectException
+throws|,
+name|MetaException
 block|{
 name|startTableFunction
 argument_list|(
