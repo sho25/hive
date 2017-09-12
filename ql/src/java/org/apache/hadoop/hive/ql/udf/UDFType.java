@@ -176,6 +176,13 @@ parameter_list|()
 default|default
 literal|false
 function_decl|;
+comment|/**    * Whether result of this operation will be altered by reordering its    * children.    *    * @return true if commutative law applies to this function    */
+name|boolean
+name|commutative
+parameter_list|()
+default|default
+literal|false
+function_decl|;
 block|}
 end_annotation_defn
 
