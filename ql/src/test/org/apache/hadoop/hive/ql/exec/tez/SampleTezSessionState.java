@@ -138,6 +138,7 @@ name|String
 name|sessionId
 decl_stmt|;
 specifier|private
+specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -157,6 +158,9 @@ name|sessionId
 parameter_list|,
 name|TezSessionPoolManager
 name|parent
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 block|{
 name|super
@@ -169,6 +173,8 @@ name|parent
 operator|.
 name|getExpirationTracker
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -176,6 +182,12 @@ operator|.
 name|sessionId
 operator|=
 name|sessionId
+expr_stmt|;
+name|this
+operator|.
+name|hiveConf
+operator|=
+name|conf
 expr_stmt|;
 block|}
 annotation|@
@@ -209,10 +221,7 @@ name|Override
 specifier|public
 name|void
 name|open
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|)
+parameter_list|()
 throws|throws
 name|IOException
 throws|,
@@ -222,12 +231,6 @@ name|URISyntaxException
 throws|,
 name|TezException
 block|{
-name|this
-operator|.
-name|hiveConf
-operator|=
-name|conf
-expr_stmt|;
 name|UserGroupInformation
 name|ugi
 init|=
@@ -247,7 +250,7 @@ name|this
 operator|.
 name|doAsEnabled
 operator|=
-name|conf
+name|hiveConf
 operator|.
 name|getBoolVar
 argument_list|(

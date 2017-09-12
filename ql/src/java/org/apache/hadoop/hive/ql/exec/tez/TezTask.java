@@ -2267,8 +2267,7 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// can happen if the user sets the tez flag after the session was
-comment|// established
+comment|// Can happen if the user sets the tez flag after the session was established.
 name|LOG
 operator|.
 name|info
@@ -2280,8 +2279,6 @@ name|session
 operator|.
 name|open
 argument_list|(
-name|conf
-argument_list|,
 name|inputOutputJars
 argument_list|)
 expr_stmt|;

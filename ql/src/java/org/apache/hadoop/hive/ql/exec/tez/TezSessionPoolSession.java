@@ -241,11 +241,16 @@ name|parent
 parameter_list|,
 name|SessionExpirationTracker
 name|expirationTracker
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|sessionId
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -337,9 +342,6 @@ specifier|protected
 name|void
 name|openInternal
 parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|,
 name|Collection
 argument_list|<
 name|String
@@ -368,8 +370,6 @@ name|super
 operator|.
 name|openInternal
 argument_list|(
-name|conf
-argument_list|,
 name|additionalFiles
 argument_list|,
 name|isAsync

@@ -13504,6 +13504,33 @@ argument_list|,
 literal|"Whether LLAP daemon should localize the resources for permanent UDFs."
 argument_list|)
 block|,
+name|LLAP_TASK_SCHEDULER_AM_REGISTRY_NAME
+argument_list|(
+literal|"hive.llap.task.scheduler.am.registry"
+argument_list|,
+literal|"llap"
+argument_list|,
+literal|"AM registry name for LLAP task scheduler plugin to register with."
+argument_list|)
+block|,
+name|LLAP_TASK_SCHEDULER_AM_REGISTRY_PRINCIPAL
+argument_list|(
+literal|"hive.llap.task.scheduler.am.registry.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The name of the principal used to access ZK AM registry securely."
+argument_list|)
+block|,
+name|LLAP_TASK_SCHEDULER_AM_REGISTRY_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.task.scheduler.am.registry.keytab.file"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos keytab file used to access ZK AM registry securely."
+argument_list|)
+block|,
 name|LLAP_TASK_SCHEDULER_NODE_REENABLE_MIN_TIMEOUT_MS
 argument_list|(
 literal|"hive.llap.task.scheduler.node.reenable.min.timeout.ms"
