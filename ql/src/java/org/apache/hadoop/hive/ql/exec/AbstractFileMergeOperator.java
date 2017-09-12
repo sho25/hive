@@ -252,6 +252,14 @@ decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
+name|String
+name|UNION_SUDBIR_PREFIX
+init|=
+literal|"HIVE_UNION_SUBDIR_"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
 name|Logger
 name|LOG
 init|=
@@ -810,6 +818,35 @@ literal|0
 operator|)
 condition|)
 block|{
+comment|// In light of results from union queries, we need to be aware that
+comment|// sub-directories can exist in the partition directory. We want to
+comment|// ignore these sub-directories and promote merged files to the
+comment|// partition directory.
+name|String
+name|name
+init|=
+name|path
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+name|Path
+name|realPartitionPath
+init|=
+name|name
+operator|.
+name|startsWith
+argument_list|(
+name|UNION_SUDBIR_PREFIX
+argument_list|)
+condition|?
+name|path
+operator|.
+name|getParent
+argument_list|()
+else|:
+name|path
+decl_stmt|;
 if|if
 condition|(
 name|tmpPathFixed
@@ -817,7 +854,7 @@ condition|)
 block|{
 name|checkPartitionsMatch
 argument_list|(
-name|path
+name|realPartitionPath
 argument_list|)
 expr_stmt|;
 block|}
@@ -827,7 +864,7 @@ comment|// We haven't fixed the TMP path for this mapper yet
 name|int
 name|depthDiff
 init|=
-name|path
+name|realPartitionPath
 operator|.
 name|depth
 argument_list|()
@@ -839,7 +876,7 @@ argument_list|()
 decl_stmt|;
 name|fixTmpPath
 argument_list|(
-name|path
+name|realPartitionPath
 argument_list|,
 name|depthDiff
 argument_list|)
