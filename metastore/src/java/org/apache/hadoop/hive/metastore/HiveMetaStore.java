@@ -21143,6 +21143,16 @@ name|isWritable
 argument_list|(
 name|parent
 argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|wh
+operator|.
+name|isDir
+argument_list|(
+name|parent
+argument_list|)
 operator|&&
 name|wh
 operator|.
@@ -21163,6 +21173,7 @@ argument_list|,
 name|mustPurge
 argument_list|)
 expr_stmt|;
+block|}
 name|deleteParentRecursive
 argument_list|(
 name|parent
