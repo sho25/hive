@@ -1326,6 +1326,8 @@ argument_list|,
 name|fileSchema
 argument_list|,
 name|recordSchema
+argument_list|,
+name|columnType
 argument_list|)
 return|;
 block|}
@@ -1904,7 +1906,7 @@ name|datum
 return|;
 block|}
 block|}
-comment|/**    * Extract either a null or the correct type from a Nullable type.  This is    * horrible in that we rebuild the TypeInfo every time.    */
+comment|/**    * Extract either a null or the correct type from a Nullable type.    */
 specifier|private
 name|Object
 name|deserializeNullableUnion
@@ -1917,6 +1919,9 @@ name|fileSchema
 parameter_list|,
 name|Schema
 name|recordSchema
+parameter_list|,
+name|TypeInfo
+name|columnType
 parameter_list|)
 throws|throws
 name|AvroSerdeException
@@ -1943,6 +1948,8 @@ argument_list|,
 name|fileSchema
 argument_list|,
 name|recordSchema
+argument_list|,
+name|columnType
 argument_list|)
 return|;
 block|}
@@ -1981,14 +1988,7 @@ name|fileSchema
 argument_list|,
 name|newRecordSchema
 argument_list|,
-name|SchemaToTypeInfo
-operator|.
-name|generateTypeInfo
-argument_list|(
-name|newRecordSchema
-argument_list|,
-literal|null
-argument_list|)
+name|columnType
 argument_list|)
 return|;
 block|}
@@ -2006,6 +2006,9 @@ name|fileSchema
 parameter_list|,
 name|Schema
 name|recordSchema
+parameter_list|,
+name|TypeInfo
+name|columnType
 parameter_list|)
 throws|throws
 name|AvroSerdeException
@@ -2208,14 +2211,7 @@ name|currentFileSchema
 argument_list|,
 name|schema
 argument_list|,
-name|SchemaToTypeInfo
-operator|.
-name|generateTypeInfo
-argument_list|(
-name|schema
-argument_list|,
-literal|null
-argument_list|)
+name|columnType
 argument_list|)
 return|;
 block|}
