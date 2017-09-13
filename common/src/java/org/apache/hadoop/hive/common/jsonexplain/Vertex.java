@@ -1600,17 +1600,18 @@ operator|.
 name|outputOps
 control|)
 block|{
+comment|// op.outputVertexName may be null
 if|if
 condition|(
-name|op
-operator|.
-name|outputVertexName
-operator|.
-name|equals
-argument_list|(
 name|callingVertex
 operator|.
 name|name
+operator|.
+name|equals
+argument_list|(
+name|op
+operator|.
+name|outputVertexName
 argument_list|)
 condition|)
 block|{

@@ -44659,16 +44659,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|colNames
-operator|.
-name|add
-argument_list|(
-name|statsObj
-operator|.
-name|getColName
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// There is no need to add colname again, otherwise we will get duplicate colNames.
 block|}
 comment|// Set the table properties
 comment|// No need to check again if it exists.

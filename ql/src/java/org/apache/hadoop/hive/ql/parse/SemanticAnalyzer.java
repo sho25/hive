@@ -66262,10 +66262,8 @@ throws|throws
 name|SemanticException
 block|{
 comment|// if it is not analyze command and not column stats, then do not gatherstats
-comment|// if it is column stats, but it is not tez, do not gatherstats
 if|if
 condition|(
-operator|(
 operator|!
 name|qbp
 operator|.
@@ -66278,35 +66276,6 @@ name|getAnalyzeRewrite
 argument_list|()
 operator|==
 literal|null
-operator|)
-operator|||
-operator|(
-name|qbp
-operator|.
-name|getAnalyzeRewrite
-argument_list|()
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|HiveConf
-operator|.
-name|getVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_EXECUTION_ENGINE
-argument_list|)
-operator|.
-name|equals
-argument_list|(
-literal|"tez"
-argument_list|)
-operator|)
 condition|)
 block|{
 name|tsDesc

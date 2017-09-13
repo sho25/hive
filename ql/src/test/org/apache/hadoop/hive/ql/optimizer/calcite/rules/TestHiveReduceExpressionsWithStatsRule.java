@@ -709,7 +709,9 @@ argument_list|(
 literal|"_int"
 argument_list|)
 argument_list|,
-literal|"TRUE"
+name|StatsSetupConst
+operator|.
+name|TRUE
 argument_list|)
 expr_stmt|;
 name|tableParams

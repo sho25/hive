@@ -1346,6 +1346,17 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVESTATSCOLAUTOGATHER
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|MiniHS2
 operator|.
 name|Builder

@@ -115,7 +115,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|SerializationUtilities
+name|StatsTask
 import|;
 end_import
 
@@ -133,7 +133,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|StatsTask
+name|SerializationUtilities
 import|;
 end_import
 

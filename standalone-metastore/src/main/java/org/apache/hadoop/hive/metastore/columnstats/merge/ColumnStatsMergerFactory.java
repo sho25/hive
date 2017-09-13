@@ -362,9 +362,12 @@ name|IllegalArgumentException
 argument_list|(
 literal|"Unknown stats type "
 operator|+
-name|typeNew
+name|statsObjNew
 operator|.
-name|toString
+name|getStatsData
+argument_list|()
+operator|.
+name|getSetField
 argument_list|()
 argument_list|)
 throw|;

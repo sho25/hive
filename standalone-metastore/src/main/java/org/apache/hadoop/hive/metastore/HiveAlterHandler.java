@@ -1780,6 +1780,8 @@ argument_list|,
 name|oldt
 argument_list|,
 name|part
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 if|if
@@ -2076,6 +2078,8 @@ argument_list|,
 name|oldt
 argument_list|,
 name|part
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 assert|assert
@@ -2946,6 +2950,8 @@ argument_list|,
 name|tbl
 argument_list|,
 name|new_part
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -3697,6 +3703,8 @@ argument_list|,
 name|tbl
 argument_list|,
 name|new_part
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|msdb
@@ -4331,6 +4339,8 @@ argument_list|,
 name|tbl
 argument_list|,
 name|tmpPart
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -5214,6 +5224,12 @@ name|table
 parameter_list|,
 name|Partition
 name|part
+parameter_list|,
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|newCols
 parameter_list|)
 throws|throws
 name|MetaException
@@ -5227,12 +5243,16 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
+comment|// if newCols are not specified, use default ones.
+if|if
+condition|(
 name|newCols
-init|=
+operator|==
+literal|null
+condition|)
+block|{
+name|newCols
+operator|=
 name|part
 operator|.
 name|getSd
@@ -5252,7 +5272,8 @@ argument_list|()
 operator|.
 name|getCols
 argument_list|()
-decl_stmt|;
+expr_stmt|;
+block|}
 name|String
 name|oldPartName
 init|=

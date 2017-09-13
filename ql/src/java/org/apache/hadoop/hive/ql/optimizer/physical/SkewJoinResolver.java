@@ -617,7 +617,9 @@ operator|.
 name|isMmTable
 argument_list|()
 condition|)
+block|{
 continue|continue;
+block|}
 comment|// See the path in FSOP that calls fs.exists on finalPath.
 name|LOG
 operator|.
@@ -670,19 +672,14 @@ operator|.
 name|isMmCtas
 argument_list|()
 condition|)
+block|{
 continue|continue;
+block|}
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Not using skew join because the destination table "
-operator|+
-name|lfd
-operator|.
-name|getDestinationCreateTable
-argument_list|()
-operator|+
-literal|" is an insert_only table"
+literal|"Not using skew join because the destination table is an insert_only table"
 argument_list|)
 expr_stmt|;
 return|return

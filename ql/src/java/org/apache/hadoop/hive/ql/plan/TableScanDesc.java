@@ -306,6 +306,8 @@ class|class
 name|TableScanDesc
 extends|extends
 name|AbstractOperatorDesc
+implements|implements
+name|IStatsGatherDesc
 block|{
 specifier|private
 specifier|static
@@ -1136,6 +1138,8 @@ name|gatherStats
 expr_stmt|;
 block|}
 annotation|@
+name|Override
+annotation|@
 name|Explain
 argument_list|(
 name|displayName
@@ -1159,6 +1163,8 @@ return|return
 name|gatherStats
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getTmpStatsDir
@@ -1264,6 +1270,8 @@ operator|=
 name|k
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 annotation|@
 name|Explain
 argument_list|(

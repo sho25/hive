@@ -9526,6 +9526,12 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// column stats will be inaccurate
+if|if
+condition|(
+operator|!
+name|hasFollowingStatsTask
+condition|)
+block|{
 name|StatsSetupConst
 operator|.
 name|clearColumnStatsState
@@ -9536,6 +9542,7 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// recreate the partition if it existed before
 if|if
 condition|(
@@ -9694,7 +9701,15 @@ operator|.
 name|getParameters
 argument_list|()
 argument_list|,
-literal|null
+name|MetaStoreUtils
+operator|.
+name|getColumnNames
+argument_list|(
+name|tbl
+operator|.
+name|getCols
+argument_list|()
+argument_list|)
 argument_list|,
 name|StatsSetupConst
 operator|.
@@ -12583,6 +12598,12 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|//column stats will be inaccurate
+if|if
+condition|(
+operator|!
+name|hasFollowingStatsTask
+condition|)
+block|{
 name|StatsSetupConst
 operator|.
 name|clearColumnStatsState
@@ -12593,6 +12614,7 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 if|if

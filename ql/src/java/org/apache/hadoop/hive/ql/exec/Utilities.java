@@ -1973,6 +1973,24 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|IStatsGatherDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|MapWork
 import|;
 end_import
@@ -2100,24 +2118,6 @@ operator|.
 name|plan
 operator|.
 name|TableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|TableScanDesc
 import|;
 end_import
 
@@ -9845,9 +9845,11 @@ name|length
 operator|!=
 literal|0
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 operator|!
@@ -20359,8 +20361,10 @@ operator|.
 name|isMmTable
 argument_list|()
 condition|)
+block|{
 continue|continue;
 comment|// No need to create for MM tables
+block|}
 name|Path
 name|tempDir
 init|=
@@ -21746,35 +21750,14 @@ if|if
 condition|(
 name|desc
 operator|instanceof
-name|FileSinkDesc
+name|IStatsGatherDesc
 condition|)
 block|{
 name|statsTmpDir
 operator|=
 operator|(
 operator|(
-name|FileSinkDesc
-operator|)
-name|desc
-operator|)
-operator|.
-name|getStatsTmpDir
-argument_list|()
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|desc
-operator|instanceof
-name|TableScanDesc
-condition|)
-block|{
-name|statsTmpDir
-operator|=
-operator|(
-operator|(
-name|TableScanDesc
+name|IStatsGatherDesc
 operator|)
 name|desc
 operator|)
@@ -22716,9 +22699,11 @@ name|statuses
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|Path
 index|[]
 name|paths
@@ -22966,7 +22951,9 @@ argument_list|(
 name|lastRelDir
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|int
 name|startIx
 init|=
@@ -23044,7 +23031,9 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 continue|continue;
+block|}
 name|int
 name|endIx
 init|=
@@ -23126,7 +23115,9 @@ argument_list|(
 name|candidate
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|results
 operator|.
 name|add
@@ -23449,12 +23440,10 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|CollectionUtils
+name|commitPaths
 operator|.
 name|isEmpty
-argument_list|(
-name|commitPaths
-argument_list|)
+argument_list|()
 condition|)
 block|{
 return|return;
@@ -24278,7 +24267,9 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 comment|// TODO: see HIVE-14886 - removeTempOrDuplicateFiles is broken for list bucketing,
 comment|//       so maintain parity here by not calling it at all.
 if|if
@@ -24287,7 +24278,9 @@ name|lbLevels
 operator|!=
 literal|0
 condition|)
+block|{
 return|return;
+block|}
 comment|// Create fake file statuses to avoid querying the file system. removeTempOrDuplicateFiles
 comment|// doesn't need tocheck anything except path and directory status for MM directories.
 name|FileStatus
@@ -24510,8 +24503,10 @@ name|toString
 argument_list|()
 argument_list|)
 condition|)
+block|{
 continue|continue;
 comment|// A good file.
+block|}
 name|deleteUncommitedFile
 argument_list|(
 name|childPath

@@ -718,6 +718,27 @@ block|}
 if|if
 condition|(
 name|transactionalValuePresent
+operator|&&
+literal|"false"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|transactionalValue
+argument_list|)
+condition|)
+block|{
+name|transactionalValuePresent
+operator|=
+literal|false
+expr_stmt|;
+name|transactionalValue
+operator|=
+literal|null
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|transactionalValuePresent
 condition|)
 block|{
 comment|//normalize prop name
