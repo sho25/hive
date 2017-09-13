@@ -189,22 +189,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|TransactionalValidationListener
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|Warehouse
 import|;
 end_import
@@ -242,24 +226,6 @@ operator|.
 name|api
 operator|.
 name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|hive_metastoreConstants
 import|;
 end_import
 
@@ -362,24 +328,6 @@ operator|.
 name|hooks
 operator|.
 name|WriteEntity
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|AcidUtils
 import|;
 end_import
 
@@ -1681,7 +1629,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Parse the newly generated SQL statment to get a new AST    */
+comment|/**    * Parse the newly generated SQL statement to get a new AST    */
 specifier|private
 name|ReparseResult
 name|parseRewrittenQuery
@@ -1694,12 +1642,6 @@ name|originalQuery
 parameter_list|)
 throws|throws
 name|SemanticException
-block|{
-comment|// Parse the rewritten query string
-name|Context
-name|rewrittenCtx
-decl_stmt|;
-try|try
 block|{
 comment|// Set dynamic partitioning to nonstrict so that queries do not need any partition
 comment|// references.
@@ -1719,6 +1661,12 @@ argument_list|,
 literal|"nonstrict"
 argument_list|)
 expr_stmt|;
+comment|// Parse the rewritten query string
+name|Context
+name|rewrittenCtx
+decl_stmt|;
+try|try
+block|{
 name|rewrittenCtx
 operator|=
 operator|new
@@ -1727,21 +1675,11 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|rewrittenCtx
-operator|.
-name|setExplainConfig
-argument_list|(
 name|ctx
 operator|.
-name|getExplainConfig
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|rewrittenCtx
-operator|.
-name|setIsUpdateDeleteMerge
+name|addRewrittenStatementContext
 argument_list|(
-literal|true
+name|rewrittenCtx
 argument_list|)
 expr_stmt|;
 block|}
@@ -1764,6 +1702,23 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+name|rewrittenCtx
+operator|.
+name|setExplainConfig
+argument_list|(
+name|ctx
+operator|.
+name|getExplainConfig
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|rewrittenCtx
+operator|.
+name|setIsUpdateDeleteMerge
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|rewrittenCtx
 operator|.
 name|setCmd
