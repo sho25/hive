@@ -2849,6 +2849,40 @@ argument_list|,
 literal|"Number of threads that will be used to dump partition data information during repl dump."
 argument_list|)
 block|,
+name|REPL_DUMPDIR_CLEAN_FREQ
+argument_list|(
+literal|"hive.repl.dumpdir.clean.freq"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Frequency at which timer task runs to purge expired dump dirs."
+argument_list|)
+block|,
+name|REPL_DUMPDIR_TTL
+argument_list|(
+literal|"hive.repl.dumpdir.ttl"
+argument_list|,
+literal|"7d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|DAYS
+argument_list|)
+argument_list|,
+literal|"TTL of dump dirs before cleanup."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
