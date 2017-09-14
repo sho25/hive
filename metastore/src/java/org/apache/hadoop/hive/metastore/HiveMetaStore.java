@@ -44929,7 +44929,7 @@ argument_list|)
 expr_stmt|;
 name|thread
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)

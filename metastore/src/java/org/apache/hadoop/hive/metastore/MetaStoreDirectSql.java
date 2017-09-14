@@ -8651,7 +8651,7 @@ operator|.
 name|getMaxPartsPerCacheNode
 argument_list|()
 decl_stmt|;
-name|float
+name|double
 name|fpp
 init|=
 name|aggrStatsCache
@@ -8929,7 +8929,7 @@ parameter_list|(
 name|int
 name|maxPartsPerCacheNode
 parameter_list|,
-name|float
+name|double
 name|fpp
 parameter_list|,
 name|List

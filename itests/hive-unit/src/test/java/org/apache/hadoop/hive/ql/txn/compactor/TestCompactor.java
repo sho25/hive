@@ -1712,7 +1712,7 @@ argument_list|)
 expr_stmt|;
 name|initiator
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -2587,7 +2587,7 @@ argument_list|)
 expr_stmt|;
 name|initiator
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -3863,7 +3863,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -4409,7 +4409,7 @@ argument_list|)
 expr_stmt|;
 name|initiator
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -4747,7 +4747,7 @@ argument_list|)
 expr_stmt|;
 name|initiator
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -5096,7 +5096,7 @@ argument_list|)
 expr_stmt|;
 name|initiator
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -5516,7 +5516,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -5988,7 +5988,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -6414,7 +6414,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -6907,7 +6907,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -7338,7 +7338,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -7688,7 +7688,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -8279,7 +8279,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -8922,7 +8922,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -9813,7 +9813,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -9892,7 +9892,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -10372,7 +10372,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|conf
 argument_list|)
@@ -11170,7 +11170,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -11238,7 +11238,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -11306,7 +11306,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|hiveConf
 argument_list|)
