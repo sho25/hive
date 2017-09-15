@@ -6787,7 +6787,7 @@ name|HIVECONVERTJOINMAXENTRIESHASHTABLE
 argument_list|(
 literal|"hive.auto.convert.join.hashtable.max.entries"
 argument_list|,
-literal|40000000L
+literal|21000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
@@ -6817,7 +6817,7 @@ name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
 argument_list|(
 literal|"hive.hashtable.key.count.adjustment"
 argument_list|,
-literal|1.0f
+literal|2.0f
 argument_list|,
 literal|"Adjustment to mapjoin hashtable size derived from table and column statistics; the estimate"
 operator|+
@@ -12229,7 +12229,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|2.0
+literal|1.0
 argument_list|,
 literal|"Bloom filter should be a multiple of this factor with nDV"
 argument_list|)
