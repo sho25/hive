@@ -94,7 +94,7 @@ specifier|final
 name|String
 name|SHA_STRING
 init|=
-literal|"SHA"
+literal|"SHA-256"
 decl_stmt|;
 specifier|private
 name|byte
