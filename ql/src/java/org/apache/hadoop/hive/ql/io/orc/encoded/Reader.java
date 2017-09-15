@@ -175,6 +175,18 @@ name|apache
 operator|.
 name|orc
 operator|.
+name|CompressionCodec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
 name|DataReader
 import|;
 end_import
@@ -237,6 +249,11 @@ name|trace
 parameter_list|)
 throws|throws
 name|IOException
+function_decl|;
+comment|/** Gets the compression codec for the underlying ORC file. */
+name|CompressionCodec
+name|getCodec
+parameter_list|()
 function_decl|;
 comment|/** The factory that can create (or return) the pools used by encoded reader. */
 specifier|public
