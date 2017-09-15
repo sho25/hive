@@ -169,7 +169,7 @@ block|{
 return|return
 name|DigestUtils
 operator|.
-name|md5Hex
+name|sha256Hex
 argument_list|(
 name|value
 argument_list|)
