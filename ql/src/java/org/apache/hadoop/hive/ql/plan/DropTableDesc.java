@@ -490,6 +490,16 @@ return|return
 name|partSpecs
 return|;
 block|}
+comment|/**    * @return the expectedType    */
+specifier|public
+name|TableType
+name|getExpectedType
+parameter_list|()
+block|{
+return|return
+name|expectedType
+return|;
+block|}
 comment|/**    * @return whether to expect a view being dropped    */
 specifier|public
 name|boolean

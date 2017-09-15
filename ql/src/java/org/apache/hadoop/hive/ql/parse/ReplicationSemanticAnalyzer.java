@@ -809,6 +809,14 @@ name|FUNCTIONS_ROOT_DIR_NAME
 init|=
 literal|"_functions"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|CONSTRAINTS_ROOT_DIR_NAME
+init|=
+literal|"_constraints"
+decl_stmt|;
 name|ReplicationSemanticAnalyzer
 parameter_list|(
 name|QueryState

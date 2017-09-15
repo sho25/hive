@@ -117,8 +117,8 @@ name|warehouse
 decl_stmt|;
 specifier|public
 specifier|final
-name|PathUtils
-name|utils
+name|PathInfo
+name|pathInfo
 decl_stmt|;
 specifier|public
 name|Context
@@ -156,10 +156,10 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|utils
+name|pathInfo
 operator|=
 operator|new
-name|PathUtils
+name|PathInfo
 argument_list|(
 name|hiveConf
 argument_list|)

@@ -531,6 +531,12 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// TODO: this can be enabled to test. Will only be used in WM case for now.
+name|boolean
+name|enableAmRegistry
+init|=
+literal|false
+decl_stmt|;
 name|defaultSessionPool
 operator|=
 operator|new
@@ -539,6 +545,8 @@ argument_list|(
 name|initConf
 argument_list|,
 name|numSessionsTotal
+argument_list|,
+name|enableAmRegistry
 argument_list|)
 expr_stmt|;
 block|}
@@ -689,6 +697,15 @@ condition|)
 block|{
 continue|continue;
 block|}
+name|HiveConf
+name|sessionConf
+init|=
+operator|new
+name|HiveConf
+argument_list|(
+name|initConf
+argument_list|)
+decl_stmt|;
 name|defaultSessionPool
 operator|.
 name|addInitialSession
@@ -698,6 +715,8 @@ argument_list|(
 name|queueName
 argument_list|,
 literal|true
+argument_list|,
+name|sessionConf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -714,6 +733,9 @@ name|queue
 parameter_list|,
 name|boolean
 name|isDefault
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 block|{
 name|TezSessionPoolSession
@@ -725,6 +747,8 @@ name|TezSessionState
 operator|.
 name|makeSessionId
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 comment|// TODO When will the queue ever be null.
@@ -1021,6 +1045,8 @@ argument_list|(
 name|queueName
 argument_list|,
 literal|false
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
@@ -1050,9 +1076,7 @@ block|{
 name|retTezSessionState
 operator|.
 name|open
-argument_list|(
-name|conf
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|LOG
 operator|.
@@ -1365,6 +1389,9 @@ name|createSession
 parameter_list|(
 name|String
 name|sessionId
+parameter_list|,
+name|HiveConf
+name|conf
 parameter_list|)
 block|{
 return|return
@@ -1376,6 +1403,8 @@ argument_list|,
 name|this
 argument_list|,
 name|expirationTracker
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}
@@ -1717,37 +1746,6 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-comment|// TODO: when will sessionConf be null, other than tests? Set in open. Throw?
-if|if
-condition|(
-name|sessionConf
-operator|==
-literal|null
-condition|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Session configuration is null for "
-operator|+
-name|sessionState
-argument_list|)
-expr_stmt|;
-comment|// default queue name when the initial session was created
-name|sessionConf
-operator|=
-operator|new
-name|HiveConf
-argument_list|(
-name|conf
-argument_list|,
-name|TezSessionPoolManager
-operator|.
-name|class
-argument_list|)
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|sessionState
@@ -1810,8 +1808,6 @@ name|sessionState
 operator|.
 name|open
 argument_list|(
-name|sessionConf
-argument_list|,
 name|oldAdditionalFiles
 argument_list|,
 literal|null
@@ -1927,6 +1923,11 @@ argument_list|,
 name|oldSession
 operator|.
 name|isDefault
+argument_list|()
+argument_list|,
+name|oldSession
+operator|.
+name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;

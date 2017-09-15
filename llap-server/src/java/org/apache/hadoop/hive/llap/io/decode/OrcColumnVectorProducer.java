@@ -263,7 +263,7 @@ name|io
 operator|.
 name|metadata
 operator|.
-name|OrcMetadataCache
+name|MetadataCache
 import|;
 end_import
 
@@ -526,7 +526,7 @@ name|ColumnVectorProducer
 block|{
 specifier|private
 specifier|final
-name|OrcMetadataCache
+name|MetadataCache
 name|metadataCache
 decl_stmt|;
 specifier|private
@@ -570,7 +570,7 @@ decl_stmt|;
 specifier|public
 name|OrcColumnVectorProducer
 parameter_list|(
-name|OrcMetadataCache
+name|MetadataCache
 name|metadataCache
 parameter_list|,
 name|LowLevelCache

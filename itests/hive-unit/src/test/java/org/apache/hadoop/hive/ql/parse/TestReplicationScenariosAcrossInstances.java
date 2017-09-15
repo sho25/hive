@@ -1440,12 +1440,12 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into table t2 partition(country='india') values ('mumbai')"
+literal|"insert into table t2 partition(country='us') values ('austin')"
 argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into table t2 partition(country='india') values ('delhi')"
+literal|"insert into table t2 partition(country='france') values ('paris')"
 argument_list|)
 operator|.
 name|run
@@ -1525,6 +1525,25 @@ argument_list|(
 name|tuple
 operator|.
 name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select country from t2 order by country"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"france"
+block|,
+literal|"india"
+block|,
+literal|"us"
+block|}
 argument_list|)
 expr_stmt|;
 block|}

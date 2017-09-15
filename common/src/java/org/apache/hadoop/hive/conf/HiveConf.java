@@ -2849,6 +2849,40 @@ argument_list|,
 literal|"Number of threads that will be used to dump partition data information during repl dump."
 argument_list|)
 block|,
+name|REPL_DUMPDIR_CLEAN_FREQ
+argument_list|(
+literal|"hive.repl.dumpdir.clean.freq"
+argument_list|,
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Frequency at which timer task runs to purge expired dump dirs."
+argument_list|)
+block|,
+name|REPL_DUMPDIR_TTL
+argument_list|(
+literal|"hive.repl.dumpdir.ttl"
+argument_list|,
+literal|"7d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|DAYS
+argument_list|)
+argument_list|,
+literal|"TTL of dump dirs before cleanup."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
@@ -4185,6 +4219,39 @@ argument_list|,
 literal|"A comma separated list of Java classes that implement the org.apache.hadoop.hive.metastore.MetaStoreEventListener"
 operator|+
 literal|" interface. Both the metastore event and corresponding listener method will be invoked in the same JDO transaction."
+argument_list|)
+block|,
+name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
+argument_list|(
+literal|"hive.notification.sequence.lock.max.retries"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Number of retries required to acquire a lock when getting the next notification sequential ID for entries "
+operator|+
+literal|"in the NOTIFICATION_LOG table."
+argument_list|)
+block|,
+name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
+argument_list|(
+literal|"hive.notification.sequence.lock.retry.sleep.interval"
+argument_list|,
+literal|500
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Sleep interval between retries to acquire a notification lock as described part of property "
+operator|+
+name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
+operator|.
+name|name
+argument_list|()
 argument_list|)
 block|,
 name|METASTORE_EVENT_DB_LISTENER_TTL
@@ -6731,7 +6798,7 @@ name|HIVECONVERTJOINMAXENTRIESHASHTABLE
 argument_list|(
 literal|"hive.auto.convert.join.hashtable.max.entries"
 argument_list|,
-literal|40000000L
+literal|21000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
@@ -6761,7 +6828,7 @@ name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
 argument_list|(
 literal|"hive.hashtable.key.count.adjustment"
 argument_list|,
-literal|1.0f
+literal|2.0f
 argument_list|,
 literal|"Adjustment to mapjoin hashtable size derived from table and column statistics; the estimate"
 operator|+
@@ -12187,7 +12254,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|2.0
+literal|1.0
 argument_list|,
 literal|"Bloom filter should be a multiple of this factor with nDV"
 argument_list|)
@@ -12416,23 +12483,6 @@ argument_list|,
 literal|"Maximum allocation possible from LLAP buddy allocator. For ORC, should be as large as\n"
 operator|+
 literal|"the largest expected ORC compression buffer size. Must be a power of 2."
-argument_list|)
-block|,
-annotation|@
-name|Deprecated
-name|LLAP_IO_METADATA_FRACTION
-argument_list|(
-literal|"hive.llap.io.metadata.fraction"
-argument_list|,
-literal|0.1f
-argument_list|,
-literal|"Temporary setting for on-heap metadata cache fraction of xmx, set to avoid potential\n"
-operator|+
-literal|"heap problems on very large datasets when on-heap metadata cache takes over\n"
-operator|+
-literal|"everything. -1 managed metadata and data together (which is more flexible). This\n"
-operator|+
-literal|"setting will be removed (in effect become -1) once ORC metadata cache is moved off-heap."
 argument_list|)
 block|,
 name|LLAP_ALLOCATOR_ARENA_COUNT
@@ -13494,6 +13544,33 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"Whether LLAP daemon should localize the resources for permanent UDFs."
+argument_list|)
+block|,
+name|LLAP_TASK_SCHEDULER_AM_REGISTRY_NAME
+argument_list|(
+literal|"hive.llap.task.scheduler.am.registry"
+argument_list|,
+literal|"llap"
+argument_list|,
+literal|"AM registry name for LLAP task scheduler plugin to register with."
+argument_list|)
+block|,
+name|LLAP_TASK_SCHEDULER_AM_REGISTRY_PRINCIPAL
+argument_list|(
+literal|"hive.llap.task.scheduler.am.registry.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The name of the principal used to access ZK AM registry securely."
+argument_list|)
+block|,
+name|LLAP_TASK_SCHEDULER_AM_REGISTRY_KEYTAB_FILE
+argument_list|(
+literal|"hive.llap.task.scheduler.am.registry.keytab.file"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The path to the Kerberos keytab file used to access ZK AM registry securely."
 argument_list|)
 block|,
 name|LLAP_TASK_SCHEDULER_NODE_REENABLE_MIN_TIMEOUT_MS

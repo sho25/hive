@@ -1997,13 +1997,6 @@ name|open
 argument_list|(
 name|any
 argument_list|(
-name|HiveConf
-operator|.
-name|class
-argument_list|)
-argument_list|,
-name|any
-argument_list|(
 name|Collection
 operator|.
 name|class

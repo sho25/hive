@@ -3116,7 +3116,26 @@ name|startSs
 operator|.
 name|getSessionId
 argument_list|()
+argument_list|,
+name|startSs
+operator|.
+name|sessionConf
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Only TezTask sets this, and then removes when done, so we don't expect to see it.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Tez session was already present in SessionState before start: "
+operator|+
+name|startSs
+operator|.
+name|tezSessionState
 argument_list|)
 expr_stmt|;
 block|}
@@ -3170,13 +3189,8 @@ operator|.
 name|tezSessionState
 operator|.
 name|open
-argument_list|(
-name|startSs
-operator|.
-name|sessionConf
-argument_list|)
+argument_list|()
 expr_stmt|;
-comment|// should use conf on session start-up
 block|}
 else|else
 block|{
@@ -3186,10 +3200,6 @@ name|tezSessionState
 operator|.
 name|beginOpen
 argument_list|(
-name|startSs
-operator|.
-name|sessionConf
-argument_list|,
 literal|null
 argument_list|,
 name|console

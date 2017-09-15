@@ -3473,7 +3473,7 @@ argument_list|)
 expr_stmt|;
 name|t
 operator|.
-name|setHiveConf
+name|setConf
 argument_list|(
 name|hiveConf
 argument_list|)

@@ -23,6 +23,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|nio
+operator|.
+name|ByteBuffer
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|io
 operator|.
 name|IOException
@@ -72,7 +82,6 @@ name|Object
 name|fileKey
 parameter_list|)
 function_decl|;
-comment|// TODO: add BB put method(s) when merging with ORC off-heap metadata cache
 comment|/**    * Puts the metadata for a given file (e.g. a footer buffer into cache).    * @param fileKey The file key.    * @param length The footer length.    * @param is The stream to read the footer from.    * @return The buffer or buffers representing the cached footer.    *         The caller must decref this buffer when done.    */
 name|MemoryBufferOrBuffers
 name|putFileMetadata
@@ -88,6 +97,16 @@ name|is
 parameter_list|)
 throws|throws
 name|IOException
+function_decl|;
+name|MemoryBufferOrBuffers
+name|putFileMetadata
+parameter_list|(
+name|Object
+name|fileKey
+parameter_list|,
+name|ByteBuffer
+name|tailBuffer
+parameter_list|)
 function_decl|;
 comment|/**    * Releases the buffer returned from getFileMetadata or putFileMetadata method.    * @param buffer The buffer to release.    */
 name|void

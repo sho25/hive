@@ -44,6 +44,8 @@ block|,
 name|Function
 block|,
 name|Partition
+block|,
+name|Constraint
 block|}
 block|}
 end_interface
