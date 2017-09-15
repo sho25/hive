@@ -737,6 +737,7 @@ name|inputOI
 argument_list|)
 return|;
 block|}
+break|break;
 case|case
 name|CHAR
 case|:
@@ -890,7 +891,7 @@ operator|)
 name|outputOI
 argument_list|)
 return|;
-default|default:
+block|}
 throw|throw
 operator|new
 name|RuntimeException
@@ -912,7 +913,6 @@ operator|+
 literal|" not supported yet."
 argument_list|)
 throw|;
-block|}
 block|}
 comment|/**    * Returns a converter that converts objects from one OI to another OI. The    * returned (converted) object belongs to this converter, so that it can be    * reused across different calls.    */
 specifier|public
