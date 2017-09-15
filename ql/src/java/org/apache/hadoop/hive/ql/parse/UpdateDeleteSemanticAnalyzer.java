@@ -1675,6 +1675,8 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+comment|// We keep track of all the contexts that are created by this query
+comment|// so we can clear them when we finish execution
 name|ctx
 operator|.
 name|addRewrittenStatementContext
