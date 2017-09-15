@@ -2207,8 +2207,8 @@ name|stmtId
 init|=
 literal|0
 decl_stmt|;
-comment|//todo due to the master merge, tblDesc is no longer CreateTableDesc, but ImportTableDesc
-comment|/*     if (txnId != null) {       tblDesc.setInitialMmWriteId(txnId);     }     */
+comment|// TODO: due to the master merge, tblDesc is no longer CreateTableDesc, but ImportTableDesc
+comment|/*     if (isAcid(txnId)) {       tblDesc.setInitialMmWriteId(txnId);     }     */
 if|if
 condition|(
 operator|!
@@ -2708,9 +2708,10 @@ if|if
 condition|(
 name|isSourceMm
 operator|||
+name|isAcid
+argument_list|(
 name|txnId
-operator|!=
-literal|null
+argument_list|)
 condition|)
 block|{
 comment|// TODO: ReplCopyTask is completely screwed. Need to support when it's not as screwed.
@@ -2718,7 +2719,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Not supported right now because Replication is completely screwed"
+literal|"Replicating MM and ACID tables is not supported"
 argument_list|)
 throw|;
 block|}
@@ -2881,6 +2882,29 @@ argument_list|)
 expr_stmt|;
 return|return
 name|loadTableTask
+return|;
+block|}
+specifier|private
+specifier|static
+name|boolean
+name|isAcid
+parameter_list|(
+name|Long
+name|txnId
+parameter_list|)
+block|{
+return|return
+operator|(
+name|txnId
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|txnId
+operator|!=
+literal|0
+operator|)
 return|;
 block|}
 specifier|private
@@ -3444,9 +3468,10 @@ if|if
 condition|(
 name|isSourceMm
 operator|||
+name|isAcid
+argument_list|(
 name|txnId
-operator|!=
-literal|null
+argument_list|)
 condition|)
 block|{
 comment|// TODO: ReplCopyTask is completely screwed. Need to support when it's not as screwed.
@@ -3454,7 +3479,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Not supported right now because Replication is completely screwed"
+literal|"Replicating MM and ACID tables is not supported"
 argument_list|)
 throw|;
 block|}
@@ -3609,9 +3634,10 @@ name|loadTableWork
 operator|.
 name|setIntermediateInMmWrite
 argument_list|(
+name|isAcid
+argument_list|(
 name|txnId
-operator|!=
-literal|null
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Task

@@ -2714,19 +2714,19 @@ literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":18,\"bucketid\":536870912,\"rowid\":0}\t0\t15"
+literal|"{\"transactionid\":20,\"bucketid\":536870912,\"rowid\":0}\t0\t15"
 block|,
 literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":20,\"bucketid\":536870912,\"rowid\":0}\t0\t17"
+literal|"{\"transactionid\":22,\"bucketid\":536870912,\"rowid\":0}\t0\t17"
 block|,
 literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":19,\"bucketid\":536870912,\"rowid\":0}\t0\t120"
+literal|"{\"transactionid\":21,\"bucketid\":536870912,\"rowid\":0}\t0\t120"
 block|,
 literal|"bucket_00000"
 block|}
@@ -2756,7 +2756,7 @@ literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":18,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
+literal|"{\"transactionid\":20,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
 block|,
 literal|"bucket_00001"
 block|}
@@ -2811,6 +2811,16 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+operator|+
+literal|"; expected "
+operator|+
+name|expected
+index|[
+name|i
+index|]
+index|[
+literal|0
+index|]
 argument_list|,
 name|rs
 operator|.
@@ -6267,7 +6277,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000023_0000023_0000"
+literal|"delta_0000025_0000025_0000"
 argument_list|,
 name|status
 index|[
@@ -6374,7 +6384,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delete_delta_0000022_0000022_0000"
+literal|"delete_delta_0000024_0000024_0000"
 argument_list|,
 name|status
 index|[
@@ -6854,7 +6864,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000023"
+literal|"base_0000025"
 argument_list|,
 name|status
 index|[

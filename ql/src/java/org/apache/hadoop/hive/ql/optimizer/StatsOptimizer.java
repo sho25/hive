@@ -2475,7 +2475,6 @@ literal|null
 return|;
 comment|// todo we can collapse this part of tree into single TS
 block|}
-comment|/* TODO# seems to be removed in master?         Table tbl = tsOp.getConf().getTableMetadata();         if (AcidUtils.isFullAcidTable(tbl)) {           Logger.info("Table " + tbl.getTableName() + " is ACID table. Skip StatsOptimizer.");           return null;         }*/
 name|List
 argument_list|<
 name|Object

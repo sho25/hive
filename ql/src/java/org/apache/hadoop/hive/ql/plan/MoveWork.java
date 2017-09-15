@@ -670,7 +670,6 @@ operator|=
 name|srcLocal
 expr_stmt|;
 block|}
-comment|// TODO# temporary test flag
 specifier|public
 name|void
 name|setNoop

@@ -1508,7 +1508,6 @@ index|]
 argument_list|)
 condition|)
 block|{
-comment|// TODO# HERE
 throw|throw
 operator|new
 name|RuntimeException

@@ -11414,7 +11414,6 @@ block|}
 comment|// TODO The following two utility methods can be moved to AcidUtils once no class in metastore is relying on them,
 comment|// right now ObjectStore.getAllMmTablesForCleanup is calling these method
 comment|/**    * Checks if a table is an ACID table that only supports INSERT, but not UPDATE/DELETE    * @param params table properties    * @return true if table is an INSERT_ONLY table, false otherwise    */
-comment|// TODO# also check that transactional is true
 specifier|public
 specifier|static
 name|boolean
@@ -11557,7 +11556,7 @@ argument_list|>
 name|props
 parameter_list|)
 block|{
-comment|// TODO# Setting these separately is a very hairy issue in certain combinations, since we
+comment|// TODO: Setting these separately is a very hairy issue in certain combinations, since we
 comment|//       cannot decide what type of table this becomes without taking both into account, and
 comment|//       in many cases the conversion might be illegal.
 comment|//       The only thing we allow is tx = true w/o tx-props, for backward compat.

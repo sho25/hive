@@ -2001,9 +2001,10 @@ name|bigBucketFileName
 argument_list|)
 decl_stmt|;
 comment|// get the tmp URI path; it will be a hdfs path if not local mode
-comment|// TODO# this doesn't work... the path for writer and reader mismatch
+comment|// TODO: this doesn't work... the path for writer and reader mismatch
 comment|//      Dump the side-table for tag ... -local-10004/HashTable-Stage-1/MapJoin-a-00-(ds%3D2008-04-08)mm_2.hashtable
 comment|//      Load back 1 hashtable file      -local-10004/HashTable-Stage-1/MapJoin-a-00-srcsortbucket3outof4.txt.hashtable
+comment|//      Hive3 probably won't support MR so do we really care?
 name|String
 name|dumpFilePrefix
 init|=

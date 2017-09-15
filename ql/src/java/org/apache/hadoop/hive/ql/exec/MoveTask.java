@@ -1934,7 +1934,6 @@ condition|)
 return|return
 literal|0
 return|;
-comment|// TODO# temporary flag for HIVE-14990
 name|Utilities
 operator|.
 name|LOG14535

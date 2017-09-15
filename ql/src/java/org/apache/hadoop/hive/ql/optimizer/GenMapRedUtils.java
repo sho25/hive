@@ -8511,7 +8511,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// TODO# create the noop MoveWork to avoid q file changes for now. Should be removed.
+comment|// TODO# create the noop MoveWork to avoid q file changes for now. Should be removed w/the flag just before merge
 name|dummyMv
 operator|=
 operator|new
@@ -8554,7 +8554,6 @@ comment|// Use the original fsOp path here in case of MM - while the new FSOP me
 comment|// MM directory, the original MoveTask still commits based on the parent. Note that this path
 comment|// can only be triggered for a merge that's part of insert for now; MM tables do not support
 comment|// concatenate. Keeping the old logic for non-MM tables with temp directories and stuff.
-comment|// TODO# is this correct?
 name|Path
 name|fsopPath
 init|=
@@ -8598,7 +8597,6 @@ name|isMmTable
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// TODO# questionable master merge here
 name|ConditionalTask
 name|cndTsk
 init|=
@@ -10795,7 +10793,6 @@ operator|.
 name|getSourcePath
 argument_list|()
 expr_stmt|;
-comment|// TODO# THIS
 block|}
 name|Utilities
 operator|.
@@ -11445,7 +11442,6 @@ operator|!
 name|chDir
 condition|)
 block|{
-comment|// TODO# is it correct to always use MM dir in MM case here? Where does MoveTask point?
 name|Utilities
 operator|.
 name|LOG14535
