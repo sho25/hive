@@ -93,6 +93,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -114,6 +124,16 @@ operator|.
 name|util
 operator|.
 name|Random
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -776,6 +796,17 @@ specifier|final
 name|String
 name|executionId
 decl_stmt|;
+comment|// Some statements, e.g., UPDATE, DELETE, or MERGE, get rewritten into different
+comment|// subqueries that create new contexts. We keep them here so we can clean them
+comment|// up when we are done.
+specifier|private
+specifier|final
+name|Set
+argument_list|<
+name|Context
+argument_list|>
+name|rewrittenStatementContexts
+decl_stmt|;
 comment|// List of Locks for this query
 specifier|protected
 name|List
@@ -1419,7 +1450,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Create a Context with a given executionId.  ExecutionId, together with    * user name and conf, will determine the temporary directory locations.    */
-specifier|public
+specifier|private
 name|Context
 parameter_list|(
 name|Configuration
@@ -1440,6 +1471,15 @@ operator|.
 name|executionId
 operator|=
 name|executionId
+expr_stmt|;
+name|this
+operator|.
+name|rewrittenStatementContexts
+operator|=
+operator|new
+name|HashSet
+argument_list|<>
+argument_list|()
 expr_stmt|;
 comment|// local& non-local tmp location is configurable. however it is the same across
 comment|// all external file systems
@@ -3033,6 +3073,22 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+comment|// First clear the other contexts created by this query
+for|for
+control|(
+name|Context
+name|subContext
+range|:
+name|rewrittenStatementContexts
+control|)
+block|{
+name|subContext
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
+comment|// Then clear this context
 if|if
 condition|(
 name|resDir
@@ -3784,6 +3840,22 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|void
+name|addRewrittenStatementContext
+parameter_list|(
+name|Context
+name|context
+parameter_list|)
+block|{
+name|rewrittenStatementContexts
+operator|.
+name|add
+argument_list|(
+name|context
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void
