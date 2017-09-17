@@ -10999,6 +10999,8 @@ operator|.
 name|getDestNamePrefix
 argument_list|(
 name|ast
+argument_list|,
+name|qb
 argument_list|)
 operator|.
 name|toString
