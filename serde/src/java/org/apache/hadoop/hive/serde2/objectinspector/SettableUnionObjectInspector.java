@@ -31,24 +31,27 @@ name|SettableUnionObjectInspector
 implements|implements
 name|UnionObjectInspector
 block|{
-comment|/* Create an empty object */
+comment|/* Creates an empty union object. */
 specifier|public
 specifier|abstract
 name|Object
 name|create
 parameter_list|()
 function_decl|;
-comment|/* Add field to the object */
+comment|/* Sets the field and tag in the union. Returns the union. */
 specifier|public
 specifier|abstract
 name|Object
-name|addField
+name|setFieldAndTag
 parameter_list|(
 name|Object
 name|union
 parameter_list|,
 name|Object
 name|field
+parameter_list|,
+name|byte
+name|tag
 parameter_list|)
 function_decl|;
 block|}

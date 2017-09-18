@@ -2343,7 +2343,7 @@ argument_list|(
 name|input
 argument_list|)
 decl_stmt|;
-name|Object
+name|byte
 name|inputFieldTag
 init|=
 name|inputOI
@@ -2402,11 +2402,13 @@ expr_stmt|;
 block|}
 name|outputOI
 operator|.
-name|addField
+name|setFieldAndTag
 argument_list|(
 name|output
 argument_list|,
 name|outputFieldValue
+argument_list|,
+name|inputFieldTag
 argument_list|)
 expr_stmt|;
 return|return

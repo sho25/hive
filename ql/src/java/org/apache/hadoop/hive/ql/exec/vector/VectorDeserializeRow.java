@@ -5781,7 +5781,7 @@ name|currentInt
 decl_stmt|;
 name|unionOI
 operator|.
-name|addField
+name|setFieldAndTag
 argument_list|(
 name|union
 argument_list|,
@@ -5810,6 +5810,11 @@ name|tag
 index|]
 argument_list|)
 argument_list|)
+argument_list|,
+operator|(
+name|byte
+operator|)
+name|tag
 argument_list|)
 expr_stmt|;
 name|deserializeRead
