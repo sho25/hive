@@ -84,6 +84,14 @@ comment|/**  * Interface to serialize HCat API elements.  */
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Public
+annotation|@
+name|InterfaceStability
+operator|.
+name|Stable
 specifier|abstract
 class|class
 name|MetadataSerializer

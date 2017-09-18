@@ -193,7 +193,7 @@ name|Public
 annotation|@
 name|InterfaceStability
 operator|.
-name|Evolving
+name|Stable
 specifier|public
 specifier|abstract
 class|class
