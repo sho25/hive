@@ -206,6 +206,14 @@ comment|/**  * The abstract class HCatClient containing APIs for HCatalog DDL co
 end_comment
 
 begin_class
+annotation|@
+name|InterfaceAudience
+operator|.
+name|Public
+annotation|@
+name|InterfaceStability
+operator|.
+name|Stable
 specifier|public
 specifier|abstract
 class|class
