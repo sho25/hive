@@ -24514,16 +24514,18 @@ argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
-comment|// // Create another table for incremental repl verification
+comment|// Test alter table
 name|run
 argument_list|(
-literal|"CREATE TABLE "
+literal|"ALTER TABLE "
 operator|+
 name|dbName
 operator|+
-literal|".acid_table_incremental (key int, value int) PARTITIONED BY (load_date date) "
+literal|".acid_table RENAME TO "
 operator|+
-literal|"CLUSTERED BY(key) INTO 2 BUCKETS STORED AS ORC TBLPROPERTIES ('transactional'='true')"
+name|dbName
+operator|+
+literal|".acid_table_rename"
 argument_list|,
 name|driver
 argument_list|)
@@ -24532,7 +24534,7 @@ name|verifyIfTableExist
 argument_list|(
 name|dbName
 argument_list|,
-literal|"acid_table_incremental"
+literal|"acid_table_rename"
 argument_list|,
 name|metaStoreClient
 argument_list|)
@@ -24580,6 +24582,127 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-dump: Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"acid_table_rename"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+comment|// Create another table for incremental repl verification
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".acid_table_incremental (key int, value int) PARTITIONED BY (load_date date) "
+operator|+
+literal|"CLUSTERED BY(key) INTO 2 BUCKETS STORED AS ORC TBLPROPERTIES ('transactional'='true')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|dbName
+argument_list|,
+literal|"acid_table_incremental"
+argument_list|,
+name|metaStoreClient
+argument_list|)
+expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|replDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info
