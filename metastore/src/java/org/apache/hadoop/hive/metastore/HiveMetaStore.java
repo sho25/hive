@@ -45,7 +45,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_COMMENT
 import|;
@@ -63,7 +63,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 import|;

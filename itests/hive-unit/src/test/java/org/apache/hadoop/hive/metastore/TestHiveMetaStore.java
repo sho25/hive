@@ -23059,7 +23059,7 @@ name|client
 operator|.
 name|getDatabase
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)

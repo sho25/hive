@@ -49,16 +49,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|BufferedReader
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|File
 import|;
 end_import
@@ -70,16 +60,6 @@ operator|.
 name|io
 operator|.
 name|IOException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|InputStreamReader
 import|;
 end_import
 
@@ -135,11 +115,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
+name|hadoop
 operator|.
-name|io
+name|hive
 operator|.
-name|IOUtils
+name|metastore
+operator|.
+name|Warehouse
 import|;
 end_import
 
@@ -194,22 +176,6 @@ operator|.
 name|HiveConf
 operator|.
 name|ConfVars
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
 import|;
 end_import
 
@@ -653,7 +619,7 @@ block|{
 comment|//check that we start with default db
 name|assertEquals
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -708,7 +674,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

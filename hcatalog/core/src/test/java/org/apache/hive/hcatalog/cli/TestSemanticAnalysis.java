@@ -139,7 +139,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 import|;
 end_import
 
@@ -774,7 +774,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -859,7 +859,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -931,7 +931,7 @@ name|client
 operator|.
 name|getPartition
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1306,7 +1306,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1430,7 +1430,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1785,7 +1785,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1960,7 +1960,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -2006,7 +2006,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -2083,7 +2083,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -2148,7 +2148,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -2478,7 +2478,7 @@ name|client
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

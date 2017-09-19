@@ -211,7 +211,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|TableType
 import|;
 end_import
 
@@ -227,7 +227,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|TableType
+name|Warehouse
 import|;
 end_import
 
@@ -5225,7 +5225,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 return|;

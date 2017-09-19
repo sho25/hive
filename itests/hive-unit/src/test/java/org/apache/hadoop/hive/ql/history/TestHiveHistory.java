@@ -205,7 +205,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 import|;
 end_import
 
@@ -693,7 +693,7 @@ name|db
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

@@ -215,7 +215,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|TableType
 import|;
 end_import
 
@@ -231,7 +231,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|TableType
+name|Warehouse
 import|;
 end_import
 
@@ -778,7 +778,7 @@ specifier|static
 name|String
 name|dbName
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 decl_stmt|;
@@ -1075,7 +1075,7 @@ operator|==
 literal|null
 operator|)
 condition|?
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 else|:
@@ -1182,7 +1182,7 @@ operator|==
 literal|null
 operator|)
 condition|?
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 else|:

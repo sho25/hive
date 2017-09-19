@@ -83,6 +83,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -154,22 +170,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
 import|;
 end_import
 
@@ -1163,7 +1163,7 @@ name|db
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4247,7 +4247,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4286,7 +4286,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4325,7 +4325,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4364,7 +4364,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4403,7 +4403,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4414,7 +4414,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4453,7 +4453,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4492,7 +4492,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4531,7 +4531,7 @@ name|db
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

@@ -46630,7 +46630,7 @@ condition|)
 block|{
 name|dbName
 operator|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 expr_stmt|;
@@ -47036,7 +47036,7 @@ condition|)
 block|{
 name|dbName
 operator|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 expr_stmt|;
