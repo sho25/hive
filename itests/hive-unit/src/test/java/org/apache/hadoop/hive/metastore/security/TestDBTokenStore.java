@@ -13,7 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 package|;
 end_package
 
@@ -111,11 +113,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
 operator|.
-name|DelegationTokenStore
+name|security
 operator|.
-name|TokenStoreException
+name|DBTokenStore
 import|;
 end_import
 
@@ -129,13 +131,13 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
 operator|.
-name|HadoopThriftAuthBridge
+name|security
 operator|.
-name|Server
+name|DelegationTokenStore
 operator|.
-name|ServerMode
+name|TokenStoreException
 import|;
 end_import
 
@@ -236,6 +238,10 @@ argument_list|(
 literal|"Test handler"
 argument_list|)
 argument_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
 operator|.
 name|METASTORE

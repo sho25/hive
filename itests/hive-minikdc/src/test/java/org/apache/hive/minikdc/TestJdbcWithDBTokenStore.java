@@ -131,6 +131,7 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+comment|//using old config value tests backwards compatibility
 name|hiveConf
 operator|.
 name|setVar

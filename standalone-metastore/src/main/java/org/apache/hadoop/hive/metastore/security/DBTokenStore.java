@@ -13,7 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 package|;
 end_package
 
@@ -113,7 +115,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 operator|.
 name|HadoopThriftAuthBridge
 operator|.
@@ -157,7 +161,7 @@ name|token
 operator|.
 name|delegation
 operator|.
-name|HiveDelegationTokenSupport
+name|MetastoreDelegationTokenSupport
 import|;
 end_import
 
@@ -420,7 +424,7 @@ name|Base64
 operator|.
 name|encodeBase64URLSafeString
 argument_list|(
-name|HiveDelegationTokenSupport
+name|MetastoreDelegationTokenSupport
 operator|.
 name|encodeDelegationTokenInformation
 argument_list|(
@@ -555,7 +559,7 @@ condition|)
 block|{
 name|result
 operator|=
-name|HiveDelegationTokenSupport
+name|MetastoreDelegationTokenSupport
 operator|.
 name|decodeDelegationTokenInformation
 argument_list|(
@@ -803,7 +807,7 @@ name|handler
 decl_stmt|;
 specifier|private
 name|ServerMode
-name|smode
+name|serverMode
 decl_stmt|;
 annotation|@
 name|Override
@@ -814,8 +818,12 @@ parameter_list|(
 name|Object
 name|handler
 parameter_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
-name|smode
+name|serverMode
 parameter_list|)
 throws|throws
 name|TokenStoreException
@@ -828,9 +836,9 @@ name|handler
 expr_stmt|;
 name|this
 operator|.
-name|smode
+name|serverMode
 operator|=
-name|smode
+name|serverMode
 expr_stmt|;
 block|}
 specifier|private
@@ -861,7 +869,7 @@ try|try
 block|{
 switch|switch
 condition|(
-name|smode
+name|serverMode
 condition|)
 block|{
 case|case
@@ -963,13 +971,11 @@ break|break;
 default|default:
 throw|throw
 operator|new
-name|TokenStoreException
+name|IllegalArgumentException
 argument_list|(
-operator|new
-name|Exception
-argument_list|(
-literal|"unknown server mode"
-argument_list|)
+literal|"Unexpected value of Server mode "
+operator|+
+name|serverMode
 argument_list|)
 throw|;
 block|}

@@ -294,7 +294,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"org.apache.hadoop.hive.thrift.HadoopThriftAuthBridge$Server$TUGIAssumingTransportFactory"
+literal|"org.apache.hadoop.hive.metastore.security.HadoopThriftAuthBridge$Server$TUGIAssumingTransportFactory"
 argument_list|,
 name|authFactory
 operator|.
@@ -417,7 +417,7 @@ name|ConfVars
 operator|.
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_CLS
 argument_list|,
-literal|"org.apache.hadoop.hive.thrift.DBTokenStore"
+literal|"org.apache.hadoop.hive.metastore.security.DBTokenStore"
 argument_list|)
 expr_stmt|;
 name|HiveAuthFactory
@@ -440,7 +440,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"org.apache.hadoop.hive.thrift.HadoopThriftAuthBridge$Server$TUGIAssumingTransportFactory"
+literal|"org.apache.hadoop.hive.metastore.security.HadoopThriftAuthBridge$Server$TUGIAssumingTransportFactory"
 argument_list|,
 name|authFactory
 operator|.

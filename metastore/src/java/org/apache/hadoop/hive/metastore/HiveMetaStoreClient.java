@@ -641,6 +641,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|SecurityUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|shims
 operator|.
 name|Utils
@@ -1653,7 +1671,7 @@ argument_list|,
 name|proxyUser
 argument_list|)
 decl_stmt|;
-name|Utils
+name|SecurityUtils
 operator|.
 name|setTokenStr
 argument_list|(
@@ -2725,7 +2743,7 @@ decl_stmt|;
 comment|// tokenSig could be null
 name|tokenStrForm
 operator|=
-name|Utils
+name|SecurityUtils
 operator|.
 name|getTokenStrForm
 argument_list|(

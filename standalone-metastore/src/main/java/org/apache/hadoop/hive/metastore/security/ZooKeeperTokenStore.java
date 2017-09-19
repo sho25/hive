@@ -13,7 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 package|;
 end_package
 
@@ -189,45 +191,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|shims
+name|metastore
 operator|.
-name|ShimLoader
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|utils
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|Utils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|thrift
-operator|.
-name|HadoopThriftAuthBridge
-operator|.
-name|Server
-operator|.
-name|ServerMode
+name|SecurityUtils
 import|;
 end_import
 
@@ -279,7 +247,7 @@ name|token
 operator|.
 name|delegation
 operator|.
-name|HiveDelegationTokenSupport
+name|MetastoreDelegationTokenSupport
 import|;
 end_import
 
@@ -536,10 +504,6 @@ block|}
 block|}
 decl_stmt|;
 specifier|private
-name|ServerMode
-name|serverMode
-decl_stmt|;
-specifier|private
 specifier|final
 name|String
 name|WHEN_ZK_DSTORE_MSG
@@ -560,6 +524,14 @@ decl_stmt|;
 specifier|private
 name|Configuration
 name|conf
+decl_stmt|;
+specifier|private
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
+name|ServerMode
+name|serverMode
 decl_stmt|;
 comment|/**    * Default constructor for dynamic instantiation w/ Configurable    * (ReflectionUtils does not support Configuration constructor injection).    */
 specifier|protected
@@ -756,7 +728,7 @@ name|serverMode
 argument_list|)
 throw|;
 block|}
-name|Utils
+name|SecurityUtils
 operator|.
 name|setZookeeperClientKerberosJaasConfig
 argument_list|(
@@ -1988,7 +1960,7 @@ name|byte
 index|[]
 name|tokenBytes
 init|=
-name|HiveDelegationTokenSupport
+name|MetastoreDelegationTokenSupport
 operator|.
 name|encodeDelegationTokenInformation
 argument_list|(
@@ -2136,7 +2108,7 @@ block|}
 try|try
 block|{
 return|return
-name|HiveDelegationTokenSupport
+name|MetastoreDelegationTokenSupport
 operator|.
 name|decodeDelegationTokenInformation
 argument_list|(
@@ -2303,15 +2275,19 @@ parameter_list|(
 name|Object
 name|hmsHandler
 parameter_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
-name|smode
+name|sMode
 parameter_list|)
 block|{
 name|this
 operator|.
 name|serverMode
 operator|=
-name|smode
+name|sMode
 expr_stmt|;
 name|zkConnectString
 operator|=
@@ -2319,7 +2295,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 argument_list|,
@@ -2348,7 +2324,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE
 argument_list|,
@@ -2378,13 +2354,13 @@ literal|"Zookeeper connect string has to be specifed through "
 operator|+
 literal|"either "
 operator|+
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 operator|+
 literal|" or "
 operator|+
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR_ALTERNATE
 operator|+
@@ -2399,7 +2375,7 @@ name|conf
 operator|.
 name|getInt
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_TIMEOUTMILLIS
 argument_list|,
@@ -2419,7 +2395,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -2452,11 +2428,11 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE
 argument_list|,
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE_DEFAULT
 argument_list|)

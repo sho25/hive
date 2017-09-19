@@ -535,9 +535,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|shims
+name|metastore
 operator|.
-name|ShimLoader
+name|security
+operator|.
+name|HadoopThriftAuthBridge
 import|;
 end_import
 
@@ -9773,9 +9775,9 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-name|ShimLoader
+name|HadoopThriftAuthBridge
 operator|.
-name|getHadoopThriftAuthBridge
+name|getBridge
 argument_list|()
 operator|.
 name|getHadoopSaslProperties

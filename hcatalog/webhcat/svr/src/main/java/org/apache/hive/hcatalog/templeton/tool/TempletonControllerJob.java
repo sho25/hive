@@ -961,7 +961,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 operator|.
 name|DelegationTokenIdentifier
 argument_list|>
@@ -978,7 +980,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 operator|.
 name|DelegationTokenIdentifier
 argument_list|>

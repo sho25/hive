@@ -13,7 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 package|;
 end_package
 
@@ -139,13 +141,33 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|metastore
+operator|.
+name|security
 operator|.
 name|HadoopThriftAuthBridge
 operator|.
 name|Server
 operator|.
 name|ServerMode
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|security
+operator|.
+name|ZooKeeperTokenStore
 import|;
 end_import
 
@@ -428,7 +450,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_CONNECT_STR
 argument_list|,
@@ -443,7 +465,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ZNODE
 argument_list|,
@@ -484,7 +506,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -504,6 +526,10 @@ name|init
 argument_list|(
 literal|null
 argument_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
 operator|.
 name|METASTORE
@@ -828,7 +854,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -856,6 +882,10 @@ name|init
 argument_list|(
 literal|null
 argument_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
 operator|.
 name|METASTORE
@@ -923,7 +953,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -974,6 +1004,10 @@ name|init
 argument_list|(
 literal|null
 argument_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
 operator|.
 name|METASTORE
@@ -1036,7 +1070,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|HiveDelegationTokenManager
+name|MetastoreDelegationTokenManager
 operator|.
 name|DELEGATION_TOKEN_STORE_ZK_ACL
 argument_list|,
@@ -1062,6 +1096,10 @@ name|init
 argument_list|(
 literal|null
 argument_list|,
+name|HadoopThriftAuthBridge
+operator|.
+name|Server
+operator|.
 name|ServerMode
 operator|.
 name|METASTORE

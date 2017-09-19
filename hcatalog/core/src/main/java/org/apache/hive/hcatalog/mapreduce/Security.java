@@ -131,9 +131,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|shims
+name|metastore
 operator|.
-name|ShimLoader
+name|security
+operator|.
+name|DelegationTokenSelector
 import|;
 end_import
 
@@ -147,9 +149,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|thrift
+name|shims
 operator|.
-name|DelegationTokenSelector
+name|ShimLoader
 import|;
 end_import
 
