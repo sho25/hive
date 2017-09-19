@@ -25113,6 +25113,160 @@ operator|)
 assert|;
 block|}
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testCMConflict
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"cmConflict"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+comment|// Create table and insert two file of the same content
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('ten')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned values('ten')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap test
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|replDumpId
+init|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+comment|// Drop two files so they are moved to CM
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap-Dump: Dumped to {} with id {}"
+argument_list|,
+name|replDumpLocn
+argument_list|,
+name|replDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|replDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT count(*) from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.unptned"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"2"
+block|}
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 specifier|static
 name|String

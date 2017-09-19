@@ -738,6 +738,11 @@ name|getCMPath
 argument_list|(
 name|hiveConf
 argument_list|,
+name|path
+operator|.
+name|getName
+argument_list|()
+argument_list|,
 name|fileCheckSum
 argument_list|)
 decl_stmt|;
@@ -1175,13 +1180,16 @@ operator|=
 name|cmRoot
 expr_stmt|;
 block|}
-comment|/***    * Convert a path of file inside a partition or table (if non-partitioned)    *   to a deterministic location of cmroot. So user can retrieve the file back    *   with the original location plus checksum.    * @param conf    * @param checkSum checksum of the file, can be retrieved by {@link #checksumFor(Path, FileSystem)}    * @return Path    */
+comment|/***    * Convert a path of file inside a partition or table (if non-partitioned)    *   to a deterministic location of cmroot. So user can retrieve the file back    *   with the original location plus checksum.    * @param conf    * @param name original filename    * @param checkSum checksum of the file, can be retrieved by {@link #checksumFor(Path, FileSystem)}    * @return Path    */
 specifier|static
 name|Path
 name|getCMPath
 parameter_list|(
 name|Configuration
 name|conf
+parameter_list|,
+name|String
+name|name
 parameter_list|,
 name|String
 name|checkSum
@@ -1194,6 +1202,10 @@ block|{
 name|String
 name|newFileName
 init|=
+name|name
+operator|+
+literal|"_"
+operator|+
 name|checkSum
 decl_stmt|;
 name|int
@@ -1312,6 +1324,11 @@ name|getCMPath
 argument_list|(
 name|hiveConf
 argument_list|,
+name|src
+operator|.
+name|getName
+argument_list|()
+argument_list|,
 name|checksumString
 argument_list|)
 argument_list|)
@@ -1360,6 +1377,11 @@ argument_list|(
 name|getCMPath
 argument_list|(
 name|hiveConf
+argument_list|,
+name|src
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 name|checksumString
 argument_list|)
