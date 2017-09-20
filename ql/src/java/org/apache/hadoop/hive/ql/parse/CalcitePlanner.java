@@ -6727,12 +6727,6 @@ name|qb
 operator|.
 name|getIsQuery
 argument_list|()
-operator|&&
-operator|!
-name|qb
-operator|.
-name|containsQueryWithoutSourceTable
-argument_list|()
 operator|)
 operator|||
 name|qb
@@ -28499,28 +28493,54 @@ argument_list|()
 condition|)
 block|{
 comment|// // This may happen for queries like select 1; (no source table)
-comment|// We can do following which is same, as what Hive does.
-comment|// With this, we will be able to generate Calcite plan.
-comment|// qb.getMetaData().setSrcForAlias(DUMMY_TABLE, getDummyTable());
-comment|// RelNode op = genTableLogicalPlan(DUMMY_TABLE, qb);
-comment|// qb.addAlias(DUMMY_TABLE);
-comment|// qb.setTabAlias(DUMMY_TABLE, DUMMY_TABLE);
-comment|// aliasToRel.put(DUMMY_TABLE, op);
-comment|// However, Hive trips later while trying to get Metadata for this dummy
-comment|// table
-comment|// So, for now lets just disable this. Anyway there is nothing much to
-comment|// optimize in such cases.
-throw|throw
-operator|new
-name|CalciteSemanticException
-argument_list|(
-literal|"Unsupported"
-argument_list|,
-name|UnsupportedFeature
+name|qb
 operator|.
-name|Others
+name|getMetaData
+argument_list|()
+operator|.
+name|setSrcForAlias
+argument_list|(
+name|DUMMY_TABLE
+argument_list|,
+name|getDummyTable
+argument_list|()
 argument_list|)
-throw|;
+expr_stmt|;
+name|qb
+operator|.
+name|addAlias
+argument_list|(
+name|DUMMY_TABLE
+argument_list|)
+expr_stmt|;
+name|qb
+operator|.
+name|setTabAlias
+argument_list|(
+name|DUMMY_TABLE
+argument_list|,
+name|DUMMY_TABLE
+argument_list|)
+expr_stmt|;
+name|RelNode
+name|op
+init|=
+name|genTableLogicalPlan
+argument_list|(
+name|DUMMY_TABLE
+argument_list|,
+name|qb
+argument_list|)
+decl_stmt|;
+name|aliasToRel
+operator|.
+name|put
+argument_list|(
+name|DUMMY_TABLE
+argument_list|,
+name|op
+argument_list|)
+expr_stmt|;
 block|}
 comment|// 1.3 process join
 comment|// 1.3.1 process hints
