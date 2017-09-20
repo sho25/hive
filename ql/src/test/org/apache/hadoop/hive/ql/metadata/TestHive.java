@@ -31,7 +31,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 import|;
@@ -182,22 +182,6 @@ operator|.
 name|HiveConf
 operator|.
 name|ConfVars
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|MetaStoreUtils
 import|;
 end_import
 
@@ -896,7 +880,7 @@ name|hm
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -929,7 +913,7 @@ init|=
 operator|new
 name|Table
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1274,7 +1258,7 @@ name|hm
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1292,7 +1276,7 @@ name|hm
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1401,7 +1385,7 @@ name|hm
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1443,7 +1427,7 @@ init|=
 operator|new
 name|Table
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -1896,7 +1880,7 @@ name|hm
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -3449,7 +3433,7 @@ block|{
 name|String
 name|dbName
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 decl_stmt|;
@@ -3708,7 +3692,7 @@ block|{
 name|String
 name|dbName
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 decl_stmt|;
@@ -3953,7 +3937,7 @@ name|hm
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4110,7 +4094,7 @@ name|hm
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4234,7 +4218,7 @@ name|hm
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4295,7 +4279,7 @@ decl_stmt|;
 name|String
 name|qTableName
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 operator|+
@@ -4309,7 +4293,7 @@ name|hm
 operator|.
 name|dropTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4342,7 +4326,7 @@ init|=
 operator|new
 name|Table
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,
@@ -4514,7 +4498,7 @@ decl_stmt|;
 name|String
 name|qIndexTableName
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 operator|+
@@ -4813,7 +4797,7 @@ name|hm
 operator|.
 name|dropIndex
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

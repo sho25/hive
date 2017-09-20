@@ -145,7 +145,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 import|;
 end_import
 
@@ -178,24 +178,6 @@ operator|.
 name|ql
 operator|.
 name|Driver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|IOConstants
 import|;
 end_import
 
@@ -424,20 +406,6 @@ operator|.
 name|output
 operator|.
 name|TextOutputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
 import|;
 end_import
 
@@ -688,16 +656,6 @@ operator|.
 name|util
 operator|.
 name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashSet
 import|;
 end_import
 
@@ -2561,7 +2519,7 @@ name|setInput
 argument_list|(
 name|job
 argument_list|,
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

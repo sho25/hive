@@ -886,7 +886,7 @@ block|{
 name|String
 name|dbName
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 decl_stmt|;
@@ -1155,7 +1155,7 @@ name|msc
 operator|.
 name|getTable
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

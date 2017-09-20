@@ -281,7 +281,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 import|;
 end_import
 
@@ -2518,7 +2518,7 @@ argument_list|,
 name|String
 argument_list|>
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|,

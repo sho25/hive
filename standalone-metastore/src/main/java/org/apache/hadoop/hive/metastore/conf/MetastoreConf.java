@@ -2252,6 +2252,37 @@ argument_list|,
 literal|"Turn on ChangeManager, so delete files will go to cmrootdir."
 argument_list|)
 block|,
+name|REPL_COPYFILE_MAXNUMFILES
+argument_list|(
+literal|"metastore.repl.copyfile.maxnumfiles"
+argument_list|,
+literal|"hive.exec.copyfile.maxnumfiles"
+argument_list|,
+literal|1L
+argument_list|,
+literal|"Maximum number of files Hive uses to do sequential HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for larger numbers of files so that copies can be done faster."
+argument_list|)
+block|,
+name|REPL_COPYFILE_MAXSIZE
+argument_list|(
+literal|"metastore.repl.copyfile.maxsize"
+argument_list|,
+literal|"hive.exec.copyfile.maxsize"
+argument_list|,
+literal|32L
+operator|*
+literal|1024
+operator|*
+literal|1024
+comment|/*32M*/
+argument_list|,
+literal|"Maximum file size (in bytes) that Hive uses to do single HDFS copies between directories."
+operator|+
+literal|"Distributed copies (distcp) will be used instead for bigger files so that copies can be done faster."
+argument_list|)
+block|,
 name|SCHEMA_INFO_CLASS
 argument_list|(
 literal|"metastore.schema.info.class"

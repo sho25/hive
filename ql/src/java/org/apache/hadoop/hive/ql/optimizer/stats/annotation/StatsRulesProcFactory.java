@@ -2153,7 +2153,10 @@ name|neededCols
 argument_list|,
 name|fop
 argument_list|,
-literal|0
+name|parentStats
+operator|.
+name|getNumRows
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Statistics
@@ -2346,7 +2349,7 @@ argument_list|>
 name|op
 parameter_list|,
 name|long
-name|evaluatedRowCount
+name|currNumRows
 parameter_list|)
 throws|throws
 name|CloneNotSupportedException
@@ -2365,10 +2368,7 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 operator|<=
 literal|1
 operator|||
@@ -2398,10 +2398,7 @@ name|pred
 operator|+
 literal|" Original num rows: "
 operator|+
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 operator|+
 literal|" Original data size: "
 operator|+
@@ -2464,6 +2461,11 @@ name|andStats
 argument_list|)
 expr_stmt|;
 comment|// evaluate children
+name|long
+name|evaluatedRowCount
+init|=
+name|currNumRows
+decl_stmt|;
 for|for
 control|(
 name|ExprNodeDesc
@@ -2475,7 +2477,7 @@ name|getChildren
 argument_list|()
 control|)
 block|{
-name|newNumRows
+name|evaluatedRowCount
 operator|=
 name|evaluateChildExpr
 argument_list|(
@@ -2494,6 +2496,11 @@ name|op
 argument_list|,
 name|evaluatedRowCount
 argument_list|)
+expr_stmt|;
+block|}
+name|newNumRows
+operator|=
+name|evaluatedRowCount
 expr_stmt|;
 if|if
 condition|(
@@ -2539,7 +2546,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
 elseif|else
 if|if
 condition|(
@@ -2560,27 +2566,6 @@ name|getChildren
 argument_list|()
 control|)
 block|{
-comment|// early exit if OR evaluation yields more rows than input rows
-if|if
-condition|(
-name|evaluatedRowCount
-operator|>=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
-condition|)
-block|{
-name|evaluatedRowCount
-operator|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
-expr_stmt|;
-block|}
-else|else
-block|{
 name|newNumRows
 operator|=
 name|StatsUtils
@@ -2599,17 +2584,24 @@ name|neededCols
 argument_list|,
 name|op
 argument_list|,
-name|evaluatedRowCount
+name|currNumRows
 argument_list|)
 argument_list|,
 name|newNumRows
 argument_list|)
 expr_stmt|;
-name|evaluatedRowCount
-operator|=
-name|newNumRows
-expr_stmt|;
 block|}
+if|if
+condition|(
+name|newNumRows
+operator|>
+name|currNumRows
+condition|)
+block|{
+name|newNumRows
+operator|=
+name|currNumRows
+expr_stmt|;
 block|}
 block|}
 elseif|else
@@ -2628,6 +2620,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|pred
+argument_list|,
+name|currNumRows
 argument_list|,
 name|aspCtx
 argument_list|,
@@ -2654,6 +2648,8 @@ name|stats
 argument_list|,
 name|pred
 argument_list|,
+name|currNumRows
+argument_list|,
 name|aspCtx
 argument_list|,
 name|neededCols
@@ -2678,6 +2674,8 @@ name|stats
 argument_list|,
 name|pred
 argument_list|,
+name|currNumRows
+argument_list|,
 name|aspCtx
 argument_list|,
 name|neededCols
@@ -2700,6 +2698,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|genFunc
+argument_list|,
+name|currNumRows
 argument_list|)
 return|;
 block|}
@@ -2720,7 +2720,7 @@ name|neededCols
 argument_list|,
 name|op
 argument_list|,
-name|evaluatedRowCount
+name|currNumRows
 argument_list|)
 expr_stmt|;
 block|}
@@ -2914,6 +2914,9 @@ parameter_list|,
 name|ExprNodeDesc
 name|pred
 parameter_list|,
+name|long
+name|currNumRows
+parameter_list|,
 name|AnnotateStatsProcCtx
 name|aspCtx
 parameter_list|,
@@ -2935,10 +2938,7 @@ block|{
 name|long
 name|numRows
 init|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 decl_stmt|;
 name|ExprNodeGenericFuncDesc
 name|fd
@@ -3561,6 +3561,9 @@ parameter_list|,
 name|ExprNodeDesc
 name|pred
 parameter_list|,
+name|long
+name|currNumRows
+parameter_list|,
 name|AnnotateStatsProcCtx
 name|aspCtx
 parameter_list|,
@@ -3675,10 +3678,7 @@ name|ExprNodeDynamicValueDesc
 condition|)
 block|{
 return|return
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 return|;
 block|}
 comment|// We transform the BETWEEN clause to AND clause (with NOT on top in invert is true).
@@ -3798,7 +3798,7 @@ name|neededCols
 argument_list|,
 name|op
 argument_list|,
-literal|0
+name|currNumRows
 argument_list|)
 return|;
 block|}
@@ -3811,6 +3811,9 @@ name|stats
 parameter_list|,
 name|ExprNodeDesc
 name|pred
+parameter_list|,
+name|long
+name|currNumRows
 parameter_list|,
 name|AnnotateStatsProcCtx
 name|aspCtx
@@ -3835,10 +3838,7 @@ block|{
 name|long
 name|numRows
 init|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 decl_stmt|;
 comment|// if the evaluate yields true then pass all rows else pass 0 rows
 if|if
@@ -3905,7 +3905,7 @@ name|neededCols
 argument_list|,
 name|op
 argument_list|,
-literal|0
+name|numRows
 argument_list|)
 expr_stmt|;
 block|}
@@ -4052,15 +4052,15 @@ name|stats
 parameter_list|,
 name|ExprNodeDesc
 name|pred
+parameter_list|,
+name|long
+name|currNumRows
 parameter_list|)
 block|{
 name|long
 name|numRows
 init|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 decl_stmt|;
 if|if
 condition|(
@@ -4154,6 +4154,9 @@ name|parentStats
 parameter_list|,
 name|ExprNodeGenericFuncDesc
 name|pred
+parameter_list|,
+name|long
+name|currNumRows
 parameter_list|)
 block|{
 name|long
@@ -4169,10 +4172,7 @@ decl_stmt|;
 name|long
 name|parentCardinality
 init|=
-name|parentStats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 decl_stmt|;
 name|long
 name|newPredCardinality
@@ -4419,15 +4419,15 @@ name|stats
 parameter_list|,
 name|ExprNodeGenericFuncDesc
 name|genFunc
+parameter_list|,
+name|long
+name|currNumRows
 parameter_list|)
 block|{
 name|long
 name|numRows
 init|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 decl_stmt|;
 name|GenericUDF
 name|udf
@@ -5419,7 +5419,7 @@ argument_list|>
 name|op
 parameter_list|,
 name|long
-name|evaluatedRowCount
+name|currNumRows
 parameter_list|)
 throws|throws
 name|CloneNotSupportedException
@@ -5429,10 +5429,7 @@ block|{
 name|long
 name|numRows
 init|=
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|currNumRows
 decl_stmt|;
 if|if
 condition|(
@@ -5786,6 +5783,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|genFunc
+argument_list|,
+name|numRows
 argument_list|)
 return|;
 block|}
@@ -5803,6 +5802,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|genFunc
+argument_list|,
+name|numRows
 argument_list|)
 return|;
 block|}
@@ -5820,6 +5821,8 @@ argument_list|(
 name|stats
 argument_list|,
 name|genFunc
+argument_list|,
+name|numRows
 argument_list|)
 return|;
 block|}
@@ -5860,7 +5863,7 @@ name|neededCols
 argument_list|,
 name|op
 argument_list|,
-name|evaluatedRowCount
+name|numRows
 argument_list|)
 return|;
 block|}
@@ -5929,10 +5932,7 @@ block|}
 else|else
 block|{
 return|return
-name|stats
-operator|.
-name|getNumRows
-argument_list|()
+name|numRows
 return|;
 block|}
 block|}
@@ -8876,7 +8876,10 @@ argument_list|()
 argument_list|,
 name|jop
 argument_list|,
-literal|0
+name|stats
+operator|.
+name|getNumRows
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -9442,7 +9445,10 @@ argument_list|()
 argument_list|,
 name|jop
 argument_list|,
-literal|0
+name|wcStats
+operator|.
+name|getNumRows
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

@@ -231,7 +231,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|Warehouse
 import|;
 end_import
 
@@ -672,7 +672,7 @@ specifier|final
 name|String
 name|DEFAULT_DB
 init|=
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 decl_stmt|;

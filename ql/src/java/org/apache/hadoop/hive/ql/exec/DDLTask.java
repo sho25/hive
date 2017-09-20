@@ -15951,7 +15951,7 @@ comment|// If serialization.format property has the default value, it will not t
 comment|// SERDE properties
 if|if
 condition|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_SERIALIZATION_FORMAT
 operator|.
@@ -32095,7 +32095,7 @@ name|databaseName
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)
@@ -32121,6 +32121,18 @@ operator|.
 name|METASTOREWAREHOUSE
 argument_list|)
 argument_list|,
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
 name|MetaStoreUtils
 operator|.
 name|encodeTableName
@@ -32213,7 +32225,7 @@ argument_list|)
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|MetaStoreUtils
+name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)
