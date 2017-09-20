@@ -21,20 +21,6 @@ end_package
 
 begin_import
 import|import
-name|io
-operator|.
-name|netty
-operator|.
-name|util
-operator|.
-name|internal
-operator|.
-name|StringUtil
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|antlr
@@ -2248,7 +2234,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Updated taskChainTail from {}{} to {}{}"
+literal|"Updated taskChainTail from {}:{} to {}:{}"
 argument_list|,
 name|taskChainTail
 operator|.
