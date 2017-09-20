@@ -110,18 +110,6 @@ specifier|public
 class|class
 name|LoadTableDesc
 extends|extends
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|LoadDesc
 implements|implements
 name|Serializable
@@ -154,14 +142,6 @@ literal|true
 decl_stmt|;
 comment|//For partitions, flag controlling whether the current
 comment|//table specs are to be used
-comment|// Need to remember whether this is an acid compliant operation, and if so whether it is an
-comment|// insert, update, or delete.
-specifier|private
-name|AcidUtils
-operator|.
-name|Operation
-name|writeType
-decl_stmt|;
 comment|// TODO: the below seems like they should just be combined into partitionDesc
 specifier|private
 name|org
@@ -203,6 +183,11 @@ name|o
 operator|.
 name|getSourcePath
 argument_list|()
+argument_list|,
+name|o
+operator|.
+name|getWriteType
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|this
@@ -236,14 +221,6 @@ operator|=
 name|o
 operator|.
 name|inheritTableSpecs
-expr_stmt|;
-name|this
-operator|.
-name|writeType
-operator|=
-name|o
-operator|.
-name|writeType
 expr_stmt|;
 name|this
 operator|.
@@ -308,6 +285,8 @@ block|{
 name|super
 argument_list|(
 name|sourcePath
+argument_list|,
+name|writeType
 argument_list|)
 expr_stmt|;
 name|init
@@ -317,8 +296,6 @@ argument_list|,
 name|partitionSpec
 argument_list|,
 name|replace
-argument_list|,
-name|writeType
 argument_list|)
 expr_stmt|;
 block|}
@@ -508,6 +485,8 @@ block|{
 name|super
 argument_list|(
 name|sourcePath
+argument_list|,
+name|writeType
 argument_list|)
 expr_stmt|;
 name|this
@@ -544,8 +523,6 @@ name|getPartSpec
 argument_list|()
 argument_list|,
 literal|true
-argument_list|,
-name|writeType
 argument_list|)
 expr_stmt|;
 block|}
@@ -565,8 +542,6 @@ argument_list|>
 argument_list|()
 argument_list|,
 literal|true
-argument_list|,
-name|writeType
 argument_list|)
 expr_stmt|;
 block|}
@@ -603,11 +578,6 @@ parameter_list|,
 specifier|final
 name|boolean
 name|replace
-parameter_list|,
-name|AcidUtils
-operator|.
-name|Operation
-name|writeType
 parameter_list|)
 block|{
 name|this
@@ -627,12 +597,6 @@ operator|.
 name|replace
 operator|=
 name|replace
-expr_stmt|;
-name|this
-operator|.
-name|writeType
-operator|=
-name|writeType
 expr_stmt|;
 block|}
 annotation|@
@@ -842,17 +806,6 @@ name|lbCtx
 operator|=
 name|lbCtx
 expr_stmt|;
-block|}
-specifier|public
-name|AcidUtils
-operator|.
-name|Operation
-name|getWriteType
-parameter_list|()
-block|{
-return|return
-name|writeType
-return|;
 block|}
 block|}
 end_class

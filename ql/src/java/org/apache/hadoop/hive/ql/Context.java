@@ -4348,6 +4348,15 @@ operator|=
 name|isUpdate
 expr_stmt|;
 block|}
+specifier|public
+name|String
+name|getExecutionId
+parameter_list|()
+block|{
+return|return
+name|executionId
+return|;
+block|}
 block|}
 end_class
 

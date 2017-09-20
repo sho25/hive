@@ -44,16 +44,21 @@ specifier|public
 enum|enum
 name|EdgeType
 block|{
+comment|//todo: HIVE-15549
 name|SIMPLE_EDGE
 block|,
+comment|//SORT_PARTITION_EDGE
 name|BROADCAST_EDGE
 block|,
 name|CONTAINS
 block|,
+comment|//used for union (all?)
 name|CUSTOM_EDGE
 block|,
+comment|//CO_PARTITION_EDGE
 name|CUSTOM_SIMPLE_EDGE
 block|,
+comment|//PARTITION_EDGE
 name|ONE_TO_ONE_EDGE
 block|}
 specifier|private

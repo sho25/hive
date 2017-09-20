@@ -1745,6 +1745,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|AbstractFileMergeOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|FunctionRegistry
 import|;
 end_import
@@ -18979,7 +18997,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|moveAcidFiles
@@ -19004,9 +19022,11 @@ throws|throws
 name|HiveException
 block|{
 comment|// The layout for ACID files is table|partname/base|delta|delete_delta/bucket
-comment|// We will always only be writing delta files.  In the buckets created by FileSinkOperator
-comment|// it will look like bucket/delta|delete_delta/bucket.  So we need to move that into
-comment|// the above structure. For the first mover there will be no delta directory,
+comment|// We will always only be writing delta files ( except IOW which writes base_X/ ).
+comment|// In the buckets created by FileSinkOperator
+comment|// it will look like original_bucket/delta|delete_delta/bucket
+comment|// (e.g. .../-ext-10004/000000_0/delta_0000014_0000014_0000/bucket_00000).  So we need to
+comment|// move that into the above structure. For the first mover there will be no delta directory,
 comment|// so we can move the whole directory.
 comment|// For everyone else we will need to just move the buckets under the existing delta
 comment|// directory.
@@ -19070,6 +19090,99 @@ operator|.
 name|originalBucketFilter
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|origBucketStats
+operator|==
+literal|null
+operator|||
+name|origBucketStats
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+comment|/**            check if we are dealing with data with non-standard layout. For example a write            produced by a (optimized) Union All query            which looks like           └── -ext-10000             ├── HIVE_UNION_SUBDIR_1             │   └── 000000_0             │       ├── _orc_acid_version             │       └── delta_0000019_0000019_0001             │           └── bucket_00000             ├── HIVE_UNION_SUBDIR_2             │   └── 000000_0             │       ├── _orc_acid_version             │       └── delta_0000019_0000019_0002             │           └── bucket_00000            The assumption is that we either have all data in subdirs or root of srcPath            but not both.            For Union case, we expect delta dirs to have unique names which is assured by            {@link org.apache.hadoop.hive.ql.optimizer.QueryPlanPostProcessor}           */
+name|FileStatus
+index|[]
+name|unionSubdirs
+init|=
+name|fs
+operator|.
+name|globStatus
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|srcPath
+argument_list|,
+name|AbstractFileMergeOperator
+operator|.
+name|UNION_SUDBIR_PREFIX
+operator|+
+literal|"[0-9]*"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|FileStatus
+argument_list|>
+name|buckets
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|FileStatus
+name|unionSubdir
+range|:
+name|unionSubdirs
+control|)
+block|{
+name|Collections
+operator|.
+name|addAll
+argument_list|(
+name|buckets
+argument_list|,
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+name|unionSubdir
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|originalBucketFilter
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|origBucketStats
+operator|=
+name|buckets
+operator|.
+name|toArray
+argument_list|(
+operator|new
+name|FileStatus
+index|[
+name|buckets
+operator|.
+name|size
+argument_list|()
+index|]
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -19188,6 +19301,7 @@ name|AcidUtils
 operator|.
 name|baseFileFilter
 argument_list|,
+comment|//for Insert Overwrite
 name|fs
 argument_list|,
 name|dst
