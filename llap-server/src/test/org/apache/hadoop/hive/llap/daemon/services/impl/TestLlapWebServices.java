@@ -65,7 +65,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -178,7 +178,7 @@ name|Exception
 block|{
 name|llapWSPort
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePortExcepting
 argument_list|(

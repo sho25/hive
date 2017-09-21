@@ -143,7 +143,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -541,7 +541,7 @@ expr_stmt|;
 name|int
 name|port
 init|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -637,7 +637,7 @@ argument_list|,
 literal|""
 argument_list|)
 expr_stmt|;
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

@@ -199,7 +199,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -1211,7 +1211,7 @@ argument_list|)
 expr_stmt|;
 name|msPort
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(
@@ -1457,7 +1457,7 @@ argument_list|)
 expr_stmt|;
 name|msPortMirror
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

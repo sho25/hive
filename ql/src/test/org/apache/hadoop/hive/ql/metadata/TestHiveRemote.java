@@ -67,7 +67,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -147,7 +147,7 @@ name|METASTOREURIS
 argument_list|,
 literal|"thrift://localhost:"
 operator|+
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|()

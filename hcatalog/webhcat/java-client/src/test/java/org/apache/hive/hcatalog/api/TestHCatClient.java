@@ -217,7 +217,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -1023,7 +1023,7 @@ expr_stmt|;
 comment|// turn on db notification listener on metastore
 name|msPort
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|()
@@ -6561,7 +6561,7 @@ argument_list|)
 expr_stmt|;
 name|replicationTargetHCatPort
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

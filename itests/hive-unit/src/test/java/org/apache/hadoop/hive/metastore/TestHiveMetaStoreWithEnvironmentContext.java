@@ -579,12 +579,12 @@ expr_stmt|;
 name|int
 name|port
 init|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
 decl_stmt|;
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

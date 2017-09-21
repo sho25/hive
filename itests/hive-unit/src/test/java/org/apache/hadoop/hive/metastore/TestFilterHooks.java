@@ -1067,7 +1067,7 @@ expr_stmt|;
 name|int
 name|port
 init|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -1087,7 +1087,7 @@ operator|+
 name|port
 argument_list|)
 expr_stmt|;
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

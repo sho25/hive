@@ -243,7 +243,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -1109,7 +1109,7 @@ operator|.
 name|HIVE_SERVER2_THRIFT_PORT
 argument_list|)
 else|:
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -1129,7 +1129,7 @@ operator|.
 name|HIVE_SERVER2_THRIFT_HTTP_PORT
 argument_list|)
 else|:
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -1612,7 +1612,7 @@ block|{
 comment|// reassign a new port, just in case if one of the MR services grabbed the last one
 name|setBinaryPort
 argument_list|(
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -1856,7 +1856,7 @@ block|{
 name|int
 name|metaStorePort
 init|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -1875,7 +1875,7 @@ operator|+
 name|metaStorePort
 argument_list|)
 expr_stmt|;
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(
