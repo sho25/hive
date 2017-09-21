@@ -7524,7 +7524,20 @@ literal|true
 argument_list|,
 literal|"Whether to enable shared work optimizer. The optimizer finds scan operator over the same table\n"
 operator|+
-literal|"and follow-up operators in the query plan and merges them if they meet some preconditions."
+literal|"and follow-up operators in the query plan and merges them if they meet some preconditions. Tez only."
+argument_list|)
+block|,
+name|HIVE_COMBINE_EQUIVALENT_WORK_OPTIMIZATION
+argument_list|(
+literal|"hive.combine.equivalent.work.optimization"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to "
+operator|+
+literal|"combine equivalent work objects during physical optimization.\n This optimization looks for equivalent "
+operator|+
+literal|"work objects and combines them if they meet certain preconditions. Spark only."
 argument_list|)
 block|,
 name|HIVE_REMOVE_SQ_COUNT_CHECK
