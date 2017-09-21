@@ -5125,6 +5125,17 @@ argument_list|,
 literal|"This an internal parameter."
 argument_list|)
 block|,
+name|HIVEADDFILESUSEHDFSLOCATION
+argument_list|(
+literal|"hive.resource.use.hdfs.location"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Reference HDFS based files/jars directly instead of "
+operator|+
+literal|"copy to session based HDFS scratch directory, to make distributed cache more useful."
+argument_list|)
+block|,
 name|HIVE_CURRENT_DATABASE
 argument_list|(
 literal|"hive.current.database"
