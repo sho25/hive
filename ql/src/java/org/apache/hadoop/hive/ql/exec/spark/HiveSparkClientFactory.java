@@ -707,7 +707,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"loading spark properties from:"
+literal|"loading spark properties from: "
 operator|+
 name|SPARK_DEFAULT_CONF_FILE
 argument_list|)
@@ -781,7 +781,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.
@@ -818,7 +818,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Failed to open spark configuration file:"
+literal|"Failed to open spark configuration file: "
 operator|+
 name|SPARK_DEFAULT_CONF_FILE
 argument_list|,
@@ -1115,7 +1115,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.
@@ -1181,7 +1181,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.
@@ -1298,7 +1298,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.
@@ -1354,7 +1354,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.
@@ -1411,7 +1411,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|String
 operator|.

@@ -2433,13 +2433,13 @@ if|if
 condition|(
 name|LOG
 operator|.
-name|isInfoEnabled
+name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Logging job configuration: "
 argument_list|)
@@ -2463,7 +2463,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 name|outWriter
 operator|.
