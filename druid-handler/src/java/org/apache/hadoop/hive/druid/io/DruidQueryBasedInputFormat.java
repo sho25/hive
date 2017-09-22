@@ -115,22 +115,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|calcite
-operator|.
-name|adapter
-operator|.
-name|druid
-operator|.
-name|DruidTable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|commons
 operator|.
 name|lang3
@@ -1106,13 +1090,18 @@ condition|(
 name|dataSource
 operator|==
 literal|null
+operator|||
+name|dataSource
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Druid data source cannot be empty"
+literal|"Druid data source cannot be empty or null"
 argument_list|)
 throw|;
 block|}
@@ -1367,7 +1356,11 @@ init|=
 name|Arrays
 operator|.
 name|asList
-argument_list|()
+argument_list|(
+name|DruidStorageHandlerUtils
+operator|.
+name|DEFAULT_INTERVAL
+argument_list|)
 decl_stmt|;
 name|builder
 operator|.
