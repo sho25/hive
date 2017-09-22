@@ -261,6 +261,8 @@ name|context
 operator|.
 name|eventOnlyReplicationSpec
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|Task

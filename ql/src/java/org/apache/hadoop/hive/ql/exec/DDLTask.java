@@ -27071,10 +27071,8 @@ literal|null
 operator|&&
 name|dropTbl
 operator|.
-name|getExpectedType
+name|getValidationRequired
 argument_list|()
-operator|!=
-literal|null
 condition|)
 block|{
 if|if
