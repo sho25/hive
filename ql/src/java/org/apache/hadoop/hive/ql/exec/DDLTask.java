@@ -30990,6 +30990,18 @@ return|return
 name|retval
 return|;
 block|}
+comment|/*   uses the authorizer from SessionState will need some more work to get this to run in parallel,   however this should not be a bottle neck so might not need to parallelize this.    */
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|canExecuteInParallel
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 

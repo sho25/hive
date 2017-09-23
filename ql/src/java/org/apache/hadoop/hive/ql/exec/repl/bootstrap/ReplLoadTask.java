@@ -742,6 +742,14 @@ name|conf
 argument_list|,
 name|getHive
 argument_list|()
+argument_list|,
+name|work
+operator|.
+name|sessionStateLineageState
+argument_list|,
+name|work
+operator|.
+name|currentTransactionId
 argument_list|)
 decl_stmt|;
 name|TaskTracker
@@ -1464,6 +1472,7 @@ name|scope
 operator|.
 name|rootTasks
 expr_stmt|;
+comment|/*       Since there can be multiple rounds of this run all of which will be tied to the same       query id -- generated in compile phase , adding a additional UUID to the end to print each run       in separate files.        */
 name|LOG
 operator|.
 name|info

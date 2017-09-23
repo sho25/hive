@@ -1547,6 +1547,187 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|parallelExecutionOfReplicationBootStrapLoad
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t2 (place string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='australia') values ('sydney')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='russia') values ('moscow')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='uk') values ('london')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='us') values ('sfo')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='france') values ('paris')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='japan') values ('tokyo')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='china') values ('hkg')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t3 (rank int)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|EXECPARALLEL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"repl status "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|tuple
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|,
+literal|"t2"
+block|,
+literal|"t3"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select country from t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"india"
+argument_list|,
+literal|"australia"
+argument_list|,
+literal|"russia"
+argument_list|,
+literal|"uk"
+argument_list|,
+literal|"us"
+argument_list|,
+literal|"france"
+argument_list|,
+literal|"japan"
+argument_list|,
+literal|"china"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

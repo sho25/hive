@@ -911,6 +911,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|lockmgr
+operator|.
+name|HiveTxnManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|Hive
@@ -7679,7 +7697,7 @@ name|targetPathToPartitionInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param fsInput The FileSink operator.    * @param ctx The MR processing context.    * @param finalName the final destination path the merge job should output.    * @param dependencyTask    * @param mvTasks    * @param conf    * @param currTask    * @throws SemanticException     * create a Map-only merge job using CombineHiveInputFormat for all partitions with    * following operators:    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo& pathToAlias to include the dynamic    *          partition    *          directories.    *    */
+comment|/**    * @param fsInput The FileSink operator.    * @param finalName the final destination path the merge job should output.    * @param dependencyTask    * @param mvTasks    * @param conf    * @param currTask    * @throws SemanticException     * create a Map-only merge job using CombineHiveInputFormat for all partitions with    * following operators:    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo& pathToAlias to include the dynamic    *          partition    *          directories.    *    */
 specifier|public
 specifier|static
 name|void
@@ -7966,6 +7984,17 @@ block|}
 comment|//
 comment|// 2. Constructing a conditional task consisting of a move task and a map reduce task
 comment|//
+name|HiveTxnManager
+name|txnMgr
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getTxnMgr
+argument_list|()
+decl_stmt|;
 name|MoveWork
 name|dummyMv
 init|=
@@ -7996,6 +8025,14 @@ literal|null
 argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getLineageState
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|MapWork

@@ -123,6 +123,24 @@ name|Level
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
 begin_comment
 comment|/**  * MoveWork.  *  */
 end_comment
@@ -177,6 +195,12 @@ specifier|private
 name|LoadMultiFilesDesc
 name|loadMultiFilesWork
 decl_stmt|;
+comment|/*   these are sessionState objects that are copied over to work to allow for parallel execution.   based on the current use case the methods are selectively synchronized, which might need to be   taken care when using other methods.    */
+specifier|private
+specifier|final
+name|LineageState
+name|sessionStateLineageState
+decl_stmt|;
 specifier|private
 name|boolean
 name|checkFileFormat
@@ -212,8 +236,13 @@ decl_stmt|;
 specifier|public
 name|MoveWork
 parameter_list|()
-block|{   }
-specifier|public
+block|{
+name|sessionStateLineageState
+operator|=
+literal|null
+expr_stmt|;
+block|}
+specifier|private
 name|MoveWork
 parameter_list|(
 name|HashSet
@@ -227,6 +256,9 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 name|this
@@ -240,6 +272,10 @@ operator|.
 name|outputs
 operator|=
 name|outputs
+expr_stmt|;
+name|sessionStateLineageState
+operator|=
+name|lineageState
 expr_stmt|;
 block|}
 specifier|public
@@ -270,6 +306,9 @@ name|checkFileFormat
 parameter_list|,
 name|boolean
 name|srcLocal
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 name|this
@@ -277,6 +316,8 @@ argument_list|(
 name|inputs
 argument_list|,
 name|outputs
+argument_list|,
+name|lineageState
 argument_list|)
 expr_stmt|;
 name|this
@@ -329,6 +370,9 @@ name|loadFileWork
 parameter_list|,
 name|boolean
 name|checkFileFormat
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 name|this
@@ -336,6 +380,8 @@ argument_list|(
 name|inputs
 argument_list|,
 name|outputs
+argument_list|,
+name|lineageState
 argument_list|)
 expr_stmt|;
 name|this
@@ -413,6 +459,12 @@ name|o
 operator|.
 name|getOutputs
 argument_list|()
+expr_stmt|;
+name|sessionStateLineageState
+operator|=
+name|o
+operator|.
+name|sessionStateLineageState
 expr_stmt|;
 block|}
 annotation|@
@@ -633,6 +685,15 @@ name|srcLocal
 operator|=
 name|srcLocal
 expr_stmt|;
+block|}
+specifier|public
+name|LineageState
+name|getLineagState
+parameter_list|()
+block|{
+return|return
+name|sessionStateLineageState
+return|;
 block|}
 block|}
 end_class

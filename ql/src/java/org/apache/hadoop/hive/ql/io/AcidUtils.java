@@ -33,6 +33,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -1788,6 +1798,8 @@ block|}
 specifier|public
 enum|enum
 name|Operation
+implements|implements
+name|Serializable
 block|{
 name|NOT_ACID
 block|,

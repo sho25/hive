@@ -51,6 +51,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -96,24 +106,6 @@ operator|.
 name|exec
 operator|.
 name|ColumnInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|FileSinkOperator
 import|;
 end_import
 
@@ -203,13 +195,15 @@ begin_class
 specifier|public
 class|class
 name|LineageState
+implements|implements
+name|Serializable
 block|{
 comment|/**    * Mapping from the directory name to FileSinkOperator (may not be FileSinkOperator for views). This    * mapping is generated at the filesink operator creation    * time and is then later used to created the mapping from    * movetask to the set of filesink operators.    */
 specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|Path
+name|String
 argument_list|,
 name|Operator
 argument_list|>
@@ -227,7 +221,6 @@ name|LineageInfo
 name|linfo
 decl_stmt|;
 comment|/**    * Constructor.    */
-specifier|public
 name|LineageState
 parameter_list|()
 block|{
@@ -235,11 +228,7 @@ name|dirToFop
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|Path
-argument_list|,
-name|Operator
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 name|linfo
@@ -257,6 +246,7 @@ expr_stmt|;
 block|}
 comment|/**    * Adds a mapping from the load work to the file sink operator.    *    * @param dir The directory name.    * @param fop The sink operator.    */
 specifier|public
+specifier|synchronized
 name|void
 name|mapDirToOp
 parameter_list|(
@@ -272,6 +262,12 @@ operator|.
 name|put
 argument_list|(
 name|dir
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|fop
 argument_list|)
@@ -279,6 +275,7 @@ expr_stmt|;
 block|}
 comment|/**    * Update the path of the captured lineage information in case the    * conditional input path and the linked MoveWork were merged into one MoveWork.    * This should only happen for Blobstore systems with optimization turned on.    * @param newPath conditional input path    * @param oldPath path of the old linked MoveWork    */
 specifier|public
+specifier|synchronized
 name|void
 name|updateDirToOpMap
 parameter_list|(
@@ -297,6 +294,12 @@ operator|.
 name|get
 argument_list|(
 name|oldPath
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -311,6 +314,12 @@ operator|.
 name|put
 argument_list|(
 name|newPath
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|op
 argument_list|)
@@ -319,6 +328,7 @@ block|}
 block|}
 comment|/**    * Set the lineage information for the associated directory.    *    * @param dir The directory containing the query results.    * @param dc The associated data container.    * @param cols The list of columns.    */
 specifier|public
+specifier|synchronized
 name|void
 name|setLineage
 parameter_list|(
@@ -347,6 +357,12 @@ operator|.
 name|get
 argument_list|(
 name|dir
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Go over the associated fields and look up the dependencies
@@ -435,6 +451,7 @@ return|;
 block|}
 comment|/**    * Clear all lineage states    */
 specifier|public
+specifier|synchronized
 name|void
 name|clear
 parameter_list|()

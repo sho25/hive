@@ -25,6 +25,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|HashMap
@@ -338,6 +348,8 @@ specifier|public
 specifier|static
 class|class
 name|Index
+implements|implements
+name|Serializable
 block|{
 comment|/**      * The map contains an index from the (operator, columnInfo) to the      * dependency vector for that tuple. This is used to generate the      * dependency vectors during the walk of the operator tree.      */
 specifier|private

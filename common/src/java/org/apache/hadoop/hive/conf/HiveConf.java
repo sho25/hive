@@ -2829,15 +2829,15 @@ name|REPL_APPROX_MAX_LOAD_TASKS
 argument_list|(
 literal|"hive.repl.approx.max.load.tasks"
 argument_list|,
-literal|1000
+literal|10000
 argument_list|,
-literal|"Provide and approximate of the max number of tasks that should be executed in before  \n"
+literal|"Provide an approximation of the maximum number of tasks that should be executed before \n"
 operator|+
-literal|"dynamically generating the next set of tasks. The number is an approximate as we \n"
+literal|"dynamically generating the next set of tasks. The number is approximate as Hive \n"
 operator|+
-literal|"will stop at slightly higher number than above, the reason being some events might \n"
+literal|"will stop at a slightly higher number, the reason being some events might lead to a \n"
 operator|+
-literal|"lead to an task increment that would cross the above limit"
+literal|"task increment that would cross the specified limit."
 argument_list|)
 block|,
 name|REPL_PARTITIONS_DUMP_PARALLELISM

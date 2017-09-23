@@ -1187,6 +1187,8 @@ specifier|public
 specifier|static
 class|class
 name|Predicate
+implements|implements
+name|Serializable
 block|{
 comment|/**      * Expression string for the predicate.      */
 specifier|private
