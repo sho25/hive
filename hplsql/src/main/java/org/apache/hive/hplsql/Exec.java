@@ -8502,6 +8502,30 @@ name|ctx
 argument_list|)
 return|;
 block|}
+comment|/**    * SUMMARY statement    */
+annotation|@
+name|Override
+specifier|public
+name|Integer
+name|visitSummary_stmt
+parameter_list|(
+name|HplsqlParser
+operator|.
+name|Summary_stmtContext
+name|ctx
+parameter_list|)
+block|{
+return|return
+name|exec
+operator|.
+name|stmt
+operator|.
+name|summary
+argument_list|(
+name|ctx
+argument_list|)
+return|;
+block|}
 comment|/**    * RESIGNAL statement    */
 annotation|@
 name|Override
