@@ -19983,7 +19983,7 @@ literal|"mapred\\.reduce\\..*"
 block|,
 literal|"mapred\\.output\\.compression\\.codec"
 block|,
-literal|"mapred\\.job\\.queuename"
+literal|"mapred\\.job\\.queue\\.name"
 block|,
 literal|"mapred\\.output\\.compression\\.type"
 block|,
