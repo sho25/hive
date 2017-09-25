@@ -2539,10 +2539,11 @@ argument_list|)
 decl_stmt|;
 comment|// number of rows -1 means that statistics from metastore is not reliable
 comment|// and 0 means statistics gathering is disabled
+comment|// estimate only if num rows is -1 since 0 could be actual number of rows
 if|if
 condition|(
 name|nr
-operator|<=
+operator|<
 literal|0
 condition|)
 block|{
@@ -2591,13 +2592,23 @@ name|avgRowSize
 expr_stmt|;
 block|}
 block|}
-return|return
+if|if
+condition|(
 name|nr
 operator|==
 literal|0
-condition|?
+operator|||
+name|nr
+operator|==
+operator|-
 literal|1
-else|:
+condition|)
+block|{
+return|return
+literal|1
+return|;
+block|}
+return|return
 name|nr
 return|;
 block|}
@@ -11471,7 +11482,8 @@ decl_stmt|;
 name|long
 name|result
 init|=
-literal|0
+operator|-
+literal|1
 decl_stmt|;
 if|if
 condition|(
@@ -11505,7 +11517,8 @@ parameter_list|)
 block|{
 name|result
 operator|=
-literal|0
+operator|-
+literal|1
 expr_stmt|;
 block|}
 block|}
