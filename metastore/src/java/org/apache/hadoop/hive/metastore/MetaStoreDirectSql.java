@@ -4673,7 +4673,7 @@ literal|" where \"PART_ID\" in ("
 operator|+
 name|partIds
 operator|+
-literal|") and \"INTEGER_IDX\">= 0"
+literal|")"
 operator|+
 literal|" order by \"PART_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
@@ -4897,7 +4897,7 @@ literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and \"INTEGER_IDX\">= 0"
+literal|")"
 operator|+
 literal|" order by \"SD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
@@ -4981,7 +4981,7 @@ literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and \"INTEGER_IDX\">= 0"
+literal|")"
 operator|+
 literal|" order by \"SD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
@@ -5044,7 +5044,7 @@ literal|" where \"SD_ID\" in ("
 operator|+
 name|sdIds
 operator|+
-literal|") and \"INTEGER_IDX\">= 0"
+literal|")"
 operator|+
 literal|" order by \"SD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
@@ -5688,7 +5688,7 @@ literal|" where \"CD_ID\" in ("
 operator|+
 name|colIds
 operator|+
-literal|") and \"INTEGER_IDX\">= 0"
+literal|")"
 operator|+
 literal|" order by \"CD_ID\" asc, \"INTEGER_IDX\" asc"
 expr_stmt|;
