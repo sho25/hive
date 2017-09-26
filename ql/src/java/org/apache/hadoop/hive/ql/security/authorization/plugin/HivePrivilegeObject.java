@@ -516,11 +516,6 @@ block|,
 name|COMMAND_PARAMS
 block|,
 name|FUNCTION
-block|,
-comment|// HIVE_SERVICE refers to a logical service name. For now hiveserver2 hostname will be
-comment|// used to give service actions a name. This is used by kill query command so it can
-comment|// be authorized specifically to a service if necessary.
-name|SERVICE_NAME
 block|}
 empty_stmt|;
 comment|/**    * When {@link HiveOperationType} is QUERY, this action type is set so that it is possible    * to determine if the action type on this object is an INSERT or INSERT_OVERWRITE    */
@@ -1082,13 +1077,6 @@ name|toString
 argument_list|()
 expr_stmt|;
 break|break;
-case|case
-name|SERVICE_NAME
-case|:
-name|name
-operator|=
-name|objectName
-expr_stmt|;
 block|}
 comment|// get the string representing action type if its non default action type
 name|String

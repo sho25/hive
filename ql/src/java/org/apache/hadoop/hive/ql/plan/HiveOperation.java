@@ -1606,15 +1606,6 @@ literal|false
 argument_list|,
 literal|false
 argument_list|)
-block|,
-name|KILL_QUERY
-argument_list|(
-literal|"KILL QUERY"
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|)
 block|;
 specifier|private
 name|String

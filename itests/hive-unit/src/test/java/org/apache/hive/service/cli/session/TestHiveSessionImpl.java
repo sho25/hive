@@ -169,16 +169,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -525,15 +515,10 @@ name|fail
 argument_list|(
 literal|"unexpected exception:"
 operator|+
-name|Arrays
-operator|.
-name|toString
-argument_list|(
 name|e
 operator|.
-name|getStackTrace
+name|getMessage
 argument_list|()
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

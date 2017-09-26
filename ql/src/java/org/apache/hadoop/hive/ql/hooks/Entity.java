@@ -191,8 +191,6 @@ block|,
 name|LOCAL_DIR
 block|,
 name|FUNCTION
-block|,
-name|SERVICE_NAME
 block|}
 comment|/**    * The database if this is a database.    */
 specifier|private
@@ -219,7 +217,7 @@ specifier|private
 name|Path
 name|d
 decl_stmt|;
-comment|/**    * An object that is represented as a String    * Currently used for functions and service name    */
+comment|/**    * An object that is represented as a String    * Currently used for functions    */
 specifier|private
 name|String
 name|stringObject
@@ -446,28 +444,6 @@ operator|=
 name|funcName
 expr_stmt|;
 block|}
-specifier|public
-name|String
-name|getServiceName
-parameter_list|()
-block|{
-if|if
-condition|(
-name|typ
-operator|==
-name|Type
-operator|.
-name|SERVICE_NAME
-condition|)
-block|{
-return|return
-name|stringObject
-return|;
-block|}
-return|return
-literal|null
-return|;
-block|}
 comment|/**    * Only used by serialization.    */
 specifier|public
 name|Entity
@@ -515,37 +491,6 @@ operator|.
 name|complete
 operator|=
 name|complete
-expr_stmt|;
-block|}
-comment|/**    * Constructor for a entity with string object representation (eg SERVICE_NAME)    *    * @param name    *          Used for service that action is being authorized on.    *          Currently hostname is used for service name.    * @param t    *         Type of entity    */
-specifier|public
-name|Entity
-parameter_list|(
-name|String
-name|name
-parameter_list|,
-name|Type
-name|t
-parameter_list|)
-block|{
-name|this
-operator|.
-name|stringObject
-operator|=
-name|name
-expr_stmt|;
-name|this
-operator|.
-name|typ
-operator|=
-name|t
-expr_stmt|;
-name|this
-operator|.
-name|name
-operator|=
-name|computeName
-argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Constructor for a table.    *    * @param t    *          Table that is read or written to.    */
@@ -1180,12 +1125,6 @@ operator|+
 name|stringObject
 return|;
 block|}
-return|return
-name|stringObject
-return|;
-case|case
-name|SERVICE_NAME
-case|:
 return|return
 name|stringObject
 return|;

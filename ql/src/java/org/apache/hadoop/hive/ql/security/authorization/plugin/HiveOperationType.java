@@ -293,8 +293,6 @@ name|SHOW_TRANSACTIONS
 block|,
 name|ABORT_TRANSACTIONS
 block|,
-name|KILL_QUERY
-block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,

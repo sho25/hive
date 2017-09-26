@@ -4499,9 +4499,6 @@ case|:
 case|case
 name|ABORT_TRANSACTIONS
 case|:
-case|case
-name|KILL_QUERY
-case|:
 name|shouldOpenImplicitTxn
 operator|=
 literal|false
@@ -6853,17 +6850,6 @@ name|PARTITION
 case|:
 comment|// not currently handled
 continue|continue;
-case|case
-name|SERVICE_NAME
-case|:
-name|objName
-operator|=
-name|privObject
-operator|.
-name|getServiceName
-argument_list|()
-expr_stmt|;
-break|break;
 default|default:
 throw|throw
 operator|new
