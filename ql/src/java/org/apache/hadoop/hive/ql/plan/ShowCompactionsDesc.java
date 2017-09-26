@@ -70,9 +70,9 @@ specifier|final
 name|String
 name|schema
 init|=
-literal|"dbname,tabname,partname,type,state,workerid,"
+literal|"compactionid,dbname,tabname,partname,type,state,workerid,starttime,duration,hadoopjobid#"
 operator|+
-literal|"starttime,duration,hadoopjobid#string:string:string:string:string:string:string:string:string"
+literal|"string:string:string:string:string:string:string:string:string:string"
 decl_stmt|;
 specifier|private
 name|String
