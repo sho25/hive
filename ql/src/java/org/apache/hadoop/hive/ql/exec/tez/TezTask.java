@@ -1256,6 +1256,8 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+comment|// Note: given that we return pool sessions to the pool in the finally block below, and that
+comment|//       we need to set the global to null to do that, this "reuse" may be pointless.
 name|session
 operator|=
 name|ss
@@ -1288,6 +1290,43 @@ literal|" has not been opened"
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|WorkloadManager
+operator|.
+name|isInUse
+argument_list|(
+name|ss
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// TODO: in future, we may also pass getUserIpAddress.
+comment|// Note: for now this will just block to wait for a session based on parallelism.
+name|session
+operator|=
+name|WorkloadManager
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|getSession
+argument_list|(
+name|session
+argument_list|,
+name|ss
+operator|.
+name|getUserName
+argument_list|()
+argument_list|,
+name|conf
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|session
 operator|=
 name|TezSessionPoolManager
@@ -1310,6 +1349,7 @@ name|getLlapMode
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|ss
 operator|.
 name|setTezSession
@@ -1711,21 +1751,10 @@ block|{
 comment|// We return this to the pool even if it's unusable; reopen is supposed to handle this.
 try|try
 block|{
-name|TezSessionPoolManager
-operator|.
-name|getInstance
-argument_list|()
-operator|.
-name|returnSession
-argument_list|(
 name|session
-argument_list|,
-name|getWork
-argument_list|()
 operator|.
-name|getLlapMode
+name|returnToSessionManager
 argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -3445,16 +3474,17 @@ argument_list|(
 literal|"Tez session was closed. Reopening..."
 argument_list|)
 expr_stmt|;
-name|TezSessionPoolManager
-operator|.
-name|getInstance
-argument_list|()
-operator|.
-name|reopenSession
-argument_list|(
+comment|// close the old one, but keep the tmp files around
+comment|// conf is passed in only for the case when session conf is null (tests and legacy paths?)
 name|sessionState
-argument_list|,
+operator|=
+name|sessionState
+operator|.
+name|reopen
+argument_list|(
 name|conf
+argument_list|,
+name|inputOutputJars
 argument_list|)
 expr_stmt|;
 name|console
@@ -3513,16 +3543,15 @@ operator|+
 literal|" retrying..."
 argument_list|)
 expr_stmt|;
-name|TezSessionPoolManager
-operator|.
-name|getInstance
-argument_list|()
-operator|.
-name|reopenSession
-argument_list|(
 name|sessionState
-argument_list|,
+operator|=
+name|sessionState
+operator|.
+name|reopen
+argument_list|(
 name|conf
+argument_list|,
+name|inputOutputJars
 argument_list|)
 expr_stmt|;
 name|dagClient
@@ -3545,15 +3574,10 @@ name|retryException
 parameter_list|)
 block|{
 comment|// we failed to submit after retrying. Destroy session and bail.
-name|TezSessionPoolManager
-operator|.
-name|getInstance
-argument_list|()
-operator|.
-name|destroySession
-argument_list|(
 name|sessionState
-argument_list|)
+operator|.
+name|destroy
+argument_list|()
 expr_stmt|;
 throw|throw
 name|retryException

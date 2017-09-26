@@ -10149,6 +10149,36 @@ literal|"The maximum number of past queries to show in HiverSever2 WebUI."
 argument_list|)
 block|,
 comment|// Tez session settings
+name|HIVE_SERVER2_TEZ_INTERACTIVE_QUEUE
+argument_list|(
+literal|"hive.server2.tez.interactive.queue"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A single YARN queues to use for Hive Interactive sessions. When this is specified,\n"
+operator|+
+literal|"workload management is enabled and used for these sessions."
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_WM_AM_REGISTRY_TIMEOUT
+argument_list|(
+literal|"hive.server2.tez.wm.am.registry.timeout"
+argument_list|,
+literal|"30s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"The timeout for AM registry registration, after which (on attempting to use the\n"
+operator|+
+literal|"session), we kill it and try to get another one."
+argument_list|)
+block|,
 name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
 argument_list|(
 literal|"hive.server2.tez.default.queues"
@@ -13144,15 +13174,6 @@ argument_list|,
 literal|"llap.daemon.rpc.num.handlers"
 argument_list|)
 block|,
-name|LLAP_PLUGIN_RPC_PORT
-argument_list|(
-literal|"hive.llap.plugin.rpc.port"
-argument_list|,
-literal|15005
-argument_list|,
-literal|"RPC port for AM LLAP daemon plugin endpoint."
-argument_list|)
-block|,
 name|LLAP_PLUGIN_RPC_NUM_HANDLERS
 argument_list|(
 literal|"hive.llap.plugin.rpc.num.handlers"
@@ -13523,6 +13544,15 @@ argument_list|,
 literal|"Number of threads to use in LLAP task communicator in Tez AM."
 argument_list|,
 literal|"llap.daemon.communicator.num.threads"
+argument_list|)
+block|,
+name|LLAP_PLUGIN_CLIENT_NUM_THREADS
+argument_list|(
+literal|"hive.llap.plugin.client.num.threads"
+argument_list|,
+literal|10
+argument_list|,
+literal|"Number of threads to use in LLAP task plugin client."
 argument_list|)
 block|,
 name|LLAP_DAEMON_DOWNLOAD_PERMANENT_FNS

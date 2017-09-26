@@ -195,6 +195,8 @@ specifier|public
 name|void
 name|testMultipleNodes
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|RequestManagerForTest
 name|requestManager
@@ -415,6 +417,8 @@ specifier|public
 name|void
 name|testSingleInvocationPerNode
 parameter_list|()
+throws|throws
+name|Exception
 block|{
 name|RequestManagerForTest
 name|requestManager
@@ -767,6 +771,8 @@ block|{
 name|super
 argument_list|(
 name|numThreads
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -848,7 +854,7 @@ name|CallableRequestForTest
 extends|extends
 name|LlapProtocolClientProxy
 operator|.
-name|CallableRequest
+name|NodeCallableRequest
 argument_list|<
 name|Message
 argument_list|,

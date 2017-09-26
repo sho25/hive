@@ -497,8 +497,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|sessionState
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|sessionState
@@ -531,8 +529,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|sessionState
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// [a,b,c,a,b,c]
@@ -594,8 +590,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|first
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|poolManager
@@ -603,8 +597,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|second
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|TezSessionState
@@ -638,8 +630,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|third
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// [b,a,c,a,b,c]
@@ -723,8 +713,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|first
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|poolManager
@@ -732,8 +720,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|second
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|poolManager
@@ -741,8 +727,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|third
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// [c,a,b,a,b,c]
@@ -776,8 +760,6 @@ operator|.
 name|returnSession
 argument_list|(
 name|first
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -996,8 +978,6 @@ name|sessions
 index|[
 name|i
 index|]
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -1130,6 +1110,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|Mockito
@@ -1191,6 +1173,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1229,6 +1213,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1284,6 +1270,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1324,6 +1312,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1362,6 +1352,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1667,13 +1659,18 @@ operator|*
 literal|1000
 argument_list|)
 expr_stmt|;
+name|session
+operator|.
+name|setLegacyLlapMode
+argument_list|(
+name|llap
+argument_list|)
+expr_stmt|;
 name|poolManager
 operator|.
 name|returnSession
 argument_list|(
 name|session
-argument_list|,
-name|llap
 argument_list|)
 expr_stmt|;
 block|}
@@ -1941,6 +1938,8 @@ argument_list|(
 name|session
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|Mockito

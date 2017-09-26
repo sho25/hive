@@ -4558,10 +4558,8 @@ operator|.
 name|getTezSession
 argument_list|()
 operator|.
-name|close
-argument_list|(
-literal|false
-argument_list|)
+name|destroy
+argument_list|()
 expr_stmt|;
 block|}
 name|setup

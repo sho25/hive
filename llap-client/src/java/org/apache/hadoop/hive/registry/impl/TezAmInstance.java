@@ -322,7 +322,7 @@ return|;
 block|}
 specifier|public
 name|String
-name|getJobIdForPluginToken
+name|getPluginTokenJobId
 parameter_list|()
 block|{
 return|return
@@ -451,6 +451,38 @@ name|token
 expr_stmt|;
 return|return
 name|token
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"TezAmInstance ["
+operator|+
+name|getSessionId
+argument_list|()
+operator|+
+literal|", host="
+operator|+
+name|host
+operator|+
+literal|", rpcPort="
+operator|+
+name|rpcPort
+operator|+
+literal|", pluginPort="
+operator|+
+name|pluginPort
+operator|+
+literal|", token="
+operator|+
+name|token
+operator|+
+literal|"]"
 return|;
 block|}
 block|}
