@@ -3178,7 +3178,7 @@ name|getPortNumber
 argument_list|()
 return|;
 block|}
-specifier|private
+specifier|public
 name|String
 name|getServerHost
 parameter_list|()

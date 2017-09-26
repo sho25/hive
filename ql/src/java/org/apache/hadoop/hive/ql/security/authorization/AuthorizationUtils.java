@@ -688,6 +688,14 @@ name|HivePrivilegeObjectType
 operator|.
 name|FUNCTION
 return|;
+case|case
+name|SERVICE_NAME
+case|:
+return|return
+name|HivePrivilegeObjectType
+operator|.
+name|SERVICE_NAME
+return|;
 default|default:
 return|return
 literal|null

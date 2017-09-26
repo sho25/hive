@@ -4117,6 +4117,50 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSQL11ReservedKeyWords_KILL
+parameter_list|()
+block|{
+try|try
+block|{
+name|parse
+argument_list|(
+literal|"CREATE TABLE KILL QUERY (col STRING)"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected ParseException"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ParseException
+name|ex
+parameter_list|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Failure didn't match."
+argument_list|,
+literal|"line 1:18 cannot recognize input near 'QUERY' '(' 'col' in create table statement"
+argument_list|,
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 end_class
 
