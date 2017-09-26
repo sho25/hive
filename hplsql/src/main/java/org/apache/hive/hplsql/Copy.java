@@ -1456,6 +1456,24 @@ condition|(
 name|info
 condition|)
 block|{
+name|DecimalFormat
+name|df
+init|=
+operator|new
+name|DecimalFormat
+argument_list|(
+literal|"#,##0.00"
+argument_list|)
+decl_stmt|;
+name|df
+operator|.
+name|setRoundingMode
+argument_list|(
+name|RoundingMode
+operator|.
+name|HALF_UP
+argument_list|)
+expr_stmt|;
 name|info
 argument_list|(
 name|ctx
@@ -1482,11 +1500,18 @@ argument_list|()
 operator|+
 literal|", "
 operator|+
+name|df
+operator|.
+name|format
+argument_list|(
 name|rows
 operator|/
+operator|(
 name|elapsed
 operator|/
-literal|1000
+literal|1000.0
+operator|)
+argument_list|)
 operator|+
 literal|" rows/sec"
 argument_list|)
