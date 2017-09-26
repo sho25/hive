@@ -9361,7 +9361,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Users have the choice of specifying compaction related tblproperties either in CREATE TABLE    * statement or in ALTER TABLE .. COMPACT statement. This tests both cases.    * @throws Exception    */
+comment|/**    * Users have the choice of specifying compaction related tblproperties either in CREATE TABLE    * statement or in ALTER TABLE .. COMPACT statement. This tests both cases.    */
 annotation|@
 name|Test
 specifier|public
@@ -10649,6 +10649,17 @@ name|String
 name|src
 parameter_list|)
 block|{        }
+annotation|@
+name|Override
+specifier|public
+name|Long
+name|getMinOpenTxn
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

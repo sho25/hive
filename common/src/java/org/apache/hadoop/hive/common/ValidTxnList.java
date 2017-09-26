@@ -126,6 +126,11 @@ name|long
 name|maxTxnId
 parameter_list|)
 function_decl|;
+comment|/**    * Returns smallest Open transaction in this set, {@code null} if there is none.    */
+name|Long
+name|getMinOpenTxn
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

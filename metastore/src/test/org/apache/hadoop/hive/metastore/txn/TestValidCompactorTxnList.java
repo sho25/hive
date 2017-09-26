@@ -781,12 +781,8 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertEquals
+name|assertNull
 argument_list|(
-name|Long
-operator|.
-name|MAX_VALUE
-argument_list|,
 name|txns
 operator|.
 name|getMinOpenTxn
@@ -842,12 +838,8 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertEquals
+name|assertNull
 argument_list|(
-name|Long
-operator|.
-name|MAX_VALUE
-argument_list|,
 name|txns
 operator|.
 name|getMinOpenTxn
@@ -908,6 +900,9 @@ argument_list|,
 name|txnList
 operator|.
 name|getMinOpenTxn
+argument_list|()
+operator|.
+name|longValue
 argument_list|()
 argument_list|)
 expr_stmt|;
