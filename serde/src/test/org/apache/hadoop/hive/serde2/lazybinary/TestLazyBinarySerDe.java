@@ -743,7 +743,6 @@ return|;
 block|}
 comment|/**    * Initialize the LazyBinarySerDe.    *    * @param fieldNames    *          table field names    * @param fieldTypes    *          table field types    * @return the initialized LazyBinarySerDe    * @throws Throwable    */
 specifier|protected
-specifier|static
 name|AbstractSerDe
 name|getSerDe
 parameter_list|(
