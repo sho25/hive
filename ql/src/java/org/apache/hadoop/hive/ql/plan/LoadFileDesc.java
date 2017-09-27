@@ -410,11 +410,21 @@ argument_list|,
 name|writeType
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"creating LFD from "
 operator|+
@@ -425,6 +435,7 @@ operator|+
 name|targetDir
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|targetDir

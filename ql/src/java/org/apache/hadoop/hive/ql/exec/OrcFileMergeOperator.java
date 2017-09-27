@@ -556,7 +556,7 @@ argument_list|()
 expr_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(

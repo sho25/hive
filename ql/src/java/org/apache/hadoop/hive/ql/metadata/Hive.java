@@ -8961,11 +8961,21 @@ argument_list|)
 condition|)
 block|{
 comment|// MM insert query, move itself is a no-op.
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"not moving "
 operator|+
@@ -8978,6 +8988,7 @@ operator|+
 literal|" (MM)"
 argument_list|)
 expr_stmt|;
+block|}
 assert|assert
 operator|!
 name|isAcid
@@ -9004,11 +9015,21 @@ name|stmtId
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"maybe deleting stuff from "
 operator|+
@@ -9021,6 +9042,7 @@ operator|+
 literal|") for replace"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|replace
@@ -9151,11 +9173,21 @@ else|:
 name|filter
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"moving "
 operator|+
@@ -9166,6 +9198,7 @@ operator|+
 name|destPath
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|replace
@@ -10243,11 +10276,21 @@ name|isDir
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Processing LB leaf "
 operator|+
@@ -10257,6 +10300,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|/* construct one location map if not exists. */
 name|constructOneLBLocationMap
 argument_list|(
@@ -10297,11 +10341,21 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Processing LB dir "
 operator|+
@@ -10311,6 +10365,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|FileStatus
@@ -10605,11 +10660,21 @@ name|getParent
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Saving LB location "
 operator|+
@@ -10627,6 +10692,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -10694,17 +10760,6 @@ name|IOException
 throws|,
 name|FileNotFoundException
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Constructing list bucketing map for "
-operator|+
-name|newPartPath
-argument_list|)
-expr_stmt|;
 name|Map
 argument_list|<
 name|List
@@ -10876,17 +10931,6 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Found DP "
-operator|+
-name|dpPath
-argument_list|)
-expr_stmt|;
 name|validPartitions
 operator|.
 name|add
@@ -10966,17 +11010,28 @@ argument_list|()
 expr_stmt|;
 comment|// Now skip the LB directories, if any...
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Found DP "
 operator|+
 name|dpPath
 argument_list|)
 expr_stmt|;
+block|}
 name|validPartitions
 operator|.
 name|add
@@ -11441,7 +11496,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|warn
 argument_list|(
@@ -11500,24 +11555,6 @@ name|fullPartSpec
 argument_list|)
 expr_stmt|;
 comment|// load the partition
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"loadPartition called for DPP from "
-operator|+
-name|partPath
-operator|+
-literal|" to "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|Partition
 name|newPartition
 init|=
@@ -12063,9 +12100,9 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"not moving "
 operator|+
@@ -12232,9 +12269,9 @@ expr_stmt|;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"moving "
 operator|+
@@ -19250,17 +19287,28 @@ name|destf
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Creating "
 operator|+
 name|destf
 argument_list|)
 expr_stmt|;
+block|}
 name|destFs
 operator|.
 name|mkdirs
@@ -21259,9 +21307,9 @@ name|HiveException
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Deleting old paths for replace in "
 operator|+
@@ -21445,7 +21493,7 @@ throw|;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -21576,6 +21624,16 @@ operator|==
 literal|0
 condition|)
 return|return;
+if|if
+condition|(
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
 name|String
 name|s
 init|=
@@ -21608,13 +21666,14 @@ expr_stmt|;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|trace
 argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!

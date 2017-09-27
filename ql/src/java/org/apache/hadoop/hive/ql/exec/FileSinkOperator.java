@@ -1638,11 +1638,21 @@ name|getStatementId
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"new FSPaths for "
 operator|+
@@ -1668,6 +1678,7 @@ literal|")"
 comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
+block|}
 name|outPaths
 operator|=
 operator|new
@@ -2043,11 +2054,21 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"commit making path for dyn/skew: "
 operator|+
@@ -2060,6 +2081,7 @@ name|getParent
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|FileUtils
 operator|.
 name|mkdir
@@ -2139,11 +2161,21 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"committing "
 operator|+
@@ -2166,6 +2198,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|isMmTable
@@ -2836,41 +2869,6 @@ name|long
 name|amount
 parameter_list|)
 block|{
-if|if
-condition|(
-literal|"rowCount"
-operator|.
-name|equals
-argument_list|(
-name|statType
-argument_list|)
-condition|)
-block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Adding "
-operator|+
-name|statType
-operator|+
-literal|" = "
-operator|+
-name|amount
-operator|+
-literal|" to "
-operator|+
-name|System
-operator|.
-name|identityHashCode
-argument_list|(
-name|this
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 name|stat
 operator|.
 name|addToStat
@@ -2889,22 +2887,6 @@ argument_list|>
 name|getStoredStats
 parameter_list|()
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Getting stats from "
-operator|+
-name|System
-operator|.
-name|identityHashCode
-argument_list|(
-name|this
-argument_list|)
-argument_list|)
-expr_stmt|;
 return|return
 name|stat
 operator|.
@@ -3188,11 +3170,21 @@ literal|null
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Setting up FSOP "
 operator|+
@@ -3223,6 +3215,7 @@ operator|+
 name|unionPath
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/** Kryo ctor. */
 specifier|protected
@@ -3673,11 +3666,21 @@ name|isMmTable
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"creating new paths "
 operator|+
@@ -3707,6 +3710,7 @@ name|getTaskOutputTempPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Create all the files - this is required because empty files need to be created for
 comment|// empty buckets
 comment|// createBucketFiles(fsp);
@@ -4694,11 +4698,21 @@ argument_list|,
 name|isSkewedStoredAsSubDirectories
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"createBucketForFileIdx "
 operator|+
@@ -4738,9 +4752,9 @@ operator|+
 name|taskId
 operator|+
 literal|")"
-comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|LOG
@@ -6257,17 +6271,6 @@ operator|==
 literal|null
 condition|)
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"lookupListBucketingPaths for "
-operator|+
-name|lbDirName
-argument_list|)
-expr_stmt|;
 name|fsp2
 operator|=
 name|createNewPaths
@@ -6324,11 +6327,21 @@ else|:
 literal|null
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"creating new paths "
 operator|+
@@ -6362,6 +6375,7 @@ name|getTaskOutputTempPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -7806,17 +7820,28 @@ name|getName
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"jobCloseOp using specPath "
 operator|+
 name|specPath
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -8201,15 +8226,6 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|error
-argument_list|(
-literal|"FSOP publishStats called."
-argument_list|)
-expr_stmt|;
 name|boolean
 name|isStatsReliable
 init|=
@@ -8365,11 +8381,21 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Observing entry for stats "
 operator|+
@@ -8383,6 +8409,7 @@ name|getTmpPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// for bucketed tables, hive.optimize.sort.dynamic.partition optimization
 comment|// adds the taskId to the fspKey.
 if|if
@@ -8428,17 +8455,6 @@ argument_list|)
 index|[
 literal|0
 index|]
-expr_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Adjusting fspKey for stats to "
-operator|+
-name|fspKey
-argument_list|)
 expr_stmt|;
 block|}
 comment|// split[0] = DP, split[1] = LB
@@ -8508,11 +8524,21 @@ name|Path
 operator|.
 name|SEPARATOR
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Prefix for stats "
 operator|+
@@ -8529,6 +8555,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 name|Map
 argument_list|<
 name|String
@@ -8592,9 +8619,7 @@ name|statsToPublish
 argument_list|)
 condition|)
 block|{
-name|Utilities
-operator|.
-name|LOG14535
+name|LOG
 operator|.
 name|error
 argument_list|(
@@ -8644,9 +8669,7 @@ name|sContext
 argument_list|)
 condition|)
 block|{
-name|Utilities
-operator|.
-name|LOG14535
+name|LOG
 operator|.
 name|error
 argument_list|(

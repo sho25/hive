@@ -2920,18 +2920,18 @@ specifier|final
 class|class
 name|Utilities
 block|{
-comment|// TODO# remove when merging; convert some statements to local loggers, remove others
+comment|/**    * A logger mostly used to trace-log the details of Hive table file operations. Filtering the    * logs for FileOperations (with trace logs present) allows one to debug what Hive has done with    * various files and directories while committing writes, as well as reading.    */
 specifier|public
 specifier|static
 specifier|final
 name|Logger
-name|LOG14535
+name|FILE_OP_LOGGER
 init|=
 name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-literal|"Log14535"
+literal|"FileOperations"
 argument_list|)
 decl_stmt|;
 comment|/**    * The object in the reducer are composed of these top level fields.    */
@@ -9182,11 +9182,21 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// move to the file destination
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Moving tmp dir: "
 operator|+
@@ -9197,6 +9207,7 @@ operator|+
 name|specPath
 argument_list|)
 expr_stmt|;
+block|}
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -9265,17 +9276,28 @@ block|}
 block|}
 else|else
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"deleting tmpPath "
 operator|+
 name|tmpPath
 argument_list|)
 expr_stmt|;
+block|}
 name|fs
 operator|.
 name|delete
@@ -9286,17 +9308,28 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"deleting taskTmpPath "
 operator|+
 name|taskTmpPath
 argument_list|)
 expr_stmt|;
+block|}
 name|fs
 operator|.
 name|delete
@@ -9483,17 +9516,28 @@ range|:
 name|paths
 control|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"creating empty bucket for "
 operator|+
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 name|RecordWriter
 name|writer
 init|=
@@ -10036,17 +10080,6 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"removeTempOrDuplicateFiles looking at DP "
-operator|+
-name|path
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|removeEmptyDpDirectory
@@ -10126,17 +10159,28 @@ name|mmDir
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"removeTempOrDuplicateFiles processing files in MM directory "
 operator|+
 name|mmDir
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|taskIDToFile
 operator|=
@@ -10312,17 +10356,28 @@ name|mmDir
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"removeTempOrDuplicateFiles processing files in MM directory "
 operator|+
 name|mmDir
 argument_list|)
 expr_stmt|;
+block|}
 name|taskIDToFile
 operator|=
 name|removeTempOrDuplicateFilesNonMm
@@ -10576,17 +10631,6 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Bucket path "
-operator|+
-name|bucketPath
-argument_list|)
-expr_stmt|;
 for|for
 control|(
 name|int
@@ -10692,17 +10736,28 @@ argument_list|,
 name|j
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Creating an empty bucket file "
 operator|+
 name|path2
 argument_list|)
 expr_stmt|;
+block|}
 name|result
 operator|.
 name|add
@@ -10794,11 +10849,21 @@ name|one
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"removeTempOrDuplicateFiles deleting "
 operator|+
@@ -10806,9 +10871,9 @@ name|one
 operator|.
 name|getPath
 argument_list|()
-comment|/*, new Exception()*/
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -10893,13 +10958,23 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
-literal|"removeTempOrDuplicateFiles pondering "
+literal|"removeTempOrDuplicateFiles looking at "
 operator|+
 name|file
 operator|.
@@ -10911,6 +10986,7 @@ operator|+
 name|taskId
 argument_list|)
 expr_stmt|;
+block|}
 name|FileStatus
 name|otherFile
 init|=
@@ -15721,7 +15797,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|warn
 argument_list|(
@@ -15732,11 +15808,21 @@ argument_list|)
 expr_stmt|;
 continue|continue;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Adding partition spec from "
 operator|+
@@ -15747,6 +15833,7 @@ operator|+
 name|fullPartSpec
 argument_list|)
 expr_stmt|;
+block|}
 name|fullPartSpecs
 operator|.
 name|add
@@ -22880,11 +22967,21 @@ name|length
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Looking at "
 operator|+
@@ -22898,6 +22995,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 comment|// If sorted, we'll skip a bunch of files.
 if|if
 condition|(
@@ -22965,7 +23063,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23026,7 +23124,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23080,17 +23178,6 @@ argument_list|,
 name|subDir
 argument_list|)
 decl_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Considering MM directory candidate "
-operator|+
-name|candidate
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -23240,17 +23327,6 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Looking for files via: "
-operator|+
-name|pathPattern
-argument_list|)
-expr_stmt|;
 return|return
 name|statusToPath
 argument_list|(
@@ -23342,7 +23418,7 @@ control|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23364,7 +23440,7 @@ block|}
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23454,7 +23530,7 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23778,9 +23854,9 @@ return|return;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Looking for manifests in: "
 operator|+
@@ -23863,7 +23939,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23887,7 +23963,7 @@ else|else
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -23901,9 +23977,9 @@ expr_stmt|;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Looking for files in: "
 operator|+
@@ -23943,7 +24019,7 @@ block|{
 comment|// TODO: do we also need to do this when creating an empty partition from select?
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -24013,17 +24089,28 @@ range|:
 name|files
 control|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Looking at path: "
 operator|+
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 name|mmDirectories
 operator|.
 name|add
@@ -24129,7 +24216,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -24186,7 +24273,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -24566,11 +24653,21 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"FSOP for "
 operator|+
@@ -24584,6 +24681,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -24605,7 +24703,7 @@ name|HiveException
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -24665,17 +24763,28 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Looking for valid MM paths under "
 operator|+
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 comment|// NULL means this directory is entirely valid.
 name|List
 argument_list|<
@@ -24804,9 +24913,9 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Skipping path "
 operator|+

@@ -651,11 +651,21 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Paths for merge "
 operator|+
@@ -678,6 +688,7 @@ operator|+
 name|outPath
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Fixes tmpPath to point to the correct partition. Initialize operator will    * set tmpPath and taskTmpPath based on root table directory. So initially,    * tmpPath will be<prefix>/_tmp.-ext-10000 and taskTmpPath will be    *<prefix>/_task_tmp.-ext-10000. The depth of these two paths will be 0.    * Now, in case of dynamic partitioning or list bucketing the inputPath will    * have additional sub-directories under root table directory. This function    * updates the tmpPath and taskTmpPath to reflect these additional    * subdirectories. It updates tmpPath and taskTmpPath in the following way    * 1. finds out the difference in path based on depthDiff provided    * and saves the path difference in newPath    * 2. newPath is used to update the existing tmpPath and taskTmpPath similar    * to the way initializeOp() does.    *    * Note: The path difference between inputPath and tmpDepth can be DP or DP+LB.    * This method will automatically handle it.    *    * Continuing the example above, if inputPath is<prefix>/-ext-10000/hr=a1/,    * newPath will be hr=a1/. Then, tmpPath and taskTmpPath will be updated to    *<prefix>/-ext-10000/hr=a1/_tmp.ext-10000 and    *<prefix>/-ext-10000/hr=a1/_task_tmp.ext-10000 respectively.    * We have list_bucket_dml_6.q cover this case: DP + LP + multiple skewed    * values + merge.    *    * @param inputPath - input path    * @throws java.io.IOException    */
 specifier|protected
@@ -774,17 +785,28 @@ name|newTmpPath
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Creating "
 operator|+
 name|newTmpPath
 argument_list|)
 expr_stmt|;
+block|}
 name|fs
 operator|.
 name|mkdirs
@@ -880,17 +902,28 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Calling fixTmpPath with "
 operator|+
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Fix temp path for alter table ... concatenate
 if|if
 condition|(

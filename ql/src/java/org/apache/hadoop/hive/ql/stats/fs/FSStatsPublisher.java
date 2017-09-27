@@ -502,21 +502,6 @@ argument_list|>
 name|stats
 parameter_list|)
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Putting in map : "
-operator|+
-name|partKV
-operator|+
-literal|"\t"
-operator|+
-name|stats
-argument_list|)
-expr_stmt|;
 comment|// we need to do new hashmap, since stats object is reused across calls.
 name|Map
 argument_list|<
@@ -749,17 +734,28 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"About to create stats file for this task : "
 operator|+
 name|statsFile
 argument_list|)
 expr_stmt|;
+block|}
 name|Output
 name|output
 init|=
@@ -846,7 +842,7 @@ parameter_list|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|error
 argument_list|(

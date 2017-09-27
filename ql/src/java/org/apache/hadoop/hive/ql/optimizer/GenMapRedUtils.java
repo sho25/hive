@@ -7764,11 +7764,21 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Creating merge work from "
 operator|+
@@ -7800,6 +7810,7 @@ operator|+
 name|finalName
 argument_list|)
 expr_stmt|;
+block|}
 name|boolean
 name|isBlockMerge
 init|=
@@ -8487,15 +8498,6 @@ literal|null
 condition|)
 block|{
 comment|// Only create the movework for non-MM table. No action needed for a MM table.
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"creating dummy movetask for merge (with lfd)"
-argument_list|)
-expr_stmt|;
 name|dummyMv
 operator|=
 operator|new
@@ -8537,7 +8539,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// TODO# create the noop MoveWork to avoid q file changes for now. Should be removed w/the flag just before merge
+comment|// TODO# noop MoveWork to avoid q file changes in HIVE-14990. Remove (w/the flag) after merge.
 name|dummyMv
 operator|=
 operator|new
@@ -8602,15 +8604,6 @@ argument_list|()
 else|:
 name|finalName
 decl_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Looking for MoveTask to make it dependant on the conditional tasks"
-argument_list|)
-expr_stmt|;
 name|Task
 argument_list|<
 name|MoveWork
@@ -9356,17 +9349,6 @@ name|inputDirStr
 argument_list|)
 expr_stmt|;
 comment|// dummy alias: just use the input path
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"createMRWorkForMergingFiles for "
-operator|+
-name|inputDir
-argument_list|)
-expr_stmt|;
 comment|// constructing the default MapredWork
 name|MapredWork
 name|cMrPlan
@@ -9601,11 +9583,21 @@ literal|" format other than RCFile or ORCFile"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"creating mergefilework from "
 operator|+
@@ -9616,6 +9608,7 @@ operator|+
 name|finalName
 argument_list|)
 expr_stmt|;
+block|}
 comment|// create the merge file work
 name|MergeFileWork
 name|work
@@ -10295,17 +10288,28 @@ name|DependencyCollectionTask
 name|dependencyTask
 parameter_list|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Creating conditional merge task for "
 operator|+
 name|condInputPath
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Create a dummy task if no move is needed.
 name|Serializable
 name|moveWork
@@ -10828,11 +10832,21 @@ name|getSourcePath
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Observing MoveWork "
 operator|+
@@ -10868,6 +10882,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -11409,11 +11424,21 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"createMoveTask setting tmpDir for LinkedFileSink chDir "
 operator|+
@@ -11432,6 +11457,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 else|else
 block|{
 name|fileSinkDesc
@@ -11441,13 +11467,23 @@ argument_list|(
 name|tmpDir
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
-literal|"createMoveTask setting tmpDir  chDir "
+literal|"createMoveTask setting tmpDir chDir "
 operator|+
 name|tmpDir
 operator|+
@@ -11459,6 +11495,7 @@ name|getDestPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -11476,15 +11513,6 @@ operator|!
 name|chDir
 condition|)
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Looking for MoveTask from createMoveTask"
-argument_list|)
-expr_stmt|;
 name|mvTask
 operator|=
 name|GenMapRedUtils

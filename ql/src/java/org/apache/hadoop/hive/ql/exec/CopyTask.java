@@ -737,11 +737,21 @@ range|:
 name|mmDirs
 control|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Found source MM directory "
 operator|+
@@ -751,6 +761,7 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|matchFilesOneDir
 argument_list|(
 name|fs

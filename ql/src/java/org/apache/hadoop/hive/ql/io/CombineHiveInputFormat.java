@@ -999,7 +999,7 @@ block|{
 comment|// This would be the case for obscure tasks like truncate column (unsupported for MM).
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|warn
 argument_list|(
@@ -1016,10 +1016,9 @@ operator|||
 name|isMmNonMerge
 condition|)
 block|{
-comment|//if (LOG.isDebugEnabled()) {
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -1035,7 +1034,6 @@ operator|+
 literal|"] is being parked for HiveInputFormat.getSplits"
 argument_list|)
 expr_stmt|;
-comment|//}
 name|nonCombinablePathIndices
 operator|.
 name|add

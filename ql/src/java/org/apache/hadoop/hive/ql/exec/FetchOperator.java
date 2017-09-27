@@ -2110,17 +2110,6 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|debug
-argument_list|(
-literal|"Considering "
-operator|+
-name|currPath
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|isNonNativeTable
@@ -2205,15 +2194,6 @@ block|}
 block|}
 block|}
 block|}
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|debug
-argument_list|(
-literal|"Done with all the paths"
-argument_list|)
-expr_stmt|;
 return|return
 literal|false
 return|;
@@ -2736,17 +2716,28 @@ argument_list|(
 name|inputFormat
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Setting fetch inputs to "
 operator|+
 name|inputs
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|inputs
@@ -2965,20 +2956,18 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Observing "
+literal|"Processing "
 operator|+
 name|currDesc
 operator|.
 name|getTableName
 argument_list|()
 operator|+
-literal|": "
-operator|+
-name|validTxnList
+literal|" for MM paths"
 argument_list|)
 expr_stmt|;
 block|}

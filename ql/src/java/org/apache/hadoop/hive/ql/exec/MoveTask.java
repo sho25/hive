@@ -1900,11 +1900,21 @@ condition|)
 return|return
 literal|0
 return|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Executing MoveWork "
 operator|+
@@ -1937,6 +1947,7 @@ name|getLoadMultiFilesWork
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 if|if
@@ -2009,11 +2020,11 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"MoveTask not moving LFD "
+literal|"MoveTask not moving "
 operator|+
 name|sourcePath
 argument_list|)
@@ -2023,11 +2034,11 @@ else|else
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"MoveTask moving LFD "
+literal|"MoveTask moving "
 operator|+
 name|sourcePath
 operator|+
@@ -2259,11 +2270,11 @@ expr_stmt|;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"MoveTask moving LMFD "
+literal|"MoveTask moving (multi-file) "
 operator|+
 name|srcPath
 operator|+
@@ -2365,11 +2376,11 @@ argument_list|)
 decl_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"MoveTask moving LMFD "
+literal|"MoveTask moving (multi-file) "
 operator|+
 name|childSrc
 operator|+
@@ -2393,11 +2404,11 @@ else|else
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"MoveTask skipping empty directory LMFD "
+literal|"MoveTask skipping empty directory (multi-file) "
 operator|+
 name|srcPath
 argument_list|)
@@ -2569,14 +2580,22 @@ operator|.
 name|getSourcePath
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
-literal|""
-operator|+
 name|mesg
 operator|.
 name|toString
@@ -2587,6 +2606,7 @@ operator|+
 name|mesg_detail
 argument_list|)
 expr_stmt|;
+block|}
 name|console
 operator|.
 name|printInfo
@@ -2677,11 +2697,21 @@ name|getTTable
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"loadTable called from "
 operator|+
@@ -2701,27 +2731,6 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|tbd
-operator|.
-name|isMmTable
-argument_list|()
-operator|&&
-operator|!
-name|tbd
-operator|.
-name|isCommitMmWrite
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Only single-partition LoadTableDesc can skip commiting write ID"
-argument_list|)
-throw|;
 block|}
 name|db
 operator|.
@@ -3214,11 +3223,21 @@ argument_list|(
 name|partVals
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"loadPartition called from "
 operator|+
@@ -3238,6 +3257,7 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|db
 operator|.
 name|loadPartition
@@ -3515,28 +3535,6 @@ comment|// After that check the number of DPs created to not exceed the limit an
 comment|// iterate over it and call loadPartition() here.
 comment|// The reason we don't do inside HIVE-1361 is the latter is large and we
 comment|// want to isolate any potential issue it may introduce.
-if|if
-condition|(
-name|tbd
-operator|.
-name|isMmTable
-argument_list|()
-operator|&&
-operator|!
-name|tbd
-operator|.
-name|isCommitMmWrite
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|HiveException
-argument_list|(
-literal|"Only single-partition LoadTableDesc can skip commiting write ID"
-argument_list|)
-throw|;
-block|}
 name|Map
 argument_list|<
 name|Map

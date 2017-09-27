@@ -342,11 +342,21 @@ argument_list|,
 name|lineageState
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Creating MoveWork "
 operator|+
@@ -366,6 +376,7 @@ operator|+
 name|loadFileWork
 argument_list|)
 expr_stmt|;
+block|}
 name|this
 operator|.
 name|loadTableWork

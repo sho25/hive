@@ -368,17 +368,28 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"About to read stats from : "
 operator|+
 name|statsDir
 argument_list|)
 expr_stmt|;
+block|}
 name|statsMap
 operator|=
 operator|new
@@ -529,17 +540,6 @@ name|kryo
 argument_list|)
 expr_stmt|;
 block|}
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Read stats : "
-operator|+
-name|statsMap
-argument_list|)
-expr_stmt|;
 name|statsList
 operator|.
 name|add
@@ -565,7 +565,7 @@ parameter_list|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|error
 argument_list|(

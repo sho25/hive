@@ -41310,11 +41310,21 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"create filesink w/DEST_TABLE specifying "
 operator|+
@@ -41325,6 +41335,7 @@ operator|+
 name|dest_path
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|dpCtx
@@ -41820,11 +41831,21 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"create filesink w/DEST_PARTITION specifying "
 operator|+
@@ -41835,6 +41856,7 @@ operator|+
 name|dest_path
 argument_list|)
 expr_stmt|;
+block|}
 name|table_desc
 operator|=
 name|Utilities
@@ -42362,11 +42384,21 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Setting query directory "
 operator|+
@@ -42383,6 +42415,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(

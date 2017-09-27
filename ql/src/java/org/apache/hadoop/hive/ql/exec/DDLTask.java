@@ -27162,11 +27162,21 @@ argument_list|)
 operator|+
 literal|"_"
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Will move "
 operator|+
@@ -27183,6 +27193,7 @@ operator|+
 literal|")"
 argument_list|)
 expr_stmt|;
+block|}
 name|targetPaths
 operator|.
 name|add
@@ -27494,11 +27505,21 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Deleting "
 operator|+
@@ -27509,6 +27530,7 @@ operator|+
 name|path
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 if|if
@@ -27839,11 +27861,21 @@ argument_list|(
 name|tgt
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Will move "
 operator|+
@@ -27854,6 +27886,7 @@ operator|+
 name|tgt
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -27895,11 +27928,21 @@ argument_list|(
 name|tgt
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Will move "
 operator|+
@@ -27910,6 +27953,7 @@ operator|+
 name|tgt
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Don't set inputs and outputs - the locks have already been taken so it's pointless.
 name|MoveWork

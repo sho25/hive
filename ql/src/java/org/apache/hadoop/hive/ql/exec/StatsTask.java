@@ -1464,11 +1464,21 @@ literal|']'
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Table "
 operator|+
@@ -1484,6 +1494,7 @@ operator|+
 literal|']'
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{

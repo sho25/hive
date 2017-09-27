@@ -125,11 +125,21 @@ name|DriverContext
 name|driverContext
 parameter_list|)
 block|{
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Executing ImportCommit for "
 operator|+
@@ -139,6 +149,7 @@ name|getTxnId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 try|try
 block|{
 if|if
@@ -156,15 +167,6 @@ operator|.
 name|RUNNING
 condition|)
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Exiting due to explain"
-argument_list|)
-expr_stmt|;
 return|return
 literal|0
 return|;

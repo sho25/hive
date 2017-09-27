@@ -829,9 +829,9 @@ argument_list|)
 decl_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"merge resolve simple case - totalSz "
 operator|+
@@ -918,7 +918,7 @@ else|else
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -1030,17 +1030,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"generateActualTasks for "
-operator|+
-name|dirPath
-argument_list|)
-expr_stmt|;
 name|DynamicPartitionCtx
 name|dpCtx
 init|=
@@ -1121,9 +1110,9 @@ argument_list|()
 decl_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"merge resolver removing "
 operator|+
@@ -1303,7 +1292,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|warn
 argument_list|(
@@ -1322,9 +1311,9 @@ continue|continue;
 block|}
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"merge resolver will merge "
 operator|+
@@ -1363,9 +1352,9 @@ else|else
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"merge resolver will move "
 operator|+
@@ -1915,9 +1904,9 @@ control|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Resolver looking at "
 operator|+

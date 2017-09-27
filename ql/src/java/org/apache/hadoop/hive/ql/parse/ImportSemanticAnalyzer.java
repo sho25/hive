@@ -2628,11 +2628,21 @@ name|stmtId
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"adding import work for table with source location: "
 operator|+
@@ -2670,6 +2680,7 @@ argument_list|()
 operator|)
 argument_list|)
 expr_stmt|;
+block|}
 name|Task
 argument_list|<
 name|?
@@ -3438,11 +3449,21 @@ name|destPath
 else|:
 name|tgtLocation
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"adding import work for partition with source location: "
 operator|+
@@ -3475,6 +3496,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|Task
 argument_list|<
 name|?
@@ -3653,18 +3675,6 @@ operator|.
 name|setInheritTableSpecs
 argument_list|(
 literal|false
-argument_list|)
-expr_stmt|;
-comment|// Do not commit the write ID from each task; need to commit once.
-comment|// TODO: we should just change the import to use a single MoveTask, like dynparts.
-name|loadTableWork
-operator|.
-name|setIntermediateInMmWrite
-argument_list|(
-name|isAcid
-argument_list|(
-name|txnId
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|Task

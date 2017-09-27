@@ -3302,11 +3302,21 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|warn
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Checking "
 operator|+
@@ -3315,6 +3325,7 @@ operator|+
 literal|" (root) for inputs"
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Ignore nullscan-optimized paths.
 if|if
 condition|(
@@ -3403,11 +3414,21 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|warn
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Checking "
 operator|+
@@ -3416,6 +3437,7 @@ operator|+
 literal|" for inputs"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -3427,7 +3449,7 @@ condition|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
 name|warn
 argument_list|(
@@ -3458,8 +3480,7 @@ name|path
 argument_list|)
 expr_stmt|;
 block|}
-else|else
-block|{
+elseif|else
 if|if
 condition|(
 operator|!
@@ -3497,7 +3518,7 @@ name|hadAcidState
 operator|=
 literal|true
 expr_stmt|;
-comment|// todo for IOW, we also need to count in base dir, if any
+comment|// TODO: for IOW, we also need to count in base dir, if any
 for|for
 control|(
 name|AcidUtils
@@ -3513,9 +3534,9 @@ control|)
 block|{
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Adding input "
 operator|+
@@ -3535,7 +3556,6 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 block|}

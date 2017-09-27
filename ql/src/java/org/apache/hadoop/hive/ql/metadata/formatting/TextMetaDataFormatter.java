@@ -2880,20 +2880,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|Utilities
-operator|.
-name|LOG14535
-operator|.
-name|info
-argument_list|(
-literal|"Processing dir for status: "
-operator|+
-name|status
-operator|.
-name|getPath
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|long
 name|accessTime
 init|=

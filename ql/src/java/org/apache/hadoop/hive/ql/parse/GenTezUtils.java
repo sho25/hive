@@ -2137,9 +2137,9 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"removing union - new desc with "
 operator|+
@@ -2479,9 +2479,9 @@ argument_list|)
 expr_stmt|;
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"will generate MR work for merging files from "
 operator|+

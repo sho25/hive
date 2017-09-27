@@ -1299,11 +1299,21 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|Utilities
 operator|.
-name|LOG14535
+name|FILE_OP_LOGGER
 operator|.
-name|info
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Created LinkedFileSink for union "
 operator|+
@@ -1317,6 +1327,7 @@ operator|+
 name|parentDirName
 argument_list|)
 expr_stmt|;
+block|}
 name|parent
 operator|.
 name|setChildOperators
