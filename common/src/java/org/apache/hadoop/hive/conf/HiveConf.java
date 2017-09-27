@@ -14378,6 +14378,10 @@ literal|"hive.spark.client.rpc.server.port,"
 operator|+
 literal|"bonecp.,"
 operator|+
+literal|"hive.druid.broker.address.default,"
+operator|+
+literal|"hive.druid.coordinator.address.default,"
+operator|+
 literal|"hikari."
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
@@ -19878,6 +19882,8 @@ block|,
 literal|"hive\\.cbo\\..*"
 block|,
 literal|"hive\\.convert\\..*"
+block|,
+literal|"hive\\.druid\\..*"
 block|,
 literal|"hive\\.exec\\.dynamic\\.partition.*"
 block|,

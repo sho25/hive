@@ -497,6 +497,8 @@ argument_list|,
 literal|"oozie.HadoopAccessorService.created"
 argument_list|,
 literal|"tez.queue.name"
+argument_list|,
+literal|"hive.druid.select.distribute"
 argument_list|)
 decl_stmt|;
 comment|// combine two lists
