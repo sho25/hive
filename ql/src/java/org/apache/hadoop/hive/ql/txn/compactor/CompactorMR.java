@@ -2081,6 +2081,38 @@ literal|0
 condition|)
 block|{
 comment|// Skip compaction if there's no delta files AND there's no original files
+name|String
+name|minOpenInfo
+init|=
+literal|"."
+decl_stmt|;
+if|if
+condition|(
+name|txns
+operator|.
+name|getMinOpenTxn
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|minOpenInfo
+operator|=
+literal|" with min Open "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
+argument_list|(
+name|txns
+operator|.
+name|getMinOpenTxn
+argument_list|()
+argument_list|)
+operator|+
+literal|".  Compaction cannot compact above this txnid"
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|error
@@ -2097,6 +2129,8 @@ operator|+
 name|ci
 operator|.
 name|id
+operator|+
+name|minOpenInfo
 argument_list|)
 expr_stmt|;
 return|return;

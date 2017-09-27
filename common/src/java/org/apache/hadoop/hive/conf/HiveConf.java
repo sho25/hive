@@ -2829,15 +2829,15 @@ name|REPL_APPROX_MAX_LOAD_TASKS
 argument_list|(
 literal|"hive.repl.approx.max.load.tasks"
 argument_list|,
-literal|1000
+literal|10000
 argument_list|,
-literal|"Provide and approximate of the max number of tasks that should be executed in before  \n"
+literal|"Provide an approximation of the maximum number of tasks that should be executed before \n"
 operator|+
-literal|"dynamically generating the next set of tasks. The number is an approximate as we \n"
+literal|"dynamically generating the next set of tasks. The number is approximate as Hive \n"
 operator|+
-literal|"will stop at slightly higher number than above, the reason being some events might \n"
+literal|"will stop at a slightly higher number, the reason being some events might lead to a \n"
 operator|+
-literal|"lead to an task increment that would cross the above limit"
+literal|"task increment that would cross the specified limit."
 argument_list|)
 block|,
 name|REPL_PARTITIONS_DUMP_PARALLELISM
@@ -7535,7 +7535,20 @@ literal|true
 argument_list|,
 literal|"Whether to enable shared work optimizer. The optimizer finds scan operator over the same table\n"
 operator|+
-literal|"and follow-up operators in the query plan and merges them if they meet some preconditions."
+literal|"and follow-up operators in the query plan and merges them if they meet some preconditions. Tez only."
+argument_list|)
+block|,
+name|HIVE_COMBINE_EQUIVALENT_WORK_OPTIMIZATION
+argument_list|(
+literal|"hive.combine.equivalent.work.optimization"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to "
+operator|+
+literal|"combine equivalent work objects during physical optimization.\n This optimization looks for equivalent "
+operator|+
+literal|"work objects and combines them if they meet certain preconditions. Spark only."
 argument_list|)
 block|,
 name|HIVE_REMOVE_SQ_COUNT_CHECK
@@ -10161,6 +10174,36 @@ literal|"The maximum number of past queries to show in HiverSever2 WebUI."
 argument_list|)
 block|,
 comment|// Tez session settings
+name|HIVE_SERVER2_TEZ_INTERACTIVE_QUEUE
+argument_list|(
+literal|"hive.server2.tez.interactive.queue"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A single YARN queues to use for Hive Interactive sessions. When this is specified,\n"
+operator|+
+literal|"workload management is enabled and used for these sessions."
+argument_list|)
+block|,
+name|HIVE_SERVER2_TEZ_WM_AM_REGISTRY_TIMEOUT
+argument_list|(
+literal|"hive.server2.tez.wm.am.registry.timeout"
+argument_list|,
+literal|"30s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"The timeout for AM registry registration, after which (on attempting to use the\n"
+operator|+
+literal|"session), we kill it and try to get another one."
+argument_list|)
+block|,
 name|HIVE_SERVER2_TEZ_DEFAULT_QUEUES
 argument_list|(
 literal|"hive.server2.tez.default.queues"
@@ -13156,15 +13199,6 @@ argument_list|,
 literal|"llap.daemon.rpc.num.handlers"
 argument_list|)
 block|,
-name|LLAP_PLUGIN_RPC_PORT
-argument_list|(
-literal|"hive.llap.plugin.rpc.port"
-argument_list|,
-literal|15005
-argument_list|,
-literal|"RPC port for AM LLAP daemon plugin endpoint."
-argument_list|)
-block|,
 name|LLAP_PLUGIN_RPC_NUM_HANDLERS
 argument_list|(
 literal|"hive.llap.plugin.rpc.num.handlers"
@@ -13535,6 +13569,15 @@ argument_list|,
 literal|"Number of threads to use in LLAP task communicator in Tez AM."
 argument_list|,
 literal|"llap.daemon.communicator.num.threads"
+argument_list|)
+block|,
+name|LLAP_PLUGIN_CLIENT_NUM_THREADS
+argument_list|(
+literal|"hive.llap.plugin.client.num.threads"
+argument_list|,
+literal|10
+argument_list|,
+literal|"Number of threads to use in LLAP task plugin client."
 argument_list|)
 block|,
 name|LLAP_DAEMON_DOWNLOAD_PERMANENT_FNS
@@ -14368,6 +14411,10 @@ operator|+
 literal|"hive.spark.client.rpc.server.port,"
 operator|+
 literal|"bonecp.,"
+operator|+
+literal|"hive.druid.broker.address.default,"
+operator|+
+literal|"hive.druid.coordinator.address.default,"
 operator|+
 literal|"hikari."
 argument_list|,
@@ -19870,6 +19917,8 @@ literal|"hive\\.cbo\\..*"
 block|,
 literal|"hive\\.convert\\..*"
 block|,
+literal|"hive\\.druid\\..*"
+block|,
 literal|"hive\\.exec\\.dynamic\\.partition.*"
 block|,
 literal|"hive\\.exec\\.max\\.dynamic\\.partitions.*"
@@ -19936,13 +19985,75 @@ literal|"hive\\.tez\\..*"
 block|,
 literal|"hive\\.vectorized\\..*"
 block|,
+literal|"fs\\.defaultFS"
+block|,
+literal|"ssl\\.client\\.truststore\\.location"
+block|,
+literal|"distcp\\.atomic"
+block|,
+literal|"distcp\\.ignore\\.failures"
+block|,
+literal|"distcp\\.preserve\\.status"
+block|,
+literal|"distcp\\.preserve\\.rawxattrs"
+block|,
+literal|"distcp\\.sync\\.folders"
+block|,
+literal|"distcp\\.delete\\.missing\\.source"
+block|,
+literal|"distcp\\.keystore\\.resource"
+block|,
+literal|"distcp\\.liststatus\\.threads"
+block|,
+literal|"distcp\\.max\\.maps"
+block|,
+literal|"distcp\\.copy\\.strategy"
+block|,
+literal|"distcp\\.skip\\.crc"
+block|,
+literal|"distcp\\.copy\\.overwrite"
+block|,
+literal|"distcp\\.copy\\.append"
+block|,
+literal|"distcp\\.map\\.bandwidth\\.mb"
+block|,
+literal|"distcp\\.dynamic\\..*"
+block|,
+literal|"distcp\\.meta\\.folder"
+block|,
+literal|"distcp\\.copy\\.listing\\.class"
+block|,
+literal|"distcp\\.filters\\.class"
+block|,
+literal|"distcp\\.options\\.skipcrccheck"
+block|,
+literal|"distcp\\.options\\.m"
+block|,
+literal|"distcp\\.options\\.numListstatusThreads"
+block|,
+literal|"distcp\\.options\\.mapredSslConf"
+block|,
+literal|"distcp\\.options\\.bandwidth"
+block|,
+literal|"distcp\\.options\\.overwrite"
+block|,
+literal|"distcp\\.options\\.strategy"
+block|,
+literal|"distcp\\.options\\.i"
+block|,
+literal|"distcp\\.options\\.p"
+block|,
+literal|"distcp\\.options\\.update"
+block|,
+literal|"distcp\\.options\\.delete"
+block|,
 literal|"mapred\\.map\\..*"
 block|,
 literal|"mapred\\.reduce\\..*"
 block|,
 literal|"mapred\\.output\\.compression\\.codec"
 block|,
-literal|"mapred\\.job\\.queuename"
+literal|"mapred\\.job\\.queue\\.name"
 block|,
 literal|"mapred\\.output\\.compression\\.type"
 block|,

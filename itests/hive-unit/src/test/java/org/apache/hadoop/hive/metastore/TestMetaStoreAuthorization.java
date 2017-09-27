@@ -481,7 +481,7 @@ block|{
 name|setup
 argument_list|()
 expr_stmt|;
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

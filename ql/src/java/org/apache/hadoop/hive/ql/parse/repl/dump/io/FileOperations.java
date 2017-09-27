@@ -213,6 +213,20 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|security
+operator|.
+name|auth
+operator|.
+name|login
+operator|.
+name|LoginException
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -375,9 +389,7 @@ name|ReplicationSpec
 name|forReplicationSpec
 parameter_list|)
 throws|throws
-name|IOException
-throws|,
-name|SemanticException
+name|Exception
 block|{
 if|if
 condition|(
@@ -405,6 +417,8 @@ name|copyFiles
 parameter_list|()
 throws|throws
 name|IOException
+throws|,
+name|LoginException
 block|{
 name|FileStatus
 index|[]

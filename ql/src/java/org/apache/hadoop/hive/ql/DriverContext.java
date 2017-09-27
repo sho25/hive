@@ -858,16 +858,9 @@ block|{
 comment|// A launchable task is one that hasn't been queued, hasn't been
 comment|// initialized, and is runnable.
 return|return
-operator|!
 name|tsk
 operator|.
-name|getQueued
-argument_list|()
-operator|&&
-operator|!
-name|tsk
-operator|.
-name|getInitialized
+name|isNotInitialized
 argument_list|()
 operator|&&
 name|tsk

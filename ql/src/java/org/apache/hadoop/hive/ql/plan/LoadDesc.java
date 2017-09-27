@@ -105,7 +105,6 @@ name|Path
 name|sourcePath
 decl_stmt|;
 comment|/**    * Need to remember whether this is an acid compliant operation, and if so whether it is an    * insert, update, or delete.    */
-specifier|private
 specifier|final
 name|AcidUtils
 operator|.

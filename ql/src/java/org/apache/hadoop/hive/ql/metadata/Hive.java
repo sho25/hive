@@ -4401,7 +4401,7 @@ name|location
 argument_list|)
 expr_stmt|;
 block|}
-name|getMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|alter_partition
@@ -9570,7 +9570,7 @@ name|getSpec
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|getSychronizedMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|add_partition
@@ -10177,7 +10177,7 @@ name|getSpec
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|getSychronizedMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|alter_partition
@@ -11374,6 +11374,10 @@ name|RawStore
 argument_list|>
 name|rawStoreMap
 init|=
+name|Collections
+operator|.
+name|synchronizedMap
+argument_list|(
 operator|new
 name|HashMap
 argument_list|<
@@ -11382,6 +11386,7 @@ argument_list|,
 name|RawStore
 argument_list|>
 argument_list|()
+argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -13708,7 +13713,7 @@ try|try
 block|{
 name|tpart
 operator|=
-name|getMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|getPartitionWithAuthInfo
@@ -13807,7 +13812,7 @@ try|try
 block|{
 name|tpart
 operator|=
-name|getMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|appendPartition
@@ -13841,7 +13846,7 @@ argument_list|)
 expr_stmt|;
 name|tpart
 operator|=
-name|getMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|getPartitionWithAuthInfo
@@ -13907,7 +13912,7 @@ argument_list|)
 expr_stmt|;
 name|tpart
 operator|=
-name|getMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|getPartitionWithAuthInfo
@@ -14691,7 +14696,7 @@ name|partVals
 argument_list|)
 expr_stmt|;
 block|}
-name|getMSC
+name|getSynchronizedMSC
 argument_list|()
 operator|.
 name|fireListenerEvent
@@ -22272,7 +22277,7 @@ name|Unstable
 specifier|public
 specifier|synchronized
 name|SynchronizedMetaStoreClient
-name|getSychronizedMSC
+name|getSynchronizedMSC
 parameter_list|()
 throws|throws
 name|MetaException

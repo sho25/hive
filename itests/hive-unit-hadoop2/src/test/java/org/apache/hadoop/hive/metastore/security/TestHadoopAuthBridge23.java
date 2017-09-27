@@ -107,7 +107,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -1020,7 +1020,7 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

@@ -377,7 +377,7 @@ expr_stmt|;
 name|int
 name|msPort
 init|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(

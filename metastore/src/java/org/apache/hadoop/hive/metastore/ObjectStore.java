@@ -51149,7 +51149,11 @@ name|message
 init|=
 literal|"Couldn't acquire the DB log notification lock because we reached the maximum"
 operator|+
-literal|" # of retries: {} retries. If this happens too often, then is recommended to "
+literal|" # of retries: "
+operator|+
+name|maxRetries
+operator|+
+literal|" retries. If this happens too often, then is recommended to "
 operator|+
 literal|"increase the maximum number of retries on the"
 operator|+

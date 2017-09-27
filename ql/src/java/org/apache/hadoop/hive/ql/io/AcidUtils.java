@@ -33,6 +33,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -1804,6 +1814,8 @@ block|}
 specifier|public
 enum|enum
 name|Operation
+implements|implements
+name|Serializable
 block|{
 name|NOT_ACID
 block|,
@@ -1812,7 +1824,7 @@ block|,
 name|UPDATE
 block|,
 name|DELETE
-block|}
+block|;   }
 comment|/**    * Logically this should have been defined in Operation but that causes a dependency    * on metastore package from exec jar (from the cluster) which is not allowed.    * This method should only be called from client side where metastore.* classes are present.    * Not following this will not be caught by unit tests since they have all the jar loaded.    */
 specifier|public
 specifier|static

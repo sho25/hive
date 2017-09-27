@@ -66,7 +66,7 @@ name|METASTOREURIS
 argument_list|,
 literal|"thrift://localhost:"
 operator|+
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|()

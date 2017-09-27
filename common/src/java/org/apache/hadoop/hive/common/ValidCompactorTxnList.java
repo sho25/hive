@@ -56,7 +56,6 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * @param abortedTxnList list of all aborted transactions    * @param abortedBits bitset marking whether the corresponding transaction is aborted    * @param highWatermark highest committed transaction to be considered for compaction,    *                      equivalently (lowest_open_txn - 1).    */
 specifier|public
 name|ValidCompactorTxnList
 parameter_list|(
@@ -71,6 +70,39 @@ name|long
 name|highWatermark
 parameter_list|)
 block|{
+name|this
+argument_list|(
+name|abortedTxnList
+argument_list|,
+name|abortedBits
+argument_list|,
+name|highWatermark
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * @param abortedTxnList list of all aborted transactions    * @param abortedBits bitset marking whether the corresponding transaction is aborted    * @param highWatermark highest committed transaction to be considered for compaction,    *                      equivalently (lowest_open_txn - 1).    */
+specifier|public
+name|ValidCompactorTxnList
+parameter_list|(
+name|long
+index|[]
+name|abortedTxnList
+parameter_list|,
+name|BitSet
+name|abortedBits
+parameter_list|,
+name|long
+name|highWatermark
+parameter_list|,
+name|long
+name|minOpenTxnId
+parameter_list|)
+block|{
+comment|// abortedBits should be all true as everything in exceptions are aborted txns
 name|super
 argument_list|(
 name|abortedTxnList
@@ -78,9 +110,10 @@ argument_list|,
 name|abortedBits
 argument_list|,
 name|highWatermark
+argument_list|,
+name|minOpenTxnId
 argument_list|)
 expr_stmt|;
-comment|// abortedBits should be all true as everything in exceptions are aborted txns
 if|if
 condition|(
 name|this

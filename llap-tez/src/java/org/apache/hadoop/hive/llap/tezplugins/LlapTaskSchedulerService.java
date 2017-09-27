@@ -2072,6 +2072,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// The fields that HS2 uses to give AM information about plugin endpoint.
+comment|// Some of these will be removed when AM registry is implemented, as AM will generate and publish them.
 comment|/** Whether to enable the endpoint. */
 specifier|public
 specifier|static
@@ -2285,17 +2286,6 @@ argument_list|,
 name|ConfVars
 operator|.
 name|LLAP_PLUGIN_RPC_NUM_HANDLERS
-argument_list|)
-argument_list|,
-name|HiveConf
-operator|.
-name|getIntVar
-argument_list|(
-name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|LLAP_PLUGIN_RPC_PORT
 argument_list|)
 argument_list|,
 name|this

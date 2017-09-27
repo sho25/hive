@@ -259,6 +259,23 @@ return|return
 name|columns
 return|;
 block|}
+comment|/**    * Get column by index    */
+name|Column
+name|getColumn
+parameter_list|(
+name|int
+name|i
+parameter_list|)
+block|{
+return|return
+name|columns
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+return|;
+block|}
 comment|/**    * Get the number of columns    */
 name|int
 name|size

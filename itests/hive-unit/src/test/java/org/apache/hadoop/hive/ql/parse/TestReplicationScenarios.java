@@ -199,7 +199,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -1211,7 +1211,7 @@ argument_list|)
 expr_stmt|;
 name|msPort
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(
@@ -1457,7 +1457,7 @@ argument_list|)
 expr_stmt|;
 name|msPortMirror
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(
@@ -1861,26 +1861,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|run
 argument_list|(
 literal|"REPL LOAD "
@@ -2718,26 +2698,6 @@ operator|+
 literal|"DROP PARTITION(b=1)"
 argument_list|,
 name|driver
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -5829,26 +5789,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -6555,26 +6495,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -7041,26 +6961,6 @@ argument_list|)
 decl_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -7334,26 +7234,6 @@ argument_list|,
 name|replDumpId
 argument_list|,
 name|postDropReplDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|postDropReplDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -7841,26 +7721,6 @@ argument_list|)
 decl_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -8220,26 +8080,6 @@ operator|+
 literal|".ptned_copy DROP PARTITION(b='1')"
 argument_list|,
 name|driver
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|postDropReplDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -8803,26 +8643,6 @@ argument_list|)
 decl_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -9350,26 +9170,6 @@ argument_list|,
 name|replDumpId
 argument_list|,
 name|postAlterReplDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|postAlterReplDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -10081,26 +9881,6 @@ name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -10317,26 +10097,6 @@ expr_stmt|;
 name|replDumpId
 operator|=
 name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -10671,26 +10431,6 @@ name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -10903,26 +10643,6 @@ name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -11044,17 +10764,6 @@ literal|0
 index|]
 operator|+
 literal|"')"
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"DROP TABLE "
-operator|+
-name|dbName
-operator|+
-literal|".ptned"
 argument_list|,
 name|driver
 argument_list|)
@@ -11221,13 +10930,17 @@ name|resetGetNextNotificationBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
-name|verifyIfTableNotExist
+name|verifyRun
 argument_list|(
-name|replDbName
+literal|"SELECT a from "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe.ptned where (b=1)"
 argument_list|,
-literal|"ptned"
+name|ptn_data
 argument_list|,
-name|metaStoreClientMirror
+name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
@@ -11583,26 +11296,6 @@ name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -11799,26 +11492,6 @@ expr_stmt|;
 name|replDumpId
 operator|=
 name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -12517,26 +12190,6 @@ name|incrementalDumpId
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -12777,26 +12430,6 @@ expr_stmt|;
 name|replDumpId
 operator|=
 name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -15883,6 +15516,512 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testRenameTableAcrossDatabases
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"renameTableAcrossDatabases"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName1
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+operator|+
+literal|"_1"
+decl_stmt|;
+name|String
+name|dbName2
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+operator|+
+literal|"_2"
+decl_stmt|;
+name|String
+name|replDbName1
+init|=
+name|dbName1
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|String
+name|replDbName2
+init|=
+name|dbName2
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName1
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName2
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName1
+operator|+
+literal|".unptned(a string) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|unptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"ten"
+block|,
+literal|"twenty"
+block|}
+decl_stmt|;
+name|String
+name|unptn_locn
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+argument_list|,
+name|testName
+operator|+
+literal|"_unptn"
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|createTestDataFile
+argument_list|(
+name|unptn_locn
+argument_list|,
+name|unptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|unptn_locn
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName1
+operator|+
+literal|".unptned"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|Tuple
+name|bootstrap1
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName1
+argument_list|,
+name|replDbName1
+argument_list|)
+decl_stmt|;
+name|Tuple
+name|bootstrap2
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName2
+argument_list|,
+name|replDbName2
+argument_list|)
+decl_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName1
+operator|+
+literal|".unptned ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName2
+argument_list|,
+literal|"unptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName1
+operator|+
+literal|".unptned RENAME TO "
+operator|+
+name|dbName2
+operator|+
+literal|".unptned_renamed"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName1
+argument_list|,
+name|bootstrap1
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName1
+argument_list|)
+expr_stmt|;
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName2
+argument_list|,
+name|bootstrap2
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName2
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName1
+argument_list|,
+literal|"unptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName1
+argument_list|,
+literal|"unptned_renamed"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName2
+operator|+
+literal|".unptned_renamed ORDER BY a"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testRenamePartitionedTableAcrossDatabases
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"renamePartitionedTableAcrossDatabases"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|testName
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName1
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+operator|+
+literal|"_1"
+decl_stmt|;
+name|String
+name|dbName2
+init|=
+name|testName
+operator|+
+literal|"_"
+operator|+
+name|tid
+operator|+
+literal|"_2"
+decl_stmt|;
+name|String
+name|replDbName1
+init|=
+name|dbName1
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|String
+name|replDbName2
+init|=
+name|dbName2
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName1
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName2
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName1
+operator|+
+literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|String
+index|[]
+name|ptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|,
+literal|"fourteen"
+block|}
+decl_stmt|;
+name|String
+name|ptn_locn
+init|=
+operator|new
+name|Path
+argument_list|(
+name|TEST_PATH
+argument_list|,
+name|testName
+operator|+
+literal|"_ptn"
+argument_list|)
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|createTestDataFile
+argument_list|(
+name|ptn_locn
+argument_list|,
+name|ptn_data
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"LOAD DATA LOCAL INPATH '"
+operator|+
+name|ptn_locn
+operator|+
+literal|"' OVERWRITE INTO TABLE "
+operator|+
+name|dbName1
+operator|+
+literal|".ptned PARTITION(b=1)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|Tuple
+name|bootstrap1
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName1
+argument_list|,
+name|replDbName1
+argument_list|)
+decl_stmt|;
+name|Tuple
+name|bootstrap2
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName2
+argument_list|,
+name|replDbName2
+argument_list|)
+decl_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName1
+operator|+
+literal|".ptned where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName2
+argument_list|,
+literal|"ptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName1
+operator|+
+literal|".ptned RENAME TO "
+operator|+
+name|dbName2
+operator|+
+literal|".ptned_renamed"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName1
+argument_list|,
+name|bootstrap1
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName1
+argument_list|)
+expr_stmt|;
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName2
+argument_list|,
+name|bootstrap2
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName2
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName1
+argument_list|,
+literal|"ptned"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|replDbName1
+argument_list|,
+literal|"ptned_renamed"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName2
+operator|+
+literal|".ptned_renamed where (b=1) ORDER BY a"
+argument_list|,
+name|ptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testViewsReplication
 parameter_list|()
 throws|throws
@@ -16453,26 +16592,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -16672,26 +16791,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -16808,26 +16907,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -16932,26 +17011,6 @@ argument_list|,
 name|incrementalDumpLocn
 argument_list|,
 name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -18726,26 +18785,6 @@ expr_stmt|;
 name|replDumpId
 operator|=
 name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
@@ -23158,26 +23197,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -23511,26 +23530,6 @@ argument_list|,
 name|incrementalDumpLocn
 argument_list|,
 name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
 argument_list|)
 expr_stmt|;
 name|run
@@ -24313,26 +24312,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -24623,26 +24602,6 @@ argument_list|)
 expr_stmt|;
 name|run
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
 literal|"REPL LOAD "
 operator|+
 name|dbName
@@ -24702,7 +24661,161 @@ name|dbName
 operator|+
 literal|" FROM "
 operator|+
-name|replDumpId
+name|incrementalDumpId
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpLocn
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|0
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|incrementalDumpId
+operator|=
+name|getResult
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Incremental-dump: Dumped to {} with id {}"
+argument_list|,
+name|incrementalDumpLocn
+argument_list|,
+name|incrementalDumpId
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"EXPLAIN REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|printOutput
+argument_list|(
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|dbName
+operator|+
+literal|"_dupe FROM '"
+operator|+
+name|incrementalDumpLocn
+operator|+
+literal|"'"
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"acid_table_incremental"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+comment|// Test adding a constraint
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".acid_table_incremental ADD CONSTRAINT key_pk PRIMARY KEY (key) DISABLE NOVALIDATE"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|List
+argument_list|<
+name|SQLPrimaryKey
+argument_list|>
+name|pks
+init|=
+name|metaStoreClient
+operator|.
+name|getPrimaryKeys
+argument_list|(
+operator|new
+name|PrimaryKeysRequest
+argument_list|(
+name|dbName
+argument_list|,
+literal|"acid_table_incremental"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+name|pks
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|TException
+name|te
+parameter_list|)
+block|{
+name|assertNull
+argument_list|(
+name|te
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Perform REPL-DUMP/LOAD
+name|advanceDumpDir
+argument_list|()
+expr_stmt|;
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" FROM "
+operator|+
+name|incrementalDumpId
 argument_list|,
 name|driver
 argument_list|)

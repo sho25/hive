@@ -135,7 +135,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 import|;
 end_import
 
@@ -405,7 +405,7 @@ block|{
 comment|//in case concurrent tests are running on the same machine
 name|webhcatPort
 operator|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()

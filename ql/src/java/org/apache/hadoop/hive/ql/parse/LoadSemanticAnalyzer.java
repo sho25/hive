@@ -585,20 +585,6 @@ name|Lists
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|impl
-operator|.
-name|OrcAcidUtils
-import|;
-end_import
-
 begin_comment
 comment|/**  * LoadSemanticAnalyzer.  *  */
 end_comment
@@ -2079,6 +2065,14 @@ argument_list|,
 literal|true
 argument_list|,
 name|isLocal
+argument_list|,
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getLineageState
+argument_list|()
 argument_list|)
 argument_list|,
 name|conf

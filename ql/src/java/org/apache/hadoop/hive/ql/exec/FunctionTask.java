@@ -2128,6 +2128,18 @@ return|return
 literal|"FUNCTION"
 return|;
 block|}
+comment|/**    * this needs access to session state resource downloads which in turn uses references to Registry objects.    */
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|canExecuteInParallel
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 

@@ -1020,7 +1020,7 @@ operator|==
 name|i
 condition|)
 block|{
-name|findOperatorsUpstream
+name|findOperatorsUpstreamJoinAccounted
 argument_list|(
 name|parent
 argument_list|,
@@ -1033,7 +1033,7 @@ block|}
 block|}
 else|else
 block|{
-name|findOperatorsUpstream
+name|findOperatorsUpstreamJoinAccounted
 argument_list|(
 name|parent
 argument_list|,

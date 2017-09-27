@@ -439,6 +439,7 @@ name|GetOpenTxnsInfoResponse
 name|txns
 parameter_list|)
 block|{
+comment|//highWater is the last txn id that has been allocated
 name|long
 name|highWater
 init|=
@@ -584,6 +585,15 @@ name|length
 argument_list|)
 expr_stmt|;
 comment|// for ValidCompactorTxnList, everything in exceptions are aborted
+if|if
+condition|(
+name|minOpenTxn
+operator|==
+name|Long
+operator|.
+name|MAX_VALUE
+condition|)
+block|{
 return|return
 operator|new
 name|ValidCompactorTxnList
@@ -595,6 +605,23 @@ argument_list|,
 name|highWater
 argument_list|)
 return|;
+block|}
+else|else
+block|{
+return|return
+operator|new
+name|ValidCompactorTxnList
+argument_list|(
+name|exceptions
+argument_list|,
+name|bitSet
+argument_list|,
+name|highWater
+argument_list|,
+name|minOpenTxn
+argument_list|)
+return|;
+block|}
 block|}
 comment|/**    * Get an instance of the TxnStore that is appropriate for this store    * @param conf configuration    * @return txn store    */
 specifier|public

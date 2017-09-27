@@ -632,6 +632,8 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+comment|// TODO: why does this only kill non-default sessions?
+comment|// Nothing for workload management since that only deals with default ones.
 name|TezSessionPoolManager
 operator|.
 name|getInstance

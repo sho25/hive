@@ -199,7 +199,7 @@ block|{
 name|int
 name|port
 init|=
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|findFreePort
 argument_list|()
@@ -282,7 +282,7 @@ literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHi
 argument_list|)
 expr_stmt|;
 comment|//Increments one HMS connection
-name|MetaStoreUtils
+name|MetaStoreTestUtils
 operator|.
 name|startMetaStore
 argument_list|(
