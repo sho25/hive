@@ -734,7 +734,7 @@ name|baseWork
 range|:
 name|sparkWork
 operator|.
-name|getAllWorkUnsorted
+name|getAllWork
 argument_list|()
 control|)
 block|{

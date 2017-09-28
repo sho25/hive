@@ -343,7 +343,7 @@ argument_list|>
 name|workGraph
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|BaseWork
 argument_list|,
@@ -368,7 +368,7 @@ argument_list|>
 name|invertedWorkGraph
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|BaseWork
 argument_list|,
