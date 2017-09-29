@@ -7751,10 +7751,21 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Columns statistics for complex datatypes are not supported yet
-return|return
-literal|null
-return|;
+name|cs
+operator|.
+name|setAvgColLen
+argument_list|(
+name|getSizeOfComplexTypes
+argument_list|(
+name|conf
+argument_list|,
+name|cinfo
+operator|.
+name|getObjectInspector
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|cs
