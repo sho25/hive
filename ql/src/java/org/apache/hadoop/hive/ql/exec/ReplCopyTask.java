@@ -440,7 +440,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-comment|// TODO: merge with real CopyTask logic?
 name|Path
 name|fromPath
 init|=
