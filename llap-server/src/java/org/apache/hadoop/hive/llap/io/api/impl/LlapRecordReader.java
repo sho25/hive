@@ -2420,9 +2420,9 @@ name|LlapIoImpl
 operator|.
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"setError called; closed {}, done {}, err {}, pending {}"
+literal|"setError called; current state closed {}, done {}, err {}, pending {}"
 argument_list|,
 name|isClosed
 argument_list|,
@@ -2434,6 +2434,17 @@ name|pendingData
 operator|.
 name|size
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"setError called with an error"
+argument_list|,
+name|t
 argument_list|)
 expr_stmt|;
 assert|assert
