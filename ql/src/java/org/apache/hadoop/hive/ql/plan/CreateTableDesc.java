@@ -4098,14 +4098,6 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-operator|!
-name|Utilities
-operator|.
-name|isDefaultNameNode
-argument_list|(
-name|conf
-argument_list|)
-operator|&&
 name|DDLTask
 operator|.
 name|doesTableNeedLocation

@@ -4338,14 +4338,6 @@ condition|(
 name|location
 operator|!=
 literal|null
-operator|&&
-operator|!
-name|Utilities
-operator|.
-name|isDefaultNameNode
-argument_list|(
-name|conf
-argument_list|)
 condition|)
 block|{
 name|location
@@ -4589,14 +4581,6 @@ condition|(
 name|location
 operator|!=
 literal|null
-operator|&&
-operator|!
-name|Utilities
-operator|.
-name|isDefaultNameNode
-argument_list|(
-name|conf
-argument_list|)
 condition|)
 block|{
 name|location
@@ -12052,14 +12036,6 @@ condition|(
 name|location
 operator|!=
 literal|null
-operator|&&
-operator|!
-name|Utilities
-operator|.
-name|isDefaultNameNode
-argument_list|(
-name|conf
-argument_list|)
 condition|)
 block|{
 comment|// Ensure that it is a full qualified path (in most cases it will be since tbl.getPath() is full qualified)
