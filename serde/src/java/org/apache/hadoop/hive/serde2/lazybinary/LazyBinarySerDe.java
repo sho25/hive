@@ -1045,19 +1045,15 @@ comment|// The object for storing row data
 name|LazyBinaryStruct
 name|cachedLazyBinaryStruct
 decl_stmt|;
-specifier|private
 name|int
 name|serializedSize
 decl_stmt|;
-specifier|private
 name|SerDeStats
 name|stats
 decl_stmt|;
-specifier|private
 name|boolean
 name|lastOperationSerialize
 decl_stmt|;
-specifier|private
 name|boolean
 name|lastOperationDeserialize
 decl_stmt|;
@@ -1976,7 +1972,7 @@ name|warnedOnceNullMapKey
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 specifier|static
 name|void
 name|serializeText
@@ -2060,7 +2056,7 @@ name|boolean
 name|value
 decl_stmt|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|void
 name|writeDateToByteStream
@@ -3833,7 +3829,7 @@ throw|;
 block|}
 block|}
 block|}
-specifier|private
+specifier|protected
 specifier|static
 name|void
 name|writeSizeAtOffset

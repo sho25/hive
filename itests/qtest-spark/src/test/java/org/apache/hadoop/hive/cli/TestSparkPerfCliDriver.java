@@ -163,7 +163,7 @@ name|class
 argument_list|)
 specifier|public
 class|class
-name|TestPerfCliDriver
+name|TestSparkPerfCliDriver
 block|{
 specifier|static
 name|CliAdapter
@@ -172,7 +172,7 @@ init|=
 operator|new
 name|CliConfigs
 operator|.
-name|PerfCliConfig
+name|SparkPerfCliConfig
 argument_list|()
 operator|.
 name|getCliAdapter
@@ -236,7 +236,7 @@ name|File
 name|qfile
 decl_stmt|;
 specifier|public
-name|TestPerfCliDriver
+name|TestSparkPerfCliDriver
 parameter_list|(
 name|String
 name|name

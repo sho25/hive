@@ -4271,6 +4271,17 @@ argument_list|,
 literal|"time after which events will be removed from the database listener queue"
 argument_list|)
 block|,
+name|METASTORE_EVENT_DB_NOTIFICATION_API_AUTH
+argument_list|(
+literal|"hive.metastore.event.db.notification.api.auth"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Should metastore do authorization against database notification related APIs such as get_next_notification.\n"
+operator|+
+literal|"If set to true, then only the superusers in proxy settings have the permission"
+argument_list|)
+block|,
 name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
 argument_list|(
 literal|"hive.metastore.authorization.storage.checks"

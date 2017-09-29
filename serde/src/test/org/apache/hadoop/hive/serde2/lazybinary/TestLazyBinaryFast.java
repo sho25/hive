@@ -1700,10 +1700,17 @@ argument_list|(
 name|rowStructObjectInspector
 argument_list|)
 decl_stmt|;
+name|TestLazyBinarySerDe
+name|testLazyBinarySerDe
+init|=
+operator|new
+name|TestLazyBinarySerDe
+argument_list|()
+decl_stmt|;
 name|AbstractSerDe
 name|serde
 init|=
-name|TestLazyBinarySerDe
+name|testLazyBinarySerDe
 operator|.
 name|getSerDe
 argument_list|(
@@ -1744,7 +1751,7 @@ argument_list|)
 decl_stmt|;
 name|serde_fewer
 operator|=
-name|TestLazyBinarySerDe
+name|testLazyBinarySerDe
 operator|.
 name|getSerDe
 argument_list|(
