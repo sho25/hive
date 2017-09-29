@@ -55,6 +55,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|lockmgr
+operator|.
+name|HiveTxnManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|HiveOperation
@@ -80,6 +98,11 @@ comment|/**    * type of the command.    */
 specifier|private
 name|HiveOperation
 name|commandType
+decl_stmt|;
+comment|/**    * transaction manager used in the query.    */
+specifier|private
+name|HiveTxnManager
+name|txnManager
 decl_stmt|;
 comment|/**    * Private constructor, use QueryState.Builder instead    * @param conf The query specific configuration object    */
 specifier|private
@@ -183,6 +206,30 @@ block|{
 return|return
 name|queryConf
 return|;
+block|}
+specifier|public
+name|HiveTxnManager
+name|getTxnManager
+parameter_list|()
+block|{
+return|return
+name|txnManager
+return|;
+block|}
+specifier|public
+name|void
+name|setTxnManager
+parameter_list|(
+name|HiveTxnManager
+name|txnManager
+parameter_list|)
+block|{
+name|this
+operator|.
+name|txnManager
+operator|=
+name|txnManager
+expr_stmt|;
 block|}
 comment|/**    * Builder to instantiate the QueryState object.    */
 specifier|public

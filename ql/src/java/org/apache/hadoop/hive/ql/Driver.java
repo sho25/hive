@@ -1971,6 +1971,24 @@ specifier|final
 name|HooksLoader
 name|hooksLoader
 decl_stmt|;
+comment|// Transaction manager the Driver has been initialized with (can be null).
+comment|// If this is set then this Transaction manager will be used during query
+comment|// compilation/execution rather than using the current session's transaction manager.
+comment|// This might be needed in a situation where a Driver is nested within an already
+comment|// running Driver/query - the nested Driver requires a separate transaction manager
+comment|// so as not to conflict with the outer Driver/query which is using the session
+comment|// transaction manager.
+specifier|private
+specifier|final
+name|HiveTxnManager
+name|initTxnMgr
+decl_stmt|;
+comment|// Transaction manager used for the query. This will be set at compile time based on
+comment|// either initTxnMgr or from the SessionState, in that order.
+specifier|private
+name|HiveTxnManager
+name|queryTxnMgr
+decl_stmt|;
 specifier|public
 enum|enum
 name|DriverState
@@ -2692,6 +2710,31 @@ parameter_list|(
 name|HiveConf
 name|conf
 parameter_list|,
+name|HiveTxnManager
+name|txnMgr
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|getNewQueryState
+argument_list|(
+name|conf
+argument_list|)
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|txnMgr
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|Driver
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|Context
 name|ctx
 parameter_list|)
@@ -2702,6 +2745,8 @@ name|getNewQueryState
 argument_list|(
 name|conf
 argument_list|)
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)
@@ -2762,6 +2807,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -2785,6 +2832,8 @@ argument_list|,
 literal|null
 argument_list|,
 name|hooksLoader
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|)
@@ -2819,6 +2868,45 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|queryInfo
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|Driver
+parameter_list|(
+name|QueryState
+name|queryState
+parameter_list|,
+name|String
+name|userName
+parameter_list|,
+name|QueryInfo
+name|queryInfo
+parameter_list|,
+name|HiveTxnManager
+name|txnMgr
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|queryState
+argument_list|,
+name|userName
+argument_list|,
+operator|new
+name|HooksLoader
+argument_list|(
+name|queryState
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
+argument_list|,
+name|queryInfo
+argument_list|,
+name|txnMgr
 argument_list|)
 expr_stmt|;
 block|}
@@ -2836,6 +2924,9 @@ name|hooksLoader
 parameter_list|,
 name|QueryInfo
 name|queryInfo
+parameter_list|,
+name|HiveTxnManager
+name|txnMgr
 parameter_list|)
 block|{
 name|this
@@ -2903,6 +2994,12 @@ operator|.
 name|queryInfo
 operator|=
 name|queryInfo
+expr_stmt|;
+name|this
+operator|.
+name|initTxnMgr
+operator|=
+name|txnMgr
 expr_stmt|;
 block|}
 comment|/**    * Generating the new QueryState object. Making sure, that the new queryId is generated.    * @param conf The HiveConf which should be used    * @return The new QueryState object    */
@@ -3248,10 +3345,22 @@ decl_stmt|;
 try|try
 block|{
 comment|// Initialize the transaction manager.  This must be done before analyze is called.
-specifier|final
-name|HiveTxnManager
-name|txnManager
-init|=
+if|if
+condition|(
+name|initTxnMgr
+operator|!=
+literal|null
+condition|)
+block|{
+name|queryTxnMgr
+operator|=
+name|initTxnMgr
+expr_stmt|;
+block|}
+else|else
+block|{
+name|queryTxnMgr
+operator|=
 name|SessionState
 operator|.
 name|get
@@ -3261,7 +3370,15 @@ name|initTxnMgr
 argument_list|(
 name|conf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+name|queryState
+operator|.
+name|setTxnManager
+argument_list|(
+name|queryTxnMgr
+argument_list|)
+expr_stmt|;
 comment|// In case when user Ctrl-C twice to kill Hive CLI JVM, we want to release locks
 comment|// if compile is being called multiple times, clear the old shutdownhook
 name|ShutdownHookManager
@@ -3271,6 +3388,12 @@ argument_list|(
 name|shutdownRunner
 argument_list|)
 expr_stmt|;
+specifier|final
+name|HiveTxnManager
+name|txnMgr
+init|=
+name|queryTxnMgr
+decl_stmt|;
 name|shutdownRunner
 operator|=
 operator|new
@@ -3290,7 +3413,7 @@ name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
 argument_list|,
-name|txnManager
+name|txnMgr
 argument_list|)
 expr_stmt|;
 block|}
@@ -3520,7 +3643,7 @@ argument_list|()
 operator|&&
 name|startImplicitTxn
 argument_list|(
-name|txnManager
+name|queryTxnMgr
 argument_list|)
 condition|)
 block|{
@@ -3533,7 +3656,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|txnManager
+name|queryTxnMgr
 operator|.
 name|isTxnOpen
 argument_list|()
@@ -3553,7 +3676,7 @@ block|}
 name|long
 name|txnid
 init|=
-name|txnManager
+name|queryTxnMgr
 operator|.
 name|openTxn
 argument_list|(
@@ -6962,7 +7085,10 @@ comment|// the input format.
 specifier|private
 name|void
 name|recordValidTxns
-parameter_list|()
+parameter_list|(
+name|HiveTxnManager
+name|txnMgr
+parameter_list|)
 throws|throws
 name|LockException
 block|{
@@ -7006,17 +7132,6 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
-name|HiveTxnManager
-name|txnMgr
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getTxnMgr
-argument_list|()
-decl_stmt|;
 name|ValidTxnList
 name|txns
 init|=
@@ -7209,31 +7324,15 @@ operator|.
 name|ACQUIRE_READ_WRITE_LOCKS
 argument_list|)
 expr_stmt|;
-name|SessionState
-name|ss
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-decl_stmt|;
-name|HiveTxnManager
-name|txnMgr
-init|=
-name|ss
-operator|.
-name|getTxnMgr
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 operator|!
-name|txnMgr
+name|queryTxnMgr
 operator|.
 name|isTxnOpen
 argument_list|()
 operator|&&
-name|txnMgr
+name|queryTxnMgr
 operator|.
 name|supportsAcid
 argument_list|()
@@ -7326,7 +7425,7 @@ name|desc
 operator|.
 name|setTransactionId
 argument_list|(
-name|txnMgr
+name|queryTxnMgr
 operator|.
 name|getCurrentTxnId
 argument_list|()
@@ -7338,7 +7437,7 @@ name|desc
 operator|.
 name|setStatementId
 argument_list|(
-name|txnMgr
+name|queryTxnMgr
 operator|.
 name|getWriteIdAndIncrement
 argument_list|()
@@ -7347,7 +7446,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/*It's imperative that {@code acquireLocks()} is called for all commands so that        HiveTxnManager can transition its state machine correctly*/
-name|txnMgr
+name|queryTxnMgr
 operator|.
 name|acquireLocks
 argument_list|(
@@ -7362,7 +7461,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|txnMgr
+name|queryTxnMgr
 operator|.
 name|recordSnapshot
 argument_list|(
@@ -7371,7 +7470,9 @@ argument_list|)
 condition|)
 block|{
 name|recordValidTxns
-argument_list|()
+argument_list|(
+name|queryTxnMgr
+argument_list|)
 expr_stmt|;
 block|}
 return|return
@@ -7468,6 +7569,24 @@ name|isEmpty
 argument_list|()
 return|;
 block|}
+specifier|public
+name|void
+name|releaseLocksAndCommitOrRollback
+parameter_list|(
+name|boolean
+name|commit
+parameter_list|)
+throws|throws
+name|LockException
+block|{
+name|releaseLocksAndCommitOrRollback
+argument_list|(
+name|commit
+argument_list|,
+name|queryTxnMgr
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * @param commit if there is an open transaction and if true, commit,    *               if false rollback.  If there is no open transaction this parameter is ignored.    * @param txnManager an optional existing transaction manager retrieved earlier from the session    *    **/
 annotation|@
 name|VisibleForTesting
@@ -7513,20 +7632,10 @@ operator|==
 literal|null
 condition|)
 block|{
-name|SessionState
-name|ss
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-decl_stmt|;
+comment|// Default to driver's txn manager if no txn manager specified
 name|txnMgr
 operator|=
-name|ss
-operator|.
-name|getTxnMgr
-argument_list|()
+name|queryTxnMgr
 expr_stmt|;
 block|}
 else|else
@@ -8078,6 +8187,73 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+specifier|public
+name|CommandProcessorResponse
+name|lockAndRespond
+parameter_list|()
+block|{
+comment|// Assumes the query has already been compiled
+if|if
+condition|(
+name|plan
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"No previously compiled query for driver - queryId="
+operator|+
+name|queryState
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|)
+throw|;
+block|}
+name|int
+name|ret
+init|=
+literal|0
+decl_stmt|;
+if|if
+condition|(
+name|requiresLock
+argument_list|()
+condition|)
+block|{
+name|ret
+operator|=
+name|acquireLocks
+argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|ret
+operator|!=
+literal|0
+condition|)
+block|{
+return|return
+name|rollback
+argument_list|(
+name|createProcessorResponse
+argument_list|(
+name|ret
+argument_list|)
+argument_list|)
+return|;
+block|}
+return|return
+name|createProcessorResponse
+argument_list|(
+name|ret
+argument_list|)
+return|;
+block|}
 specifier|private
 specifier|static
 specifier|final
@@ -8239,8 +8415,6 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -8873,22 +9047,11 @@ block|}
 comment|// the reason that we set the txn manager for the cxt here is because each
 comment|// query has its own ctx object. The txn mgr is shared across the
 comment|// same instance of Driver, which can run multiple queries.
-name|HiveTxnManager
-name|txnManager
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getTxnMgr
-argument_list|()
-decl_stmt|;
 name|ctx
 operator|.
 name|setHiveTxnManager
 argument_list|(
-name|txnManager
+name|queryTxnMgr
 argument_list|)
 expr_stmt|;
 if|if
@@ -8969,7 +9132,7 @@ block|{
 comment|//since set autocommit starts an implicit txn, close it
 if|if
 condition|(
-name|txnManager
+name|queryTxnMgr
 operator|.
 name|isImplicitTransactionOpen
 argument_list|()
@@ -8987,8 +9150,6 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|true
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -9008,8 +9169,6 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -9265,8 +9424,6 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -13543,8 +13700,6 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -13774,8 +13929,6 @@ block|{
 name|releaseLocksAndCommitOrRollback
 argument_list|(
 literal|false
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
