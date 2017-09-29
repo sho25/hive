@@ -305,7 +305,7 @@ operator|=
 name|type
 expr_stmt|;
 block|}
-comment|/**    * Constructor for objects represented as String.    * Currently applicable only for function names.    * @param db    * @param objName    * @param type    * @param writeType    */
+comment|/**    * Constructor for objects represented as String.    * Currently applicable only for function names.    * @param db    * @param objName    * @param className    * @param type    * @param writeType    */
 specifier|public
 name|WriteEntity
 parameter_list|(
@@ -314,6 +314,9 @@ name|db
 parameter_list|,
 name|String
 name|objName
+parameter_list|,
+name|String
+name|className
 parameter_list|,
 name|Type
 name|type
@@ -327,6 +330,8 @@ argument_list|(
 name|db
 argument_list|,
 name|objName
+argument_list|,
+name|className
 argument_list|,
 name|type
 argument_list|)

@@ -6851,6 +6851,11 @@ name|columns
 init|=
 literal|null
 decl_stmt|;
+name|String
+name|className
+init|=
+literal|null
+decl_stmt|;
 switch|switch
 condition|(
 name|privObject
@@ -6967,6 +6972,13 @@ operator|.
 name|getFunctionName
 argument_list|()
 expr_stmt|;
+name|className
+operator|=
+name|privObject
+operator|.
+name|getClassName
+argument_list|()
+expr_stmt|;
 break|break;
 case|case
 name|DUMMYPARTITION
@@ -7025,6 +7037,8 @@ argument_list|,
 name|actionType
 argument_list|,
 literal|null
+argument_list|,
+name|className
 argument_list|)
 decl_stmt|;
 name|hivePrivobjs
