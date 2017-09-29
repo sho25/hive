@@ -1748,6 +1748,9 @@ block|}
 block|}
 finally|finally
 block|{
+comment|// Note: due to TEZ-3846, the session may actually be invalid in case of some errors.
+comment|//       Currently, reopen on an attempted reuse will take care of that; we cannot tell
+comment|//       if the session is usable until we try.
 comment|// We return this to the pool even if it's unusable; reopen is supposed to handle this.
 try|try
 block|{

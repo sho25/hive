@@ -8296,17 +8296,6 @@ operator|.
 name|getIndexTableName
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|Utilities
-operator|.
-name|isDefaultNameNode
-argument_list|(
-name|conf
-argument_list|)
-condition|)
-block|{
 comment|// If location is specified - ensure that it is a full qualified name
 name|makeLocationQualified
 argument_list|(
@@ -8315,7 +8304,6 @@ argument_list|,
 name|indexTableName
 argument_list|)
 expr_stmt|;
-block|}
 name|db
 operator|.
 name|createIndex
@@ -29462,23 +29450,11 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-if|if
-condition|(
-operator|!
-name|Utilities
-operator|.
-name|isDefaultNameNode
-argument_list|(
-name|conf
-argument_list|)
-condition|)
-block|{
 name|makeLocationQualified
 argument_list|(
 name|database
 argument_list|)
 expr_stmt|;
-block|}
 name|db
 operator|.
 name|createDatabase
@@ -31028,18 +31004,17 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// If location is specified - ensure that it is a full qualified name
 if|if
 condition|(
-operator|!
-name|Utilities
+name|DDLTask
 operator|.
-name|isDefaultNameNode
+name|doesTableNeedLocation
 argument_list|(
-name|conf
+name|tbl
 argument_list|)
 condition|)
 block|{
-comment|// If location is specified - ensure that it is a full qualified name
 name|makeLocationQualified
 argument_list|(
 name|tbl
@@ -32762,6 +32737,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// TODO: why doesn't this check class name rather than toString?
 name|String
 name|sh
 init|=
@@ -32791,6 +32767,14 @@ argument_list|(
 name|Constants
 operator|.
 name|DRUID_HIVE_STORAGE_HANDLER_ID
+argument_list|)
+operator|&&
+operator|!
+name|sh
+operator|.
+name|equals
+argument_list|(
+literal|"org.apache.hadoop.hive.accumulo.AccumuloStorageHandler"
 argument_list|)
 expr_stmt|;
 block|}

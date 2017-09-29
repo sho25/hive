@@ -280,7 +280,7 @@ function_decl|;
 name|TezSessionState
 name|reopen
 parameter_list|(
-name|TezSessionPoolSession
+name|TezSessionState
 name|session
 parameter_list|,
 name|Configuration
@@ -296,7 +296,7 @@ function_decl|;
 name|void
 name|destroy
 parameter_list|(
-name|TezSessionPoolSession
+name|TezSessionState
 name|session
 parameter_list|)
 throws|throws

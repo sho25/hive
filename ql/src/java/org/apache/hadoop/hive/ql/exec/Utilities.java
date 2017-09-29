@@ -21232,31 +21232,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Checks if current hive script was executed with non-default namenode    *    * @return True/False    */
-specifier|public
-specifier|static
-name|boolean
-name|isDefaultNameNode
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|)
-block|{
-return|return
-operator|!
-name|conf
-operator|.
-name|getChangedProperties
-argument_list|()
-operator|.
-name|containsKey
-argument_list|(
-name|CommonConfigurationKeysPublic
-operator|.
-name|FS_DEFAULT_NAME_KEY
-argument_list|)
-return|;
-block|}
 comment|/**    * Checks if the current HiveServer2 logging operation level is>= PERFORMANCE.    * @param conf Hive configuration.    * @return true if current HiveServer2 logging operation level is>= PERFORMANCE.    * Else, false.    */
 specifier|public
 specifier|static

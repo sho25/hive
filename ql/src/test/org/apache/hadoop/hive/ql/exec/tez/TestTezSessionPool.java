@@ -1105,7 +1105,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -1168,7 +1168,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -1208,7 +1208,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -1265,7 +1265,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -1307,7 +1307,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -1347,7 +1347,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -1933,7 +1933,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|session
 argument_list|,
@@ -2018,7 +2018,7 @@ argument_list|)
 expr_stmt|;
 name|poolManager
 operator|.
-name|destroySession
+name|destroy
 argument_list|(
 name|session
 argument_list|)

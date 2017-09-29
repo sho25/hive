@@ -518,11 +518,6 @@ block|{
 if|if
 condition|(
 operator|!
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 operator|.

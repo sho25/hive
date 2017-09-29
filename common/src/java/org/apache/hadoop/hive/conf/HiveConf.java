@@ -2844,7 +2844,7 @@ name|REPL_PARTITIONS_DUMP_PARALLELISM
 argument_list|(
 literal|"hive.repl.partitions.dump.parallelism"
 argument_list|,
-literal|5
+literal|100
 argument_list|,
 literal|"Number of threads that will be used to dump partition data information during repl dump."
 argument_list|)

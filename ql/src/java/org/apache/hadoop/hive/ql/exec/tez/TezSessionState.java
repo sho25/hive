@@ -4160,7 +4160,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|reopenSession
+name|reopen
 argument_list|(
 name|this
 argument_list|,
@@ -4183,7 +4183,7 @@ operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|destroySession
+name|destroy
 argument_list|(
 name|this
 argument_list|)

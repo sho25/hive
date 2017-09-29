@@ -740,13 +740,12 @@ operator|.
 name|LLAP_DAEMON_OUTPUT_SERVICE_SEND_BUFFER_SIZE
 argument_list|)
 decl_stmt|;
+comment|// Netty defaults to no of processors * 2. Can be changed via -Dio.netty.eventLoopThreads
 name|eventLoopGroup
 operator|=
 operator|new
 name|NioEventLoopGroup
-argument_list|(
-literal|1
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|serverBootstrap
 operator|=

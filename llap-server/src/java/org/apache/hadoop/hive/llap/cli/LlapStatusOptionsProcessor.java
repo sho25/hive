@@ -185,6 +185,7 @@ name|DEFAULT_RUNNING_NODES_THRESHOLD
 init|=
 literal|1.0f
 decl_stmt|;
+comment|// TODO: why doesn't this use one of the existing options implementations?!
 enum|enum
 name|OptionConstants
 block|{
@@ -245,6 +246,20 @@ argument_list|,
 literal|"Watch mode waits until all LLAP daemons are running or subset of the nodes are "
 operator|+
 literal|"running (threshold can be specified via -r option) (Default wait until all nodes are running)"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+comment|// This is a negative because we want the positive to be the default when nothing is specified.
+name|NOT_LAUNCHED
+argument_list|(
+literal|"notlaunched"
+argument_list|,
+literal|'l'
+argument_list|,
+literal|"In watch mode, do not assume that the application was "
+operator|+
+literal|"already launched if there's doubt (e.g. if the last application instance has failed)."
 argument_list|,
 literal|false
 argument_list|)
@@ -540,6 +555,11 @@ specifier|final
 name|float
 name|runningNodesThreshold
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isLaunched
+decl_stmt|;
 specifier|public
 name|LlapStatusOptions
 parameter_list|(
@@ -567,6 +587,8 @@ argument_list|,
 name|DEFAULT_WATCH_MODE_TIMEOUT_MS
 argument_list|,
 name|DEFAULT_RUNNING_NODES_THRESHOLD
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -599,6 +621,10 @@ parameter_list|,
 specifier|final
 name|float
 name|runningNodesThreshold
+parameter_list|,
+specifier|final
+name|boolean
+name|isLaunched
 parameter_list|)
 block|{
 name|this
@@ -648,6 +674,12 @@ operator|.
 name|runningNodesThreshold
 operator|=
 name|runningNodesThreshold
+expr_stmt|;
+name|this
+operator|.
+name|isLaunched
+operator|=
+name|isLaunched
 expr_stmt|;
 block|}
 specifier|public
@@ -702,6 +734,15 @@ parameter_list|()
 block|{
 return|return
 name|watchMode
+return|;
+block|}
+specifier|public
+name|boolean
+name|isLaunched
+parameter_list|()
+block|{
+return|return
+name|isLaunched
 return|;
 block|}
 specifier|public
@@ -1111,10 +1152,6 @@ operator|.
 name|getLongOpt
 argument_list|()
 argument_list|)
-condition|?
-literal|true
-else|:
-literal|false
 decl_stmt|;
 name|long
 name|watchTimeoutMs
@@ -1187,6 +1224,22 @@ name|SECONDS
 argument_list|)
 expr_stmt|;
 block|}
+name|boolean
+name|isLaunched
+init|=
+operator|!
+name|commandLine
+operator|.
+name|hasOption
+argument_list|(
+name|OptionConstants
+operator|.
+name|NOT_LAUNCHED
+operator|.
+name|getLongOpt
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|float
 name|runningNodesThreshold
 init|=
@@ -1265,6 +1318,8 @@ argument_list|,
 name|watchTimeoutMs
 argument_list|,
 name|runningNodesThreshold
+argument_list|,
+name|isLaunched
 argument_list|)
 return|;
 block|}

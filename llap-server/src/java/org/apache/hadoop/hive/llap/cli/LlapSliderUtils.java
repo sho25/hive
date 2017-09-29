@@ -21,6 +21,20 @@ end_package
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|Files
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -80,6 +94,28 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|cli
+operator|.
+name|status
+operator|.
+name|LlapStatusHelpers
+operator|.
+name|AppStatusBuilder
 import|;
 end_import
 
@@ -292,20 +328,6 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|io
-operator|.
-name|Files
 import|;
 end_import
 
@@ -592,6 +614,9 @@ parameter_list|(
 name|ApplicationReport
 name|appReport
 parameter_list|,
+name|AppStatusBuilder
+name|appStatusBuilder
+parameter_list|,
 name|Logger
 name|LOG
 parameter_list|)
@@ -633,18 +658,13 @@ return|;
 block|}
 try|try
 block|{
-name|ApplicationDiagnostics
-name|appDiagnostics
-init|=
+return|return
 name|ApplicationDiagnostics
 operator|.
 name|fromJson
 argument_list|(
 name|diagnostics
 argument_list|)
-decl_stmt|;
-return|return
-name|appDiagnostics
 return|;
 block|}
 catch|catch
@@ -659,6 +679,14 @@ name|warn
 argument_list|(
 literal|"Failed to parse application diagnostics from Yarn Diagnostics - {}"
 argument_list|,
+name|diagnostics
+argument_list|)
+expr_stmt|;
+comment|// Set the raw YARN diagnostics here - the caller won't know if they even exist.
+name|appStatusBuilder
+operator|.
+name|setDiagnostics
+argument_list|(
 name|diagnostics
 argument_list|)
 expr_stmt|;
