@@ -37009,7 +37009,14 @@ name|ex
 argument_list|)
 expr_stmt|;
 block|}
+comment|//Thrift cannot return null result
 return|return
+name|ret
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
 name|ret
 return|;
 block|}

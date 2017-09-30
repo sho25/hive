@@ -76,13 +76,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Runs the tests defined in TestJdbcWithMiniKdc when DBTokenStore  * is configured in a remote secure HMS mode and impersonation  * is turned on  */
+comment|/**  * Runs the tests defined in TestJdbcWithMiniKdc when DBTokenStore  * is configured and HMS is setup in a remote secure mode and  * impersonation is turned OFF  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestJdbcWithDBTokenStore
+name|TestJdbcWithDBTokenStoreNoDoAs
 extends|extends
 name|TestJdbcWithMiniKdc
 block|{
@@ -142,6 +142,17 @@ argument_list|,
 literal|"org.apache.hadoop.hive.thrift.DBTokenStore"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_ENABLE_DOAS
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|miniHiveKdc
 operator|=
 name|MiniHiveKdc
@@ -167,6 +178,67 @@ operator|.
 name|start
 argument_list|(
 name|confOverlay
+argument_list|)
+expr_stmt|;
+name|String
+name|metastorePrincipal
+init|=
+name|miniHS2
+operator|.
+name|getConfProperty
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORE_KERBEROS_PRINCIPAL
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
+name|String
+name|hs2Principal
+init|=
+name|miniHS2
+operator|.
+name|getConfProperty
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_KERBEROS_PRINCIPAL
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
+name|String
+name|hs2KeyTab
+init|=
+name|miniHS2
+operator|.
+name|getConfProperty
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_KERBEROS_KEYTAB
+operator|.
+name|varname
+argument_list|)
+decl_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"HS2 principal : "
+operator|+
+name|hs2Principal
+operator|+
+literal|" HS2 keytab : "
+operator|+
+name|hs2KeyTab
+operator|+
+literal|" Metastore principal : "
+operator|+
+name|metastorePrincipal
 argument_list|)
 expr_stmt|;
 block|}
