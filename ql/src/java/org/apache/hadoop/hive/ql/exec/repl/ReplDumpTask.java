@@ -2186,6 +2186,8 @@ argument_list|,
 name|tblName
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|String
