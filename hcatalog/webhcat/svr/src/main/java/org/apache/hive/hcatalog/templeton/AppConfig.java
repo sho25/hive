@@ -813,6 +813,14 @@ name|XSRF_FILTER_ENABLED
 init|=
 literal|"templeton.xsrf.filter.enabled"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|FRAME_OPTIONS_FILETER
+init|=
+literal|"templeton.frame.options.filter"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
