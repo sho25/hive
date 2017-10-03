@@ -608,6 +608,15 @@ name|ConfVars
 operator|.
 name|HIVE_SERVER2_KERBEROS_PRINCIPAL
 argument_list|)
+argument_list|,
+name|conf
+operator|.
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_CLIENT_KERBEROS_PRINCIPAL
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Start delegation token manager

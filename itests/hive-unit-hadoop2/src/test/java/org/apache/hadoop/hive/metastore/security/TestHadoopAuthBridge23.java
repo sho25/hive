@@ -648,6 +648,9 @@ name|keytabFile
 parameter_list|,
 name|String
 name|principalConf
+parameter_list|,
+name|String
+name|clientConf
 parameter_list|)
 throws|throws
 name|TTransportException

@@ -5489,8 +5489,6 @@ try|try
 block|{
 if|if
 condition|(
-name|inTest
-operator|&&
 name|postProcess
 argument_list|(
 name|xpl_note
@@ -5505,7 +5503,7 @@ name|invoke
 argument_list|(
 name|work
 argument_list|,
-literal|true
+name|inTest
 argument_list|)
 expr_stmt|;
 block|}

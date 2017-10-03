@@ -604,7 +604,7 @@ name|command
 argument_list|,
 name|ctx
 argument_list|,
-literal|true
+literal|null
 argument_list|)
 return|;
 block|}
@@ -619,8 +619,8 @@ parameter_list|,
 name|Context
 name|ctx
 parameter_list|,
-name|boolean
-name|setTokenRewriteStream
+name|String
+name|viewFullyQualifiedName
 parameter_list|)
 throws|throws
 name|ParseException
@@ -674,13 +674,29 @@ condition|)
 block|{
 if|if
 condition|(
-name|setTokenRewriteStream
+name|viewFullyQualifiedName
+operator|==
+literal|null
 condition|)
 block|{
+comment|// Top level query
 name|ctx
 operator|.
 name|setTokenRewriteStream
 argument_list|(
+name|tokens
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// It is a view
+name|ctx
+operator|.
+name|addViewTokenRewriteStream
+argument_list|(
+name|viewFullyQualifiedName
+argument_list|,
 name|tokens
 argument_list|)
 expr_stmt|;

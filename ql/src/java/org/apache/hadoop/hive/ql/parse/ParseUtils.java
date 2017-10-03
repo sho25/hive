@@ -519,7 +519,7 @@ name|command
 argument_list|,
 name|ctx
 argument_list|,
-literal|true
+literal|null
 argument_list|)
 return|;
 block|}
@@ -535,8 +535,8 @@ parameter_list|,
 name|Context
 name|ctx
 parameter_list|,
-name|boolean
-name|setTokenRewriteStream
+name|String
+name|viewFullyQualifiedName
 parameter_list|)
 throws|throws
 name|ParseException
@@ -559,7 +559,7 @@ name|command
 argument_list|,
 name|ctx
 argument_list|,
-name|setTokenRewriteStream
+name|viewFullyQualifiedName
 argument_list|)
 decl_stmt|;
 name|tree

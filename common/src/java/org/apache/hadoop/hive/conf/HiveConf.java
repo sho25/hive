@@ -3863,6 +3863,16 @@ operator|+
 literal|"The special string _HOST will be replaced automatically with the correct host name."
 argument_list|)
 block|,
+name|METASTORE_CLIENT_KERBEROS_PRINCIPAL
+argument_list|(
+literal|"hive.metastore.client.kerberos.principal"
+argument_list|,
+literal|""
+argument_list|,
+comment|// E.g. "hive-metastore/_HOST@EXAMPLE.COM".
+literal|"The Kerberos principal associated with the HA cluster of hcat_servers."
+argument_list|)
+block|,
 name|METASTORE_USE_THRIFT_SASL
 argument_list|(
 literal|"hive.metastore.sasl.enabled"
@@ -10855,6 +10865,15 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"Kerberos server principal"
+argument_list|)
+block|,
+name|HIVE_SERVER2_CLIENT_KERBEROS_PRINCIPAL
+argument_list|(
+literal|"hive.server2.authentication.client.kerberos.principal"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Kerberos principal used by the HA hive_server2s."
 argument_list|)
 block|,
 name|HIVE_SERVER2_SPNEGO_KEYTAB
