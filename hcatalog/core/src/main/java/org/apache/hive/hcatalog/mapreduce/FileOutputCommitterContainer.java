@@ -5856,12 +5856,9 @@ operator|.
 name|getTokenStrForm
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|tokenStrForm
-operator|!=
-literal|null
-operator|&&
+name|String
+name|hCatKeyTokenSignature
+init|=
 name|context
 operator|.
 name|getConfiguration
@@ -5873,15 +5870,48 @@ name|HCatConstants
 operator|.
 name|HCAT_KEY_TOKEN_SIGNATURE
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|tokenStrForm
+operator|!=
+literal|null
+operator|&&
+name|hCatKeyTokenSignature
 operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"FileOutputCommitterContainer::cancelDelegationTokens(): "
+operator|+
+literal|"Cancelling token fetched for HCAT_KEY_TOKEN_SIGNATURE == ("
+operator|+
+name|hCatKeyTokenSignature
+operator|+
+literal|")."
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|cancelDelegationToken
 argument_list|(
 name|tokenStrForm
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"FileOutputCommitterContainer::cancelDelegationTokens(): "
+operator|+
+literal|"Could not find tokenStrForm, or HCAT_KEY_TOKEN_SIGNATURE. Skipping token cancellation."
 argument_list|)
 expr_stmt|;
 block|}

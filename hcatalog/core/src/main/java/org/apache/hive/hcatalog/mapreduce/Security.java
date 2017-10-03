@@ -728,6 +728,23 @@ name|getTokens
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Security::handleSecurity(): Checking for pre-existing metastore token... "
+operator|+
+operator|(
+name|hiveToken
+operator|==
+literal|null
+condition|?
+literal|"Not found. Creating a new one."
+else|:
+literal|"Found. Using existing token."
+operator|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|hiveToken
@@ -911,6 +928,15 @@ expr_stmt|;
 comment|// this will be used by the outputcommitter to pass on to the metastore client
 comment|// which in turn will pass on to the TokenSelector so that it can select
 comment|// the right token.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Security::handleSecurity(): Setting signature of token to: "
+operator|+
+name|tokenSignature
+argument_list|)
+expr_stmt|;
 name|conf
 operator|.
 name|set
