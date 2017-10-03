@@ -1301,6 +1301,9 @@ case|case
 name|TIMESTAMP
 case|:
 case|case
+name|TIMESTAMP_WITH_LOCAL_TIME_ZONE
+case|:
+case|case
 name|INTERVAL_DAY
 case|:
 case|case
@@ -1767,6 +1770,36 @@ operator|=
 name|HiveParser
 operator|.
 name|TOK_TIMESTAMPLITERAL
+expr_stmt|;
+break|break;
+case|case
+name|TIMESTAMP_WITH_LOCAL_TIME_ZONE
+case|:
+comment|// Calcite stores timestamp with local time-zone in UTC internally, thus
+comment|// when we bring it back, we need to add the UTC suffix.
+name|val
+operator|=
+literal|"'"
+operator|+
+name|literal
+operator|.
+name|getValueAs
+argument_list|(
+name|TimestampString
+operator|.
+name|class
+argument_list|)
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" UTC'"
+expr_stmt|;
+name|type
+operator|=
+name|HiveParser
+operator|.
+name|TOK_TIMESTAMPLOCALTZLITERAL
 expr_stmt|;
 break|break;
 case|case

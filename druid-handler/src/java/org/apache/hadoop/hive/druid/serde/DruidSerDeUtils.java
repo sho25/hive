@@ -319,7 +319,7 @@ comment|// Timestamp (null or default used by FLOOR)
 return|return
 name|TypeInfoFactory
 operator|.
-name|timestampTypeInfo
+name|timestampLocalTZTypeInfo
 return|;
 block|}
 else|else

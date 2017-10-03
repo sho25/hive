@@ -1757,8 +1757,6 @@ argument_list|)
 argument_list|,
 name|gbInputRel
 argument_list|,
-literal|false
-argument_list|,
 name|ImmutableBitSet
 operator|.
 name|of
@@ -2188,8 +2186,6 @@ name|aggregate
 operator|.
 name|getInput
 argument_list|()
-argument_list|,
-literal|true
 argument_list|,
 name|groupSet
 argument_list|,

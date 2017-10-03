@@ -135,6 +135,15 @@ name|MAX_TIMESTAMP_PRECISION
 init|=
 literal|9
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|MAX_TIMESTAMP_WITH_LOCAL_TIME_ZONE_PRECISION
+init|=
+literal|15
+decl_stmt|;
+comment|// Up to nanos
 annotation|@
 name|Override
 specifier|public
@@ -236,6 +245,9 @@ name|TIME
 case|:
 case|case
 name|TIMESTAMP
+case|:
+case|case
+name|TIMESTAMP_WITH_LOCAL_TIME_ZONE
 case|:
 return|return
 name|getMaxPrecision
@@ -360,6 +372,12 @@ name|TIMESTAMP
 case|:
 return|return
 name|MAX_TIMESTAMP_PRECISION
+return|;
+case|case
+name|TIMESTAMP_WITH_LOCAL_TIME_ZONE
+case|:
+return|return
+name|MAX_TIMESTAMP_WITH_LOCAL_TIME_ZONE_PRECISION
 return|;
 case|case
 name|INTERVAL_YEAR

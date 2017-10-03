@@ -265,7 +265,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|TraitsUtil
+name|HiveRelShuttle
 import|;
 end_import
 
@@ -285,7 +285,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|HiveRelShuttle
+name|TraitsUtil
 import|;
 end_import
 
@@ -331,9 +331,6 @@ parameter_list|,
 name|RelNode
 name|child
 parameter_list|,
-name|boolean
-name|indicator
-parameter_list|,
 name|ImmutableBitSet
 name|groupSet
 parameter_list|,
@@ -363,7 +360,7 @@ argument_list|)
 argument_list|,
 name|child
 argument_list|,
-name|indicator
+literal|false
 argument_list|,
 name|groupSet
 argument_list|,
@@ -404,6 +401,21 @@ argument_list|>
 name|aggCalls
 parameter_list|)
 block|{
+if|if
+condition|(
+name|indicator
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Hive does not support indicator columns but tried "
+operator|+
+literal|"to create an Aggregate operator containing them"
+argument_list|)
+throw|;
+block|}
 return|return
 operator|new
 name|HiveAggregate
@@ -414,8 +426,6 @@ argument_list|,
 name|traitSet
 argument_list|,
 name|input
-argument_list|,
-name|indicator
 argument_list|,
 name|groupSet
 argument_list|,

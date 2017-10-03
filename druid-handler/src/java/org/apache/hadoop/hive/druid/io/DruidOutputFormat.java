@@ -1269,6 +1269,7 @@ break|break;
 case|case
 name|TIMESTAMP
 case|:
+comment|// Granularity column
 name|String
 name|tColumnName
 init|=
@@ -1281,16 +1282,6 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|tColumnName
-operator|.
-name|equals
-argument_list|(
-name|DruidStorageHandlerUtils
-operator|.
-name|DEFAULT_TIMESTAMP_COLUMN
-argument_list|)
-operator|&&
 operator|!
 name|tColumnName
 operator|.
@@ -1309,6 +1300,48 @@ argument_list|(
 literal|"Dimension "
 operator|+
 name|tColumnName
+operator|+
+literal|" does not have STRING type: "
+operator|+
+name|primitiveCategory
+argument_list|)
+throw|;
+block|}
+continue|continue;
+case|case
+name|TIMESTAMPLOCALTZ
+case|:
+comment|// Druid timestamp column
+name|String
+name|tLocalTZColumnName
+init|=
+name|columnNames
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|tLocalTZColumnName
+operator|.
+name|equals
+argument_list|(
+name|DruidStorageHandlerUtils
+operator|.
+name|DEFAULT_TIMESTAMP_COLUMN
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Dimension "
+operator|+
+name|tLocalTZColumnName
 operator|+
 literal|" does not have STRING type: "
 operator|+

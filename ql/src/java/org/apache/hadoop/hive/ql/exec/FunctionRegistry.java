@@ -5728,6 +5728,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"to_epoch_milli"
+argument_list|,
+name|GenericUDFEpochMilli
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// Generic UDTF's
 name|system
 operator|.

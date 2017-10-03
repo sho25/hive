@@ -8259,10 +8259,7 @@ name|put
 argument_list|(
 name|materialization
 operator|.
-name|table
-operator|.
-name|getQualifiedName
-argument_list|()
+name|qualifiedTableName
 operator|.
 name|get
 argument_list|(

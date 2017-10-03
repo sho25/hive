@@ -1322,6 +1322,14 @@ argument_list|,
 name|queryRel
 argument_list|,
 literal|null
+argument_list|,
+name|tableRel
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getQualifiedName
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|cq
@@ -2060,6 +2068,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: Default interval will be an Interval once Calcite 1.15.0 is released.
+comment|// We will need to update the type of this list.
 name|List
 argument_list|<
 name|LocalInterval
@@ -2107,6 +2117,10 @@ operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
 name|intervals
+argument_list|,
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 specifier|final

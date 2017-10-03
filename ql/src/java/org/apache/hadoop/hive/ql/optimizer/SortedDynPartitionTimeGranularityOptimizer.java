@@ -827,6 +827,46 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDFEpochMilli
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|generic
+operator|.
+name|GenericUDFTimestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -2086,7 +2126,7 @@ argument_list|()
 operator|==
 name|PrimitiveCategory
 operator|.
-name|TIMESTAMP
+name|TIMESTAMPLOCALTZ
 condition|)
 block|{
 if|if
@@ -2101,9 +2141,9 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Multiple columns with timestamp type on query result; "
+literal|"Multiple columns with timestamp with local time-zone type on query result; "
 operator|+
-literal|"could not resolve which one is the timestamp column"
+literal|"could not resolve which one is the timestamp with local time-zone column"
 argument_list|)
 throw|;
 block|}
@@ -2125,9 +2165,9 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"No column with timestamp type on query result; "
+literal|"No column with timestamp with local time-zone type on query result; "
 operator|+
-literal|"one column should be of timestamp type"
+literal|"one column should be of timestamp with local time-zone type"
 argument_list|)
 throw|;
 block|}
@@ -2267,6 +2307,18 @@ literal|"Granularity for Druid segment not recognized"
 argument_list|)
 throw|;
 block|}
+comment|// Timestamp column type in Druid is timestamp with local time-zone, as it represents
+comment|// a specific instant in time. Thus, we have this value and we need to extract the
+comment|// granularity to split the data when we are storing it in Druid. However, Druid stores
+comment|// the data in UTC. Thus, we need to apply the following logic on the data to extract
+comment|// the granularity correctly:
+comment|// 1) Read the timestamp with local time-zone value.
+comment|// 2) Extract UTC epoch (millis) from timestamp with local time-zone.
+comment|// 3) Cast the long to a timestamp.
+comment|// 4) Apply the granularity function on the timestamp value.
+comment|// That way, '2010-01-01 00:00:00 UTC' and '2009-12-31 16:00:00 PST' (same instant)
+comment|// will end up in the same Druid segment.
+comment|// #1 - Read the column value
 name|ExprNodeDesc
 name|expr
 init|=
@@ -2281,10 +2333,56 @@ name|timestampPos
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|descs
-operator|.
-name|add
+comment|// #2 - UTC epoch for instant
+name|ExprNodeGenericFuncDesc
+name|f1
+init|=
+operator|new
+name|ExprNodeGenericFuncDesc
 argument_list|(
+name|TypeInfoFactory
+operator|.
+name|longTypeInfo
+argument_list|,
+operator|new
+name|GenericUDFEpochMilli
+argument_list|()
+argument_list|,
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|expr
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|// #3 - Cast to timestamp
+name|ExprNodeGenericFuncDesc
+name|f2
+init|=
+operator|new
+name|ExprNodeGenericFuncDesc
+argument_list|(
+name|TypeInfoFactory
+operator|.
+name|timestampTypeInfo
+argument_list|,
+operator|new
+name|GenericUDFTimestamp
+argument_list|()
+argument_list|,
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|f1
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|// #4 - We apply the granularity function
+name|ExprNodeGenericFuncDesc
+name|f3
+init|=
 operator|new
 name|ExprNodeGenericFuncDesc
 argument_list|(
@@ -2309,9 +2407,15 @@ name|Lists
 operator|.
 name|newArrayList
 argument_list|(
-name|expr
+name|f2
 argument_list|)
 argument_list|)
+decl_stmt|;
+name|descs
+operator|.
+name|add
+argument_list|(
+name|f3
 argument_list|)
 expr_stmt|;
 name|colNames
