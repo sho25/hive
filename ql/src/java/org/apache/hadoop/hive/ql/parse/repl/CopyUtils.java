@@ -390,6 +390,9 @@ specifier|public
 name|void
 name|copyAndVerify
 parameter_list|(
+name|FileSystem
+name|destinationFs
+parameter_list|,
 name|Path
 name|destination
 parameter_list|,
@@ -422,16 +425,6 @@ init|=
 name|fsToFileMap
 argument_list|(
 name|srcFiles
-argument_list|)
-decl_stmt|;
-name|FileSystem
-name|destinationFs
-init|=
-name|destination
-operator|.
-name|getFileSystem
-argument_list|(
-name|hiveConf
 argument_list|)
 decl_stmt|;
 for|for

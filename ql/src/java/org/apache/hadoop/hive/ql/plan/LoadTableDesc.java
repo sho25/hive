@@ -123,8 +123,8 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 decl_stmt|;
 specifier|private
 name|DynamicPartitionCtx
@@ -176,6 +176,19 @@ name|partitionSpec
 decl_stmt|;
 comment|// NOTE: this partitionSpec has to be ordered map
 specifier|public
+enum|enum
+name|LoadFileType
+block|{
+name|REPLACE_ALL
+block|,
+comment|// Remove all existing data before copy/move
+name|KEEP_EXISTING
+block|,
+comment|// If any file exist while copy, then just duplicate the file
+name|OVERWRITE_EXISTING
+comment|// If any file exist while copy, then just overwrite the file
+block|}
+specifier|public
 name|LoadTableDesc
 parameter_list|(
 specifier|final
@@ -198,11 +211,11 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|replace
+name|loadFileType
 operator|=
 name|o
 operator|.
-name|replace
+name|loadFileType
 expr_stmt|;
 name|this
 operator|.
@@ -274,8 +287,8 @@ argument_list|>
 name|partitionSpec
 parameter_list|,
 specifier|final
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|,
 specifier|final
 name|AcidUtils
@@ -306,11 +319,11 @@ name|table
 argument_list|,
 name|partitionSpec
 argument_list|,
-name|replace
+name|loadFileType
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * For use with non-ACID compliant operations, such as LOAD    * @param sourcePath    * @param table    * @param partitionSpec    * @param replace    */
+comment|/**    * For use with non-ACID compliant operations, such as LOAD    * @param sourcePath    * @param table    * @param partitionSpec    * @param loadFileType    */
 specifier|public
 name|LoadTableDesc
 parameter_list|(
@@ -332,8 +345,8 @@ argument_list|>
 name|partitionSpec
 parameter_list|,
 specifier|final
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|)
 block|{
 name|this
@@ -344,7 +357,7 @@ name|table
 argument_list|,
 name|partitionSpec
 argument_list|,
-name|replace
+name|loadFileType
 argument_list|,
 name|AcidUtils
 operator|.
@@ -394,7 +407,9 @@ name|table
 argument_list|,
 name|partitionSpec
 argument_list|,
-literal|true
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
 argument_list|,
 name|writeType
 argument_list|,
@@ -432,7 +447,9 @@ name|table
 argument_list|,
 name|partitionSpec
 argument_list|,
-literal|true
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
 argument_list|,
 name|AcidUtils
 operator|.
@@ -515,7 +532,9 @@ operator|.
 name|getPartSpec
 argument_list|()
 argument_list|,
-literal|true
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
 argument_list|)
 expr_stmt|;
 block|}
@@ -530,7 +549,9 @@ name|LinkedHashMap
 argument_list|<>
 argument_list|()
 argument_list|,
-literal|true
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
 argument_list|)
 expr_stmt|;
 block|}
@@ -565,8 +586,8 @@ argument_list|>
 name|partitionSpec
 parameter_list|,
 specifier|final
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|)
 block|{
 name|this
@@ -583,9 +604,9 @@ name|partitionSpec
 expr_stmt|;
 name|this
 operator|.
-name|replace
+name|loadFileType
 operator|=
-name|replace
+name|loadFileType
 expr_stmt|;
 block|}
 annotation|@
@@ -703,22 +724,37 @@ name|getReplace
 parameter_list|()
 block|{
 return|return
-name|replace
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
+operator|)
+return|;
+block|}
+specifier|public
+name|LoadFileType
+name|getLoadFileType
+parameter_list|()
+block|{
+return|return
+name|loadFileType
 return|;
 block|}
 specifier|public
 name|void
-name|setReplace
+name|setLoadFileType
 parameter_list|(
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|)
 block|{
 name|this
 operator|.
-name|replace
+name|loadFileType
 operator|=
-name|replace
+name|loadFileType
 expr_stmt|;
 block|}
 specifier|public

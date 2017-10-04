@@ -1993,6 +1993,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|LoadTableDesc
+operator|.
+name|LoadFileType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|CreateTableAutomaticGrant
@@ -8536,7 +8556,7 @@ name|currentDb
 argument_list|)
 return|;
 block|}
-comment|/**    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param inheritTableSpecs    * @param isSkewedStoreAsSubdir    * @param isSrcLocal    * @param isAcid    * @param hasFollowingStatsTask    * @return    * @throws HiveException    */
+comment|/**    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param inheritTableSpecs    * @param isSkewedStoreAsSubdir    * @param isSrcLocal    * @param isAcid    * @param hasFollowingStatsTask    * @return    * @throws HiveException    */
 specifier|public
 name|void
 name|loadPartition
@@ -8555,8 +8575,8 @@ name|String
 argument_list|>
 name|partSpec
 parameter_list|,
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|,
 name|boolean
 name|inheritTableSpecs
@@ -8592,7 +8612,7 @@ name|tbl
 argument_list|,
 name|partSpec
 argument_list|,
-name|replace
+name|loadFileType
 argument_list|,
 name|inheritTableSpecs
 argument_list|,
@@ -8606,7 +8626,7 @@ name|hasFollowingStatsTask
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param replace    *          if true - replace files in the partition, otherwise add files to    *          the partition    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid    *          true if this is an ACID operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @return Partition object being loaded with data    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcid    *          true if this is an ACID operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @return Partition object being loaded with data    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -8625,8 +8645,8 @@ name|String
 argument_list|>
 name|partSpec
 parameter_list|,
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|,
 name|boolean
 name|inheritTableSpecs
@@ -8870,7 +8890,13 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|replace
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
+operator|)
 operator|||
 operator|(
 name|oldPart
@@ -8952,6 +8978,14 @@ name|isSrcLocal
 argument_list|,
 name|isAcid
 argument_list|,
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|OVERWRITE_EXISTING
+operator|)
+argument_list|,
 name|newFiles
 argument_list|)
 expr_stmt|;
@@ -9031,7 +9065,13 @@ name|tbl
 argument_list|,
 name|partSpec
 argument_list|,
-name|replace
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
+operator|)
 argument_list|,
 name|newFiles
 argument_list|)
@@ -10215,7 +10255,7 @@ return|return
 name|validPartitions
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param replace    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param numDP number of dynamic partitions    * @param listBucketingEnabled    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
 specifier|public
 name|Map
 argument_list|<
@@ -10248,8 +10288,8 @@ argument_list|>
 name|partSpec
 parameter_list|,
 specifier|final
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|,
 specifier|final
 name|int
@@ -10594,7 +10634,7 @@ name|tbl
 argument_list|,
 name|fullPartSpec
 argument_list|,
-name|replace
+name|loadFileType
 argument_list|,
 literal|true
 argument_list|,
@@ -10746,9 +10786,12 @@ name|fullPartSpec
 operator|+
 literal|", "
 operator|+
-literal|" replace="
+literal|" loadFileType="
 operator|+
-name|replace
+name|loadFileType
+operator|.
+name|toString
+argument_list|()
 operator|+
 literal|", "
 operator|+
@@ -11009,7 +11052,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param replace    *          if true - replace files in the table, otherwise add files to table    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param hasFollowingStatsTask    *          if there is any following stats task    * @param isAcid true if this is an ACID based write    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param hasFollowingStatsTask    *          if there is any following stats task    * @param isAcid true if this is an ACID based write    */
 specifier|public
 name|void
 name|loadTable
@@ -11020,8 +11063,8 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
-name|boolean
-name|replace
+name|LoadFileType
+name|loadFileType
 parameter_list|,
 name|boolean
 name|isSrcLocal
@@ -11097,7 +11140,11 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|replace
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
 condition|)
 block|{
 name|Path
@@ -11178,6 +11225,14 @@ argument_list|,
 name|isSrcLocal
 argument_list|,
 name|isAcid
+argument_list|,
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|OVERWRITE_EXISTING
+operator|)
 argument_list|,
 name|newFiles
 argument_list|)
@@ -11379,7 +11434,13 @@ name|tbl
 argument_list|,
 literal|null
 argument_list|,
-name|replace
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|REPLACE_ALL
+operator|)
 argument_list|,
 name|newFiles
 argument_list|)
@@ -16300,6 +16361,9 @@ specifier|final
 name|boolean
 name|isSrcLocal
 parameter_list|,
+name|boolean
+name|isOverwrite
+parameter_list|,
 specifier|final
 name|List
 argument_list|<
@@ -16609,6 +16673,8 @@ name|destf
 argument_list|,
 name|isSrcLocal
 argument_list|,
+name|isOverwrite
+argument_list|,
 name|isRenameAllowed
 argument_list|)
 decl_stmt|;
@@ -16707,6 +16773,8 @@ argument_list|,
 name|destf
 argument_list|,
 name|isSrcLocal
+argument_list|,
+name|isOverwrite
 argument_list|,
 name|isRenameAllowed
 argument_list|)
@@ -17117,7 +17185,7 @@ name|path
 argument_list|)
 return|;
 block|}
-comment|/**    *<p>    *   Moves a file from one {@link Path} to another. If {@code isRenameAllowed} is true then the    *   {@link FileSystem#rename(Path, Path)} method is used to move the file. If its false then the data is copied, if    *   {@code isSrcLocal} is true then the {@link FileSystem#copyFromLocalFile(Path, Path)} method is used, else    *   {@link FileUtils#copy(FileSystem, Path, FileSystem, Path, boolean, boolean, HiveConf)} is used.    *</p>    *    *<p>    *   If the destination file already exists, then {@code _copy_[counter]} is appended to the file name, where counter    *   is an integer starting from 1.    *</p>    *    * @param conf the {@link HiveConf} to use if copying data    * @param sourceFs the {@link FileSystem} where the source file exists    * @param sourcePath the {@link Path} to move    * @param destFs the {@link FileSystem} to move the file to    * @param destDirPath the {@link Path} to move the file to    * @param isSrcLocal if the source file is on the local filesystem    * @param isRenameAllowed true if the data should be renamed and not copied, false otherwise    *    * @return the {@link Path} the source file was moved to    *    * @throws IOException if there was an issue moving the file    */
+comment|/**    *<p>    *   Moves a file from one {@link Path} to another. If {@code isRenameAllowed} is true then the    *   {@link FileSystem#rename(Path, Path)} method is used to move the file. If its false then the data is copied, if    *   {@code isSrcLocal} is true then the {@link FileSystem#copyFromLocalFile(Path, Path)} method is used, else    *   {@link FileUtils#copy(FileSystem, Path, FileSystem, Path, boolean, boolean, HiveConf)} is used.    *</p>    *    *<p>    *   If the destination file already exists, then {@code _copy_[counter]} is appended to the file name, where counter    *   is an integer starting from 1.    *</p>    *    * @param conf the {@link HiveConf} to use if copying data    * @param sourceFs the {@link FileSystem} where the source file exists    * @param sourcePath the {@link Path} to move    * @param destFs the {@link FileSystem} to move the file to    * @param destDirPath the {@link Path} to move the file to    * @param isSrcLocal if the source file is on the local filesystem    * @param isOverwrite if true, then overwrite destination file if exist else make a duplicate copy    * @param isRenameAllowed true if the data should be renamed and not copied, false otherwise    *    * @return the {@link Path} the source file was moved to    *    * @throws IOException if there was an issue moving the file    */
 specifier|private
 specifier|static
 name|Path
@@ -17140,6 +17208,9 @@ name|destDirPath
 parameter_list|,
 name|boolean
 name|isSrcLocal
+parameter_list|,
+name|boolean
+name|isOverwrite
 parameter_list|,
 name|boolean
 name|isRenameAllowed
@@ -17216,6 +17287,22 @@ name|counter
 operator|++
 control|)
 block|{
+if|if
+condition|(
+name|isOverwrite
+condition|)
+block|{
+name|destFs
+operator|.
+name|delete
+argument_list|(
+name|destFilePath
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
 name|destFilePath
 operator|=
 operator|new
@@ -18778,7 +18865,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Copy files.  This handles building the mapping for buckets and such between the source and    * destination    * @param conf Configuration object    * @param srcf source directory, if bucketed should contain bucket files    * @param destf directory to move files into    * @param fs Filesystem    * @param isSrcLocal true if source is on local file system    * @param isAcid true if this is an ACID based write    * @param newFiles if this is non-null, a list of files that were created as a result of this    *                 move will be returned.    * @throws HiveException    */
+comment|/**    * Copy files.  This handles building the mapping for buckets and such between the source and    * destination    * @param conf Configuration object    * @param srcf source directory, if bucketed should contain bucket files    * @param destf directory to move files into    * @param fs Filesystem    * @param isSrcLocal true if source is on local file system    * @param isAcid true if this is an ACID based write    * @param isOverwrite if true, then overwrite if destination file exist, else add a duplicate copy    * @param newFiles if this is non-null, a list of files that were created as a result of this    *                 move will be returned.    * @throws HiveException    */
 specifier|static
 specifier|protected
 name|void
@@ -18801,6 +18888,9 @@ name|isSrcLocal
 parameter_list|,
 name|boolean
 name|isAcid
+parameter_list|,
+name|boolean
+name|isOverwrite
 parameter_list|,
 name|List
 argument_list|<
@@ -18968,6 +19058,8 @@ argument_list|,
 name|destf
 argument_list|,
 name|isSrcLocal
+argument_list|,
+name|isOverwrite
 argument_list|,
 name|newFiles
 argument_list|)
