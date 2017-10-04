@@ -72810,16 +72810,6 @@ argument_list|(
 name|derivedSchema
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-operator|!
-name|createVwDesc
-operator|.
-name|isMaterialized
-argument_list|()
-condition|)
-block|{
-comment|// materialized views don't store the expanded text as they won't be rewritten at query time.
 name|createVwDesc
 operator|.
 name|setViewExpandedText
@@ -72827,7 +72817,6 @@ argument_list|(
 name|expandedText
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 specifier|static
 name|List

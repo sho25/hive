@@ -277,7 +277,7 @@ specifier|public
 name|CreateViewDesc
 parameter_list|()
 block|{   }
-comment|/**    * Used to create a materialized view descriptor    * @param viewName    * @param schema    * @param comment    * @param tblProps    * @param partColNames    * @param ifNotExists    * @param orReplace    * @param isAlterViewAs    * @param inputFormat    * @param outputFormat    * @param location    * @param serde    * @param storageHandler    * @param serdeProps    */
+comment|/**    * Used to create a materialized view descriptor    * @param viewName    * @param schema    * @param comment    * @param tblProps    * @param partColNames    * @param ifNotExists    * @param orReplace    * @param isAlterViewAs    * @param inputFormat    * @param outputFormat    * @param location    * @param serName    * @param serde    * @param storageHandler    * @param serdeProps    */
 specifier|public
 name|CreateViewDesc
 parameter_list|(
