@@ -10213,7 +10213,6 @@ name|filesKept
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO: not clear why two if conditions are different. Preserve the existing logic for now.
 name|addBucketFileToResults
 argument_list|(
 name|taskIDToFile
@@ -10415,7 +10414,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// TODO: not clear why two if conditions are different. Preserve the existing logic for now.
 name|addBucketFileToResults2
 argument_list|(
 name|taskIDToFile
@@ -23991,7 +23989,6 @@ name|specPath
 argument_list|)
 condition|)
 block|{
-comment|// TODO: do we also need to do this when creating an empty partition from select?
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER

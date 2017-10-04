@@ -1639,7 +1639,7 @@ name|locations
 return|;
 block|}
 comment|/**    * @param tblPath not NULL    * @throws IOException    */
-comment|// Duplicates logic in TextMetaDataFormatter TODO: wtf?!!
+comment|// Duplicates logic in TextMetaDataFormatter
 specifier|private
 name|void
 name|putFileSystemsStats

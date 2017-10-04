@@ -1608,7 +1608,7 @@ name|InterruptedException
 block|{
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

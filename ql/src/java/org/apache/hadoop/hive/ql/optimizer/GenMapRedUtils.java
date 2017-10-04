@@ -8537,55 +8537,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-else|else
-block|{
-comment|// TODO# noop MoveWork to avoid q file changes in HIVE-14990. Remove (w/the flag) after merge.
-name|dummyMv
-operator|=
-operator|new
-name|MoveWork
-argument_list|(
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-operator|new
-name|LoadFileDesc
-argument_list|(
-name|inputDirName
-argument_list|,
-name|finalName
-argument_list|,
-literal|true
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|,
-literal|false
-argument_list|)
-argument_list|,
-literal|false
-argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getLineageState
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|dummyMv
-operator|.
-name|setNoop
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-block|}
 comment|// Use the original fsOp path here in case of MM - while the new FSOP merges files inside the
 comment|// MM directory, the original MoveTask still commits based on the parent. Note that this path
 comment|// can only be triggered for a merge that's part of insert for now; MM tables do not support
@@ -10324,7 +10275,7 @@ operator|new
 name|DependencyCollectionWork
 argument_list|()
 decl_stmt|;
-comment|// TODO: this should never happen for mm tables.
+comment|// Note: this should never happen for mm tables.
 name|boolean
 name|shouldMergeMovePaths
 init|=
@@ -10754,14 +10705,6 @@ operator|.
 name|getWork
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|mvWork
-operator|.
-name|isNoop
-argument_list|()
-condition|)
-continue|continue;
 name|Path
 name|srcDir
 init|=
@@ -10987,7 +10930,7 @@ name|isMmTable
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// TODO: wtf? wtf?!! why is this in this method?
+comment|// TODO: wtf?!! why is this in this method? This has nothing to do with anything.
 if|if
 condition|(
 name|mvTask

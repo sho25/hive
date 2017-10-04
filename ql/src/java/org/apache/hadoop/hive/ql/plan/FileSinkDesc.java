@@ -1155,7 +1155,7 @@ literal|null
 condition|)
 block|{
 return|return
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -1170,7 +1170,7 @@ else|else
 block|{
 comment|// Dynamic Partition Insert case
 return|return
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

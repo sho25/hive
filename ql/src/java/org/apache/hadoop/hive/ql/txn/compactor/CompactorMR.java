@@ -1638,7 +1638,7 @@ comment|// For MM tables we don't need to launch MR jobs as there is no compacti
 comment|// We just need to delete the directories for aborted transactions.
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

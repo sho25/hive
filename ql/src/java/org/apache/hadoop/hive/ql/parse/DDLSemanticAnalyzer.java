@@ -8174,7 +8174,7 @@ block|}
 comment|// It would be possible to support this, but this is such a pointless command.
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -12495,7 +12495,7 @@ expr_stmt|;
 comment|// TODO: we should probably block all ACID tables here.
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

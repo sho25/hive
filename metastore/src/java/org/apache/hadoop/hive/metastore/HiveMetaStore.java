@@ -14385,7 +14385,7 @@ if|if
 condition|(
 name|MetaStoreUtils
 operator|.
-name|isInsertOnlyTable
+name|isInsertOnlyTableParam
 argument_list|(
 name|t
 operator|.
@@ -14997,7 +14997,7 @@ if|if
 condition|(
 name|MetaStoreUtils
 operator|.
-name|isInsertOnlyTable
+name|isInsertOnlyTableParam
 argument_list|(
 name|t
 operator|.

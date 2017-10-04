@@ -225,6 +225,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|AcidUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -992,11 +1010,11 @@ init|=
 literal|""
 decl_stmt|;
 comment|// check if input pruning is possible
-comment|// TODO: this relies a lot on having one file per bucket. No support for MM tables for now.
+comment|// TODO: this code is buggy - it relies on having one file per bucket; no MM support (by design).
 name|boolean
 name|isMmTable
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

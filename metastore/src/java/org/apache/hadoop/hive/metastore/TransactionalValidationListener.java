@@ -765,7 +765,7 @@ operator|&&
 operator|!
 name|MetaStoreUtils
 operator|.
-name|isInsertOnlyTable
+name|isInsertOnlyTableParam
 argument_list|(
 name|oldTable
 operator|.
@@ -830,7 +830,7 @@ operator|&&
 operator|!
 name|MetaStoreUtils
 operator|.
-name|isInsertOnlyTable
+name|isInsertOnlyTableParam
 argument_list|(
 name|oldTable
 operator|.

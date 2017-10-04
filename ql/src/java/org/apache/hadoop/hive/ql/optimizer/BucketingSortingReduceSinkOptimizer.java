@@ -2372,7 +2372,7 @@ block|}
 elseif|else
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -2843,7 +2843,7 @@ decl_stmt|;
 comment|// Not supported for MM tables for now.
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

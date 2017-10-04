@@ -2146,7 +2146,7 @@ argument_list|()
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -2919,7 +2919,7 @@ name|validTxnList
 decl_stmt|;
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

@@ -1629,7 +1629,7 @@ name|tableHandle
 argument_list|)
 operator|&&
 operator|!
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -1952,7 +1952,7 @@ name|tableHandle
 decl_stmt|;
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

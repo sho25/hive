@@ -8721,7 +8721,7 @@ decl_stmt|;
 name|boolean
 name|isMmTableWrite
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -8945,7 +8945,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO: this assumes both paths are qualified; which they are, currently.
+comment|// Note: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
 name|isMmTableWrite
@@ -10013,7 +10013,7 @@ name|subdirFilter
 init|=
 literal|null
 decl_stmt|;
-comment|// TODO: just like the move path, we only do one level of recursion.
+comment|// Note: just like the move path, we only do one level of recursion.
 for|for
 control|(
 name|FileStatus
@@ -10263,7 +10263,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// TODO: may be broken? no LB bugs for now but if any are found.
 comment|/* Base Case. It's leaf. */
 if|if
 condition|(
@@ -10476,7 +10475,7 @@ argument_list|,
 literal|""
 argument_list|)
 decl_stmt|;
-comment|// TODO: wtf?
+comment|// TODO: should it rather do a prefix?
 if|if
 condition|(
 name|lbDirSuffix
@@ -11311,7 +11310,7 @@ name|txnId
 argument_list|,
 name|stmtId
 argument_list|,
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -12080,7 +12079,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO: this assumes both paths are qualified; which they are, currently.
+comment|// Note: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
 name|isMmTable
@@ -21030,7 +21029,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// TODO: we assume lbLevels is 0 here. Same as old code for non-MM.
+comment|// Note: we assume lbLevels is 0 here. Same as old code for non-MM.
 comment|//       For MM tables, this can only be a LOAD command. Does LOAD even support LB?
 name|deleteOldPathForReplace
 argument_list|(
@@ -21391,8 +21390,8 @@ else|else
 block|{
 comment|// We need to clean up different MM IDs from each LB directory separately.
 comment|// Avoid temporary directories in the immediate table/part dir.
-comment|// TODO: we could just find directories with any MM directories inside?
-comment|//       the rest doesn't have to be cleaned up.
+comment|// Note: we could just find directories with any MM directories inside?
+comment|//       the rest doesn't have to be cleaned up. Play it safe.
 name|String
 name|mask
 init|=

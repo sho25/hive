@@ -41368,7 +41368,7 @@ argument_list|()
 decl_stmt|;
 name|isMmTable
 operator|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -41573,7 +41573,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -41900,7 +41900,7 @@ argument_list|)
 expr_stmt|;
 name|isMmTable
 operator|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -42069,7 +42069,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -42363,7 +42363,7 @@ condition|(
 operator|!
 name|destTableIsTemporary
 operator|&&
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -44091,7 +44091,7 @@ argument_list|()
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -44110,7 +44110,7 @@ name|table_desc
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -74045,7 +74045,7 @@ argument_list|(
 name|tbl
 argument_list|)
 operator|||
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -74363,7 +74363,7 @@ argument_list|(
 name|tbl
 argument_list|)
 operator|||
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

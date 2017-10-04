@@ -7900,7 +7900,7 @@ operator|.
 name|calculateListBucketingLevel
 argument_list|()
 decl_stmt|;
-comment|// TODO: why is it stored in both?
+comment|// TODO: why is it stored in both table and dpCtx?
 name|int
 name|numBuckets
 init|=

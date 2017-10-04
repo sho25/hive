@@ -13021,7 +13021,7 @@ name|tbl
 argument_list|)
 operator|&&
 operator|!
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -26701,7 +26701,7 @@ decl_stmt|;
 name|boolean
 name|isFromMmTable
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -26713,7 +26713,7 @@ argument_list|)
 decl_stmt|,
 name|isRemoved
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isRemovedInsertOnlyTable
 argument_list|(
@@ -26843,25 +26843,11 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|tbl
-operator|.
-name|isStoredAsSubDirectories
-argument_list|()
-condition|)
-block|{
-comment|// TODO: support this? we only bail because it's a PITA and hardly anyone seems to care.
-throw|throw
-operator|new
-name|HiveException
+name|checkMmLb
 argument_list|(
-literal|"Converting list bucketed tables stored as subdirectories "
-operator|+
-literal|" to and from MM is not supported"
+name|tbl
 argument_list|)
-throw|;
-block|}
+expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -27285,14 +27271,15 @@ name|isStoredAsSubDirectories
 argument_list|()
 condition|)
 return|return;
-comment|// TODO: support this?
+comment|// TODO [MM gap?]: by design; no-one seems to use LB tables. They will work, but not convert.
+comment|//                 It's possible to work around this by re-creating and re-inserting the table.
 throw|throw
 operator|new
 name|HiveException
 argument_list|(
 literal|"Converting list bucketed tables stored as subdirectories "
 operator|+
-literal|" to and from MM is not supported"
+literal|" to and from MM is not supported. Please re-create a table in the desired format."
 argument_list|)
 throw|;
 block|}
@@ -27315,14 +27302,13 @@ name|isStoredAsSubDirectories
 argument_list|()
 condition|)
 return|return;
-comment|// TODO: support this?
 throw|throw
 operator|new
 name|HiveException
 argument_list|(
 literal|"Converting list bucketed tables stored as subdirectories "
 operator|+
-literal|" to and from MM is not supported. Please create a table in the desired format."
+literal|" to and from MM is not supported. Please re-create a table in the desired format."
 argument_list|)
 throw|;
 block|}
@@ -28157,7 +28143,7 @@ block|{
 name|boolean
 name|isFromMmTable
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -28170,7 +28156,7 @@ decl_stmt|;
 name|Boolean
 name|isToMmTable
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isToInsertOnlyTable
 argument_list|(

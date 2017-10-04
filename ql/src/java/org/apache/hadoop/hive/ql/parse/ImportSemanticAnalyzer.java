@@ -1129,7 +1129,6 @@ name|SuppressWarnings
 argument_list|(
 literal|"unused"
 argument_list|)
-comment|// TODO: wtf?
 name|ASTNode
 name|partspec
 init|=
@@ -1718,7 +1717,7 @@ block|}
 name|boolean
 name|isSourceMm
 init|=
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -2189,7 +2188,8 @@ name|stmtId
 init|=
 literal|0
 decl_stmt|;
-comment|// TODO: due to the master merge, tblDesc is no longer CreateTableDesc, but ImportTableDesc
+comment|// TODO [MM gap?]: bad merge; tblDesc is no longer CreateTableDesc, but ImportTableDesc.
+comment|//                 We need to verify the tests to see if this works correctly.
 comment|/*     if (isAcid(txnId)) {       tblDesc.setInitialMmWriteId(txnId);     }     */
 if|if
 condition|(
@@ -2591,7 +2591,7 @@ name|Path
 name|destPath
 init|=
 operator|!
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -2707,7 +2707,7 @@ name|txnId
 argument_list|)
 condition|)
 block|{
-comment|// TODO: ReplCopyTask is completely screwed. Need to support when it's not as screwed.
+comment|// Note: this is replication gap, not MM gap... Repl V2 is not ready yet.
 throw|throw
 operator|new
 name|RuntimeException
@@ -3394,7 +3394,7 @@ name|Path
 name|destPath
 init|=
 operator|!
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -3435,7 +3435,7 @@ name|Path
 name|moveTaskSrc
 init|=
 operator|!
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -3523,7 +3523,7 @@ name|txnId
 argument_list|)
 condition|)
 block|{
-comment|// TODO: ReplCopyTask is completely screwed. Need to support when it's not as screwed.
+comment|// Note: this is replication gap, not MM gap... Repl V2 is not ready yet.
 throw|throw
 operator|new
 name|RuntimeException
@@ -5343,7 +5343,7 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -5703,7 +5703,7 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -6499,7 +6499,7 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -6746,7 +6746,7 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

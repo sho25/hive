@@ -2215,7 +2215,8 @@ init|=
 literal|0
 decl_stmt|;
 block|}
-comment|// TODO: why is this in text formatter? grrr
+comment|// TODO: why is this in text formatter?!!
+comment|//       This computes stats and should be in stats (de-duplicated too).
 specifier|private
 name|void
 name|writeFileSystemStats

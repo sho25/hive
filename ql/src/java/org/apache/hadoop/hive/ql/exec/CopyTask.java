@@ -683,7 +683,7 @@ argument_list|,
 literal|null
 argument_list|)
 return|;
-comment|// TODO: this doesn't handle list bucketing properly. Does the original exim do that?
+comment|// Note: this doesn't handle list bucketing properly; neither does the original code.
 name|FileStatus
 index|[]
 name|mmDirs

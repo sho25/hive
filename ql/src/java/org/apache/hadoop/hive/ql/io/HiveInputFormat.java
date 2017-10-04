@@ -2913,7 +2913,7 @@ name|validTxnList
 decl_stmt|;
 if|if
 condition|(
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
@@ -3518,7 +3518,7 @@ name|hadAcidState
 operator|=
 literal|true
 expr_stmt|;
-comment|// TODO: for IOW, we also need to count in base dir, if any
+comment|// TODO [MM gap]: for IOW, we also need to count in base dir, if any
 for|for
 control|(
 name|AcidUtils
@@ -4485,9 +4485,10 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// TODO: HiveFileFormatUtils.getPartitionDescFromPathRecursively for MM tables?
-comment|//       So far, the only case when this is called for a MM directory was in error.
-comment|//       Keep it like this for now; may need replacement if we find a valid usage like this.
+comment|// Note: we could call HiveFileFormatUtils.getPartitionDescFromPathRecursively for MM tables.
+comment|//       The recursive call is usually needed for non-MM tables, because the path management
+comment|//       is not strict and the code does whatever. That should not happen for MM tables.
+comment|//       Keep it like this for now; may need replacement if we find a valid use case.
 name|partDesc
 operator|=
 name|pathToPartitionInfo

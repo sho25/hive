@@ -184,7 +184,7 @@ specifier|private
 name|Long
 name|currentTransactionId
 decl_stmt|;
-comment|// TODO: the below seems like they should just be combined into partitionDesc
+comment|// TODO: the below seem like they should just be combined into partitionDesc
 specifier|private
 name|org
 operator|.
@@ -865,7 +865,7 @@ name|isMmTable
 parameter_list|()
 block|{
 return|return
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(

@@ -1892,16 +1892,6 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|work
-operator|.
-name|isNoop
-argument_list|()
-condition|)
-return|return
-literal|0
-return|;
-if|if
-condition|(
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
@@ -4749,7 +4739,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// TODO: this particular bit will not work for MM tables, as there can be multiple
+comment|// Note: this particular bit will not work for MM tables, as there can be multiple
 comment|//       directories for different MM IDs. We could put the path here that would account
 comment|//       for the current MM ID being written, but it will not guarantee that other MM IDs
 comment|//       have the correct buckets. The existing code discards the inferred data when the

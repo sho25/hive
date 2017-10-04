@@ -983,7 +983,7 @@ operator|=
 operator|!
 name|isMerge
 operator|&&
-name|MetaStoreUtils
+name|AcidUtils
 operator|.
 name|isInsertOnlyTable
 argument_list|(
