@@ -391,16 +391,9 @@ name|long
 name|end
 parameter_list|)
 block|{
-name|CacheChunk
-name|cc
-init|=
+return|return
 operator|new
 name|CacheChunk
-argument_list|()
-decl_stmt|;
-name|cc
-operator|.
-name|init
 argument_list|(
 name|buffer
 argument_list|,
@@ -408,9 +401,6 @@ name|offset
 argument_list|,
 name|end
 argument_list|)
-expr_stmt|;
-return|return
-name|cc
 return|;
 block|}
 block|}
