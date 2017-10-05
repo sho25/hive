@@ -20037,7 +20037,7 @@ literal|"distcp\\.options\\.strategy"
 block|,
 literal|"distcp\\.options\\.i"
 block|,
-literal|"distcp\\.options\\.p"
+literal|"distcp\\.options\\.p.*"
 block|,
 literal|"distcp\\.options\\.update"
 block|,

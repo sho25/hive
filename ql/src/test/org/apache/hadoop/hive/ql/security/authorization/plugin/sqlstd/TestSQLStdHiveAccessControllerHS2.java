@@ -499,6 +499,8 @@ argument_list|,
 literal|"tez.queue.name"
 argument_list|,
 literal|"hive.druid.select.distribute"
+argument_list|,
+literal|"distcp.options.px"
 argument_list|)
 decl_stmt|;
 comment|// combine two lists
