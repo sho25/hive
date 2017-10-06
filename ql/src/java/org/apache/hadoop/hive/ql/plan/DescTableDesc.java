@@ -160,11 +160,6 @@ decl_stmt|;
 name|boolean
 name|isFormatted
 decl_stmt|;
-comment|/** Show pretty output?  This has more human-readable formatting than    * isFormatted mode.    */
-specifier|private
-name|boolean
-name|isPretty
-decl_stmt|;
 comment|/**    * table name for the result of describe table.    */
 specifier|private
 specifier|static
@@ -230,12 +225,6 @@ expr_stmt|;
 name|this
 operator|.
 name|isFormatted
-operator|=
-literal|false
-expr_stmt|;
-name|this
-operator|.
-name|isPretty
 operator|=
 literal|false
 expr_stmt|;
@@ -348,32 +337,6 @@ operator|.
 name|isFormatted
 operator|=
 name|isFormat
-expr_stmt|;
-block|}
-specifier|public
-name|boolean
-name|isPretty
-parameter_list|()
-block|{
-return|return
-name|this
-operator|.
-name|isPretty
-return|;
-block|}
-specifier|public
-name|void
-name|setPretty
-parameter_list|(
-name|boolean
-name|isPretty
-parameter_list|)
-block|{
-name|this
-operator|.
-name|isPretty
-operator|=
-name|isPretty
 expr_stmt|;
 block|}
 comment|/**    * @return the tableName    */

@@ -22678,11 +22678,6 @@ operator|.
 name|isExt
 argument_list|()
 argument_list|,
-name|descTbl
-operator|.
-name|isPretty
-argument_list|()
-argument_list|,
 name|isOutputPadded
 argument_list|,
 name|colStats

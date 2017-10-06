@@ -369,9 +369,6 @@ name|boolean
 name|isExt
 parameter_list|,
 name|boolean
-name|isPretty
-parameter_list|,
-name|boolean
 name|isOutputPadded
 parameter_list|,
 name|List
