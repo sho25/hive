@@ -579,7 +579,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|metastore
 operator|.
 name|txn
 operator|.
@@ -750,6 +750,10 @@ operator|.
 name|LoggerFactory
 import|;
 end_import
+
+begin_comment
+comment|/**  * TODO: this should be merged with TestTxnCommands once that is checked in  * specifically the tests; the supporting code here is just a clone of TestTxnCommands  */
+end_comment
 
 begin_class
 specifier|public
@@ -996,9 +1000,6 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|tearDown
-argument_list|()
-expr_stmt|;
 name|hiveConf
 operator|=
 operator|new
@@ -1122,7 +1123,9 @@ expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|File
 name|f
@@ -1364,7 +1367,9 @@ block|}
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 block|}
 finally|finally
@@ -10609,12 +10614,17 @@ operator|new
 name|AcidOpenTxnsCounterService
 argument_list|()
 decl_stmt|;
-name|runHouseKeeperService
-argument_list|(
 name|openTxnsCounterService
-argument_list|,
+operator|.
+name|setConf
+argument_list|(
 name|hiveConf
 argument_list|)
+expr_stmt|;
+name|openTxnsCounterService
+operator|.
+name|run
+argument_list|()
 expr_stmt|;
 comment|// will update current number of open txns to 3
 name|MetaException
@@ -10701,12 +10711,10 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|runHouseKeeperService
-argument_list|(
 name|openTxnsCounterService
-argument_list|,
-name|hiveConf
-argument_list|)
+operator|.
+name|run
+argument_list|()
 expr_stmt|;
 comment|// will update current number of open txns back to 0
 name|exception

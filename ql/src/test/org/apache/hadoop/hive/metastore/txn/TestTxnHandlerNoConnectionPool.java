@@ -292,7 +292,9 @@ block|{
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -308,7 +310,9 @@ expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 name|txnHandler
@@ -333,7 +337,9 @@ block|{
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@

@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -41,10 +41,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|classification
 operator|.
 name|InterfaceAudience
@@ -59,13 +55,23 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|classification
 operator|.
 name|InterfaceStability
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configurable
 import|;
 end_import
 
@@ -84,22 +90,6 @@ operator|.
 name|classification
 operator|.
 name|RetrySemantics
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
 import|;
 end_import
 
@@ -162,7 +152,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)}  * and {@link org.apache.hadoop.hive.common.JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  *  * Note on HIVE_LOCKS.hl_last_heartbeat.  * For locks that are part of transaction, we set this 0 (would rather set it to NULL but  * Currently the DB schema has this NOT NULL) and only update/read heartbeat from corresponding  * transaction in TXNS.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  */
 end_comment
 
 begin_interface
@@ -177,6 +167,8 @@ name|Evolving
 specifier|public
 interface|interface
 name|TxnStore
+extends|extends
+name|Configurable
 block|{
 enum|enum
 name|MUTEX_KEY
@@ -226,28 +218,16 @@ name|ATTEMPTED_RESPONSE
 init|=
 literal|"attempted"
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
 name|int
 name|TIMED_OUT_TXN_ABORT_BATCH_SIZE
 init|=
 literal|50000
 decl_stmt|;
-specifier|public
-name|void
-name|setConf
-parameter_list|(
-name|HiveConf
-name|conf
-parameter_list|)
-function_decl|;
 comment|/**    * Get information about open transactions.  This gives extensive information about the    * transactions rather than just the list of transactions.  This should be used when the need    * is to see information about the transactions (e.g. show transactions).    * @return information about open transactions    * @throws MetaException    */
 annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|GetOpenTxnsInfoResponse
 name|getOpenTxnsInfo
 parameter_list|()
@@ -259,7 +239,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|GetOpenTxnsResponse
 name|getOpenTxns
 parameter_list|()
@@ -271,7 +250,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|void
 name|countOpenTxns
 parameter_list|()
@@ -283,7 +261,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|OpenTxnsResponse
 name|openTxns
 parameter_list|(
@@ -298,7 +275,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|abortTxn
 parameter_list|(
@@ -317,7 +293,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|abortTxns
 parameter_list|(
@@ -334,7 +309,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|commitTxn
 parameter_list|(
@@ -353,7 +327,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|CannotRetry
-specifier|public
 name|LockResponse
 name|lock
 parameter_list|(
@@ -372,7 +345,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|LockResponse
 name|checkLock
 parameter_list|(
@@ -393,7 +365,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|unlock
 parameter_list|(
@@ -412,7 +383,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|ShowLocksResponse
 name|showLocks
 parameter_list|(
@@ -427,7 +397,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|void
 name|heartbeat
 parameter_list|(
@@ -448,7 +417,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|HeartbeatTxnRangeResponse
 name|heartbeatTxnRange
 parameter_list|(
@@ -463,7 +431,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|CompactionResponse
 name|compact
 parameter_list|(
@@ -478,7 +445,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|ShowCompactResponse
 name|showCompact
 parameter_list|(
@@ -493,7 +459,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|void
 name|addDynamicPartitions
 parameter_list|(
@@ -512,7 +477,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|cleanupRecords
 parameter_list|(
@@ -539,7 +503,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|performTimeOuts
 parameter_list|()
@@ -549,7 +512,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|Set
 argument_list|<
 name|CompactionInfo
@@ -567,7 +529,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|setRunAs
 parameter_list|(
@@ -585,7 +546,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|CompactionInfo
 name|findNextToCompact
 parameter_list|(
@@ -600,7 +560,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|void
 name|markCompacted
 parameter_list|(
@@ -615,7 +574,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|List
 argument_list|<
 name|CompactionInfo
@@ -630,7 +588,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|CannotRetry
-specifier|public
 name|void
 name|markCleaned
 parameter_list|(
@@ -645,7 +602,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|CannotRetry
-specifier|public
 name|void
 name|markFailed
 parameter_list|(
@@ -660,7 +616,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|void
 name|cleanEmptyAbortedTxns
 parameter_list|()
@@ -672,7 +627,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|revokeFromLocalWorkers
 parameter_list|(
@@ -687,7 +641,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|revokeTimedoutWorkers
 parameter_list|(
@@ -702,7 +655,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -720,7 +672,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|setCompactionHighestTxnId
 parameter_list|(
@@ -738,7 +689,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|void
 name|purgeCompactionHistory
 parameter_list|()
@@ -750,7 +700,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|SafeToRetry
-specifier|public
 name|void
 name|performWriteSetGC
 parameter_list|()
@@ -760,7 +709,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|ReadOnly
-specifier|public
 name|boolean
 name|checkFailedCompactions
 parameter_list|(
@@ -772,7 +720,6 @@ name|MetaException
 function_decl|;
 annotation|@
 name|VisibleForTesting
-specifier|public
 name|int
 name|numLocksInLockTable
 parameter_list|()
@@ -794,19 +741,15 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|MutexAPI
 name|getMutexAPI
 parameter_list|()
 function_decl|;
 comment|/**    * This is primarily designed to provide coarse grained mutex support to operations running    * inside the Metastore (of which there could be several instances).  The initial goal is to     * ensure that various sub-processes of the Compactor don't step on each other.    *     * In RDMBS world each {@code LockHandle} uses a java.sql.Connection so use it sparingly.    */
-specifier|public
-specifier|static
 interface|interface
 name|MutexAPI
 block|{
 comment|/**      * The {@code key} is name of the lock. Will acquire and exclusive lock or block.  It retuns      * a handle which must be used to release the lock.  Each invocation returns a new handle.      */
-specifier|public
 name|LockHandle
 name|acquireLock
 parameter_list|(
@@ -817,7 +760,6 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**      * Same as {@link #acquireLock(String)} but takes an already existing handle as input.  This       * will associate the lock on {@code key} with the same handle.  All locks associated with      * the same handle will be released together.      * @param handle not NULL      */
-specifier|public
 name|void
 name|acquireLock
 parameter_list|(
@@ -830,13 +772,10 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-specifier|public
-specifier|static
 interface|interface
 name|LockHandle
 block|{
 comment|/**        * Releases all locks associated with this handle.        */
-specifier|public
 name|void
 name|releaseLocks
 parameter_list|()
@@ -848,7 +787,6 @@ annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
-specifier|public
 name|void
 name|setHadoopJobId
 parameter_list|(

@@ -1826,12 +1826,16 @@ comment|//1) Start from a clean slate (metastore)
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 comment|//2) obtain metastore clients
 name|msClient
