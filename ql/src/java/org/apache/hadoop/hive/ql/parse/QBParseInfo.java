@@ -372,12 +372,6 @@ name|isNoScanAnalyzeCommand
 decl_stmt|;
 comment|// used for the analyze command (statistics) (noscan)
 specifier|private
-name|boolean
-name|isPartialScanAnalyzeCommand
-decl_stmt|;
-comment|// used for the analyze command (statistics)
-comment|// (partialscan)
-specifier|private
 specifier|final
 name|HashMap
 argument_list|<
@@ -2855,32 +2849,6 @@ operator|.
 name|isNoScanAnalyzeCommand
 operator|=
 name|isNoScanAnalyzeCommand
-expr_stmt|;
-block|}
-comment|/**    * @return the isPartialScanAnalyzeCommand    */
-specifier|public
-name|boolean
-name|isPartialScanAnalyzeCommand
-parameter_list|()
-block|{
-return|return
-name|isPartialScanAnalyzeCommand
-return|;
-block|}
-comment|/**    * @param isPartialScanAnalyzeCommand the isPartialScanAnalyzeCommand to set    */
-specifier|public
-name|void
-name|setPartialScanAnalyzeCommand
-parameter_list|(
-name|boolean
-name|isPartialScanAnalyzeCommand
-parameter_list|)
-block|{
-name|this
-operator|.
-name|isPartialScanAnalyzeCommand
-operator|=
-name|isPartialScanAnalyzeCommand
 expr_stmt|;
 block|}
 comment|/**    * See also {@link #isInsertIntoTable(String)}    */

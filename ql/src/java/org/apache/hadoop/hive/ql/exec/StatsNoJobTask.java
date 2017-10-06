@@ -628,7 +628,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * StatsNoJobTask is used in cases where stats collection is the only task for the given query (no  * parent MR or Tez job). It is used in the following cases 1) ANALYZE with partialscan/noscan for  * file formats that implement StatsProvidingRecordReader interface: ORC format (implements  * StatsProvidingRecordReader) stores column statistics for all columns in the file footer. Its much  * faster to compute the table/partition statistics by reading the footer than scanning all the  * rows. This task can be used for computing basic stats like numFiles, numRows, fileSize,  * rawDataSize from ORC footer.  **/
+comment|/**  * StatsNoJobTask is used in cases where stats collection is the only task for the given query (no  * parent MR or Tez job). It is used in the following cases 1) ANALYZE with noscan for  * file formats that implement StatsProvidingRecordReader interface: ORC format (implements  * StatsProvidingRecordReader) stores column statistics for all columns in the file footer. Its much  * faster to compute the table/partition statistics by reading the footer than scanning all the  * rows. This task can be used for computing basic stats like numFiles, numRows, fileSize,  * rawDataSize from ORC footer.  **/
 end_comment
 
 begin_class

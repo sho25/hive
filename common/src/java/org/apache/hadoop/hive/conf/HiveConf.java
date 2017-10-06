@@ -7814,7 +7814,7 @@ literal|"hive.stats.gather.num.threads"
 argument_list|,
 literal|10
 argument_list|,
-literal|"Number of threads used by partialscan/noscan analyze command for partitioned tables.\n"
+literal|"Number of threads used by noscan analyze command for partitioned tables.\n"
 operator|+
 literal|"This is applicable only for file formats that implement StatsProvidingRecordReader (like ORC)."
 argument_list|)
@@ -18112,9 +18112,11 @@ name|result
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|result
 return|;
+block|}
 if|if
 condition|(
 name|var
@@ -18147,9 +18149,11 @@ name|result
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|result
 return|;
+block|}
 block|}
 return|return
 name|org
@@ -21330,7 +21334,9 @@ argument_list|(
 name|s
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 operator|!
@@ -21418,9 +21424,11 @@ name|reverseMap
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|reverseMap
 return|;
+block|}
 block|}
 name|HashMap
 argument_list|<
@@ -21504,9 +21512,11 @@ name|reverseMap
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|reverseMap
 return|;
+block|}
 name|reverseMap
 operator|=
 name|vars

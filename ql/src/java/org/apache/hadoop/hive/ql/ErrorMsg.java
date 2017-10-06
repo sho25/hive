@@ -1577,51 +1577,6 @@ operator|+
 literal|"a non-native table"
 argument_list|)
 block|,
-name|ANALYZE_TABLE_PARTIALSCAN_NON_NATIVE
-argument_list|(
-literal|10229
-argument_list|,
-literal|"ANALYZE TABLE PARTIALSCAN cannot be used for "
-operator|+
-literal|"a non-native table"
-argument_list|)
-block|,
-name|ANALYZE_TABLE_PARTIALSCAN_NON_RCFILE
-argument_list|(
-literal|10230
-argument_list|,
-literal|"ANALYZE TABLE PARTIALSCAN doesn't "
-operator|+
-literal|"support non-RCfile. "
-argument_list|)
-block|,
-name|ANALYZE_TABLE_PARTIALSCAN_EXTERNAL_TABLE
-argument_list|(
-literal|10231
-argument_list|,
-literal|"ANALYZE TABLE PARTIALSCAN "
-operator|+
-literal|"doesn't support external table: "
-argument_list|)
-block|,
-name|ANALYZE_TABLE_PARTIALSCAN_AGGKEY
-argument_list|(
-literal|10232
-argument_list|,
-literal|"Analyze partialscan command "
-operator|+
-literal|"fails to construct aggregation for the partition "
-argument_list|)
-block|,
-name|ANALYZE_TABLE_PARTIALSCAN_AUTOGATHER
-argument_list|(
-literal|10233
-argument_list|,
-literal|"Analyze partialscan is not allowed "
-operator|+
-literal|"if hive.stats.autogather is set to false"
-argument_list|)
-block|,
 name|PARTITION_VALUE_NOT_CONTINUOUS
 argument_list|(
 literal|10234
@@ -3018,45 +2973,55 @@ name|e
 operator|instanceof
 name|AccessControlException
 condition|)
+block|{
 return|return
 name|ACCESS_DENIED
 return|;
+block|}
 if|if
 condition|(
 name|e
 operator|instanceof
 name|NSQuotaExceededException
 condition|)
+block|{
 return|return
 name|QUOTA_EXCEEDED
 return|;
+block|}
 if|if
 condition|(
 name|e
 operator|instanceof
 name|DSQuotaExceededException
 condition|)
+block|{
 return|return
 name|QUOTA_EXCEEDED
 return|;
+block|}
 if|if
 condition|(
 name|e
 operator|instanceof
 name|UnresolvedPathException
 condition|)
+block|{
 return|return
 name|UNRESOLVED_PATH
 return|;
+block|}
 if|if
 condition|(
 name|e
 operator|instanceof
 name|FileNotFoundException
 condition|)
+block|{
 return|return
 name|FILE_NOT_FOUND
 return|;
+block|}
 return|return
 name|UNRESOLVED_RT_EXCEPTION
 return|;

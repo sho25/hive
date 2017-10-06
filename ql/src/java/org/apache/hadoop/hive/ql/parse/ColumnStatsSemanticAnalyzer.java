@@ -2244,14 +2244,6 @@ argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
-comment|// check if it is partial scan. grammar prevents coexit partialscan/columns
-name|super
-operator|.
-name|processPartialScanCommand
-argument_list|(
-name|ast
-argument_list|)
-expr_stmt|;
 comment|/* Rewrite only analyze table<> column<> compute statistics; Don't rewrite analyze table      * command - table stats are collected by the table scan operator and is not rewritten to      * an aggregation.      */
 if|if
 condition|(
