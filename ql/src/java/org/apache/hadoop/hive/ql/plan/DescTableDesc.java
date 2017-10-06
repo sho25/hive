@@ -191,7 +191,7 @@ name|colStatsSchema
 init|=
 literal|"col_name,data_type,min,max,num_nulls,"
 operator|+
-literal|"distinct_count,avg_col_len,max_col_len,num_trues,num_falses,comment,bitVector"
+literal|"distinct_count,avg_col_len,max_col_len,num_trues,num_falses,bitVector,comment"
 operator|+
 literal|"#string:string:string:string:string:string:string:string:string:string:string:string"
 decl_stmt|;
