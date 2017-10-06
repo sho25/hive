@@ -1624,13 +1624,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|StringBuilder
-name|builder
-init|=
-operator|new
-name|StringBuilder
-argument_list|()
-decl_stmt|;
 for|for
 control|(
 name|Map
@@ -2828,17 +2821,12 @@ name|MetaException
 argument_list|(
 literal|"No current SessionState, cannot create temporary table"
 operator|+
-name|tbl
+name|Warehouse
 operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|"."
-operator|+
+name|getQualifiedName
+argument_list|(
 name|tbl
-operator|.
-name|getTableName
-argument_list|()
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -2899,11 +2887,14 @@ name|MetaException
 argument_list|(
 literal|"Temporary table "
 operator|+
+name|StatsUtils
+operator|.
+name|getFullyQualifiedTableName
+argument_list|(
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tblName
+argument_list|)
 operator|+
 literal|" already exists"
 argument_list|)
@@ -4344,11 +4335,14 @@ name|MetaException
 argument_list|(
 literal|"Could not find temp table entry for "
 operator|+
+name|StatsUtils
+operator|.
+name|getFullyQualifiedTableName
+argument_list|(
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -4802,11 +4796,14 @@ name|MetaException
 argument_list|(
 literal|"No current SessionState, cannot update temporary table stats for "
 operator|+
+name|StatsUtils
+operator|.
+name|getFullyQualifiedTableName
+argument_list|(
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 argument_list|)
 throw|;
 block|}

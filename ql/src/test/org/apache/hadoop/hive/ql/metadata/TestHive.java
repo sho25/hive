@@ -371,6 +371,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|stats
+operator|.
+name|StatsUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde
 operator|.
 name|serdeConstants
@@ -3352,11 +3370,14 @@ name|fail
 argument_list|(
 literal|"Unable to drop and create table "
 operator|+
+name|StatsUtils
+operator|.
+name|getFullyQualifiedTableName
+argument_list|(
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 operator|+
 literal|" because "
 operator|+

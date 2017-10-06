@@ -14337,14 +14337,7 @@ name|fullViewName
 init|=
 name|tab
 operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|tab
-operator|.
-name|getTableName
+name|getFullyQualifiedName
 argument_list|()
 decl_stmt|;
 comment|// Prevent view cycles

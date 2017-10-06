@@ -383,6 +383,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|stats
+operator|.
+name|StatsUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|AfterClass
@@ -567,6 +585,21 @@ name|getSimpleName
 argument_list|()
 operator|+
 literal|"Db"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|fullInTableName
+init|=
+name|StatsUtils
+operator|.
+name|getFullyQualifiedTableName
+argument_list|(
+name|dbName
+argument_list|,
+name|inDbTableName
+argument_list|)
 decl_stmt|;
 specifier|static
 name|HiveAuthorizer
@@ -775,11 +808,7 @@ name|runCmd
 argument_list|(
 literal|"create table "
 operator|+
-name|dbName
-operator|+
-literal|"."
-operator|+
-name|inDbTableName
+name|fullInTableName
 operator|+
 literal|"(i int)"
 argument_list|)
@@ -865,11 +894,7 @@ name|runCmd
 argument_list|(
 literal|"drop table if exists "
 operator|+
-name|dbName
-operator|+
-literal|"."
-operator|+
-name|inDbTableName
+name|fullInTableName
 argument_list|)
 expr_stmt|;
 name|runCmd
@@ -2968,11 +2993,7 @@ name|compile
 argument_list|(
 literal|"repl dump "
 operator|+
-name|dbName
-operator|+
-literal|"."
-operator|+
-name|inDbTableName
+name|fullInTableName
 argument_list|)
 expr_stmt|;
 name|assertEquals

@@ -7560,14 +7560,7 @@ name|addMaterializedTable
 argument_list|(
 name|table
 operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|table
-operator|.
-name|getTableName
+name|getFullyQualifiedName
 argument_list|()
 argument_list|,
 name|table

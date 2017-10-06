@@ -1632,14 +1632,7 @@ block|{
 return|return
 name|tbl
 operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|tbl
-operator|.
-name|getTableName
+name|getFullyQualifiedName
 argument_list|()
 return|;
 block|}

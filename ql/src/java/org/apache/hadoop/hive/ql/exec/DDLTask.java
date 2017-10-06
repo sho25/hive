@@ -9481,14 +9481,6 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
-name|String
-name|tabName
-init|=
-name|alterPartitionDesc
-operator|.
-name|getTableName
-argument_list|()
-decl_stmt|;
 comment|// This is checked by DDLSemanticAnalyzer
 assert|assert
 operator|(
@@ -9875,8 +9867,6 @@ name|db
 operator|.
 name|alterTable
 argument_list|(
-name|tabName
-argument_list|,
 name|tbl
 argument_list|,
 literal|null
@@ -9901,7 +9891,10 @@ name|GENERIC_ERROR
 argument_list|,
 literal|"Unable to alter "
 operator|+
-name|tabName
+name|tbl
+operator|.
+name|getFullyQualifiedName
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -10002,11 +9995,6 @@ name|db
 operator|.
 name|alterTable
 argument_list|(
-name|touchDesc
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
 name|tbl
 argument_list|,
 name|environmentContext
@@ -29358,18 +29346,13 @@ argument_list|()
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"creating table {}.{} on {}"
+literal|"creating table {} on {}"
 argument_list|,
 name|tbl
 operator|.
-name|getDbName
-argument_list|()
-argument_list|,
-name|tbl
-operator|.
-name|getTableName
+name|getFullyQualifiedName
 argument_list|()
 argument_list|,
 name|tbl
@@ -29491,18 +29474,6 @@ name|db
 operator|.
 name|alterTable
 argument_list|(
-name|tbl
-operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
 name|tbl
 argument_list|,
 literal|null

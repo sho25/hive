@@ -159,6 +159,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|stats
+operator|.
+name|StatsUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|shims
 operator|.
 name|ShimLoader
@@ -498,6 +516,18 @@ operator|=
 literal|"create table "
 expr_stmt|;
 block|}
+name|String
+name|qualifiedTableName
+init|=
+name|StatsUtils
+operator|.
+name|getFullyQualifiedTableName
+argument_list|(
+name|testDbName
+argument_list|,
+name|testTableName
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|isPartitioned
@@ -510,11 +540,7 @@ name|execute
 argument_list|(
 name|createTablePrefix
 operator|+
-name|testDbName
-operator|+
-literal|"."
-operator|+
-name|testTableName
+name|qualifiedTableName
 operator|+
 literal|" (id int, value string) "
 operator|+
@@ -532,11 +558,7 @@ name|execute
 argument_list|(
 literal|"insert into "
 operator|+
-name|testDbName
-operator|+
-literal|"."
-operator|+
-name|testTableName
+name|qualifiedTableName
 operator|+
 literal|" PARTITION ("
 operator|+
@@ -555,11 +577,7 @@ name|execute
 argument_list|(
 literal|"insert into "
 operator|+
-name|testDbName
-operator|+
-literal|"."
-operator|+
-name|testTableName
+name|qualifiedTableName
 operator|+
 literal|" PARTITION ("
 operator|+
@@ -582,11 +600,7 @@ name|execute
 argument_list|(
 name|createTablePrefix
 operator|+
-name|testDbName
-operator|+
-literal|"."
-operator|+
-name|testTableName
+name|qualifiedTableName
 operator|+
 literal|" (id int, value string)"
 argument_list|)
@@ -598,11 +612,7 @@ name|execute
 argument_list|(
 literal|"insert into "
 operator|+
-name|testDbName
-operator|+
-literal|"."
-operator|+
-name|testTableName
+name|qualifiedTableName
 operator|+
 literal|" values (1, \"dummy1\"), (2, \"dummy2\"), (3, \"dummy3\")"
 argument_list|)
@@ -621,11 +631,7 @@ name|execute
 argument_list|(
 literal|"alter table "
 operator|+
-name|testDbName
-operator|+
-literal|"."
-operator|+
-name|testTableName
+name|qualifiedTableName
 operator|+
 literal|" set tblproperties (\"auto.purge\"=\""
 operator|+
