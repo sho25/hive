@@ -333,11 +333,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|log4j
-operator|.
-name|Level
+name|Logger
 import|;
 end_import
 
@@ -345,11 +343,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|log4j
-operator|.
-name|Logger
+name|LoggerFactory
 import|;
 end_import
 
@@ -460,7 +456,7 @@ specifier|final
 name|Logger
 name|LOG
 init|=
-name|Logger
+name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
@@ -772,36 +768,6 @@ name|AccumuloSecurityException
 throws|,
 name|IOException
 block|{
-name|Level
-name|l
-init|=
-name|AccumuloIndexedOutputFormat
-operator|.
-name|getLogLevel
-argument_list|(
-name|job
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|l
-operator|!=
-literal|null
-condition|)
-block|{
-name|LOG
-operator|.
-name|setLevel
-argument_list|(
-name|AccumuloIndexedOutputFormat
-operator|.
-name|getLogLevel
-argument_list|(
-name|job
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 name|this
 operator|.
 name|isStringEncoded
@@ -914,8 +880,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Index Table = "
-operator|+
+literal|"Index Table = {}"
+argument_list|,
 name|iname
 argument_list|)
 expr_stmt|;
@@ -1037,8 +1003,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Index Cols = "
-operator|+
+literal|"Index Cols = {}"
+argument_list|,
 name|cols
 argument_list|)
 expr_stmt|;
@@ -1177,6 +1143,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Could not add table"
+argument_list|,
 name|var5
 argument_list|)
 expr_stmt|;
@@ -1226,6 +1194,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Could not add index table"
+argument_list|,
 name|var6
 argument_list|)
 expr_stmt|;
@@ -1376,8 +1346,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Simulating adding table: "
-operator|+
+literal|"Simulating adding table: {}"
+argument_list|,
 name|tableName
 argument_list|)
 expr_stmt|;
@@ -1388,8 +1358,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Adding table: "
-operator|+
+literal|"Adding table: {}"
+argument_list|,
 name|tableName
 argument_list|)
 expr_stmt|;
@@ -1451,8 +1421,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Accumulo security violation creating "
-operator|+
+literal|"Accumulo security violation creating {}"
+argument_list|,
 name|table
 argument_list|,
 name|var8
@@ -1472,8 +1442,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Table Exists "
-operator|+
+literal|"Table Exists {}"
+argument_list|,
 name|table
 argument_list|,
 name|var9
@@ -1505,11 +1475,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Accumulo table "
-operator|+
+literal|"Accumulo table {} doesn't exist and cannot be created."
+argument_list|,
 name|table
-operator|+
-literal|" doesn't exist and cannot be created."
 argument_list|,
 name|var5
 argument_list|)
@@ -1566,18 +1534,10 @@ name|LOG
 operator|.
 name|trace
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Table %s row key: %s"
+literal|"Table {} row key: {}"
 argument_list|,
-operator|new
-name|Object
-index|[]
-block|{
 name|table
-block|,
+argument_list|,
 name|this
 operator|.
 name|hexDump
@@ -1586,8 +1546,6 @@ name|m
 operator|.
 name|getRow
 argument_list|()
-argument_list|)
-block|}
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1625,18 +1583,10 @@ name|LOG
 operator|.
 name|trace
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Table %s column: %s:%s"
+literal|"Table {} column: {}:{}"
 argument_list|,
-operator|new
-name|Object
-index|[]
-block|{
 name|table
-block|,
+argument_list|,
 name|this
 operator|.
 name|hexDump
@@ -1646,7 +1596,7 @@ operator|.
 name|getColumnFamily
 argument_list|()
 argument_list|)
-block|,
+argument_list|,
 name|this
 operator|.
 name|hexDump
@@ -1656,27 +1606,16 @@ operator|.
 name|getColumnQualifier
 argument_list|()
 argument_list|)
-block|}
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
 name|trace
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Table %s security: %s"
+literal|"Table {} security: {}"
 argument_list|,
-operator|new
-name|Object
-index|[]
-block|{
 name|table
-block|,
-operator|(
+argument_list|,
 operator|new
 name|ColumnVisibility
 argument_list|(
@@ -1685,30 +1624,19 @@ operator|.
 name|getColumnVisibility
 argument_list|()
 argument_list|)
-operator|)
 operator|.
 name|toString
 argument_list|()
-block|}
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
 name|trace
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Table %s value: %s"
+literal|"Table {} value: {}"
 argument_list|,
-operator|new
-name|Object
-index|[]
-block|{
 name|table
-block|,
+argument_list|,
 name|this
 operator|.
 name|hexDump
@@ -1717,8 +1645,6 @@ name|cu
 operator|.
 name|getValue
 argument_list|()
-argument_list|)
-block|}
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1832,21 +1758,11 @@ name|LOG
 operator|.
 name|trace
 argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Building index for column %s:%s"
+literal|"Building index for column {}:{}"
 argument_list|,
-operator|new
-name|Object
-index|[]
-block|{
 name|cf
-block|,
+argument_list|,
 name|cq
-block|}
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|Mutation
@@ -2039,14 +1955,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"mutations written: "
-operator|+
+literal|"mutations written: {}, values written: {}"
+argument_list|,
 name|this
 operator|.
 name|mutCount
-operator|+
-literal|", values written: "
-operator|+
+argument_list|,
 name|this
 operator|.
 name|valCount
@@ -2224,8 +2138,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Not authorized to write to tables : "
-operator|+
+literal|"Not authorized to write to tables {}"
+argument_list|,
 name|tables
 argument_list|)
 expr_stmt|;
@@ -2247,8 +2161,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Constraint violations : "
-operator|+
+literal|"Constraint violations : {}"
+argument_list|,
 name|var7
 operator|.
 name|getConstraintViolationSummaries
