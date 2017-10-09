@@ -5946,6 +5946,23 @@ argument_list|,
 literal|"SerDes retrieving schema from metastore. This is an internal parameter."
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
+name|HIVE_LEGACY_SCHEMA_FOR_ALL_SERDES
+argument_list|(
+literal|"hive.legacy.schema.for.all.serdes"
+argument_list|,
+literal|false
+argument_list|,
+literal|"A backward compatibility setting for external metastore users that do not handle \n"
+operator|+
+name|SERDESUSINGMETASTOREFORSCHEMA
+operator|.
+name|varname
+operator|+
+literal|" correctly. This may be removed at any time."
+argument_list|)
+block|,
 name|HIVEHISTORYFILELOC
 argument_list|(
 literal|"hive.querylog.location"
