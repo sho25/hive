@@ -163,6 +163,20 @@ name|apache
 operator|.
 name|commons
 operator|.
+name|lang
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
 name|math3
 operator|.
 name|util
@@ -1459,7 +1473,50 @@ return|return
 name|access
 return|;
 block|}
-comment|/**    * Does the user sending the HttpServletRequest have the administrator ACLs? If    * it isn't the case, response will be modified to send an error to the user.    *    * @param servletContext    * @param request    * @param response used to send the error response if user does not have admin access.    * @return true if admin-authorized, false otherwise    * @throws IOException    */
+comment|/**    * Check if the remote user has access to an object (e.g. query history) that belongs to a user    *    * @param ctx the context containing the admin ACL.    * @param request the HTTP request.    * @param remoteUser the user that sent out the request.    * @param user the user of the object being checked against.    * @return true if the remote user is the same as the user or has the admin access    * @throws IOException    */
+specifier|public
+specifier|static
+name|boolean
+name|hasAccess
+parameter_list|(
+name|String
+name|remoteUser
+parameter_list|,
+name|String
+name|user
+parameter_list|,
+name|ServletContext
+name|ctx
+parameter_list|,
+name|HttpServletRequest
+name|request
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|StringUtils
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|remoteUser
+argument_list|,
+name|user
+argument_list|)
+operator|||
+name|HttpServer
+operator|.
+name|hasAdministratorAccess
+argument_list|(
+name|ctx
+argument_list|,
+name|request
+argument_list|,
+literal|null
+argument_list|)
+return|;
+block|}
+comment|/**    * Does the user sending the HttpServletRequest have the administrator ACLs? If    * it isn't the case, response will be modified to send an error to the user.    *    * @param servletContext    * @param request    * @param response used to send the error response if user does not have admin access (no error if null)    * @return true if admin-authorized, false otherwise    * @throws IOException    */
 specifier|static
 name|boolean
 name|hasAdministratorAccess
@@ -1524,6 +1581,13 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|response
+operator|!=
+literal|null
+condition|)
+block|{
 name|response
 operator|.
 name|sendError
@@ -1537,6 +1601,7 @@ operator|+
 literal|"authorized to access this page."
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
@@ -1561,6 +1626,13 @@ name|remoteUser
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|response
+operator|!=
+literal|null
+condition|)
+block|{
 name|response
 operator|.
 name|sendError
@@ -1576,6 +1648,7 @@ operator|+
 literal|" is unauthorized to access this page."
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|false
 return|;
