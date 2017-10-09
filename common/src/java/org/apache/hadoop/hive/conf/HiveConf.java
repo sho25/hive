@@ -684,7 +684,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Logger
-name|l4j
+name|LOG
 init|=
 name|LoggerFactory
 operator|.
@@ -1271,15 +1271,7 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-if|if
-condition|(
-name|l4j
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
@@ -1288,7 +1280,6 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-block|}
 name|System
 operator|.
 name|err
@@ -1347,19 +1338,14 @@ block|}
 if|if
 condition|(
 name|doLog
-operator|&&
-name|l4j
-operator|.
-name|isInfoEnabled
-argument_list|()
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Found configuration file "
-operator|+
+literal|"Found configuration file {}"
+argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
@@ -1409,26 +1395,17 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-if|if
-condition|(
-name|l4j
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Error looking for config "
-operator|+
+literal|"Error looking for config {}"
+argument_list|,
 name|f
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-block|}
 name|System
 operator|.
 name|err
@@ -18287,20 +18264,22 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|retval
+name|StringUtils
+operator|.
+name|EMPTY
 operator|.
 name|equals
 argument_list|(
-literal|""
+name|retval
 argument_list|)
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Using the default value passed in for log id: "
-operator|+
+literal|"Using the default value passed in for log id: {}"
+argument_list|,
 name|defaultValue
 argument_list|)
 expr_stmt|;
@@ -18319,16 +18298,14 @@ operator|>
 name|LOG_PREFIX_LENGTH
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"The original log id prefix is "
-operator|+
+literal|"The original log id prefix is {} has been truncated to {}"
+argument_list|,
 name|retval
-operator|+
-literal|" has been truncated to "
-operator|+
+argument_list|,
 name|retval
 operator|.
 name|substring
@@ -19010,7 +18987,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|warn
 argument_list|(
@@ -19215,15 +19192,13 @@ operator|==
 literal|null
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"HiveConf of name "
-operator|+
+literal|"HiveConf of name {} does not exist"
+argument_list|,
 name|key
-operator|+
-literal|" does not exist"
 argument_list|)
 expr_stmt|;
 block|}
@@ -19242,24 +19217,20 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"HiveConf "
-operator|+
+literal|"HiveConf {} expects {} type value"
+argument_list|,
 name|var
 operator|.
 name|varname
-operator|+
-literal|" expects "
-operator|+
+argument_list|,
 name|var
 operator|.
 name|typeString
 argument_list|()
-operator|+
-literal|" type value"
 argument_list|)
 expr_stmt|;
 block|}
@@ -21310,7 +21281,9 @@ block|{
 name|String
 name|result
 init|=
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 decl_stmt|;
 for|for
 control|(
