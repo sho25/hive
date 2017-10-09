@@ -837,6 +837,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|cache
+operator|.
+name|CachedStore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|conf
 operator|.
 name|MetastoreConf
@@ -43668,6 +43686,14 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+argument_list|)
+expr_stmt|;
+comment|// This will only initialize the cache if configured.
+name|CachedStore
+operator|.
+name|initSharedCacheAsync
+argument_list|(
+name|conf
 argument_list|)
 expr_stmt|;
 comment|//Start Metrics for Standalone (Remote) Mode

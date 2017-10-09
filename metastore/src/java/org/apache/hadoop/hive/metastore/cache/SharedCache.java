@@ -419,7 +419,6 @@ class|class
 name|SharedCache
 block|{
 specifier|private
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -438,7 +437,6 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -457,7 +455,6 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -468,15 +465,10 @@ name|partitionCache
 init|=
 operator|new
 name|TreeMap
-argument_list|<
-name|String
-argument_list|,
-name|PartitionWrapper
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -487,15 +479,10 @@ name|partitionColStatsCache
 init|=
 operator|new
 name|TreeMap
-argument_list|<
-name|String
-argument_list|,
-name|ColumnStatisticsObj
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -506,15 +493,10 @@ name|tableColStatsCache
 init|=
 operator|new
 name|TreeMap
-argument_list|<
-name|String
-argument_list|,
-name|ColumnStatisticsObj
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
-specifier|static
 name|Map
 argument_list|<
 name|ByteArrayWrapper
@@ -525,11 +507,7 @@ name|sdCache
 init|=
 operator|new
 name|HashMap
-argument_list|<
-name|ByteArrayWrapper
-argument_list|,
-name|StorageDescriptorWrapper
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -537,9 +515,9 @@ specifier|static
 name|MessageDigest
 name|md
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|Logger
 name|LOG
 init|=
@@ -550,9 +528,6 @@ argument_list|(
 name|SharedCache
 operator|.
 name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 decl_stmt|;
 static|static
@@ -587,7 +562,6 @@ throw|;
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|Database
 name|getDatabaseFromCache
@@ -620,7 +594,6 @@ literal|null
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|addDatabaseToCache
@@ -663,7 +636,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removeDatabaseFromCache
@@ -681,7 +653,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|List
 argument_list|<
@@ -705,7 +676,6 @@ argument_list|)
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterDatabaseInCache
@@ -747,7 +717,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|int
 name|getCachedDatabaseCount
@@ -761,7 +730,6 @@ argument_list|()
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|Table
 name|getTableFromCache
@@ -809,6 +777,8 @@ operator|.
 name|assemble
 argument_list|(
 name|tblWrapper
+argument_list|,
+name|this
 argument_list|)
 decl_stmt|;
 return|return
@@ -816,7 +786,6 @@ name|t
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|addTableToCache
@@ -1008,7 +977,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removeTableFromCache
@@ -1061,7 +1029,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|ColumnStatisticsObj
 name|getCachedTableColStats
@@ -1094,7 +1061,6 @@ literal|null
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removeTableColStatsFromCache
@@ -1191,7 +1157,6 @@ block|}
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removeTableColStatsFromCache
@@ -1224,7 +1189,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|updateTableColStatsInCache
@@ -1332,7 +1296,6 @@ block|}
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterTableInCache
@@ -1381,7 +1344,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterTableInPartitionCache
@@ -1522,7 +1484,6 @@ block|}
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterTableInTableColStatsCache
@@ -1723,7 +1684,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterTableInPartitionColStatsCache
@@ -1974,7 +1934,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|int
 name|getCachedTableCount
@@ -1988,7 +1947,6 @@ argument_list|()
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|List
 argument_list|<
@@ -2049,6 +2007,8 @@ operator|.
 name|assemble
 argument_list|(
 name|wrapper
+argument_list|,
+name|this
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2059,7 +2019,6 @@ name|tables
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|List
 argument_list|<
@@ -2208,7 +2167,6 @@ name|tableMetas
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|addPartitionToCache
@@ -2343,7 +2301,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|Partition
 name|getPartitionFromCache
@@ -2381,6 +2338,8 @@ operator|.
 name|assemble
 argument_list|(
 name|wrapper
+argument_list|,
+name|this
 argument_list|)
 decl_stmt|;
 return|return
@@ -2388,7 +2347,6 @@ name|p
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|Partition
 name|getPartitionFromCache
@@ -2423,7 +2381,6 @@ argument_list|)
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|boolean
 name|existPartitionFromCache
@@ -2460,7 +2417,6 @@ argument_list|)
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|Partition
 name|removePartitionFromCache
@@ -2525,7 +2481,6 @@ return|;
 block|}
 comment|// Remove cached column stats for all partitions of a table
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removePartitionColStatsFromCache
@@ -2623,7 +2578,6 @@ block|}
 block|}
 comment|// Remove cached column stats for a particular partition of a table
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removePartitionColStatsFromCache
@@ -2729,7 +2683,6 @@ block|}
 block|}
 comment|// Remove cached column stats for a particular partition and a particular column of a table
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|removePartitionColStatsFromCache
@@ -2770,7 +2723,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|List
 argument_list|<
@@ -2866,6 +2818,8 @@ operator|.
 name|assemble
 argument_list|(
 name|wrapper
+argument_list|,
+name|this
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2879,7 +2833,6 @@ name|partitions
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterPartitionInCache
@@ -2936,7 +2889,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|alterPartitionInColStatsCache
@@ -3137,7 +3089,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|updatePartitionColStatsInCache
@@ -3253,7 +3204,6 @@ block|}
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|int
 name|getCachedPartitionCount
@@ -3267,7 +3217,6 @@ argument_list|()
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|ColumnStatisticsObj
 name|getCachedPartitionColStats
@@ -3300,7 +3249,6 @@ literal|null
 return|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|addPartitionColStatsToCache
@@ -3431,7 +3379,6 @@ block|}
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|refreshPartitionColStats
@@ -3485,7 +3432,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|addTableColStatsToCache
@@ -3540,7 +3486,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|refreshTableColStats
@@ -3591,7 +3536,6 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-specifier|static
 name|void
 name|increSd
 parameter_list|(
@@ -3675,7 +3619,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 name|void
 name|decrSd
 parameter_list|(
@@ -3728,7 +3671,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 name|StorageDescriptor
 name|getSdFromCache
 parameter_list|(
@@ -3760,7 +3702,6 @@ return|;
 block|}
 comment|// Replace databases in databaseCache with the new list
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|refreshDatabases
@@ -3816,7 +3757,6 @@ block|}
 block|}
 comment|// Replace tables in tableCache with the new list
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|refreshTables
@@ -3885,7 +3825,6 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-specifier|static
 specifier|synchronized
 name|void
 name|refreshPartitions
@@ -4011,7 +3950,6 @@ block|}
 block|}
 annotation|@
 name|VisibleForTesting
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -4027,7 +3965,6 @@ return|;
 block|}
 annotation|@
 name|VisibleForTesting
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -4043,7 +3980,6 @@ return|;
 block|}
 annotation|@
 name|VisibleForTesting
-specifier|static
 name|Map
 argument_list|<
 name|String
@@ -4059,7 +3995,6 @@ return|;
 block|}
 annotation|@
 name|VisibleForTesting
-specifier|static
 name|Map
 argument_list|<
 name|ByteArrayWrapper
@@ -4075,7 +4010,6 @@ return|;
 block|}
 annotation|@
 name|VisibleForTesting
-specifier|static
 name|Map
 argument_list|<
 name|String

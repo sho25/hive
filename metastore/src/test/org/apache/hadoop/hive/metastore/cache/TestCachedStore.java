@@ -490,6 +490,10 @@ specifier|private
 name|CachedStore
 name|cachedStore
 decl_stmt|;
+specifier|private
+name|SharedCache
+name|sharedCache
+decl_stmt|;
 annotation|@
 name|Before
 specifier|public
@@ -566,22 +570,33 @@ name|conf
 argument_list|)
 expr_stmt|;
 comment|// Stop the CachedStore cache update service. We'll start it explicitly to control the test
-name|cachedStore
+name|CachedStore
 operator|.
 name|stopCacheUpdateService
 argument_list|(
 literal|1
 argument_list|)
+expr_stmt|;
+name|cachedStore
+operator|.
+name|setInitializedForTest
+argument_list|()
 expr_stmt|;
 comment|// Stop the CachedStore cache update service. We'll start it explicitly to control the test
-name|cachedStore
+name|CachedStore
 operator|.
 name|stopCacheUpdateService
 argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
+name|sharedCache
+operator|=
+operator|new
 name|SharedCache
+argument_list|()
+expr_stmt|;
+name|sharedCache
 operator|.
 name|getDatabaseCache
 argument_list|()
@@ -589,7 +604,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|getTableCache
 argument_list|()
@@ -597,7 +612,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|getPartitionCache
 argument_list|()
@@ -605,7 +620,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -613,7 +628,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|getPartitionColStatsCache
 argument_list|()
@@ -718,10 +733,12 @@ name|dbName
 argument_list|)
 expr_stmt|;
 comment|// Prewarm CachedStore
-name|cachedStore
+name|CachedStore
 operator|.
 name|prewarm
-argument_list|()
+argument_list|(
+name|objectStore
+argument_list|)
 expr_stmt|;
 comment|// Read database via CachedStore
 name|Database
@@ -1435,10 +1452,12 @@ name|tblName
 argument_list|)
 expr_stmt|;
 comment|// Prewarm CachedStore
-name|cachedStore
+name|CachedStore
 operator|.
 name|prewarm
-argument_list|()
+argument_list|(
+name|objectStore
+argument_list|)
 expr_stmt|;
 comment|// Read database, table via CachedStore
 name|Database
@@ -2329,10 +2348,12 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Prewarm CachedStore
-name|cachedStore
+name|CachedStore
 operator|.
 name|prewarm
-argument_list|()
+argument_list|(
+name|objectStore
+argument_list|)
 expr_stmt|;
 comment|// Read database, table, partition via CachedStore
 name|Database
@@ -3356,10 +3377,12 @@ name|stats
 argument_list|)
 expr_stmt|;
 comment|// Prewarm CachedStore
-name|cachedStore
+name|CachedStore
 operator|.
 name|prewarm
-argument_list|()
+argument_list|(
+name|objectStore
+argument_list|)
 expr_stmt|;
 comment|// Read table stats via CachedStore
 name|ColumnStatistics
@@ -3424,7 +3447,7 @@ throws|throws
 name|InterruptedException
 block|{
 comment|// Set cache refresh period to 100 milliseconds
-name|cachedStore
+name|CachedStore
 operator|.
 name|setCacheRefreshPeriod
 argument_list|(
@@ -3432,10 +3455,15 @@ literal|100
 argument_list|)
 expr_stmt|;
 comment|// Start the CachedStore update service
-name|cachedStore
+name|CachedStore
 operator|.
 name|startCacheUpdateService
+argument_list|(
+name|cachedStore
+operator|.
+name|getConf
 argument_list|()
+argument_list|)
 expr_stmt|;
 comment|// Sleep for 500 ms so that cache update is complete
 name|Thread
@@ -3446,7 +3474,7 @@ literal|500
 argument_list|)
 expr_stmt|;
 comment|// Stop cache update service
-name|cachedStore
+name|CachedStore
 operator|.
 name|stopCacheUpdateService
 argument_list|(
@@ -3497,7 +3525,7 @@ argument_list|(
 literal|"db1"
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addDatabaseToCache
 argument_list|(
@@ -3506,7 +3534,7 @@ argument_list|,
 name|db1
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addDatabaseToCache
 argument_list|(
@@ -3515,7 +3543,7 @@ argument_list|,
 name|db2
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addDatabaseToCache
 argument_list|(
@@ -3528,7 +3556,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedDatabaseCount
 argument_list|()
@@ -3536,7 +3564,7 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|alterDatabaseInCache
 argument_list|(
@@ -3549,7 +3577,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedDatabaseCount
 argument_list|()
@@ -3557,7 +3585,7 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|removeDatabaseFromCache
 argument_list|(
@@ -3568,7 +3596,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedDatabaseCount
 argument_list|()
@@ -3582,7 +3610,7 @@ name|String
 argument_list|>
 name|dbs
 init|=
-name|SharedCache
+name|sharedCache
 operator|.
 name|listCachedDatabases
 argument_list|()
@@ -4077,7 +4105,7 @@ argument_list|>
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addTableToCache
 argument_list|(
@@ -4088,7 +4116,7 @@ argument_list|,
 name|tbl1
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addTableToCache
 argument_list|(
@@ -4099,7 +4127,7 @@ argument_list|,
 name|tbl2
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addTableToCache
 argument_list|(
@@ -4110,7 +4138,7 @@ argument_list|,
 name|tbl3
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addTableToCache
 argument_list|(
@@ -4125,7 +4153,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedTableCount
 argument_list|()
@@ -4137,7 +4165,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4151,7 +4179,7 @@ expr_stmt|;
 name|Table
 name|t
 init|=
-name|SharedCache
+name|sharedCache
 operator|.
 name|getTableFromCache
 argument_list|(
@@ -4175,7 +4203,7 @@ argument_list|,
 literal|"loc1"
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|removeTableFromCache
 argument_list|(
@@ -4188,7 +4216,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedTableCount
 argument_list|()
@@ -4200,7 +4228,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4211,7 +4239,7 @@ argument_list|,
 literal|2
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|alterTableInCache
 argument_list|(
@@ -4226,7 +4254,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedTableCount
 argument_list|()
@@ -4238,7 +4266,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4249,7 +4277,7 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|removeTableFromCache
 argument_list|(
@@ -4262,7 +4290,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedTableCount
 argument_list|()
@@ -4274,7 +4302,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4739,7 +4767,7 @@ literal|"201701"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addPartitionToCache
 argument_list|(
@@ -4750,7 +4778,7 @@ argument_list|,
 name|part1
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addPartitionToCache
 argument_list|(
@@ -4761,7 +4789,7 @@ argument_list|,
 name|part2
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addPartitionToCache
 argument_list|(
@@ -4772,7 +4800,7 @@ argument_list|,
 name|part3
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|addPartitionToCache
 argument_list|(
@@ -4787,7 +4815,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedPartitionCount
 argument_list|()
@@ -4799,7 +4827,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4813,7 +4841,7 @@ expr_stmt|;
 name|Partition
 name|t
 init|=
-name|SharedCache
+name|sharedCache
 operator|.
 name|getPartitionFromCache
 argument_list|(
@@ -4844,7 +4872,7 @@ argument_list|,
 literal|"loc1"
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|removePartitionFromCache
 argument_list|(
@@ -4864,7 +4892,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedPartitionCount
 argument_list|()
@@ -4876,7 +4904,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4887,7 +4915,7 @@ argument_list|,
 literal|2
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|alterPartitionInCache
 argument_list|(
@@ -4909,7 +4937,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedPartitionCount
 argument_list|()
@@ -4921,7 +4949,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
@@ -4932,7 +4960,7 @@ argument_list|,
 literal|3
 argument_list|)
 expr_stmt|;
-name|SharedCache
+name|sharedCache
 operator|.
 name|removePartitionFromCache
 argument_list|(
@@ -4952,7 +4980,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getCachedPartitionCount
 argument_list|()
@@ -4964,7 +4992,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|SharedCache
+name|sharedCache
 operator|.
 name|getSdCache
 argument_list|()
