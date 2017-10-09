@@ -414,7 +414,7 @@ name|specificFilterSet
 decl_stmt|;
 specifier|private
 name|boolean
-name|rewriteSourceTables
+name|useSharedDatabase
 decl_stmt|;
 specifier|private
 name|Converter
@@ -519,6 +519,15 @@ name|converter
 return|;
 block|}
 specifier|public
+name|boolean
+name|isUseSharedDatabase
+parameter_list|()
+block|{
+return|return
+name|useSharedDatabase
+return|;
+block|}
+specifier|public
 name|String
 name|getDebugHint
 parameter_list|()
@@ -548,7 +557,7 @@ literal|"./itests/qtest/target/tmp/log/hive.log"
 argument_list|)
 return|;
 block|}
-comment|/**    * Filters the sql commands if necessary.    * @param commands The array of the sql commands before filtering    * @return The filtered array of the sql command strings    * @throws IOException File read error    */
+comment|/**    * Filters the sql commands if necessary - eg. not using the shared database.    * @param commands The array of the sql commands before filtering    * @return The filtered array of the sql command strings    * @throws IOException File read error    */
 specifier|public
 name|String
 index|[]
@@ -563,7 +572,8 @@ name|IOException
 block|{
 if|if
 condition|(
-name|rewriteSourceTables
+operator|!
+name|useSharedDatabase
 condition|)
 block|{
 for|for
@@ -704,17 +714,13 @@ name|source
 operator|.
 name|replaceAll
 argument_list|(
-literal|"(?is)(?<!name:?|alias:?)(\\s+)default\\."
+literal|"(?is)(?<!name:?|alias:?)(\\s+)default\\.("
 operator|+
 name|table
 operator|+
-literal|"([\\s;\\n\\)])"
+literal|")([\\s;\\n\\),])"
 argument_list|,
-literal|"$1"
-operator|+
-name|table
-operator|+
-literal|"$2"
+literal|"$1$2$3"
 argument_list|)
 expr_stmt|;
 block|}
@@ -809,6 +815,7 @@ return|return
 name|source
 return|;
 block|}
+comment|/**    * Filters the generated output file    * @throws IOException    */
 specifier|public
 name|void
 name|filterOutput
@@ -859,7 +866,8 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|rewriteSourceTables
+operator|!
+name|useSharedDatabase
 condition|)
 block|{
 name|output
@@ -883,6 +891,7 @@ name|output
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Compare the filtered file with the expected golden file    * @return The comparison data    * @throws IOException If there is a problem accessing the golden or generated file    * @throws InterruptedException If there is a problem running the diff command    */
 specifier|public
 name|QTestProcessExecResult
 name|compareResults
@@ -916,6 +925,7 @@ name|executeDiff
 argument_list|()
 return|;
 block|}
+comment|/**    * Overwrite the golden file with the generated output    * @throws IOException If there is a problem accessing the golden or generated file    */
 specifier|public
 name|void
 name|overwriteResults
@@ -1445,6 +1455,20 @@ argument_list|)
 operator|.
 name|addFilter
 argument_list|(
+literal|".*Location.*\n"
+argument_list|,
+name|MASK_PATTERN
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|".*LOCATION '.*\n"
+argument_list|,
+name|MASK_PATTERN
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
 literal|".*Output:.*/data/files/.*\n"
 argument_list|,
 name|MASK_PATTERN
@@ -1453,6 +1477,13 @@ operator|.
 name|addFilter
 argument_list|(
 literal|".*CreateTime.*\n"
+argument_list|,
+name|MASK_PATTERN
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|".*last_modified_.*\n"
 argument_list|,
 name|MASK_PATTERN
 argument_list|)
@@ -1573,7 +1604,7 @@ name|resultsDirectory
 decl_stmt|;
 specifier|private
 name|boolean
-name|rewriteSourceTables
+name|useSharedDatabase
 decl_stmt|;
 specifier|private
 name|boolean
@@ -1639,17 +1670,17 @@ return|;
 block|}
 specifier|public
 name|QFileBuilder
-name|setRewriteSourceTables
+name|setUseSharedDatabase
 parameter_list|(
 name|boolean
-name|rewriteSourceTables
+name|useSharedDatabase
 parameter_list|)
 block|{
 name|this
 operator|.
-name|rewriteSourceTables
+name|useSharedDatabase
 operator|=
-name|rewriteSourceTables
+name|useSharedDatabase
 expr_stmt|;
 return|return
 name|this
@@ -1696,6 +1727,12 @@ name|name
 operator|=
 name|name
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|useSharedDatabase
+condition|)
+block|{
 name|result
 operator|.
 name|databaseName
@@ -1703,7 +1740,101 @@ operator|=
 literal|"test_db_"
 operator|+
 name|name
+operator|.
+name|toLowerCase
+argument_list|()
 expr_stmt|;
+name|result
+operator|.
+name|specificFilterSet
+operator|=
+operator|new
+name|RegexFilterSet
+argument_list|()
+operator|.
+name|addFilter
+argument_list|(
+literal|"(PREHOOK|POSTHOOK): (Output|Input): database:"
+operator|+
+name|result
+operator|.
+name|databaseName
+operator|+
+literal|"\n"
+argument_list|,
+literal|"$1: $2: database:default\n"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"(PREHOOK|POSTHOOK): (Output|Input): "
+operator|+
+name|result
+operator|.
+name|databaseName
+operator|+
+literal|"@"
+argument_list|,
+literal|"$1: $2: default@"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"name(:?) "
+operator|+
+name|result
+operator|.
+name|databaseName
+operator|+
+literal|"\\.(.*)\n"
+argument_list|,
+literal|"name$1 default.$2\n"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"alias(:?) "
+operator|+
+name|result
+operator|.
+name|databaseName
+operator|+
+literal|"\\.(.*)\n"
+argument_list|,
+literal|"alias$1 default.$2\n"
+argument_list|)
+operator|.
+name|addFilter
+argument_list|(
+literal|"/"
+operator|+
+name|result
+operator|.
+name|databaseName
+operator|+
+literal|".db/"
+argument_list|,
+literal|"/"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|result
+operator|.
+name|databaseName
+operator|=
+literal|"default"
+expr_stmt|;
+name|result
+operator|.
+name|specificFilterSet
+operator|=
+operator|new
+name|RegexFilterSet
+argument_list|()
+expr_stmt|;
+block|}
 name|result
 operator|.
 name|inputFile
@@ -1790,82 +1921,9 @@ argument_list|)
 expr_stmt|;
 name|result
 operator|.
-name|rewriteSourceTables
+name|useSharedDatabase
 operator|=
-name|rewriteSourceTables
-expr_stmt|;
-name|result
-operator|.
-name|specificFilterSet
-operator|=
-operator|new
-name|RegexFilterSet
-argument_list|()
-operator|.
-name|addFilter
-argument_list|(
-literal|"(PREHOOK|POSTHOOK): (Output|Input): database:"
-operator|+
-name|result
-operator|.
-name|databaseName
-operator|+
-literal|"\n"
-argument_list|,
-literal|"$1: $2: database:default\n"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-literal|"(PREHOOK|POSTHOOK): (Output|Input): "
-operator|+
-name|result
-operator|.
-name|databaseName
-operator|+
-literal|"@"
-argument_list|,
-literal|"$1: $2: default@"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-literal|"name(:?) "
-operator|+
-name|result
-operator|.
-name|databaseName
-operator|+
-literal|"\\.(.*)\n"
-argument_list|,
-literal|"name$1 default.$2\n"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-literal|"alias(:?) "
-operator|+
-name|result
-operator|.
-name|databaseName
-operator|+
-literal|"\\.(.*)\n"
-argument_list|,
-literal|"alias$1 default.$2\n"
-argument_list|)
-operator|.
-name|addFilter
-argument_list|(
-literal|"/"
-operator|+
-name|result
-operator|.
-name|databaseName
-operator|+
-literal|".db/"
-argument_list|,
-literal|"/"
-argument_list|)
+name|useSharedDatabase
 expr_stmt|;
 name|result
 operator|.
