@@ -4202,6 +4202,7 @@ operator|.
 name|getStatsData
 argument_list|()
 decl_stmt|;
+comment|// @formatter:off
 if|if
 condition|(
 name|csd
@@ -4257,7 +4258,13 @@ literal|""
 argument_list|,
 literal|""
 argument_list|,
-literal|""
+name|convertToString
+argument_list|(
+name|bcsd
+operator|.
+name|getBitVectors
+argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4390,7 +4397,13 @@ operator|.
 name|getNumFalses
 argument_list|()
 argument_list|,
-literal|""
+name|convertToString
+argument_list|(
+name|bcsd
+operator|.
+name|getBitVectors
+argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4687,6 +4700,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// @formatter:on
 block|}
 else|else
 block|{
