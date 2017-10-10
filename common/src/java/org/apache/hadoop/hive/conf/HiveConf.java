@@ -11837,6 +11837,17 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_VECTORIZED_INPUT_FILE_FORMAT_EXCLUDES
+argument_list|(
+literal|"hive.vectorized.input.format.excludes"
+argument_list|,
+literal|""
+argument_list|,
+literal|"This configuration should be set to fully described input format class names for which \n"
+operator|+
+literal|" vectorized input format should not be used for vectorized execution."
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_USE_VECTOR_DESERIALIZE
 argument_list|(
 literal|"hive.vectorized.use.vector.serde.deserialize"
