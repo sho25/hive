@@ -5446,6 +5446,7 @@ name|colType
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -5453,6 +5454,7 @@ argument_list|(
 literal|"column type not found"
 argument_list|)
 throw|;
+block|}
 name|ColumnStatsDesc
 name|cStatsDesc
 init|=
@@ -13714,6 +13716,7 @@ name|partSpec
 operator|!=
 literal|null
 condition|)
+block|{
 name|newPartSpec
 operator|=
 operator|new
@@ -13727,6 +13730,7 @@ argument_list|(
 name|partSpec
 argument_list|)
 expr_stmt|;
+block|}
 name|HashMap
 argument_list|<
 name|String
@@ -15263,17 +15267,6 @@ operator|==
 name|HiveParser
 operator|.
 name|KW_EXTENDED
-argument_list|)
-expr_stmt|;
-name|descTblDesc
-operator|.
-name|setPretty
-argument_list|(
-name|descOptions
-operator|==
-name|HiveParser
-operator|.
-name|KW_PRETTY
 argument_list|)
 expr_stmt|;
 comment|// in case of "DESCRIBE FORMATTED tablename column_name" statement, colPath
@@ -20622,8 +20615,10 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return;
 comment|// nothing to do
+block|}
 name|validateAlterTableType
 argument_list|(
 name|tab
@@ -22628,7 +22623,9 @@ name|HiveParser
 operator|.
 name|TOK_PARTSPEC
 condition|)
+block|{
 continue|continue;
+block|}
 name|ExprNodeGenericFuncDesc
 name|expr
 init|=
@@ -23035,7 +23032,9 @@ name|expr
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 comment|// We got the expr for one full partition spec. Determine the prefix length.
 name|int
 name|prefixLength
@@ -23259,7 +23258,9 @@ name|getName
 argument_list|()
 argument_list|)
 condition|)
+block|{
 break|break;
+block|}
 operator|++
 name|partPrefixToDrop
 expr_stmt|;

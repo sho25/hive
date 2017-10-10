@@ -398,9 +398,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|tearDown
-argument_list|()
-expr_stmt|;
 name|hiveConf
 operator|=
 operator|new
@@ -525,7 +522,9 @@ expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|File
 name|f
@@ -769,7 +768,9 @@ block|{
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|FileUtils
 operator|.

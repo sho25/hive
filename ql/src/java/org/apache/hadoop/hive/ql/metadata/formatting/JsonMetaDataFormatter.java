@@ -693,9 +693,6 @@ name|boolean
 name|isExt
 parameter_list|,
 name|boolean
-name|isPretty
-parameter_list|,
-name|boolean
 name|isOutputPadded
 parameter_list|,
 name|List
@@ -2270,6 +2267,7 @@ name|length
 operator|>
 literal|1
 condition|)
+block|{
 name|val
 operator|=
 name|URLDecoder
@@ -2284,6 +2282,7 @@ argument_list|,
 literal|"UTF-8"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

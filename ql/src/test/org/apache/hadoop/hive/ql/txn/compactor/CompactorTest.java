@@ -971,7 +971,9 @@ expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|ms
 operator|=

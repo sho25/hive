@@ -50928,7 +50928,7 @@ block|{
 name|String
 name|selectQuery
 init|=
-literal|"select NEXT_EVENT_ID from NOTIFICATION_SEQUENCE"
+literal|"select \"NEXT_EVENT_ID\" from \"NOTIFICATION_SEQUENCE\""
 decl_stmt|;
 name|String
 name|selectForUpdateQuery

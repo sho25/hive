@@ -11938,7 +11938,9 @@ block|{
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|txnHandler
 operator|=
@@ -11962,7 +11964,9 @@ block|{
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private

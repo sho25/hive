@@ -1074,7 +1074,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_EVENT_LISTENERS
+name|METASTORE_TRANSACTIONAL_EVENT_LISTENERS
 operator|.
 name|varname
 argument_list|,

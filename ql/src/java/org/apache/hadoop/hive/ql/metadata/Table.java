@@ -5018,6 +5018,22 @@ condition|)
 return|return
 literal|true
 return|;
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_LEGACY_SCHEMA_FOR_ALL_SERDES
+argument_list|)
+condition|)
+return|return
+literal|true
+return|;
 comment|// Table may or may not be using metastore. Only the SerDe can tell us.
 name|AbstractSerDe
 name|deserializer

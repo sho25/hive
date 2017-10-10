@@ -1408,17 +1408,9 @@ name|long
 name|endOffset
 parameter_list|)
 block|{
-name|CacheChunk
-name|result
-init|=
+return|return
 operator|new
 name|CacheChunk
-argument_list|()
-decl_stmt|;
-comment|// TODO: pool?
-name|result
-operator|.
-name|init
 argument_list|(
 name|buffer
 argument_list|,
@@ -1426,9 +1418,6 @@ name|startOffset
 argument_list|,
 name|endOffset
 argument_list|)
-expr_stmt|;
-return|return
-name|result
 return|;
 block|}
 block|}

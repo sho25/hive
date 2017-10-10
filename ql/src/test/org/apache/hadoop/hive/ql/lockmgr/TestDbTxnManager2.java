@@ -728,12 +728,16 @@ expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|SessionState
 name|ss
@@ -3584,6 +3588,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE in ('t10', 't11')"
 argument_list|)
 decl_stmt|;
@@ -3602,6 +3608,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE in ('t12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -3690,6 +3698,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -3722,6 +3732,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE='t10'"
 argument_list|)
 expr_stmt|;
@@ -3740,6 +3752,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE='t10'"
 argument_list|)
 expr_stmt|;
@@ -3772,6 +3786,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE='t10'"
 argument_list|)
 expr_stmt|;
@@ -3790,6 +3806,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE='t10'"
 argument_list|)
 expr_stmt|;
@@ -3808,6 +3826,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE='t12p' and TC_PARTITION='ds=today/hour=1'"
 argument_list|)
 expr_stmt|;
@@ -3826,6 +3846,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE='t12p' and CTC_PARTITION='ds=today/hour=1'"
 argument_list|)
 expr_stmt|;
@@ -3858,6 +3880,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE='t12p' and TC_PARTITION='ds=today/hour=1'"
 argument_list|)
 expr_stmt|;
@@ -3876,6 +3900,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE='t12p' and CTC_PARTITION='ds=today/hour=1'"
 argument_list|)
 expr_stmt|;
@@ -3909,6 +3935,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11' and CQ_STATE='i' and CQ_TYPE='i'"
 argument_list|)
 expr_stmt|;
@@ -3944,6 +3972,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11' and CQ_STATE='r' and CQ_TYPE='i'"
 argument_list|)
 expr_stmt|;
@@ -3979,6 +4009,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11'"
 argument_list|)
 expr_stmt|;
@@ -3997,6 +4029,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE='t11' and CC_STATE='s' and CC_TYPE='i'"
 argument_list|)
 expr_stmt|;
@@ -4029,6 +4063,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p' and CQ_PARTITION='ds=tomorrow/hour=2' and CQ_STATE='i' and CQ_TYPE='i'"
 argument_list|)
 expr_stmt|;
@@ -4064,6 +4100,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p' and CQ_PARTITION='ds=tomorrow/hour=2' and CQ_STATE='r' and CQ_TYPE='i'"
 argument_list|)
 expr_stmt|;
@@ -4099,6 +4137,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p'"
 argument_list|)
 expr_stmt|;
@@ -4117,6 +4157,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE='t12p' and CC_STATE='s' and CC_TYPE='i'"
 argument_list|)
 expr_stmt|;
@@ -4163,6 +4205,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4199,6 +4243,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4217,6 +4263,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE='t11' and CC_STATE='f' and CC_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4249,6 +4297,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p' and CQ_PARTITION='ds=tomorrow/hour=2' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4285,6 +4335,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p' and CQ_PARTITION='ds=tomorrow/hour=2' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4303,6 +4355,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE='t12p' and CC_STATE='f' and CC_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4349,6 +4403,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4381,6 +4437,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p' and CQ_PARTITION='ds=tomorrow/hour=2' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4414,6 +4472,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t11'"
 argument_list|)
 expr_stmt|;
@@ -4432,6 +4492,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE='t11'"
 argument_list|)
 expr_stmt|;
@@ -4464,6 +4526,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t12p'"
 argument_list|)
 expr_stmt|;
@@ -4482,6 +4546,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE='t12p'"
 argument_list|)
 expr_stmt|;
@@ -4515,6 +4581,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE='t13p' and CQ_STATE='i' and CQ_TYPE='a'"
 argument_list|)
 expr_stmt|;
@@ -4534,6 +4602,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4552,6 +4622,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4570,6 +4642,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4588,6 +4662,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4620,6 +4696,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where TC_DATABASE='temp' and TC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4638,6 +4716,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_DATABASE='temp' and CTC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4656,6 +4736,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPACTION_QUEUE where CQ_DATABASE='temp' and CQ_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -4674,6 +4756,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_COMPACTIONS where CC_DATABASE='temp' and CC_TABLE in ('t10', 't11', 't12p', 't13p')"
 argument_list|)
 expr_stmt|;
@@ -7798,6 +7882,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8032,6 +8118,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8088,6 +8176,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8197,6 +8287,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8255,6 +8347,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -8264,6 +8358,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8295,6 +8391,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8405,6 +8503,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8440,6 +8540,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8715,6 +8817,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8735,6 +8839,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8770,6 +8876,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8911,6 +9019,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -8990,6 +9100,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -9060,6 +9172,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -9097,6 +9211,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
@@ -9471,6 +9587,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -9480,6 +9598,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=one' and ws_operation_type='u'"
 argument_list|)
 argument_list|)
@@ -9494,6 +9614,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -9503,6 +9625,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='u'"
 argument_list|)
 argument_list|)
@@ -9518,6 +9642,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -9527,6 +9653,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_table='tab2' and ctc_partition is not null"
 argument_list|)
 argument_list|)
@@ -9981,6 +10109,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -9990,6 +10120,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=one' and ws_operation_type='u' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -10004,6 +10136,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -10013,6 +10147,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='u' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -10028,6 +10164,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -10037,6 +10175,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_table='tab1' and ctc_partition is not null"
 argument_list|)
 argument_list|)
@@ -10492,6 +10632,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -10501,6 +10643,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=one' and ws_operation_type='u' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -10515,6 +10659,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -10524,6 +10670,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='u' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -10538,6 +10686,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -10547,6 +10697,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_table='tab1' and ctc_partition is not null"
 argument_list|)
 argument_list|)
@@ -11000,6 +11152,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -11009,6 +11163,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 operator|(
@@ -11031,6 +11187,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -11040,6 +11198,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 name|idTxnUpdate1
@@ -11058,6 +11218,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -11067,6 +11229,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 name|idTxnDelete1
@@ -11085,6 +11249,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -11094,6 +11260,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=one' and ws_operation_type='u' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -11108,6 +11276,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -11117,6 +11287,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -11131,6 +11303,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -11140,6 +11314,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_table='tab1' and ctc_partition is not null"
 argument_list|)
 argument_list|)
@@ -11625,6 +11801,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -11634,6 +11812,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='u' and ws_table='tab1'"
 argument_list|)
 argument_list|)
@@ -11648,6 +11828,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -11657,6 +11839,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_table='tab1' and ctc_partition is not null"
 argument_list|)
 argument_list|)
@@ -12229,6 +12413,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -12238,6 +12424,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
 operator|+
 name|txnIdDelete
@@ -12254,6 +12442,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -12263,6 +12453,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
 operator|+
 name|txnIdSelect
@@ -12279,6 +12471,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -12288,6 +12482,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
 operator|+
 name|txnIdDelete
@@ -12304,6 +12500,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -12313,6 +12511,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
 operator|+
 name|txnIdSelect
@@ -12329,6 +12529,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -12338,6 +12540,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_table='tab1' and ctc_partition is not null"
 argument_list|)
 argument_list|)
@@ -12425,6 +12629,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -12434,6 +12640,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|)
@@ -12447,6 +12655,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -12456,6 +12666,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=6 and ctc_table='tab1'"
 argument_list|)
 argument_list|)
@@ -12576,6 +12788,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -12585,6 +12799,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|)
@@ -12598,6 +12814,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -12607,6 +12825,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=9"
 argument_list|)
 argument_list|)
@@ -12619,6 +12839,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -12628,6 +12850,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=9 and ctc_table='tab1'"
 argument_list|)
 argument_list|)
@@ -13533,6 +13757,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -13542,6 +13768,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId1
@@ -13683,6 +13911,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -13692,6 +13922,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId1
@@ -13719,6 +13951,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -13728,6 +13962,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId1
@@ -13755,6 +13991,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -13764,6 +14002,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId1
@@ -13797,6 +14037,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -13806,6 +14048,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 name|txnId1
@@ -13831,6 +14075,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -13840,6 +14086,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnId1
@@ -13867,6 +14115,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -13876,6 +14126,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnId1
@@ -14033,6 +14285,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14042,6 +14296,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId2
@@ -14186,6 +14442,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14195,6 +14453,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId2
@@ -14222,6 +14482,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14231,6 +14493,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId2
@@ -14258,6 +14522,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14267,6 +14533,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId2
@@ -14349,6 +14617,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14358,6 +14628,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 name|txnId2
@@ -14383,6 +14655,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -14392,6 +14666,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnId2
@@ -14431,6 +14707,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14440,6 +14718,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 name|txnId2
@@ -14465,6 +14745,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -14474,6 +14756,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnId2
@@ -14501,6 +14785,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -14510,6 +14796,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnId2
@@ -14677,6 +14965,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -14687,6 +14977,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid1
@@ -14924,6 +15216,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -14938,6 +15232,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnid1
@@ -15046,6 +15342,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -15056,6 +15354,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid2
@@ -15081,6 +15381,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -15091,6 +15393,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid2
@@ -15195,6 +15499,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -15205,6 +15511,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnid2
@@ -15349,6 +15657,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from HIVE_LOCKS"
 argument_list|)
 argument_list|,
@@ -15358,6 +15668,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from HIVE_LOCKS where hl_txnid="
 operator|+
 name|txnid1
@@ -15388,6 +15700,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -15397,6 +15711,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid1
@@ -15477,6 +15793,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -15488,6 +15806,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid="
 operator|+
 operator|(
@@ -15632,6 +15952,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -15642,6 +15964,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid2
@@ -16076,6 +16400,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -16086,6 +16412,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId1
@@ -16150,6 +16478,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -16159,6 +16489,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnId1
@@ -16192,6 +16524,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -16202,6 +16536,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnId1
@@ -16359,6 +16695,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -16369,6 +16707,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid2
@@ -16433,6 +16773,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -16442,6 +16784,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid2
@@ -16510,6 +16854,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
@@ -16519,6 +16865,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from TXN_COMPONENTS where tc_txnid="
 operator|+
 name|txnid2
@@ -16622,6 +16970,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -16632,6 +16982,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnid2
@@ -16659,6 +17011,8 @@ name|TxnDbUtil
 operator|.
 name|queryToString
 argument_list|(
+name|conf
+argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
@@ -16669,6 +17023,8 @@ name|TxnDbUtil
 operator|.
 name|countQueryAgent
 argument_list|(
+name|conf
+argument_list|,
 literal|"select count(*) from WRITE_SET where ws_txnid="
 operator|+
 name|txnid2

@@ -224,6 +224,11 @@ specifier|private
 name|String
 name|stringObject
 decl_stmt|;
+comment|/**    * The class name for a function    */
+specifier|private
+name|String
+name|className
+decl_stmt|;
 comment|/**    * This is derived from t and p, but we need to serialize this field to make    * sure Entity.hashCode() does not need to recursively read into t and p.    */
 specifier|private
 specifier|final
@@ -386,6 +391,32 @@ operator|.
 name|d
 operator|=
 name|d
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getClassName
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|className
+return|;
+block|}
+specifier|public
+name|void
+name|setClassName
+parameter_list|(
+name|String
+name|className
+parameter_list|)
+block|{
+name|this
+operator|.
+name|className
+operator|=
+name|className
 expr_stmt|;
 block|}
 specifier|public
@@ -742,7 +773,7 @@ operator|=
 name|complete
 expr_stmt|;
 block|}
-comment|/**    * Create an entity representing a object with given name, database namespace and type    * @param database - database namespace    * @param strObj - object name as string    * @param type - the entity type. this constructor only supports FUNCTION type currently    */
+comment|/**    * Create an entity representing a object with given name, database namespace and type    * @param database - database namespace    * @param strObj - object name as string    * @param className - function class name    * @param type - the entity type. this constructor only supports FUNCTION type currently    */
 specifier|public
 name|Entity
 parameter_list|(
@@ -751,6 +782,9 @@ name|database
 parameter_list|,
 name|String
 name|strObj
+parameter_list|,
+name|String
+name|className
 parameter_list|,
 name|Type
 name|type
@@ -788,6 +822,12 @@ operator|.
 name|stringObject
 operator|=
 name|strObj
+expr_stmt|;
+name|this
+operator|.
+name|className
+operator|=
+name|className
 expr_stmt|;
 name|this
 operator|.

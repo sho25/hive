@@ -2739,6 +2739,13 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"HMSC::open(): Found delegation token. Creating DIGEST-based thrift connection."
+argument_list|)
+expr_stmt|;
 comment|// authenticate using delegation tokens via the "DIGEST" mechanism
 name|transport
 operator|=
@@ -2772,6 +2779,13 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"HMSC::open(): Could not find delegation token. Creating KERBEROS-based thrift connection."
+argument_list|)
+expr_stmt|;
 name|String
 name|principalConfig
 init|=

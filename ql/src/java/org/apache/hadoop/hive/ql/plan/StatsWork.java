@@ -180,12 +180,6 @@ name|isNoScanAnalyzeCommand
 init|=
 literal|false
 decl_stmt|;
-specifier|private
-name|boolean
-name|isPartialScanAnalyzeCommand
-init|=
-literal|false
-decl_stmt|;
 comment|// sourceTask for TS is not changed (currently) but that of FS might be changed
 comment|// by various optimizers (auto.convert.join, for example)
 comment|// so this is set by DriverContext in runtime
@@ -429,32 +423,6 @@ operator|.
 name|isNoScanAnalyzeCommand
 operator|=
 name|isNoScanAnalyzeCommand
-expr_stmt|;
-block|}
-comment|/**    * @return the isPartialScanAnalyzeCommand    */
-specifier|public
-name|boolean
-name|isPartialScanAnalyzeCommand
-parameter_list|()
-block|{
-return|return
-name|isPartialScanAnalyzeCommand
-return|;
-block|}
-comment|/**    * @param isPartialScanAnalyzeCommand the isPartialScanAnalyzeCommand to set    */
-specifier|public
-name|void
-name|setPartialScanAnalyzeCommand
-parameter_list|(
-name|boolean
-name|isPartialScanAnalyzeCommand
-parameter_list|)
-block|{
-name|this
-operator|.
-name|isPartialScanAnalyzeCommand
-operator|=
-name|isPartialScanAnalyzeCommand
 expr_stmt|;
 block|}
 specifier|public

@@ -707,6 +707,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -840,6 +842,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -988,6 +992,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -1139,6 +1145,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -1276,6 +1284,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -1418,6 +1428,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -2472,6 +2484,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -2609,6 +2623,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -2746,6 +2762,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -2883,6 +2901,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -3020,6 +3040,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -3157,6 +3179,8 @@ name|TxnDbUtil
 operator|.
 name|countLockComponents
 argument_list|(
+name|conf
+argument_list|,
 operator|(
 operator|(
 name|DbLockManager
@@ -3770,7 +3794,9 @@ block|{
 name|TxnDbUtil
 operator|.
 name|prepDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|txnMgr
 operator|=
@@ -3896,7 +3922,9 @@ expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|cleanDb
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
