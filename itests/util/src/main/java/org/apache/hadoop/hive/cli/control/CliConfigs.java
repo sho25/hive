@@ -236,6 +236,13 @@ argument_list|,
 literal|"disabled.query.files"
 argument_list|)
 expr_stmt|;
+name|excludesFrom
+argument_list|(
+name|testConfigProps
+argument_list|,
+literal|"localSpark.only.query.files"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive"
