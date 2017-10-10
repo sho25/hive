@@ -8817,25 +8817,6 @@ argument_list|,
 literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
 argument_list|)
 block|,
-name|HIVE_DRUID_SELECT_DISTRIBUTE
-argument_list|(
-literal|"hive.druid.select.distribute"
-argument_list|,
-literal|true
-argument_list|,
-literal|"If it is set to true, we distribute the execution of Druid Select queries. Concretely, we retrieve\n"
-operator|+
-literal|"the result for Select queries directly from the Druid nodes containing the segments data.\n"
-operator|+
-literal|"In particular, first we contact the Druid broker node to obtain the nodes containing the segments\n"
-operator|+
-literal|"for the given query, and then we contact those nodes to retrieve the results for the query.\n"
-operator|+
-literal|"If it is set to false, we do not execute the Select queries in a distributed fashion. Instead, results\n"
-operator|+
-literal|"for those queries are returned by the Druid broker node."
-argument_list|)
-block|,
 name|HIVE_DRUID_SELECT_THRESHOLD
 argument_list|(
 literal|"hive.druid.select.threshold"
