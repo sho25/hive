@@ -2347,9 +2347,8 @@ argument_list|,
 name|dataSource
 argument_list|)
 expr_stmt|;
-comment|// When overwriting or when we do not have segments, we can just start with empty timeline,
-comment|// as we are overwriting segments with new versions and not inserting new segments at all,
-comment|// respectively
+comment|// When overwriting, we just start with empty timeline,
+comment|// as we are overwriting segments with new versions
 name|timeline
 operator|=
 operator|new
