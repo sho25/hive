@@ -6603,6 +6603,17 @@ operator|+
 literal|"overall query performance."
 argument_list|)
 block|,
+name|HIVE_IO_SARG_CACHE_MAX_WEIGHT_MB
+argument_list|(
+literal|"hive.io.sarg.cache.max.weight.mb"
+argument_list|,
+literal|10
+argument_list|,
+literal|"The max weight allowed for the SearchArgument Cache. By default, the cache allows a max-weight of 10MB, "
+operator|+
+literal|"after which entries will be evicted."
+argument_list|)
+block|,
 name|HIVE_LAZYSIMPLE_EXTENDED_BOOLEAN_LITERAL
 argument_list|(
 literal|"hive.lazysimple.extended_boolean_literal"
