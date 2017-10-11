@@ -4223,7 +4223,7 @@ name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
 argument_list|(
 literal|"hive.notification.sequence.lock.retry.sleep.interval"
 argument_list|,
-literal|500
+literal|500L
 argument_list|,
 operator|new
 name|TimeValidator
