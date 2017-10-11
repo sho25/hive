@@ -6454,9 +6454,9 @@ operator|<
 literal|1
 condition|)
 block|{
-comment|// Max is disabled, we can safely return true
+comment|// Max is disabled, we can safely return false
 return|return
-literal|true
+literal|false
 return|;
 block|}
 comment|// Evaluate
