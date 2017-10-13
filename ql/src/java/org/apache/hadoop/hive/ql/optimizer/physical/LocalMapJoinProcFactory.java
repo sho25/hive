@@ -1457,7 +1457,7 @@ operator|)
 name|parent
 operator|)
 operator|.
-name|getTableDesc
+name|getTableDescSkewJoin
 argument_list|()
 expr_stmt|;
 block|}

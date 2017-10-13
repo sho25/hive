@@ -275,6 +275,14 @@ name|DEFAULT_TRANSACTIONAL_PROPERTY
 init|=
 literal|"default"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|INSERTONLY_TRANSACTIONAL_PROPERTY
+init|=
+literal|"insert_only"
+decl_stmt|;
 name|TransactionalValidationListener
 parameter_list|(
 name|Configuration
@@ -657,6 +665,22 @@ name|newTable
 argument_list|)
 condition|)
 block|{
+comment|// INSERT_ONLY tables don't have to conform to ACID requirement like ORC or bucketing
+if|if
+condition|(
+name|transactionalPropertiesValue
+operator|==
+literal|null
+operator|||
+operator|!
+literal|"insert_only"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|transactionalPropertiesValue
+argument_list|)
+condition|)
+block|{
 throw|throw
 operator|new
 name|MetaException
@@ -664,6 +688,7 @@ argument_list|(
 literal|"The table must be stored using an ACID compliant format (such as ORC)"
 argument_list|)
 throw|;
+block|}
 block|}
 if|if
 condition|(
@@ -736,6 +761,17 @@ if|if
 condition|(
 operator|!
 name|hasValidTransactionalValue
+operator|&&
+operator|!
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTableParam
+argument_list|(
+name|oldTable
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
 condition|)
 block|{
 comment|// if here, there is attempt to set transactional to something other than 'true'
@@ -777,6 +813,7 @@ comment|// value will throw an error. An exception will still be thrown if the p
 comment|// null and an attempt is made to set it. This behaviour can be changed in the future.
 if|if
 condition|(
+operator|(
 name|oldTransactionalPropertiesValue
 operator|==
 literal|null
@@ -787,6 +824,18 @@ operator|.
 name|equalsIgnoreCase
 argument_list|(
 name|transactionalPropertiesValue
+argument_list|)
+operator|)
+operator|&&
+operator|!
+name|MetaStoreUtils
+operator|.
+name|isInsertOnlyTableParam
+argument_list|(
+name|oldTable
+operator|.
+name|getParameters
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -850,14 +899,14 @@ block|{
 return|return;
 block|}
 name|String
-name|transactionalValue
+name|transactional
 init|=
 literal|null
 decl_stmt|;
-name|boolean
-name|transactionalPropFound
+name|String
+name|transactionalProperties
 init|=
-literal|false
+literal|null
 decl_stmt|;
 name|Set
 argument_list|<
@@ -883,6 +932,7 @@ range|:
 name|keys
 control|)
 block|{
+comment|// Get the "transactional" tblproperties value
 if|if
 condition|(
 name|hive_metastoreConstants
@@ -895,11 +945,7 @@ name|key
 argument_list|)
 condition|)
 block|{
-name|transactionalPropFound
-operator|=
-literal|true
-expr_stmt|;
-name|transactionalValue
+name|transactional
 operator|=
 name|parameters
 operator|.
@@ -916,11 +962,35 @@ name|key
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Get the "transactional_properties" tblproperties value
+if|if
+condition|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_TRANSACTIONAL_PROPERTIES
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|key
+argument_list|)
+condition|)
+block|{
+name|transactionalProperties
+operator|=
+name|parameters
+operator|.
+name|get
+argument_list|(
+name|key
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
-operator|!
-name|transactionalPropFound
+name|transactional
+operator|==
+literal|null
 condition|)
 block|{
 return|return;
@@ -931,7 +1001,7 @@ literal|"false"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|transactionalValue
+name|transactional
 argument_list|)
 condition|)
 block|{
@@ -952,7 +1022,7 @@ literal|"true"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|transactionalValue
+name|transactional
 argument_list|)
 condition|)
 block|{
@@ -965,6 +1035,22 @@ name|newTable
 argument_list|)
 condition|)
 block|{
+comment|// INSERT_ONLY tables don't have to conform to ACID requirement like ORC or bucketing
+if|if
+condition|(
+name|transactionalProperties
+operator|==
+literal|null
+operator|||
+operator|!
+literal|"insert_only"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|transactionalProperties
+argument_list|)
+condition|)
+block|{
 throw|throw
 operator|new
 name|MetaException
@@ -972,6 +1058,7 @@ argument_list|(
 literal|"The table must be stored using an ACID compliant format (such as ORC)"
 argument_list|)
 throw|;
+block|}
 block|}
 if|if
 condition|(
@@ -1035,7 +1122,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
-comment|// transactional prop is found, but the value is not in expected range
+comment|// transactional is found, but the value is not in expected range
 throw|throw
 operator|new
 name|MetaException
@@ -1313,6 +1400,9 @@ condition|)
 block|{
 case|case
 name|DEFAULT_TRANSACTIONAL_PROPERTY
+case|:
+case|case
+name|INSERTONLY_TRANSACTIONAL_PROPERTY
 case|:
 name|isValid
 operator|=

@@ -208,7 +208,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -240,7 +240,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -279,7 +279,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -328,7 +328,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -360,7 +360,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -392,7 +392,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -425,7 +425,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -457,7 +457,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -489,7 +489,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -524,7 +524,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -572,7 +572,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,
@@ -604,7 +604,7 @@ name|ret
 operator|=
 name|HiveFileFormatUtils
 operator|.
-name|getPartitionDescFromPathRecursively
+name|getFromPathRecursively
 argument_list|(
 name|pathToPartitionInfo
 argument_list|,

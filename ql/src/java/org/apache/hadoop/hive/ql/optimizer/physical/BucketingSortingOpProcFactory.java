@@ -525,6 +525,26 @@ name|SelectDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * Operator factory for the rule processors for inferring bucketing/sorting columns.  */
 end_comment
@@ -534,6 +554,21 @@ specifier|public
 class|class
 name|BucketingSortingOpProcFactory
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|BucketingSortingOpProcFactory
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|public
 specifier|static
 class|class
@@ -2435,6 +2470,26 @@ name|FileSinkOperator
 operator|)
 name|nd
 decl_stmt|;
+if|if
+condition|(
+name|fop
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isMmTable
+argument_list|()
+condition|)
+block|{
+comment|// See the comment inside updatePartitionBucketSortColumns.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Currently, inferring buckets is not going to work for MM tables (by design)."
+argument_list|)
+expr_stmt|;
+block|}
 name|Operator
 argument_list|<
 name|?

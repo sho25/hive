@@ -1267,7 +1267,8 @@ name|FileSinkDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|// whether any ACID table is involved in a query
+comment|// whether any ACID table or Insert-only (mm) table is involved in a query
+comment|// They both require DbTxnManager and both need to recordValidTxns when acquiring locks in Driver
 specifier|protected
 name|boolean
 name|acidInQuery

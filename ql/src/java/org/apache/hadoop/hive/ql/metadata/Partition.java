@@ -1876,6 +1876,7 @@ name|int
 name|bucketNum
 parameter_list|)
 block|{
+comment|// Note: this makes assumptions that won't work with MM tables, unions, etc.
 name|FileStatus
 name|srcs
 index|[]

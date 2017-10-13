@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -187,6 +197,24 @@ name|Task
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
 begin_comment
 comment|/**  * Conditional task resolution interface. This is invoked at run time to get the  * task to invoke. Developers can plug in their own resolvers  */
 end_comment
@@ -297,22 +325,6 @@ block|{
 return|return
 name|dir
 return|;
-block|}
-comment|/**      * @param dir      *          the dir to set      */
-specifier|public
-name|void
-name|setDir
-parameter_list|(
-name|String
-name|dir
-parameter_list|)
-block|{
-name|this
-operator|.
-name|dir
-operator|=
-name|dir
-expr_stmt|;
 block|}
 comment|/**      * @return the listTasks      */
 specifier|public
@@ -815,6 +827,21 @@ argument_list|,
 name|avgConditionSize
 argument_list|)
 decl_stmt|;
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"merge resolve simple case - totalSz "
+operator|+
+name|totalSz
+operator|+
+literal|" from "
+operator|+
+name|dirPath
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|totalSz
@@ -889,6 +916,17 @@ block|}
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|info
+argument_list|(
+literal|"Resolver returning movetask for "
+operator|+
+name|dirPath
+argument_list|)
+expr_stmt|;
 name|resTsks
 operator|.
 name|add
@@ -1070,6 +1108,17 @@ operator|.
 name|getTableDesc
 argument_list|()
 decl_stmt|;
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"merge resolver removing "
+operator|+
+name|path
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|removePathToPartitionInfo
@@ -1234,6 +1283,49 @@ argument_list|)
 else|:
 name|partDesc
 decl_stmt|;
+if|if
+condition|(
+name|pDesc
+operator|==
+literal|null
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|warn
+argument_list|(
+literal|"merger ignoring invalid DP path "
+operator|+
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"merge resolver will merge "
+operator|+
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|work
 operator|.
 name|resolveDynamicPartitionStoredAsSubDirsMerge
@@ -1258,6 +1350,23 @@ expr_stmt|;
 block|}
 else|else
 block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"merge resolver will move "
+operator|+
+name|status
+index|[
+name|i
+index|]
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|toMove
 operator|.
 name|add
@@ -1301,6 +1410,7 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// Note: this path should be specific to concatenate; never executed in a select query.
 comment|// modify the existing move task as it is already in the candidate running tasks
 comment|// running the MoveTask and MR task in parallel may
 comment|// cause the mvTask write to /ds=1 and MR task write
@@ -1580,6 +1690,10 @@ name|getPartSpec
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Require all the directories to be present with some values.
+if|if
+condition|(
+operator|!
 name|Warehouse
 operator|.
 name|makeSpecFromName
@@ -1593,11 +1707,27 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+operator|new
+name|HashSet
+argument_list|<>
+argument_list|(
+name|dpCtx
+operator|.
+name|getPartSpec
+argument_list|()
+operator|.
+name|keySet
+argument_list|()
 argument_list|)
-expr_stmt|;
-name|PartitionDesc
-name|pDesc
-init|=
+argument_list|)
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+return|return
 operator|new
 name|PartitionDesc
 argument_list|(
@@ -1605,9 +1735,6 @@ name|tblDesc
 argument_list|,
 name|fullPartSpec
 argument_list|)
-decl_stmt|;
-return|return
-name|pDesc
 return|;
 block|}
 specifier|private
@@ -1653,6 +1780,13 @@ operator|.
 name|setMinSplitSizePerRack
 argument_list|(
 name|targetSize
+argument_list|)
+expr_stmt|;
+name|mWork
+operator|.
+name|setIsMergeFromResolver
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -1768,6 +1902,20 @@ range|:
 name|fStats
 control|)
 block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"Resolver looking at "
+operator|+
+name|fStat
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|fStat

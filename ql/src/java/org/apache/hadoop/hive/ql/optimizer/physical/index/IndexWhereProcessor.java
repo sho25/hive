@@ -856,7 +856,7 @@ name|tblDesc
 init|=
 name|operator
 operator|.
-name|getTableDesc
+name|getTableDescSkewJoin
 argument_list|()
 decl_stmt|;
 name|Map

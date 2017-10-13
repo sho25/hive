@@ -68,6 +68,11 @@ name|TEST_CAPABILITY
 argument_list|(
 literal|1
 argument_list|)
+block|,
+name|INSERT_ONLY_TABLES
+argument_list|(
+literal|2
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -118,6 +123,12 @@ literal|1
 case|:
 return|return
 name|TEST_CAPABILITY
+return|;
+case|case
+literal|2
+case|:
+return|return
+name|INSERT_ONLY_TABLES
 return|;
 default|default:
 return|return

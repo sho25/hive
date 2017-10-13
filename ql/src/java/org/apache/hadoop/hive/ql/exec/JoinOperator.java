@@ -1195,7 +1195,9 @@ block|{
 comment|// Step1: rename tmp output folder to intermediate path. After this
 comment|// point, updates from speculative tasks still writing to tmpPath
 comment|// will not appear in finalPath.
-name|log
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
@@ -1206,6 +1208,12 @@ operator|+
 literal|" to: "
 operator|+
 name|intermediatePath
+operator|+
+literal|"(spec "
+operator|+
+name|specPath
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|Utilities
@@ -1230,7 +1238,9 @@ name|intermediatePath
 argument_list|)
 expr_stmt|;
 comment|// Step3: move to the file destination
-name|log
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(

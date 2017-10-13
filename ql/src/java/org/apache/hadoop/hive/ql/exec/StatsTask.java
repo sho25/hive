@@ -1236,7 +1236,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|table
 argument_list|)
@@ -1490,9 +1490,21 @@ literal|']'
 argument_list|)
 expr_stmt|;
 block|}
-name|LOG
+if|if
+condition|(
+name|Utilities
 operator|.
-name|info
+name|FILE_OP_LOGGER
+operator|.
+name|isTraceEnabled
+argument_list|()
+condition|)
+block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
 argument_list|(
 literal|"Table "
 operator|+
@@ -1508,6 +1520,7 @@ operator|+
 literal|']'
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1904,7 +1917,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|table
 argument_list|)

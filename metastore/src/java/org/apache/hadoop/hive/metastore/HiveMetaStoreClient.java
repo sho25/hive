@@ -553,6 +553,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|TableType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|conf
 operator|.
 name|MetastoreConf
@@ -853,9 +869,20 @@ specifier|static
 name|ClientCapabilities
 name|VERSION
 init|=
-literal|null
+operator|new
+name|ClientCapabilities
+argument_list|(
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|ClientCapability
+operator|.
+name|INSERT_ONLY_TABLES
+argument_list|)
+argument_list|)
 decl_stmt|;
-comment|// No capabilities.
+comment|// Test capability for tests.
 specifier|public
 specifier|final
 specifier|static
@@ -871,11 +898,14 @@ name|newArrayList
 argument_list|(
 name|ClientCapability
 operator|.
+name|INSERT_ONLY_TABLES
+argument_list|,
+name|ClientCapability
+operator|.
 name|TEST_CAPABILITY
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// Test capability for tests.
 name|ThriftHiveMetastore
 operator|.
 name|Iface

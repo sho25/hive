@@ -474,6 +474,9 @@ name|outputDir
 parameter_list|,
 name|String
 name|srcTblInputFormat
+parameter_list|,
+name|TableDesc
+name|tbl
 parameter_list|)
 block|{
 name|this
@@ -485,6 +488,8 @@ argument_list|,
 literal|false
 argument_list|,
 name|srcTblInputFormat
+argument_list|,
+name|tbl
 argument_list|)
 expr_stmt|;
 block|}
@@ -505,6 +510,9 @@ name|hasDynamicPartitions
 parameter_list|,
 name|String
 name|srcTblInputFormat
+parameter_list|,
+name|TableDesc
+name|tbl
 parameter_list|)
 block|{
 name|this
@@ -592,6 +600,13 @@ operator|.
 name|setInputFileFormatClass
 argument_list|(
 name|internalInputFormat
+argument_list|)
+expr_stmt|;
+name|partDesc
+operator|.
+name|setTableDesc
+argument_list|(
+name|tbl
 argument_list|)
 expr_stmt|;
 for|for

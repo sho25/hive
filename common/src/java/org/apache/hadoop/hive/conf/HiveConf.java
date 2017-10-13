@@ -6148,6 +6148,17 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVEEXIMTESTMODE
+argument_list|(
+literal|"hive.exim.test.mode"
+argument_list|,
+literal|false
+argument_list|,
+literal|"The subset of test mode that only enables custom path handling for ExIm."
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVETESTMODEPREFIX
 argument_list|(
 literal|"hive.test.mode.prefix"
@@ -8368,6 +8379,20 @@ literal|"hive.txn.operational.properties"
 argument_list|,
 literal|1
 argument_list|,
+literal|"Sets the operational properties that control the appropriate behavior for various\n"
+operator|+
+literal|"versions of the Hive ACID subsystem. Mostly it is intended to be used as an internal property\n"
+operator|+
+literal|"for future versions of ACID. (See HIVE-14035 for details.)\n"
+operator|+
+literal|"0: Turn on the legacy mode for ACID\n"
+operator|+
+literal|"1: Enable split-update feature found in the newer version of Hive ACID subsystem\n"
+operator|+
+literal|"2: Hash-based merge, which combines delta files using GRACE hash join based approach (not implemented)\n"
+operator|+
+literal|"3: Make the table 'quarter-acid' as it only supports insert. But it doesn't require ORC or bucketing.\n"
+operator|+
 literal|"This is intended to be used as an internal property for future versions of ACID. (See\n"
 operator|+
 literal|"HIVE-14035 for details.)"
@@ -14351,6 +14376,15 @@ operator|+
 name|LOG_PREFIX_LENGTH
 operator|+
 literal|" characters. Defaults to use auto-generated session id."
+argument_list|)
+block|,
+name|HIVE_MM_AVOID_GLOBSTATUS_ON_S3
+argument_list|(
+literal|"hive.mm.avoid.s3.globstatus"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use listFiles (optimized on S3) instead of globStatus when on S3."
 argument_list|)
 block|,
 name|HIVE_CONF_RESTRICTED_LIST

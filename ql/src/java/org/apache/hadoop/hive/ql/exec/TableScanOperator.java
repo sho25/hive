@@ -577,7 +577,7 @@ name|schemaEvolutionColumnsTypes
 decl_stmt|;
 specifier|public
 name|TableDesc
-name|getTableDesc
+name|getTableDescSkewJoin
 parameter_list|()
 block|{
 return|return
@@ -586,7 +586,7 @@ return|;
 block|}
 specifier|public
 name|void
-name|setTableDesc
+name|setTableDescSkewJoin
 parameter_list|(
 name|TableDesc
 name|tableDesc

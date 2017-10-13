@@ -1693,8 +1693,6 @@ operator|.
 name|getAcidState
 argument_list|(
 operator|new
-name|TestInputOutputFormat
-operator|.
 name|MockPath
 argument_list|(
 name|fs
@@ -2168,8 +2166,6 @@ operator|.
 name|getAcidState
 argument_list|(
 operator|new
-name|TestInputOutputFormat
-operator|.
 name|MockPath
 argument_list|(
 name|fs
@@ -5213,8 +5209,6 @@ operator|.
 name|getAcidState
 argument_list|(
 operator|new
-name|TestInputOutputFormat
-operator|.
 name|MockPath
 argument_list|(
 name|fs

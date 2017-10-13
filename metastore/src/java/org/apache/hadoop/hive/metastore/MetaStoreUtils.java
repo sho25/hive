@@ -2207,6 +2207,11 @@ name|tableSize
 init|=
 literal|0L
 decl_stmt|;
+name|String
+name|s
+init|=
+literal|"LOG14535 Populating quick stats for: "
+decl_stmt|;
 for|for
 control|(
 name|FileStatus
@@ -2215,6 +2220,15 @@ range|:
 name|fileStatus
 control|)
 block|{
+name|s
+operator|+=
+name|status
+operator|.
+name|getPath
+argument_list|()
+operator|+
+literal|", "
+expr_stmt|;
 comment|// don't take directories into account for quick stats
 if|if
 condition|(
@@ -2238,6 +2252,14 @@ literal|1
 expr_stmt|;
 block|}
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+name|s
+comment|/*, new Exception()*/
+argument_list|)
+expr_stmt|;
 name|params
 operator|.
 name|put
@@ -12113,6 +12135,48 @@ name|includes
 argument_list|(
 name|ipAddress
 argument_list|)
+return|;
+block|}
+comment|/** Duplicates AcidUtils; used in a couple places in metastore. */
+specifier|public
+specifier|static
+name|boolean
+name|isInsertOnlyTableParam
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|params
+parameter_list|)
+block|{
+name|String
+name|transactionalProp
+init|=
+name|params
+operator|.
+name|get
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_TRANSACTIONAL_PROPERTIES
+argument_list|)
+decl_stmt|;
+return|return
+operator|(
+name|transactionalProp
+operator|!=
+literal|null
+operator|&&
+literal|"insert_only"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|transactionalProp
+argument_list|)
+operator|)
 return|;
 block|}
 block|}

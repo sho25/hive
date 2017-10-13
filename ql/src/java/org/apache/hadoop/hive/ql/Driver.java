@@ -7459,7 +7459,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*It's imperative that {@code acquireLocks()} is called for all commands so that        HiveTxnManager can transition its state machine correctly*/
+comment|/*It's imperative that {@code acquireLocks()} is called for all commands so that       HiveTxnManager can transition its state machine correctly*/
 name|queryTxnMgr
 operator|.
 name|acquireLocks

@@ -1663,7 +1663,7 @@ name|setIsAcid
 argument_list|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)
@@ -1994,7 +1994,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)
@@ -2137,7 +2137,7 @@ name|setIsAcid
 argument_list|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)

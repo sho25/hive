@@ -2135,18 +2135,29 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"removing union - new desc with "
+operator|+
+name|desc
+operator|.
+name|getDirName
+argument_list|()
+operator|+
+literal|"; parent "
+operator|+
+name|path
+argument_list|)
+expr_stmt|;
 name|desc
 operator|.
 name|setLinkedFileSink
 argument_list|(
 literal|true
-argument_list|)
-expr_stmt|;
-name|desc
-operator|.
-name|setParentDir
-argument_list|(
-name|path
 argument_list|)
 expr_stmt|;
 name|desc
@@ -2464,6 +2475,27 @@ operator|.
 name|info
 argument_list|(
 literal|"using CombineHiveInputformat for the merge job"
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"will generate MR work for merging files from "
+operator|+
+name|fileSink
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getDirName
+argument_list|()
+operator|+
+literal|" to "
+operator|+
+name|finalName
 argument_list|)
 expr_stmt|;
 name|GenMapRedUtils

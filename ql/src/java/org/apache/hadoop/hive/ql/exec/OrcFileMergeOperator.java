@@ -464,6 +464,11 @@ name|filePath
 init|=
 literal|""
 decl_stmt|;
+name|boolean
+name|exception
+init|=
+literal|false
+decl_stmt|;
 try|try
 block|{
 name|OrcFileValueWrapper
@@ -526,9 +531,7 @@ name|getInputPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|incompatFileSet
-operator|.
-name|add
+name|addIncompatibleFile
 argument_list|(
 name|k
 operator|.
@@ -550,6 +553,17 @@ argument_list|()
 operator|.
 name|getPath
 argument_list|()
+expr_stmt|;
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|info
+argument_list|(
+literal|"OrcFileMergeOperator processing "
+operator|+
+name|filePath
+argument_list|)
 expr_stmt|;
 name|fixTmpPath
 argument_list|(
@@ -728,6 +742,12 @@ name|enforceBufferSize
 argument_list|()
 expr_stmt|;
 block|}
+name|Path
+name|outPath
+init|=
+name|getOutPath
+argument_list|()
+decl_stmt|;
 name|outWriter
 operator|=
 name|OrcFile
@@ -767,9 +787,7 @@ name|k
 argument_list|)
 condition|)
 block|{
-name|incompatFileSet
-operator|.
-name|add
+name|addIncompatibleFile
 argument_list|(
 name|k
 operator|.
@@ -978,8 +996,6 @@ name|Throwable
 name|e
 parameter_list|)
 block|{
-name|this
-operator|.
 name|exception
 operator|=
 literal|true

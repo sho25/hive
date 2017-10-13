@@ -932,7 +932,7 @@ specifier|public
 name|void
 name|rollbackTransaction
 parameter_list|()
-block|{     }
+block|{   }
 annotation|@
 name|Override
 specifier|public
