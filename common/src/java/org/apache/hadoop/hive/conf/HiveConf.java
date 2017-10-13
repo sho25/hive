@@ -4223,7 +4223,7 @@ name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
 argument_list|(
 literal|"hive.notification.sequence.lock.retry.sleep.interval"
 argument_list|,
-literal|500
+literal|500L
 argument_list|,
 operator|new
 name|TimeValidator
@@ -6614,6 +6614,17 @@ operator|+
 literal|"overall query performance."
 argument_list|)
 block|,
+name|HIVE_IO_SARG_CACHE_MAX_WEIGHT_MB
+argument_list|(
+literal|"hive.io.sarg.cache.max.weight.mb"
+argument_list|,
+literal|10
+argument_list|,
+literal|"The max weight allowed for the SearchArgument Cache. By default, the cache allows a max-weight of 10MB, "
+operator|+
+literal|"after which entries will be evicted."
+argument_list|)
+block|,
 name|HIVE_LAZYSIMPLE_EXTENDED_BOOLEAN_LITERAL
 argument_list|(
 literal|"hive.lazysimple.extended_boolean_literal"
@@ -8840,25 +8851,6 @@ argument_list|,
 literal|"localhost:8081"
 argument_list|,
 literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
-argument_list|)
-block|,
-name|HIVE_DRUID_SELECT_DISTRIBUTE
-argument_list|(
-literal|"hive.druid.select.distribute"
-argument_list|,
-literal|true
-argument_list|,
-literal|"If it is set to true, we distribute the execution of Druid Select queries. Concretely, we retrieve\n"
-operator|+
-literal|"the result for Select queries directly from the Druid nodes containing the segments data.\n"
-operator|+
-literal|"In particular, first we contact the Druid broker node to obtain the nodes containing the segments\n"
-operator|+
-literal|"for the given query, and then we contact those nodes to retrieve the results for the query.\n"
-operator|+
-literal|"If it is set to false, we do not execute the Select queries in a distributed fashion. Instead, results\n"
-operator|+
-literal|"for those queries are returned by the Druid broker node."
 argument_list|)
 block|,
 name|HIVE_DRUID_SELECT_THRESHOLD

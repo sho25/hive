@@ -1432,6 +1432,8 @@ argument_list|(
 name|rcwork
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -1461,6 +1463,8 @@ literal|false
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

@@ -51236,6 +51236,15 @@ block|}
 block|}
 block|}
 block|}
+specifier|public
+name|long
+name|getSleepInterval
+parameter_list|()
+block|{
+return|return
+name|sleepInterval
+return|;
+block|}
 block|}
 annotation|@
 name|Override

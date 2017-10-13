@@ -1906,6 +1906,8 @@ argument_list|(
 name|work
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|dependency
