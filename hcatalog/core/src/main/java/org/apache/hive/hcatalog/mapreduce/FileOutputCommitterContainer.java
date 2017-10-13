@@ -3430,6 +3430,16 @@ argument_list|(
 name|parentDir
 argument_list|,
 literal|"_placeholder"
+operator|+
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|Math
+operator|.
+name|random
+argument_list|()
+argument_list|)
 argument_list|)
 decl_stmt|;
 if|if
@@ -3442,7 +3452,7 @@ name|parentDir
 argument_list|)
 condition|)
 block|{
-comment|// It is weired but we need a placeholder,
+comment|// It is weird but we need a placeholder,
 comment|// otherwise rename cannot move file to the right place
 name|fs
 operator|.
