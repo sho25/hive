@@ -2133,23 +2133,6 @@ argument_list|,
 literal|"Set this to true if multiple threads access metastore through JDO concurrently."
 argument_list|)
 block|,
-name|ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
-argument_list|(
-literal|"metastore.orm.retrieveMapNullsAsEmptyStrings"
-argument_list|,
-literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Thrift does not support nulls in maps, so any nulls present in maps retrieved from ORM must "
-operator|+
-literal|"either be pruned or converted to empty strings. Some backing dbs such as Oracle persist empty strings "
-operator|+
-literal|"as nulls, so we should set this parameter if we wish to reverse that behaviour. For others, "
-operator|+
-literal|"pruning is the correct behaviour"
-argument_list|)
-block|,
 name|MAX_OPEN_TXNS
 argument_list|(
 literal|"metastore.max.open.txns"
@@ -2174,6 +2157,56 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Reads outside of transactions"
+argument_list|)
+block|,
+name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
+argument_list|(
+literal|"metastore.notification.sequence.lock.max.retries"
+argument_list|,
+literal|"hive.notification.sequence.lock.max.retries"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Number of retries required to acquire a lock when getting the next notification sequential ID for entries "
+operator|+
+literal|"in the NOTIFICATION_LOG table."
+argument_list|)
+block|,
+name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
+argument_list|(
+literal|"metastore.notification.sequence.lock.retry.sleep.interval"
+argument_list|,
+literal|"hive.notification.sequence.lock.retry.sleep.interval"
+argument_list|,
+literal|500
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|,
+literal|"Sleep interval between retries to acquire a notification lock as described part of property "
+operator|+
+name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
+operator|.
+name|name
+argument_list|()
+argument_list|)
+block|,
+name|ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
+argument_list|(
+literal|"metastore.orm.retrieveMapNullsAsEmptyStrings"
+argument_list|,
+literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Thrift does not support nulls in maps, so any nulls present in maps retrieved from ORM must "
+operator|+
+literal|"either be pruned or converted to empty strings. Some backing dbs such as Oracle persist empty strings "
+operator|+
+literal|"as nulls, so we should set this parameter if we wish to reverse that behaviour. For others, "
+operator|+
+literal|"pruning is the correct behaviour"
 argument_list|)
 block|,
 name|PARTITION_NAME_WHITELIST_PATTERN
@@ -2502,6 +2535,17 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"A flag to gather statistics (only basic) automatically during the INSERT OVERWRITE command."
+argument_list|)
+block|,
+name|STATS_FETCH_BITVECTOR
+argument_list|(
+literal|"metastore.stats.fetch.bitvector"
+argument_list|,
+literal|"hive.stats.fetch.bitvector"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether we fetch bitvector when we compute ndv. Users can turn it off if they want to use old schema"
 argument_list|)
 block|,
 name|STATS_NDV_TUNER

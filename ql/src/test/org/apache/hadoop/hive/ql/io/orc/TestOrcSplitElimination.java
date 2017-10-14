@@ -299,8 +299,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|hbase
-operator|.
 name|MetadataStore
 import|;
 end_import
