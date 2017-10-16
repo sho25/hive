@@ -8119,6 +8119,133 @@ name|rs
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * https://issues.apache.org/jira/browse/HIVE-17391    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testEmptyInTblproperties
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"create table t1 "
+operator|+
+literal|"(a int, b int) stored as orc TBLPROPERTIES ('serialization.null.format'='', 'transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into t1 "
+operator|+
+literal|"(a,b) values(1,7),(3,7)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"update t1"
+operator|+
+literal|" set b = -2 where b = 2"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table t1 "
+operator|+
+literal|" compact 'MAJOR'"
+argument_list|)
+expr_stmt|;
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|TxnStore
+name|txnHandler
+init|=
+name|TxnUtils
+operator|.
+name|getTxnStore
+argument_list|(
+name|hiveConf
+argument_list|)
+decl_stmt|;
+name|ShowCompactResponse
+name|resp
+init|=
+name|txnHandler
+operator|.
+name|showCompact
+argument_list|(
+operator|new
+name|ShowCompactRequest
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Unexpected number of compactions in history"
+argument_list|,
+literal|1
+argument_list|,
+name|resp
+operator|.
+name|getCompactsSize
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Unexpected 0 compaction state"
+argument_list|,
+name|TxnStore
+operator|.
+name|CLEANING_RESPONSE
+argument_list|,
+name|resp
+operator|.
+name|getCompacts
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getState
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|resp
+operator|.
+name|getCompacts
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getHadoopJobId
+argument_list|()
+operator|.
+name|startsWith
+argument_list|(
+literal|"job_local"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * https://issues.apache.org/jira/browse/HIVE-10151    */
 annotation|@
 name|Test

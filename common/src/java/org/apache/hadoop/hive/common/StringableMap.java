@@ -119,6 +119,7 @@ name|i
 operator|++
 control|)
 block|{
+comment|// Get the key String.
 name|parts
 operator|=
 name|s
@@ -146,8 +147,9 @@ decl_stmt|;
 name|String
 name|key
 init|=
-literal|null
+literal|""
 decl_stmt|;
+comment|// Default is now an empty string.
 if|if
 condition|(
 name|len
@@ -168,6 +170,28 @@ argument_list|,
 name|len
 argument_list|)
 expr_stmt|;
+comment|// Please check the toString() method of this class.
+comment|// null has -1 as length and empty String has 0.
+elseif|else
+if|if
+condition|(
+name|len
+operator|<
+literal|0
+condition|)
+block|{
+name|key
+operator|=
+literal|null
+expr_stmt|;
+name|len
+operator|=
+literal|0
+expr_stmt|;
+comment|// Set 0 to 'len' for null-valued key
+comment|// since only len exists for null-valued key from the given String "s".
+block|}
+comment|// Get the value String for the key
 name|parts
 operator|=
 name|parts
@@ -202,7 +226,7 @@ expr_stmt|;
 name|String
 name|value
 init|=
-literal|null
+literal|""
 decl_stmt|;
 if|if
 condition|(
@@ -224,6 +248,33 @@ argument_list|,
 name|len
 argument_list|)
 expr_stmt|;
+elseif|else
+if|if
+condition|(
+name|len
+operator|<
+literal|0
+condition|)
+block|{
+name|value
+operator|=
+literal|null
+expr_stmt|;
+name|len
+operator|=
+literal|0
+expr_stmt|;
+comment|// Set 0 to 'len' since only len exists.
+block|}
+comment|// Put the entry into the HashMap<String, String>.
+name|put
+argument_list|(
+name|key
+argument_list|,
+name|value
+argument_list|)
+expr_stmt|;
+comment|// Move to the next substring to process.
 name|s
 operator|=
 name|parts
@@ -234,13 +285,6 @@ operator|.
 name|substring
 argument_list|(
 name|len
-argument_list|)
-expr_stmt|;
-name|put
-argument_list|(
-name|key
-argument_list|,
-name|value
 argument_list|)
 expr_stmt|;
 block|}
@@ -316,6 +360,8 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+comment|// Append the key String to the output StringBuilder.
+comment|// Note that null is saved as -1 in length, and that empty String as 0.
 name|int
 name|length
 init|=
@@ -328,7 +374,8 @@ operator|==
 literal|null
 operator|)
 condition|?
-literal|0
+operator|-
+literal|1
 else|:
 name|entry
 operator|.
@@ -342,15 +389,6 @@ name|buf
 operator|.
 name|append
 argument_list|(
-name|entry
-operator|.
-name|getKey
-argument_list|()
-operator|==
-literal|null
-condition|?
-literal|0
-else|:
 name|length
 argument_list|)
 expr_stmt|;
@@ -377,6 +415,8 @@ name|getKey
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Append the value String to the output StringBuilder.
+comment|// Note that null is saved as -1 in length, and that empty String as 0.
 name|length
 operator|=
 operator|(
@@ -388,7 +428,8 @@ operator|==
 literal|null
 operator|)
 condition|?
-literal|0
+operator|-
+literal|1
 else|:
 name|entry
 operator|.
@@ -418,6 +459,7 @@ name|length
 operator|>
 literal|0
 condition|)
+block|{
 name|buf
 operator|.
 name|append
@@ -428,6 +470,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 return|return
