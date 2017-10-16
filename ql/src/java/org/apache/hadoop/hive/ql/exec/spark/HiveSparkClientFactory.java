@@ -93,6 +93,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -134,24 +148,6 @@ operator|.
 name|common
 operator|.
 name|LogUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
 import|;
 end_import
 
@@ -491,6 +487,16 @@ name|String
 name|SPARK_DEPLOY_MODE
 init|=
 literal|"spark.submit.deployMode"
+decl_stmt|;
+annotation|@
+name|VisibleForTesting
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SPARK_CLONE_CONFIGURATION
+init|=
+literal|"spark.hadoop.cloneConf"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1626,6 +1632,16 @@ literal|"false"
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Force Spark configs to be cloned by default
+name|sparkConf
+operator|.
+name|putIfAbsent
+argument_list|(
+name|SPARK_CLONE_CONFIGURATION
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 comment|// Set the credential provider passwords if found, if there is job specific password
 comment|// the credential provider location is set directly in the execute method of LocalSparkClient
 comment|// and submit method of RemoteHiveSparkClient when the job config is created

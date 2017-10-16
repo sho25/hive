@@ -45,6 +45,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1041,6 +1055,16 @@ argument_list|()
 operator|.
 name|toString
 argument_list|()
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+name|HiveSparkClient
+name|getHiveSparkClient
+parameter_list|()
+block|{
+return|return
+name|hiveSparkClient
 return|;
 block|}
 block|}
