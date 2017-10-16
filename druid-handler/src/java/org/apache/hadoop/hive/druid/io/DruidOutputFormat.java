@@ -894,10 +894,33 @@ operator|.
 name|HIVE_DRUID_INDEXING_GRANULARITY
 argument_list|)
 decl_stmt|;
+comment|// If datasource is in the table properties, it is an INSERT/INSERT OVERWRITE as the datasource
+comment|// name was already persisted. Otherwise, it is a CT/CTAS and we need to get the name from the
+comment|// job properties that are set by configureOutputJobProperties in the DruidStorageHandler
 specifier|final
 name|String
 name|dataSource
 init|=
+name|tableProperties
+operator|.
+name|getProperty
+argument_list|(
+name|Constants
+operator|.
+name|DRUID_DATA_SOURCE
+argument_list|)
+operator|==
+literal|null
+condition|?
+name|jc
+operator|.
+name|get
+argument_list|(
+name|Constants
+operator|.
+name|DRUID_DATA_SOURCE
+argument_list|)
+else|:
 name|tableProperties
 operator|.
 name|getProperty
