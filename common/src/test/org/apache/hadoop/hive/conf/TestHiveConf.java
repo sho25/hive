@@ -729,7 +729,7 @@ name|HiveConf
 operator|.
 name|unitFor
 argument_list|(
-literal|"useconds"
+literal|"usecs"
 argument_list|,
 literal|null
 argument_list|)

@@ -221,7 +221,7 @@ name|HiveConf
 name|conf
 parameter_list|)
 throws|throws
-name|InterruptedException
+name|Exception
 block|{
 name|conf
 operator|.
