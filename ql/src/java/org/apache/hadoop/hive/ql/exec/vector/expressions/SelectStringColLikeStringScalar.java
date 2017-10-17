@@ -740,7 +740,7 @@ else|else
 block|{
 name|outputVector
 index|[
-literal|0
+name|i
 index|]
 operator|=
 name|LongColumnVector
@@ -830,7 +830,7 @@ else|else
 block|{
 name|outputVector
 index|[
-literal|0
+name|i
 index|]
 operator|=
 name|LongColumnVector
