@@ -4981,9 +4981,9 @@ name|INVALID_CSTR_SYNTAX
 operator|.
 name|getMsg
 argument_list|(
-literal|"ENABLE feature not supported yet. "
+literal|"ENABLE/ENFORCED feature not supported yet. "
 operator|+
-literal|"Please use DISABLE instead."
+literal|"Please use DISABLE/NOT ENFORCED instead."
 argument_list|)
 argument_list|)
 throw|;
