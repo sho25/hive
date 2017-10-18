@@ -93,6 +93,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|fasterxml
+operator|.
+name|jackson
+operator|.
+name|databind
+operator|.
+name|JsonNode
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -220,20 +234,6 @@ operator|.
 name|metadata
 operator|.
 name|Hive
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Time
 import|;
 end_import
 
@@ -2284,6 +2284,25 @@ argument_list|>
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// We're going to wait for the session to be abandoned.
+name|String
+name|currentValue
+decl_stmt|;
+name|int
+name|count
+init|=
+literal|5
+decl_stmt|;
+comment|// how many times we'll sleep before giving up
+name|String
+name|expectedValue
+init|=
+literal|"1"
+decl_stmt|;
+do|do
+block|{
+comment|// HIVE_SERVER2_SESSION_CHECK_INTERVAL is set to 3 seconds, so we have to wait for at least
+comment|// that long to see an abandoned session
 name|Thread
 operator|.
 name|sleep
@@ -2298,9 +2317,11 @@ operator|.
 name|dumpJson
 argument_list|()
 expr_stmt|;
+name|currentValue
+operator|=
 name|MetricsTestUtils
 operator|.
-name|verifyMetricsJson
+name|getJsonNode
 argument_list|(
 name|json
 argument_list|,
@@ -2311,8 +2332,36 @@ argument_list|,
 name|MetricsConstant
 operator|.
 name|HS2_ABANDONED_SESSIONS
+argument_list|)
+operator|.
+name|asText
+argument_list|()
+expr_stmt|;
+comment|// loop until the value is correct or we run out of tries
+block|}
+do|while
+condition|(
+operator|!
+name|expectedValue
+operator|.
+name|equals
+argument_list|(
+name|currentValue
+argument_list|)
+operator|&&
+operator|--
+name|count
+operator|>
+literal|0
+condition|)
+do|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|expectedValue
 argument_list|,
-literal|1
+name|currentValue
 argument_list|)
 expr_stmt|;
 block|}
