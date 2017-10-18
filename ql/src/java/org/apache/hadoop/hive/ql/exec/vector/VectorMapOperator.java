@@ -3033,14 +3033,37 @@ condition|(
 name|hasRowIdentifier
 condition|)
 block|{
-comment|// UNDONE: Pass ROW__ID STRUCT column through IO Context to get filled in by ACID reader
-comment|// UNDONE: Or, perhaps tell it to do it before calling us, ...
-comment|// UNDONE: For now, set column to NULL.
+if|if
+condition|(
+name|batchContext
+operator|.
+name|getRecordIdColumnVector
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
 name|setRowIdentiferToNull
 argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|batch
+operator|.
+name|cols
+index|[
+name|rowIdentifierColumnNum
+index|]
+operator|=
+name|batchContext
+operator|.
+name|getRecordIdColumnVector
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 block|}
 name|oneRootOperator

@@ -1256,6 +1256,7 @@ name|batchIndex
 argument_list|)
 return|;
 block|}
+specifier|public
 name|Object
 name|extractRowColumn
 parameter_list|(

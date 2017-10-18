@@ -10479,9 +10479,18 @@ expr_stmt|;
 block|}
 else|else
 block|{
-throw|throw
-operator|new
-name|AssertionError
+comment|// A struct column can have a null child column
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Batch has no data for "
 operator|+
@@ -10491,7 +10500,11 @@ literal|": "
 operator|+
 name|batch
 argument_list|)
-throw|;
+expr_stmt|;
+block|}
+return|return
+literal|null
+return|;
 block|}
 comment|// EncodedColumnBatch is already decompressed, we don't really need to pass codec.
 comment|// But we need to know if the original data is compressed or not. This is used to skip
@@ -13323,6 +13336,13 @@ range|:
 name|fields
 control|)
 block|{
+if|if
+condition|(
+name|child
+operator|!=
+literal|null
+condition|)
+block|{
 name|child
 operator|.
 name|seek
@@ -13330,6 +13350,7 @@ argument_list|(
 name|index
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

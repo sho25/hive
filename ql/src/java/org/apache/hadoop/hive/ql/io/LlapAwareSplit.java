@@ -19,6 +19,20 @@ name|io
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
 begin_comment
 comment|/**  * Split that is aware that it could be executed in LLAP. Allows LlapInputFormat to do  * a last-minute check to see of LLAP IO pipeline should be used for this particular split.  * By default, there is no such check - whatever is sent in is attempted with LLAP IO.  */
 end_comment
@@ -30,7 +44,10 @@ name|LlapAwareSplit
 block|{
 name|boolean
 name|canUseLlapIo
-parameter_list|()
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
 function_decl|;
 block|}
 end_interface

@@ -9712,7 +9712,9 @@ name|stats
 argument_list|)
 return|;
 block|}
-specifier|private
+block|}
+specifier|public
+specifier|static
 name|boolean
 index|[]
 name|shiftReaderIncludedForAcid
@@ -9796,7 +9798,6 @@ block|}
 return|return
 name|newIncluded
 return|;
-block|}
 block|}
 comment|/** Class intended to update two values from methods... Java-related cruft. */
 annotation|@

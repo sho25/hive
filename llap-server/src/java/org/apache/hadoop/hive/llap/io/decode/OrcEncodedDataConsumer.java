@@ -1374,7 +1374,9 @@ name|idx
 index|]
 argument_list|)
 argument_list|,
-name|batchSize
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_SIZE
 argument_list|)
 expr_stmt|;
 block|}

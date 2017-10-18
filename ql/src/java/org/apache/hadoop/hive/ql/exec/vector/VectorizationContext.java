@@ -3772,6 +3772,23 @@ operator|.
 name|CASE_INSENSITIVE
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Pattern
+name|structTypePattern
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"struct.*"
+argument_list|,
+name|Pattern
+operator|.
+name|CASE_INSENSITIVE
+argument_list|)
+decl_stmt|;
 comment|//Map column number to type
 specifier|private
 name|OutputColumnManager
@@ -17899,6 +17916,12 @@ name|INTERVAL_DAY_TIME
 case|:
 return|return
 name|hiveTypeName
+return|;
+case|case
+name|STRUCT
+case|:
+return|return
+literal|"Struct"
 return|;
 default|default:
 throw|throw
