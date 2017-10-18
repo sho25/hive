@@ -23264,7 +23264,7 @@ literal|"CREATE TABLE "
 operator|+
 name|dbName
 operator|+
-literal|".tbl1(a string, b string, primary key (a) disable novalidate rely, unique (b) disable)"
+literal|".tbl1(a string, b string, primary key (a, b) disable novalidate rely)"
 argument_list|,
 name|driver
 argument_list|)
@@ -23290,7 +23290,7 @@ literal|"CREATE TABLE "
 operator|+
 name|dbName
 operator|+
-literal|".tbl3(a string, b string not null disable)"
+literal|".tbl3(a string, b string not null disable, unique (a) disable)"
 argument_list|,
 name|driver
 argument_list|)
@@ -23389,7 +23389,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-literal|1
+literal|2
 argument_list|)
 expr_stmt|;
 name|List
@@ -23409,7 +23409,7 @@ name|dbName
 operator|+
 literal|"_dupe"
 argument_list|,
-literal|"tbl1"
+literal|"tbl3"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -23455,7 +23455,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-literal|1
+literal|2
 argument_list|)
 expr_stmt|;
 name|List
@@ -23508,7 +23508,7 @@ literal|"CREATE TABLE "
 operator|+
 name|dbName
 operator|+
-literal|".tbl4(a string, b string, primary key (a) disable novalidate rely, unique (b) disable)"
+literal|".tbl4(a string, b string, primary key (a, b) disable novalidate rely)"
 argument_list|,
 name|driver
 argument_list|)
@@ -23534,7 +23534,7 @@ literal|"CREATE TABLE "
 operator|+
 name|dbName
 operator|+
-literal|".tbl6(a string, b string not null disable)"
+literal|".tbl6(a string, b string not null disable, unique (a) disable)"
 argument_list|,
 name|driver
 argument_list|)
@@ -23657,7 +23657,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-literal|1
+literal|2
 argument_list|)
 expr_stmt|;
 name|pkName
@@ -23689,7 +23689,7 @@ name|dbName
 operator|+
 literal|"_dupe"
 argument_list|,
-literal|"tbl4"
+literal|"tbl6"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -23747,7 +23747,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-literal|1
+literal|2
 argument_list|)
 expr_stmt|;
 name|fkName
