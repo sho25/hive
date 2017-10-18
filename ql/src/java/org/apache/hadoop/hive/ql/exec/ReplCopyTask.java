@@ -1008,6 +1008,9 @@ argument_list|,
 name|destFileWithSourceName
 argument_list|)
 decl_stmt|;
+name|boolean
+name|result
+init|=
 name|dstFs
 operator|.
 name|rename
@@ -1016,7 +1019,33 @@ name|destFile
 argument_list|,
 name|newDestFile
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|result
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"could not rename "
+operator|+
+name|destFile
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" to "
+operator|+
+name|newDestFile
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+throw|;
+block|}
 block|}
 block|}
 return|return
@@ -1137,6 +1166,8 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+try|try
+init|(
 name|BufferedReader
 name|br
 init|=
@@ -1154,7 +1185,8 @@ name|fileListing
 argument_list|)
 argument_list|)
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 comment|// TODO : verify if skipping charset here is okay
 name|String
 name|line
@@ -1270,6 +1302,7 @@ comment|// in it to contain hdfs://<name>/ entries, and/or vice-versa, and this 
 comment|// It might also be possible that there will be a mix of them in a given _files file.
 comment|// TODO: revisit close to the end of replv2 dev, to see if our assumption now still holds,
 comment|// and if not so, optimize.
+block|}
 block|}
 return|return
 name|filePaths
