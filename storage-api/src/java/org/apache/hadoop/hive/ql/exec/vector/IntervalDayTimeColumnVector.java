@@ -122,6 +122,10 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|Type
+operator|.
+name|INTERVAL_DAY_TIME
+argument_list|,
 name|len
 argument_list|)
 expr_stmt|;

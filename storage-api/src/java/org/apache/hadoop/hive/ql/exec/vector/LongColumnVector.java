@@ -78,6 +78,10 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|Type
+operator|.
+name|LONG
+argument_list|,
 name|len
 argument_list|)
 expr_stmt|;

@@ -2096,6 +2096,11 @@ name|redWork
 operator|.
 name|getVectorizedVertexNum
 argument_list|()
+argument_list|,
+name|redWork
+operator|.
+name|getVectorizedTestingReducerBatchSize
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|ois

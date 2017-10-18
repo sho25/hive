@@ -355,9 +355,9 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|mapjoin
+name|rowbytescontainer
 operator|.
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 import|;
 end_import
 
@@ -878,7 +878,7 @@ name|ObjectContainer
 name|matchfileObjContainer
 decl_stmt|;
 comment|// Stores big table rows
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 name|matchfileRowBytesContainer
 decl_stmt|;
 comment|// Stores big table rows as bytes for native vector map join.
@@ -1225,7 +1225,7 @@ return|;
 block|}
 comment|/* Get the big table row bytes container for native vector map join */
 specifier|public
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 name|getMatchfileRowBytesContainer
 parameter_list|()
 block|{
@@ -1239,7 +1239,7 @@ block|{
 name|matchfileRowBytesContainer
 operator|=
 operator|new
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 argument_list|(
 name|spillLocalDirs
 argument_list|)

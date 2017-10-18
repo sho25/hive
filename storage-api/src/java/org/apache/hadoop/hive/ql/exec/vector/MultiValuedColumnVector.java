@@ -62,12 +62,17 @@ comment|/**    * Constructor for MultiValuedColumnVector.    *    * @param len V
 specifier|public
 name|MultiValuedColumnVector
 parameter_list|(
+name|Type
+name|type
+parameter_list|,
 name|int
 name|len
 parameter_list|)
 block|{
 name|super
 argument_list|(
+name|type
+argument_list|,
 name|len
 argument_list|)
 expr_stmt|;

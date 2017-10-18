@@ -4177,6 +4177,14 @@ argument_list|>
 name|rowDeserializeInputFormatExcludes
 decl_stmt|;
 specifier|private
+name|int
+name|vectorizedPTFMaxMemoryBufferingBatchCount
+decl_stmt|;
+specifier|private
+name|int
+name|vectorizedTestingReducerBatchSize
+decl_stmt|;
+specifier|private
 name|boolean
 name|isSchemaEvolution
 decl_stmt|;
@@ -9226,6 +9234,13 @@ operator|++
 name|vectorizedVertexNum
 argument_list|)
 expr_stmt|;
+name|reduceWork
+operator|.
+name|setVectorizedTestingReducerBatchSize
+argument_list|(
+name|vectorizedTestingReducerBatchSize
+argument_list|)
+expr_stmt|;
 name|boolean
 name|ret
 decl_stmt|;
@@ -9913,7 +9928,9 @@ name|vnp
 init|=
 operator|new
 name|ReduceWorkValidationNodeProcessor
-argument_list|()
+argument_list|(
+name|vectorTaskColumnInfo
+argument_list|)
 decl_stmt|;
 name|addReduceWorkRules
 argument_list|(
@@ -10800,6 +10817,46 @@ name|ReduceWorkValidationNodeProcessor
 implements|implements
 name|NodeProcessor
 block|{
+specifier|private
+specifier|final
+name|VectorTaskColumnInfo
+name|vectorTaskColumnInfo
+decl_stmt|;
+specifier|private
+specifier|final
+name|TypeInfo
+index|[]
+name|reducerBatchTypeInfos
+decl_stmt|;
+specifier|public
+name|ReduceWorkValidationNodeProcessor
+parameter_list|(
+name|VectorTaskColumnInfo
+name|vectorTaskColumnInfo
+parameter_list|)
+block|{
+name|this
+operator|.
+name|vectorTaskColumnInfo
+operator|=
+name|vectorTaskColumnInfo
+expr_stmt|;
+name|reducerBatchTypeInfos
+operator|=
+name|vectorTaskColumnInfo
+operator|.
+name|allTypeInfos
+operator|.
+name|toArray
+argument_list|(
+operator|new
+name|TypeInfo
+index|[
+literal|0
+index|]
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Children of Vectorized GROUPBY that outputs rows instead of vectorized row batchs.
 specifier|protected
 specifier|final
@@ -10939,6 +10996,8 @@ init|=
 name|validateReduceWorkOperator
 argument_list|(
 name|op
+argument_list|,
+name|reducerBatchTypeInfos
 argument_list|)
 decl_stmt|;
 if|if
@@ -12454,6 +12513,36 @@ operator|.
 name|HIVE_VECTORIZATION_ROW_IDENTIFIER_ENABLED
 argument_list|)
 expr_stmt|;
+name|vectorizedPTFMaxMemoryBufferingBatchCount
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_PTF_MAX_MEMORY_BUFFERING_BATCH_COUNT
+argument_list|)
+expr_stmt|;
+name|vectorizedTestingReducerBatchSize
+operator|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_TESTING_REDUCER_BATCH_SIZE
+argument_list|)
+expr_stmt|;
 name|isSchemaEvolution
 operator|=
 name|HiveConf
@@ -12877,6 +12966,10 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 name|op
+parameter_list|,
+name|TypeInfo
+index|[]
+name|reducerBatchTypeInfos
 parameter_list|)
 block|{
 name|boolean
@@ -13100,6 +13193,7 @@ break|break;
 case|case
 name|PTF
 case|:
+comment|// PTF needs the TypeInfo of the reducer batch.
 name|ret
 operator|=
 name|validatePTFOperator
@@ -13108,6 +13202,8 @@ operator|(
 name|PTFOperator
 operator|)
 name|op
+argument_list|,
+name|reducerBatchTypeInfos
 argument_list|)
 expr_stmt|;
 break|break;
@@ -14191,6 +14287,10 @@ name|validatePTFOperator
 parameter_list|(
 name|PTFOperator
 name|op
+parameter_list|,
+name|TypeInfo
+index|[]
+name|reducerBatchTypeInfos
 parameter_list|)
 block|{
 if|if
@@ -14345,6 +14445,10 @@ argument_list|(
 name|op
 argument_list|,
 name|ptfDesc
+argument_list|,
+name|reducerBatchTypeInfos
+argument_list|,
+name|vectorizedPTFMaxMemoryBufferingBatchCount
 argument_list|)
 expr_stmt|;
 block|}
@@ -22195,6 +22299,13 @@ name|ptfOp
 parameter_list|,
 name|PTFDesc
 name|ptfDesc
+parameter_list|,
+name|TypeInfo
+index|[]
+name|reducerBatchTypeInfos
+parameter_list|,
+name|int
+name|vectorizedPTFMaxMemoryBufferingBatchCount
 parameter_list|)
 throws|throws
 name|HiveException
@@ -22259,6 +22370,7 @@ name|size
 argument_list|()
 decl_stmt|;
 comment|/*      * Output columns.      */
+comment|// Evaluator results are first.
 name|String
 index|[]
 name|outputColumnNames
@@ -22330,6 +22442,7 @@ operator|=
 name|typeInfo
 expr_stmt|;
 block|}
+comment|// Followed by key and non-key input columns (some may be missing).
 for|for
 control|(
 name|int
@@ -22590,6 +22703,13 @@ argument_list|()
 decl_stmt|;
 name|vectorPTFDesc
 operator|.
+name|setReducerBatchTypeInfos
+argument_list|(
+name|reducerBatchTypeInfos
+argument_list|)
+expr_stmt|;
+name|vectorPTFDesc
+operator|.
 name|setIsPartitionOrderBy
 argument_list|(
 name|isPartitionOrderBy
@@ -22644,6 +22764,13 @@ argument_list|(
 name|outputTypeInfos
 argument_list|)
 expr_stmt|;
+name|vectorPTFDesc
+operator|.
+name|setVectorizedPTFMaxMemoryBufferingBatchCount
+argument_list|(
+name|vectorizedPTFMaxMemoryBufferingBatchCount
+argument_list|)
+expr_stmt|;
 return|return
 name|vectorPTFDesc
 return|;
@@ -22655,7 +22782,7 @@ name|determineKeyAndNonKeyInputColumnMap
 parameter_list|(
 name|int
 index|[]
-name|outputColumnMap
+name|outputColumnProjectionMap
 parameter_list|,
 name|boolean
 name|isPartitionOrderBy
@@ -22688,7 +22815,7 @@ specifier|final
 name|int
 name|outputSize
 init|=
-name|outputColumnMap
+name|outputColumnProjectionMap
 operator|.
 name|length
 decl_stmt|;
@@ -22733,7 +22860,7 @@ specifier|final
 name|int
 name|nonEvalColumnNum
 init|=
-name|outputColumnMap
+name|outputColumnProjectionMap
 index|[
 name|i
 index|]
@@ -22973,7 +23100,7 @@ decl_stmt|;
 comment|/*      * Output columns.      */
 name|int
 index|[]
-name|outputColumnMap
+name|outputColumnProjectionMap
 init|=
 operator|new
 name|int
@@ -22981,6 +23108,7 @@ index|[
 name|outputSize
 index|]
 decl_stmt|;
+comment|// Evaluator results are first.
 for|for
 control|(
 name|int
@@ -23027,7 +23155,7 @@ argument_list|(
 name|typeInfo
 argument_list|)
 expr_stmt|;
-name|outputColumnMap
+name|outputColumnProjectionMap
 index|[
 name|i
 index|]
@@ -23035,6 +23163,7 @@ operator|=
 name|outputColumnNum
 expr_stmt|;
 block|}
+comment|// Followed by key and non-key input columns (some may be missing).
 for|for
 control|(
 name|int
@@ -23060,7 +23189,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-name|outputColumnMap
+name|outputColumnProjectionMap
 index|[
 name|i
 index|]
@@ -23389,7 +23518,7 @@ argument_list|()
 decl_stmt|;
 name|determineKeyAndNonKeyInputColumnMap
 argument_list|(
-name|outputColumnMap
+name|outputColumnProjectionMap
 argument_list|,
 name|isPartitionOrderBy
 argument_list|,
@@ -23625,7 +23754,7 @@ name|vectorPTFInfo
 operator|.
 name|setOutputColumnMap
 argument_list|(
-name|outputColumnMap
+name|outputColumnProjectionMap
 argument_list|)
 expr_stmt|;
 name|vectorPTFInfo

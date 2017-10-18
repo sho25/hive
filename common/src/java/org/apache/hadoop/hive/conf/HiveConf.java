@@ -11922,11 +11922,36 @@ name|HIVE_VECTORIZATION_PTF_ENABLED
 argument_list|(
 literal|"hive.vectorized.execution.ptf.enabled"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"This flag should be set to true to enable vectorized mode of the PTF of query execution.\n"
 operator|+
-literal|"The default value is false."
+literal|"The default value is true."
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_PTF_MAX_MEMORY_BUFFERING_BATCH_COUNT
+argument_list|(
+literal|"hive.vectorized.ptf.max.memory.buffering.batch.count"
+argument_list|,
+literal|25
+argument_list|,
+literal|"Maximum number of vectorized row batches to buffer in memory for PTF\n"
+operator|+
+literal|"The default value is 25"
+argument_list|)
+block|,
+name|HIVE_VECTORIZATION_TESTING_REDUCER_BATCH_SIZE
+argument_list|(
+literal|"hive.vectorized.testing.reducer.batch.size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"internal use only, used for creating small group key vectorized row batches to exercise more logic\n"
+operator|+
+literal|"The default value is -1 which means don't restrict for testing"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|HIVE_VECTORIZATION_COMPLEX_TYPES_ENABLED

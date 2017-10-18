@@ -906,13 +906,15 @@ name|boolean
 name|isPartitionOrderBy
 decl_stmt|;
 comment|/**    * PTF vector expressions.    */
-comment|// This is map of which vectorized row batch columns are the input columns and the group value
-comment|// (aggregation) output columns.
-comment|// And, their types.
+specifier|private
+name|TypeInfo
+index|[]
+name|reducerBatchTypeInfos
+decl_stmt|;
 specifier|private
 name|int
 index|[]
-name|outputColumnMap
+name|outputProjectionColumnMap
 decl_stmt|;
 specifier|private
 name|String
@@ -1026,7 +1028,7 @@ specifier|private
 specifier|transient
 name|int
 index|[]
-name|streamingColumnMap
+name|streamingEvaluatorNums
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -1186,6 +1188,13 @@ name|vContext
 operator|=
 name|vContext
 expr_stmt|;
+name|reducerBatchTypeInfos
+operator|=
+name|vectorDesc
+operator|.
+name|getReducerBatchTypeInfos
+argument_list|()
+expr_stmt|;
 name|isPartitionOrderBy
 operator|=
 name|vectorDesc
@@ -1207,7 +1216,7 @@ operator|.
 name|getOutputTypeInfos
 argument_list|()
 expr_stmt|;
-name|outputColumnMap
+name|outputProjectionColumnMap
 operator|=
 name|vectorPTFInfo
 operator|.
@@ -1381,7 +1390,7 @@ decl_stmt|;
 name|int
 name|outputColumn
 init|=
-name|outputColumnMap
+name|outputProjectionColumnMap
 index|[
 name|i
 index|]
@@ -1510,7 +1519,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|outputColumnMap
+name|outputProjectionColumnMap
 operator|.
 name|length
 condition|;
@@ -1521,7 +1530,7 @@ block|{
 name|int
 name|outputColumn
 init|=
-name|outputColumnMap
+name|outputProjectionColumnMap
 index|[
 name|i
 index|]
@@ -1579,13 +1588,13 @@ name|overflowBatch
 operator|.
 name|projectedColumns
 operator|=
-name|outputColumnMap
+name|outputProjectionColumnMap
 expr_stmt|;
 name|overflowBatch
 operator|.
 name|projectionSize
 operator|=
-name|outputColumnMap
+name|outputProjectionColumnMap
 operator|.
 name|length
 expr_stmt|;
@@ -1790,11 +1799,11 @@ argument_list|,
 name|vectorPTFInfo
 argument_list|)
 expr_stmt|;
-name|streamingColumnMap
+name|streamingEvaluatorNums
 operator|=
 name|VectorPTFDesc
 operator|.
-name|getStreamingColumnMap
+name|getStreamingEvaluatorNums
 argument_list|(
 name|evaluators
 argument_list|)
@@ -1802,7 +1811,7 @@ expr_stmt|;
 name|allEvaluatorsAreStreaming
 operator|=
 operator|(
-name|streamingColumnMap
+name|streamingEvaluatorNums
 operator|.
 name|length
 operator|==
@@ -1819,21 +1828,32 @@ name|groupBatches
 operator|=
 operator|new
 name|VectorPTFGroupBatches
+argument_list|(
+name|hconf
+argument_list|,
+name|vectorDesc
+operator|.
+name|getVectorizedPTFMaxMemoryBufferingBatchCount
 argument_list|()
+argument_list|)
 expr_stmt|;
 name|groupBatches
 operator|.
 name|init
 argument_list|(
+name|reducerBatchTypeInfos
+argument_list|,
 name|evaluators
 argument_list|,
-name|outputColumnMap
+name|outputProjectionColumnMap
+argument_list|,
+name|outputTypeInfos
 argument_list|,
 name|keyInputColumnMap
 argument_list|,
 name|nonKeyInputColumnMap
 argument_list|,
-name|streamingColumnMap
+name|streamingEvaluatorNums
 argument_list|,
 name|overflowBatch
 argument_list|)

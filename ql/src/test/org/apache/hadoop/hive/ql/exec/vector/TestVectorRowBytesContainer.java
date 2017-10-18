@@ -18,10 +18,6 @@ operator|.
 name|exec
 operator|.
 name|vector
-operator|.
-name|mapjoin
-operator|.
-name|fast
 package|;
 end_package
 
@@ -53,7 +49,31 @@ name|vector
 operator|.
 name|mapjoin
 operator|.
-name|VectorMapJoinRowBytesContainer
+name|fast
+operator|.
+name|RandomByteArrayStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|rowbytescontainer
+operator|.
+name|VectorRowBytesContainer
 import|;
 end_import
 
@@ -100,7 +120,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|TestVectorMapJoinRowBytesContainer
+name|TestVectorRowBytesContainer
 block|{
 specifier|public
 name|void
@@ -124,11 +144,11 @@ argument_list|(
 name|random
 argument_list|)
 decl_stmt|;
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 name|vectorMapJoinRowBytesContainer
 init|=
 operator|new
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 argument_list|(
 literal|null
 argument_list|)

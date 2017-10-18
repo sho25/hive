@@ -19,7 +19,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|mapjoin
+name|rowbytescontainer
 package|;
 end_package
 
@@ -138,7 +138,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 block|{
 specifier|private
 specifier|static
@@ -150,7 +150,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 operator|.
 name|class
 argument_list|)
@@ -293,7 +293,7 @@ name|String
 name|spillLocalDirs
 decl_stmt|;
 specifier|public
-name|VectorMapJoinRowBytesContainer
+name|VectorRowBytesContainer
 parameter_list|(
 name|String
 name|spillLocalDirs
@@ -1284,6 +1284,36 @@ block|{
 return|return
 name|currentLength
 return|;
+block|}
+specifier|public
+name|void
+name|resetWrite
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+if|if
+condition|(
+operator|!
+name|isOpen
+condition|)
+block|{
+return|return;
+block|}
+comment|// Truncate by re-opening FileOutputStream.
+name|fileOutputStream
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+name|fileOutputStream
+operator|=
+operator|new
+name|FileOutputStream
+argument_list|(
+name|tmpFile
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void

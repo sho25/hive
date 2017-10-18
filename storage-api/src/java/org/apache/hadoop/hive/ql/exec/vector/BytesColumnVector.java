@@ -133,6 +133,10 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|Type
+operator|.
+name|BYTES
+argument_list|,
 name|size
 argument_list|)
 expr_stmt|;

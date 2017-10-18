@@ -70,6 +70,11 @@ name|MAP
 block|,
 name|UNION
 block|}
+specifier|public
+specifier|final
+name|Type
+name|type
+decl_stmt|;
 comment|/*    * If hasNulls is true, then this array contains true if the value    * is null, otherwise false. The array is always allocated, so a batch can be re-used    * later and nulls added.    */
 specifier|public
 name|boolean
@@ -99,10 +104,19 @@ comment|/**    * Constructor for super-class ColumnVector. This is not called di
 specifier|public
 name|ColumnVector
 parameter_list|(
+name|Type
+name|type
+parameter_list|,
 name|int
 name|len
 parameter_list|)
 block|{
+name|this
+operator|.
+name|type
+operator|=
+name|type
+expr_stmt|;
 name|isNull
 operator|=
 operator|new

@@ -115,6 +115,10 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|Type
+operator|.
+name|DECIMAL
+argument_list|,
 name|size
 argument_list|)
 expr_stmt|;
