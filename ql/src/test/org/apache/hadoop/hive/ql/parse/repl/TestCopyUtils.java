@@ -62,7 +62,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|CopyUtilsTest
+name|TestCopyUtils
 block|{
 comment|/*   Distcp currently does not copy a single file in a distributed manner hence we dont care about   the size of file, if there is only file, we dont want to launch distcp.    */
 annotation|@

@@ -77,7 +77,7 @@ begin_class
 specifier|public
 specifier|final
 class|class
-name|JavaDataModelTest
+name|TestJavaDataModel
 block|{
 specifier|private
 specifier|static

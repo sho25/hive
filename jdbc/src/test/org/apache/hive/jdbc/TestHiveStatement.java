@@ -50,7 +50,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|HiveStatementTest
+name|TestHiveStatement
 block|{
 annotation|@
 name|Test

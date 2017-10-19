@@ -447,6 +447,18 @@ name|org
 operator|.
 name|mockito
 operator|.
+name|Matchers
+operator|.
+name|any
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|mockito
+operator|.
 name|Mockito
 operator|.
 name|mock
@@ -485,18 +497,6 @@ name|when
 import|;
 end_import
 
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Matchers
-operator|.
-name|any
-import|;
-end_import
-
 begin_class
 annotation|@
 name|RunWith
@@ -528,7 +528,7 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|PrimaryToReplicaResourceFunctionTest
+name|TestPrimaryToReplicaResourceFunction
 block|{
 specifier|private
 name|PrimaryToReplicaResourceFunction
@@ -561,7 +561,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|PrimaryToReplicaResourceFunctionTest
+name|TestPrimaryToReplicaResourceFunction
 operator|.
 name|class
 argument_list|)
@@ -736,7 +736,7 @@ name|when
 argument_list|(
 name|System
 operator|.
-name|currentTimeMillis
+name|nanoTime
 argument_list|()
 argument_list|)
 operator|.
@@ -847,7 +847,7 @@ name|is
 argument_list|(
 name|equalTo
 argument_list|(
-literal|"hdfs://somehost:9000/someBasePath/withADir/replicaDbName/somefunctionname/"
+literal|"hdfs://somehost:9000/someBasePath/withADir/replicadbname/somefunctionname/"
 operator|+
 name|String
 operator|.

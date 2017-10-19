@@ -105,14 +105,14 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|assertEquals
 import|;
 end_import
 
 begin_class
 specifier|public
 class|class
-name|JSONMessageDeserializerTest
+name|TestJSONMessageDeserializer
 block|{
 specifier|public
 specifier|static

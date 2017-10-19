@@ -119,20 +119,6 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
 name|hive
 operator|.
 name|hcatalog
@@ -269,6 +255,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|abstract
 class|class
 name|HCatBaseTest
 block|{

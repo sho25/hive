@@ -151,7 +151,7 @@ name|class
 argument_list|)
 specifier|public
 class|class
-name|HiveWrapperTest
+name|TestHiveWrapper
 block|{
 annotation|@
 name|Mock

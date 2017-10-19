@@ -56,7 +56,7 @@ end_import
 begin_class
 specifier|public
 class|class
-name|CLIServiceRestoreTest
+name|TestCLIServiceRestore
 block|{
 name|CLIService
 name|service
