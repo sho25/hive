@@ -2346,14 +2346,11 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Running explain user level has problem: "
+literal|"Running explain user level has problem."
 operator|+
+literal|" Falling back to normal explain."
+argument_list|,
 name|e
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|". Falling back to normal explain"
 argument_list|)
 expr_stmt|;
 name|work
@@ -2438,12 +2435,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"JsonPlan is augmented to "
-operator|+
+literal|"JsonPlan is augmented to {}"
+argument_list|,
 name|jsonPlan
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

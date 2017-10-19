@@ -3513,16 +3513,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Because "
-operator|+
+literal|"Because {} is infinite or NaN, we skip stats."
+argument_list|,
 name|colName
 operator|.
 name|get
 argument_list|(
 name|i
 argument_list|)
-operator|+
-literal|" is infinite or NaN, we skip stats."
 argument_list|)
 expr_stmt|;
 block|}

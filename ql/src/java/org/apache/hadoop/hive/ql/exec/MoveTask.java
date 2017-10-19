@@ -1256,8 +1256,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Unable to delete the path created for facilitating rename"
-operator|+
+literal|"Unable to delete the path created for facilitating rename: {}"
+argument_list|,
 name|deletePath
 argument_list|)
 expr_stmt|;
@@ -1746,15 +1746,10 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"about to release lock for output: "
-operator|+
+literal|"about to release lock for output: {} lock: {}"
+argument_list|,
 name|output
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" lock: "
-operator|+
+argument_list|,
 name|lock
 operator|.
 name|getHiveLockObject
@@ -1786,8 +1781,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Could not release lock "
-operator|+
+literal|"Could not release lock {}"
+argument_list|,
 name|lock
 operator|.
 name|getHiveLockObject
@@ -2842,14 +2837,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Partition is: "
-operator|+
+literal|"Partition is: {}"
+argument_list|,
 name|tbd
 operator|.
 name|getPartitionSpec
-argument_list|()
-operator|.
-name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3995,7 +3987,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"\tLoading partition "
+literal|"Loading partition "
 operator|+
 name|entry
 operator|.

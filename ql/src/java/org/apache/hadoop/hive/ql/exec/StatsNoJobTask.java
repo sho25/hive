@@ -864,11 +864,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Initialized threadpool for stats computation with "
-operator|+
+literal|"Initialized threadpool for stats computation with {} threads"
+argument_list|,
 name|numThreads
-operator|+
-literal|" threads"
 argument_list|)
 expr_stmt|;
 block|}
@@ -882,8 +880,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Cannot get table "
-operator|+
+literal|"Cannot get table {}"
+argument_list|,
 name|tableName
 argument_list|,
 name|e
@@ -1349,10 +1347,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"{}: {}"
+argument_list|,
 name|threadName
-operator|+
-literal|": "
-operator|+
+argument_list|,
 name|msg
 argument_list|)
 expr_stmt|;
@@ -1395,10 +1393,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"{}: {}"
+argument_list|,
 name|threadName
-operator|+
-literal|": "
-operator|+
+argument_list|,
 name|msg
 argument_list|)
 expr_stmt|;
@@ -2069,6 +2067,15 @@ argument_list|(
 name|msg
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Table {} does not provide stats."
+argument_list|,
+name|tableFullName
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 catch|catch
@@ -2301,8 +2308,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Bulk updated "
-operator|+
+literal|"Bulk updated {} partitions."
+argument_list|,
 name|partUpdates
 operator|.
 name|values
@@ -2310,8 +2317,6 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|+
-literal|" partitions."
 argument_list|)
 expr_stmt|;
 block|}

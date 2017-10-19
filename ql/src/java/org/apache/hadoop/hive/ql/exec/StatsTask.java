@@ -965,8 +965,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Cannot get table "
-operator|+
+literal|"Cannot get table {}"
+argument_list|,
 name|tableName
 argument_list|,
 name|e
@@ -1490,6 +1490,20 @@ literal|']'
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Table {} stats: [{}]"
+argument_list|,
+name|tableFullName
+argument_list|,
+name|toString
+argument_list|(
+name|parameters
+argument_list|)
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|Utilities
@@ -1636,8 +1650,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Getting file stats of all partitions. threadpool size:"
-operator|+
+literal|"Getting file stats of all partitions. threadpool size: {}"
+argument_list|,
 name|poolSize
 argument_list|)
 expr_stmt|;
@@ -1797,14 +1811,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cancelling "
-operator|+
+literal|"Cancelling {} file stats lookup tasks"
+argument_list|,
 name|futures
 operator|.
 name|size
 argument_list|()
-operator|+
-literal|" file stats lookup tasks"
 argument_list|)
 expr_stmt|;
 comment|//cancel other futures
@@ -2180,23 +2192,19 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Partition "
-operator|+
+literal|"Partition {}{} stats: [{}]"
+argument_list|,
 name|tableFullName
-operator|+
+argument_list|,
 name|partn
 operator|.
 name|getSpec
 argument_list|()
-operator|+
-literal|" stats: ["
-operator|+
+argument_list|,
 name|toString
 argument_list|(
 name|parameters
 argument_list|)
-operator|+
-literal|']'
 argument_list|)
 expr_stmt|;
 block|}

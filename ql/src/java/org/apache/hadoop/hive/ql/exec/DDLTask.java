@@ -6223,10 +6223,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|stringifyException
-argument_list|(
+literal|"Failed"
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -9060,11 +9059,8 @@ operator|.
 name|info
 argument_list|(
 literal|"alter index: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -9207,6 +9203,14 @@ condition|)
 block|{
 comment|// no rename, the table is missing either due to drop/rename which follows the current rename.
 comment|// or the existing table is newer than our update.
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -9221,6 +9225,7 @@ name|makePartName
 argument_list|(
 operator|new
 name|ArrayList
+argument_list|<>
 argument_list|(
 name|oldPartSpec
 operator|.
@@ -9230,6 +9235,7 @@ argument_list|)
 argument_list|,
 operator|new
 name|ArrayList
+argument_list|<>
 argument_list|(
 name|oldPartSpec
 operator|.
@@ -9239,6 +9245,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|0
 return|;
@@ -16353,11 +16360,8 @@ operator|.
 name|info
 argument_list|(
 literal|"show create table: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -16793,11 +16797,8 @@ operator|.
 name|info
 argument_list|(
 literal|"show indexes: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -16822,11 +16823,8 @@ operator|.
 name|info
 argument_list|(
 literal|"show indexes: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -16908,8 +16906,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"pattern: "
-operator|+
+literal|"pattern: {}"
+argument_list|,
 name|showDatabasesDesc
 operator|.
 name|getPattern
@@ -16943,8 +16941,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"results : "
-operator|+
+literal|"results : {}"
+argument_list|,
 name|databases
 operator|.
 name|size
@@ -17093,8 +17091,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"pattern: "
-operator|+
+literal|"pattern: {}"
+argument_list|,
 name|pattern
 argument_list|)
 expr_stmt|;
@@ -17115,8 +17113,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"results : "
-operator|+
+literal|"results : {}"
+argument_list|,
 name|tablesOrViews
 operator|.
 name|size
@@ -17415,8 +17413,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"pattern: "
-operator|+
+literal|"pattern: {}"
+argument_list|,
 name|showFuncs
 operator|.
 name|getPattern
@@ -17470,8 +17468,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"results : "
-operator|+
+literal|"results : {}"
+argument_list|,
 name|funcs
 operator|.
 name|size
@@ -17578,11 +17576,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -17600,11 +17595,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -18077,11 +18069,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -18099,11 +18088,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -18998,11 +18984,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -19020,11 +19003,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -19516,11 +19496,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show compactions: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -19806,11 +19783,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"show transactions: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -19905,17 +19879,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"kill query called ("
-operator|+
+literal|"kill query called ({})"
+argument_list|,
 name|desc
 operator|.
 name|getQueryIds
 argument_list|()
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|")"
 argument_list|)
 expr_stmt|;
 return|return
@@ -20437,11 +20406,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"describe function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -20459,11 +20425,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"describe function: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -20854,8 +20817,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"pattern: "
-operator|+
+literal|"pattern: {}"
+argument_list|,
 name|showTblStatus
 operator|.
 name|getPattern
@@ -20953,8 +20916,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"results : "
-operator|+
+literal|"results : {}"
+argument_list|,
 name|tblStr
 operator|.
 name|size
@@ -21099,12 +21062,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DDLTask: show properties for "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
+literal|"DDLTask: show properties for {}"
+argument_list|,
+name|tableName
 argument_list|)
 expr_stmt|;
 name|StringBuilder
@@ -21244,12 +21204,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"DDLTask: written data for showing properties of "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
+literal|"DDLTask: written data for showing properties of {}"
+argument_list|,
+name|tableName
 argument_list|)
 expr_stmt|;
 name|writeToFile
@@ -21277,11 +21234,8 @@ operator|.
 name|info
 argument_list|(
 literal|"show table properties: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -21299,11 +21253,8 @@ operator|.
 name|info
 argument_list|(
 literal|"show table properties: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -21585,12 +21536,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"DDLTask: got data for "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
+literal|"DDLTask: got data for {}"
+argument_list|,
+name|tableName
 argument_list|)
 expr_stmt|;
 name|List
@@ -22809,12 +22757,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"DDLTask: written data for "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
+literal|"DDLTask: written data for {}"
+argument_list|,
+name|tableName
 argument_list|)
 expr_stmt|;
 block|}
@@ -23917,11 +23862,8 @@ operator|.
 name|error
 argument_list|(
 literal|"alter table: "
-operator|+
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -24067,21 +24009,17 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Ignoring request to add "
-operator|+
+literal|"Ignoring request to add {} because {} is present"
+argument_list|,
 name|newWriteEntity
 operator|.
 name|toStringDetail
 argument_list|()
-operator|+
-literal|" because "
-operator|+
+argument_list|,
 name|writeEntity
 operator|.
 name|toStringDetail
 argument_list|()
-operator|+
-literal|" is present"
 argument_list|)
 expr_stmt|;
 return|return
@@ -28031,10 +27969,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"InvalidObjectException: "
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -28948,8 +28885,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Found class for "
-operator|+
+literal|"Found class for {}"
+argument_list|,
 name|serdeName
 argument_list|)
 expr_stmt|;
@@ -29318,23 +29255,19 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Changing "
-operator|+
+literal|"Changing {} from {} to {}"
+argument_list|,
 name|var
 operator|.
 name|varname
-operator|+
-literal|" from "
-operator|+
+argument_list|,
 name|conf
 operator|.
 name|getVar
 argument_list|(
 name|var
 argument_list|)
-operator|+
-literal|" to "
-operator|+
+argument_list|,
 name|newValue
 argument_list|)
 expr_stmt|;
@@ -29427,22 +29360,18 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"creating table "
-operator|+
+literal|"creating table {}.{} on {}"
+argument_list|,
 name|tbl
 operator|.
 name|getDbName
 argument_list|()
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tbl
 operator|.
 name|getTableName
 argument_list|()
-operator|+
-literal|" on "
-operator|+
+argument_list|,
 name|tbl
 operator|.
 name|getDataLocation
@@ -29964,12 +29893,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Default to LazySimpleSerDe for table "
-operator|+
-name|crtTbl
-operator|.
-name|getTableName
-argument_list|()
+literal|"Default to LazySimpleSerDe for table {}"
+argument_list|,
+name|targetTableName
 argument_list|)
 expr_stmt|;
 name|tbl
@@ -30500,12 +30426,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Default to LazySimpleSerDe for like table "
-operator|+
-name|crtTbl
-operator|.
-name|getTableName
-argument_list|()
+literal|"Default to LazySimpleSerDe for like table {}"
+argument_list|,
+name|targetTableName
 argument_list|)
 expr_stmt|;
 name|tbl
@@ -31314,12 +31237,10 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Default to "
-operator|+
+literal|"Default to {} for materialized view {}"
+argument_list|,
 name|serDeClassName
-operator|+
-literal|" for materialized view "
-operator|+
+argument_list|,
 name|crtView
 operator|.
 name|getViewName
@@ -31343,12 +31264,10 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Use StorageHandler-supplied "
-operator|+
+literal|"Use StorageHandler-supplied {} for materialized view {}"
+argument_list|,
 name|serDeClassName
-operator|+
-literal|" for materialized view "
-operator|+
+argument_list|,
 name|crtView
 operator|.
 name|getViewName
@@ -31755,6 +31674,14 @@ condition|)
 block|{
 comment|// no truncate, the table is missing either due to drop/rename which follows the truncate.
 comment|// or the existing table is newer than our update.
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -31777,6 +31704,7 @@ name|makePartName
 argument_list|(
 operator|new
 name|ArrayList
+argument_list|<>
 argument_list|(
 name|partSpec
 operator|.
@@ -31786,6 +31714,7 @@ argument_list|)
 argument_list|,
 operator|new
 name|ArrayList
+argument_list|<>
 argument_list|(
 name|partSpec
 operator|.
@@ -31795,6 +31724,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 literal|0
 return|;

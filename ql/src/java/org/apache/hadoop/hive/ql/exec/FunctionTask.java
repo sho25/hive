@@ -726,10 +726,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|stringifyException
-argument_list|(
+literal|"Failed to create function"
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -896,10 +895,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|stringifyException
-argument_list|(
+literal|"Failed to drop function"
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -944,10 +942,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|stringifyException
-argument_list|(
+literal|"Failed to reload functions"
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -1349,13 +1346,8 @@ operator|.
 name|info
 argument_list|(
 literal|"create function: "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -1387,13 +1379,8 @@ operator|.
 name|info
 argument_list|(
 literal|"create function: "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -1473,13 +1460,8 @@ operator|.
 name|info
 argument_list|(
 literal|"drop macro: "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -1574,13 +1556,8 @@ operator|.
 name|info
 argument_list|(
 literal|"drop function: "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|console
@@ -1637,13 +1614,8 @@ operator|.
 name|info
 argument_list|(
 literal|"drop function: "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return

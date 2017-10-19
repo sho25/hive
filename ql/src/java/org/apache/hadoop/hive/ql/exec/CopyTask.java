@@ -511,34 +511,33 @@ range|:
 name|srcs
 control|)
 block|{
+name|String
+name|oneSrcPathStr
+init|=
+name|oneSrc
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
 name|console
 operator|.
 name|printInfo
 argument_list|(
 literal|"Copying file: "
 operator|+
-name|oneSrc
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|toString
-argument_list|()
+name|oneSrcPathStr
 argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Copying file: "
-operator|+
-name|oneSrc
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|toString
-argument_list|()
+literal|"Copying file: {}"
+argument_list|,
+name|oneSrcPathStr
 argument_list|)
 expr_stmt|;
 if|if
@@ -575,13 +574,7 @@ name|printError
 argument_list|(
 literal|"Failed to copy: '"
 operator|+
-name|oneSrc
-operator|.
-name|getPath
-argument_list|()
-operator|.
-name|toString
-argument_list|()
+name|oneSrcPathStr
 operator|+
 literal|"to: '"
 operator|+

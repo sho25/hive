@@ -655,12 +655,20 @@ argument_list|,
 name|fromPath
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"ReplCopyTask _files contains:"
-operator|+
+literal|"ReplCopyTask _files contains: {}"
+argument_list|,
 operator|(
 name|srcFiles
 operator|==
@@ -675,6 +683,7 @@ argument_list|()
 operator|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 operator|(
@@ -739,6 +748,14 @@ argument_list|,
 name|fromPath
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -758,6 +775,7 @@ name|length
 operator|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|srcs
@@ -1121,8 +1139,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"ReplCopyTask filesInFileListing() reading "
-operator|+
+literal|"ReplCopyTask filesInFileListing() reading {}"
+argument_list|,
 name|fileListing
 operator|.
 name|toUri
@@ -1211,8 +1229,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"ReplCopyTask :_filesReadLine:"
-operator|+
+literal|"ReplCopyTask :_filesReadLine: {}"
+argument_list|,
 name|line
 argument_list|)
 expr_stmt|;
@@ -1274,14 +1292,12 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Cannot find "
-operator|+
+literal|"Cannot find {} in source repo or cmroot"
+argument_list|,
 name|fileWithChksum
 index|[
 literal|0
 index|]
-operator|+
-literal|" in source repo or cmroot"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -1367,12 +1383,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"ReplCopyTask:getLoadCopyTask: "
-operator|+
+literal|"ReplCopyTask:getLoadCopyTask: {}=>{}"
+argument_list|,
 name|srcPath
-operator|+
-literal|"=>"
-operator|+
+argument_list|,
 name|dstPath
 argument_list|)
 expr_stmt|;

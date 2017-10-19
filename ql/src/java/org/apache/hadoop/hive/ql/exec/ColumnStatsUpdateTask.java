@@ -2595,8 +2595,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Reading date value as days since epoch: "
-operator|+
+literal|"Reading date value as days since epoch: {}"
+argument_list|,
 name|dateStr
 argument_list|)
 expr_stmt|;
