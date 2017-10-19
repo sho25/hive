@@ -5009,6 +5009,8 @@ literal|true
 return|;
 block|}
 comment|/**    * @return true if there is an active transaction. If the current transaction    *         is either committed or rolled back it returns false    */
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isActiveTransaction
@@ -19885,6 +19887,7 @@ literal|true
 argument_list|)
 block|{
 specifier|private
+specifier|final
 name|SqlFilterForPushdown
 name|filter
 init|=
@@ -19903,6 +19906,8 @@ return|return
 literal|"Partition count"
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|boolean
 name|canUseDirectSql
@@ -20054,6 +20059,7 @@ literal|true
 argument_list|)
 block|{
 specifier|private
+specifier|final
 name|SqlFilterForPushdown
 name|filter
 init|=
@@ -20072,6 +20078,8 @@ return|return
 literal|"Partition count"
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|boolean
 name|canUseDirectSql
@@ -20320,6 +20328,7 @@ name|allowJdo
 argument_list|)
 block|{
 specifier|private
+specifier|final
 name|SqlFilterForPushdown
 name|filter
 init|=
@@ -43171,6 +43180,45 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|sqlGenerator
+operator|.
+name|getDbProduct
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|DatabaseProduct
+operator|.
+name|POSTGRES
+argument_list|)
+operator|&&
+name|mStatsObj
+operator|.
+name|getBitVector
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+comment|// workaround for DN bug in persisting nulls in pg bytea column
+comment|// instead set empty bit vector with header.
+name|mStatsObj
+operator|.
+name|setBitVector
+argument_list|(
+operator|new
+name|byte
+index|[]
+block|{
+literal|'H'
+block|,
+literal|'L'
+block|}
+argument_list|)
+expr_stmt|;
+block|}
 name|pm
 operator|.
 name|makePersistent
@@ -43363,6 +43411,45 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|sqlGenerator
+operator|.
+name|getDbProduct
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|DatabaseProduct
+operator|.
+name|POSTGRES
+argument_list|)
+operator|&&
+name|mStatsObj
+operator|.
+name|getBitVector
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+comment|// workaround for DN bug in persisting nulls in pg bytea column
+comment|// instead set empty bit vector with header.
+name|mStatsObj
+operator|.
+name|setBitVector
+argument_list|(
+operator|new
+name|byte
+index|[]
+block|{
+literal|'H'
+block|,
+literal|'L'
+block|}
+argument_list|)
+expr_stmt|;
+block|}
 name|pm
 operator|.
 name|makePersistent
@@ -51390,13 +51477,6 @@ operator|.
 name|ExecutionContext
 name|ec
 init|=
-operator|(
-name|org
-operator|.
-name|datanucleus
-operator|.
-name|ExecutionContext
-operator|)
 name|pm
 operator|.
 name|getExecutionContext

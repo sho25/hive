@@ -844,6 +844,15 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|public
+name|DatabaseProduct
+name|getDbProduct
+parameter_list|()
+block|{
+return|return
+name|dbProduct
+return|;
+block|}
 block|}
 end_class
 
