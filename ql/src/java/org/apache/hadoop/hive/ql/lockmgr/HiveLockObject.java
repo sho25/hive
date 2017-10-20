@@ -288,7 +288,7 @@ literal|null
 else|:
 name|StringUtils
 operator|.
-name|substring
+name|abbreviate
 argument_list|(
 name|removeDelimiter
 argument_list|(
@@ -297,8 +297,6 @@ operator|.
 name|trim
 argument_list|()
 argument_list|)
-argument_list|,
-literal|0
 argument_list|,
 name|conf
 operator|.
