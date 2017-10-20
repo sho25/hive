@@ -35,16 +35,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Collection
 import|;
 end_import
@@ -86,6 +76,16 @@ operator|.
 name|util
 operator|.
 name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|LinkedHashSet
 import|;
 end_import
 
@@ -447,7 +447,7 @@ argument_list|>
 name|roots
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|BaseWork
 argument_list|>
@@ -462,7 +462,7 @@ argument_list|>
 name|leaves
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<
 name|BaseWork
 argument_list|>

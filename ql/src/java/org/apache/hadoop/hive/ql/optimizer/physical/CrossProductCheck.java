@@ -113,6 +113,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TreeMap
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|slf4j
@@ -1347,7 +1357,7 @@ argument_list|>
 name|rsInfo
 init|=
 operator|new
-name|HashMap
+name|TreeMap
 argument_list|<
 name|Integer
 argument_list|,

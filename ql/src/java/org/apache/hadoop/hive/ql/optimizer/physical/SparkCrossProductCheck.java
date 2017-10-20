@@ -319,16 +319,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Iterator
 import|;
 end_import
@@ -360,6 +350,16 @@ operator|.
 name|util
 operator|.
 name|Stack
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TreeMap
 import|;
 end_import
 
@@ -650,7 +650,7 @@ argument_list|>
 name|rsInfo
 init|=
 operator|new
-name|HashMap
+name|TreeMap
 argument_list|<
 name|Integer
 argument_list|,
