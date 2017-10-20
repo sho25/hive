@@ -384,6 +384,31 @@ literal|"rw-r--r--"
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Permissions for metric directory
+specifier|private
+specifier|static
+specifier|final
+name|FileAttribute
+argument_list|<
+name|Set
+argument_list|<
+name|PosixFilePermission
+argument_list|>
+argument_list|>
+name|DIR_ATTRS
+init|=
+name|PosixFilePermissions
+operator|.
+name|asFileAttribute
+argument_list|(
+name|PosixFilePermissions
+operator|.
+name|fromString
+argument_list|(
+literal|"rwxr-xr-x"
+argument_list|)
+argument_list|)
+decl_stmt|;
 comment|// Thread name for reporter thread
 specifier|private
 specifier|static
@@ -418,11 +443,11 @@ specifier|final
 name|Path
 name|path
 decl_stmt|;
-comment|// tmpdir is the dirname(path)
+comment|// Directory where path resides
 specifier|private
 specifier|final
 name|Path
-name|tmpDir
+name|metricsDir
 decl_stmt|;
 specifier|public
 name|JsonFileMetricsReporter
@@ -520,9 +545,9 @@ argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
-comment|// We want to use tmpDir i the same directory as the destination file to support atomic
+comment|// We want to use metricsDir in the same directory as the destination file to support atomic
 comment|// move of temp file to the destination metrics file
-name|tmpDir
+name|metricsDir
 operator|=
 name|path
 operator|.
@@ -537,6 +562,64 @@ name|void
 name|start
 parameter_list|()
 block|{
+comment|// Create metrics directory if it is not present
+if|if
+condition|(
+operator|!
+name|metricsDir
+operator|.
+name|toFile
+argument_list|()
+operator|.
+name|exists
+argument_list|()
+condition|)
+block|{
+name|LOGGER
+operator|.
+name|warn
+argument_list|(
+literal|"Metrics directory {} does not exist, creating one"
+argument_list|,
+name|metricsDir
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+comment|// createDirectories creates all non-existent parent directories
+name|Files
+operator|.
+name|createDirectories
+argument_list|(
+name|metricsDir
+argument_list|,
+name|DIR_ATTRS
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+name|LOGGER
+operator|.
+name|error
+argument_list|(
+literal|"Failed to create directory {}: {}"
+argument_list|,
+name|metricsDir
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+block|}
 name|executorService
 operator|=
 name|Executors
@@ -581,11 +664,19 @@ name|void
 name|close
 parameter_list|()
 block|{
+if|if
+condition|(
+name|executorService
+operator|!=
+literal|null
+condition|)
+block|{
 name|executorService
 operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -645,7 +736,7 @@ name|Files
 operator|.
 name|createTempFile
 argument_list|(
-name|tmpDir
+name|metricsDir
 argument_list|,
 literal|"hmetrics"
 argument_list|,
@@ -787,11 +878,17 @@ argument_list|,
 name|tmpFile
 argument_list|,
 name|path
+argument_list|)
+expr_stmt|;
+name|LOGGER
+operator|.
+name|error
+argument_list|(
+literal|"Exception during rename"
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-return|return;
 block|}
 block|}
 catch|catch
@@ -850,8 +947,8 @@ name|LOGGER
 operator|.
 name|error
 argument_list|(
-literal|"failed to delete yemporary metrics file {}"
-argument_list|,
+literal|"failed to delete temporary metrics file "
+operator|+
 name|tmpFile
 argument_list|,
 name|e
