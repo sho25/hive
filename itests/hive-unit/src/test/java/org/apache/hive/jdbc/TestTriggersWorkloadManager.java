@@ -560,7 +560,13 @@ operator|new
 name|WorkloadManager
 operator|.
 name|PoolState
-argument_list|()
+argument_list|(
+literal|"llap"
+argument_list|,
+literal|1
+argument_list|,
+literal|1f
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|when

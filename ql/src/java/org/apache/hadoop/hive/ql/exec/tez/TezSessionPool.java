@@ -340,6 +340,10 @@ specifier|final
 name|HiveConf
 name|initConf
 decl_stmt|;
+specifier|private
+name|int
+name|initialSize
+decl_stmt|;
 comment|// TODO: eventually, this will need to support resize. That would probably require replacement
 comment|//       with a RW lock, a semaphore and linked list.
 specifier|private
@@ -445,6 +449,13 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|initialSize
+operator|=
+name|initialSessions
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|initialSessions
@@ -1364,6 +1375,14 @@ name|sessionId
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+name|int
+name|getInitialSize
+parameter_list|()
+block|{
+return|return
+name|initialSize
+return|;
 block|}
 block|}
 end_class
