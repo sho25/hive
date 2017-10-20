@@ -4144,6 +4144,9 @@ case|case
 name|TIMESTAMP
 case|:
 case|case
+name|TIMESTAMPLOCALTZ
+case|:
+case|case
 name|DATE
 case|:
 case|case
