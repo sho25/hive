@@ -295,6 +295,14 @@ name|ABORT_TRANSACTIONS
 block|,
 name|KILL_QUERY
 block|,
+name|CREATE_RESOURCEPLAN
+block|,
+name|SHOW_RESOURCEPLAN
+block|,
+name|ALTER_RESOURCEPLAN
+block|,
+name|DROP_RESOURCEPLAN
+block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,
