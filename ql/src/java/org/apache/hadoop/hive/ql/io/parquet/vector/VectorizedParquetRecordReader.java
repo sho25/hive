@@ -1002,13 +1002,6 @@ name|VectorizedRowBatchCtx
 name|rbCtx
 decl_stmt|;
 specifier|private
-name|List
-argument_list|<
-name|Integer
-argument_list|>
-name|indexColumnsWanted
-decl_stmt|;
-specifier|private
 name|Object
 index|[]
 name|partitionValues
@@ -1074,24 +1067,6 @@ name|initialize
 argument_list|(
 name|inputSplit
 argument_list|,
-name|conf
-argument_list|)
-expr_stmt|;
-name|colsToInclude
-operator|=
-name|ColumnProjectionUtils
-operator|.
-name|getReadColumnIDs
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|rbCtx
-operator|=
-name|Utilities
-operator|.
-name|getVectorizedRowBatchCtx
-argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
@@ -1236,24 +1211,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-name|colsToInclude
-operator|=
-name|ColumnProjectionUtils
-operator|.
-name|getReadColumnIDs
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-name|rbCtx
-operator|=
-name|Utilities
-operator|.
-name|getVectorizedRowBatchCtx
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
 name|initPartitionValues
 argument_list|(
 operator|(
@@ -1367,6 +1324,29 @@ name|IOException
 throws|,
 name|InterruptedException
 block|{
+name|colsToInclude
+operator|=
+name|ColumnProjectionUtils
+operator|.
+name|getReadColumnIDs
+argument_list|(
+name|configuration
+argument_list|)
+expr_stmt|;
+comment|//initialize the rowbatchContext
+name|jobConf
+operator|=
+name|configuration
+expr_stmt|;
+name|rbCtx
+operator|=
+name|Utilities
+operator|.
+name|getVectorizedRowBatchCtx
+argument_list|(
+name|jobConf
+argument_list|)
+expr_stmt|;
 comment|// the oldSplit may be null during the split phase
 if|if
 condition|(
@@ -1377,10 +1357,6 @@ condition|)
 block|{
 return|return;
 block|}
-name|jobConf
-operator|=
-name|configuration
-expr_stmt|;
 name|ParquetMetadata
 name|footer
 decl_stmt|;
@@ -1873,7 +1849,7 @@ operator|.
 name|getSchema
 argument_list|()
 expr_stmt|;
-name|indexColumnsWanted
+name|colsToInclude
 operator|=
 name|ColumnProjectionUtils
 operator|.
@@ -2869,9 +2845,16 @@ name|isReadAllColumns
 argument_list|(
 name|jobConf
 argument_list|)
-operator|&&
+condition|)
+block|{
+comment|//certain queries like select count(*) from table do not have
+comment|//any projected columns and still have isReadAllColumns as false
+comment|//in such cases columnReaders are not needed
+comment|//However, if colsToInclude is not empty we should initialize each columnReader
+if|if
+condition|(
 operator|!
-name|indexColumnsWanted
+name|colsToInclude
 operator|.
 name|isEmpty
 argument_list|()
@@ -2906,7 +2889,7 @@ name|columnTypesList
 operator|.
 name|get
 argument_list|(
-name|indexColumnsWanted
+name|colsToInclude
 operator|.
 name|get
 argument_list|(
@@ -2933,6 +2916,7 @@ argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
