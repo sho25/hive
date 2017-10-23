@@ -956,7 +956,8 @@ name|ConfVars
 operator|.
 name|METRICS_REPORTERS
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -979,7 +980,8 @@ name|ConfVars
 operator|.
 name|HIVE_CODAHALE_METRICS_REPORTER_CLASSES
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -1002,7 +1004,8 @@ name|ConfVars
 operator|.
 name|HIVE_METRICS_REPORTER
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if

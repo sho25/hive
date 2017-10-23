@@ -635,7 +635,8 @@ name|ConfVars
 operator|.
 name|WAREHOUSE
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|" is not set in the config or blank"
 argument_list|)

@@ -4336,7 +4336,8 @@ name|setProperty
 argument_list|(
 name|var
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 name|confVal
 argument_list|)
@@ -4354,7 +4355,8 @@ name|isPrintable
 argument_list|(
 name|var
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -4366,7 +4368,8 @@ literal|"Overriding "
 operator|+
 name|var
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|" value "
 operator|+
@@ -4424,7 +4427,8 @@ name|ConfVars
 operator|.
 name|PWD
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 name|passwd
 argument_list|)

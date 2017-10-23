@@ -283,6 +283,10 @@ name|Pattern
 import|;
 end_import
 
+begin_comment
+comment|/**  * A set of definitions of config values used by the Metastore.  One of the key aims of this  * class is to provide backwards compatibility with existing Hive configuration keys while  * allowing the metastore to have its own, Hive independant keys.   For this reason access to the  * underlying Configuration object should always be done via the static methods provided here  * rather than directly via {@link Configuration#get(String)} and  * {@link Configuration#set(String, String)}.  All the methods of this class will handle checking  * both the MetastoreConf key and the Hive key.  The algorithm is, on reads, to check first the  * MetastoreConf key, then the Hive key, then return the default if neither are set.  On write  * the Metastore key only is set.  *  * This class does not extend Configuration.  Rather it provides static methods for operating on  * a Configuration object.  This allows it to work on HiveConf objects, which otherwise would not  * be the case.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -3266,27 +3270,27 @@ argument_list|,
 literal|"comment"
 argument_list|)
 block|;
-specifier|public
+specifier|private
 specifier|final
 name|String
 name|varname
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|String
 name|hiveName
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|Object
 name|defaultVal
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|Validator
 name|validator
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|boolean
 name|caseSensitive
@@ -3746,6 +3750,26 @@ parameter_list|()
 block|{
 return|return
 name|caseSensitive
+return|;
+block|}
+comment|/**      * If you are calling this, you're probably doing it wrong.  You shouldn't need to use the      * underlying variable name.  Use one of the getVar methods instead.  Only use this if you      * are 100% sure you know you're doing.  The reason for this is that MetastoreConf goes to a      * lot of trouble to make sure it checks both Hive and Metastore values for config keys.  If      * you call conf.get(varname) you are undermining that.      * @return variable name      */
+specifier|public
+name|String
+name|getVarname
+parameter_list|()
+block|{
+return|return
+name|varname
+return|;
+block|}
+comment|/**      * If you are calling this, you're probably doing it wrong.  You shouldn't need to use the      * underlying variable name.  Use one of the getVar methods instead.  Only use this if you      * are 100% sure you know you're doing.  The reason for this is that MetastoreConf goes to a      * lot of trouble to make sure it checks both Hive and Metastore values for config keys.  If      * you call conf.get(hivename) you are undermining that.      * @return variable hive name      */
+specifier|public
+name|String
+name|getHiveName
+parameter_list|()
+block|{
+return|return
+name|hiveName
 return|;
 block|}
 annotation|@

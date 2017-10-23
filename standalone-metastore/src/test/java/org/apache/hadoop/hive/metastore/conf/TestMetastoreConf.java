@@ -299,7 +299,8 @@ name|remove
 argument_list|(
 name|var
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -936,7 +937,8 @@ name|ConfVars
 operator|.
 name|STR_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -956,7 +958,8 @@ name|ConfVars
 operator|.
 name|STR_TEST_ENTRY
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1309,7 +1312,8 @@ name|ConfVars
 operator|.
 name|DOUBLE_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1329,7 +1333,8 @@ name|ConfVars
 operator|.
 name|DOUBLE_TEST_ENTRY
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1857,7 +1862,8 @@ name|ConfVars
 operator|.
 name|STR_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"from-properties"
 argument_list|)
@@ -1903,7 +1909,8 @@ name|ConfVars
 operator|.
 name|STR_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2273,7 +2280,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2293,7 +2301,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2396,7 +2405,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30s"
 argument_list|)
@@ -2433,7 +2443,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30seconds"
 argument_list|)
@@ -2470,7 +2481,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30ms"
 argument_list|)
@@ -2507,7 +2519,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30msec"
 argument_list|)
@@ -2544,7 +2557,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30us"
 argument_list|)
@@ -2581,7 +2595,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30usec"
 argument_list|)
@@ -2618,7 +2633,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30m"
 argument_list|)
@@ -2655,7 +2671,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30minutes"
 argument_list|)
@@ -2692,7 +2709,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30ns"
 argument_list|)
@@ -2729,7 +2747,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30nsec"
 argument_list|)
@@ -2766,7 +2785,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30h"
 argument_list|)
@@ -2803,7 +2823,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30hours"
 argument_list|)
@@ -2840,7 +2861,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30d"
 argument_list|)
@@ -2877,7 +2899,8 @@ name|ConfVars
 operator|.
 name|TIME_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|,
 literal|"30days"
 argument_list|)
@@ -3165,7 +3188,8 @@ name|ConfVars
 operator|.
 name|STR_TEST_ENTRY
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3181,7 +3205,8 @@ name|ConfVars
 operator|.
 name|PWD
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3197,7 +3222,8 @@ name|ConfVars
 operator|.
 name|PWD
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3368,7 +3394,8 @@ name|ConfVars
 operator|.
 name|PWD
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 argument_list|)
 argument_list|)

@@ -4378,7 +4378,8 @@ name|ConfVars
 operator|.
 name|COMPACTOR_INITIATOR_FAILED_THRESHOLD
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|"="
 operator|+
@@ -4400,7 +4401,8 @@ name|ConfVars
 operator|.
 name|COMPACTOR_INITIATOR_FAILED_THRESHOLD
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|"="
 operator|+

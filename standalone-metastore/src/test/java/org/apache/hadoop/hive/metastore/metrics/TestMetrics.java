@@ -504,7 +504,8 @@ name|ConfVars
 operator|.
 name|HIVE_CODAHALE_METRICS_REPORTER_CLASSES
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|,
 literal|"org.apache.hadoop.hive.common.metrics.metrics2.JsonFileMetricsReporter,"
 operator|+
@@ -599,7 +600,8 @@ name|ConfVars
 operator|.
 name|HIVE_METRICS_REPORTER
 operator|.
-name|hiveName
+name|getHiveName
+argument_list|()
 argument_list|,
 literal|"JSON_FILE,JMX,CONSOLE,HADOOP2"
 argument_list|)

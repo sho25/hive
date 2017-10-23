@@ -18366,7 +18366,8 @@ name|ConfVars
 operator|.
 name|CONNECTION_DRIVER
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 decl_stmt|;
 name|LOG
 operator|.

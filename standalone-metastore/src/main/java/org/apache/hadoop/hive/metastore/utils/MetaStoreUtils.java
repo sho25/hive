@@ -1748,7 +1748,8 @@ name|ConfVars
 operator|.
 name|PARTITION_NAME_WHITELIST_PATTERN
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|")"
 argument_list|)

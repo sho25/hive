@@ -502,13 +502,13 @@ block|{
 name|String
 name|confVarStr
 init|=
-name|conf
+name|MetastoreConf
 operator|.
-name|get
+name|getAsString
 argument_list|(
+name|conf
+argument_list|,
 name|confVar
-operator|.
-name|varname
 argument_list|)
 decl_stmt|;
 if|if
@@ -531,7 +531,8 @@ literal|"Empty "
 operator|+
 name|confVar
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 argument_list|)
 throw|;
 block|}

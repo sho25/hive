@@ -1135,7 +1135,8 @@ name|ConfVars
 operator|.
 name|DIRECT_SQL_MAX_QUERY_LENGTH
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|" is set too small to have one IN clause with single value!"
 argument_list|)
@@ -1157,7 +1158,8 @@ name|ConfVars
 operator|.
 name|DIRECT_SQL_MAX_QUERY_LENGTH
 operator|.
-name|varname
+name|getVarname
+argument_list|()
 operator|+
 literal|"!"
 argument_list|)
