@@ -91,6 +91,12 @@ case|:
 return|return
 literal|"FORWARD"
 return|;
+case|case
+literal|"XPROD_EDGE"
+case|:
+return|return
+literal|"XPROD_EDGE"
+return|;
 default|default:
 return|return
 literal|"UNKNOWN"

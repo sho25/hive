@@ -12498,6 +12498,15 @@ argument_list|,
 literal|"The customized fraction of JVM memory which Tez will reserve for the processor"
 argument_list|)
 block|,
+name|TEZ_CARTESIAN_PRODUCT_EDGE_ENABLED
+argument_list|(
+literal|"hive.tez.cartesian-product.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Use Tez cartesian product edge to speed up cross product"
+argument_list|)
+block|,
 comment|// The default is different on the client and server, so it's null here.
 name|LLAP_IO_ENABLED
 argument_list|(

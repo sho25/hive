@@ -641,7 +641,7 @@ name|Map
 argument_list|<
 name|Integer
 argument_list|,
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|ExtractReduceSinkInfo
 operator|.
@@ -654,7 +654,7 @@ name|TreeMap
 argument_list|<
 name|Integer
 argument_list|,
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|ExtractReduceSinkInfo
 operator|.
@@ -680,7 +680,7 @@ operator|.
 name|putAll
 argument_list|(
 operator|new
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|ExtractReduceSinkInfo
 argument_list|(
@@ -745,7 +745,7 @@ argument_list|>
 name|warnings
 init|=
 operator|new
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|MapJoinCheck
 argument_list|(
@@ -795,7 +795,7 @@ name|Map
 argument_list|<
 name|Integer
 argument_list|,
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|ExtractReduceSinkInfo
 operator|.
@@ -816,7 +816,7 @@ return|return;
 block|}
 name|Iterator
 argument_list|<
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|ExtractReduceSinkInfo
 operator|.
@@ -832,7 +832,7 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
-name|CrossProductCheck
+name|CrossProductHandler
 operator|.
 name|ExtractReduceSinkInfo
 operator|.

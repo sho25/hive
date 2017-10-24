@@ -382,7 +382,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|CrossProductCheck
+name|CrossProductHandler
 argument_list|()
 argument_list|)
 expr_stmt|;

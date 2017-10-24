@@ -1057,7 +1057,7 @@ name|optimizer
 operator|.
 name|physical
 operator|.
-name|CrossProductCheck
+name|CrossProductHandler
 import|;
 end_import
 
@@ -5276,7 +5276,7 @@ block|{
 name|physicalCtx
 operator|=
 operator|new
-name|CrossProductCheck
+name|CrossProductHandler
 argument_list|()
 operator|.
 name|resolve

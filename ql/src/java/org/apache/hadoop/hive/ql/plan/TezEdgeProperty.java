@@ -60,6 +60,8 @@ name|CUSTOM_SIMPLE_EDGE
 block|,
 comment|//PARTITION_EDGE
 name|ONE_TO_ONE_EDGE
+block|,
+name|XPROD_EDGE
 block|}
 specifier|private
 name|HiveConf

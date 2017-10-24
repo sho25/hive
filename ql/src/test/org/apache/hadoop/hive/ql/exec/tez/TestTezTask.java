@@ -1071,7 +1071,14 @@ argument_list|)
 argument_list|,
 name|any
 argument_list|(
-name|VertexType
+name|BaseWork
+operator|.
+name|class
+argument_list|)
+argument_list|,
+name|any
+argument_list|(
+name|TezWork
 operator|.
 name|class
 argument_list|)

@@ -391,6 +391,8 @@ name|PARTITION_ONLY_SHUFFLE
 block|,
 name|FORWARD
 block|,
+name|XPROD_EDGE
+block|,
 name|UNKNOWN
 block|}
 empty_stmt|;
