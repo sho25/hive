@@ -533,20 +533,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// TODO: remove when this is enabled everywhere
-name|HiveConf
-operator|.
-name|setBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|HIVE_VECTORIZATION_ROW_IDENTIFIER_ENABLED
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 operator|!
