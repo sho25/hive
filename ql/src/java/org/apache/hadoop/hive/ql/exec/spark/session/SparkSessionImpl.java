@@ -435,6 +435,8 @@ operator|.
 name|createHiveSparkClient
 argument_list|(
 name|conf
+argument_list|,
+name|sessionId
 argument_list|)
 expr_stmt|;
 block|}

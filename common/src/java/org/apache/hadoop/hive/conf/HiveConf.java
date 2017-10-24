@@ -7041,7 +7041,9 @@ literal|null
 argument_list|,
 literal|"This named is used by Tez to set the dag name. This name in turn will appear on \n"
 operator|+
-literal|"the Tez UI representing the work that was done."
+literal|"the Tez UI representing the work that was done. Used by Spark to set the query name, will show up in the\n"
+operator|+
+literal|"Spark UI."
 argument_list|)
 block|,
 name|HIVEOPTIMIZEBUCKETINGSORTING

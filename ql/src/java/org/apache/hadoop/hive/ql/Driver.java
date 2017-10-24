@@ -1802,6 +1802,14 @@ name|Driver
 implements|implements
 name|CommandProcessor
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MAPREDUCE_WORKFLOW_NODE_NAME
+init|=
+literal|"mapreduce.workflow.node.name"
+decl_stmt|;
 specifier|static
 specifier|final
 specifier|private
@@ -12899,7 +12907,7 @@ name|JOB_NAME
 argument_list|,
 name|jobname
 operator|+
-literal|"("
+literal|" ("
 operator|+
 name|tsk
 operator|.
@@ -12914,7 +12922,7 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"mapreduce.workflow.node.name"
+name|MAPREDUCE_WORKFLOW_NODE_NAME
 argument_list|,
 name|tsk
 operator|.
