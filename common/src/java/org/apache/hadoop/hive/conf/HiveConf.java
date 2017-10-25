@@ -1981,6 +1981,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_CAPABILITY_CHECK
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 block|}
 decl_stmt|;
 static|static

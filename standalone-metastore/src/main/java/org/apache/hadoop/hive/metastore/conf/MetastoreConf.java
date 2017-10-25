@@ -777,6 +777,10 @@ block|,
 name|ConfVars
 operator|.
 name|CAPABILITY_CHECK
+block|,
+name|ConfVars
+operator|.
+name|DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 block|}
 decl_stmt|;
 static|static
