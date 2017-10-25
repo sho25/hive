@@ -1149,6 +1149,9 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+comment|// Views derive the column type from the base table definition.  So the view definition
+comment|// can be altered to change the column types.  The column type compatibility checks should
+comment|// be done only for non-views.
 if|if
 condition|(
 name|HiveConf
@@ -1164,6 +1167,22 @@ operator|.
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|,
 literal|false
+argument_list|)
+operator|&&
+operator|!
+name|oldt
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|TableType
+operator|.
+name|VIRTUAL_VIEW
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 condition|)
 block|{
