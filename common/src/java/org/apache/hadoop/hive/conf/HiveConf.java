@@ -14107,6 +14107,17 @@ operator|+
 literal|"operators of the Join operator."
 argument_list|)
 block|,
+name|SPARK_OPTIMIZE_SHUFFLE_SERDE
+argument_list|(
+literal|"hive.spark.optimize.shuffle.serde"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If this is set to true, Hive on Spark will register custom serializers for data types\n"
+operator|+
+literal|"in shuffle. This should result in less shuffled data."
+argument_list|)
+block|,
 name|SPARK_CLIENT_FUTURE_TIMEOUT
 argument_list|(
 literal|"hive.spark.client.future.timeout"
