@@ -368,6 +368,13 @@ name|TGetInfoType
 operator|.
 name|CLI_MAX_IDENTIFIER_LEN
 argument_list|)
+operator|,
+name|CLI_ODBC_KEYWORDS
+argument_list|(
+name|TGetInfoType
+operator|.
+name|CLI_ODBC_KEYWORDS
+argument_list|)
 enum|;
 end_enum
 

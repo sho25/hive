@@ -2948,13 +2948,31 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
-throw|throw
-operator|new
-name|SQLFeatureNotSupportedException
+comment|// Note: the definitions of what ODBC and JDBC keywords exclude are different in different
+comment|//       places. For now, just return the ODBC version here; that excludes Hive keywords
+comment|//       that are also ODBC reserved keywords. We could also exclude SQL:2003.
+name|TGetInfoResp
+name|resp
+init|=
+name|getServerInfo
 argument_list|(
-literal|"Method not supported"
+name|GetInfoType
+operator|.
+name|CLI_ODBC_KEYWORDS
+operator|.
+name|toTGetInfoType
+argument_list|()
 argument_list|)
-throw|;
+decl_stmt|;
+return|return
+name|resp
+operator|.
+name|getInfoValue
+argument_list|()
+operator|.
+name|getStringValue
+argument_list|()
+return|;
 block|}
 specifier|public
 name|int

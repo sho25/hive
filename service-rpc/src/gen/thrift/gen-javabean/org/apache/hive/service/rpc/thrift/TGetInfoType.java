@@ -298,6 +298,11 @@ name|CLI_MAX_IDENTIFIER_LEN
 argument_list|(
 literal|10005
 argument_list|)
+block|,
+name|CLI_ODBC_KEYWORDS
+argument_list|(
+literal|10006
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -624,6 +629,12 @@ literal|10005
 case|:
 return|return
 name|CLI_MAX_IDENTIFIER_LEN
+return|;
+case|case
+literal|10006
+case|:
+return|return
+name|CLI_ODBC_KEYWORDS
 return|;
 default|default:
 return|return
