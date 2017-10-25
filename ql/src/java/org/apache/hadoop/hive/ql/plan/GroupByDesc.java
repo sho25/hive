@@ -349,6 +349,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
+comment|//  /* in case of grouping sets; groupby1 will output values for every setgroup; this is the index of the column that information will be sent */
 specifier|private
 name|ArrayList
 argument_list|<
