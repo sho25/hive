@@ -775,7 +775,9 @@ argument_list|,
 operator|new
 name|ExprNodeConstantDesc
 argument_list|(
-name|pti
+name|TypeInfoFactory
+operator|.
+name|stringTypeInfo
 argument_list|,
 name|val
 argument_list|)

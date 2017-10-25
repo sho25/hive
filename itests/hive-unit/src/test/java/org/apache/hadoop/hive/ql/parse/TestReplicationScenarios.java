@@ -2336,7 +2336,7 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replicatedDbName
 operator|+
 literal|".ptned_empty"
 argument_list|,
@@ -2349,7 +2349,7 @@ name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replicatedDbName
 operator|+
 literal|".unptned_empty"
 argument_list|,
@@ -14826,6 +14826,178 @@ argument_list|,
 name|data_after_ovwrite
 argument_list|,
 name|driverMirror
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDropPartitionEventWithPartitionOnTimestampColumn
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|testName
+init|=
+literal|"dropPartitionEventWithPartitionOnTimestampColumn"
+decl_stmt|;
+name|String
+name|dbName
+init|=
+name|createDB
+argument_list|(
+name|testName
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned(a string) PARTITIONED BY (b timestamp)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Bootstrap dump/load
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|ptn_data
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"fifteen"
+block|}
+decl_stmt|;
+name|String
+name|ptnVal
+init|=
+literal|"2017-10-24 00:00:00.0"
+decl_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned PARTITION(b=\""
+operator|+
+name|ptnVal
+operator|+
+literal|"\") values('"
+operator|+
+name|ptn_data
+index|[
+literal|0
+index|]
+operator|+
+literal|"')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Replicate insert event and verify
+name|Tuple
+name|incrDump
+init|=
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|bootstrapDump
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+decl_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT a from "
+operator|+
+name|replDbName
+operator|+
+literal|".ptned where (b=\""
+operator|+
+name|ptnVal
+operator|+
+literal|"\") ORDER BY a"
+argument_list|,
+name|ptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".ptned DROP PARTITION(b=\""
+operator|+
+name|ptnVal
+operator|+
+literal|"\")"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Replicate drop partition event and verify
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
+name|incrDump
+operator|.
+name|lastReplId
+argument_list|,
+name|replDbName
+argument_list|)
+expr_stmt|;
+name|verifyIfPartitionNotExist
+argument_list|(
+name|replDbName
+argument_list|,
+literal|"ptned"
+argument_list|,
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|ptnVal
+argument_list|)
+argument_list|)
+argument_list|,
+name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 block|}
