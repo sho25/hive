@@ -107,6 +107,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|AbstractFileMergeOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|Utilities
 import|;
 end_import
@@ -196,20 +214,6 @@ operator|.
 name|orc
 operator|.
 name|TypeDescription
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|impl
-operator|.
-name|OrcAcidUtils
 import|;
 end_import
 
@@ -1388,7 +1392,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * A reader that pretends an original base file is a new versioned base file.    * It wraps the underlying reader's row with an ACID event object and    * makes the relevant translations.    *     * Running multiple Insert statements on the same partition (of non acid table) creates files    * like so: 00000_0, 00000_0_copy1, 00000_0_copy2, etc.  So the OriginalReaderPair must treat all    * of these files as part of a single logical bucket file.    *    * Also, for unbucketed (non acid) tables, there are no guarantees where data files may be placed.    * For example, CTAS+Tez+Union creates subdirs 1/, 2/, etc for each leg of the Union.  Thus the    * data file need not be an immediate child of partition dir.  All files for a given writerId are    * treated as one logical unit to assign {@link RecordIdentifier}s to them consistently.    *     * For Compaction, where each split includes the whole bucket, this means reading over all the    * files in order to assign ROW__ID.rowid in one sequence for the entire logical bucket.    * For unbucketed tables, a Compaction split is all files written by a given writerId.    *    * For a read after the table is marked transactional but before it's rewritten into a base/    * by compaction, each of the original files may be split into many pieces.  For each split we    * must make sure to include only the relevant part of each delta file.    * {@link OrcRawRecordMerger#minKey} and {@link OrcRawRecordMerger#maxKey} are computed for each    * split of the original file and used to filter rows from all the deltas.  The ROW__ID.rowid for    * the rows of the 'original' file of course, must be assigned from the beginning of logical    * bucket.  The last split of the logical bucket, i.e. the split that has the end of last file,    * should include all insert events from deltas (last sentence is obsolete for Acid 2: HIVE-17320)    */
+comment|/**    * A reader that pretends an original base file is a new versioned base file.    * It wraps the underlying reader's row with an ACID event object and    * makes the relevant translations.    *     * Running multiple Insert statements on the same partition (of non acid table) creates files    * like so: 00000_0, 00000_0_copy1, 00000_0_copy2, etc.  So the OriginalReaderPair must treat all    * of these files as part of a single logical bucket file.    *    * Also, for unbucketed (non acid) tables, there are no guarantees where data files may be placed.    * For example, CTAS+Tez+Union creates subdirs    * {@link AbstractFileMergeOperator#UNION_SUDBIR_PREFIX}_1/,    * {@link AbstractFileMergeOperator#UNION_SUDBIR_PREFIX}_2/, etc for each leg of the Union.  Thus    * the data file need not be an immediate child of partition dir.  All files for a given writerId    * are treated as one logical unit to assign {@link RecordIdentifier}s to them consistently.    *     * For Compaction, where each split includes the whole bucket, this means reading over all the    * files in order to assign ROW__ID.rowid in one sequence for the entire logical bucket.    * For unbucketed tables, a Compaction split is all files written by a given writerId.    *    * For a read after the table is marked transactional but before it's rewritten into a base/    * by compaction, each of the original files may be split into many pieces.  For each split we    * must make sure to include only the relevant part of each delta file.    * {@link OrcRawRecordMerger#minKey} and {@link OrcRawRecordMerger#maxKey} are computed for each    * split of the original file and used to filter rows from all the deltas.  The ROW__ID.rowid for    * the rows of the 'original' file of course, must be assigned from the beginning of logical    * bucket.  The last split of the logical bucket, i.e. the split that has the end of last file,    * should include all insert events from deltas (last sentence is obsolete for Acid 2: HIVE-17320)    */
 specifier|private
 specifier|static
 specifier|abstract
