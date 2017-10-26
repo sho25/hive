@@ -3050,11 +3050,12 @@ name|right
 argument_list|)
 condition|)
 block|{
-comment|// if left-semi-join found a match, skipping the rest of the rows in the
-comment|// rhs table of the semijoin
+comment|// if left-semi-join found a match and we do not have any additional predicates,
+comment|// skipping the rest of the rows in the rhs table of the semijoin
 name|done
 operator|=
-literal|true
+operator|!
+name|needsPostEvaluation
 expr_stmt|;
 block|}
 block|}
@@ -3280,6 +3281,18 @@ argument_list|)
 decl_stmt|;
 name|producedRow
 operator||=
+name|forward
+expr_stmt|;
+name|done
+operator|=
+operator|(
+name|type
+operator|==
+name|JoinDesc
+operator|.
+name|LEFT_SEMI_JOIN
+operator|)
+operator|&&
 name|forward
 expr_stmt|;
 if|if
