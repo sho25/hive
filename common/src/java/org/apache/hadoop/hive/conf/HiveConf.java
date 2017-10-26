@@ -9385,9 +9385,9 @@ literal|"hive.security.authorization.sqlstd.confwhitelist"
 argument_list|,
 literal|""
 argument_list|,
-literal|"List of comma separated Java regexes. Configurations parameters that match these\n"
+literal|"A Java regex. Configurations parameters that match this\n"
 operator|+
-literal|"regexes can be modified by user when SQL standard authorization is enabled.\n"
+literal|"regex can be modified by user when SQL standard authorization is enabled.\n"
 operator|+
 literal|"To get the default value, use the 'set<param>' command.\n"
 operator|+
@@ -9402,11 +9402,13 @@ literal|"hive.security.authorization.sqlstd.confwhitelist.append"
 argument_list|,
 literal|""
 argument_list|,
-literal|"List of comma separated Java regexes, to be appended to list set in\n"
+literal|"2nd Java regex that it would match in addition to\n"
 operator|+
-literal|"hive.security.authorization.sqlstd.confwhitelist. Using this list instead\n"
+literal|"hive.security.authorization.sqlstd.confwhitelist.\n"
 operator|+
-literal|"of updating the original list means that you can append to the defaults\n"
+literal|"Do not include a starting \"|\" in the value. Using this regex instead\n"
+operator|+
+literal|"of updating the original regex means that you can append to the default\n"
 operator|+
 literal|"set by SQL standard authorization instead of replacing it entirely."
 argument_list|)
