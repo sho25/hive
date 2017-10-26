@@ -595,14 +595,10 @@ specifier|private
 specifier|static
 name|SQLPrivTypeGrant
 index|[]
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 init|=
 name|arr
 argument_list|(
-name|SQLPrivTypeGrant
-operator|.
-name|OWNER_PRIV
-argument_list|,
 name|SQLPrivTypeGrant
 operator|.
 name|INSERT_NOGRANT
@@ -675,7 +671,7 @@ argument_list|(
 operator|new
 name|PrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|HivePrivilegeObjectType
 operator|.
@@ -685,7 +681,7 @@ argument_list|,
 operator|new
 name|PrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|HivePrivilegeObjectType
 operator|.
@@ -1293,7 +1289,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1311,7 +1307,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1383,7 +1379,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1474,7 +1470,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|OWNER_PRIV_AR
 argument_list|,
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1763,7 +1759,7 @@ name|PrivRequirement
 operator|.
 name|newIOPrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|INS_NOGRANT_AR
 argument_list|)
@@ -1784,7 +1780,7 @@ name|newIOPrivRequirement
 argument_list|(
 name|SEL_GRANT_AR
 argument_list|,
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1808,7 +1804,7 @@ argument_list|(
 operator|new
 name|PrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|IOType
 operator|.
@@ -2061,7 +2057,7 @@ argument_list|,
 operator|new
 name|PrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|HivePrivilegeObjectType
 operator|.
@@ -2195,7 +2191,7 @@ name|PrivRequirement
 operator|.
 name|newIOPrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|arr
 argument_list|(
@@ -2586,7 +2582,7 @@ argument_list|(
 operator|new
 name|PrivRequirement
 argument_list|(
-name|OWNER_INS_SEL_DEL_NOGRANT_AR
+name|INS_SEL_DEL_NOGRANT_AR
 argument_list|,
 name|IOType
 operator|.
