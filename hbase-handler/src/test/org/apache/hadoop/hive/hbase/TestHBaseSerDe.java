@@ -293,6 +293,34 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
+name|Cell
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hbase
+operator|.
+name|CellComparator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hbase
+operator|.
 name|KeyValue
 import|;
 end_import
@@ -1078,14 +1106,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1279,8 +1307,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -1296,7 +1325,7 @@ argument_list|)
 decl_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -1312,7 +1341,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -1328,7 +1357,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfc
 argument_list|,
@@ -1344,7 +1373,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -1360,7 +1389,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -1376,7 +1405,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfc
 argument_list|,
@@ -1392,7 +1421,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -1408,7 +1437,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -1833,14 +1862,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2034,8 +2063,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -2053,7 +2083,7 @@ argument_list|)
 decl_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -2069,7 +2099,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -2085,7 +2115,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfc
 argument_list|,
@@ -2101,7 +2131,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -2117,7 +2147,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -2133,7 +2163,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfc
 argument_list|,
@@ -2149,7 +2179,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -2165,7 +2195,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -2834,14 +2864,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -3033,6 +3063,8 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|//    When using only HBase2, then we could change to this
+comment|//    Collections.sort(kvs, CellComparator.COMPARATOR);
 name|Collections
 operator|.
 name|sort
@@ -3047,8 +3079,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -3064,7 +3097,7 @@ argument_list|)
 decl_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -3082,7 +3115,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -3100,7 +3133,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfc
 argument_list|,
@@ -3118,7 +3151,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -3136,7 +3169,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -3154,7 +3187,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfc
 argument_list|,
@@ -3172,7 +3205,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfa
 argument_list|,
@@ -3188,7 +3221,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|cfb
 argument_list|,
@@ -3960,14 +3993,14 @@ block|}
 decl_stmt|;
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -4097,7 +4130,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|columnFamilies
 index|[
@@ -4127,8 +4160,9 @@ index|[
 name|i
 index|]
 operator|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -5104,14 +5138,14 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -5160,7 +5194,7 @@ argument_list|)
 expr_stmt|;
 name|p
 operator|.
-name|add
+name|addColumn
 argument_list|(
 name|columnFamilies
 index|[
@@ -5182,8 +5216,9 @@ block|}
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -5911,14 +5946,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -6029,8 +6064,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -6603,14 +6639,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -6643,8 +6679,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -6843,14 +6880,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -6883,8 +6920,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -7220,14 +7258,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7260,8 +7298,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -7461,14 +7500,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7501,8 +7540,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -7702,14 +7742,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7742,8 +7782,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -7943,14 +7984,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7983,8 +8024,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -8185,14 +8227,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -8225,8 +8267,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -8529,14 +8572,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -8569,8 +8612,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -8880,14 +8924,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -8972,8 +9016,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -9264,14 +9309,14 @@ decl_stmt|;
 comment|// Data
 name|List
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 name|kvs
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|KeyValue
+name|Cell
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -9304,8 +9349,9 @@ expr_stmt|;
 name|Result
 name|r
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)

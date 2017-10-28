@@ -143,7 +143,7 @@ name|hbase
 operator|.
 name|client
 operator|.
-name|HBaseAdmin
+name|Admin
 import|;
 end_import
 
@@ -159,7 +159,7 @@ name|hbase
 operator|.
 name|client
 operator|.
-name|HConnection
+name|Connection
 import|;
 end_import
 
@@ -175,7 +175,7 @@ name|hbase
 operator|.
 name|client
 operator|.
-name|HConnectionManager
+name|ConnectionFactory
 import|;
 end_import
 
@@ -205,7 +205,7 @@ name|hbase
 operator|.
 name|client
 operator|.
-name|HTableInterface
+name|Put
 import|;
 end_import
 
@@ -221,7 +221,7 @@ name|hbase
 operator|.
 name|client
 operator|.
-name|Put
+name|Table
 import|;
 end_import
 
@@ -305,7 +305,7 @@ name|String
 name|hbaseRoot
 decl_stmt|;
 specifier|private
-name|HConnection
+name|Connection
 name|hbaseConn
 decl_stmt|;
 specifier|private
@@ -317,7 +317,7 @@ init|=
 literal|1
 decl_stmt|;
 specifier|public
-name|HConnection
+name|Connection
 name|getConnection
 parameter_list|()
 block|{
@@ -616,6 +616,16 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+comment|// Fix needed due to dependency for hbase-mapreduce module
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"org.apache.hadoop.hbase.shaded.io.netty.packagePrefix"
+argument_list|,
+literal|"org.apache.hadoop.hbase.shaded."
+argument_list|)
+expr_stmt|;
 name|hbaseCluster
 operator|=
 operator|new
@@ -646,7 +656,7 @@ argument_list|)
 expr_stmt|;
 name|hbaseConn
 operator|=
-name|HConnectionManager
+name|ConnectionFactory
 operator|.
 name|createConnection
 argument_list|(
@@ -654,7 +664,7 @@ name|hbaseConf
 argument_list|)
 expr_stmt|;
 comment|// opening the META table ensures that cluster is running
-name|HTableInterface
+name|Table
 name|meta
 init|=
 literal|null
@@ -710,10 +720,12 @@ init|=
 operator|new
 name|HTableDescriptor
 argument_list|(
-name|HBASE_TABLE_NAME
+name|TableName
 operator|.
-name|getBytes
-argument_list|()
+name|valueOf
+argument_list|(
+name|HBASE_TABLE_NAME
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|HColumnDescriptor
@@ -885,12 +897,12 @@ operator|.
 name|MAX_VALUE
 block|}
 decl_stmt|;
-name|HBaseAdmin
+name|Admin
 name|hbaseAdmin
 init|=
 literal|null
 decl_stmt|;
-name|HTableInterface
+name|Table
 name|htable
 init|=
 literal|null
@@ -899,14 +911,10 @@ try|try
 block|{
 name|hbaseAdmin
 operator|=
-operator|new
-name|HBaseAdmin
-argument_list|(
 name|hbaseConn
 operator|.
-name|getConfiguration
+name|getAdmin
 argument_list|()
-argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -942,7 +950,12 @@ name|hbaseConn
 operator|.
 name|getTable
 argument_list|(
+name|TableName
+operator|.
+name|valueOf
+argument_list|(
 name|HBASE_TABLE_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// data
@@ -1005,7 +1018,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1033,7 +1046,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1061,7 +1074,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1089,7 +1102,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1117,7 +1130,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1145,7 +1158,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1173,7 +1186,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1201,7 +1214,7 @@ index|[
 name|i
 index|]
 operator|.
-name|add
+name|addColumn
 argument_list|(
 literal|"cf"
 operator|.
@@ -1327,13 +1340,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|HConnectionManager
-operator|.
-name|deleteAllConnections
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
 name|hbaseCluster
 operator|.
 name|shutdown

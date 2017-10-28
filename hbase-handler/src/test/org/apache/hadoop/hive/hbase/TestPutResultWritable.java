@@ -254,8 +254,9 @@ decl_stmt|;
 name|Result
 name|expected
 init|=
-operator|new
 name|Result
+operator|.
+name|create
 argument_list|(
 name|kvs
 argument_list|)
@@ -282,7 +283,7 @@ name|assertArrayEquals
 argument_list|(
 name|expected
 operator|.
-name|raw
+name|rawCells
 argument_list|()
 argument_list|,
 name|actual
@@ -290,7 +291,7 @@ operator|.
 name|getResult
 argument_list|()
 operator|.
-name|raw
+name|rawCells
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -456,7 +457,10 @@ name|assertEquals
 argument_list|(
 name|expected
 operator|.
-name|getFamilyMap
+name|getFamilyCellMap
+argument_list|()
+operator|.
+name|keySet
 argument_list|()
 argument_list|,
 name|actual
@@ -464,7 +468,10 @@ operator|.
 name|getPut
 argument_list|()
 operator|.
-name|getFamilyMap
+name|getFamilyCellMap
+argument_list|()
+operator|.
+name|keySet
 argument_list|()
 argument_list|)
 expr_stmt|;

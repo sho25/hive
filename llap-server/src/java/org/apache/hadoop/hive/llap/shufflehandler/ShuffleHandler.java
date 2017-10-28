@@ -4280,7 +4280,10 @@ name|equals
 argument_list|(
 name|request
 operator|.
-name|getHeader
+name|headers
+argument_list|()
+operator|.
+name|get
 argument_list|(
 name|ShuffleHeader
 operator|.
@@ -4297,7 +4300,10 @@ name|equals
 argument_list|(
 name|request
 operator|.
-name|getHeader
+name|headers
+argument_list|()
+operator|.
+name|get
 argument_list|(
 name|ShuffleHeader
 operator|.
@@ -5515,7 +5521,10 @@ argument_list|)
 expr_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|HttpHeaders
 operator|.
@@ -5531,7 +5540,10 @@ else|else
 block|{
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|HttpHeaders
 operator|.
@@ -5549,7 +5561,10 @@ argument_list|)
 expr_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|HttpHeaders
 operator|.
@@ -5566,7 +5581,10 @@ argument_list|)
 expr_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|HttpHeaders
 operator|.
@@ -5699,7 +5717,10 @@ name|urlHashStr
 init|=
 name|request
 operator|.
-name|getHeader
+name|headers
+argument_list|()
+operator|.
+name|get
 argument_list|(
 name|SecureShuffleUtils
 operator|.
@@ -5807,7 +5828,10 @@ argument_list|)
 decl_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|SecureShuffleUtils
 operator|.
@@ -5819,7 +5843,10 @@ expr_stmt|;
 comment|// Put shuffle version into http header
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|ShuffleHeader
 operator|.
@@ -5832,7 +5859,10 @@ argument_list|)
 expr_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|ShuffleHeader
 operator|.
@@ -6261,7 +6291,10 @@ argument_list|)
 decl_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|CONTENT_TYPE
 argument_list|,
@@ -6271,7 +6304,10 @@ expr_stmt|;
 comment|// Put shuffle version into http header
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|ShuffleHeader
 operator|.
@@ -6284,7 +6320,10 @@ argument_list|)
 expr_stmt|;
 name|response
 operator|.
-name|setHeader
+name|headers
+argument_list|()
+operator|.
+name|add
 argument_list|(
 name|ShuffleHeader
 operator|.

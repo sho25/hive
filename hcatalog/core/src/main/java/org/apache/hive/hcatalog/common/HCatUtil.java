@@ -4250,6 +4250,13 @@ name|matches
 argument_list|(
 literal|"\\b2\\..*"
 argument_list|)
+operator|||
+name|version
+operator|.
+name|matches
+argument_list|(
+literal|"\\b3\\..*"
+argument_list|)
 condition|)
 return|return
 literal|true

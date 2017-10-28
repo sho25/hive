@@ -567,6 +567,19 @@ argument_list|,
 literal|"2"
 argument_list|)
 expr_stmt|;
+comment|// FIXME: Hadoop3 made the incompatible change for dfs.client.datanode-restart.timeout
+comment|// while spark2 is still using Hadoop2.
+comment|// Spark requires Hive to support Hadoop3 first then Spark can start
+comment|// working on Hadoop3 support. Remove this after Spark supports Hadoop3.
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"dfs.client.datanode-restart.timeout"
+argument_list|,
+literal|"30"
+argument_list|)
+expr_stmt|;
 return|return
 name|conf
 return|;

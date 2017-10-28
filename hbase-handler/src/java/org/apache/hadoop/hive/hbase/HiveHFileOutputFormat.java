@@ -271,7 +271,7 @@ name|hbase
 operator|.
 name|mapreduce
 operator|.
-name|HFileOutputFormat
+name|HFileOutputFormat2
 import|;
 end_import
 
@@ -490,13 +490,13 @@ specifier|public
 class|class
 name|HiveHFileOutputFormat
 extends|extends
-name|HFileOutputFormat
+name|HFileOutputFormat2
 implements|implements
 name|HiveOutputFormat
 argument_list|<
 name|ImmutableBytesWritable
 argument_list|,
-name|KeyValue
+name|Cell
 argument_list|>
 block|{
 specifier|public
@@ -537,7 +537,7 @@ name|RecordWriter
 argument_list|<
 name|ImmutableBytesWritable
 argument_list|,
-name|KeyValue
+name|Cell
 argument_list|>
 name|getFileWriter
 parameter_list|(
@@ -798,7 +798,7 @@ name|RecordWriter
 argument_list|<
 name|ImmutableBytesWritable
 argument_list|,
-name|KeyValue
+name|Cell
 argument_list|>
 name|fileWriter
 init|=
@@ -1613,7 +1613,7 @@ name|RecordWriter
 argument_list|<
 name|ImmutableBytesWritable
 argument_list|,
-name|KeyValue
+name|Cell
 argument_list|>
 name|getRecordWriter
 parameter_list|(

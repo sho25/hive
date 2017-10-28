@@ -9855,14 +9855,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"2048"
+literal|2048
 argument_list|,
 name|job
 operator|.
-name|get
-argument_list|(
-literal|"mapreduce.map.memory.mb"
-argument_list|)
+name|getMemoryForMapTask
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// 2048 comes from tblproperties
@@ -9932,14 +9930,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"1024"
+literal|1024
 argument_list|,
 name|job
 operator|.
-name|get
-argument_list|(
-literal|"mapreduce.map.memory.mb"
-argument_list|)
+name|getMemoryForMapTask
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// 1024 is the default value
@@ -10412,14 +10408,12 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"3072"
+literal|3072
 argument_list|,
 name|job
 operator|.
-name|get
-argument_list|(
-literal|"mapreduce.map.memory.mb"
-argument_list|)
+name|getMemoryForMapTask
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert

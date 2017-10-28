@@ -387,6 +387,36 @@ return|return
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|URI
+name|relativize
+parameter_list|(
+name|URI
+name|uri
+parameter_list|)
+block|{
+comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|URI
+name|resolve
+parameter_list|(
+name|URI
+name|uri
+parameter_list|)
+block|{
+comment|// TODO Auto-generated method stub
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 
