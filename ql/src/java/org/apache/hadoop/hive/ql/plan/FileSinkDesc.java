@@ -458,6 +458,9 @@ name|mmWriteId
 parameter_list|,
 name|boolean
 name|isMmCtas
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 block|{
 name|this
@@ -545,6 +548,12 @@ operator|.
 name|isMmCtas
 operator|=
 name|isMmCtas
+expr_stmt|;
+name|this
+operator|.
+name|isInsertOverwrite
+operator|=
+name|isInsertOverwrite
 expr_stmt|;
 block|}
 specifier|public
@@ -664,6 +673,8 @@ argument_list|,
 name|mmWriteId
 argument_list|,
 name|isMmCtas
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 name|ret

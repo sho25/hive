@@ -605,7 +605,6 @@ name|int
 name|queryParallelism
 decl_stmt|;
 specifier|private
-specifier|final
 name|List
 argument_list|<
 name|Trigger
@@ -703,6 +702,28 @@ argument_list|()
 operator|+
 literal|"]"
 return|;
+block|}
+annotation|@
+name|VisibleForTesting
+comment|// will change in HIVE-17809
+specifier|public
+name|void
+name|setTriggers
+parameter_list|(
+specifier|final
+name|List
+argument_list|<
+name|Trigger
+argument_list|>
+name|triggers
+parameter_list|)
+block|{
+name|this
+operator|.
+name|triggers
+operator|=
+name|triggers
+expr_stmt|;
 block|}
 specifier|public
 name|List

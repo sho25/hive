@@ -655,7 +655,7 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|HIVECOUNTERCREATEDFILES
+name|HIVE_COUNTER_CREATED_FILES
 init|=
 literal|"CREATED_FILES"
 decl_stmt|;
@@ -663,7 +663,15 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|HIVECOUNTERFATAL
+name|HIVE_COUNTER_CREATED_DYNAMIC_PARTITIONS
+init|=
+literal|"CREATED_DYNAMIC_PARTITIONS"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_COUNTER_FATAL
 init|=
 literal|"FATAL_ERROR"
 decl_stmt|;

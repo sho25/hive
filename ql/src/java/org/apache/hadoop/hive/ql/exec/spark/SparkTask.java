@@ -2246,7 +2246,7 @@ name|add
 argument_list|(
 name|Operator
 operator|.
-name|HIVECOUNTERCREATEDFILES
+name|HIVE_COUNTER_CREATED_FILES
 argument_list|)
 expr_stmt|;
 comment|// MapOperator is out of SparkWork, SparkMapRecordHandler use it to bridge

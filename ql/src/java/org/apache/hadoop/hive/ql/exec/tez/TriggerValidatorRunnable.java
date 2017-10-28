@@ -268,6 +268,12 @@ condition|(
 name|triggerContext
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|triggerContext
+operator|.
+name|isQueryCompleted
+argument_list|()
 condition|)
 block|{
 name|Map
@@ -316,18 +322,23 @@ name|desiredCounter
 argument_list|)
 condition|)
 block|{
-if|if
-condition|(
-name|t
-operator|.
-name|apply
-argument_list|(
+name|long
+name|currentCounterValue
+init|=
 name|currentCounters
 operator|.
 name|get
 argument_list|(
 name|desiredCounter
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|t
+operator|.
+name|apply
+argument_list|(
+name|currentCounterValue
 argument_list|)
 condition|)
 block|{
@@ -346,11 +357,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Query {} violated trigger {}. Going to apply action {}"
+literal|"Query {} violated trigger {}. Current counter value: {}. Going to apply action {}"
 argument_list|,
 name|queryId
 argument_list|,
 name|t
+argument_list|,
+name|currentCounterValue
 argument_list|,
 name|t
 operator|.

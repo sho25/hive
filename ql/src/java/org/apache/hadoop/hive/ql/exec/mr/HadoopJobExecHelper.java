@@ -1268,7 +1268,7 @@ argument_list|)
 argument_list|,
 name|Operator
 operator|.
-name|HIVECOUNTERCREATEDFILES
+name|HIVE_COUNTER_CREATED_FILES
 argument_list|)
 decl_stmt|;
 name|long
