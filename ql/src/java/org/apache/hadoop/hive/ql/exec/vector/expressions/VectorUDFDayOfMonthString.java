@@ -50,14 +50,14 @@ name|int
 name|colNum
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|colNum
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|,
 literal|8
 argument_list|,

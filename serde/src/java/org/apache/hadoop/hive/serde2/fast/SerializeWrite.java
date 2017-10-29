@@ -438,6 +438,18 @@ name|IOException
 function_decl|;
 comment|/*    * DECIMAL.    *    * NOTE: The scale parameter is for text serialization (e.g. HiveDecimal.toFormatString) that    * creates trailing zeroes output decimals.    */
 name|void
+name|writeDecimal64
+parameter_list|(
+name|long
+name|decimal64Long
+parameter_list|,
+name|int
+name|scale
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+name|void
 name|writeHiveDecimal
 parameter_list|(
 name|HiveDecimal

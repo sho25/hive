@@ -75,7 +75,7 @@ name|int
 name|arg3Column
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -86,7 +86,7 @@ name|arg2Column
 argument_list|,
 name|arg3Column
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}

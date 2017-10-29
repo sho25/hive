@@ -306,14 +306,14 @@ parameter_list|(
 name|LimitDesc
 name|limitDesc
 parameter_list|,
-name|VectorDesc
-name|vectorDesc
+name|VectorLimitDesc
+name|vectorLimitDesc
 parameter_list|)
 block|{
 comment|// Native vectorization supported.
 name|super
 argument_list|(
-name|vectorDesc
+name|vectorLimitDesc
 argument_list|,
 literal|true
 argument_list|)
@@ -350,9 +350,18 @@ name|LimitOperatorExplainVectorization
 name|getLimitVectorization
 parameter_list|()
 block|{
+name|VectorLimitDesc
+name|vectorLimitDesc
+init|=
+operator|(
+name|VectorLimitDesc
+operator|)
+name|getVectorDesc
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
-name|vectorDesc
+name|vectorLimitDesc
 operator|==
 literal|null
 condition|)
@@ -367,7 +376,7 @@ name|LimitOperatorExplainVectorization
 argument_list|(
 name|this
 argument_list|,
-name|vectorDesc
+name|vectorLimitDesc
 argument_list|)
 return|;
 block|}

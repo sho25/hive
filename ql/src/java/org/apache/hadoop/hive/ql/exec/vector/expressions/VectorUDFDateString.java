@@ -217,14 +217,14 @@ name|int
 name|inputColumn
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|inputColumn
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}

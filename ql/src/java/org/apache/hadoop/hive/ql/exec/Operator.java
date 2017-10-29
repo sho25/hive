@@ -1630,6 +1630,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// String className = this.getClass().getName();
 name|this
 operator|.
 name|done
@@ -1692,7 +1693,6 @@ operator|=
 name|inputOIs
 expr_stmt|;
 block|}
-comment|// initialize structure to maintain child op info. operator tree changes
 comment|// while initializing so this need to be done here instead of constructor
 name|childOperatorsArray
 operator|=

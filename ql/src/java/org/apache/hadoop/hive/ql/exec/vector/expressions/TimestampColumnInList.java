@@ -157,6 +157,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
+specifier|final
 name|int
 name|inputCol
 decl_stmt|;
@@ -164,10 +165,6 @@ specifier|private
 name|Timestamp
 index|[]
 name|inListValues
-decl_stmt|;
-specifier|private
-name|int
-name|outputColumn
 decl_stmt|;
 comment|// The set object containing the IN list.
 specifier|private
@@ -185,9 +182,11 @@ block|{
 name|super
 argument_list|()
 expr_stmt|;
-name|inSet
+comment|// Dummy final assignments.
+name|inputCol
 operator|=
-literal|null
+operator|-
+literal|1
 expr_stmt|;
 block|}
 comment|/**    * After construction you must call setInListValues() to add the values to the IN set.    */
@@ -198,20 +197,19 @@ name|int
 name|colNum
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
+name|super
+argument_list|(
+name|outputColumnNum
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|inputCol
 operator|=
 name|colNum
-expr_stmt|;
-name|this
-operator|.
-name|outputColumn
-operator|=
-name|outputColumn
 expr_stmt|;
 name|inSet
 operator|=
@@ -303,7 +301,7 @@ name|batch
 operator|.
 name|cols
 index|[
-name|outputColumn
+name|outputColumnNum
 index|]
 decl_stmt|;
 name|int
@@ -718,28 +716,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|String
-name|getOutputType
-parameter_list|()
-block|{
-return|return
-literal|"boolean"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|int
-name|getOutputColumn
-parameter_list|()
-block|{
-return|return
-name|outputColumn
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|Descriptor
 name|getDescriptor
 parameter_list|()
@@ -773,9 +749,12 @@ name|vectorExpressionParameters
 parameter_list|()
 block|{
 return|return
-literal|"col "
-operator|+
+name|getColumnParamString
+argument_list|(
+literal|0
+argument_list|,
 name|inputCol
+argument_list|)
 operator|+
 literal|", values "
 operator|+

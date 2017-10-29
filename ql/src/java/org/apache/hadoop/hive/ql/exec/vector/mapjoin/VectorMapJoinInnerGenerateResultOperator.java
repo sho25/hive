@@ -277,6 +277,24 @@ name|OperatorDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|VectorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class has methods for generating vectorized join results for inner joins.  *  * Inner joins use a hash map to lookup the 1 or more small table values.  *  * One vector inner join optimization is projecting inner keys.  When a key appears  * in the small table results area, instead of copying or referencing key we just include  * that key again in the output projection.  *  * Another optimization is when an inner join does not have any small table columns in the  * join result, we use a different variation call inner big only.  That variation uses  * a hash multi-set instead of hash map since there are no values (just a count).  */
 end_comment
@@ -401,11 +419,14 @@ parameter_list|(
 name|CompilationOpContext
 name|ctx
 parameter_list|,
+name|OperatorDesc
+name|conf
+parameter_list|,
 name|VectorizationContext
 name|vContext
 parameter_list|,
-name|OperatorDesc
-name|conf
+name|VectorDesc
+name|vectorDesc
 parameter_list|)
 throws|throws
 name|HiveException
@@ -414,9 +435,11 @@ name|super
 argument_list|(
 name|ctx
 argument_list|,
+name|conf
+argument_list|,
 name|vContext
 argument_list|,
-name|conf
+name|vectorDesc
 argument_list|)
 expr_stmt|;
 block|}

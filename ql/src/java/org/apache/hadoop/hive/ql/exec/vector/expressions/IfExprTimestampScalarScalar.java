@@ -85,7 +85,7 @@ name|Timestamp
 name|arg3Scalar
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -96,7 +96,7 @@ name|arg2Scalar
 argument_list|,
 name|arg3Scalar
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}

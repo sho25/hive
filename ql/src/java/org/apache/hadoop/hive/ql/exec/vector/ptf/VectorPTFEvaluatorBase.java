@@ -303,7 +303,7 @@ name|inputColumnNum
 operator|=
 name|inputVecExpr
 operator|.
-name|getOutputColumn
+name|getOutputColumnNum
 argument_list|()
 expr_stmt|;
 if|if

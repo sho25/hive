@@ -153,7 +153,11 @@ block|}
 specifier|public
 name|IfExprDoubleColumnDoubleColumn
 parameter_list|()
-block|{   }
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -230,7 +234,7 @@ name|batch
 operator|.
 name|cols
 index|[
-name|outputColumn
+name|outputColumnNum
 index|]
 decl_stmt|;
 name|int
@@ -768,32 +772,32 @@ annotation|@
 name|Override
 specifier|public
 name|String
-name|getOutputType
-parameter_list|()
-block|{
-return|return
-literal|"double"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
 name|vectorExpressionParameters
 parameter_list|()
 block|{
 return|return
-literal|"col "
-operator|+
+name|getColumnParamString
+argument_list|(
+literal|0
+argument_list|,
 name|arg1Column
+argument_list|)
 operator|+
-literal|", col "
+literal|", "
 operator|+
+name|getColumnParamString
+argument_list|(
+literal|1
+argument_list|,
 name|arg2Column
+argument_list|)
 operator|+
-literal|", col "
-operator|+
+name|getColumnParamString
+argument_list|(
+literal|2
+argument_list|,
 name|arg3Column
+argument_list|)
 return|;
 block|}
 annotation|@

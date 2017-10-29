@@ -22,7 +22,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * VectorizationContextRegion optional interface implemented by vectorized operators   * that are changing the vectorization context (region boundary operators)  */
+comment|/**  * VectorizationContextRegion optional interface implemented by vectorized operators  * that are changing the vectorization context (region boundary operators)  */
 end_comment
 
 begin_interface
@@ -31,7 +31,7 @@ interface|interface
 name|VectorizationContextRegion
 block|{
 name|VectorizationContext
-name|getOuputVectorizationContext
+name|getOutputVectorizationContext
 parameter_list|()
 function_decl|;
 block|}

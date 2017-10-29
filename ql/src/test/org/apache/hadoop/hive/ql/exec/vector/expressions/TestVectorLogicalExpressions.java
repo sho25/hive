@@ -3326,20 +3326,20 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
-name|getOutputColumn
+name|Descriptor
+name|getDescriptor
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
 return|return
-literal|0
+literal|null
 return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|Descriptor
-name|getDescriptor
+name|String
+name|vectorExpressionParameters
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
@@ -3426,20 +3426,20 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
-name|getOutputColumn
+name|Descriptor
+name|getDescriptor
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
 return|return
-literal|0
+literal|null
 return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|Descriptor
-name|getDescriptor
+name|String
+name|vectorExpressionParameters
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
@@ -3527,20 +3527,20 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
-name|getOutputColumn
+name|Descriptor
+name|getDescriptor
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
 return|return
-literal|0
+literal|null
 return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|Descriptor
-name|getDescriptor
+name|String
+name|vectorExpressionParameters
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
@@ -3650,20 +3650,20 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
-name|getOutputColumn
+name|Descriptor
+name|getDescriptor
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub
 return|return
-literal|0
+literal|null
 return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|Descriptor
-name|getDescriptor
+name|String
+name|vectorExpressionParameters
 parameter_list|()
 block|{
 comment|// TODO Auto-generated method stub

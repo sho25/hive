@@ -99,7 +99,7 @@ name|int
 name|colNum
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 comment|/* not a real field */
@@ -110,7 +110,7 @@ literal|1
 argument_list|,
 name|colNum
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 name|dateWritable

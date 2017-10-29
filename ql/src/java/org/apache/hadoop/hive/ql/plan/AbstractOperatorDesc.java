@@ -112,7 +112,8 @@ name|vectorMode
 init|=
 literal|false
 decl_stmt|;
-comment|// Extra parameters only for vectorization.
+comment|// Reference to vectorization description needed for EXPLAIN VECTORIZATION, hash table loading,
+comment|// etc.
 specifier|protected
 name|VectorDesc
 name|vectorDesc

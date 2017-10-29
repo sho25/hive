@@ -93,14 +93,14 @@ name|int
 name|inputCol
 parameter_list|,
 name|int
-name|outputCol
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|inputCol
 argument_list|,
-name|outputCol
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}

@@ -2111,6 +2111,20 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|dec
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Can't add NULL.
+name|isSet
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 operator|!
 name|isSet
 condition|)
@@ -2176,6 +2190,20 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|dec
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Can't subtract NULL.
+name|isSet
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 operator|!
 name|isSet
 condition|)
@@ -2241,6 +2269,20 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|dec
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Can't multiply NULL.
+name|isSet
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 operator|!
 name|isSet
 condition|)
@@ -2306,6 +2348,20 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|dec
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Can't divide NULL.
+name|isSet
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
+if|if
+condition|(
 operator|!
 name|isSet
 condition|)
@@ -2369,6 +2425,20 @@ name|HiveDecimal
 name|dec
 parameter_list|)
 block|{
+if|if
+condition|(
+name|dec
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Can't do remainder on NULL.
+name|isSet
+operator|=
+literal|false
+expr_stmt|;
+return|return;
+block|}
 if|if
 condition|(
 operator|!

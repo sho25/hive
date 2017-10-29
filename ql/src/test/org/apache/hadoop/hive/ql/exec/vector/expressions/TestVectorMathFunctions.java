@@ -753,6 +753,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
@@ -1156,19 +1174,6 @@ argument_list|,
 literal|1
 argument_list|)
 decl_stmt|;
-operator|(
-operator|(
-name|ISetLongArg
-operator|)
-name|expr
-operator|)
-operator|.
-name|setArg
-argument_list|(
-literal|4
-argument_list|)
-expr_stmt|;
-comment|// set number of digits
 name|expr
 operator|.
 name|evaluate
@@ -4089,19 +4094,6 @@ argument_list|,
 literal|1
 argument_list|)
 decl_stmt|;
-operator|(
-operator|(
-name|ISetDoubleArg
-operator|)
-name|expr
-operator|)
-operator|.
-name|setArg
-argument_list|(
-literal|10.0d
-argument_list|)
-expr_stmt|;
-comment|// set base
 name|expr
 operator|.
 name|evaluate
@@ -4213,7 +4205,6 @@ argument_list|,
 literal|1
 argument_list|)
 decl_stmt|;
-comment|//((ISetDoubleArg) expr).setArg(0.3d);  // set base
 name|expr
 operator|.
 name|evaluate
@@ -4375,19 +4366,6 @@ argument_list|,
 literal|1
 argument_list|)
 decl_stmt|;
-operator|(
-operator|(
-name|ISetDoubleArg
-operator|)
-name|expr
-operator|)
-operator|.
-name|setArg
-argument_list|(
-literal|2.0d
-argument_list|)
-expr_stmt|;
-comment|// set power
 name|expr
 operator|.
 name|evaluate
@@ -4817,6 +4795,8 @@ specifier|public
 name|void
 name|testVectorBin
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test conversion of long->string
 name|VectorizedRowBatch
@@ -4860,6 +4840,11 @@ argument_list|,
 literal|2
 argument_list|)
 decl_stmt|;
+name|expr
+operator|.
+name|transientInit
+argument_list|()
+expr_stmt|;
 name|expr
 operator|.
 name|evaluate
@@ -4911,6 +4896,8 @@ specifier|public
 name|void
 name|testVectorHex
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test long->string version
 name|VectorizedRowBatch
@@ -4954,6 +4941,11 @@ argument_list|,
 literal|2
 argument_list|)
 decl_stmt|;
+name|expr
+operator|.
+name|transientInit
+argument_list|()
+expr_stmt|;
 name|expr
 operator|.
 name|evaluate

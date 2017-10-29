@@ -53,8 +53,6 @@ class|class
 name|BRoundWithNumDigitsDoubleToDouble
 extends|extends
 name|RoundWithNumDigitsDoubleToDouble
-implements|implements
-name|ISetLongArg
 block|{
 specifier|private
 specifier|static
@@ -74,7 +72,7 @@ name|long
 name|scalarVal
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -83,7 +81,7 @@ name|colNum
 argument_list|,
 name|scalarVal
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}

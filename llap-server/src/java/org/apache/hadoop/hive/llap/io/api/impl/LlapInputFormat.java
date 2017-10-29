@@ -1564,7 +1564,13 @@ argument_list|)
 argument_list|,
 literal|null
 argument_list|,
+literal|null
+argument_list|,
 name|partitionColumnCount
+argument_list|,
+name|virtualColumns
+operator|.
+name|length
 argument_list|,
 name|virtualColumns
 argument_list|,
@@ -1573,6 +1579,8 @@ name|String
 index|[
 literal|0
 index|]
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}

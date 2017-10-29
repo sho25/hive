@@ -60,7 +60,7 @@ name|int
 name|colNum
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -71,11 +71,8 @@ name|WEEK_OF_YEAR
 argument_list|,
 name|colNum
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
-expr_stmt|;
-name|initCalendar
-argument_list|()
 expr_stmt|;
 block|}
 specifier|public
@@ -85,11 +82,10 @@ block|{
 name|super
 argument_list|()
 expr_stmt|;
-name|initCalendar
-argument_list|()
-expr_stmt|;
 block|}
-specifier|private
+annotation|@
+name|Override
+specifier|public
 name|void
 name|initCalendar
 parameter_list|()

@@ -344,7 +344,7 @@ specifier|public
 name|StructColumnInList
 parameter_list|(
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -352,7 +352,7 @@ argument_list|(
 operator|-
 literal|1
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}
@@ -763,17 +763,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|String
-name|getOutputType
-parameter_list|()
-block|{
-return|return
-literal|"boolean"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|Descriptor
 name|getDescriptor
 parameter_list|()
@@ -795,12 +784,9 @@ parameter_list|)
 block|{
 comment|// Tell our super class FilterStringColumnInList it will be evaluating our scratch
 comment|// BytesColumnVector.
-name|super
-operator|.
-name|setInputColumn
-argument_list|(
+name|inputCol
+operator|=
 name|scratchBytesColumn
-argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -884,7 +870,7 @@ index|]
 operator|=
 name|ve
 operator|.
-name|getOutputColumn
+name|getOutputColumnNum
 argument_list|()
 expr_stmt|;
 block|}

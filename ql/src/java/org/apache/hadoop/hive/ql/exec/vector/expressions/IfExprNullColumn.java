@@ -144,6 +144,14 @@ name|outputColumn
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|IfExprNullColumn
+parameter_list|()
+block|{
+name|super
+argument_list|()
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -204,7 +212,7 @@ name|batch
 operator|.
 name|cols
 index|[
-name|outputColumn
+name|outputColumnNum
 index|]
 decl_stmt|;
 specifier|final
@@ -474,25 +482,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|int
-name|getOutputColumn
-parameter_list|()
-block|{
-return|return
-name|outputColumn
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|String
 name|vectorExpressionParameters
 parameter_list|()
 block|{
 return|return
-literal|"col "
-operator|+
+name|getColumnParamString
+argument_list|(
+literal|0
+argument_list|,
 name|arg1Column
+argument_list|)
 operator|+
 literal|", null, col "
 operator|+

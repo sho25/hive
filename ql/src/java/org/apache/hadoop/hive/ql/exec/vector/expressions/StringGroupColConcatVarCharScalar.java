@@ -90,7 +90,7 @@ name|HiveVarchar
 name|value
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -105,7 +105,7 @@ operator|.
 name|getBytes
 argument_list|()
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}

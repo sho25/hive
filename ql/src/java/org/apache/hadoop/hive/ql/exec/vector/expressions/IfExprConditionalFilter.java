@@ -117,22 +117,11 @@ literal|1
 decl_stmt|;
 specifier|protected
 name|int
-name|outputColumn
-init|=
-operator|-
-literal|1
-decl_stmt|;
-specifier|protected
-name|int
 name|arg2ColumnTmp
 init|=
 operator|-
 literal|1
 decl_stmt|;
-specifier|public
-name|IfExprConditionalFilter
-parameter_list|()
-block|{   }
 specifier|public
 name|IfExprConditionalFilter
 parameter_list|(
@@ -146,9 +135,14 @@ name|int
 name|arg3Column
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
+name|super
+argument_list|(
+name|outputColumnNum
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|arg1Column
@@ -198,11 +192,13 @@ operator|=
 name|arg2Column
 expr_stmt|;
 block|}
-name|this
-operator|.
-name|outputColumn
-operator|=
-name|outputColumn
+block|}
+specifier|public
+name|IfExprConditionalFilter
+parameter_list|()
+block|{
+name|super
+argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * For If(expr1,expr2,expr3) expression,    * Firstly, save the previous selected vector, size and selectedInUse value of batch.    * Secondly evaluate the conditional expression and update the selected array of batch based    * on the result of conditional expression(1 denote done, 0 denote not done)    * Then evaluate the expr2 based on the updated selected.    * After the expr2 is executed, remove the indexes which have done in expr2.    * Last, evaluate the expr3 based on the updated selected.    *    * @param batch    * @param childExpressions the childExpressions need to be evaluated.    */
@@ -403,7 +399,7 @@ index|[
 literal|1
 index|]
 operator|.
-name|getOutputColumn
+name|getOutputColumnNum
 argument_list|()
 operator|==
 name|arg2ColumnTmp
@@ -676,7 +672,7 @@ name|colNum
 init|=
 name|ve
 operator|.
-name|getOutputColumn
+name|getOutputColumnNum
 argument_list|()
 decl_stmt|;
 comment|// Evaluate the conditional expression.
@@ -803,17 +799,6 @@ block|{    }
 annotation|@
 name|Override
 specifier|public
-name|int
-name|getOutputColumn
-parameter_list|()
-block|{
-return|return
-name|outputColumn
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|VectorExpressionDescriptor
 operator|.
 name|Descriptor
@@ -827,6 +812,17 @@ argument_list|(
 literal|"Undefined descriptor"
 argument_list|)
 throw|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|vectorExpressionParameters
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
 block|}
 block|}
 end_class

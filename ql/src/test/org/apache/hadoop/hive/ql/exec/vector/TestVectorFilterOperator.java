@@ -610,6 +610,13 @@ argument_list|(
 name|col1Expr
 argument_list|)
 expr_stmt|;
+name|VectorFilterDesc
+name|vectorDesc
+init|=
+operator|new
+name|VectorFilterDesc
+argument_list|()
+decl_stmt|;
 name|Operator
 argument_list|<
 name|?
@@ -651,6 +658,8 @@ argument_list|(
 name|filterOp
 argument_list|,
 name|vc
+argument_list|,
+name|vectorDesc
 argument_list|)
 return|;
 block|}
@@ -751,7 +760,7 @@ argument_list|()
 decl_stmt|;
 name|vfo
 operator|.
-name|getConditionEvaluator
+name|getPredicateExpression
 argument_list|()
 operator|.
 name|evaluate

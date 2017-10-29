@@ -58,6 +58,8 @@ name|BYTES
 block|,
 name|DECIMAL
 block|,
+name|DECIMAL_64
+block|,
 name|TIMESTAMP
 block|,
 name|INTERVAL_DAY_TIME

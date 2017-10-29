@@ -195,6 +195,24 @@ name|OperatorDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|VectorDesc
+import|;
+end_import
+
 begin_comment
 comment|// Multi-Key hash table import.
 end_comment
@@ -428,11 +446,14 @@ parameter_list|(
 name|CompilationOpContext
 name|ctx
 parameter_list|,
+name|OperatorDesc
+name|conf
+parameter_list|,
 name|VectorizationContext
 name|vContext
 parameter_list|,
-name|OperatorDesc
-name|conf
+name|VectorDesc
+name|vectorDesc
 parameter_list|)
 throws|throws
 name|HiveException
@@ -441,9 +462,11 @@ name|super
 argument_list|(
 name|ctx
 argument_list|,
+name|conf
+argument_list|,
 name|vContext
 argument_list|,
-name|conf
+name|vectorDesc
 argument_list|)
 expr_stmt|;
 block|}

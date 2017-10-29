@@ -94,7 +94,7 @@ name|HiveChar
 name|arg3Scalar
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -111,24 +111,17 @@ operator|.
 name|getBytes
 argument_list|()
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}
 specifier|public
 name|IfExprStringScalarCharScalar
 parameter_list|()
-block|{   }
-annotation|@
-name|Override
-specifier|public
-name|String
-name|getOutputType
-parameter_list|()
 block|{
-return|return
-literal|"String"
-return|;
+name|super
+argument_list|()
+expr_stmt|;
 block|}
 annotation|@
 name|Override

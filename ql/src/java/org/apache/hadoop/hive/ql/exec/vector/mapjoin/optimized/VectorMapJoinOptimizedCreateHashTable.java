@@ -249,6 +249,7 @@ operator|.
 name|isNoOuterJoin
 argument_list|()
 decl_stmt|;
+comment|// UNDONE
 name|VectorMapJoinDesc
 name|vectorDesc
 init|=

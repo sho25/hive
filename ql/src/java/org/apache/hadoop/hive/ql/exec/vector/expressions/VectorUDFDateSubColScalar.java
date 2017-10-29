@@ -44,7 +44,7 @@ name|long
 name|numDays
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -53,7 +53,7 @@ name|colNum
 argument_list|,
 name|numDays
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 name|isPositive
@@ -67,10 +67,6 @@ parameter_list|()
 block|{
 name|super
 argument_list|()
-expr_stmt|;
-name|isPositive
-operator|=
-literal|false
 expr_stmt|;
 block|}
 block|}

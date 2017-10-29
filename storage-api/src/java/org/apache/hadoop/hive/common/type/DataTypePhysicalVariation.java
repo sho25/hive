@@ -13,34 +13,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
+name|type
 package|;
 end_package
 
-begin_comment
-comment|/* Used to set the long constant argument to function  * (e.g. a constant number of digits to round to)  */
-end_comment
-
-begin_interface
+begin_enum
 specifier|public
-interface|interface
-name|ISetLongArg
+enum|enum
+name|DataTypePhysicalVariation
 block|{
-name|void
-name|setArg
-parameter_list|(
-name|long
-name|l
-parameter_list|)
-function_decl|;
+name|NONE
+block|,
+name|DECIMAL_64
 block|}
-end_interface
+end_enum
 
 end_unit
 

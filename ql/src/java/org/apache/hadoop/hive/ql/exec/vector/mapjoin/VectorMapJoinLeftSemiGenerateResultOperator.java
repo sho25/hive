@@ -257,6 +257,24 @@ name|OperatorDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|VectorDesc
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class has methods for generating vectorized join results for left semi joins.  *  * The big difference between inner joins and left semi joins is existence testing.  *  * Inner joins use a hash map to lookup the 1 or more small table values.  *  * Left semi joins are a specialized join for outputting big table rows whose key exists  * in the small table.  *  * No small table values are needed for left semi join since they would be empty.  So,  * we use a hash set as the hash table.  Hash sets just report whether a key exists.  This  * is a big performance optimization.  */
 end_comment
@@ -356,11 +374,14 @@ parameter_list|(
 name|CompilationOpContext
 name|ctx
 parameter_list|,
+name|OperatorDesc
+name|conf
+parameter_list|,
 name|VectorizationContext
 name|vContext
 parameter_list|,
-name|OperatorDesc
-name|conf
+name|VectorDesc
+name|vectorDesc
 parameter_list|)
 throws|throws
 name|HiveException
@@ -369,9 +390,11 @@ name|super
 argument_list|(
 name|ctx
 argument_list|,
+name|conf
+argument_list|,
 name|vContext
 argument_list|,
-name|conf
+name|vectorDesc
 argument_list|)
 expr_stmt|;
 block|}

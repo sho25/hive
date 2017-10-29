@@ -12001,6 +12001,42 @@ argument_list|,
 literal|"This flag should be set to true to enable vectorization of ROW__ID."
 argument_list|)
 block|,
+name|HIVE_VECTORIZED_INPUT_FORMAT_SUPPORTS_ENABLED
+argument_list|(
+literal|"hive.vectorized.input.format.supports.enabled"
+argument_list|,
+literal|"decimal_64"
+argument_list|,
+literal|"Which vectorized input format support features are enabled for vectorization.\n"
+operator|+
+literal|"That is, if a VectorizedInputFormat input format does support \"decimal_64\" for example\n"
+operator|+
+literal|"this variable must enable that to be used in vectorization"
+argument_list|)
+block|,
+name|HIVE_TEST_VECTORIZATION_ENABLED_OVERRIDE
+argument_list|(
+literal|"hive.test.vectorized.execution.enabled.override"
+argument_list|,
+literal|"none"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"enable"
+argument_list|,
+literal|"disable"
+argument_list|)
+argument_list|,
+literal|"internal use only, used to override the hive.vectorized.execution.enabled setting and\n"
+operator|+
+literal|"turn off vectorization.  The default is false, or course"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"
@@ -14939,6 +14975,42 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+name|ConfVars
+parameter_list|(
+name|String
+name|varname
+parameter_list|,
+name|Object
+name|defaultVal
+parameter_list|,
+name|Validator
+name|validator
+parameter_list|,
+name|String
+name|description
+parameter_list|,
+name|boolean
+name|excluded
+parameter_list|)
+block|{
+name|this
+argument_list|(
+name|varname
+argument_list|,
+name|defaultVal
+argument_list|,
+name|validator
+argument_list|,
+name|description
+argument_list|,
+literal|true
+argument_list|,
+name|excluded
 argument_list|,
 literal|null
 argument_list|)

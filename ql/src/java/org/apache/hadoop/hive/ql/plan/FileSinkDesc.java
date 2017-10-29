@@ -1935,14 +1935,14 @@ block|{
 specifier|public
 name|FileSinkOperatorExplainVectorization
 parameter_list|(
-name|VectorDesc
-name|vectorDesc
+name|VectorFileSinkDesc
+name|vectorFileSinkDesc
 parameter_list|)
 block|{
 comment|// Native vectorization not supported.
 name|super
 argument_list|(
-name|vectorDesc
+name|vectorFileSinkDesc
 argument_list|,
 literal|false
 argument_list|)
@@ -1979,9 +1979,18 @@ name|FileSinkOperatorExplainVectorization
 name|getFileSinkVectorization
 parameter_list|()
 block|{
+name|VectorFileSinkDesc
+name|vectorFileSinkDesc
+init|=
+operator|(
+name|VectorFileSinkDesc
+operator|)
+name|getVectorDesc
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
-name|vectorDesc
+name|vectorFileSinkDesc
 operator|==
 literal|null
 condition|)
@@ -1994,7 +2003,7 @@ return|return
 operator|new
 name|FileSinkOperatorExplainVectorization
 argument_list|(
-name|vectorDesc
+name|vectorFileSinkDesc
 argument_list|)
 return|;
 block|}

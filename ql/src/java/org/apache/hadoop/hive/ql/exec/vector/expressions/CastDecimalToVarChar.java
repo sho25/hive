@@ -84,14 +84,14 @@ name|int
 name|inputColumn
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|inputColumn
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}
@@ -139,17 +139,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|String
-name|getOutputType
-parameter_list|()
-block|{
-return|return
-literal|"VarChar"
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|int
 name|getMaxLength
 parameter_list|()
@@ -183,9 +172,12 @@ name|vectorExpressionParameters
 parameter_list|()
 block|{
 return|return
-literal|"col "
-operator|+
+name|getColumnParamString
+argument_list|(
+literal|0
+argument_list|,
 name|inputColumn
+argument_list|)
 operator|+
 literal|", maxLength "
 operator|+

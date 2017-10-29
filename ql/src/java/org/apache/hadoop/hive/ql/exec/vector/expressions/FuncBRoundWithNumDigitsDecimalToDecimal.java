@@ -86,7 +86,7 @@ name|int
 name|scalarValue
 parameter_list|,
 name|int
-name|outputColumn
+name|outputColumnNum
 parameter_list|)
 block|{
 name|super
@@ -95,7 +95,7 @@ name|colNum
 argument_list|,
 name|scalarValue
 argument_list|,
-name|outputColumn
+name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}
