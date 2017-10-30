@@ -20358,6 +20358,8 @@ operator|.
 name|killQuery
 argument_list|(
 name|queryId
+argument_list|,
+literal|"User invoked KILL QUERY"
 argument_list|)
 expr_stmt|;
 block|}

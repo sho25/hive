@@ -243,6 +243,14 @@ operator|.
 name|killQuery
 argument_list|(
 name|queryId
+argument_list|,
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|getMsg
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

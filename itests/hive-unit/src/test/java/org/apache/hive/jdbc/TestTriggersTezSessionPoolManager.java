@@ -929,7 +929,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1003,7 +1005,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1125,7 +1129,9 @@ name|query
 argument_list|,
 name|setCmds
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1199,7 +1205,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1273,7 +1281,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1348,7 +1358,9 @@ argument_list|,
 name|getConfigs
 argument_list|()
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2216,7 +2228,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|execTimeTrigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2319,7 +2333,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|shuffleTrigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}

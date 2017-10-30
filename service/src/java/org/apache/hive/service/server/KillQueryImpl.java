@@ -190,6 +190,9 @@ name|killQuery
 parameter_list|(
 name|String
 name|queryId
+parameter_list|,
+name|String
+name|errMsg
 parameter_list|)
 throws|throws
 name|HiveException
@@ -238,6 +241,8 @@ operator|.
 name|cancelOperation
 argument_list|(
 name|handle
+argument_list|,
+name|errMsg
 argument_list|)
 expr_stmt|;
 block|}

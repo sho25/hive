@@ -52,6 +52,9 @@ name|killQuery
 parameter_list|(
 name|String
 name|queryId
+parameter_list|,
+name|String
+name|errMsg
 parameter_list|)
 throws|throws
 name|HiveException
