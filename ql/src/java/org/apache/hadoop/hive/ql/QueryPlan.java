@@ -825,6 +825,7 @@ name|FileSinkDesc
 argument_list|>
 name|acidSinks
 decl_stmt|;
+comment|// Note: both full-ACID and insert-only sinks.
 specifier|private
 name|Boolean
 name|autoCommitValue

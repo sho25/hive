@@ -756,6 +756,13 @@ argument_list|)
 expr_stmt|;
 name|ret
 operator|.
+name|setStatementId
+argument_list|(
+name|statementId
+argument_list|)
+expr_stmt|;
+name|ret
+operator|.
 name|setStatsTmpDir
 argument_list|(
 name|statsTmpDir
@@ -912,7 +919,7 @@ name|txnId
 argument_list|,
 name|txnId
 argument_list|,
-literal|0
+name|statementId
 argument_list|)
 argument_list|)
 return|;
