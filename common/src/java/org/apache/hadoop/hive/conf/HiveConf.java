@@ -12198,6 +12198,17 @@ operator|+
 literal|"The default value is true."
 argument_list|)
 block|,
+name|HIVE_CREATE_TABLES_AS_INSERT_ONLY
+argument_list|(
+literal|"hive.create.as.insert.only"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether the eligible tables should be created as ACID insert-only by default. Does \n"
+operator|+
+literal|"not apply to external tables, the ones using storage handlers, etc."
+argument_list|)
+block|,
 comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
