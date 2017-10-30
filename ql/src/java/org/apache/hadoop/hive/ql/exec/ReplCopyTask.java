@@ -440,6 +440,49 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+comment|// Note: CopyWork supports copying multiple files, but ReplCopyWork doesn't.
+comment|//       Not clear of ReplCopyWork should inherit from CopyWork.
+if|if
+condition|(
+name|work
+operator|.
+name|getFromPaths
+argument_list|()
+operator|.
+name|length
+operator|>
+literal|1
+operator|||
+name|work
+operator|.
+name|getToPaths
+argument_list|()
+operator|.
+name|length
+operator|>
+literal|1
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Invalid ReplCopyWork: "
+operator|+
+name|work
+operator|.
+name|getFromPaths
+argument_list|()
+operator|+
+literal|", "
+operator|+
+name|work
+operator|.
+name|getToPaths
+argument_list|()
+argument_list|)
+throw|;
+block|}
 name|Path
 name|fromPath
 init|=
