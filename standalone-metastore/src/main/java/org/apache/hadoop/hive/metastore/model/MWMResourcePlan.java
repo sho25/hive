@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Set
 import|;
 end_import
 
@@ -51,21 +51,21 @@ name|Status
 name|status
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|MWMPool
 argument_list|>
 name|pools
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|MWMTrigger
 argument_list|>
 name|triggers
 decl_stmt|;
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|MWMMapping
 argument_list|>
@@ -190,7 +190,7 @@ name|status
 expr_stmt|;
 block|}
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|MWMPool
 argument_list|>
@@ -205,7 +205,7 @@ specifier|public
 name|void
 name|setPools
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|MWMPool
 argument_list|>
@@ -220,7 +220,7 @@ name|pools
 expr_stmt|;
 block|}
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|MWMTrigger
 argument_list|>
@@ -235,7 +235,7 @@ specifier|public
 name|void
 name|setTriggers
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|MWMTrigger
 argument_list|>
@@ -250,7 +250,7 @@ name|triggers
 expr_stmt|;
 block|}
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|MWMMapping
 argument_list|>
@@ -265,7 +265,7 @@ specifier|public
 name|void
 name|setMappings
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|MWMMapping
 argument_list|>

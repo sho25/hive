@@ -303,6 +303,12 @@ name|ALTER_RESOURCEPLAN
 block|,
 name|DROP_RESOURCEPLAN
 block|,
+name|CREATE_TRIGGER
+block|,
+name|ALTER_TRIGGER
+block|,
+name|DROP_TRIGGER
+block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,

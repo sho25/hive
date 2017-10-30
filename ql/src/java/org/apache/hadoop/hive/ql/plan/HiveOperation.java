@@ -1667,6 +1667,45 @@ literal|false
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|CREATE_TRIGGER
+argument_list|(
+literal|"CREATE TRIGGER"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|ALTER_TRIGGER
+argument_list|(
+literal|"ALTER TRIGGER"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|DROP_TRIGGER
+argument_list|(
+literal|"DROP TRIGGER"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|)
 block|;
 specifier|private
 name|String
