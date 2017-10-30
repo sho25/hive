@@ -1062,58 +1062,10 @@ name|trigger
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|setCmds
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-decl_stmt|;
-comment|// reducer phase starts only after 75% of mappers
-comment|// this will start 15 tasks, shuffle starts after 11 tasks
-name|setCmds
-operator|.
-name|add
-argument_list|(
-literal|"set hive.exec.dynamic.partition.mode=nonstrict"
-argument_list|)
-expr_stmt|;
-name|setCmds
-operator|.
-name|add
-argument_list|(
-literal|"set mapred.min.split.size=400"
-argument_list|)
-expr_stmt|;
-name|setCmds
-operator|.
-name|add
-argument_list|(
-literal|"set mapred.max.split.size=400"
-argument_list|)
-expr_stmt|;
-name|setCmds
-operator|.
-name|add
-argument_list|(
-literal|"set tez.grouping.min-size=400"
-argument_list|)
-expr_stmt|;
-name|setCmds
-operator|.
-name|add
-argument_list|(
-literal|"set tez.grouping.max-size=400"
-argument_list|)
-expr_stmt|;
 name|String
 name|query
 init|=
-literal|"select t1.under_col, t1.value from "
+literal|"select sleep(t1.under_col, 5), t1.value from "
 operator|+
 name|tableName
 operator|+
@@ -1121,17 +1073,15 @@ literal|" t1 join "
 operator|+
 name|tableName
 operator|+
-literal|" t2 on t1.under_col>=t2.under_col order by t1.under_col"
+literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|setCmds
+literal|null
 argument_list|,
-name|trigger
-operator|+
-literal|" violated"
+literal|"Query was cancelled"
 argument_list|)
 expr_stmt|;
 block|}
