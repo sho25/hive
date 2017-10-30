@@ -11046,7 +11046,10 @@ block|}
 else|else
 block|{
 comment|// The non-MM path only finds new partitions, as it is looking at the temp path.
-comment|// To produce the same effect, we will find all the partitions affected by this write ID.
+comment|// To produce the same effect, we will find all the partitions affected by this txn ID.
+comment|// Note: we ignore the statement ID here, because it's currently irrelevant for MoveTask
+comment|//       where this is used; we always want to load everything; also the only case where
+comment|//       we have multiple statements anyway is union.
 name|Path
 index|[]
 name|leafStatus
@@ -11067,7 +11070,8 @@ literal|null
 argument_list|,
 name|txnId
 argument_list|,
-name|stmtId
+operator|-
+literal|1
 argument_list|,
 name|conf
 argument_list|)
