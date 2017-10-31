@@ -7431,10 +7431,10 @@ operator|.
 name|BOOLEAN_GROUP
 return|;
 case|case
-name|TIMESTAMP
+name|DATE
 case|:
 case|case
-name|DATE
+name|TIMESTAMP
 case|:
 case|case
 name|TIMESTAMPLOCALTZ
