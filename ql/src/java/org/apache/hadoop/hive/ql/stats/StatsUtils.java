@@ -2705,9 +2705,7 @@ block|{
 name|Statistics
 name|stats
 init|=
-operator|new
-name|Statistics
-argument_list|()
+literal|null
 decl_stmt|;
 name|float
 name|deserFactor
@@ -2783,13 +2781,6 @@ argument_list|,
 name|ds
 argument_list|)
 decl_stmt|;
-name|stats
-operator|.
-name|setNumRows
-argument_list|(
-name|nr
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|ColStatistics
@@ -2892,9 +2883,12 @@ name|betterDS
 expr_stmt|;
 block|}
 name|stats
-operator|.
-name|setDataSize
+operator|=
+operator|new
+name|Statistics
 argument_list|(
+name|nr
+argument_list|,
 name|ds
 argument_list|)
 expr_stmt|;
@@ -3162,16 +3156,12 @@ literal|1
 expr_stmt|;
 block|}
 name|stats
-operator|.
-name|addToNumRows
+operator|=
+operator|new
+name|Statistics
 argument_list|(
 name|nr
-argument_list|)
-expr_stmt|;
-name|stats
-operator|.
-name|addToDataSize
-argument_list|(
+argument_list|,
 name|ds
 argument_list|)
 expr_stmt|;
@@ -3668,6 +3658,7 @@ argument_list|,
 name|columnStats
 argument_list|)
 expr_stmt|;
+comment|// FIXME: this add seems suspicious...10 lines below the value returned by this method used as betterDS
 name|stats
 operator|.
 name|addToDataSize
@@ -3934,6 +3925,27 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|rowCounts
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+comment|// all partitions are filtered by partition pruning
+name|stats
+operator|.
+name|setBasicStatsState
+argument_list|(
+name|State
+operator|.
+name|COMPLETE
+argument_list|)
+expr_stmt|;
 block|}
 comment|// This block exists for debugging purposes: we want to check whether
 comment|// the col stats cache is working properly and we are retrieving the
