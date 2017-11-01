@@ -3877,6 +3877,19 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Performs the pre/commit/rollback to the metadata storage for insert operator from external storage handler.    * @param table table name    * @param overwrite true if the insert is overwrite    *    * @throws MetaException    */
+name|void
+name|insertTable
+parameter_list|(
+name|Table
+name|table
+parameter_list|,
+name|boolean
+name|overwrite
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * A filter provided by the client that determines if a given notification event should be    * returned.    */
 annotation|@
 name|InterfaceAudience
