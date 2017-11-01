@@ -3819,24 +3819,23 @@ name|getRight
 argument_list|()
 decl_stmt|;
 name|String
+name|fullSequenceName
+init|=
+literal|"org.apache.hadoop.hive.metastore.model."
+operator|+
+name|seqName
+decl_stmt|;
+name|String
 name|seqQuery
 init|=
 name|needsQuotedIdentifier
 condition|?
 operator|(
-literal|"select t.\"NEXT_VAL\" from \"SEQUENCE_TABLE\" t WHERE t.\"SEQUENCE_NAME\"='org.apache.hadoop.hive.metastore.model."
-operator|+
-name|seqName
-operator|+
-literal|"' order by t.\"SEQUENCE_NAME\" "
+literal|"select t.\"NEXT_VAL\" from \"SEQUENCE_TABLE\" t WHERE t.\"SEQUENCE_NAME\"=? order by t.\"SEQUENCE_NAME\" "
 operator|)
 else|:
 operator|(
-literal|"select t.NEXT_VAL from SEQUENCE_TABLE t WHERE t.SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model."
-operator|+
-name|seqName
-operator|+
-literal|"' order by t.SEQUENCE_NAME "
+literal|"select t.NEXT_VAL from SEQUENCE_TABLE t WHERE t.SEQUENCE_NAME=? order by t.SEQUENCE_NAME "
 operator|)
 decl_stmt|;
 name|String
@@ -3901,15 +3900,32 @@ operator|>
 literal|0
 condition|)
 block|{
-name|ResultSet
-name|resSeq
+name|PreparedStatement
+name|pStmt
 init|=
-name|stmt
+name|conn
 operator|.
-name|executeQuery
+name|prepareStatement
 argument_list|(
 name|seqQuery
 argument_list|)
+decl_stmt|;
+name|pStmt
+operator|.
+name|setString
+argument_list|(
+literal|1
+argument_list|,
+name|fullSequenceName
+argument_list|)
+expr_stmt|;
+name|ResultSet
+name|resSeq
+init|=
+name|pStmt
+operator|.
+name|executeQuery
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
