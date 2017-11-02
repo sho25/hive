@@ -1062,18 +1062,42 @@ name|trigger
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|cmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.auto.convert.join=false"
+argument_list|)
+expr_stmt|;
+comment|// to slow down the reducer so that SHUFFLE_BYTES publishing and validation can happen, adding sleep between
+comment|// multiple reduce stages
 name|String
 name|query
 init|=
-literal|"select sleep(t1.under_col, 5), t1.value from "
+literal|"select count(distinct t.under_col), sleep(t.under_col, 10) from (select t1.under_col from "
 operator|+
 name|tableName
 operator|+
-literal|" t1 join "
+literal|" t1 "
+operator|+
+literal|"join "
 operator|+
 name|tableName
 operator|+
-literal|" t2 on t1.under_col>=t2.under_col"
+literal|" t2 on t1.under_col=t2.under_col order by sleep(t1.under_col, 0))"
+operator|+
+literal|" t group by t.under_col"
 decl_stmt|;
 name|runQueryWithTrigger
 argument_list|(
@@ -1081,7 +1105,9 @@ name|query
 argument_list|,
 literal|null
 argument_list|,
-literal|"Query was cancelled"
+name|trigger
+operator|+
+literal|" violated"
 argument_list|)
 expr_stmt|;
 block|}
