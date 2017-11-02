@@ -363,6 +363,12 @@ name|void
 name|start
 parameter_list|()
 block|{
+comment|// Try to get cluster information once, to avoid immediate cluster-update event in WM.
+name|clusterState
+operator|.
+name|initClusterInfo
+argument_list|()
+expr_stmt|;
 name|clusterStateUpdateThread
 operator|.
 name|start
@@ -383,6 +389,17 @@ argument_list|()
 expr_stmt|;
 comment|// Don't wait for the thread.
 block|}
+specifier|public
+name|void
+name|initClusterInfo
+parameter_list|()
+block|{
+name|clusterState
+operator|.
+name|initClusterInfo
+argument_list|()
+expr_stmt|;
+block|}
 annotation|@
 name|VisibleForTesting
 specifier|protected
@@ -395,13 +412,13 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|allowUpdate
+operator|&&
 operator|!
 name|clusterState
 operator|.
 name|initClusterInfo
-argument_list|(
-name|allowUpdate
-argument_list|)
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -494,7 +511,7 @@ specifier|public
 name|void
 name|updateSessionsAsync
 parameter_list|(
-name|double
+name|Double
 name|totalMaxAlloc
 parameter_list|,
 name|List
@@ -504,7 +521,7 @@ argument_list|>
 name|sessionsToUpdate
 parameter_list|)
 block|{
-comment|// Do not make a remote call unless we have no information at all.
+comment|// Do not make a remote call under any circumstances - this is supposed to be async.
 name|int
 name|totalCount
 init|=
@@ -516,6 +533,18 @@ decl_stmt|;
 name|int
 name|totalToDistribute
 init|=
+operator|-
+literal|1
+decl_stmt|;
+if|if
+condition|(
+name|totalMaxAlloc
+operator|!=
+literal|null
+condition|)
+block|{
+name|totalToDistribute
+operator|=
 operator|(
 name|int
 operator|)
@@ -527,7 +556,8 @@ name|totalCount
 operator|*
 name|totalMaxAlloc
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|double
 name|lastDelta
 init|=
@@ -577,6 +607,10 @@ name|sessionsToUpdate
 operator|.
 name|size
 argument_list|()
+operator|&&
+name|totalToDistribute
+operator|>=
+literal|0
 condition|)
 block|{
 name|intAlloc
@@ -649,6 +683,13 @@ block|}
 comment|// Make sure we don't give out more than allowed due to double/rounding artifacts.
 if|if
 condition|(
+name|totalToDistribute
+operator|>=
+literal|0
+condition|)
+block|{
+if|if
+condition|(
 name|intAlloc
 operator|>
 name|totalToDistribute
@@ -663,6 +704,7 @@ name|totalToDistribute
 operator|-=
 name|intAlloc
 expr_stmt|;
+block|}
 comment|// This will only send update if it's necessary.
 name|updateSessionAsync
 argument_list|(
@@ -843,7 +885,7 @@ try|try
 block|{
 name|session
 operator|.
-name|destroy
+name|handleUpdateError
 argument_list|()
 expr_stmt|;
 block|}

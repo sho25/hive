@@ -143,11 +143,8 @@ expr_stmt|;
 block|}
 block|}
 name|AmPluginInfo
-name|waitForAmPluginInfo
-parameter_list|(
-name|int
-name|timeoutMs
-parameter_list|)
+name|getAmPluginInfo
+parameter_list|()
 throws|throws
 name|InterruptedException
 throws|,

@@ -678,10 +678,8 @@ name|info
 operator|=
 name|node
 operator|.
-name|waitForAmPluginInfo
-argument_list|(
-literal|0
-argument_list|)
+name|getAmPluginInfo
+argument_list|()
 expr_stmt|;
 comment|// Don't wait - should already be initialized.
 if|if

@@ -3915,7 +3915,8 @@ block|{
 comment|// ignore
 block|}
 block|}
-specifier|public
+specifier|protected
+specifier|final
 name|void
 name|cleanupScratchDir
 parameter_list|()

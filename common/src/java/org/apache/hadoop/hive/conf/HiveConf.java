@@ -10227,6 +10227,17 @@ operator|+
 literal|"workload management is enabled and used for these sessions."
 argument_list|)
 block|,
+name|HIVE_SERVER2_TEZ_WM_WORKER_THREADS
+argument_list|(
+literal|"hive.server2.tez.wm.worker.threads"
+argument_list|,
+literal|4
+argument_list|,
+literal|"Number of worker threads to use to perform the synchronous operations with Tez\n"
+operator|+
+literal|"sessions for workload management (e.g. opening, closing, etc.)"
+argument_list|)
+block|,
 name|HIVE_SERVER2_TEZ_WM_AM_REGISTRY_TIMEOUT
 argument_list|(
 literal|"hive.server2.tez.wm.am.registry.timeout"
