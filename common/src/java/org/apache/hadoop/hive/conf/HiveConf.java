@@ -12473,6 +12473,20 @@ argument_list|,
 literal|"Use a semi-join branch for map-joins. This may not make it faster, but is helpful in certain join patterns."
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_SEMIJOIN_REDUCTION_FOR_DPP_FACTOR
+argument_list|(
+literal|"hive.tez.dynamic.semijoin.reduction.for.dpp.factor"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|1.0
+argument_list|,
+literal|"The factor to decide if semijoin branch feeds into a TableScan\n"
+operator|+
+literal|"which has an outgoing Dynamic Partition Pruning (DPP) branch based on number of distinct values."
+argument_list|)
+block|,
 name|TEZ_SMB_NUMBER_WAVES
 argument_list|(
 literal|"hive.tez.smb.number.waves"
