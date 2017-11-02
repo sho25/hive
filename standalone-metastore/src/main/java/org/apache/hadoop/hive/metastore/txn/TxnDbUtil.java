@@ -609,6 +609,36 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Another thread might have already created these tables.
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"already exists"
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Txn tables already exist, returning"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 comment|// This might be a deadlock, if so, let's retry
 if|if
 condition|(

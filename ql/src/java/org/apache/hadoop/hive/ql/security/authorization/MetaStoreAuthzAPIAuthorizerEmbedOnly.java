@@ -73,9 +73,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|HiveMetaStore
-operator|.
-name|HMSHandler
+name|IHMSHandler
 import|;
 end_import
 
@@ -338,7 +336,7 @@ specifier|public
 name|void
 name|setMetaStoreHandler
 parameter_list|(
-name|HMSHandler
+name|IHMSHandler
 name|handler
 parameter_list|)
 block|{

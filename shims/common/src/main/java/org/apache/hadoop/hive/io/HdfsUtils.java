@@ -359,50 +359,6 @@ argument_list|(
 literal|"shims.HdfsUtils"
 argument_list|)
 decl_stmt|;
-comment|// TODO: this relies on HDFS not changing the format; we assume if we could get inode ID, this
-comment|//       is still going to work. Otherwise, file IDs can be turned off. Later, we should use
-comment|//       as public utility method in HDFS to obtain the inode-based path.
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|HDFS_ID_PATH_PREFIX
-init|=
-literal|"/.reserved/.inodes/"
-decl_stmt|;
-specifier|public
-specifier|static
-name|Path
-name|getFileIdPath
-parameter_list|(
-name|FileSystem
-name|fileSystem
-parameter_list|,
-name|Path
-name|path
-parameter_list|,
-name|long
-name|fileId
-parameter_list|)
-block|{
-return|return
-operator|(
-name|fileSystem
-operator|instanceof
-name|DistributedFileSystem
-operator|)
-condition|?
-operator|new
-name|Path
-argument_list|(
-name|HDFS_ID_PATH_PREFIX
-operator|+
-name|fileId
-argument_list|)
-else|:
-name|path
-return|;
-block|}
 comment|/**    * Copy the permissions, group, and ACLs from a source {@link HadoopFileStatus} to a target {@link Path}. This method    * will only log a warning if permissions cannot be set, no exception will be thrown.    *    * @param conf the {@link Configuration} used when setting permissions and ACLs    * @param sourceStatus the source {@link HadoopFileStatus} to copy permissions and ACLs from    * @param fs the {@link FileSystem} that contains the target {@link Path}    * @param target the {@link Path} to copy permissions, group, and ACLs to    * @param recursion recursively set permissions and ACLs on the target {@link Path}    */
 specifier|public
 specifier|static

@@ -4059,14 +4059,12 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|HiveMetaStore
-operator|.
-name|HMSHandler
+name|IHMSHandler
 name|beforeHandler
 init|=
 name|event
 operator|.
-name|getHandler
+name|getIHMSHandler
 argument_list|()
 decl_stmt|;
 name|closingClient
@@ -4103,14 +4101,12 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|HiveMetaStore
-operator|.
-name|HMSHandler
+name|IHMSHandler
 name|afterHandler
 init|=
 name|event
 operator|.
-name|getHandler
+name|getIHMSHandler
 argument_list|()
 decl_stmt|;
 comment|// Meta-conf cleanup should trigger an event to listener

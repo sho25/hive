@@ -745,7 +745,11 @@ block|,
 name|ConfVars
 operator|.
 name|DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
-block|,   }
+block|,
+name|ConfVars
+operator|.
+name|FILE_METADATA_THREADS
+block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
 specifier|private
@@ -1866,6 +1870,17 @@ argument_list|,
 literal|"Class to use to process expressions in partition pruning."
 argument_list|)
 block|,
+name|FILE_METADATA_THREADS
+argument_list|(
+literal|"metastore.file.metadata.threads"
+argument_list|,
+literal|"hive.metastore.hbase.file.metadata.threads"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of threads to use to read file metadata in background to cache it."
+argument_list|)
+block|,
 name|FILTER_HOOK
 argument_list|(
 literal|"metastore.filter.hook"
@@ -2064,6 +2079,38 @@ argument_list|,
 literal|"org.datanucleus.api.jdo.JDOPersistenceManagerFactory"
 argument_list|,
 literal|"class implementing the jdo persistence"
+argument_list|)
+block|,
+comment|// Parameters for exporting metadata on table drop (requires the use of the)
+comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
+name|METADATA_EXPORT_LOCATION
+argument_list|(
+literal|"metastore.metadata.export.location"
+argument_list|,
+literal|"hive.metadata.export.location"
+argument_list|,
+literal|""
+argument_list|,
+literal|"When used in conjunction with the org.apache.hadoop.hive.ql.parse.MetaDataExportListener pre event listener, \n"
+operator|+
+literal|"it is the location to which the metadata will be exported. The default is an empty string, which results in the \n"
+operator|+
+literal|"metadata being exported to the current user's home directory on HDFS."
+argument_list|)
+block|,
+name|MOVE_EXPORTED_METADATA_TO_TRASH
+argument_list|(
+literal|"metastore.metadata.move.exported.metadata.to.trash"
+argument_list|,
+literal|"hive.metadata.move.exported.metadata.to.trash"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When used in conjunction with the org.apache.hadoop.hive.ql.parse.MetaDataExportListener pre event listener, \n"
+operator|+
+literal|"this setting determines if the metadata that is exported will subsequently be moved to the user's trash directory \n"
+operator|+
+literal|"alongside the dropped table data. This ensures that the metadata will be cleaned up along with the dropped table data."
 argument_list|)
 block|,
 name|METRICS_ENABLED
