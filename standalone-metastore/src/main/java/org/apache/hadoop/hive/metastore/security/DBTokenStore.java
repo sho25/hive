@@ -223,24 +223,15 @@ parameter_list|)
 throws|throws
 name|TokenStoreException
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"addMasterKey: s = "
-operator|+
+literal|"addMasterKey: s = {}"
+argument_list|,
 name|s
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 operator|(
 name|Integer
@@ -277,28 +268,17 @@ parameter_list|)
 throws|throws
 name|TokenStoreException
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"updateMasterKey: s = "
-operator|+
+literal|"updateMasterKey: s = {}, keySeq = {}"
+argument_list|,
 name|s
-operator|+
-literal|", keySeq = "
-operator|+
+argument_list|,
 name|keySeq
 argument_list|)
 expr_stmt|;
-block|}
 name|invokeOnTokenStore
 argument_list|(
 literal|"updateMasterKey"
@@ -460,28 +440,17 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"addToken: tokenIdentifier = "
-operator|+
+literal|"addToken: tokenIdentifier = {}, added = {}"
+argument_list|,
 name|tokenIdentifier
-operator|+
-literal|", added = "
-operator|+
+argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|result
 return|;
@@ -572,28 +541,17 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"getToken: tokenIdentifier = "
-operator|+
+literal|"getToken: tokenIdentifier = {}, result = {}"
+argument_list|,
 name|tokenIdentifier
-operator|+
-literal|", result = "
-operator|+
+argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|result
 return|;
@@ -654,28 +612,17 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"removeToken: tokenIdentifier = "
-operator|+
+literal|"removeToken: tokenIdentifier = {}, removed = {}"
+argument_list|,
 name|tokenIdentifier
-operator|+
-literal|", removed = "
-operator|+
+argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|result
 return|;
