@@ -383,6 +383,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Enumeration
 import|;
 end_import
@@ -633,6 +643,34 @@ name|apache
 operator|.
 name|commons
 operator|.
+name|collections
+operator|.
+name|CollectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|collections
+operator|.
+name|MapUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
 name|lang
 operator|.
 name|StringUtils
@@ -692,20 +730,6 @@ operator|.
 name|filecache
 operator|.
 name|DistributedCache
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|CommonConfigurationKeysPublic
 import|;
 end_import
 
@@ -1359,26 +1383,6 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|VectorExpressionDescriptor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|VectorizedInputFormatInterface
 import|;
 end_import
@@ -1691,26 +1695,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|parquet
-operator|.
-name|MapredParquetInputFormat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|rcfile
 operator|.
 name|truncate
@@ -1864,26 +1848,6 @@ operator|.
 name|metadata
 operator|.
 name|Table
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|physical
-operator|.
-name|Vectorizer
 import|;
 end_import
 
@@ -2228,22 +2192,6 @@ operator|.
 name|serde
 operator|.
 name|serdeConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|ColumnProjectionUtils
 import|;
 end_import
 
@@ -3041,6 +2989,15 @@ name|DEPRECATED_MAPRED_DFSCLIENT_PARALLELISM_MAX
 init|=
 literal|"mapred.dfsclient.parallelism.max"
 decl_stmt|;
+specifier|public
+specifier|static
+name|Random
+name|randGen
+init|=
+operator|new
+name|Random
+argument_list|()
+decl_stmt|;
 comment|/**    * ReduceField:    * KEY: record key    * VALUE: record value    */
 specifier|public
 specifier|static
@@ -3595,34 +3552,26 @@ name|Configuration
 name|jconf
 parameter_list|)
 block|{
+name|String
+name|currentMergePrefix
+init|=
+name|jconf
+operator|.
+name|get
+argument_list|(
+name|DagUtils
+operator|.
+name|TEZ_MERGE_CURRENT_MERGE_FILE_PREFIX
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
-operator|(
-name|jconf
-operator|.
-name|get
-argument_list|(
-name|DagUtils
-operator|.
-name|TEZ_MERGE_CURRENT_MERGE_FILE_PREFIX
-argument_list|)
-operator|==
-literal|null
-operator|)
-operator|||
-operator|(
-name|jconf
-operator|.
-name|get
-argument_list|(
-name|DagUtils
-operator|.
-name|TEZ_MERGE_CURRENT_MERGE_FILE_PREFIX
-argument_list|)
+name|StringUtils
 operator|.
 name|isEmpty
-argument_list|()
-operator|)
+argument_list|(
+name|currentMergePrefix
+argument_list|)
 condition|)
 block|{
 return|return
@@ -3659,14 +3608,12 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|prefix
-operator|==
-literal|null
-operator|||
-name|prefix
+name|StringUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|prefix
+argument_list|)
 condition|)
 block|{
 return|return
@@ -3864,15 +3811,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|addedJars
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|addedJars
+name|StringUtils
 operator|.
-name|isEmpty
-argument_list|()
+name|isNotEmpty
+argument_list|(
+name|addedJars
+argument_list|)
 condition|)
 block|{
 name|ClassLoader
@@ -3933,8 +3877,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"PLAN PATH = "
-operator|+
+literal|"PLAN PATH = {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
@@ -3981,8 +3925,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"local path = "
-operator|+
+literal|"local path = {}"
+argument_list|,
 name|localPath
 argument_list|)
 expr_stmt|;
@@ -4008,12 +3952,9 @@ name|HIVE_RPC_QUERY_PLAN
 argument_list|)
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Loading plan from string: "
-operator|+
+name|String
+name|planStringPath
+init|=
 name|path
 operator|.
 name|toUri
@@ -4021,6 +3962,14 @@ argument_list|()
 operator|.
 name|getPath
 argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Loading plan from string: {}"
+argument_list|,
+name|planStringPath
 argument_list|)
 expr_stmt|;
 name|String
@@ -4030,13 +3979,7 @@ name|conf
 operator|.
 name|getRaw
 argument_list|(
-name|path
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
+name|planStringPath
 argument_list|)
 decl_stmt|;
 if|if
@@ -4102,8 +4045,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Open file to read in plan: "
-operator|+
+literal|"Open file to read in plan: {}"
+argument_list|,
 name|localPath
 argument_list|)
 expr_stmt|;
@@ -4465,21 +4408,14 @@ name|gWork
 argument_list|)
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
+else|else
 block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Found plan in cache for name: "
-operator|+
+literal|"Found plan in cache for name: {}"
+argument_list|,
 name|name
 argument_list|)
 expr_stmt|;
@@ -4499,16 +4435,11 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"No plan file found: "
-operator|+
+literal|"No plan file found: {}"
+argument_list|,
 name|path
-operator|+
-literal|"; "
-operator|+
+argument_list|,
 name|fnf
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -4532,9 +4463,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to load plan: "
-operator|+
-name|path
+name|msg
 argument_list|,
 name|e
 argument_list|)
@@ -4558,28 +4487,13 @@ argument_list|(
 name|kryo
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|in
-operator|!=
-literal|null
-condition|)
-block|{
-try|try
-block|{
-name|in
+name|IOUtils
 operator|.
-name|close
-argument_list|()
+name|closeStream
+argument_list|(
+name|in
+argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|cantBlameMeForTrying
-parameter_list|)
-block|{ }
-block|}
 block|}
 block|}
 specifier|private
@@ -4711,14 +4625,12 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|children
-operator|==
-literal|null
-operator|||
-name|children
+name|CollectionUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|children
+argument_list|)
 condition|)
 block|{
 return|return;
@@ -4741,10 +4653,7 @@ argument_list|(
 operator|new
 name|String
 index|[
-name|children
-operator|.
-name|size
-argument_list|()
+literal|0
 index|]
 argument_list|)
 argument_list|)
@@ -5411,10 +5320,6 @@ init|=
 literal|"Error caching "
 operator|+
 name|name
-operator|+
-literal|": "
-operator|+
-name|e
 decl_stmt|;
 name|LOG
 operator|.
@@ -5861,15 +5766,6 @@ name|nullStringOutput
 init|=
 literal|"NULL"
 decl_stmt|;
-specifier|public
-specifier|static
-name|Random
-name|randGen
-init|=
-operator|new
-name|Random
-argument_list|()
-decl_stmt|;
 comment|/**    * Gets the task id if we are running as a Hadoop job. Gets a random number otherwise.    */
 specifier|public
 specifier|static
@@ -5900,32 +5796,28 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|(
-name|taskid
-operator|==
-literal|null
-operator|)
-operator|||
-name|taskid
+name|StringUtils
 operator|.
-name|equals
+name|isEmpty
 argument_list|(
-literal|""
+name|taskid
 argument_list|)
 condition|)
 block|{
 return|return
 operator|(
-literal|""
-operator|+
-name|Math
+name|Integer
 operator|.
-name|abs
+name|toString
 argument_list|(
 name|randGen
 operator|.
 name|nextInt
-argument_list|()
+argument_list|(
+name|Integer
+operator|.
+name|MAX_VALUE
+argument_list|)
 argument_list|)
 operator|)
 return|;
@@ -6311,7 +6203,9 @@ literal|null
 condition|)
 block|{
 return|return
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 return|;
 block|}
 name|StringBuilder
@@ -6412,7 +6306,9 @@ name|getOpTreeSkel_helper
 argument_list|(
 name|op
 argument_list|,
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 argument_list|)
 return|;
 block|}
@@ -6692,7 +6588,9 @@ literal|0
 argument_list|,
 name|suffixlength
 argument_list|,
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 argument_list|)
 decl_stmt|;
 name|suffix
@@ -6760,11 +6658,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|boolean
-name|foundCrChar
-init|=
-literal|false
-decl_stmt|;
 while|while
 condition|(
 literal|true
@@ -7058,7 +6951,9 @@ argument_list|()
 return|;
 block|}
 return|return
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 return|;
 block|}
 comment|/**    * Create a sequencefile output stream based on job configuration.    *    * @param jc    *          Job configuration    * @param fs    *          File System to create file in    * @param file    *          Path to be created    * @param keyClass    *          Java Class for key    * @param valClass    *          Java Class for value    * @return output stream over the created sequencefile    */
@@ -8322,15 +8217,13 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Unable to get task id from file name: "
-operator|+
-name|filename
-operator|+
-literal|". Using last component"
-operator|+
-name|taskId
+literal|"Unable to get task id from file name: {}. Using last component {}"
 operator|+
 literal|" as task id."
+argument_list|,
+name|filename
+argument_list|,
+name|taskId
 argument_list|)
 expr_stmt|;
 block|}
@@ -8350,12 +8243,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"TaskId for "
-operator|+
+literal|"TaskId for {} = {}"
+argument_list|,
 name|filename
-operator|+
-literal|" = "
-operator|+
+argument_list|,
 name|taskId
 argument_list|)
 expr_stmt|;
@@ -8528,13 +8419,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Unable to determine bucket number from task id: "
-operator|+
-name|taskId
-operator|+
-literal|". Using "
+literal|"Unable to determine bucket number from task id: {}. Using "
 operator|+
 literal|"task ID as bucket number."
+argument_list|,
+name|taskId
 argument_list|)
 expr_stmt|;
 return|return
@@ -8574,7 +8463,9 @@ argument_list|)
 operator|==
 literal|null
 condition|?
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 else|:
 name|m
 operator|.
@@ -8624,13 +8515,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Unable to determine bucket number from file ID: "
-operator|+
-name|strBucketNum
-operator|+
-literal|". Using "
+literal|"Unable to determine bucket number from file ID: {}. Using "
 operator|+
 literal|"file ID as bucket number."
+argument_list|,
+name|strBucketNum
 argument_list|)
 expr_stmt|;
 return|return
@@ -8670,7 +8559,9 @@ argument_list|)
 operator|==
 literal|null
 condition|?
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 else|:
 name|m
 operator|.
@@ -8741,7 +8632,7 @@ name|s
 operator|.
 name|append
 argument_list|(
-literal|"0"
+literal|'0'
 argument_list|)
 expr_stmt|;
 block|}
@@ -9112,12 +9003,11 @@ expr_stmt|;
 comment|// create empty buckets if necessary
 if|if
 condition|(
+operator|!
 name|emptyBuckets
 operator|.
-name|size
+name|isEmpty
 argument_list|()
-operator|>
-literal|0
 condition|)
 block|{
 name|perfLogger
@@ -9166,32 +9056,19 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// move to the file destination
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"Moving tmp dir: "
-operator|+
+literal|"Moving tmp dir: {} to: {}"
+argument_list|,
 name|tmpPath
-operator|+
-literal|" to: "
-operator|+
+argument_list|,
 name|specPath
 argument_list|)
 expr_stmt|;
-block|}
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -9260,28 +9137,17 @@ block|}
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"deleting tmpPath "
-operator|+
+literal|"deleting tmpPath {}"
+argument_list|,
 name|tmpPath
 argument_list|)
 expr_stmt|;
-block|}
 name|fs
 operator|.
 name|delete
@@ -9292,28 +9158,17 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"deleting taskTmpPath "
-operator|+
+literal|"deleting taskTmpPath {}"
+argument_list|,
 name|taskTmpPath
 argument_list|)
 expr_stmt|;
-block|}
 name|fs
 operator|.
 name|delete
@@ -9500,28 +9355,17 @@ range|:
 name|paths
 control|)
 block|{
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"creating empty bucket for "
-operator|+
+literal|"creating empty bucket for {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
-block|}
 name|RecordWriter
 name|writer
 init|=
@@ -9558,8 +9402,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"created empty bucket for enforcing bucketing at "
-operator|+
+literal|"created empty bucket for enforcing bucketing at {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
@@ -9909,8 +9753,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Cannot delete empty directory "
-operator|+
+literal|"Cannot delete empty directory {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
@@ -10137,28 +9981,17 @@ name|mmDir
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"removeTempOrDuplicateFiles processing files in MM directory "
-operator|+
+literal|"removeTempOrDuplicateFiles processing files in MM directory {}"
+argument_list|,
 name|mmDir
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 operator|!
@@ -10548,28 +10381,17 @@ name|mmDir
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"removeTempOrDuplicateFiles processing files in MM directory "
-operator|+
+literal|"removeTempOrDuplicateFiles processing files in MM directory {}"
+argument_list|,
 name|mmDir
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|mmDir
 return|;
@@ -10603,16 +10425,12 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|taskIDToFile
-operator|!=
-literal|null
-operator|&&
-name|taskIDToFile
+name|MapUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|taskIDToFile
+argument_list|)
 operator|&&
 operator|(
 name|numBuckets
@@ -10878,28 +10696,17 @@ argument_list|,
 name|j
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"Creating an empty bucket file "
-operator|+
+literal|"Creating an empty bucket file {}"
+argument_list|,
 name|path2
 argument_list|)
 expr_stmt|;
-block|}
 name|result
 operator|.
 name|add
@@ -10991,31 +10798,25 @@ name|one
 argument_list|)
 condition|)
 block|{
-if|if
-condition|(
-name|Utilities
+name|Path
+name|onePath
+init|=
+name|one
 operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
+name|getPath
 argument_list|()
-condition|)
-block|{
+decl_stmt|;
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"removeTempOrDuplicateFiles deleting "
-operator|+
-name|one
-operator|.
-name|getPath
-argument_list|()
+literal|"removeTempOrDuplicateFiles deleting {}"
+argument_list|,
+name|onePath
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 operator|!
@@ -11023,10 +10824,7 @@ name|fs
 operator|.
 name|delete
 argument_list|(
-name|one
-operator|.
-name|getPath
-argument_list|()
+name|onePath
 argument_list|,
 literal|true
 argument_list|)
@@ -11038,10 +10836,7 @@ name|IOException
 argument_list|(
 literal|"Unable to delete tmp file: "
 operator|+
-name|one
-operator|.
-name|getPath
-argument_list|()
+name|onePath
 argument_list|)
 throw|;
 block|}
@@ -11086,49 +10881,40 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+name|Path
+name|filePath
+init|=
+name|file
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
 name|String
 name|taskId
 init|=
 name|getPrefixedTaskIdFromFilename
 argument_list|(
-name|file
-operator|.
-name|getPath
-argument_list|()
+name|filePath
 operator|.
 name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"removeTempOrDuplicateFiles looking at "
+literal|"removeTempOrDuplicateFiles looking at {}"
 operator|+
-name|file
-operator|.
-name|getPath
-argument_list|()
-operator|+
-literal|", taskId "
-operator|+
+literal|", taskId {}"
+argument_list|,
+name|filePath
+argument_list|,
 name|taskId
 argument_list|)
 expr_stmt|;
-block|}
 name|FileStatus
 name|otherFile
 init|=
@@ -11205,14 +10991,19 @@ comment|// "_copy_x" suffix will be identified as duplicates (change in value
 comment|// of x is wrongly identified as attempt id) and will be deleted.
 comment|// To avoid that we will ignore files with "_copy_x" suffix from duplicate
 comment|// elimination.
-if|if
-condition|(
-name|isCopyFile
-argument_list|(
+name|Path
+name|filePath
+init|=
 name|file
 operator|.
 name|getPath
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|isCopyFile
+argument_list|(
+name|filePath
 operator|.
 name|getName
 argument_list|()
@@ -11223,14 +11014,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-name|file
-operator|.
-name|getPath
-argument_list|()
-operator|+
-literal|" file identified as duplicate. This file is"
+literal|"{} file identified as duplicate. This file is"
 operator|+
 literal|" not deleted as it has copySuffix."
+argument_list|,
+name|filePath
 argument_list|)
 expr_stmt|;
 return|return
@@ -11420,11 +11208,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Unable to verify if file name "
-operator|+
+literal|"Unable to verify if file name {} has _copy_ suffix."
+argument_list|,
 name|filename
-operator|+
-literal|" has _copy_ suffix."
 argument_list|)
 expr_stmt|;
 block|}
@@ -11453,16 +11239,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Filename: "
-operator|+
+literal|"Filename: {} TaskId: {} CopySuffix: {}"
+argument_list|,
 name|filename
-operator|+
-literal|" TaskId: "
-operator|+
+argument_list|,
 name|taskId
-operator|+
-literal|" CopySuffix: "
-operator|+
+argument_list|,
 name|copyFileSuffix
 argument_list|)
 expr_stmt|;
@@ -11965,11 +11747,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"The file "
-operator|+
+literal|"The file {} does not exist."
+argument_list|,
 name|one
-operator|+
-literal|" does not exist."
 argument_list|)
 expr_stmt|;
 block|}
@@ -12014,7 +11794,9 @@ block|}
 else|else
 block|{
 return|return
-literal|""
+name|StringUtils
+operator|.
+name|EMPTY
 return|;
 block|}
 block|}
@@ -12047,14 +11829,6 @@ operator|==
 literal|null
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -12062,7 +11836,6 @@ argument_list|(
 literal|"Hive Conf not found or Session not initiated, use thread based class loader instead"
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|JavaUtils
 operator|.
@@ -12088,14 +11861,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
@@ -12104,19 +11869,10 @@ literal|"Use session specified class loader"
 argument_list|)
 expr_stmt|;
 comment|//it's normal case
-block|}
 return|return
 name|sessionCL
 return|;
 block|}
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -12124,7 +11880,6 @@ argument_list|(
 literal|"Session specified class loader not found, use thread based class loader"
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|JavaUtils
 operator|.
@@ -12278,11 +12033,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Bad URL "
-operator|+
+literal|"Bad URL {}, ignoring path"
+argument_list|,
 name|onestr
-operator|+
-literal|", ignoring path"
 argument_list|)
 expr_stmt|;
 block|}
@@ -12719,7 +12472,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"x"
+literal|'x'
 argument_list|)
 expr_stmt|;
 name|sb
@@ -12960,13 +12713,6 @@ argument_list|(
 literal|","
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|cols
-operator|!=
-literal|null
-condition|)
-block|{
 for|for
 control|(
 name|String
@@ -12977,19 +12723,11 @@ control|)
 block|{
 if|if
 condition|(
-name|col
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|col
+name|StringUtils
 operator|.
-name|trim
-argument_list|()
-operator|.
-name|equals
+name|isNotBlank
 argument_list|(
-literal|""
+name|col
 argument_list|)
 condition|)
 block|{
@@ -13000,7 +12738,6 @@ argument_list|(
 name|col
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 return|return
@@ -14047,12 +13784,10 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Deprecated configuration is used: "
-operator|+
+literal|"Deprecated configuration is used: {}. Please use {}"
+argument_list|,
 name|DEPRECATED_MAPRED_DFSCLIENT_PARALLELISM_MAX
-operator|+
-literal|". Please use "
-operator|+
+argument_list|,
 name|ConfVars
 operator|.
 name|HIVE_EXEC_INPUT_LISTING_MAX_THREADS
@@ -14310,11 +14045,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Using "
-operator|+
+literal|"Using {} threads for getContentSummary"
+argument_list|,
 name|numExecutors
-operator|+
-literal|" threads for getContentSummary"
 argument_list|)
 expr_stmt|;
 name|executor
@@ -14977,11 +14710,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cannot get size of "
-operator|+
+literal|"Cannot get size of {}. Safely ignored."
+argument_list|,
 name|pathStr
-operator|+
-literal|". Safely ignored."
 argument_list|)
 expr_stmt|;
 block|}
@@ -15188,39 +14919,44 @@ argument_list|,
 name|cs
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Cache Content Summary for "
+literal|"Cache Content Summary for {} length: {} file count: {} "
 operator|+
+literal|" directory count: {}"
+argument_list|,
 name|entry
 operator|.
 name|getKey
 argument_list|()
-operator|+
-literal|" length: "
-operator|+
+argument_list|,
 name|cs
 operator|.
 name|getLength
 argument_list|()
-operator|+
-literal|" file count: "
-operator|+
+argument_list|,
 name|cs
 operator|.
 name|getFileCount
 argument_list|()
-operator|+
-literal|" directory count: "
-operator|+
+argument_list|,
 name|cs
 operator|.
 name|getDirectoryCount
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 operator|new
@@ -15426,36 +15162,41 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Content Summary "
+literal|"Content Summary {} length: {} num files: {}"
 operator|+
+literal|" num directories: {}"
+argument_list|,
 name|dirPath
-operator|+
-literal|"length: "
-operator|+
+argument_list|,
 name|cs
 operator|.
 name|getLength
 argument_list|()
-operator|+
-literal|" num files: "
-operator|+
+argument_list|,
 name|cs
 operator|.
 name|getFileCount
 argument_list|()
-operator|+
-literal|" num directories: "
-operator|+
+argument_list|,
 name|cs
 operator|.
 name|getDirectoryCount
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 operator|(
 name|cs
@@ -15487,8 +15228,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Content Summary not cached for "
-operator|+
+literal|"Content Summary not cached for {}"
+argument_list|,
 name|dirPath
 argument_list|)
 expr_stmt|;
@@ -16075,39 +15816,26 @@ name|FILE_OP_LOGGER
 operator|.
 name|warn
 argument_list|(
-literal|"Ignoring invalid DP directory "
-operator|+
+literal|"Ignoring invalid DP directory {}"
+argument_list|,
 name|partPath
 argument_list|)
 expr_stmt|;
 continue|continue;
 block|}
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"Adding partition spec from "
-operator|+
+literal|"Adding partition spec from {}: {}"
+argument_list|,
 name|partPath
-operator|+
-literal|": "
-operator|+
+argument_list|,
 name|fullPartSpec
 argument_list|)
 expr_stmt|;
-block|}
 name|fullPartSpecs
 operator|.
 name|add
@@ -16334,7 +16062,7 @@ name|columnNames
 operator|.
 name|append
 argument_list|(
-literal|","
+literal|','
 argument_list|)
 expr_stmt|;
 block|}
@@ -16514,7 +16242,7 @@ name|columnTypes
 operator|.
 name|append
 argument_list|(
-literal|","
+literal|','
 argument_list|)
 expr_stmt|;
 block|}
@@ -17077,13 +16805,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-name|Random
-name|r
-init|=
-operator|new
-name|Random
-argument_list|()
-decl_stmt|;
 name|T
 name|result
 init|=
@@ -17127,16 +16848,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failure and retry #"
-operator|+
+literal|"Failure and retry # {}"
+argument_list|,
 name|failures
-operator|+
-literal|" with exception "
-operator|+
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -17159,7 +16875,7 @@ name|baseWindow
 argument_list|,
 name|failures
 argument_list|,
-name|r
+name|randGen
 argument_list|)
 decl_stmt|;
 try|try
@@ -17210,13 +16926,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-name|Random
-name|r
-init|=
-operator|new
-name|Random
-argument_list|()
-decl_stmt|;
 comment|// retry with # of maxRetries before throwing exception
 for|for
 control|(
@@ -17263,8 +16972,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error during JDBC connection. "
-operator|+
+literal|"Error during JDBC connection."
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -17283,7 +16992,7 @@ name|waitWindow
 argument_list|,
 name|failures
 argument_list|,
-name|r
+name|randGen
 argument_list|)
 decl_stmt|;
 try|try
@@ -17337,13 +17046,6 @@ parameter_list|)
 throws|throws
 name|SQLException
 block|{
-name|Random
-name|r
-init|=
-operator|new
-name|Random
-argument_list|()
-decl_stmt|;
 comment|// retry with # of maxRetries before throwing exception
 for|for
 control|(
@@ -17385,12 +17087,10 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error preparing JDBC Statement "
-operator|+
+literal|"Error preparing JDBC Statement {}"
+argument_list|,
 name|stmt
-operator|+
-literal|" :"
-operator|+
+argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
@@ -17409,7 +17109,7 @@ name|waitWindow
 argument_list|,
 name|failures
 argument_list|,
-name|r
+name|randGen
 argument_list|)
 decl_stmt|;
 try|try
@@ -17471,8 +17171,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Invalid query timeout "
-operator|+
+literal|"Invalid query timeout {}"
+argument_list|,
 name|timeout
 argument_list|)
 expr_stmt|;
@@ -17960,16 +17660,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"BytesPerReducer="
-operator|+
+literal|"BytesPerReducer={} maxReducers={} estimated totalInputFileSize={}"
+argument_list|,
 name|bytesPerReducer
-operator|+
-literal|" maxReducers="
-operator|+
+argument_list|,
 name|maxReducers
-operator|+
-literal|" estimated totalInputFileSize="
-operator|+
+argument_list|,
 name|totalInputFileSize
 argument_list|)
 expr_stmt|;
@@ -17980,16 +17676,12 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"BytesPerReducer="
-operator|+
+literal|"BytesPerReducer={} maxReducers={} totalInputFileSize={}"
+argument_list|,
 name|bytesPerReducer
-operator|+
-literal|" maxReducers="
-operator|+
+argument_list|,
 name|maxReducers
-operator|+
-literal|" totalInputFileSize="
-operator|+
+argument_list|,
 name|totalInputFileSize
 argument_list|)
 expr_stmt|;
@@ -18215,20 +17907,15 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|work
-operator|.
-name|getNameToSplitSample
-argument_list|()
-operator|==
-literal|null
-operator|||
-name|work
-operator|.
-name|getNameToSplitSample
-argument_list|()
+name|MapUtils
 operator|.
 name|isEmpty
+argument_list|(
+name|work
+operator|.
+name|getNameToSplitSample
 argument_list|()
+argument_list|)
 condition|)
 block|{
 comment|// If percentage block sampling wasn't used, we don't need to do any estimation
@@ -18296,20 +17983,15 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|work
-operator|.
-name|getNameToSplitSample
-argument_list|()
-operator|==
-literal|null
-operator|||
-name|work
-operator|.
-name|getNameToSplitSample
-argument_list|()
+name|MapUtils
 operator|.
 name|isEmpty
+argument_list|(
+name|work
+operator|.
+name|getNameToSplitSample
 argument_list|()
+argument_list|)
 condition|)
 block|{
 comment|// If percentage block sampling wasn't used, we don't need to do any estimation
@@ -18602,8 +18284,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing alias "
-operator|+
+literal|"Processing alias {}"
+argument_list|,
 name|alias
 argument_list|)
 expr_stmt|;
@@ -18658,11 +18340,6 @@ name|boolean
 name|hasLogged
 init|=
 literal|false
-decl_stmt|;
-name|Path
-name|path
-init|=
-literal|null
 decl_stmt|;
 for|for
 control|(
@@ -18752,8 +18429,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Found a null path for alias "
-operator|+
+literal|"Found a null path for alias {}"
+argument_list|,
 name|alias
 argument_list|)
 expr_stmt|;
@@ -18787,25 +18464,15 @@ argument_list|(
 name|file
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Adding input file "
-operator|+
+literal|"Adding input file {}"
+argument_list|,
 name|file
 argument_list|)
 expr_stmt|;
-block|}
-elseif|else
 if|if
 condition|(
 operator|!
@@ -18820,8 +18487,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Adding "
-operator|+
+literal|"Adding {} inputs; the first input is {}"
+argument_list|,
 name|work
 operator|.
 name|getPathToAliases
@@ -18829,9 +18496,7 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-operator|+
-literal|" inputs; the first input is "
-operator|+
+argument_list|,
 name|file
 argument_list|)
 expr_stmt|;
@@ -19727,34 +19392,19 @@ argument_list|,
 name|oneRow
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Changed input file "
-operator|+
+literal|"Changed input file {} to empty file {} ({})"
+argument_list|,
 name|strPath
-operator|+
-literal|" to empty file "
-operator|+
+argument_list|,
 name|newPath
-operator|+
-literal|" ("
-operator|+
+argument_list|,
 name|oneRow
-operator|+
-literal|")"
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|newPath
 return|;
@@ -19931,28 +19581,17 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Changed input file for alias "
-operator|+
+literal|"Changed input file for alias {} to newPath"
+argument_list|,
 name|alias
-operator|+
-literal|" to "
-operator|+
+argument_list|,
 name|newPath
 argument_list|)
 expr_stmt|;
-block|}
 comment|// update the work
 name|LinkedHashMap
 argument_list|<
@@ -19981,7 +19620,9 @@ name|ArrayList
 argument_list|<
 name|String
 argument_list|>
-argument_list|()
+argument_list|(
+literal|1
+argument_list|)
 decl_stmt|;
 name|newList
 operator|.
@@ -20035,6 +19676,19 @@ return|return
 name|newPath
 return|;
 block|}
+specifier|private
+specifier|static
+specifier|final
+name|Path
+index|[]
+name|EMPTY_PATH
+init|=
+operator|new
+name|Path
+index|[
+literal|0
+index|]
+decl_stmt|;
 comment|/**    * setInputPaths add all the paths in the provided list to the Job conf object    * as input paths for the job.    *    * @param job    * @param pathsToAdd    */
 specifier|public
 specifier|static
@@ -20071,11 +19725,7 @@ condition|)
 block|{
 name|addedPaths
 operator|=
-operator|new
-name|Path
-index|[
-literal|0
-index|]
+name|EMPTY_PATH
 expr_stmt|;
 block|}
 name|Path
@@ -20313,9 +19963,12 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
+name|MapUtils
+operator|.
+name|isNotEmpty
+argument_list|(
 name|pa
-operator|!=
-literal|null
+argument_list|)
 condition|)
 block|{
 comment|// common case: 1 table scan per map-work
@@ -20663,16 +20316,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Create dirs "
-operator|+
+literal|"Create dirs {} with permission {} recursive {}"
+argument_list|,
 name|mkdirPath
-operator|+
-literal|" with permission "
-operator|+
+argument_list|,
 name|fsPermission
-operator|+
-literal|" recursive "
-operator|+
+argument_list|,
 name|recursive
 argument_list|)
 expr_stmt|;
@@ -22158,14 +21807,14 @@ name|classNames
 operator|==
 literal|null
 condition|)
+block|{
 return|return
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-literal|0
-argument_list|)
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
 return|;
+block|}
 name|Collection
 argument_list|<
 name|Class
@@ -22199,16 +21848,16 @@ control|)
 block|{
 if|if
 condition|(
-name|className
-operator|==
-literal|null
-operator|||
-name|className
+name|StringUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|className
+argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 try|try
 block|{
 name|classList
@@ -22234,17 +21883,13 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Cannot create class "
-operator|+
+literal|"Cannot create class {} for {} checks"
+argument_list|,
 name|className
-operator|+
-literal|" for "
-operator|+
+argument_list|,
 name|confVar
 operator|.
 name|varname
-operator|+
-literal|" checks"
 argument_list|)
 expr_stmt|;
 block|}
@@ -22519,7 +22164,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|"."
+literal|'.'
 operator|+
 name|field
 operator|.
@@ -22566,7 +22211,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|"."
+literal|'.'
 operator|+
 name|field
 operator|.
@@ -22599,228 +22244,6 @@ argument_list|)
 decl_stmt|;
 return|return
 name|rowObjectInspector
-return|;
-block|}
-specifier|private
-specifier|static
-name|String
-index|[]
-name|getReadColumnTypes
-parameter_list|(
-specifier|final
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|readColumnNames
-parameter_list|,
-specifier|final
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|allColumnNames
-parameter_list|,
-specifier|final
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|allColumnTypes
-parameter_list|)
-block|{
-if|if
-condition|(
-name|readColumnNames
-operator|==
-literal|null
-operator|||
-name|allColumnNames
-operator|==
-literal|null
-operator|||
-name|allColumnTypes
-operator|==
-literal|null
-operator|||
-name|readColumnNames
-operator|.
-name|isEmpty
-argument_list|()
-operator|||
-name|allColumnNames
-operator|.
-name|isEmpty
-argument_list|()
-operator|||
-name|allColumnTypes
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-return|return
-literal|null
-return|;
-block|}
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|columnNameToType
-init|=
-operator|new
-name|HashMap
-argument_list|<>
-argument_list|()
-decl_stmt|;
-name|List
-argument_list|<
-name|TypeInfo
-argument_list|>
-name|types
-init|=
-name|TypeInfoUtils
-operator|.
-name|typeInfosFromTypeNames
-argument_list|(
-name|allColumnTypes
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|allColumnNames
-operator|.
-name|size
-argument_list|()
-operator|!=
-name|types
-operator|.
-name|size
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Column names count does not match column types count."
-operator|+
-literal|" ColumnNames: {} [{}] ColumnTypes: {} [{}]"
-argument_list|,
-name|allColumnNames
-argument_list|,
-name|allColumnNames
-operator|.
-name|size
-argument_list|()
-argument_list|,
-name|allColumnTypes
-argument_list|,
-name|types
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-return|return
-literal|null
-return|;
-block|}
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|allColumnNames
-operator|.
-name|size
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|columnNameToType
-operator|.
-name|put
-argument_list|(
-name|allColumnNames
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-argument_list|,
-name|types
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-name|String
-index|[]
-name|result
-init|=
-operator|new
-name|String
-index|[
-name|readColumnNames
-operator|.
-name|size
-argument_list|()
-index|]
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|readColumnNames
-operator|.
-name|size
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|result
-index|[
-name|i
-index|]
-operator|=
-name|columnNameToType
-operator|.
-name|get
-argument_list|(
-name|readColumnNames
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|result
 return|;
 block|}
 specifier|public
@@ -22951,8 +22374,8 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to delete "
-operator|+
+literal|"Failed to delete {}"
+argument_list|,
 name|path
 argument_list|,
 name|ex
@@ -23112,14 +22535,14 @@ block|{
 try|try
 block|{
 return|return
+literal|"s3a"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
 name|fs
 operator|.
 name|getScheme
 argument_list|()
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-literal|"s3a"
 argument_list|)
 return|;
 block|}
@@ -23306,16 +22729,21 @@ name|next
 argument_list|()
 decl_stmt|;
 name|Path
+name|lfsPath
+init|=
+name|lfs
+operator|.
+name|getPath
+argument_list|()
+decl_stmt|;
+name|Path
 name|dirPath
 init|=
 name|Path
 operator|.
 name|getPathWithoutSchemeAndAuthority
 argument_list|(
-name|lfs
-operator|.
-name|getPath
-argument_list|()
+name|lfsPath
 argument_list|)
 decl_stmt|;
 name|String
@@ -23343,10 +22771,7 @@ name|IOException
 argument_list|(
 literal|"Path "
 operator|+
-name|lfs
-operator|.
-name|getPath
-argument_list|()
+name|lfsPath
 operator|+
 literal|" is not under "
 operator|+
@@ -23373,35 +22798,19 @@ name|length
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"Looking at "
-operator|+
+literal|"Looking at {} from {}"
+argument_list|,
 name|subDir
-operator|+
-literal|" from "
-operator|+
-name|lfs
-operator|.
-name|getPath
-argument_list|()
+argument_list|,
+name|lfsPath
 argument_list|)
 expr_stmt|;
-block|}
 comment|// If sorted, we'll skip a bunch of files.
 if|if
 condition|(
@@ -23473,24 +22882,15 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Expected level of nesting ("
+literal|"Expected level of nesting ({}) is not "
 operator|+
+literal|" present in {} (from {})"
+argument_list|,
 name|skipLevels
-operator|+
-literal|") is not "
-operator|+
-literal|" present in "
-operator|+
+argument_list|,
 name|subDir
-operator|+
-literal|" (from "
-operator|+
-name|lfs
-operator|.
-name|getPath
-argument_list|()
-operator|+
-literal|")"
+argument_list|,
+name|lfsPath
 argument_list|)
 expr_stmt|;
 break|break;
@@ -23534,28 +22934,19 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Expected level of nesting ("
+literal|"Expected level of nesting ({}) is not present in"
 operator|+
+literal|" {} (from {})"
+argument_list|,
 operator|(
 name|skipLevels
 operator|+
 literal|1
 operator|)
-operator|+
-literal|") is not "
-operator|+
-literal|" present in "
-operator|+
+argument_list|,
 name|subDir
-operator|+
-literal|" (from "
-operator|+
-name|lfs
-operator|.
-name|getPath
-argument_list|()
-operator|+
-literal|")"
+argument_list|,
+name|lfsPath
 argument_list|)
 expr_stmt|;
 continue|continue;
@@ -23692,7 +23083,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|"*"
+literal|'*'
 argument_list|)
 expr_stmt|;
 block|}
@@ -23848,11 +23239,9 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Deleting "
-operator|+
+literal|"Deleting {} on failure"
+argument_list|,
 name|path
-operator|+
-literal|" on failure"
 argument_list|)
 expr_stmt|;
 name|tryDelete
@@ -23870,11 +23259,9 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Deleting "
-operator|+
+literal|"Deleting {} on failure"
+argument_list|,
 name|manifestDir
-operator|+
-literal|" on failure"
 argument_list|)
 expr_stmt|;
 name|fs
@@ -23921,12 +23308,16 @@ name|HiveException
 block|{
 if|if
 condition|(
-name|commitPaths
+name|CollectionUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|commitPaths
+argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 comment|// We assume one FSOP per task (per specPath), so we create it in specPath.
 name|Path
 name|manifestPath
@@ -23960,12 +23351,10 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Writing manifest to "
-operator|+
+literal|"Writing manifest to {} with {}"
+argument_list|,
 name|manifestPath
-operator|+
-literal|" with "
-operator|+
+argument_list|,
 name|commitPaths
 argument_list|)
 expr_stmt|;
@@ -24284,15 +23673,11 @@ name|FILE_OP_LOGGER
 operator|.
 name|debug
 argument_list|(
-literal|"Looking for manifests in: "
-operator|+
+literal|"Looking for manifests in: {} ({})"
+argument_list|,
 name|manifestDir
-operator|+
-literal|" ("
-operator|+
+argument_list|,
 name|txnId
-operator|+
-literal|")"
 argument_list|)
 expr_stmt|;
 name|List
@@ -24369,8 +23754,8 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Reading manifest "
-operator|+
+literal|"Reading manifest {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
@@ -24407,8 +23792,8 @@ name|FILE_OP_LOGGER
 operator|.
 name|debug
 argument_list|(
-literal|"Looking for files in: "
-operator|+
+literal|"Looking for files in: {}"
+argument_list|,
 name|specPath
 argument_list|)
 expr_stmt|;
@@ -24448,8 +23833,8 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Creating table directory for CTAS with no output at "
-operator|+
+literal|"Creating table directory for CTAS with no output at {}"
+argument_list|,
 name|specPath
 argument_list|)
 expr_stmt|;
@@ -24514,28 +23899,17 @@ range|:
 name|files
 control|)
 block|{
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"Looking at path: "
-operator|+
+literal|"Looking at path: {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
-block|}
 name|mmDirectories
 operator|.
 name|add
@@ -24645,8 +24019,8 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Deleting manifest directory "
-operator|+
+literal|"Deleting manifest directory {}"
+argument_list|,
 name|manifestDir
 argument_list|)
 expr_stmt|;
@@ -24702,8 +24076,8 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Deleting manifest directory "
-operator|+
+literal|"Deleting manifest directory {}"
+argument_list|,
 name|manifestDir
 argument_list|)
 expr_stmt|;
@@ -24865,12 +24239,11 @@ decl_stmt|;
 comment|// create empty buckets if necessary
 if|if
 condition|(
+operator|!
 name|emptyBuckets
 operator|.
-name|size
+name|isEmpty
 argument_list|()
-operator|>
-literal|0
 condition|)
 block|{
 assert|assert
@@ -25080,35 +24453,19 @@ expr_stmt|;
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"FSOP for "
-operator|+
+literal|"FSOP for {} is ignoring the other side of the union {}"
+argument_list|,
 name|unionSuffix
-operator|+
-literal|" is ignoring the other side of the union "
-operator|+
+argument_list|,
 name|childPath
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 block|}
@@ -25134,11 +24491,9 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Deleting "
-operator|+
+literal|"Deleting {} that was not committed"
+argument_list|,
 name|childPath
-operator|+
-literal|" that was not committed"
 argument_list|)
 expr_stmt|;
 comment|// We should actually succeed here - if we fail, don't commit the query.
@@ -25190,28 +24545,17 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"Looking for valid MM paths under "
-operator|+
+literal|"Looking for valid MM paths under {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
-block|}
 comment|// NULL means this directory is entirely valid.
 name|List
 argument_list|<
@@ -25344,8 +24688,8 @@ name|FILE_OP_LOGGER
 operator|.
 name|debug
 argument_list|(
-literal|"Skipping path "
-operator|+
+literal|"Skipping path {}"
+argument_list|,
 name|childPath
 argument_list|)
 expr_stmt|;
