@@ -7381,7 +7381,12 @@ name|queryParallelism
 argument_list|,
 name|resourceFraction
 argument_list|,
-literal|null
+operator|new
+name|ArrayList
+argument_list|<
+name|Trigger
+argument_list|>
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
