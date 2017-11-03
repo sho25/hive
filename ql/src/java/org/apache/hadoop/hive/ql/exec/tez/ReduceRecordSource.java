@@ -2004,6 +2004,9 @@ name|reducer
 operator|instanceof
 name|CommonMergeJoinOperator
 operator|)
+operator|&&
+name|hasNext
+argument_list|()
 condition|)
 block|{
 name|passDownKey
