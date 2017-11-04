@@ -1797,22 +1797,6 @@ name|HIVE_STATS_FETCH_COLUMN_STATS
 argument_list|)
 decl_stmt|;
 name|boolean
-name|fetchPartStats
-init|=
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_STATS_FETCH_PARTITION_STATS
-argument_list|)
-decl_stmt|;
-name|boolean
 name|testMode
 init|=
 name|HiveConf
@@ -1846,8 +1830,6 @@ argument_list|,
 name|referencedColumns
 argument_list|,
 name|fetchColStats
-argument_list|,
-name|fetchPartStats
 argument_list|,
 name|testMode
 argument_list|)
@@ -2649,9 +2631,6 @@ name|referencedColumns
 parameter_list|,
 name|boolean
 name|fetchColStats
-parameter_list|,
-name|boolean
-name|fetchPartStats
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2674,8 +2653,6 @@ argument_list|,
 name|referencedColumns
 argument_list|,
 name|fetchColStats
-argument_list|,
-name|fetchPartStats
 argument_list|,
 literal|false
 argument_list|)
@@ -2718,9 +2695,6 @@ name|referencedColumns
 parameter_list|,
 name|boolean
 name|fetchColStats
-parameter_list|,
-name|boolean
-name|fetchPartStats
 parameter_list|,
 name|boolean
 name|failIfCacheMiss
@@ -2997,11 +2971,6 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|fetchPartStats
-condition|)
-block|{
 name|rowCounts
 operator|=
 name|getBasicStatForPartitions
@@ -3078,7 +3047,6 @@ argument_list|(
 name|dataSizes
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|// if data size still could not be determined, then fall back to filesytem to get file
 comment|// sizes
@@ -6147,7 +6115,9 @@ name|hasNull
 operator|&&
 name|hasStats
 condition|)
+block|{
 break|break;
+block|}
 block|}
 block|}
 name|State

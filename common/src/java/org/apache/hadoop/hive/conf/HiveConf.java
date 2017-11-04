@@ -8016,27 +8016,6 @@ operator|+
 literal|"entries/values can be specified using this config."
 argument_list|)
 block|,
-comment|// statistics annotation fetches stats for each partition, which can be expensive. turning
-comment|// this off will result in basic sizes being fetched from namenode instead
-name|HIVE_STATS_FETCH_PARTITION_STATS
-argument_list|(
-literal|"hive.stats.fetch.partition.stats"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Annotation of operator tree with statistics information requires partition level basic\n"
-operator|+
-literal|"statistics like number of rows, data size and file size. Partition statistics are fetched from\n"
-operator|+
-literal|"metastore. Fetching partition statistics for each needed partition can be expensive when the\n"
-operator|+
-literal|"number of partitions is high. This flag can be used to disable fetching of partition statistics\n"
-operator|+
-literal|"from metastore. When this flag is disabled, Hive will make calls to filesystem to get file sizes\n"
-operator|+
-literal|"and will estimate the number of rows from row schema."
-argument_list|)
-block|,
 comment|// statistics annotation fetches column statistics for all required columns which can
 comment|// be very expensive sometimes
 name|HIVE_STATS_FETCH_COLUMN_STATS

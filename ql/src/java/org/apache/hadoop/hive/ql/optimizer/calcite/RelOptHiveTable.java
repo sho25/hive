@@ -3386,8 +3386,6 @@ argument_list|,
 name|nonPartColNamesThatRqrStats
 argument_list|,
 literal|true
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|rowCount
@@ -3787,8 +3785,6 @@ argument_list|,
 name|colStatsCached
 argument_list|,
 name|nonPartColNamesThatRqrStats
-argument_list|,
-literal|true
 argument_list|,
 literal|true
 argument_list|)
