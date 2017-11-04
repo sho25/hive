@@ -640,11 +640,6 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|cleanDb
@@ -720,11 +715,13 @@ name|txnMgr
 operator|!=
 literal|null
 condition|)
+block|{
 name|txnMgr
 operator|.
 name|closeTxnManager
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 comment|/**    * HIVE-16688    */
 annotation|@

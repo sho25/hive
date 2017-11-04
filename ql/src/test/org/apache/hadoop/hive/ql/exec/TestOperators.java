@@ -3014,11 +3014,6 @@ operator|new
 name|Driver
 argument_list|()
 decl_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|CommandProcessorResponse
 name|response
 init|=
@@ -3058,11 +3053,6 @@ literal|"load data local inpath '../data/files/employee.dat' "
 operator|+
 literal|"overwrite into table fetchOp partition (state='CA')"
 expr_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|response
 operator|=
 name|driver
@@ -3088,11 +3078,6 @@ literal|"load data local inpath '../data/files/employee2.dat' "
 operator|+
 literal|"overwrite into table fetchOp partition (state='OR')"
 expr_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|response
 operator|=
 name|driver
@@ -3115,11 +3100,6 @@ expr_stmt|;
 name|cmd
 operator|=
 literal|"select * from fetchOp"
-expr_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
 expr_stmt|;
 name|driver
 operator|.

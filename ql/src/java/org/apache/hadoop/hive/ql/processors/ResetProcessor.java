@@ -246,13 +246,6 @@ name|ResetProcessor
 implements|implements
 name|CommandProcessor
 block|{
-annotation|@
-name|Override
-specifier|public
-name|void
-name|init
-parameter_list|()
-block|{   }
 specifier|private
 specifier|final
 specifier|static
@@ -408,7 +401,9 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|DEFAULT_ARG
@@ -552,7 +547,9 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 name|HiveConf
 name|conf
 init|=
@@ -618,7 +615,9 @@ argument_list|(
 name|varname
 argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 name|setSessionVariableFromConf
 argument_list|(
 name|ss
@@ -1012,6 +1011,7 @@ name|confVars
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -1021,6 +1021,7 @@ operator|+
 literal|" not found"
 argument_list|)
 throw|;
+block|}
 return|return
 name|confVars
 return|;

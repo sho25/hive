@@ -540,15 +540,6 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|init
-parameter_list|()
-block|{
-comment|//no init needed
-block|}
 comment|/**    * User supplies dynamic code in this format:    * COMPILE ` some code here ` AS groovy NAMED something.groovy;    * CompileProcessor will compile and package this code into a jar. The jar    * will be added to the session state via the session state's    * ADD RESOURCE command.    * @param command a String to be compiled    * @return CommandProcessorResponse with 0 for success and 1 for failure    */
 annotation|@
 name|Override

@@ -4810,7 +4810,9 @@ if|if
 condition|(
 name|partial
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|checkHadoopVersionExclude
@@ -6819,11 +6821,6 @@ name|Driver
 argument_list|(
 name|conf
 argument_list|)
-expr_stmt|;
-name|drv
-operator|.
-name|init
-argument_list|()
 expr_stmt|;
 name|pd
 operator|=
@@ -10497,6 +10494,7 @@ name|result
 operator|!=
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -10510,6 +10508,7 @@ operator|+
 name|outFileName
 argument_list|)
 throw|;
+block|}
 block|}
 end_function
 
@@ -10764,6 +10763,7 @@ name|result
 operator|!=
 literal|0
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -10773,6 +10773,7 @@ operator|+
 name|in
 argument_list|)
 throw|;
+block|}
 block|}
 end_function
 
@@ -11181,11 +11182,6 @@ parameter_list|()
 throws|throws
 name|SemanticException
 block|{
-name|drv
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|pd
 operator|=
 operator|new
@@ -12554,7 +12550,9 @@ name|cachedQvFileList
 operator|!=
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 comment|// Not thread-safe.
 name|System
 operator|.
@@ -12617,8 +12615,10 @@ name|cachedQvFileList
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
 comment|// no files at all
+block|}
 name|Arrays
 operator|.
 name|sort

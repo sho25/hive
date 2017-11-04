@@ -1027,13 +1027,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|init
-parameter_list|()
-block|{   }
 specifier|public
 name|CommandProcessorResponse
 name|executeSetVariable

@@ -707,11 +707,6 @@ name|resetQueryState
 argument_list|()
 expr_stmt|;
 block|}
-name|drv
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 return|return
 name|drv
 return|;

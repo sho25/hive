@@ -179,11 +179,6 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 block|}
 annotation|@
 name|After

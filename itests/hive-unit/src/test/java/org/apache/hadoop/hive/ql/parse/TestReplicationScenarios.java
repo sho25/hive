@@ -25634,11 +25634,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|driverMirror
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|run
 argument_list|(
 literal|"REPL LOAD "

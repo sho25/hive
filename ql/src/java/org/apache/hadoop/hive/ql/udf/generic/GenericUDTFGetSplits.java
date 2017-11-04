@@ -2250,11 +2250,6 @@ argument_list|,
 name|txnManager
 argument_list|)
 decl_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 name|DriverCleanup
 name|driverCleanup
 init|=

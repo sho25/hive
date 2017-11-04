@@ -431,6 +431,8 @@ name|SimpleQueryRedactor
 extends|extends
 name|Redactor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|String
 name|redactQuery
@@ -491,11 +493,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|driver
-operator|.
-name|init
-argument_list|()
-expr_stmt|;
 return|return
 name|driver
 return|;
