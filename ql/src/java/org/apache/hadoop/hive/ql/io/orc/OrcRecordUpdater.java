@@ -521,7 +521,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|public
 specifier|static
 specifier|final
 name|String
@@ -529,7 +528,7 @@ name|ACID_KEY_INDEX_NAME
 init|=
 literal|"hive.acid.key.index"
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -537,7 +536,7 @@ name|ACID_FORMAT
 init|=
 literal|"_orc_acid_version"
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|int
@@ -566,6 +565,7 @@ name|DELETE_OPERATION
 init|=
 literal|2
 decl_stmt|;
+comment|//column indexes of corresponding data in storage layer
 specifier|final
 specifier|static
 name|int
@@ -608,6 +608,7 @@ name|ROW
 init|=
 literal|5
 decl_stmt|;
+comment|/**    * total number of fields (above)    */
 specifier|final
 specifier|static
 name|int

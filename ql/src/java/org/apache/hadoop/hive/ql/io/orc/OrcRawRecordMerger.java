@@ -2110,6 +2110,7 @@ name|bucketId
 condition|)
 block|{
 continue|continue;
+comment|//todo: HIVE-16952
 block|}
 if|if
 condition|(

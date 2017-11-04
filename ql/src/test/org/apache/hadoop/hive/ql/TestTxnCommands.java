@@ -492,7 +492,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  *   * Tests here are for multi-statement transactions (WIP) and those that don't need to  * run with Acid 2.0 (see subclasses of TestTxnCommands2)  */
+comment|/**  * The LockManager is not ready, but for no-concurrency straight-line path we can  * test AC=true, and AC=false with commit/rollback/exception and test resulting data.  *  * Can also test, calling commit in AC=true mode, etc, toggling AC...  *  * Tests here are for multi-statement transactions (WIP) and others  * Mostly uses bucketed tables  */
 end_comment
 
 begin_class

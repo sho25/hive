@@ -145,24 +145,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|hive_metastoreConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|io
@@ -1359,6 +1341,11 @@ operator|.
 name|isSplitUpdate
 argument_list|()
 decl_stmt|;
+assert|assert
+name|isSplitUpdate
+operator|:
+literal|"should be true in Hive 3.0"
+assert|;
 if|if
 condition|(
 name|isOriginal
