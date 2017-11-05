@@ -256,28 +256,17 @@ operator|.
 name|getAndIncrement
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"addMasterKey: s = "
-operator|+
+literal|"addMasterKey: s = {}, keySeq = {}"
+argument_list|,
 name|s
-operator|+
-literal|", keySeq = "
-operator|+
+argument_list|,
 name|keySeq
 argument_list|)
 expr_stmt|;
-block|}
 name|masterKeys
 operator|.
 name|put
@@ -304,28 +293,17 @@ name|String
 name|s
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"updateMasterKey: s = "
-operator|+
+literal|"updateMasterKey: s = {}, keySeq = {}"
+argument_list|,
 name|s
-operator|+
-literal|", keySeq = "
-operator|+
+argument_list|,
 name|keySeq
 argument_list|)
 expr_stmt|;
-block|}
 name|masterKeys
 operator|.
 name|put
@@ -346,24 +324,15 @@ name|int
 name|keySeq
 parameter_list|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"removeMasterKey: keySeq = "
-operator|+
+literal|"removeMasterKey: keySeq = {}"
+argument_list|,
 name|keySeq
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|masterKeys
 operator|.
@@ -424,24 +393,14 @@ argument_list|,
 name|token
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"addToken: tokenIdentifier = "
-operator|+
+literal|"addToken: tokenIdentifier = {}, added = {}"
+argument_list|,
 name|tokenIdentifier
-operator|+
-literal|", added = "
-operator|+
+argument_list|,
 operator|(
 name|tokenInfo
 operator|==
@@ -449,7 +408,6 @@ literal|null
 operator|)
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 operator|(
 name|tokenInfo
@@ -478,24 +436,14 @@ argument_list|(
 name|tokenIdentifier
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"removeToken: tokenIdentifier = "
-operator|+
+literal|"removeToken: tokenIdentifier = {}, removed = "
+argument_list|,
 name|tokenIdentifier
-operator|+
-literal|", removed = "
-operator|+
+argument_list|,
 operator|(
 name|tokenInfo
 operator|!=
@@ -503,7 +451,6 @@ literal|null
 operator|)
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|tokenInfo
 operator|!=
@@ -530,28 +477,17 @@ argument_list|(
 name|tokenIdentifier
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"getToken: tokenIdentifier = "
-operator|+
+literal|"getToken: tokenIdentifier = {}, result = {}"
+argument_list|,
 name|tokenIdentifier
-operator|+
-literal|", result = "
-operator|+
+argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|result
 return|;
@@ -566,43 +502,16 @@ argument_list|>
 name|getAllDelegationTokenIdentifiers
 parameter_list|()
 block|{
-name|List
-argument_list|<
-name|DelegationTokenIdentifier
-argument_list|>
-name|result
-init|=
+return|return
 operator|new
 name|ArrayList
 argument_list|<>
 argument_list|(
 name|tokens
 operator|.
-name|size
-argument_list|()
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|DelegationTokenIdentifier
-name|id
-range|:
-name|tokens
-operator|.
 name|keySet
 argument_list|()
-control|)
-block|{
-name|result
-operator|.
-name|add
-argument_list|(
-name|id
 argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|result
 return|;
 block|}
 annotation|@
