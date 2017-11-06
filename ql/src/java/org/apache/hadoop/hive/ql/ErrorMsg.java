@@ -2411,17 +2411,6 @@ operator|+
 literal|"is controlled by hive.exec.max.dynamic.partitions and hive.exec.max.dynamic.partitions.pernode. "
 argument_list|)
 block|,
-name|PARTITION_SCAN_LIMIT_EXCEEDED
-argument_list|(
-literal|20005
-argument_list|,
-literal|"Number of partitions scanned (={0}) on table {1} exceeds limit"
-operator|+
-literal|" (={2}). This is controlled by hive.limit.query.max.table.partition."
-argument_list|,
-literal|true
-argument_list|)
-block|,
 comment|/**    * {1} is the transaction id;    * use {@link org.apache.hadoop.hive.common.JavaUtils#txnIdToString(long)} to format    */
 name|OP_NOT_ALLOWED_IN_IMPLICIT_TXN
 argument_list|(

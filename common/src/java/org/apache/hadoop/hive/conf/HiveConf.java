@@ -6831,26 +6831,6 @@ argument_list|,
 literal|"The fraction of available memory to be used for buffering rows in Reducesink operator for limit pushdown optimization."
 argument_list|)
 block|,
-annotation|@
-name|Deprecated
-name|HIVELIMITTABLESCANPARTITION
-argument_list|(
-literal|"hive.limit.query.max.table.partition"
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|"This controls how many partitions can be scanned for each partitioned table.\n"
-operator|+
-literal|"The default value \"-1\" means no limit. (DEPRECATED: Please use "
-operator|+
-name|ConfVars
-operator|.
-name|METASTORE_LIMIT_PARTITION_REQUEST
-operator|+
-literal|" in the metastore instead.)"
-argument_list|)
-block|,
 name|HIVECONVERTJOINMAXENTRIESHASHTABLE
 argument_list|(
 literal|"hive.auto.convert.join.hashtable.max.entries"
