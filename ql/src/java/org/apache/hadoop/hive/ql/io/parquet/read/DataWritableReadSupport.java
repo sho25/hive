@@ -2248,7 +2248,7 @@ block|}
 else|else
 block|{
 return|return
-name|fileSchema
+name|tableSchema
 return|;
 block|}
 block|}
