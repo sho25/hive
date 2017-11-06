@@ -1404,6 +1404,21 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
+comment|// will be invoked anyway in TezTask. Doing it early to initialize triggers for non-pool tez session.
+name|tezSessionPoolManager
+operator|=
+name|TezSessionPoolManager
+operator|.
+name|getInstance
+argument_list|()
+expr_stmt|;
+name|tezSessionPoolManager
+operator|.
+name|initTriggers
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|hiveConf
@@ -1416,13 +1431,6 @@ name|HIVE_SERVER2_TEZ_INITIALIZE_DEFAULT_SESSIONS
 argument_list|)
 condition|)
 block|{
-name|tezSessionPoolManager
-operator|=
-name|TezSessionPoolManager
-operator|.
-name|getInstance
-argument_list|()
-expr_stmt|;
 name|tezSessionPoolManager
 operator|.
 name|setupPool
