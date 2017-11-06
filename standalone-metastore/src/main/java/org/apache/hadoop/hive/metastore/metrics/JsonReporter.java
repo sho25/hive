@@ -897,6 +897,7 @@ argument_list|)
 expr_stmt|;
 return|return;
 block|}
+comment|// Atomically move temp file to the destination file
 try|try
 block|{
 name|Files
@@ -909,13 +910,13 @@ name|path
 argument_list|,
 name|StandardCopyOption
 operator|.
-name|REPLACE_EXISTING
+name|ATOMIC_MOVE
 argument_list|)
 expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|IOException
+name|Exception
 name|e
 parameter_list|)
 block|{
