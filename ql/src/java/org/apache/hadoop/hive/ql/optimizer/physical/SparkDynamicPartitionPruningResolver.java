@@ -697,7 +697,7 @@ name|remove
 argument_list|(
 name|pruningSinkDesc
 operator|.
-name|getPartKey
+name|getTargetPartKey
 argument_list|()
 argument_list|)
 expr_stmt|;
