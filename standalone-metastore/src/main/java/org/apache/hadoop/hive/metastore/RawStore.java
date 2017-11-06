@@ -19,6 +19,24 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|WMFullResourcePlan
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|lang
@@ -3209,7 +3227,7 @@ parameter_list|()
 throws|throws
 name|MetaException
 function_decl|;
-name|void
+name|WMFullResourcePlan
 name|alterResourcePlan
 parameter_list|(
 name|String
@@ -3217,6 +3235,9 @@ name|name
 parameter_list|,
 name|WMResourcePlan
 name|resourcePlan
+parameter_list|,
+name|boolean
+name|canActivateDisabled
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
@@ -3225,6 +3246,12 @@ name|NoSuchObjectException
 throws|,
 name|InvalidOperationException
 throws|,
+name|MetaException
+function_decl|;
+name|WMFullResourcePlan
+name|getActiveResourcePlan
+parameter_list|()
+throws|throws
 name|MetaException
 function_decl|;
 name|boolean

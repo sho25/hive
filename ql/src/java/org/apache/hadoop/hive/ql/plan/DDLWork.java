@@ -150,6 +150,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|// TODO: this can probably be replaced with much less code via dynamic dispatch and/or templates.
 specifier|private
 name|PreInsertTableDesc
 name|preInsertTableDesc
