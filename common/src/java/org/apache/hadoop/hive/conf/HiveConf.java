@@ -14681,19 +14681,6 @@ argument_list|,
 literal|"Maximum number of threads that Hive uses to list file information from file systems (recommended> 1 for blobstore)."
 argument_list|)
 block|,
-name|HIVE_EXEC_MOVE_FILES_FROM_SOURCE_DIR
-argument_list|(
-literal|"hive.exec.move.files.from.source.dir"
-argument_list|,
-literal|false
-argument_list|,
-literal|"When moving/renaming a directory from source to destination, individually move each \n"
-operator|+
-literal|"file in the source directory, rather than renaming the source directory. This may \n"
-operator|+
-literal|"help protect against files written to temp directories by runaway task attempts."
-argument_list|)
-block|,
 comment|/* BLOBSTORE section */
 name|HIVE_BLOBSTORE_SUPPORTED_SCHEMES
 argument_list|(

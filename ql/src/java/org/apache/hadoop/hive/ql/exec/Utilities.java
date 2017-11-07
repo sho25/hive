@@ -887,6 +887,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|BlobStorageUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|FileUtils
 import|;
 end_import
@@ -8881,6 +8897,28 @@ name|IOException
 throws|,
 name|HiveException
 block|{
+comment|//
+comment|// Runaway task attempts (which are unable to be killed by MR/YARN) can cause HIVE-17113,
+comment|// where they can write duplicate output files to tmpPath after de-duplicating the files,
+comment|// but before tmpPath is moved to specPath.
+comment|// Fixing this issue will be done differently for blobstore (e.g. S3)
+comment|// vs non-blobstore (local filesystem, HDFS) filesystems due to differences in
+comment|// implementation - a directory move in a blobstore effectively results in file-by-file
+comment|// moves for every file in a directory, while in HDFS/localFS a directory move is just a
+comment|// single filesystem operation.
+comment|// - For non-blobstore FS, do the following:
+comment|//   1) Rename tmpPath to a new directory name to prevent additional files
+comment|//      from being added by runaway processes.
+comment|//   2) Remove duplicates from the temp directory
+comment|//   3) Rename/move the temp directory to specPath
+comment|//
+comment|// - For blobstore FS, do the following:
+comment|//   1) Remove duplicates from tmpPath
+comment|//   2) Use moveSpecifiedFiles() to perform a file-by-file move of the de-duped files
+comment|//      to specPath. On blobstore FS, assuming n files in the directory, this results
+comment|//      in n file moves, compared to 2*n file moves with the previous solution
+comment|//      (each directory move would result in a file-by-file move of the files in the directory)
+comment|//
 name|FileSystem
 name|fs
 init|=
@@ -8889,6 +8927,18 @@ operator|.
 name|getFileSystem
 argument_list|(
 name|hconf
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isBlobStorage
+init|=
+name|BlobStorageUtils
+operator|.
+name|isBlobStorageFileSystem
+argument_list|(
+name|hconf
+argument_list|,
+name|fs
 argument_list|)
 decl_stmt|;
 name|Path
@@ -8916,6 +8966,57 @@ condition|(
 name|success
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|isBlobStorage
+operator|&&
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|tmpPath
+argument_list|)
+condition|)
+block|{
+comment|//   1) Rename tmpPath to a new directory name to prevent additional files
+comment|//      from being added by runaway processes.
+name|Path
+name|tmpPathOriginal
+init|=
+name|tmpPath
+decl_stmt|;
+name|tmpPath
+operator|=
+operator|new
+name|Path
+argument_list|(
+name|tmpPath
+operator|.
+name|getParent
+argument_list|()
+argument_list|,
+name|tmpPath
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|".moved"
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
+name|rename
+argument_list|(
+name|fs
+argument_list|,
+name|tmpPathOriginal
+argument_list|,
+name|tmpPath
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Remove duplicates from tmpPath
 name|FileStatus
 index|[]
 name|statuses
@@ -9100,18 +9201,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|hconf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_EXEC_MOVE_FILES_FROM_SOURCE_DIR
-argument_list|)
+name|isBlobStorage
 condition|)
 block|{
 comment|// HIVE-17113 - avoid copying files that may have been written to the temp dir by runaway tasks,
@@ -9132,6 +9222,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// For non-blobstore case, can just move the directory - the initial directory rename
+comment|// at the start of this method should prevent files written by runaway tasks.
 name|Utilities
 operator|.
 name|renameOrMoveFiles
