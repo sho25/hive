@@ -529,6 +529,28 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
+name|HiveSemiJoin
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|reloperators
+operator|.
 name|HiveTableScan
 import|;
 end_import
@@ -1851,6 +1873,8 @@ comment|// thus we need to introduce a project on top of it.
 comment|// But we only need the additional project if the left child
 comment|// is another join too; if it is not, ASTConverter will swap
 comment|// the join inputs, leaving the join operator on the left.
+comment|// we also do it if parent is HiveSemiJoin since ASTConverter won't
+comment|// swap inputs then
 comment|// This will help triggering multijoin recognition methods that
 comment|// are embedded in SemanticAnalyzer.
 if|if
@@ -1879,6 +1903,10 @@ name|getLeft
 argument_list|()
 operator|instanceof
 name|Join
+operator|||
+name|parent
+operator|instanceof
+name|HiveSemiJoin
 operator|)
 condition|)
 block|{
