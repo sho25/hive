@@ -10388,6 +10388,40 @@ operator|+
 literal|"  VERBOSE: All logs"
 argument_list|)
 block|,
+comment|// HS2 connections guard rails
+name|HIVE_SERVER2_LIMIT_CONNECTIONS_PER_USER
+argument_list|(
+literal|"hive.server2.limit.connections.per.user"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Maximum hive server2 connections per user. Any user exceeding this limit will not be allowed to connect. "
+operator|+
+literal|"Default=0 does not enforce limits."
+argument_list|)
+block|,
+name|HIVE_SERVER2_LIMIT_CONNECTIONS_PER_IPADDRESS
+argument_list|(
+literal|"hive.server2.limit.connections.per.ipaddress"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Maximum hive server2 connections per ipaddress. Any ipaddress exceeding this limit will not be allowed "
+operator|+
+literal|"to connect. Default=0 does not enforce limits."
+argument_list|)
+block|,
+name|HIVE_SERVER2_LIMIT_CONNECTIONS_PER_USER_IPADDRESS
+argument_list|(
+literal|"hive.server2.limit.connections.per.user.ipaddress"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Maximum hive server2 connections per user:ipaddress combination. Any user-ipaddress exceeding this limit will "
+operator|+
+literal|"not be allowed to connect. Default=0 does not enforce limits."
+argument_list|)
+block|,
 comment|// Enable metric collection for HiveServer2
 name|HIVE_SERVER2_METRICS_ENABLED
 argument_list|(

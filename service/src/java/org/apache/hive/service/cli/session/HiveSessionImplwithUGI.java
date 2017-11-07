@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -303,6 +313,13 @@ name|ipAddress
 parameter_list|,
 name|String
 name|delegationToken
+parameter_list|,
+specifier|final
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|forwardedAddresses
 parameter_list|)
 throws|throws
 name|HiveSQLException
@@ -320,6 +337,8 @@ argument_list|,
 name|hiveConf
 argument_list|,
 name|ipAddress
+argument_list|,
+name|forwardedAddresses
 argument_list|)
 expr_stmt|;
 name|setSessionUGI
