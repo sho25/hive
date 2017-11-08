@@ -211,7 +211,7 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
-name|CellComparator
+name|CellComparatorImpl
 import|;
 end_import
 
@@ -1438,7 +1438,7 @@ name|getValue
 argument_list|()
 argument_list|,
 operator|new
-name|CellComparator
+name|CellComparatorImpl
 argument_list|()
 argument_list|)
 expr_stmt|;
