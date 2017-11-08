@@ -3026,6 +3026,19 @@ argument_list|,
 literal|"Frequency of WriteSet reaper runs"
 argument_list|)
 block|,
+name|WM_DEFAULT_POOL_SIZE
+argument_list|(
+literal|"metastore.wm.default.pool.size"
+argument_list|,
+literal|"hive.metastore.wm.default.pool.size"
+argument_list|,
+literal|4
+argument_list|,
+literal|"The size of a default pool to create when creating an empty resource plan;\n"
+operator|+
+literal|"If not positive, no default pool will be created."
+argument_list|)
+block|,
 comment|// Hive values we have copied and use as is
 comment|// These two are used to indicate that we are running tests
 name|HIVE_IN_TEST

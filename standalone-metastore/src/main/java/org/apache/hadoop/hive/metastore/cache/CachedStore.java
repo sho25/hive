@@ -13127,6 +13127,9 @@ name|createResourcePlan
 parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
+parameter_list|,
+name|int
+name|defaultPoolSize
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
@@ -13138,6 +13141,8 @@ operator|.
 name|createResourcePlan
 argument_list|(
 name|resourcePlan
+argument_list|,
+name|defaultPoolSize
 argument_list|)
 expr_stmt|;
 block|}

@@ -3201,6 +3201,9 @@ name|createResourcePlan
 parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
+parameter_list|,
+name|int
+name|defaultPoolSize
 parameter_list|)
 throws|throws
 name|AlreadyExistsException

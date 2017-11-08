@@ -1939,6 +1939,12 @@ operator|.
 name|ConfVars
 operator|.
 name|METASTORE_HBASE_FILE_METADATA_THREADS
+block|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORE_WM_DEFAULT_POOL_SIZE
 block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
@@ -3809,6 +3815,17 @@ argument_list|,
 literal|true
 argument_list|,
 literal|"Whether to enable TCP keepalive for the metastore server. Keepalive will prevent accumulation of half-open connections."
+argument_list|)
+block|,
+name|METASTORE_WM_DEFAULT_POOL_SIZE
+argument_list|(
+literal|"hive.metastore.wm.default.pool.size"
+argument_list|,
+literal|4
+argument_list|,
+literal|"The size of a default pool to create when creating an empty resource plan;\n"
+operator|+
+literal|"If not positive, no default pool will be created."
 argument_list|)
 block|,
 name|METASTORE_INT_ORIGINAL
