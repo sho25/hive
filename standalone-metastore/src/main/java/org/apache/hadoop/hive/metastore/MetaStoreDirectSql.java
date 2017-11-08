@@ -1188,6 +1188,8 @@ name|SKEWED_COL_VALUE_LOC_MAP
 decl_stmt|,
 name|COLUMNS_V2
 decl_stmt|,
+name|PARTITION_KEYS
+decl_stmt|,
 name|SERDE_PARAMS
 decl_stmt|,
 name|PART_COL_STATS
@@ -13787,7 +13789,11 @@ decl_stmt|;
 name|String
 name|queryText
 init|=
-literal|"SELECT  \"D2\".\"NAME\", \"T2\".\"TBL_NAME\", \"C2\".\"COLUMN_NAME\","
+literal|"SELECT  \"D2\".\"NAME\", \"T2\".\"TBL_NAME\", "
+operator|+
+literal|"CASE WHEN \"C2\".\"COLUMN_NAME\" IS NOT NULL THEN \"C2\".\"COLUMN_NAME\" "
+operator|+
+literal|"ELSE \"P2\".\"PKEY_NAME\" END, "
 operator|+
 literal|""
 operator|+
@@ -13799,9 +13805,21 @@ name|TBLS
 operator|+
 literal|".\"TBL_NAME\", "
 operator|+
+literal|"CASE WHEN "
+operator|+
 name|COLUMNS_V2
 operator|+
-literal|".\"COLUMN_NAME\", "
+literal|".\"COLUMN_NAME\" IS NOT NULL THEN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"COLUMN_NAME\" "
+operator|+
+literal|"ELSE "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"PKEY_NAME\" END, "
 operator|+
 literal|""
 operator|+
@@ -13833,7 +13851,7 @@ name|TBLS
 operator|+
 literal|" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -13847,7 +13865,7 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"CHILD_TBL_ID\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -13869,7 +13887,7 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"PARENT_INTEGER_IDX\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|DBS
 operator|+
@@ -13883,7 +13901,7 @@ name|DBS
 operator|+
 literal|".\"DB_ID\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|TBLS
 operator|+
@@ -13893,13 +13911,13 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"PARENT_TBL_ID\" = \"T2\".\"TBL_ID\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|DBS
 operator|+
 literal|" \"D2\" ON \"T2\".\"DB_ID\" = \"D2\".\"DB_ID\" "
 operator|+
-literal|" INNER JOIN "
+literal|" LEFT OUTER JOIN "
 operator|+
 name|COLUMNS_V2
 operator|+
@@ -13923,7 +13941,31 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"CHILD_INTEGER_IDX\" "
 operator|+
-literal|" INNER JOIN "
+literal|" LEFT OUTER JOIN "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"TBL_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"CHILD_INTEGER_IDX\" "
+operator|+
+literal|" LEFT OUTER JOIN "
 operator|+
 name|COLUMNS_V2
 operator|+
@@ -13934,6 +13976,22 @@ operator|+
 literal|".\"PARENT_CD_ID\" AND "
 operator|+
 literal|" \"C2\".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" LEFT OUTER JOIN "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|" \"P2\" ON \"P2\".\"TBL_ID\" = "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" AND "
+operator|+
+literal|" \"P2\".\"INTEGER_IDX\" = "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -14364,11 +14422,21 @@ name|TBLS
 operator|+
 literal|".\"TBL_NAME\", "
 operator|+
+literal|"CASE WHEN "
+operator|+
 name|COLUMNS_V2
 operator|+
-literal|".\"COLUMN_NAME\","
+literal|".\"COLUMN_NAME\" IS NOT NULL THEN "
 operator|+
-literal|""
+name|COLUMNS_V2
+operator|+
+literal|".\"COLUMN_NAME\" "
+operator|+
+literal|"ELSE "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"PKEY_NAME\" END, "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -14390,7 +14458,7 @@ name|TBLS
 operator|+
 literal|" "
 operator|+
-literal|" INNER  join "
+literal|" INNER JOIN "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -14404,7 +14472,7 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"PARENT_TBL_ID\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|DBS
 operator|+
@@ -14418,7 +14486,7 @@ name|DBS
 operator|+
 literal|".\"DB_ID\" "
 operator|+
-literal|" INNER JOIN "
+literal|" LEFT OUTER JOIN "
 operator|+
 name|COLUMNS_V2
 operator|+
@@ -14435,6 +14503,30 @@ operator|+
 literal|" "
 operator|+
 name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" LEFT OUTER JOIN "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"TBL_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|PARTITION_KEYS
 operator|+
 literal|".\"INTEGER_IDX\" = "
 operator|+
@@ -14763,17 +14855,25 @@ name|TBLS
 operator|+
 literal|".\"TBL_NAME\", "
 operator|+
+literal|"CASE WHEN "
+operator|+
 name|COLUMNS_V2
 operator|+
-literal|".\"COLUMN_NAME\","
+literal|".\"COLUMN_NAME\" IS NOT NULL THEN "
 operator|+
-literal|""
+name|COLUMNS_V2
+operator|+
+literal|".\"COLUMN_NAME\" "
+operator|+
+literal|"ELSE "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"PKEY_NAME\" END, "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
 literal|".\"POSITION\", "
-operator|+
-literal|""
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -14789,7 +14889,7 @@ name|TBLS
 operator|+
 literal|" "
 operator|+
-literal|" INNER  join "
+literal|" INNER JOIN "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -14803,7 +14903,7 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"PARENT_TBL_ID\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|DBS
 operator|+
@@ -14817,7 +14917,7 @@ name|DBS
 operator|+
 literal|".\"DB_ID\" "
 operator|+
-literal|" INNER JOIN "
+literal|" LEFT OUTER JOIN "
 operator|+
 name|COLUMNS_V2
 operator|+
@@ -14834,6 +14934,30 @@ operator|+
 literal|" "
 operator|+
 name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" LEFT OUTER JOIN "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"TBL_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|PARTITION_KEYS
 operator|+
 literal|".\"INTEGER_IDX\" = "
 operator|+
@@ -15160,11 +15284,23 @@ literal|".\"NAME\", "
 operator|+
 name|TBLS
 operator|+
-literal|".\"TBL_NAME\", "
+literal|".\"TBL_NAME\","
+operator|+
+literal|"CASE WHEN "
 operator|+
 name|COLUMNS_V2
 operator|+
-literal|".\"COLUMN_NAME\","
+literal|".\"COLUMN_NAME\" IS NOT NULL THEN "
+operator|+
+name|COLUMNS_V2
+operator|+
+literal|".\"COLUMN_NAME\" "
+operator|+
+literal|"ELSE "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"PKEY_NAME\" END, "
 operator|+
 literal|""
 operator|+
@@ -15182,7 +15318,7 @@ name|TBLS
 operator|+
 literal|" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
@@ -15196,7 +15332,7 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"PARENT_TBL_ID\" "
 operator|+
-literal|" INNER join "
+literal|" INNER JOIN "
 operator|+
 name|DBS
 operator|+
@@ -15210,7 +15346,7 @@ name|DBS
 operator|+
 literal|".\"DB_ID\" "
 operator|+
-literal|" INNER JOIN "
+literal|" LEFT OUTER JOIN "
 operator|+
 name|COLUMNS_V2
 operator|+
@@ -15227,6 +15363,30 @@ operator|+
 literal|" "
 operator|+
 name|COLUMNS_V2
+operator|+
+literal|".\"INTEGER_IDX\" = "
+operator|+
+name|KEY_CONSTRAINTS
+operator|+
+literal|".\"PARENT_INTEGER_IDX\" "
+operator|+
+literal|" LEFT OUTER JOIN "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|" ON "
+operator|+
+name|TBLS
+operator|+
+literal|".\"TBL_ID\" = "
+operator|+
+name|PARTITION_KEYS
+operator|+
+literal|".\"TBL_ID\" AND "
+operator|+
+literal|" "
+operator|+
+name|PARTITION_KEYS
 operator|+
 literal|".\"INTEGER_IDX\" = "
 operator|+

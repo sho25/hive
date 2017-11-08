@@ -677,15 +677,7 @@ name|BaseSemanticAnalyzer
 operator|.
 name|getColumns
 argument_list|(
-operator|(
-name|ASTNode
-operator|)
 name|child
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
 argument_list|,
 literal|false
 argument_list|)
