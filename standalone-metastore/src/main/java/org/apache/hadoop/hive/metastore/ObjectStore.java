@@ -641,6 +641,20 @@ name|apache
 operator|.
 name|commons
 operator|.
+name|collections
+operator|.
+name|CollectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
 name|lang
 operator|.
 name|ArrayUtils
@@ -2920,9 +2934,6 @@ argument_list|(
 name|ObjectStore
 operator|.
 name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -2945,6 +2956,9 @@ argument_list|<
 name|String
 argument_list|,
 name|Class
+argument_list|<
+name|?
+argument_list|>
 argument_list|>
 name|PINCLASSMAP
 decl_stmt|;
@@ -2975,6 +2989,9 @@ argument_list|<
 name|String
 argument_list|,
 name|Class
+argument_list|<
+name|?
+argument_list|>
 argument_list|>
 name|map
 init|=
@@ -3123,25 +3140,25 @@ argument_list|(
 literal|"USER"
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|user
-operator|==
-literal|null
-condition|)
-block|{
 name|USER
 operator|=
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|defaultString
+argument_list|(
+name|user
+argument_list|,
 literal|"UNKNOWN"
+argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|USER
-operator|=
-name|user
-expr_stmt|;
-block|}
 block|}
 specifier|private
 name|boolean
@@ -3652,9 +3669,9 @@ name|info
 argument_list|(
 literal|"Retriable exception while instantiating ObjectStore, retrying. "
 operator|+
+literal|"{} tries left"
+argument_list|,
 name|numTries
-operator|+
-literal|" tries left"
 argument_list|,
 name|e
 argument_list|)
@@ -3974,23 +3991,25 @@ argument_list|(
 literal|"javax.jdo.mapping.Schema"
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|schema
-operator|!=
-literal|null
-operator|&&
-name|schema
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
 name|schema
 operator|=
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|defaultIfBlank
+argument_list|(
+name|schema
+argument_list|,
 literal|null
+argument_list|)
 expr_stmt|;
-block|}
 name|directSql
 operator|=
 operator|new
@@ -4009,16 +4028,14 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"RawStore: "
+literal|"RawStore: {}, with PersistenceManager: {}"
 operator|+
+literal|" created in the thread with id: {}"
+argument_list|,
 name|this
-operator|+
-literal|", with PersistenceManager: "
-operator|+
+argument_list|,
 name|pm
-operator|+
-literal|" created in the thread with id: "
-operator|+
+argument_list|,
 name|Thread
 operator|.
 name|currentThread
@@ -4162,11 +4179,6 @@ argument_list|)
 decl_stmt|;
 try|try
 block|{
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unchecked"
-argument_list|)
 name|Class
 argument_list|<
 name|?
@@ -4357,8 +4369,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Invalid metastore property value for "
-operator|+
+literal|"Invalid metastore property value for {}"
+argument_list|,
 name|ConfVars
 operator|.
 name|DBACCESS_SSL_PROPS
@@ -4419,6 +4431,14 @@ argument_list|,
 name|var
 argument_list|)
 decl_stmt|;
+name|String
+name|varName
+init|=
+name|var
+operator|.
+name|getVarname
+argument_list|()
+decl_stmt|;
 name|Object
 name|prevVal
 init|=
@@ -4426,29 +4446,18 @@ name|prop
 operator|.
 name|setProperty
 argument_list|(
-name|var
-operator|.
-name|getVarname
-argument_list|()
+name|varName
 argument_list|,
 name|confVal
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-operator|&&
 name|MetastoreConf
 operator|.
 name|isPrintable
 argument_list|(
-name|var
-operator|.
-name|getVarname
-argument_list|()
+name|varName
 argument_list|)
 condition|)
 block|{
@@ -4456,19 +4465,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Overriding "
-operator|+
-name|var
-operator|.
-name|getVarname
-argument_list|()
-operator|+
-literal|" value "
-operator|+
+literal|"Overriding {} value {} from jpox.properties with {}"
+argument_list|,
+name|varName
+argument_list|,
 name|prevVal
-operator|+
-literal|" from  jpox.properties with "
-operator|+
+argument_list|,
 name|confVal
 argument_list|)
 expr_stmt|;
@@ -4499,15 +4501,20 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|passwd
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|passwd
+name|org
 operator|.
-name|isEmpty
-argument_list|()
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|isNotEmpty
+argument_list|(
+name|passwd
+argument_list|)
 condition|)
 block|{
 comment|// We can get away with the use of varname here because varname == hiveName for PWD
@@ -4592,13 +4599,13 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"{} = {}"
+argument_list|,
 name|e
 operator|.
 name|getKey
 argument_list|()
-operator|+
-literal|" = "
-operator|+
+argument_list|,
 name|e
 operator|.
 name|getValue
@@ -4646,16 +4653,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|currentAutoStartVal
-operator|!=
-literal|null
-operator|&&
 operator|!
-name|currentAutoStartVal
+name|autoStartIgnore
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|autoStartIgnore
+name|currentAutoStartVal
 argument_list|)
 condition|)
 block|{
@@ -4663,19 +4666,17 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
+literal|"{} is set to unsupported value {} . Setting it to value: {}"
+argument_list|,
 name|autoStartKey
-operator|+
-literal|" is set to unsupported value "
-operator|+
+argument_list|,
 name|conf
 operator|.
 name|get
 argument_list|(
 name|autoStartKey
 argument_list|)
-operator|+
-literal|" . Setting it to value "
-operator|+
+argument_list|,
 name|autoStartIgnore
 argument_list|)
 expr_stmt|;
@@ -4863,39 +4864,37 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Setting MetaStore object pin classes with hive.metastore.cache.pinobjtypes=\""
-operator|+
+literal|"Setting MetaStore object pin classes with hive.metastore.cache.pinobjtypes=\"{}\""
+argument_list|,
 name|objTypes
-operator|+
-literal|"\""
 argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|objTypes
-operator|!=
-literal|null
-operator|&&
-name|objTypes
+name|org
 operator|.
-name|length
-argument_list|()
-operator|>
-literal|0
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|isNotEmpty
+argument_list|(
+name|objTypes
+argument_list|)
 condition|)
 block|{
-name|objTypes
-operator|=
-name|objTypes
-operator|.
-name|toLowerCase
-argument_list|()
-expr_stmt|;
 name|String
 index|[]
 name|typeTokens
 init|=
 name|objTypes
+operator|.
+name|toLowerCase
+argument_list|()
 operator|.
 name|split
 argument_list|(
@@ -4948,10 +4947,10 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
+literal|"{} is not one of the pinnable object types: {}"
+argument_list|,
 name|type
-operator|+
-literal|" is not one of the pinnable object types: "
-operator|+
+argument_list|,
 name|org
 operator|.
 name|apache
@@ -5025,6 +5024,17 @@ name|void
 name|shutdown
 parameter_list|()
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"RawStore: {}, with PersistenceManager: {} will be shutdown"
+argument_list|,
+name|this
+argument_list|,
+name|pm
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|pm
@@ -5032,21 +5042,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"RawStore: "
-operator|+
-name|this
-operator|+
-literal|", with PersistenceManager: "
-operator|+
-name|pm
-operator|+
-literal|" will be shutdown"
-argument_list|)
-expr_stmt|;
 name|pm
 operator|.
 name|close
@@ -5730,11 +5725,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to get database "
-operator|+
+literal|"Failed to get database {}, returning NoSuchObjectException"
+argument_list|,
 name|name
-operator|+
-literal|", returning NoSuchObjectException"
 argument_list|,
 name|ex
 argument_list|)
@@ -5961,27 +5954,33 @@ expr_stmt|;
 name|String
 name|type
 init|=
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|defaultIfBlank
+argument_list|(
 name|mdb
 operator|.
 name|getOwnerType
 argument_list|()
-decl_stmt|;
-name|db
-operator|.
-name|setOwnerType
-argument_list|(
-operator|(
+argument_list|,
 literal|null
+argument_list|)
+decl_stmt|;
+name|PrincipalType
+name|principalType
+init|=
+operator|(
+name|type
 operator|==
-name|type
-operator|||
-name|type
-operator|.
-name|trim
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
+literal|null
 operator|)
 condition|?
 literal|null
@@ -5992,6 +5991,12 @@ name|valueOf
 argument_list|(
 name|type
 argument_list|)
+decl_stmt|;
+name|db
+operator|.
+name|setOwnerType
+argument_list|(
+name|principalType
 argument_list|)
 expr_stmt|;
 return|return
@@ -6202,11 +6207,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Dropping database "
-operator|+
+literal|"Dropping database {} along with all tables"
+argument_list|,
 name|dbname
-operator|+
-literal|" along with all tables"
 argument_list|)
 expr_stmt|;
 name|dbname
@@ -6268,16 +6271,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|dbGrants
-operator|!=
-literal|null
-operator|&&
-name|dbGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|dbGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -6453,10 +6452,16 @@ literal|"name ascending"
 argument_list|)
 expr_stmt|;
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 operator|(
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 operator|)
 name|query
 operator|.
@@ -6469,10 +6474,7 @@ argument_list|(
 operator|new
 name|String
 index|[
-name|parameterVals
-operator|.
-name|size
-argument_list|()
+literal|0
 index|]
 argument_list|)
 argument_list|)
@@ -6482,39 +6484,10 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<>
-argument_list|()
-expr_stmt|;
-for|for
-control|(
-name|Iterator
-name|i
-init|=
-name|names
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|i
-operator|.
-name|hasNext
-argument_list|()
-condition|;
-control|)
-block|{
-name|databases
-operator|.
-name|add
 argument_list|(
-operator|(
-name|String
-operator|)
-name|i
-operator|.
-name|next
-argument_list|()
+name|names
 argument_list|)
 expr_stmt|;
-block|}
 name|commited
 operator|=
 name|commitTransaction
@@ -7132,8 +7105,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"type not found "
-operator|+
+literal|"type not found {}"
+argument_list|,
 name|typeName
 argument_list|,
 name|e
@@ -7729,16 +7702,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tabGrants
-operator|!=
-literal|null
-operator|&&
-name|tabGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|tabGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -7764,16 +7733,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tblColGrants
-operator|!=
-literal|null
-operator|&&
-name|tblColGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|tblColGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -7801,16 +7766,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|partGrants
-operator|!=
-literal|null
-operator|&&
-name|partGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|partGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -7836,16 +7797,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|partColGrants
-operator|!=
-literal|null
-operator|&&
-name|partColGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|partColGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -7879,15 +7836,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Found no table level column statistics associated with db "
+literal|"Found no table level column statistics associated with db {}"
 operator|+
+literal|" table {} record to delete"
+argument_list|,
 name|dbName
-operator|+
-literal|" table "
-operator|+
+argument_list|,
 name|tableName
-operator|+
-literal|" record to delete"
 argument_list|)
 expr_stmt|;
 block|}
@@ -7908,16 +7863,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tabConstraints
-operator|!=
-literal|null
-operator|&&
-name|tabConstraints
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|tabConstraints
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -8545,10 +8496,16 @@ literal|"tableName ascending"
 argument_list|)
 expr_stmt|;
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 operator|(
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 operator|)
 name|query
 operator|.
@@ -8561,10 +8518,7 @@ argument_list|(
 operator|new
 name|String
 index|[
-name|parameterVals
-operator|.
-name|size
-argument_list|()
+literal|0
 index|]
 argument_list|)
 argument_list|)
@@ -8574,39 +8528,10 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<>
-argument_list|()
-expr_stmt|;
-for|for
-control|(
-name|Iterator
-name|i
-init|=
-name|names
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|i
-operator|.
-name|hasNext
-argument_list|()
-condition|;
-control|)
-block|{
-name|tbls
-operator|.
-name|add
 argument_list|(
-operator|(
-name|String
-operator|)
-name|i
-operator|.
-name|next
-argument_list|()
+name|names
 argument_list|)
 expr_stmt|;
-block|}
 name|commited
 operator|=
 name|commitTransaction
@@ -9737,14 +9662,20 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|dbNameIfExists
-operator|==
-literal|null
-operator|||
-name|dbNameIfExists
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|dbNameIfExists
+argument_list|)
 condition|)
 block|{
 throw|throw
@@ -9766,7 +9697,12 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<>
+argument_list|(
+name|tbl_names
+operator|.
+name|size
 argument_list|()
+argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -10210,12 +10146,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+literal|"Could not convert to MTable"
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -11896,12 +11829,12 @@ block|}
 block|}
 if|if
 condition|(
-name|toPersist
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|toPersist
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -12667,12 +12600,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|toPersist
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|toPersist
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -12949,16 +12882,12 @@ comment|// (like MySQL, Derby) considers 'a' = 'a ' whereas others like (Postgre
 comment|// Oracle) doesn't exhibit this problem.
 if|if
 condition|(
-name|mparts
-operator|!=
-literal|null
-operator|&&
-name|mparts
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|mparts
+argument_list|)
 condition|)
 block|{
 if|if
@@ -13513,12 +13442,16 @@ name|NoSuchObjectException
 block|{
 if|if
 condition|(
-name|partNames
+name|CollectionUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|partNames
+argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 name|boolean
 name|success
 init|=
@@ -13753,16 +13686,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|partGrants
-operator|!=
-literal|null
-operator|&&
-name|partGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|partGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -13810,16 +13739,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|partColumnGrants
-operator|!=
-literal|null
-operator|&&
-name|partColumnGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|partColumnGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -14204,16 +14129,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|mparts
-operator|!=
-literal|null
-operator|&&
-name|mparts
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|mparts
+argument_list|)
 condition|)
 block|{
 for|for
@@ -15194,8 +15115,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Number of records fetched: "
-operator|+
+literal|"Number of records fetched: {}"
+argument_list|,
 name|response
 operator|.
 name|getPartitionValues
@@ -15249,8 +15170,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Number of records fetched with filter: "
-operator|+
+literal|"Number of records fetched with filter: {}"
+argument_list|,
 name|response
 operator|.
 name|getPartitionValues
@@ -15331,36 +15252,17 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Database: "
-operator|+
+literal|"Database: {} Table: {} filter: \"{}\" cols: {}"
+argument_list|,
 name|dbName
-operator|+
-literal|" Table:"
-operator|+
+argument_list|,
 name|tableName
-operator|+
-literal|" filter\""
-operator|+
+argument_list|,
 name|filter
-operator|+
-literal|"\" cols:"
-operator|+
+argument_list|,
 name|cols
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|partitionResults
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
 name|List
 argument_list|<
 name|String
@@ -15416,8 +15318,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Querying by partition names failed, trying out with partition objects, filter:"
-operator|+
+literal|"Querying by partition names failed, trying out with partition objects, filter: {}"
+argument_list|,
 name|filter
 argument_list|)
 expr_stmt|;
@@ -15593,8 +15495,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Converting responses to Partition values for items:"
-operator|+
+literal|"Converting responses to Partition values for items: {}"
+argument_list|,
 name|partitionNames
 operator|.
 name|size
@@ -15621,6 +15523,10 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
+name|Collections
+operator|.
+name|nCopies
+argument_list|(
 name|tbl
 operator|.
 name|getPartitionKeys
@@ -15628,27 +15534,11 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|FieldSchema
-name|key
-range|:
-name|tbl
-operator|.
-name|getPartitionKeys
-argument_list|()
-control|)
-block|{
-name|vals
-operator|.
-name|add
-argument_list|(
+argument_list|,
 literal|null
 argument_list|)
-expr_stmt|;
-block|}
+argument_list|)
+decl_stmt|;
 name|PartitionValuesRow
 name|row
 init|=
@@ -15852,14 +15742,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Filter specified is "
-operator|+
+literal|"Filter specified is {}, JDOQL filter is {}"
+argument_list|,
 name|filter
-operator|+
-literal|","
-operator|+
-literal|" JDOQL filter is "
-operator|+
+argument_list|,
 name|queryFilterString
 argument_list|)
 expr_stmt|;
@@ -15867,8 +15753,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Parms is "
-operator|+
+literal|"Parms is {}"
+argument_list|,
 name|params
 argument_list|)
 expr_stmt|;
@@ -15918,10 +15804,16 @@ literal|"partitionName"
 argument_list|)
 expr_stmt|;
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 operator|(
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 operator|)
 name|query
 operator|.
@@ -15937,39 +15829,10 @@ name|ArrayList
 argument_list|<
 name|String
 argument_list|>
-argument_list|()
-expr_stmt|;
-for|for
-control|(
-name|Iterator
-name|i
-init|=
-name|names
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|i
-operator|.
-name|hasNext
-argument_list|()
-condition|;
-control|)
-block|{
-name|partNames
-operator|.
-name|add
 argument_list|(
-operator|(
-name|String
-operator|)
-name|i
-operator|.
-name|next
-argument_list|()
+name|names
 argument_list|)
 expr_stmt|;
-block|}
 name|LOG
 operator|.
 name|debug
@@ -15986,8 +15849,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done retrieving all objects for getPartitionNamesByFilter, size:"
-operator|+
+literal|"Done retrieving all objects for getPartitionNamesByFilter, size: {}"
+argument_list|,
 name|partNames
 operator|.
 name|size
@@ -16168,8 +16031,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Columns to be selected from Partitions: "
-operator|+
+literal|"Columns to be selected from Partitions: {}"
+argument_list|,
 name|partValuesSelect
 argument_list|)
 expr_stmt|;
@@ -16440,10 +16303,16 @@ argument_list|)
 expr_stmt|;
 block|}
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 operator|(
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 operator|)
 name|query
 operator|.
@@ -16454,37 +16323,13 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
-for|for
-control|(
-name|Iterator
-name|i
-init|=
-name|names
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|i
-operator|.
-name|hasNext
-argument_list|()
-condition|;
-control|)
-block|{
 name|pns
 operator|.
-name|add
+name|addAll
 argument_list|(
-operator|(
-name|String
-operator|)
-name|i
-operator|.
-name|next
-argument_list|()
+name|names
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|query
@@ -17077,6 +16922,9 @@ literal|"Executing listPartitionNamesPs"
 argument_list|)
 expr_stmt|;
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 name|getPartitionPsQueryResults
@@ -17094,25 +16942,13 @@ argument_list|,
 name|queryWrapper
 argument_list|)
 decl_stmt|;
-for|for
-control|(
-name|Object
-name|o
-range|:
-name|names
-control|)
-block|{
 name|partitionNames
 operator|.
-name|add
+name|addAll
 argument_list|(
-operator|(
-name|String
-operator|)
-name|o
+name|names
 argument_list|)
 expr_stmt|;
-block|}
 name|success
 operator|=
 name|commitTransaction
@@ -17282,8 +17118,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done retrieving all objects for listMPartitions "
-operator|+
+literal|"Done retrieving all objects for listMPartitions {}"
+argument_list|,
 name|mparts
 argument_list|)
 expr_stmt|;
@@ -18479,11 +18315,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Deleted "
-operator|+
+literal|"Deleted {} partition from store"
+argument_list|,
 name|deleted
-operator|+
-literal|" partition from store"
 argument_list|)
 expr_stmt|;
 name|query
@@ -18818,12 +18652,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|" JDOQL filter is "
-operator|+
+literal|" JDOQL filter is {}"
+argument_list|,
 name|sb
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|params
@@ -19867,25 +19698,9 @@ condition|(
 name|doTrace
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|describeResult
-argument_list|()
-operator|+
-literal|" retrieved using "
-operator|+
-operator|(
-name|doUseDirectSql
-condition|?
-literal|"SQL"
-else|:
-literal|"ORM"
-operator|)
-operator|+
-literal|" in "
-operator|+
+name|double
+name|time
+init|=
 operator|(
 operator|(
 name|System
@@ -19898,8 +19713,33 @@ operator|)
 operator|/
 literal|1000000.0
 operator|)
-operator|+
-literal|"ms"
+decl_stmt|;
+name|String
+name|result
+init|=
+name|describeResult
+argument_list|()
+decl_stmt|;
+name|String
+name|retrieveType
+init|=
+name|doUseDirectSql
+condition|?
+literal|"SQL"
+else|:
+literal|"ORM"
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"{} retrieved using {} in {}ms"
+argument_list|,
+name|result
+argument_list|,
+name|retrieveType
+argument_list|,
+name|time
 argument_list|)
 expr_stmt|;
 block|}
@@ -20045,8 +19885,11 @@ parameter_list|()
 block|{
 return|return
 literal|"db details for db "
-operator|+
+operator|.
+name|concat
+argument_list|(
 name|dbName
+argument_list|)
 return|;
 block|}
 block|}
@@ -20141,17 +19984,20 @@ specifier|final
 name|ExpressionTree
 name|exprTree
 init|=
-operator|(
-name|filter
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|filter
+name|org
 operator|.
-name|isEmpty
-argument_list|()
-operator|)
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|isNotEmpty
+argument_list|(
+name|filter
+argument_list|)
 condition|?
 name|PartFilterExprUtil
 operator|.
@@ -21035,8 +20881,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"JDO filter pushdown cannot be used: "
-operator|+
+literal|"JDO filter pushdown cannot be used: {}"
+argument_list|,
 name|queryBuilder
 operator|.
 name|getErrorMessage
@@ -21059,8 +20905,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"jdoFilter = "
-operator|+
+literal|"jdoFilter = {}"
+argument_list|,
 name|jdoFilter
 argument_list|)
 expr_stmt|;
@@ -21181,7 +21027,7 @@ name|paramDecl
 operator|.
 name|append
 argument_list|(
-literal|" "
+literal|' '
 argument_list|)
 expr_stmt|;
 name|paramDecl
@@ -21349,17 +21195,21 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"filter specified is "
-operator|+
+literal|"filter specified is {}, JDOQL filter is {}"
+argument_list|,
 name|filter
-operator|+
-literal|","
-operator|+
-literal|" JDOQL filter is "
-operator|+
+argument_list|,
 name|queryFilterString
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 for|for
 control|(
 name|Entry
@@ -21380,22 +21230,18 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"key: "
-operator|+
+literal|"key: {} value: {} class: {}"
+argument_list|,
 name|entry
 operator|.
 name|getKey
 argument_list|()
-operator|+
-literal|" value: "
-operator|+
+argument_list|,
 name|entry
 operator|.
 name|getValue
 argument_list|()
-operator|+
-literal|" class: "
-operator|+
+argument_list|,
 name|entry
 operator|.
 name|getValue
@@ -21408,6 +21254,7 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|String
 name|parameterDeclaration
@@ -21432,10 +21279,16 @@ name|queryFilterString
 argument_list|)
 expr_stmt|;
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 operator|(
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 operator|)
 name|query
 operator|.
@@ -21445,55 +21298,18 @@ name|params
 argument_list|)
 decl_stmt|;
 comment|// have to emulate "distinct", otherwise tables with the same name may be returned
-name|Set
-argument_list|<
-name|String
-argument_list|>
-name|tableNamesSet
-init|=
-operator|new
-name|HashSet
-argument_list|<>
-argument_list|()
-decl_stmt|;
-for|for
-control|(
-name|Iterator
-name|i
-init|=
-name|names
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|i
-operator|.
-name|hasNext
-argument_list|()
-condition|;
-control|)
-block|{
-name|tableNamesSet
-operator|.
-name|add
-argument_list|(
-operator|(
-name|String
-operator|)
-name|i
-operator|.
-name|next
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|tableNames
 operator|=
 operator|new
 name|ArrayList
 argument_list|<>
 argument_list|(
-name|tableNamesSet
+operator|new
+name|HashSet
+argument_list|<>
+argument_list|(
+name|names
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -21686,14 +21502,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Filter specified is "
-operator|+
+literal|"Filter specified is {}, JDOQL filter is {}"
+argument_list|,
 name|filter
-operator|+
-literal|","
-operator|+
-literal|" JDOQL filter is "
-operator|+
+argument_list|,
 name|queryFilterString
 argument_list|)
 expr_stmt|;
@@ -21701,8 +21513,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Parms is "
-operator|+
+literal|"Parms is {}"
+argument_list|,
 name|params
 argument_list|)
 expr_stmt|;
@@ -21736,10 +21548,16 @@ literal|"partitionName"
 argument_list|)
 expr_stmt|;
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 name|names
 init|=
 operator|(
 name|Collection
+argument_list|<
+name|String
+argument_list|>
 operator|)
 name|query
 operator|.
@@ -21753,39 +21571,10 @@ operator|=
 operator|new
 name|ArrayList
 argument_list|<>
-argument_list|()
-expr_stmt|;
-for|for
-control|(
-name|Iterator
-name|i
-init|=
-name|names
-operator|.
-name|iterator
-argument_list|()
-init|;
-name|i
-operator|.
-name|hasNext
-argument_list|()
-condition|;
-control|)
-block|{
-name|partNames
-operator|.
-name|add
 argument_list|(
-operator|(
-name|String
-operator|)
-name|i
-operator|.
-name|next
-argument_list|()
+name|names
 argument_list|)
 expr_stmt|;
-block|}
 name|LOG
 operator|.
 name|debug
@@ -23153,32 +22942,12 @@ return|;
 block|}
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|cols
-operator|.
-name|size
-argument_list|()
-condition|;
-name|i
-operator|++
-control|)
-block|{
 name|MFieldSchema
 name|mfs
-init|=
+range|:
 name|cols
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-decl_stmt|;
+control|)
+block|{
 if|if
 condition|(
 name|mfs
@@ -23617,11 +23386,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Attempting to add a guid "
-operator|+
+literal|"Attempting to add a guid {} for the metastore db"
+argument_list|,
 name|guid
-operator|+
-literal|" for the metastore db"
 argument_list|)
 expr_stmt|;
 name|prop
@@ -23674,11 +23441,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Metastore db guid "
-operator|+
+literal|"Metastore db guid {} created successfully"
+argument_list|,
 name|guid
-operator|+
-literal|" created successfully"
 argument_list|)
 expr_stmt|;
 return|return
@@ -23696,10 +23461,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
+literal|"Metastore db guid creation failed"
 argument_list|,
 name|e
 argument_list|)
@@ -23851,8 +23613,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Found guid "
-operator|+
+literal|"Found guid {}"
+argument_list|,
 name|uuid
 argument_list|)
 expr_stmt|;
@@ -23900,8 +23662,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Returning guid of metastore db : "
-operator|+
+literal|"Returning guid of metastore db : {}"
+argument_list|,
 name|uuids
 operator|.
 name|get
@@ -23987,12 +23749,12 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|foreignKeys
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|foreignKeys
+argument_list|)
 condition|)
 block|{
 name|List
@@ -28375,12 +28137,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|roleMap
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|roleMap
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28413,12 +28175,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|roleMember
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|roleMember
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28455,12 +28217,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|userGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|userGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28493,12 +28255,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|dbGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|dbGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28536,12 +28298,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tabPartGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|tabPartGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28579,12 +28341,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|partGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|partGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28622,12 +28384,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tblColumnGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|tblColumnGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -28665,12 +28427,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|partColumnGrants
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|partColumnGrants
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -29804,12 +29566,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|user
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|user
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -29930,16 +29692,12 @@ block|}
 block|}
 if|if
 condition|(
-name|groupNames
-operator|!=
-literal|null
-operator|&&
-name|groupNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|groupNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -29985,12 +29743,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|group
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|group
+argument_list|)
 condition|)
 block|{
 name|List
@@ -30171,16 +29929,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|userNameDbPriv
-operator|!=
-literal|null
-operator|&&
-name|userNameDbPriv
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|userNameDbPriv
+argument_list|)
 condition|)
 block|{
 name|List
@@ -30377,16 +30131,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|groupNames
-operator|!=
-literal|null
-operator|&&
-name|groupNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|groupNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -30455,16 +30205,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|roleNames
-operator|!=
-literal|null
-operator|&&
-name|roleNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|roleNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -30656,16 +30402,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|groupNames
-operator|!=
-literal|null
-operator|&&
-name|groupNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|groupNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -30738,16 +30480,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|roleNames
-operator|!=
-literal|null
-operator|&&
-name|roleNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|roleNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -30938,16 +30676,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|groupNames
-operator|!=
-literal|null
-operator|&&
-name|groupNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|groupNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -31018,16 +30752,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|roleNames
-operator|!=
-literal|null
-operator|&&
-name|roleNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|roleNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -31233,16 +30963,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|groupNames
-operator|!=
-literal|null
-operator|&&
-name|groupNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|groupNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -31317,16 +31043,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|roleNames
-operator|!=
-literal|null
-operator|&&
-name|roleNames
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|roleNames
+argument_list|)
 condition|)
 block|{
 name|Map
@@ -31476,16 +31198,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|userNameTabPartPriv
-operator|!=
-literal|null
-operator|&&
-name|userNameTabPartPriv
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|userNameTabPartPriv
+argument_list|)
 condition|)
 block|{
 name|List
@@ -31669,16 +31387,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|userNameTabPartPriv
-operator|!=
-literal|null
-operator|&&
-name|userNameTabPartPriv
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|userNameTabPartPriv
+argument_list|)
 condition|)
 block|{
 name|List
@@ -31854,16 +31568,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|userNameColumnPriv
-operator|!=
-literal|null
-operator|&&
-name|userNameColumnPriv
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|userNameColumnPriv
+argument_list|)
 condition|)
 block|{
 name|List
@@ -31980,16 +31690,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|userNameColumnPriv
-operator|!=
-literal|null
-operator|&&
-name|userNameColumnPriv
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|userNameColumnPriv
+argument_list|)
 condition|)
 block|{
 name|List
@@ -32153,16 +31859,12 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|privilegeList
-operator|!=
-literal|null
-operator|&&
-name|privilegeList
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|privilegeList
+argument_list|)
 condition|)
 block|{
 name|Iterator
@@ -33434,12 +33136,12 @@ block|}
 block|}
 if|if
 condition|(
-name|persistentObjs
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|persistentObjs
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -33526,16 +33228,12 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|privilegeList
-operator|!=
-literal|null
-operator|&&
-name|privilegeList
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|privilegeList
+argument_list|)
 condition|)
 block|{
 name|Iterator
@@ -34747,12 +34445,12 @@ block|}
 block|}
 if|if
 condition|(
-name|persistentObjs
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|persistentObjs
+argument_list|)
 condition|)
 block|{
 if|if
@@ -44347,16 +44045,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updating table level column statistics for db="
+literal|"Updating table level column statistics for db={} tableName={}"
 operator|+
-name|dbName
-operator|+
-literal|" tableName="
-operator|+
+literal|" colName={}"
+argument_list|,
 name|tableName
-operator|+
-literal|" colName="
-operator|+
+argument_list|,
+name|dbName
+argument_list|,
 name|colName
 argument_list|)
 expr_stmt|;
@@ -47341,20 +47037,27 @@ name|query
 init|=
 literal|null
 decl_stmt|;
-if|if
-condition|(
-name|dbName
-operator|==
-literal|null
-condition|)
-block|{
 name|dbName
 operator|=
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|defaultString
+argument_list|(
+name|dbName
+argument_list|,
 name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
+argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|tableName
@@ -47737,20 +47440,27 @@ name|query
 init|=
 literal|null
 decl_stmt|;
-if|if
-condition|(
-name|dbName
-operator|==
-literal|null
-condition|)
-block|{
 name|dbName
 operator|=
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|defaultString
+argument_list|(
+name|dbName
+argument_list|,
 name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
+argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|tableName
@@ -48314,8 +48024,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing addToken with status : "
-operator|+
+literal|"Done executing addToken with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -48404,8 +48114,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing removeToken with status : "
-operator|+
+literal|"Done executing removeToken with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -48494,8 +48204,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing getToken with status : "
-operator|+
+literal|"Done executing getToken with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -48626,8 +48336,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing getAllTokenIdentifers with status : "
-operator|+
+literal|"Done executing getAllTokenIdentifers with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -48708,8 +48418,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing addMasterKey with status : "
-operator|+
+literal|"Done executing addMasterKey with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -48862,8 +48572,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing updateMasterKey with status : "
-operator|+
+literal|"Done executing updateMasterKey with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -49010,8 +48720,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing removeMasterKey with status : "
-operator|+
+literal|"Done executing removeMasterKey with status : {}"
+argument_list|,
 name|success
 argument_list|)
 expr_stmt|;
@@ -49154,8 +48864,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Done executing getMasterKeys with status : "
-operator|+
+literal|"Done executing getMasterKeys with status : {}"
+argument_list|,
 name|committed
 argument_list|)
 expr_stmt|;
@@ -49287,7 +48997,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Version information not found in metastore. "
+literal|"Version information not found in metastore."
 argument_list|)
 throw|;
 block|}
@@ -49297,17 +49007,14 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Version information not found in metastore. "
+literal|"Version information not found in metastore. {} is not "
 operator|+
+literal|"enabled so recording the schema version {}"
+argument_list|,
 name|ConfVars
 operator|.
 name|SCHEMA_VERIFICATION
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" is not enabled so recording the schema version "
-operator|+
+argument_list|,
 name|hiveSchemaVer
 argument_list|)
 expr_stmt|;
@@ -49344,8 +49051,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Found expected HMS version of "
-operator|+
+literal|"Found expected HMS version of {}"
+argument_list|,
 name|dbSchemaVer
 argument_list|)
 expr_stmt|;
@@ -49380,16 +49087,14 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Version information found in metastore differs "
+literal|"Version information found in metastore differs {} "
 operator|+
+literal|"from expected schema version {}. Schema verififcation is disabled {}"
+argument_list|,
 name|dbSchemaVer
-operator|+
-literal|" from expected schema version "
-operator|+
+argument_list|,
 name|hiveSchemaVer
-operator|+
-literal|". Schema verififcation is disabled "
-operator|+
+argument_list|,
 name|ConfVars
 operator|.
 name|SCHEMA_VERIFICATION
@@ -49727,12 +49432,10 @@ name|warn
 argument_list|(
 literal|"setMetaStoreSchemaVersion called but recording version is disabled: "
 operator|+
-literal|"version = "
-operator|+
+literal|"version = {}, comment = {}"
+argument_list|,
 name|schemaVersion
-operator|+
-literal|", comment = "
-operator|+
+argument_list|,
 name|comment
 argument_list|)
 expr_stmt|;
@@ -49742,8 +49445,8 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Setting metastore schema version in db to "
-operator|+
+literal|"Setting metastore schema version in db to {}"
+argument_list|,
 name|schemaVersion
 argument_list|)
 expr_stmt|;
@@ -49884,8 +49587,10 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
+literal|"{} {}"
+argument_list|,
 name|message
-operator|+
+argument_list|,
 name|getCallStack
 argument_list|()
 argument_list|)
@@ -50182,12 +49887,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+literal|"Database does not exist"
+argument_list|,
 name|e
-argument_list|)
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -51608,15 +51310,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Attempting to acquire the DB log notification lock: "
-operator|+
-name|currentRetries
-operator|+
-literal|" out of "
-operator|+
-name|maxRetries
+literal|"Attempting to acquire the DB log notification lock: {} out of {}"
 operator|+
 literal|" retries"
+argument_list|,
+name|currentRetries
+argument_list|,
+name|maxRetries
 argument_list|,
 name|e
 argument_list|)
@@ -51794,16 +51494,12 @@ name|needToPersistId
 decl_stmt|;
 if|if
 condition|(
-name|ids
-operator|==
-literal|null
-operator|||
-name|ids
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
+name|isEmpty
+argument_list|(
+name|ids
+argument_list|)
 condition|)
 block|{
 name|mNotificationNextId
@@ -52000,16 +51696,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|toBeRemoved
-operator|!=
-literal|null
-operator|&&
-name|toBeRemoved
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|toBeRemoved
+argument_list|)
 condition|)
 block|{
 name|pm
@@ -52091,16 +51783,12 @@ literal|0
 decl_stmt|;
 if|if
 condition|(
-name|ids
-operator|!=
-literal|null
-operator|&&
-name|ids
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|ids
+argument_list|)
 condition|)
 block|{
 name|id
@@ -53216,7 +52904,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to remove cached classloaders from DataNucleus NucleusContext "
+literal|"Failed to remove cached classloaders from DataNucleus NucleusContext"
 argument_list|,
 name|e
 argument_list|)
@@ -53290,16 +52978,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cleared ClassLoaderResolverImpl: "
-operator|+
+literal|"Cleared ClassLoaderResolverImpl: {}, {}, {}"
+argument_list|,
 name|resourcesCleared
-operator|+
-literal|","
-operator|+
+argument_list|,
 name|loadedClassesCleared
-operator|+
-literal|","
-operator|+
+argument_list|,
 name|unloadedClassesCleared
 argument_list|)
 expr_stmt|;
@@ -56019,16 +55703,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tabConstraints
-operator|!=
-literal|null
-operator|&&
-name|tabConstraints
+name|CollectionUtils
 operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
+name|isNotEmpty
+argument_list|(
+name|tabConstraints
+argument_list|)
 condition|)
 block|{
 name|pm
