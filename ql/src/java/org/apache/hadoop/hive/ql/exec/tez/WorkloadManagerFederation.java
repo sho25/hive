@@ -23,6 +23,26 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -74,6 +94,21 @@ specifier|public
 class|class
 name|WorkloadManagerFederation
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|WorkloadManagerFederation
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|public
 specifier|static
 name|TezSessionState
@@ -101,17 +136,28 @@ throws|throws
 name|Exception
 block|{
 comment|// 1. If WM is not present just go to unmanaged.
-if|if
-condition|(
-operator|!
+name|WorkloadManager
+name|wm
+init|=
 name|WorkloadManager
 operator|.
-name|isInUse
-argument_list|(
-name|conf
-argument_list|)
+name|getInstance
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|wm
+operator|==
+literal|null
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Using unmanaged session - WM is not initialized"
+argument_list|)
+expr_stmt|;
 return|return
 name|getUnmanagedSession
 argument_list|(
@@ -125,17 +171,9 @@ name|isUnmanagedLlapMode
 argument_list|)
 return|;
 block|}
-name|WorkloadManager
-name|wm
-init|=
-name|WorkloadManager
-operator|.
-name|getInstance
-argument_list|()
-decl_stmt|;
-comment|// We will ask WM for preliminary mapping. This allows us to escape to the unmanaged path
-comment|// quickly in the common case. It's still possible that resource plan will be updated and
-comment|// so our preliminary mapping won't work out. We'll handle that below.
+comment|// 2. We will ask WM for a preliminary mapping. This allows us to escape to the unmanaged path
+comment|//    quickly in the common case. It's still possible that resource plan will be updated and
+comment|//    our preliminary mapping won't work out. We'll handle that below.
 if|if
 condition|(
 operator|!
@@ -147,6 +185,15 @@ name|input
 argument_list|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using unmanaged session - no mapping for "
+operator|+
+name|input
+argument_list|)
+expr_stmt|;
 return|return
 name|getUnmanagedSession
 argument_list|(
@@ -160,9 +207,19 @@ name|isUnmanagedLlapMode
 argument_list|)
 return|;
 block|}
+comment|// 3. Finally, try WM.
 try|try
 block|{
 comment|// Note: this may just block to wait for a session based on parallelism.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Getting a WM session for "
+operator|+
+name|input
+argument_list|)
+expr_stmt|;
 name|TezSessionState
 name|result
 init|=

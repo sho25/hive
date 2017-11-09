@@ -763,6 +763,20 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Updating {} with {} guaranteed tasks"
+argument_list|,
+name|session
+operator|.
+name|getSessionId
+argument_list|()
+argument_list|,
+name|intAlloc
+argument_list|)
+expr_stmt|;
 name|amCommunicator
 operator|.
 name|sendUpdateQuery

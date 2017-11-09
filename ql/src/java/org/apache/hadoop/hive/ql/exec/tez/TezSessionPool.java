@@ -1810,8 +1810,6 @@ name|getSessionId
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO: can be enable temporarily for testing
-comment|// conf.set(LlapTaskSchedulerService.LLAP_PLUGIN_ENDPOINT_ENABLED, "true");
 block|}
 block|}
 specifier|private
