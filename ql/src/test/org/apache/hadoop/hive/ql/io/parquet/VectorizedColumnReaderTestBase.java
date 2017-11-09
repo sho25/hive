@@ -517,6 +517,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|mapred
+operator|.
+name|FileSplit
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|mapreduce
 operator|.
 name|InputSplit
@@ -1484,9 +1498,10 @@ literal|0
 operator|)
 return|;
 block|}
-specifier|protected
+specifier|public
+specifier|static
 name|VectorizedParquetRecordReader
-name|createParquetReader
+name|createTestParquetReader
 parameter_list|(
 name|String
 name|schemaString
@@ -1560,6 +1575,41 @@ argument_list|,
 name|file
 argument_list|)
 expr_stmt|;
+name|initialVectorizedRowBatchCtx
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+return|return
+operator|new
+name|VectorizedParquetRecordReader
+argument_list|(
+name|getFileSplit
+argument_list|(
+name|vectorJob
+argument_list|)
+argument_list|,
+operator|new
+name|JobConf
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
+return|;
+block|}
+specifier|protected
+specifier|static
+name|FileSplit
+name|getFileSplit
+parameter_list|(
+name|Job
+name|vectorJob
+parameter_list|)
+throws|throws
+name|IOException
+throws|,
+name|InterruptedException
+block|{
 name|ParquetInputFormat
 name|parquetInputFormat
 init|=
@@ -1589,23 +1639,29 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|initialVectorizedRowBatchCtx
-argument_list|(
-name|conf
-argument_list|)
-expr_stmt|;
-return|return
+name|FileSplit
+name|fsplit
+init|=
 operator|new
-name|VectorizedParquetRecordReader
+name|FileSplit
 argument_list|(
-name|split
+name|file
 argument_list|,
-operator|new
-name|JobConf
-argument_list|(
-name|conf
+literal|0L
+argument_list|,
+name|split
+operator|.
+name|getLength
+argument_list|()
+argument_list|,
+name|split
+operator|.
+name|getLocations
+argument_list|()
 argument_list|)
-argument_list|)
+decl_stmt|;
+return|return
+name|fsplit
 return|;
 block|}
 specifier|protected
@@ -2088,6 +2144,7 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|protected
+specifier|static
 name|void
 name|initialVectorizedRowBatchCtx
 parameter_list|(
@@ -2152,6 +2209,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|static
 name|StructObjectInspector
 name|createStructObjectInspector
 parameter_list|(
@@ -2301,7 +2359,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message test { required int32 int32_field;}"
 argument_list|,
@@ -2503,7 +2561,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message test { required int64 int64_field;}"
 argument_list|,
@@ -2705,7 +2763,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message test { required double double_field;}"
 argument_list|,
@@ -2909,7 +2967,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message test { required float float_field;}"
 argument_list|,
@@ -3110,7 +3168,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message test { required boolean boolean_field;}"
 argument_list|,
@@ -3316,7 +3374,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message test { required binary binary_field_some_null;}"
 argument_list|,
@@ -3618,7 +3676,7 @@ decl_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 name|schema
 argument_list|,
@@ -3882,7 +3940,7 @@ decl_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 name|schema
 argument_list|,
@@ -4185,7 +4243,7 @@ decl_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 name|schema
 argument_list|,
@@ -4424,7 +4482,7 @@ decl_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 name|schema
 argument_list|,
@@ -4744,7 +4802,7 @@ expr_stmt|;
 name|VectorizedParquetRecordReader
 name|reader
 init|=
-name|createParquetReader
+name|createTestParquetReader
 argument_list|(
 literal|"message hive_schema { required value (DECIMAL(5,2));}"
 argument_list|,
