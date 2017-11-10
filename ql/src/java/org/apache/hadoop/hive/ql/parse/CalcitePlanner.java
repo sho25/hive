@@ -3177,28 +3177,6 @@ name|calcite
 operator|.
 name|rules
 operator|.
-name|HiveRemoveGBYSemiJoinRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|calcite
-operator|.
-name|rules
-operator|.
 name|HiveRulesRegistry
 import|;
 end_import
@@ -11644,64 +11622,7 @@ literal|"Calcite: Semijoin conversion"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 8. convert SemiJoin + GBy to SemiJoin
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|)
-expr_stmt|;
-name|calciteOptimizedPlan
-operator|=
-name|hepPlan
-argument_list|(
-name|calciteOptimizedPlan
-argument_list|,
-literal|false
-argument_list|,
-name|mdProvider
-operator|.
-name|getMetadataProvider
-argument_list|()
-argument_list|,
-literal|null
-argument_list|,
-name|HiveRemoveGBYSemiJoinRule
-operator|.
-name|INSTANCE
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|,
-literal|"Calcite: Removal of gby from semijoin"
-argument_list|)
-expr_stmt|;
-comment|// 9. Get rid of sq_count_check if group by key is constant (HIVE-)
+comment|// 8. Get rid of sq_count_check if group by key is constant (HIVE-)
 if|if
 condition|(
 name|conf
@@ -11771,7 +11692,7 @@ literal|"Calcite: Removing sq_count_check UDF "
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 10. Run rule to fix windowing issue when it is done over
+comment|// 9. Run rule to fix windowing issue when it is done over
 comment|// aggregation columns (HIVE-10627)
 if|if
 condition|(
@@ -11846,7 +11767,7 @@ literal|"Calcite: Window fixing rule"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 11. Apply Druid transformation rules
+comment|// 10. Apply Druid transformation rules
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -11947,7 +11868,7 @@ argument_list|,
 literal|"Calcite: Druid transformation rules"
 argument_list|)
 expr_stmt|;
-comment|// 12. Run rules to aid in translation from Calcite tree to Hive tree
+comment|// 11. Run rules to aid in translation from Calcite tree to Hive tree
 if|if
 condition|(
 name|HiveConf
@@ -11979,7 +11900,7 @@ operator|.
 name|OPTIMIZER
 argument_list|)
 expr_stmt|;
-comment|// 12.1. Merge join into multijoin operators (if possible)
+comment|// 11.1. Merge join into multijoin operators (if possible)
 name|calciteOptimizedPlan
 operator|=
 name|hepPlan
@@ -12112,7 +12033,7 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
-comment|// 12.2.  Introduce exchange operators below join/multijoin operators
+comment|// 11.2.  Introduce exchange operators below join/multijoin operators
 name|calciteOptimizedPlan
 operator|=
 name|hepPlan
