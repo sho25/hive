@@ -21755,6 +21755,34 @@ argument_list|)
 expr_stmt|;
 comment|// Fully copy over the contents of the new SD into the old SD,
 comment|// so we don't create an extra SD in the metastore db that has no references.
+name|MColumnDescriptor
+name|oldCD
+init|=
+literal|null
+decl_stmt|;
+name|MStorageDescriptor
+name|oldSD
+init|=
+name|oldt
+operator|.
+name|getSd
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|oldSD
+operator|!=
+literal|null
+condition|)
+block|{
+name|oldCD
+operator|=
+name|oldSD
+operator|.
+name|getCD
+argument_list|()
+expr_stmt|;
+block|}
 name|copyMSD
 argument_list|(
 name|newt
@@ -21766,6 +21794,11 @@ name|oldt
 operator|.
 name|getSd
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|removeUnusedColumnDescriptor
+argument_list|(
+name|oldCD
 argument_list|)
 expr_stmt|;
 name|oldt
@@ -21999,8 +22032,9 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|/**    * Alters an existing partition. Initiates copy of SD. Returns the old CD.    * @param dbname    * @param name    * @param part_vals Partition values (of the original partition instance)    * @param newPart Partition object containing new information    * @return The column descriptor of the old partition instance (null if table is a view)    * @throws InvalidObjectException    * @throws MetaException    */
 specifier|private
-name|void
+name|MColumnDescriptor
 name|alterPartitionNoTxn
 parameter_list|(
 name|String
@@ -22059,6 +22093,34 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
+name|MColumnDescriptor
+name|oldCD
+init|=
+literal|null
+decl_stmt|;
+name|MStorageDescriptor
+name|oldSD
+init|=
+name|oldp
+operator|.
+name|getSd
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|oldSD
+operator|!=
+literal|null
+condition|)
+block|{
+name|oldCD
+operator|=
+name|oldSD
+operator|.
+name|getCD
+argument_list|()
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|oldp
@@ -22192,6 +22254,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+name|oldCD
+return|;
 block|}
 annotation|@
 name|Override
@@ -22234,6 +22299,9 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
+name|MColumnDescriptor
+name|oldCd
+init|=
 name|alterPartitionNoTxn
 argument_list|(
 name|dbname
@@ -22243,6 +22311,11 @@ argument_list|,
 name|part_vals
 argument_list|,
 name|newPart
+argument_list|)
+decl_stmt|;
+name|removeUnusedColumnDescriptor
+argument_list|(
+name|oldCd
 argument_list|)
 expr_stmt|;
 comment|// commit the changes
@@ -22365,6 +22438,17 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
+name|Set
+argument_list|<
+name|MColumnDescriptor
+argument_list|>
+name|oldCds
+init|=
+operator|new
+name|HashSet
+argument_list|<>
+argument_list|()
+decl_stmt|;
 for|for
 control|(
 name|Partition
@@ -22384,6 +22468,9 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
+name|MColumnDescriptor
+name|oldCd
+init|=
 name|alterPartitionNoTxn
 argument_list|(
 name|dbname
@@ -22393,6 +22480,35 @@ argument_list|,
 name|tmpPartVals
 argument_list|,
 name|tmpPart
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|oldCd
+operator|!=
+literal|null
+condition|)
+block|{
+name|oldCds
+operator|.
+name|add
+argument_list|(
+name|oldCd
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+for|for
+control|(
+name|MColumnDescriptor
+name|oldCd
+range|:
+name|oldCds
+control|)
+block|{
+name|removeUnusedColumnDescriptor
+argument_list|(
+name|oldCd
 argument_list|)
 expr_stmt|;
 block|}
@@ -22476,14 +22592,6 @@ name|getLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|MColumnDescriptor
-name|oldCD
-init|=
-name|oldSd
-operator|.
-name|getCD
-argument_list|()
-decl_stmt|;
 comment|// If the columns of the old column descriptor != the columns of the new one,
 comment|// then change the old storage descriptor's column descriptor.
 comment|// Convert the MFieldSchema's to their thrift object counterparts, because we maintain
@@ -22573,13 +22681,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|//If oldCd does not have any more references, then we should delete it
-comment|// from the backend db
-name|removeUnusedColumnDescriptor
-argument_list|(
-name|oldCD
-argument_list|)
-expr_stmt|;
 name|oldSd
 operator|.
 name|setBucketCols
