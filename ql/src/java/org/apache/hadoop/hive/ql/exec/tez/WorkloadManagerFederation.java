@@ -241,7 +241,9 @@ argument_list|(
 name|wm
 operator|.
 name|getTriggerCounterNames
-argument_list|()
+argument_list|(
+name|result
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return

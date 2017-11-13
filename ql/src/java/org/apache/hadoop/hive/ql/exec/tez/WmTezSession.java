@@ -39,24 +39,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -814,6 +796,28 @@ name|killReason
 operator|=
 name|killReason
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|super
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|", poolName: "
+operator|+
+name|poolName
+operator|+
+literal|", clusterFraction: "
+operator|+
+name|clusterFraction
+return|;
 block|}
 specifier|private
 specifier|final
