@@ -12910,13 +12910,6 @@ name|getOpContext
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|TaskResult
-name|tskRes
-init|=
-operator|new
-name|TaskResult
-argument_list|()
-decl_stmt|;
 name|TaskRunner
 name|tskRun
 init|=
@@ -12924,8 +12917,6 @@ operator|new
 name|TaskRunner
 argument_list|(
 name|tsk
-argument_list|,
-name|tskRes
 argument_list|)
 decl_stmt|;
 name|cxt

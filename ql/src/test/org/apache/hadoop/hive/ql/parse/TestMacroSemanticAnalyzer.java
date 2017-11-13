@@ -369,7 +369,9 @@ argument_list|,
 name|task
 operator|.
 name|executeTask
-argument_list|()
+argument_list|(
+literal|null
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
