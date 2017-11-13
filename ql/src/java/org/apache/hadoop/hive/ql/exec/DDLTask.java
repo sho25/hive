@@ -18187,7 +18187,7 @@ operator|.
 name|getType
 argument_list|()
 decl_stmt|;
-comment|// will be null for tables, VIRTUAL_VIEW for views
+comment|// null for tables, VIRTUAL_VIEW for views, MATERIALIZED_VIEW for MVs
 if|if
 condition|(
 operator|!

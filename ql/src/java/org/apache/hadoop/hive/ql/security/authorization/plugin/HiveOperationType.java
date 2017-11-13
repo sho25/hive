@@ -191,6 +191,8 @@ name|SHOWCONF
 block|,
 name|SHOWVIEWS
 block|,
+name|SHOWMATERIALIZEDVIEWS
+block|,
 name|CREATEFUNCTION
 block|,
 name|DROPFUNCTION
