@@ -694,6 +694,9 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// hiveConf, getConf and setConf are in this class because AlterHandler extends Configurable.
+comment|// Always use the configuration from HMS Handler.  Making AlterHandler not extend Configurable
+comment|// is not in the scope of the fix for HIVE-17942.
 annotation|@
 name|Override
 specifier|public
@@ -898,7 +901,10 @@ name|validateName
 argument_list|(
 name|newTblName
 argument_list|,
-name|hiveConf
+name|handler
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -1136,7 +1142,10 @@ name|MetastoreConf
 operator|.
 name|getBoolVar
 argument_list|(
-name|hiveConf
+name|handler
+operator|.
+name|getConf
+argument_list|()
 argument_list|,
 name|MetastoreConf
 operator|.
@@ -2042,7 +2051,10 @@ name|MetaStoreUtils
 operator|.
 name|requireCalStats
 argument_list|(
-name|hiveConf
+name|handler
+operator|.
+name|getConf
+argument_list|()
 argument_list|,
 literal|null
 argument_list|,
@@ -2972,7 +2984,10 @@ name|MetaStoreUtils
 operator|.
 name|requireCalStats
 argument_list|(
-name|hiveConf
+name|handler
+operator|.
+name|getConf
+argument_list|()
 argument_list|,
 name|oldPart
 argument_list|,
@@ -3744,7 +3759,10 @@ name|MetaStoreUtils
 operator|.
 name|requireCalStats
 argument_list|(
-name|hiveConf
+name|handler
+operator|.
+name|getConf
+argument_list|()
 argument_list|,
 name|oldPart
 argument_list|,
@@ -4361,7 +4379,10 @@ name|MetaStoreUtils
 operator|.
 name|requireCalStats
 argument_list|(
-name|hiveConf
+name|handler
+operator|.
+name|getConf
+argument_list|()
 argument_list|,
 name|oldTmpPart
 argument_list|,
