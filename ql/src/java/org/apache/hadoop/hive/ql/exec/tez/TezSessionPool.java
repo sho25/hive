@@ -2521,7 +2521,7 @@ parameter_list|()
 block|{
 name|poolLock
 operator|.
-name|tryLock
+name|lock
 argument_list|()
 expr_stmt|;
 try|try

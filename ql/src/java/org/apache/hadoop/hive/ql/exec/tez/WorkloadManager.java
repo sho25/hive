@@ -37,6 +37,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collections
 import|;
 end_import
@@ -78,6 +88,16 @@ operator|.
 name|util
 operator|.
 name|IdentityHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Iterator
 import|;
 end_import
 
@@ -441,6 +461,24 @@ name|ql
 operator|.
 name|session
 operator|.
+name|KillQuery
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
 name|SessionState
 import|;
 end_import
@@ -662,7 +700,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** Workload management entry point for HS2. */
+comment|/** Workload management entry point for HS2.  * Note on how this class operates.  * There are tons of things that could be happening in parallel that are a real pain to sync.  * Therefore, it uses an actor-ish model where the master thread, in processCurrentEvents method,  * processes a bunch of events that have accumulated since the previous iteration, repeatedly  * and quickly, doing physical work via async calls or via worker threads.  * That way the bulk of the state (pools, etc.) does not require any sync, and we mostly have  * a consistent view of the conflicting events when we process things. However, that also means  * none of that state can be accessed directly - most changes that touch pool state, or interact  * with background operations like init, need to go thru eventstate; see e.g. returnAfterUse.  */
 end_comment
 
 begin_class
@@ -715,6 +753,7 @@ literal|""
 operator|+
 name|POOL_SEPARATOR
 decl_stmt|;
+comment|// Various final services, configs, etc.
 specifier|private
 specifier|final
 name|HiveConf
@@ -748,6 +787,11 @@ specifier|final
 name|String
 name|yarnQueue
 decl_stmt|;
+specifier|private
+specifier|final
+name|int
+name|amRegistryTimeoutMs
+decl_stmt|;
 comment|// Note: it's not clear that we need to track this - unlike PoolManager we don't have non-pool
 comment|//       sessions, so the pool itself could internally track the sessions it gave out, since
 comment|//       calling close on an unopened session is probably harmless.
@@ -766,30 +810,6 @@ name|IdentityHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
-specifier|private
-specifier|final
-name|int
-name|amRegistryTimeoutMs
-decl_stmt|;
-comment|// Note: pools can only be modified by the master thread.
-specifier|private
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|PoolState
-argument_list|>
-name|pools
-decl_stmt|;
-comment|// Used to make sure that waiting getSessions don't block update.
-specifier|private
-name|UserPoolMapping
-name|userPoolMapping
-decl_stmt|;
-specifier|private
-name|int
-name|totalQueryParallelism
-decl_stmt|;
 comment|// We index the get requests to make sure there are no ordering artifacts when we requeue.
 specifier|private
 specifier|final
@@ -804,10 +824,41 @@ operator|.
 name|MIN_VALUE
 argument_list|)
 decl_stmt|;
+comment|// The below group of fields (pools, etc.) can only be modified by the master thread.
 specifier|private
-name|PerPoolTriggerValidatorRunnable
-name|triggerValidatorRunnable
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|PoolState
+argument_list|>
+name|pools
 decl_stmt|;
+specifier|private
+name|int
+name|totalQueryParallelism
+decl_stmt|;
+comment|/**    * The queries being killed. This is used to sync between the background kill finishing and the    * query finishing and user returning the sessions, which can happen in separate iterations    * of the master thread processing, yet need to be aware of each other.    */
+specifier|private
+name|Map
+argument_list|<
+name|WmTezSession
+argument_list|,
+name|KillQueryContext
+argument_list|>
+name|killQueryInProgress
+init|=
+operator|new
+name|IdentityHashMap
+argument_list|<>
+argument_list|()
+decl_stmt|;
+comment|// Used to make sure that waiting getSessions don't block update.
+specifier|private
+name|UserPoolMapping
+name|userPoolMapping
+decl_stmt|;
+comment|// End of master thread state
 comment|// Note: we could use RW lock to allow concurrent calls for different sessions, however all
 comment|//       those calls do is add elements to lists and maps; and we'd need to sync those separately
 comment|//       separately, plus have an object to notify because RW lock does not support conditions
@@ -860,6 +911,20 @@ init|=
 name|one
 decl_stmt|;
 specifier|private
+specifier|final
+name|WmThreadSyncWork
+name|syncWork
+init|=
+operator|new
+name|WmThreadSyncWork
+argument_list|()
+decl_stmt|;
+comment|// End sync stuff.
+specifier|private
+name|PerPoolTriggerValidatorRunnable
+name|triggerValidatorRunnable
+decl_stmt|;
+specifier|private
 name|Map
 argument_list|<
 name|String
@@ -873,6 +938,15 @@ name|ConcurrentHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
+specifier|private
+name|SessionTriggerProvider
+name|sessionTriggerProvider
+decl_stmt|;
+specifier|private
+name|TriggerActionHandler
+name|triggerActionHandler
+decl_stmt|;
+comment|// The master thread and various workers.
 comment|/** The master thread the processes the events from EventState. */
 annotation|@
 name|VisibleForTesting
@@ -893,15 +967,7 @@ specifier|final
 name|ScheduledExecutorService
 name|timeoutPool
 decl_stmt|;
-specifier|private
-specifier|final
-name|WmThreadSyncWork
-name|syncWork
-init|=
-operator|new
-name|WmThreadSyncWork
-argument_list|()
-decl_stmt|;
+comment|// The initial plan initalization future, to wait for the plan to apply during setup.
 specifier|private
 name|ListenableFuture
 argument_list|<
@@ -958,7 +1024,6 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
-comment|// TODO: this is temporary before HiveServerEnvironment is merged.
 specifier|private
 specifier|static
 specifier|volatile
@@ -1303,6 +1368,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|static
 name|int
 name|determineQueryParallelism
 parameter_list|(
@@ -1663,6 +1729,21 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|final
+name|Map
+argument_list|<
+name|WmTezSession
+argument_list|,
+name|Boolean
+argument_list|>
+name|killQueryResults
+init|=
+operator|new
+name|IdentityHashMap
+argument_list|<>
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|final
 name|LinkedList
 argument_list|<
 name|SessionInitContext
@@ -1847,7 +1928,7 @@ class|class
 name|WmThreadSyncWork
 block|{
 specifier|private
-name|LinkedList
+name|List
 argument_list|<
 name|WmTezSession
 argument_list|>
@@ -1862,6 +1943,20 @@ name|toDestroyNoRestart
 init|=
 operator|new
 name|LinkedList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+specifier|private
+name|Map
+argument_list|<
+name|WmTezSession
+argument_list|,
+name|KillQueryContext
+argument_list|>
+name|toKillQuery
+init|=
+operator|new
+name|IdentityHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -2075,7 +2170,185 @@ name|context
 parameter_list|)
 block|{
 comment|// Do the work that cannot be done via async calls.
-comment|// 1. Restart pool sessions.
+comment|// 1. Kill queries.
+for|for
+control|(
+name|KillQueryContext
+name|killCtx
+range|:
+name|context
+operator|.
+name|toKillQuery
+operator|.
+name|values
+argument_list|()
+control|)
+block|{
+specifier|final
+name|WmTezSession
+name|toKill
+init|=
+name|killCtx
+operator|.
+name|session
+decl_stmt|;
+specifier|final
+name|String
+name|reason
+init|=
+name|killCtx
+operator|.
+name|reason
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Killing query for {}"
+argument_list|,
+name|toKill
+argument_list|)
+expr_stmt|;
+name|workPool
+operator|.
+name|submit
+argument_list|(
+parameter_list|()
+lambda|->
+block|{
+comment|// Note: we get query ID here, rather than in the caller, where it would be more correct
+comment|//       because we know which exact query we intend to kill. This is valid because we
+comment|//       are not expecting query ID to change - we never reuse the session for which a
+comment|//       query is being killed until both the kill, and the user, return it.
+name|String
+name|queryId
+init|=
+name|toKill
+operator|.
+name|getQueryId
+argument_list|()
+decl_stmt|;
+name|KillQuery
+name|kq
+init|=
+name|toKill
+operator|.
+name|getKillQuery
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|kq
+operator|!=
+literal|null
+operator|&&
+name|queryId
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Invoking KillQuery for "
+operator|+
+name|queryId
+operator|+
+literal|": "
+operator|+
+name|reason
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|kq
+operator|.
+name|killQuery
+argument_list|(
+name|queryId
+argument_list|,
+name|reason
+argument_list|)
+expr_stmt|;
+name|addKillQueryResult
+argument_list|(
+name|toKill
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Killed "
+operator|+
+name|queryId
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to kill "
+operator|+
+name|queryId
+operator|+
+literal|"; will try to restart AM instead"
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Will queue restart for {}; queryId {}, killQuery {}"
+argument_list|,
+name|toKill
+argument_list|,
+name|queryId
+argument_list|,
+name|kq
+argument_list|)
+expr_stmt|;
+block|}
+comment|// We cannot restart in place because the user might receive a failure and return the
+comment|// session to the master thread without the "irrelevant" flag set. In fact, the query might
+comment|// have succeeded in the gap and the session might already be returned. Queue restart thru
+comment|// the master thread.
+name|addKillQueryResult
+argument_list|(
+name|toKill
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+name|context
+operator|.
+name|toKillQuery
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+comment|// 2. Restart pool sessions.
 for|for
 control|(
 specifier|final
@@ -2091,11 +2364,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Replacing "
-operator|+
+literal|"Replacing {} with a new session"
+argument_list|,
 name|toRestart
-operator|+
-literal|" with a new session"
 argument_list|)
 expr_stmt|;
 name|workPool
@@ -2150,7 +2421,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 2. Destroy the sessions that we don't need anymore.
+comment|// 3. Destroy the sessions that we don't need anymore.
 for|for
 control|(
 specifier|final
@@ -2166,11 +2437,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Closing "
-operator|+
+literal|"Closing {} without restart"
+argument_list|,
 name|toDestroy
-operator|+
-literal|" without restart"
 argument_list|)
 expr_stmt|;
 name|workPool
@@ -2221,6 +2490,7 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
+comment|/**    * This is the main method of the master thread the processes one set of events.    * Be mindful of the fact that events can be queued while we are processing events, so    * in addition to making sure we keep the current set consistent (e.g. no need to handle    * update errors for a session that should already be destroyed), this needs to guard itself    * against the future iterations - e.g. what happens if we kill a query due to plan change,    * but the DAG finished before the kill happens and the user queues a "return" event? Etc.    * DO NOT block for a long time in this method.    * @param e Input events.    * @param syncWork Output tasks that cannot be called via async methods.    */
 specifier|private
 name|void
 name|processCurrentEvents
@@ -2280,7 +2550,105 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 1. Handle sessions that are being destroyed by users. Destroy implies return.
+comment|// 1. Handle kill query results - part 1, just put them in place. We will resolve what
+comment|//    to do with the sessions after we go thru all the concurrent user actions.
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|WmTezSession
+argument_list|,
+name|Boolean
+argument_list|>
+name|entry
+range|:
+name|e
+operator|.
+name|killQueryResults
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+name|WmTezSession
+name|killQuerySession
+init|=
+name|entry
+operator|.
+name|getKey
+argument_list|()
+decl_stmt|;
+name|boolean
+name|killResult
+init|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Processing KillQuery {} for {}"
+argument_list|,
+name|killResult
+condition|?
+literal|"success"
+else|:
+literal|"failure"
+argument_list|,
+name|killQuerySession
+argument_list|)
+expr_stmt|;
+comment|// Note: do not cancel any user actions here; user actions actually interact with kills.
+name|KillQueryContext
+name|killCtx
+init|=
+name|killQueryInProgress
+operator|.
+name|get
+argument_list|(
+name|killQuerySession
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|killCtx
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Internal error - cannot find the context for killing {}"
+argument_list|,
+name|killQuerySession
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
+name|killCtx
+operator|.
+name|handleKillQueryCallback
+argument_list|(
+operator|!
+name|killResult
+argument_list|)
+expr_stmt|;
+block|}
+name|e
+operator|.
+name|killQueryResults
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+comment|// 2. Handle sessions that are being destroyed by users. Destroy implies return.
 for|for
 control|(
 name|WmTezSession
@@ -2320,8 +2688,8 @@ argument_list|,
 name|sessionToDestroy
 argument_list|)
 expr_stmt|;
-name|Boolean
-name|shouldReturn
+name|RemoveSessionResult
+name|rr
 init|=
 name|handleReturnedInUseSessionOnMasterThread
 argument_list|(
@@ -2330,18 +2698,26 @@ argument_list|,
 name|sessionToDestroy
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|shouldReturn
+name|rr
 operator|==
-literal|null
+name|RemoveSessionResult
+operator|.
+name|OK
 operator|||
-name|shouldReturn
+name|rr
+operator|==
+name|RemoveSessionResult
+operator|.
+name|NOT_FOUND
 condition|)
 block|{
-comment|// Restart if this session is still relevant, even if there's an internal error.
+comment|// Restart even if there's an internal error.
 name|syncWork
 operator|.
 name|toRestartInUse
@@ -2360,7 +2736,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 2. Now handle actual returns. Sessions may be returned to the pool or may trigger expires.
+comment|// 3. Now handle actual returns. Sessions may be returned to the pool or may trigger expires.
 for|for
 control|(
 name|WmTezSession
@@ -2380,8 +2756,8 @@ argument_list|,
 name|sessionToReturn
 argument_list|)
 expr_stmt|;
-name|Boolean
-name|shouldReturn
+name|RemoveSessionResult
+name|rr
 init|=
 name|handleReturnedInUseSessionOnMasterThread
 argument_list|(
@@ -2390,33 +2766,18 @@ argument_list|,
 name|sessionToReturn
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
-if|if
+switch|switch
 condition|(
-name|shouldReturn
-operator|==
-literal|null
+name|rr
 condition|)
 block|{
-comment|// Restart if there's an internal error.
-name|syncWork
-operator|.
-name|toRestartInUse
-operator|.
-name|add
-argument_list|(
-name|sessionToReturn
-argument_list|)
-expr_stmt|;
-continue|continue;
-block|}
-if|if
-condition|(
-operator|!
-name|shouldReturn
-condition|)
-continue|continue;
+case|case
+name|OK
+case|:
 name|boolean
 name|wasReturned
 init|=
@@ -2443,6 +2804,36 @@ name|sessionToReturn
 argument_list|)
 expr_stmt|;
 block|}
+break|break;
+case|case
+name|NOT_FOUND
+case|:
+name|syncWork
+operator|.
+name|toRestartInUse
+operator|.
+name|add
+argument_list|(
+name|sessionToReturn
+argument_list|)
+expr_stmt|;
+comment|// Restart if there's an internal error.
+break|break;
+case|case
+name|IGNORE
+case|:
+break|break;
+default|default:
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Unknown state "
+operator|+
+name|rr
+argument_list|)
+throw|;
+block|}
 block|}
 name|e
 operator|.
@@ -2451,7 +2842,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 3. Reopen is essentially just destroy + get a new session for a session in use.
+comment|// 4. Reopen is essentially just destroy + get a new session for a session in use.
 for|for
 control|(
 name|Map
@@ -2514,7 +2905,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 4. All the sessions in use that were not destroyed or returned with a failed update now die.
+comment|// 5. All the sessions in use that were not destroyed or returned with a failed update now die.
 for|for
 control|(
 name|WmTezSession
@@ -2553,7 +2944,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 5. Now apply a resource plan if any. This is expected to be pretty rare.
+comment|// 6. Now apply a resource plan if any. This is expected to be pretty rare.
 name|boolean
 name|hasRequeues
 init|=
@@ -2612,22 +3003,13 @@ name|resourcePlanToApply
 operator|=
 literal|null
 expr_stmt|;
-comment|// 6. Handle any move session requests. The way move session works right now is
+comment|// 7. Handle any move session requests. The way move session works right now is
 comment|// a) sessions get moved to destination pool if there is capacity in destination pool
 comment|// b) if there is no capacity in destination pool, the session gets killed (since we cannot pause a query)
 comment|// TODO: in future this the process of killing can be delayed until the point where a session is actually required.
 comment|// We could consider delaying the move (when destination capacity is full) until there is claim in src pool.
 comment|// May be change command to support ... DELAYED MOVE TO etl ... which will run under src cluster fraction as long
 comment|// as possible
-if|if
-condition|(
-name|e
-operator|.
-name|moveSessions
-operator|!=
-literal|null
-condition|)
-block|{
 for|for
 control|(
 name|MoveSession
@@ -2648,7 +3030,6 @@ name|poolsToRedistribute
 argument_list|)
 expr_stmt|;
 block|}
-block|}
 name|e
 operator|.
 name|moveSessions
@@ -2656,7 +3037,7 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 7. Handle all the get/reuse requests. We won't actually give out anything here, but merely
+comment|// 8. Handle all the get/reuse requests. We won't actually give out anything here, but merely
 comment|//    map all the requests and place them in an appropriate order in pool queues. The only
 comment|//    exception is the reuse without queue contention; can be granted immediately. If we can't
 comment|//    reuse the session immediately, we will convert the reuse to a normal get, because we
@@ -2708,7 +3089,151 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-comment|// 8. If there was a cluster state change, make sure we redistribute all the pools.
+comment|// 9. Resolve all the kill query requests in flight. Nothing below can affect them.
+name|Iterator
+argument_list|<
+name|KillQueryContext
+argument_list|>
+name|iter
+init|=
+name|killQueryInProgress
+operator|.
+name|values
+argument_list|()
+operator|.
+name|iterator
+argument_list|()
+decl_stmt|;
+while|while
+condition|(
+name|iter
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+name|KillQueryContext
+name|ctx
+init|=
+name|iter
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+name|KillQueryResult
+name|kr
+init|=
+name|ctx
+operator|.
+name|process
+argument_list|()
+decl_stmt|;
+switch|switch
+condition|(
+name|kr
+condition|)
+block|{
+case|case
+name|IN_PROGRESS
+case|:
+continue|continue;
+comment|// Either the user or the kill is not done yet.
+case|case
+name|OK
+case|:
+block|{
+name|iter
+operator|.
+name|remove
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Kill query succeeded; returning to the pool: {}"
+argument_list|,
+name|ctx
+operator|.
+name|session
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|tezAmPool
+operator|.
+name|returnSessionAsync
+argument_list|(
+name|ctx
+operator|.
+name|session
+argument_list|)
+condition|)
+block|{
+name|syncWork
+operator|.
+name|toDestroyNoRestart
+operator|.
+name|add
+argument_list|(
+name|ctx
+operator|.
+name|session
+argument_list|)
+expr_stmt|;
+block|}
+break|break;
+block|}
+case|case
+name|RESTART_REQUIRED
+case|:
+block|{
+name|iter
+operator|.
+name|remove
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Kill query failed; restarting: {}"
+argument_list|,
+name|ctx
+operator|.
+name|session
+argument_list|)
+expr_stmt|;
+comment|// Note: we assume here the session, before we resolve killQuery result here, is still
+comment|//       "in use". That is because all the user ops above like return, reopen, etc.
+comment|//       don't actually return/reopen/... when kill query is in progress.
+name|syncWork
+operator|.
+name|toRestartInUse
+operator|.
+name|add
+argument_list|(
+name|ctx
+operator|.
+name|session
+argument_list|)
+expr_stmt|;
+break|break;
+block|}
+default|default:
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Unknown state "
+operator|+
+name|kr
+argument_list|)
+throw|;
+block|}
+block|}
+comment|// 10. If there was a cluster state change, make sure we redistribute all the pools.
 if|if
 condition|(
 name|e
@@ -2740,7 +3265,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|// 9. Finally, for all the pools that have changes, promote queued queries and rebalance.
+comment|// 11. Finally, for all the pools that have changes, promote queued queries and rebalance.
 for|for
 control|(
 name|String
@@ -2786,7 +3311,50 @@ name|hasRequeues
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 10. Notify tests and global async ops.
+comment|// 12. Save state for future iterations.
+for|for
+control|(
+name|KillQueryContext
+name|killCtx
+range|:
+name|syncWork
+operator|.
+name|toKillQuery
+operator|.
+name|values
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|killQueryInProgress
+operator|.
+name|put
+argument_list|(
+name|killCtx
+operator|.
+name|session
+argument_list|,
+name|killCtx
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"One query killed several times - internal error {}"
+argument_list|,
+name|killCtx
+operator|.
+name|session
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// 13. Notify tests and global async ops.
 if|if
 condition|(
 name|e
@@ -2887,8 +3455,8 @@ argument_list|)
 condition|)
 block|{
 comment|// remove from src pool
-name|Boolean
-name|removed
+name|RemoveSessionResult
+name|rr
 init|=
 name|checkAndRemoveSessionFromItsPool
 argument_list|(
@@ -2897,15 +3465,17 @@ operator|.
 name|srcSession
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|removed
-operator|!=
-literal|null
-operator|&&
-name|removed
+name|rr
+operator|==
+name|RemoveSessionResult
+operator|.
+name|OK
 condition|)
 block|{
 comment|// check if there is capacity in dest pool, if so move else kill the session
@@ -3344,7 +3914,7 @@ block|}
 block|}
 block|}
 specifier|private
-name|Boolean
+name|RemoveSessionResult
 name|handleReturnedInUseSessionOnMasterThread
 parameter_list|(
 name|EventState
@@ -3358,6 +3928,9 @@ argument_list|<
 name|String
 argument_list|>
 name|poolsToRedistribute
+parameter_list|,
+name|boolean
+name|isReturn
 parameter_list|)
 block|{
 comment|// This handles the common logic for destroy and return - everything except
@@ -3456,6 +4029,8 @@ argument_list|(
 name|session
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+name|isReturn
 argument_list|)
 return|;
 block|}
@@ -3551,74 +4126,27 @@ operator|.
 name|getPoolName
 argument_list|()
 decl_stmt|;
-name|Boolean
-name|isRemoved
+name|RemoveSessionResult
+name|rr
 init|=
 name|checkAndRemoveSessionFromItsPool
 argument_list|(
 name|session
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
-comment|// If we fail to remove, it's probably an internal error. We'd try to handle it the same way
-comment|// as above - by restarting the session. We'd fail the caller to avoid exceeding parallelism.
-if|if
+switch|switch
 condition|(
-name|isRemoved
-operator|==
-literal|null
+name|rr
 condition|)
 block|{
-name|future
-operator|.
-name|setException
-argument_list|(
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Reopen failed due to an internal error"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|syncWork
-operator|.
-name|toRestartInUse
-operator|.
-name|add
-argument_list|(
-name|session
-argument_list|)
-expr_stmt|;
-return|return;
-block|}
-elseif|else
-if|if
-condition|(
-operator|!
-name|isRemoved
-condition|)
-block|{
-name|future
-operator|.
-name|setException
-argument_list|(
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"WM killed this session during reopen: "
-operator|+
-name|session
-operator|.
-name|getReasonForKill
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-return|return;
-comment|// No longer relevant for WM - bail.
-block|}
-comment|// If pool didn't exist, removeSessionFromItsPool would have returned null.
+case|case
+name|OK
+case|:
+comment|// If pool didn't exist, checkAndRemoveSessionFromItsPool wouldn't have returned OK.
 name|PoolState
 name|pool
 init|=
@@ -3638,6 +4166,11 @@ argument_list|(
 name|future
 argument_list|,
 name|poolName
+argument_list|,
+name|session
+operator|.
+name|getQueryId
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// We have just removed the session from the same pool, so don't check concurrency here.
@@ -3679,6 +4212,67 @@ argument_list|(
 name|session
 argument_list|)
 expr_stmt|;
+return|return;
+case|case
+name|IGNORE
+case|:
+comment|// Reopen implies the use of the reopened session for the same query that we gave it out
+comment|// for; so, as we would have failed an active query, fail the user before it's started.
+name|future
+operator|.
+name|setException
+argument_list|(
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"WM killed this session during reopen: "
+operator|+
+name|session
+operator|.
+name|getReasonForKill
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+return|return;
+comment|// No longer relevant for WM.
+case|case
+name|NOT_FOUND
+case|:
+comment|// If we fail to remove, it's probably an internal error. We'd try to handle it the same way
+comment|// as above - by restarting the session. We'd fail the caller to avoid exceeding parallelism.
+name|future
+operator|.
+name|setException
+argument_list|(
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Reopen failed due to an internal error"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|syncWork
+operator|.
+name|toRestartInUse
+operator|.
+name|add
+argument_list|(
+name|session
+argument_list|)
+expr_stmt|;
+return|return;
+default|default:
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Unknown state "
+operator|+
+name|rr
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|private
 name|void
@@ -3730,33 +4324,32 @@ block|}
 comment|// TODO: we should communicate this to the user more explicitly (use kill query API, or
 comment|//       add an option for bg kill checking to TezTask/monitor?
 comment|// We are assuming the update-error AM is bad and just try to kill it.
-name|Boolean
-name|isRemoved
+name|RemoveSessionResult
+name|rr
 init|=
 name|checkAndRemoveSessionFromItsPool
 argument_list|(
 name|sessionWithUpdateError
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
-if|if
+switch|switch
 condition|(
-name|isRemoved
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|isRemoved
+name|rr
 condition|)
 block|{
-comment|// An update error for some session that was actually already killed by us.
-return|return;
-block|}
+case|case
+name|OK
+case|:
+case|case
+name|NOT_FOUND
+case|:
 comment|// Regardless whether it was removed successfully or after failing to remove, restart it.
 comment|// Since we just restart this from under the user, mark it so we handle it properly when
 comment|// the user tries to actually use this session and fails, proceeding to return/destroy it.
-comment|// TODO: propagate this error to TezJobMonitor somehow, after we add the use of KillQuery.
 name|sessionWithUpdateError
 operator|.
 name|setIsIrrelevantForWm
@@ -3764,6 +4357,7 @@ argument_list|(
 literal|"Failed to update resource allocation"
 argument_list|)
 expr_stmt|;
+comment|// We assume AM might be bad so we will not try to kill the query here; just scrap the AM.
 name|syncWork
 operator|.
 name|toRestartInUse
@@ -3773,6 +4367,23 @@ argument_list|(
 name|sessionWithUpdateError
 argument_list|)
 expr_stmt|;
+break|break;
+case|case
+name|IGNORE
+case|:
+return|return;
+comment|// An update error for some session that was actually already killed by us.
+default|default:
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Unknown state "
+operator|+
+name|rr
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|private
 name|void
@@ -3824,7 +4435,7 @@ name|getDefaultPoolPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -4088,7 +4699,7 @@ name|fraction
 argument_list|,
 name|syncWork
 operator|.
-name|toRestartInUse
+name|toKillQuery
 argument_list|,
 name|e
 argument_list|)
@@ -4308,7 +4919,7 @@ name|destroy
 argument_list|(
 name|syncWork
 operator|.
-name|toRestartInUse
+name|toKillQuery
 argument_list|,
 name|e
 operator|.
@@ -4362,58 +4973,39 @@ operator|<
 literal|0
 condition|)
 block|{
-comment|// First, see if we have unused sessions that we were planning to restart; get rid of those.
-name|int
-name|toTransfer
-init|=
-name|Math
-operator|.
-name|min
-argument_list|(
-operator|-
+comment|// First, see if we have sessions that we were planning to restart/kill; get rid of those.
 name|deltaSessions
+operator|=
+name|transferSessionsToDestroy
+argument_list|(
+name|syncWork
+operator|.
+name|toKillQuery
+operator|.
+name|keySet
+argument_list|()
 argument_list|,
 name|syncWork
 operator|.
-name|toRestartInUse
-operator|.
-name|size
-argument_list|()
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|toTransfer
-condition|;
-operator|++
-name|i
-control|)
-block|{
-name|syncWork
-operator|.
 name|toDestroyNoRestart
-operator|.
-name|add
+argument_list|,
+name|deltaSessions
+argument_list|)
+expr_stmt|;
+name|deltaSessions
+operator|=
+name|transferSessionsToDestroy
 argument_list|(
 name|syncWork
 operator|.
 name|toRestartInUse
+argument_list|,
+name|syncWork
 operator|.
-name|pollFirst
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
+name|toDestroyNoRestart
+argument_list|,
 name|deltaSessions
-operator|+=
-name|toTransfer
+argument_list|)
 expr_stmt|;
 block|}
 if|if
@@ -4438,6 +5030,133 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|private
+specifier|static
+name|int
+name|transferSessionsToDestroy
+parameter_list|(
+name|Collection
+argument_list|<
+name|WmTezSession
+argument_list|>
+name|source
+parameter_list|,
+name|List
+argument_list|<
+name|WmTezSession
+argument_list|>
+name|toDestroy
+parameter_list|,
+name|int
+name|deltaSessions
+parameter_list|)
+block|{
+comment|// We were going to kill some queries and reuse the sessions, or maybe restart and put the new
+comment|// ones back into the AM pool. However, the AM pool has shrunk, so we will close them instead.
+if|if
+condition|(
+name|deltaSessions
+operator|>=
+literal|0
+condition|)
+return|return
+name|deltaSessions
+return|;
+name|int
+name|toTransfer
+init|=
+name|Math
+operator|.
+name|min
+argument_list|(
+operator|-
+name|deltaSessions
+argument_list|,
+name|source
+operator|.
+name|size
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Iterator
+argument_list|<
+name|WmTezSession
+argument_list|>
+name|iter
+init|=
+name|source
+operator|.
+name|iterator
+argument_list|()
+decl_stmt|;
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|toTransfer
+condition|;
+operator|++
+name|i
+control|)
+block|{
+name|WmTezSession
+name|session
+init|=
+name|iter
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Will destroy {} instead of restarting"
+argument_list|,
+name|session
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|session
+operator|.
+name|isIrrelevantForWm
+argument_list|()
+condition|)
+block|{
+name|session
+operator|.
+name|setIsIrrelevantForWm
+argument_list|(
+literal|"Killed due to workload management plan change"
+argument_list|)
+expr_stmt|;
+block|}
+name|toDestroy
+operator|.
+name|add
+argument_list|(
+name|session
+argument_list|)
+expr_stmt|;
+name|iter
+operator|.
+name|remove
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+name|deltaSessions
+operator|+
+name|toTransfer
+return|;
 block|}
 annotation|@
 name|SuppressWarnings
@@ -4607,8 +5326,8 @@ argument_list|(
 name|oldPoolName
 argument_list|)
 expr_stmt|;
-name|Boolean
-name|isRemoved
+name|RemoveSessionResult
+name|rr
 init|=
 name|checkAndRemoveSessionFromItsPool
 argument_list|(
@@ -4617,19 +5336,20 @@ operator|.
 name|sessionToReuse
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isRemoved
-operator|==
-literal|null
-operator|||
-operator|!
-name|isRemoved
+name|rr
+operator|!=
+name|RemoveSessionResult
+operator|.
+name|OK
 condition|)
 block|{
-comment|// This is probably an internal error... abandon the reuse attempt.
+comment|// Abandon the reuse attempt.
 name|returnSessionOnFailedReuse
 argument_list|(
 name|req
@@ -4712,6 +5432,17 @@ operator|.
 name|setQueueName
 argument_list|(
 name|yarnQueue
+argument_list|)
+expr_stmt|;
+name|req
+operator|.
+name|sessionToReuse
+operator|.
+name|setQueryId
+argument_list|(
+name|req
+operator|.
+name|queryId
 argument_list|)
 expr_stmt|;
 name|pool
@@ -4915,6 +5646,10 @@ operator|.
 name|future
 argument_list|,
 name|poolName
+argument_list|,
+name|queueReq
+operator|.
+name|queryId
 argument_list|)
 decl_stmt|;
 name|ListenableFuture
@@ -5014,15 +5749,26 @@ argument_list|>
 name|poolsToRedistribute
 parameter_list|)
 block|{
-if|if
-condition|(
+name|WmTezSession
+name|session
+init|=
 name|req
 operator|.
 name|sessionToReuse
+decl_stmt|;
+if|if
+condition|(
+name|session
 operator|==
 literal|null
 condition|)
 return|return;
+name|req
+operator|.
+name|sessionToReuse
+operator|=
+literal|null
+expr_stmt|;
 if|if
 condition|(
 name|poolsToRedistribute
@@ -5030,27 +5776,46 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|Boolean
-name|isRemoved
+name|RemoveSessionResult
+name|rr
 init|=
 name|checkAndRemoveSessionFromItsPool
 argument_list|(
-name|req
-operator|.
-name|sessionToReuse
+name|session
 argument_list|,
 name|poolsToRedistribute
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
-comment|// The session cannot have been killed; this happens after all the kills in the current
-comment|// iteration, so we would have cleared sessionToReuse when killing this.
-assert|assert
-name|isRemoved
+comment|// The session cannot have been killed just now; this happens after all the kills in
+comment|// the current iteration, so we would have cleared sessionToReuse when killing this.
+name|boolean
+name|isOk
+init|=
+operator|(
+name|rr
 operator|==
-literal|null
+name|RemoveSessionResult
+operator|.
+name|OK
+operator|)
+decl_stmt|;
+assert|assert
+name|isOk
 operator|||
-name|isRemoved
+name|rr
+operator|==
+name|RemoveSessionResult
+operator|.
+name|IGNORE
 assert|;
+if|if
+condition|(
+operator|!
+name|isOk
+condition|)
+return|return;
 block|}
 if|if
 condition|(
@@ -5059,9 +5824,7 @@ name|tezAmPool
 operator|.
 name|returnSessionAsync
 argument_list|(
-name|req
-operator|.
-name|sessionToReuse
+name|session
 argument_list|)
 condition|)
 block|{
@@ -5071,22 +5834,31 @@ name|toDestroyNoRestart
 operator|.
 name|add
 argument_list|(
-name|req
-operator|.
-name|sessionToReuse
+name|session
 argument_list|)
 expr_stmt|;
 block|}
-name|req
-operator|.
-name|sessionToReuse
-operator|=
-literal|null
-expr_stmt|;
 block|}
-comment|/**    * Checks if the session is still relevant for WM and if yes, removes it from its thread.    * @return true if the session was removed; false if the session was already processed by WM    *         thread (so we are dealing with an outdated request); null if the session should be    *         in WM but wasn't found in the requisite pool (internal error?).    */
+comment|/** The result of trying to remove a presumably-active session from a pool on a user request. */
 specifier|private
-name|Boolean
+specifier|static
+enum|enum
+name|RemoveSessionResult
+block|{
+name|OK
+block|,
+comment|// Normal case - an active session was removed from the pool.
+name|IGNORE
+block|,
+comment|// Session was restarted out of bounds, any user-side handling should be ignored.
+comment|// Or, session is being killed, need to coordinate between that and the user.
+comment|// These two cases don't need to be distinguished for now.
+name|NOT_FOUND
+comment|// The session is active but not found in the pool - internal error.
+block|}
+comment|/**    * Checks if the session is still relevant for WM and if yes, removes it from its thread.    * @param isSessionOk Whether the user thinks the session being returned in some way is ok;    *                    true means it is (return, reuse); false mean it isn't (reopen, destroy);    *                    null means this is not a user call.    * @return true if the session was removed; false if the session was already processed by WM    *         thread (so we are dealing with an outdated request); null if the session should be    *         in WM but wasn't found in the requisite pool (internal error?).    */
+specifier|private
+name|RemoveSessionResult
 name|checkAndRemoveSessionFromItsPool
 parameter_list|(
 name|WmTezSession
@@ -5097,6 +5869,9 @@ argument_list|<
 name|String
 argument_list|>
 name|poolsToRedistribute
+parameter_list|,
+name|Boolean
+name|isSessionOk
 parameter_list|)
 block|{
 comment|// It is possible for some request to be queued after a main thread has decided to kill this
@@ -5110,7 +5885,46 @@ argument_list|()
 condition|)
 block|{
 return|return
-literal|false
+name|RemoveSessionResult
+operator|.
+name|IGNORE
+return|;
+block|}
+if|if
+condition|(
+name|killQueryInProgress
+operator|.
+name|containsKey
+argument_list|(
+name|session
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
+name|isSessionOk
+operator|!=
+literal|null
+condition|)
+block|{
+name|killQueryInProgress
+operator|.
+name|get
+argument_list|(
+name|session
+argument_list|)
+operator|.
+name|handleUserCallback
+argument_list|(
+operator|!
+name|isSessionOk
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|RemoveSessionResult
+operator|.
+name|IGNORE
 return|;
 block|}
 comment|// If we did not kill this session we expect everything to be present.
@@ -5168,7 +5982,9 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|true
+name|RemoveSessionResult
+operator|.
+name|OK
 return|;
 block|}
 block|}
@@ -5186,7 +6002,9 @@ name|session
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+name|RemoveSessionResult
+operator|.
+name|NOT_FOUND
 return|;
 block|}
 specifier|private
@@ -5534,10 +6352,18 @@ name|WmTezSession
 name|sessionToReuse
 decl_stmt|;
 specifier|private
+specifier|final
+name|String
+name|queryId
+decl_stmt|;
+specifier|private
 name|GetRequest
 parameter_list|(
 name|MappingInput
 name|mappingInput
+parameter_list|,
+name|String
+name|queryId
 parameter_list|,
 name|SettableFuture
 argument_list|<
@@ -5562,6 +6388,12 @@ operator|.
 name|mappingInput
 operator|=
 name|mappingInput
+expr_stmt|;
+name|this
+operator|.
+name|queryId
+operator|=
+name|queryId
 expr_stmt|;
 name|this
 operator|.
@@ -5628,6 +6460,22 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|String
+name|queryId
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEQUERYID
+argument_list|)
+decl_stmt|;
 name|SettableFuture
 argument_list|<
 name|WmTezSession
@@ -5654,6 +6502,8 @@ operator|new
 name|GetRequest
 argument_list|(
 name|input
+argument_list|,
+name|queryId
 argument_list|,
 name|future
 argument_list|,
@@ -5925,6 +6775,48 @@ operator|.
 name|add
 argument_list|(
 name|wmTezSession
+argument_list|)
+expr_stmt|;
+name|notifyWmThreadUnderLock
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|currentLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+specifier|private
+name|void
+name|addKillQueryResult
+parameter_list|(
+name|WmTezSession
+name|toKill
+parameter_list|,
+name|boolean
+name|success
+parameter_list|)
+block|{
+name|currentLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|current
+operator|.
+name|killQueryResults
+operator|.
+name|put
+argument_list|(
+name|toKill
+argument_list|,
+name|success
 argument_list|)
 expr_stmt|;
 name|notifyWmThreadUnderLock
@@ -6963,9 +7855,11 @@ parameter_list|,
 name|double
 name|fraction
 parameter_list|,
-name|List
+name|Map
 argument_list|<
 name|WmTezSession
+argument_list|,
+name|KillQueryContext
 argument_list|>
 name|toKill
 parameter_list|,
@@ -7048,9 +7942,11 @@ specifier|public
 name|void
 name|destroy
 parameter_list|(
-name|List
+name|Map
 argument_list|<
 name|WmTezSession
+argument_list|,
+name|KillQueryContext
 argument_list|>
 name|toKill
 parameter_list|,
@@ -7219,9 +8115,11 @@ name|GetRequest
 argument_list|>
 name|toReuse
 parameter_list|,
-name|List
+name|Map
 argument_list|<
 name|WmTezSession
+argument_list|,
+name|KillQueryContext
 argument_list|>
 name|toKill
 parameter_list|)
@@ -7238,16 +8136,22 @@ name|resetRemovedSession
 argument_list|(
 name|sessionToKill
 argument_list|,
-name|killReason
-argument_list|,
 name|toReuse
 argument_list|)
 expr_stmt|;
 name|toKill
 operator|.
-name|add
+name|put
 argument_list|(
 name|sessionToKill
+argument_list|,
+operator|new
+name|KillQueryContext
+argument_list|(
+name|sessionToKill
+argument_list|,
+name|killReason
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -7290,16 +8194,22 @@ name|resetRemovedSession
 argument_list|(
 name|sessionToKill
 argument_list|,
-name|killReason
-argument_list|,
 name|toReuse
 argument_list|)
 expr_stmt|;
 name|toKill
 operator|.
-name|add
+name|put
 argument_list|(
 name|sessionToKill
+argument_list|,
+operator|new
+name|KillQueryContext
+argument_list|(
+name|sessionToKill
+argument_list|,
+name|killReason
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -7316,9 +8226,6 @@ parameter_list|(
 name|WmTezSession
 name|sessionToKill
 parameter_list|,
-name|String
-name|killReason
-parameter_list|,
 name|IdentityHashMap
 argument_list|<
 name|WmTezSession
@@ -7328,18 +8235,6 @@ argument_list|>
 name|toReuse
 parameter_list|)
 block|{
-assert|assert
-name|killReason
-operator|!=
-literal|null
-assert|;
-name|sessionToKill
-operator|.
-name|setIsIrrelevantForWm
-argument_list|(
-name|killReason
-argument_list|)
-expr_stmt|;
 name|sessionToKill
 operator|.
 name|clearWm
@@ -7433,6 +8328,8 @@ specifier|private
 specifier|final
 name|String
 name|poolName
+decl_stmt|,
+name|queryId
 decl_stmt|;
 specifier|private
 specifier|final
@@ -7473,6 +8370,9 @@ name|future
 parameter_list|,
 name|String
 name|poolName
+parameter_list|,
+name|String
+name|queryId
 parameter_list|)
 block|{
 name|this
@@ -7494,6 +8394,12 @@ operator|.
 name|poolName
 operator|=
 name|poolName
+expr_stmt|;
+name|this
+operator|.
+name|queryId
+operator|=
+name|queryId
 expr_stmt|;
 block|}
 annotation|@
@@ -7567,6 +8473,13 @@ operator|.
 name|setQueueName
 argument_list|(
 name|yarnQueue
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
+name|setQueryId
+argument_list|(
+name|queryId
 argument_list|)
 expr_stmt|;
 name|this
@@ -7759,6 +8672,13 @@ operator|.
 name|setClusterFraction
 argument_list|(
 literal|0f
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
+name|setQueryId
+argument_list|(
+literal|null
 argument_list|)
 expr_stmt|;
 name|tezAmPool
@@ -8164,6 +9084,233 @@ argument_list|)
 operator|!=
 literal|null
 return|;
+block|}
+specifier|private
+specifier|static
+enum|enum
+name|KillQueryResult
+block|{
+name|OK
+block|,
+name|RESTART_REQUIRED
+block|,
+name|IN_PROGRESS
+block|}
+comment|/**    * When we kill a query without killing a session, we need two things to come back before reuse.    * First of all, kill query itself should come back, and second the user should handle it    * and let go of the session (or, the query could finish and it could give the session back    * even before we try to kill the query). We also need to handle cases where the user doesn't    * like the session even before we kill it, or the kill fails and the user is happily computing    * away. This class is to collect and make sense of the state around all this.    */
+specifier|private
+specifier|static
+specifier|final
+class|class
+name|KillQueryContext
+block|{
+specifier|private
+specifier|final
+name|String
+name|reason
+decl_stmt|;
+specifier|private
+specifier|final
+name|WmTezSession
+name|session
+decl_stmt|;
+comment|// Note: all the fields are only modified by master thread.
+specifier|private
+name|boolean
+name|isUserDone
+init|=
+literal|false
+decl_stmt|,
+name|isKillDone
+init|=
+literal|false
+decl_stmt|,
+name|hasKillFailed
+init|=
+literal|false
+decl_stmt|,
+name|hasUserFailed
+init|=
+literal|false
+decl_stmt|;
+specifier|public
+name|KillQueryContext
+parameter_list|(
+name|WmTezSession
+name|session
+parameter_list|,
+name|String
+name|reason
+parameter_list|)
+block|{
+name|this
+operator|.
+name|session
+operator|=
+name|session
+expr_stmt|;
+name|this
+operator|.
+name|reason
+operator|=
+name|reason
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|handleKillQueryCallback
+parameter_list|(
+name|boolean
+name|hasFailed
+parameter_list|)
+block|{
+name|isKillDone
+operator|=
+literal|true
+expr_stmt|;
+name|hasKillFailed
+operator|=
+name|hasFailed
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|handleUserCallback
+parameter_list|(
+name|boolean
+name|hasFailed
+parameter_list|)
+block|{
+if|if
+condition|(
+name|isUserDone
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Duplicate user call for a session being killed; ignoring"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+name|isUserDone
+operator|=
+literal|true
+expr_stmt|;
+name|hasUserFailed
+operator|=
+name|hasFailed
+expr_stmt|;
+block|}
+specifier|private
+name|KillQueryResult
+name|process
+parameter_list|()
+block|{
+if|if
+condition|(
+operator|!
+name|isUserDone
+operator|&&
+name|hasKillFailed
+condition|)
+block|{
+comment|// The user has not returned and the kill has failed.
+comment|// We are going to brute force kill the AM; whatever user does is now irrelevant.
+name|session
+operator|.
+name|setIsIrrelevantForWm
+argument_list|(
+name|reason
+argument_list|)
+expr_stmt|;
+return|return
+name|KillQueryResult
+operator|.
+name|RESTART_REQUIRED
+return|;
+block|}
+if|if
+condition|(
+operator|!
+name|isUserDone
+operator|||
+operator|!
+name|isKillDone
+condition|)
+return|return
+name|KillQueryResult
+operator|.
+name|IN_PROGRESS
+return|;
+comment|// Someone is not done.
+comment|// Both user and the kill have returned.
+if|if
+condition|(
+name|hasUserFailed
+operator|&&
+name|hasKillFailed
+condition|)
+block|{
+comment|// If the kill failed and the user also thinks the session is invalid, restart it.
+name|session
+operator|.
+name|setIsIrrelevantForWm
+argument_list|(
+name|reason
+argument_list|)
+expr_stmt|;
+return|return
+name|KillQueryResult
+operator|.
+name|RESTART_REQUIRED
+return|;
+block|}
+comment|// Otherwise, we can reuse the session. Either the kill has failed but the user managed to
+comment|// return early (in fact, can it fail because the query has completed earlier?), or the user
+comment|// has failed because the query was killed from under it.
+return|return
+name|KillQueryResult
+operator|.
+name|OK
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"KillQueryContext [isUserDone="
+operator|+
+name|isUserDone
+operator|+
+literal|", isKillDone="
+operator|+
+name|isKillDone
+operator|+
+literal|", hasKillFailed="
+operator|+
+name|hasKillFailed
+operator|+
+literal|", hasUserFailed="
+operator|+
+name|hasUserFailed
+operator|+
+literal|", session="
+operator|+
+name|session
+operator|+
+literal|", reason="
+operator|+
+name|reason
+operator|+
+literal|"]"
+return|;
+block|}
 block|}
 annotation|@
 name|VisibleForTesting

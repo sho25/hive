@@ -4006,6 +4006,27 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
+name|TezSessionPool
+argument_list|<
+name|WmTezSession
+argument_list|>
+name|tezAmPool
+init|=
+name|wm
+operator|.
+name|getTezAmPool
+argument_list|()
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|6
+argument_list|,
+name|tezAmPool
+operator|.
+name|getCurrentSize
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// A: 1/1 running, 1 queued; B: 2/2 running, C: 1/2 running, D: 1/1 running, 1 queued.
 comment|// Total: 5/6 running.
 name|WmTezSession
@@ -4246,6 +4267,16 @@ argument_list|,
 name|EPSILON
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|tezAmPool
+operator|.
+name|getCurrentSize
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Change the resource plan - resize B and C down, D up, and remove A remapping users to B.
 comment|// Everything will be killed in A and B, C won't change, D will start one more query from
 comment|// the queue, and the query queued in A will be re-queued in B and started.
@@ -4466,6 +4497,16 @@ argument_list|(
 name|sessionB2
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|tezAmPool
+operator|.
+name|getCurrentSize
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Wait for another iteration to make sure event gets processed for D2 to receive allocation.
 name|sessionA2
 operator|.
@@ -4490,6 +4531,7 @@ argument_list|,
 name|EPSILON
 argument_list|)
 expr_stmt|;
+comment|// Return itself should be a no-op - the pool went from 6 to 4 with 1 session in the pool.
 name|sessionD2
 operator|.
 name|get
@@ -4528,10 +4570,7 @@ name|assertEquals
 argument_list|(
 literal|4
 argument_list|,
-name|wm
-operator|.
-name|getTezAmPool
-argument_list|()
+name|tezAmPool
 operator|.
 name|getCurrentSize
 argument_list|()
