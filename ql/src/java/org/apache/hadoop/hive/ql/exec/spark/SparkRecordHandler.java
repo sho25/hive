@@ -291,6 +291,12 @@ name|nextLogThreshold
 init|=
 literal|1
 decl_stmt|;
+specifier|protected
+name|boolean
+name|anyRow
+init|=
+literal|false
+decl_stmt|;
 specifier|public
 parameter_list|<
 name|K
