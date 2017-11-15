@@ -1032,7 +1032,7 @@ specifier|public
 class|class
 name|TezSessionState
 block|{
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|Logger

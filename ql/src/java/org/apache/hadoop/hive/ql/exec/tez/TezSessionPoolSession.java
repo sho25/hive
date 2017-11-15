@@ -1069,6 +1069,9 @@ name|updateFromRegistry
 parameter_list|(
 name|TezAmInstance
 name|si
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
 comment|// Nothing to do.

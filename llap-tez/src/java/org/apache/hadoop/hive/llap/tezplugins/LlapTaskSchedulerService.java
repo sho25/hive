@@ -3912,6 +3912,9 @@ name|onCreate
 parameter_list|(
 name|LlapServiceInstance
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
 name|LOG
@@ -3954,14 +3957,17 @@ name|onUpdate
 parameter_list|(
 name|LlapServiceInstance
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
-comment|// TODO In what situations will this be invoked?
+comment|// Registry uses ephemeral sequential znodes that are never updated as of now.
 name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Not expecing Updates from the registry. Received update for instance={}. Ignoring"
+literal|"Unexpected update for instance={}. Ignoring"
 argument_list|,
 name|serviceInstance
 argument_list|)
@@ -3975,6 +3981,9 @@ name|onRemove
 parameter_list|(
 name|LlapServiceInstance
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
 name|NodeReport

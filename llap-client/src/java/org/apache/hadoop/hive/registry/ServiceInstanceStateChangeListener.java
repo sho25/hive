@@ -37,6 +37,9 @@ name|onCreate
 parameter_list|(
 name|InstanceType
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 function_decl|;
 comment|/**    * Called when an existing {@link ServiceInstance} is updated.    *    * @param serviceInstance - updated service instance    */
@@ -45,6 +48,9 @@ name|onUpdate
 parameter_list|(
 name|InstanceType
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 function_decl|;
 comment|/**    * Called when an existing {@link ServiceInstance} is removed.    *    * @param serviceInstance - removed service instance    */
@@ -53,6 +59,9 @@ name|onRemove
 parameter_list|(
 name|InstanceType
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 function_decl|;
 block|}

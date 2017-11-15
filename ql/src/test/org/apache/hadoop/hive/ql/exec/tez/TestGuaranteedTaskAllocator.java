@@ -197,10 +197,7 @@ parameter_list|,
 name|AmPluginNode
 name|node
 parameter_list|,
-name|ExecuteRequestCallback
-argument_list|<
-name|UpdateQueryResponseProto
-argument_list|>
+name|UpdateRequestContext
 name|callback
 parameter_list|)
 block|{

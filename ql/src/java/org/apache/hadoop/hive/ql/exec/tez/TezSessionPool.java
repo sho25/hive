@@ -1526,14 +1526,9 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
-name|bySessionId
-operator|.
-name|remove
+name|notifyClosed
 argument_list|(
 name|oldSession
-operator|.
-name|getSessionId
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// There's some bogus code that can modify the queue name. Force-set it for pool sessions.
@@ -1830,6 +1825,9 @@ name|onCreate
 parameter_list|(
 name|TezAmInstance
 name|si
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
 name|String
@@ -1865,6 +1863,10 @@ literal|"AM for "
 operator|+
 name|sessionId
 operator|+
+literal|", v."
+operator|+
+name|ephSeqVersion
+operator|+
 literal|" has registered; updating ["
 operator|+
 name|session
@@ -1882,6 +1884,8 @@ operator|.
 name|updateFromRegistry
 argument_list|(
 name|si
+argument_list|,
+name|ephSeqVersion
 argument_list|)
 expr_stmt|;
 block|}
@@ -1908,12 +1912,16 @@ name|onUpdate
 parameter_list|(
 name|TezAmInstance
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
-comment|// Presumably we'd get those later if AM updates its stuff.
+comment|// We currently never update the znode once registered.
+comment|// AM recovery will create a new node when it calls register.
 name|LOG
 operator|.
-name|info
+name|warn
 argument_list|(
 literal|"Received an unexpected update for instance={}. Ignoring"
 argument_list|,
@@ -1929,6 +1937,9 @@ name|onRemove
 parameter_list|(
 name|TezAmInstance
 name|serviceInstance
+parameter_list|,
+name|int
+name|ephSeqVersion
 parameter_list|)
 block|{
 name|String
@@ -1939,29 +1950,68 @@ operator|.
 name|getSessionId
 argument_list|()
 decl_stmt|;
-comment|// For now, we don't take any action. In future, we might restore the session based
+comment|// For now, we don't take any pool action. In future, we might restore the session based
 comment|// on this and get rid of the logic outside of the pool that replaces/reopens/etc.
+name|SessionType
+name|session
+init|=
+name|bySessionId
+operator|.
+name|get
+argument_list|(
+name|sessionId
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|session
+operator|!=
+literal|null
+condition|)
+block|{
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"AM for "
 operator|+
 name|sessionId
 operator|+
-literal|" has disappeared from the registry"
+literal|", v."
+operator|+
+name|ephSeqVersion
+operator|+
+literal|" has unregistered; updating ["
+operator|+
+name|session
+operator|+
+literal|"]"
 argument_list|)
 expr_stmt|;
-comment|// TODO: this might race if AM for the same session is restarted internally by Tez.
-comment|//        It is possible to receive the create before remove and remove the wrong one.
-comment|//        We need some identity in the value to make sure that doesn't happen.
-name|bySessionId
+name|session
 operator|.
-name|remove
+name|updateFromRegistry
 argument_list|(
-name|sessionId
+literal|null
+argument_list|,
+name|ephSeqVersion
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"AM for an unknown "
+operator|+
+name|sessionId
+operator|+
+literal|" has unregistered; ignoring"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 annotation|@
@@ -2541,6 +2591,26 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+block|}
+comment|/**    * Should be called when the session is no longer needed, to remove it from bySessionId.    */
+specifier|public
+name|void
+name|notifyClosed
+parameter_list|(
+name|TezSessionState
+name|session
+parameter_list|)
+block|{
+name|bySessionId
+operator|.
+name|remove
+argument_list|(
+name|session
+operator|.
+name|getSessionId
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
