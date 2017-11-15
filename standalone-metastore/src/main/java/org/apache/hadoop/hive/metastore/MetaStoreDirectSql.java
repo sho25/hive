@@ -2710,7 +2710,7 @@ literal|"SELECT "
 operator|+
 name|TBLS
 operator|+
-literal|".\"TBL_NAME\","
+literal|".\"TBL_NAME\""
 operator|+
 literal|" FROM "
 operator|+
