@@ -3211,7 +3211,7 @@ name|Mockito
 operator|.
 name|times
 argument_list|(
-literal|3
+literal|2
 argument_list|)
 argument_list|)
 operator|.
