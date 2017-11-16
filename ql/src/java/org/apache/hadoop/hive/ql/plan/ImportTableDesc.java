@@ -1519,7 +1519,7 @@ name|VIEW
 case|:
 name|createViewDesc
 operator|.
-name|setOrReplace
+name|setReplace
 argument_list|(
 name|replaceMode
 argument_list|)

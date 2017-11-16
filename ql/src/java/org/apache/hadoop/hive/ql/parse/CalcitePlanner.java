@@ -4828,6 +4828,17 @@ operator|.
 name|isMaterializedView
 argument_list|()
 decl_stmt|;
+specifier|final
+name|boolean
+name|rebuild
+init|=
+name|materializedView
+operator|&&
+name|createVwDesc
+operator|.
+name|isReplace
+argument_list|()
+decl_stmt|;
 try|try
 block|{
 if|if
@@ -4942,6 +4953,13 @@ name|getOptimizedAST
 argument_list|()
 decl_stmt|;
 comment|// 1.1. Fix up the query for insert/ctas/materialized views
+if|if
+condition|(
+operator|!
+name|rebuild
+condition|)
+block|{
+comment|// If it is not a MATERIALIZED VIEW...REBUILD
 name|newAST
 operator|=
 name|fixUpAfterCbo
@@ -4953,6 +4971,7 @@ argument_list|,
 name|cboCtx
 argument_list|)
 expr_stmt|;
+block|}
 comment|// 2. Regen OP plan from optimized AST
 if|if
 condition|(
@@ -5011,6 +5030,30 @@ name|VIEW
 operator|&&
 name|materializedView
 condition|)
+block|{
+if|if
+condition|(
+name|rebuild
+condition|)
+block|{
+comment|// Use the CREATE MATERIALIZED VIEW...REBUILD
+name|init
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|setAST
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
+name|reAnalyzeViewAfterCbo
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
+block|}
+else|else
 block|{
 comment|// Store text of the ORIGINAL QUERY
 name|String
@@ -5093,6 +5136,21 @@ argument_list|(
 name|newAST
 argument_list|)
 expr_stmt|;
+name|createVwDesc
+operator|.
+name|setViewOriginalText
+argument_list|(
+name|originalText
+argument_list|)
+expr_stmt|;
+name|createVwDesc
+operator|.
+name|setViewExpandedText
+argument_list|(
+name|expandedText
+argument_list|)
+expr_stmt|;
+block|}
 name|viewSelect
 operator|=
 name|newAST
@@ -5112,20 +5170,6 @@ name|createVwDesc
 operator|.
 name|getViewName
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|createVwDesc
-operator|.
-name|setViewOriginalText
-argument_list|(
-name|originalText
-argument_list|)
-expr_stmt|;
-name|createVwDesc
-operator|.
-name|setViewExpandedText
-argument_list|(
-name|expandedText
 argument_list|)
 expr_stmt|;
 block|}
