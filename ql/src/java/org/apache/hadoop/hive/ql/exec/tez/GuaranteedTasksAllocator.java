@@ -898,6 +898,21 @@ operator|>=
 literal|0
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending a new update "
+operator|+
+name|nextUpdate
+operator|+
+literal|" to "
+operator|+
+name|session
+operator|+
+literal|" in the response"
+argument_list|)
+expr_stmt|;
 name|updateSessionAsync
 argument_list|(
 name|session

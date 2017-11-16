@@ -1762,6 +1762,18 @@ operator|.
 name|getVertexName
 argument_list|()
 argument_list|)
+operator|.
+name|append
+argument_list|(
+name|c
+operator|.
+name|isGuaranteed
+argument_list|()
+condition|?
+literal|", guaranteed"
+else|:
+literal|""
+argument_list|)
 expr_stmt|;
 name|isFirst
 operator|=
