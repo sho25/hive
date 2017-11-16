@@ -11909,6 +11909,10 @@ name|AGGREGATE
 argument_list|,
 name|DruidRules
 operator|.
+name|POST_AGGREGATION_PROJECT
+argument_list|,
+name|DruidRules
+operator|.
 name|FILTER_AGGREGATE_TRANSPOSE
 argument_list|,
 name|DruidRules
