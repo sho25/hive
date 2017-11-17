@@ -1766,7 +1766,7 @@ argument_list|()
 argument_list|,
 name|tab
 operator|.
-name|getCols
+name|getAllCols
 argument_list|()
 operator|.
 name|get
