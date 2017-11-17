@@ -43439,6 +43439,12 @@ name|dest_tab
 operator|!=
 literal|null
 operator|&&
+operator|!
+name|dest_tab
+operator|.
+name|isNonNative
+argument_list|()
+operator|&&
 name|conf
 operator|.
 name|getBoolVar
