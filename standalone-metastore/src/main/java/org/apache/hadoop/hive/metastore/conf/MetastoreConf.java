@@ -1153,6 +1153,42 @@ argument_list|,
 literal|"The time after which metastore cache is updated from metastore DB."
 argument_list|)
 block|,
+name|CACHED_RAW_STORE_CACHED_OBJECTS_WHITELIST
+argument_list|(
+literal|"metastore.cached.rawstore.cached.object.whitelist"
+argument_list|,
+literal|"hive.metastore.cached.rawstore.cached.object.whitelist"
+argument_list|,
+literal|".*"
+argument_list|,
+literal|"Comma separated list of regular expressions \n "
+operator|+
+literal|"to select the tables (and its partitions, stats etc) that will be cached by CachedStore. \n"
+operator|+
+literal|"This can be used in conjunction with hive.metastore.cached.rawstore.cached.object.blacklist. \n"
+operator|+
+literal|"Example: .*, db1.*, db2\\.tbl.*. The last item can potentially override patterns specified before."
+argument_list|)
+block|,
+name|CACHED_RAW_STORE_CACHED_OBJECTS_BLACKLIST
+argument_list|(
+literal|"metastore.cached.rawstore.cached.object.blacklist"
+argument_list|,
+literal|"hive.metastore.cached.rawstore.cached.object.blacklist"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Comma separated list of regular expressions \n "
+operator|+
+literal|"to filter out the tables (and its partitions, stats etc) that will be cached by CachedStore. \n"
+operator|+
+literal|"This can be used in conjunction with hive.metastore.cached.rawstore.cached.object.whitelist. \n"
+operator|+
+literal|"Example: db2.*, db3\\.tbl1, db3\\..*. The last item can potentially override patterns specified before. \n"
+operator|+
+literal|"The blacklist also overrides the whitelist."
+argument_list|)
+block|,
 name|CAPABILITY_CHECK
 argument_list|(
 literal|"metastore.client.capability.check"

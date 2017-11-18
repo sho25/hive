@@ -2093,6 +2093,17 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
+comment|// In case cols are null
+if|if
+condition|(
+name|sd
+operator|.
+name|getCols
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|FieldSchema
@@ -2158,6 +2169,7 @@ name|ENCODING
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
