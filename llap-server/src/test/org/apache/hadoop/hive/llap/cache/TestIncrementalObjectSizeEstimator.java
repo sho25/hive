@@ -127,6 +127,18 @@ name|apache
 operator|.
 name|orc
 operator|.
+name|CompressionCodec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
 name|DataReader
 import|;
 end_import
@@ -1202,6 +1214,17 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{     }
+annotation|@
+name|Override
+specifier|public
+name|CompressionCodec
+name|getCompressionCodec
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 comment|/*   @Test   public void testMetadata() throws IOException {     // Mostly tests that it doesn't crash.     OrcStripeMetadata osm = OrcStripeMetadata.createDummy(0);     HashMap<Class<?>, ObjectEstimator> map =         IncrementalObjectSizeEstimator.createEstimators(osm);     IncrementalObjectSizeEstimator.addEstimator("com.google.protobuf.LiteralByteString", map);     ObjectEstimator root = map.get(OrcStripeMetadata.class);      LOG.info("Estimated " + root.estimate(osm, map) + " for a dummy OSM");      OrcBatchKey stripeKey = null;     DummyMetadataReader mr = new DummyMetadataReader();     mr.doStreamStep = false;     mr.isEmpty = true;     StripeInformation si = Mockito.mock(StripeInformation.class);     Mockito.when(si.getNumberOfRows()).thenReturn(0L);     osm = new OrcStripeMetadata(stripeKey, mr, si, null, null, null, null);     LOG.info("Estimated " + root.estimate(osm, map) + " for an empty OSM");     mr.doStreamStep = true;     osm = new OrcStripeMetadata(stripeKey, mr, si, null, null, null, null);     LOG.info("Estimated " + root.estimate(osm, map) + " for an empty OSM after serde");      mr.isEmpty = false;     stripeKey = new OrcBatchKey(0, 0, 0);     osm = new OrcStripeMetadata(stripeKey, mr, si, null, null, null, null);     LOG.info("Estimated " + root.estimate(osm, map) + " for a test OSM");     osm.resetRowIndex();     LOG.info("Estimated " + root.estimate(osm, map) + " for a test OSM w/o row index");     mr.doStreamStep = true;     osm = new OrcStripeMetadata(stripeKey, mr, si, null, null, null, null);     LOG.info("Estimated " + root.estimate(osm, map) + " for a test OSM after serde");     osm.resetRowIndex();     LOG.info("Estimated " + root.estimate(osm, map) + " for a test OSM w/o row index after serde");      OrcFileMetadata ofm = OrcFileMetadata.createDummy(0);     map = IncrementalObjectSizeEstimator.createEstimators(ofm);     IncrementalObjectSizeEstimator.addEstimator("com.google.protobuf.LiteralByteString", map);     root = map.get(OrcFileMetadata.class);      LOG.info("Estimated " + root.estimate(ofm, map) + " for a dummy OFM");   }*/
 specifier|private

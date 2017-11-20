@@ -188,7 +188,7 @@ argument_list|,
 name|getSchema
 argument_list|()
 argument_list|,
-name|codec
+name|compressionKind
 argument_list|,
 name|getWriterVersion
 argument_list|()
@@ -205,17 +205,6 @@ name|pf
 argument_list|,
 name|trace
 argument_list|)
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|CompressionCodec
-name|getCodec
-parameter_list|()
-block|{
-return|return
-name|codec
 return|;
 block|}
 block|}

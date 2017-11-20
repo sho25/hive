@@ -473,6 +473,28 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+comment|/**    * An exception that indicates that the dynamic values are (intentionally)    * not available in this context.    */
+specifier|public
+specifier|static
+class|class
+name|NoDynamicValuesException
+extends|extends
+name|RuntimeException
+block|{
+specifier|public
+name|NoDynamicValuesException
+parameter_list|(
+name|String
+name|message
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|message
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 specifier|public
 name|Object
 name|getValue
@@ -496,7 +518,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IllegalStateException
+name|NoDynamicValuesException
 argument_list|(
 literal|"Cannot retrieve dynamic value "
 operator|+
@@ -572,7 +594,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IllegalStateException
+name|NoDynamicValuesException
 argument_list|(
 literal|"DynamicValueRegistry not available"
 argument_list|)
@@ -591,6 +613,16 @@ name|initialized
 operator|=
 literal|true
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|NoDynamicValuesException
+name|err
+parameter_list|)
+block|{
+throw|throw
+name|err
+throw|;
 block|}
 catch|catch
 parameter_list|(

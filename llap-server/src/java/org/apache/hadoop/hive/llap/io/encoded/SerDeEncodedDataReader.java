@@ -3881,6 +3881,17 @@ operator|=
 name|currentFileOffset
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|CompressionCodec
+name|getCompressionCodec
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 specifier|private
 interface|interface
