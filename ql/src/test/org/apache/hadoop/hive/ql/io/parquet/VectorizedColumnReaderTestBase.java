@@ -245,6 +245,26 @@ name|exec
 operator|.
 name|vector
 operator|.
+name|ListColumnVector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
 name|VectorizedRowBatch
 import|;
 end_import
@@ -971,6 +991,24 @@ operator|+
 literal|"  }\n"
 operator|+
 literal|"}\n"
+operator|+
+literal|"repeated int32 list_int32_field;"
+operator|+
+literal|"repeated int64 list_int64_field;"
+operator|+
+literal|"repeated double list_double_field;"
+operator|+
+literal|"repeated float list_float_field;"
+operator|+
+literal|"repeated boolean list_boolean_field;"
+operator|+
+literal|"repeated fixed_len_byte_array(3) list_byte_array_field;"
+operator|+
+literal|"repeated binary list_binary_field;"
+operator|+
+literal|"repeated binary list_decimal_field (DECIMAL(5,2));"
+operator|+
+literal|"repeated int32 list_int32_field_for_repeat_test;"
 operator|+
 literal|"} "
 argument_list|)
