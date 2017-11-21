@@ -766,12 +766,12 @@ argument_list|()
 expr_stmt|;
 name|d
 operator|.
-name|destroy
+name|close
 argument_list|()
 expr_stmt|;
 name|d
 operator|.
-name|close
+name|destroy
 argument_list|()
 expr_stmt|;
 name|d

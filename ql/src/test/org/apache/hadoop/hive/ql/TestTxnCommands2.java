@@ -1364,12 +1364,12 @@ argument_list|()
 expr_stmt|;
 name|d
 operator|.
-name|destroy
+name|close
 argument_list|()
 expr_stmt|;
 name|d
 operator|.
-name|close
+name|destroy
 argument_list|()
 expr_stmt|;
 name|d
@@ -2702,7 +2702,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|/*      * All ROW__IDs are unique on read after conversion to acid       * ROW__IDs are exactly the same before and after compaction      * Also check the file name (only) after compaction for completeness      * Note: order of rows in a file ends up being the reverse of order in values clause (why?!)      */
+comment|/*      * All ROW__IDs are unique on read after conversion to acid      * ROW__IDs are exactly the same before and after compaction      * Also check the file name (only) after compaction for completeness      * Note: order of rows in a file ends up being the reverse of order in values clause (why?!)      */
 name|String
 index|[]
 index|[]
