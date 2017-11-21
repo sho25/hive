@@ -71,8 +71,6 @@ begin_class
 specifier|public
 class|class
 name|CommandProcessorResponse
-extends|extends
-name|Exception
 block|{
 specifier|private
 specifier|final
