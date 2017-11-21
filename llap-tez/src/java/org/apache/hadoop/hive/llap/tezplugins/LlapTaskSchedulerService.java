@@ -1444,6 +1444,19 @@ decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|Logger
+name|WM_LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+literal|"GuaranteedTasks"
+argument_list|)
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
 name|TaskStartComparator
 name|TASK_INFO_COMPARATOR
 init|=
@@ -1562,17 +1575,10 @@ block|}
 comment|// TODO: this is an ugly hack; see the same in LlapTaskCommunicator for discussion.
 comment|//       This only lives for the duration of the service init.
 specifier|static
-specifier|final
-name|ThreadLocal
-argument_list|<
 name|LlapTaskSchedulerService
-argument_list|>
 name|instance
 init|=
-operator|new
-name|ThreadLocal
-argument_list|<>
-argument_list|()
+literal|null
 decl_stmt|;
 specifier|private
 specifier|final
@@ -1640,6 +1646,21 @@ name|knownTasks
 init|=
 operator|new
 name|ConcurrentHashMap
+argument_list|<>
+argument_list|()
+decl_stmt|;
+specifier|private
+specifier|final
+name|Map
+argument_list|<
+name|TezTaskAttemptID
+argument_list|,
+name|TaskInfo
+argument_list|>
+name|tasksById
+init|=
+operator|new
+name|HashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -2773,15 +2794,19 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+synchronized|synchronized
+init|(
+name|LlapTaskCommunicator
+operator|.
+name|pluginInitLock
+init|)
+block|{
 name|LlapTaskCommunicator
 name|peer
 init|=
 name|LlapTaskCommunicator
 operator|.
 name|instance
-operator|.
-name|get
-argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -2798,25 +2823,27 @@ argument_list|(
 name|peer
 argument_list|)
 expr_stmt|;
+name|peer
+operator|.
+name|setScheduler
+argument_list|(
+name|this
+argument_list|)
+expr_stmt|;
 name|LlapTaskCommunicator
 operator|.
 name|instance
-operator|.
-name|set
-argument_list|(
+operator|=
 literal|null
-argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
 name|instance
-operator|.
-name|set
-argument_list|(
+operator|=
 name|this
-argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
@@ -2985,6 +3012,7 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+comment|// TODO: when this code is a little less hot, change most logs to debug.
 comment|// We will determine what to do under lock and then do stuff outside of the lock.
 comment|// The approach is state-based. We consider the task to have a duck when we have decided to
 comment|// give it one; the sends below merely fix the discrepancy with the actual state. We may add the
@@ -2998,6 +3026,19 @@ name|newTotalGuaranteed
 operator|-
 name|totalGuaranteed
 decl_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Received guaranteed tasks "
+operator|+
+name|newTotalGuaranteed
+operator|+
+literal|"; the delta to adjust by is "
+operator|+
+name|delta
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|delta
@@ -3047,7 +3088,29 @@ name|delta
 operator|-=
 name|totalUpdated
 expr_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Distributed "
+operator|+
+name|totalUpdated
+argument_list|)
+expr_stmt|;
 block|}
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Setting unused: "
+operator|+
+name|unusedGuaranteed
+operator|+
+literal|" plus "
+operator|+
+name|delta
+argument_list|)
+expr_stmt|;
 name|unusedGuaranteed
 operator|+=
 name|delta
@@ -3068,6 +3131,19 @@ name|unusedGuaranteed
 condition|)
 block|{
 comment|// Somebody took away our unwanted ducks.
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Setting unused: "
+operator|+
+name|unusedGuaranteed
+operator|+
+literal|" minus "
+operator|+
+name|delta
+argument_list|)
+expr_stmt|;
 name|unusedGuaranteed
 operator|-=
 name|delta
@@ -3079,6 +3155,10 @@ block|{
 name|delta
 operator|-=
 name|unusedGuaranteed
+expr_stmt|;
+name|unusedGuaranteed
+operator|=
+literal|0
 expr_stmt|;
 name|toUpdate
 operator|=
@@ -3099,6 +3179,19 @@ argument_list|,
 name|toUpdate
 argument_list|)
 decl_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unused is 0; revoked "
+operator|+
+name|totalUpdated
+operator|+
+literal|" / "
+operator|+
+name|delta
+argument_list|)
+expr_stmt|;
 comment|// We must be able to take away the requisite number; if we can't, where'd the ducks go?
 if|if
 condition|(
@@ -3119,10 +3212,6 @@ literal|" guaranteed tasks locally"
 argument_list|)
 throw|;
 block|}
-name|unusedGuaranteed
-operator|=
-literal|0
-expr_stmt|;
 block|}
 block|}
 block|}
@@ -3141,6 +3230,20 @@ operator|==
 literal|null
 condition|)
 return|return;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending updates to "
+operator|+
+name|toUpdate
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" tasks"
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|TaskInfo
@@ -3186,6 +3289,12 @@ condition|(
 name|ti
 operator|.
 name|lastSetGuaranteed
+operator|!=
+literal|null
+operator|&&
+name|ti
+operator|.
+name|lastSetGuaranteed
 operator|==
 name|ti
 operator|.
@@ -3197,6 +3306,23 @@ operator|.
 name|isPendingUpdate
 operator|=
 literal|false
+expr_stmt|;
+name|ti
+operator|.
+name|requestedValue
+operator|=
+literal|null
+expr_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Not sending update to "
+operator|+
+name|ti
+operator|.
+name|attemptId
+argument_list|)
 expr_stmt|;
 return|return;
 comment|// Nothing to do - e.g. two messages have canceled each other before we could react.
@@ -3241,6 +3367,21 @@ name|newStateAnyTask
 init|=
 literal|null
 decl_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Received response for "
+operator|+
+name|ti
+operator|.
+name|attemptId
+operator|+
+literal|", "
+operator|+
+name|isOk
+argument_list|)
+expr_stmt|;
 synchronized|synchronized
 init|(
 name|ti
@@ -3268,17 +3409,21 @@ name|isPendingUpdate
 operator|=
 literal|false
 expr_stmt|;
+name|ti
+operator|.
+name|requestedValue
+operator|=
+literal|null
+expr_stmt|;
 return|return;
 block|}
 name|boolean
 name|requestedValue
 init|=
-operator|!
 name|ti
 operator|.
-name|lastSetGuaranteed
+name|requestedValue
 decl_stmt|;
-comment|// Otherwise we wouldn't have sent.
 if|if
 condition|(
 name|isOk
@@ -3307,10 +3452,20 @@ name|isPendingUpdate
 operator|=
 literal|false
 expr_stmt|;
+name|ti
+operator|.
+name|requestedValue
+operator|=
+literal|null
+expr_stmt|;
 return|return;
 block|}
 comment|// The state has changed during the update. Let's undo what we just did.
 name|newStateSameTask
+operator|=
+name|ti
+operator|.
+name|requestedValue
 operator|=
 name|ti
 operator|.
@@ -3339,6 +3494,12 @@ name|isPendingUpdate
 operator|=
 literal|false
 expr_stmt|;
+name|ti
+operator|.
+name|requestedValue
+operator|=
+literal|null
+expr_stmt|;
 return|return;
 block|}
 comment|// We failed to update this task. Instead of retrying for this task, find another.
@@ -3355,6 +3516,21 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending update to the same task in response handling "
+operator|+
+name|ti
+operator|.
+name|attemptId
+operator|+
+literal|", "
+operator|+
+name|newStateSameTask
+argument_list|)
+expr_stmt|;
 comment|// We need to send the state update again (the state has changed since the last one).
 name|sendUpdateMessageAsync
 argument_list|(
@@ -3404,6 +3580,12 @@ name|isPendingUpdate
 operator|=
 literal|false
 expr_stmt|;
+name|ti
+operator|.
+name|requestedValue
+operator|=
+literal|null
+expr_stmt|;
 if|if
 condition|(
 name|newStateAnyTask
@@ -3416,6 +3598,21 @@ block|{
 comment|// The state changed between this and previous check within this method.
 return|return;
 block|}
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending update to a different task in response handling "
+operator|+
+name|ti
+operator|.
+name|attemptId
+operator|+
+literal|", "
+operator|+
+name|newStateAnyTask
+argument_list|)
+expr_stmt|;
 comment|// First, "give up" on this task and put it back in the original list.
 name|boolean
 name|isRemoved
@@ -5418,7 +5615,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|LOG
+name|WM_LOG
 operator|.
 name|error
 argument_list|(
@@ -5870,6 +6067,167 @@ expr_stmt|;
 return|return
 literal|true
 return|;
+block|}
+specifier|public
+name|void
+name|notifyStarted
+parameter_list|(
+name|TezTaskAttemptID
+name|attemptId
+parameter_list|)
+block|{
+name|TaskInfo
+name|info
+init|=
+literal|null
+decl_stmt|;
+name|writeLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|info
+operator|=
+name|tasksById
+operator|.
+name|get
+argument_list|(
+name|attemptId
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|info
+operator|==
+literal|null
+condition|)
+block|{
+name|WM_LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unknown task start notification "
+operator|+
+name|attemptId
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+block|}
+finally|finally
+block|{
+name|writeLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
+name|handleUpdateResult
+argument_list|(
+name|info
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * A hacky way for communicator and scheduler to share per-task info. Scheduler should be able    * to include this with task allocation to be passed to the communicator, instead. TEZ-3866.    * @param attemptId Task attempt ID.    * @return The initial value of the guaranteed flag to send with the task.    */
+name|boolean
+name|isInitialGuaranteed
+parameter_list|(
+name|TezTaskAttemptID
+name|attemptId
+parameter_list|)
+block|{
+name|TaskInfo
+name|info
+init|=
+literal|null
+decl_stmt|;
+name|readLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|info
+operator|=
+name|tasksById
+operator|.
+name|get
+argument_list|(
+name|attemptId
+argument_list|)
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|readLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|info
+operator|==
+literal|null
+condition|)
+block|{
+name|WM_LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Status requested for an unknown task "
+operator|+
+name|attemptId
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+synchronized|synchronized
+init|(
+name|info
+init|)
+block|{
+if|if
+condition|(
+name|info
+operator|.
+name|isGuaranteed
+operator|==
+literal|null
+condition|)
+return|return
+literal|false
+return|;
+comment|// TODO: should never happen?
+assert|assert
+name|info
+operator|.
+name|lastSetGuaranteed
+operator|==
+literal|null
+assert|;
+name|info
+operator|.
+name|requestedValue
+operator|=
+name|info
+operator|.
+name|isGuaranteed
+expr_stmt|;
+return|return
+name|info
+operator|.
+name|isGuaranteed
+return|;
+block|}
 block|}
 comment|// Must be called under the epic lock.
 specifier|private
@@ -7405,6 +7763,17 @@ argument_list|,
 name|taskInfo
 argument_list|)
 expr_stmt|;
+name|tasksById
+operator|.
+name|put
+argument_list|(
+name|taskInfo
+operator|.
+name|attemptId
+argument_list|,
+name|taskInfo
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|metrics
@@ -7530,7 +7899,9 @@ expr_stmt|;
 block|}
 block|}
 comment|/* Register a running task into the runningTasks structure */
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|protected
 name|void
 name|registerRunningTask
 parameter_list|(
@@ -7538,7 +7909,16 @@ name|TaskInfo
 name|taskInfo
 parameter_list|)
 block|{
-comment|// This is called during scheduling under the epic lock; no parallel changes expected.
+name|boolean
+name|isGuaranteed
+init|=
+literal|false
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|taskInfo
+init|)
+block|{
 assert|assert
 operator|!
 name|taskInfo
@@ -7547,12 +7927,22 @@ name|isPendingUpdate
 assert|;
 name|taskInfo
 operator|.
-name|lastSetGuaranteed
+name|isPendingUpdate
+operator|=
+literal|true
+expr_stmt|;
+comment|// Update w/the request.
+name|taskInfo
+operator|.
+name|requestedValue
+operator|=
+name|isGuaranteed
 operator|=
 name|taskInfo
 operator|.
 name|isGuaranteed
 expr_stmt|;
+block|}
 name|TreeMap
 argument_list|<
 name|Integer
@@ -7564,8 +7954,6 @@ argument_list|>
 argument_list|>
 name|runningTasks
 init|=
-name|taskInfo
-operator|.
 name|isGuaranteed
 condition|?
 name|guaranteedTasks
@@ -7579,6 +7967,23 @@ argument_list|()
 expr_stmt|;
 try|try
 block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Registering "
+operator|+
+name|taskInfo
+operator|.
+name|attemptId
+operator|+
+literal|"; "
+operator|+
+name|taskInfo
+operator|.
+name|isGuaranteed
+argument_list|)
+expr_stmt|;
 name|addToRunningTasksMap
 argument_list|(
 name|runningTasks
@@ -7661,6 +8066,32 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|tasksById
+operator|.
+name|remove
+argument_list|(
+name|taskInfo
+operator|.
+name|attemptId
+argument_list|)
+expr_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Unregistering "
+operator|+
+name|taskInfo
+operator|.
+name|attemptId
+operator|+
+literal|"; "
+operator|+
+name|taskInfo
+operator|.
+name|isGuaranteed
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|taskInfo
@@ -7712,6 +8143,7 @@ argument_list|,
 name|task
 argument_list|)
 expr_stmt|;
+comment|// TODO: [!!!] is it possible that we are losing the guaranteed task here? dbl check paths
 block|}
 block|}
 block|}
@@ -8646,6 +9078,19 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"downgrading "
+operator|+
+name|downgradedTask
+operator|.
+name|value
+operator|.
+name|attemptId
+argument_list|)
+expr_stmt|;
 name|checkAndSendGuaranteedStateUpdate
 argument_list|(
 name|downgradedTask
@@ -9537,6 +9982,34 @@ argument_list|>
 name|toUpdate
 parameter_list|)
 block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Distributing "
+operator|+
+name|count
+operator|+
+literal|" among "
+operator|+
+name|speculativeTasks
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" levels"
+operator|+
+operator|(
+name|failedUpdate
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+literal|"; on failure"
+operator|)
+argument_list|)
+expr_stmt|;
 name|Iterator
 argument_list|<
 name|Entry
@@ -9617,6 +10090,34 @@ argument_list|>
 name|toUpdate
 parameter_list|)
 block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Revoking "
+operator|+
+name|count
+operator|+
+literal|" from "
+operator|+
+name|guaranteedTasks
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" levels"
+operator|+
+operator|(
+name|failedUpdate
+operator|==
+literal|null
+condition|?
+literal|""
+else|:
+literal|"; on failure"
+operator|)
+argument_list|)
+expr_stmt|;
 name|int
 name|remainingCount
 init|=
@@ -9827,6 +10328,14 @@ name|isPendingUpdate
 operator|=
 literal|true
 expr_stmt|;
+name|taskInfo
+operator|.
+name|requestedValue
+operator|=
+name|taskInfo
+operator|.
+name|isGuaranteed
+expr_stmt|;
 name|toUpdate
 operator|.
 name|value
@@ -9935,6 +10444,28 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"At priority "
+operator|+
+name|entry
+operator|.
+name|getKey
+argument_list|()
+operator|+
+literal|" observing "
+operator|+
+name|entry
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|Iterator
 argument_list|<
 name|TaskInfo
@@ -10046,11 +10577,48 @@ name|isPendingUpdate
 operator|=
 literal|true
 expr_stmt|;
+name|taskInfo
+operator|.
+name|requestedValue
+operator|=
+name|taskInfo
+operator|.
+name|isGuaranteed
+expr_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding "
+operator|+
+name|taskInfo
+operator|.
+name|attemptId
+operator|+
+literal|" to update"
+argument_list|)
+expr_stmt|;
 name|toUpdate
 operator|.
 name|add
 argument_list|(
 name|taskInfo
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Not adding "
+operator|+
+name|taskInfo
+operator|.
+name|attemptId
+operator|+
+literal|" to update - already pending"
 argument_list|)
 expr_stmt|;
 block|}
@@ -10143,7 +10711,28 @@ name|isPendingUpdate
 operator|=
 literal|true
 expr_stmt|;
+name|failedUpdate
+operator|.
+name|requestedValue
+operator|=
+name|failedUpdate
+operator|.
+name|isGuaranteed
+expr_stmt|;
 block|}
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Adding failed "
+operator|+
+name|failedUpdate
+operator|.
+name|attemptId
+operator|+
+literal|" to update"
+argument_list|)
+expr_stmt|;
 comment|// Do not check the state - this is coming from the updater under epic lock.
 name|toUpdate
 operator|.
@@ -12846,10 +13435,16 @@ literal|false
 decl_stmt|;
 comment|/** The last state positively propagated to the task. Set by the updater. */
 specifier|private
-name|boolean
+name|Boolean
 name|lastSetGuaranteed
 init|=
-literal|false
+literal|null
+decl_stmt|;
+specifier|private
+name|Boolean
+name|requestedValue
+init|=
+literal|null
 decl_stmt|;
 comment|/** Whether there's an update in progress for this TaskInfo. */
 specifier|private
@@ -13445,6 +14040,16 @@ return|return
 name|isPendingUpdate
 return|;
 block|}
+annotation|@
+name|VisibleForTesting
+name|TezTaskAttemptID
+name|getAttemptId
+parameter_list|()
+block|{
+return|return
+name|attemptId
+return|;
+block|}
 block|}
 comment|// Newer tasks first.
 specifier|private
@@ -13826,6 +14431,21 @@ name|boolean
 name|newState
 parameter_list|)
 block|{
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending message to "
+operator|+
+name|ti
+operator|.
+name|attemptId
+operator|+
+literal|": "
+operator|+
+name|newState
+argument_list|)
+expr_stmt|;
 name|communicator
 operator|.
 name|startUpdateGuaranteed
@@ -13833,6 +14453,10 @@ argument_list|(
 name|ti
 operator|.
 name|attemptId
+argument_list|,
+name|ti
+operator|.
+name|assignedNode
 argument_list|,
 name|newState
 argument_list|,

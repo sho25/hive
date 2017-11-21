@@ -969,6 +969,8 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+literal|null
+argument_list|,
 name|yarnQueue
 argument_list|,
 name|conf
@@ -1000,6 +1002,8 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+literal|null
+argument_list|,
 name|yarnQueue
 argument_list|,
 name|conf
