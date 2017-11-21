@@ -1470,7 +1470,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDTFGetSplits.  *   */
+comment|/**  * GenericUDTFGetSplits.  *  */
 end_comment
 
 begin_class
@@ -2645,33 +2645,27 @@ block|{
 comment|// Table will be queried directly by LLAP
 comment|// Acquire locks if necessary - they will be released during session cleanup.
 comment|// The read will have READ_COMMITTED level semantics.
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|lockAndRespond
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-condition|)
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorResponse
+name|cpr1
+parameter_list|)
 block|{
 throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Failed to acquire locks: "
-operator|+
-name|cpr
-operator|.
-name|getException
-argument_list|()
+literal|"Failed to acquire locks"
+argument_list|,
+name|cpr1
 argument_list|)
 throw|;
 block|}
@@ -4161,7 +4155,7 @@ name|toByteArray
 argument_list|()
 return|;
 block|}
-comment|/**    * Returns a local resource representing a jar. This resource will be used to    * execute the plan on the cluster.    *     * @param localJarPath    *          Local path to the jar to be localized.    * @return LocalResource corresponding to the localized hive exec resource.    * @throws IOException    *           when any file system related call fails.    * @throws LoginException    *           when we are unable to determine the user.    * @throws URISyntaxException    *           when current jar location cannot be determined.    */
+comment|/**    * Returns a local resource representing a jar. This resource will be used to    * execute the plan on the cluster.    *    * @param localJarPath    *          Local path to the jar to be localized.    * @return LocalResource corresponding to the localized hive exec resource.    * @throws IOException    *           when any file system related call fails.    * @throws LoginException    *           when we are unable to determine the user.    * @throws URISyntaxException    *           when current jar location cannot be determined.    */
 specifier|private
 name|LocalResource
 name|createJarLocalResource
