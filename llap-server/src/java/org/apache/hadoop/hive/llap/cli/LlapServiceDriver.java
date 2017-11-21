@@ -3364,6 +3364,8 @@ name|conf
 operator|.
 name|getAuxJars
 argument_list|()
+argument_list|,
+literal|","
 argument_list|)
 expr_stmt|;
 name|addAuxJarsToSet
@@ -3376,6 +3378,8 @@ name|getenv
 argument_list|(
 literal|"HIVE_AUX_JARS_PATH"
 argument_list|)
+argument_list|,
+literal|":"
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -3396,6 +3400,8 @@ name|options
 operator|.
 name|getAuxJars
 argument_list|()
+argument_list|,
+literal|","
 argument_list|)
 expr_stmt|;
 for|for
@@ -3436,6 +3442,9 @@ name|auxJarSet
 parameter_list|,
 name|String
 name|auxJars
+parameter_list|,
+name|String
+name|delimiter
 parameter_list|)
 block|{
 if|if
@@ -3460,7 +3469,7 @@ name|auxJars
 operator|.
 name|split
 argument_list|(
-literal|","
+name|delimiter
 argument_list|)
 decl_stmt|;
 for|for
