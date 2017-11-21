@@ -863,11 +863,13 @@ name|childOperatorsTag
 expr_stmt|;
 name|this
 operator|.
-name|colExprMap
-operator|=
+name|setColumnExprMap
+argument_list|(
 name|clone
 operator|.
-name|colExprMap
+name|getColumnExprMap
+argument_list|()
+argument_list|)
 expr_stmt|;
 name|this
 operator|.

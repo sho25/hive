@@ -140,6 +140,12 @@ parameter_list|()
 default|default
 literal|false
 function_decl|;
+name|boolean
+name|jsonOnly
+parameter_list|()
+default|default
+literal|false
+function_decl|;
 comment|// By default, many existing @Explain classes/methods are NON_VECTORIZED.
 comment|//
 comment|// Vectorized methods/classes have detail levels:

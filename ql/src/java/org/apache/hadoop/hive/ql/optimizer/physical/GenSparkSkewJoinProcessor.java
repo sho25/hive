@@ -2257,6 +2257,16 @@ name|getNullSafes
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|mapJoinDescriptor
+operator|.
+name|setColumnExprMap
+argument_list|(
+name|joinDescriptor
+operator|.
+name|getColumnExprMap
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// temporarily, mark it as child of all the TS
 name|MapJoinOperator
 name|mapJoinOp

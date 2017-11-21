@@ -1714,7 +1714,7 @@ name|removeField
 argument_list|(
 name|kryo
 argument_list|,
-name|Operator
+name|AbstractOperatorDesc
 operator|.
 name|class
 argument_list|,

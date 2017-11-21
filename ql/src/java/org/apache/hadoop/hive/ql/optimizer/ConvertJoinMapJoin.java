@@ -2181,6 +2181,27 @@ name|getResidualFilterExprs
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// keep column expression map, explain plan uses this to display
+name|mapJoinDesc
+operator|.
+name|setColumnExprMap
+argument_list|(
+name|joinDesc
+operator|.
+name|getColumnExprMap
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|mapJoinDesc
+operator|.
+name|setReversedExprs
+argument_list|(
+name|joinDesc
+operator|.
+name|getReversedExprs
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|mapJoinDesc
 operator|.
 name|resetOrder
