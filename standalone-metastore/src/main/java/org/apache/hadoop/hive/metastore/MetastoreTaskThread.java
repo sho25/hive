@@ -31,19 +31,54 @@ name|Configurable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
 begin_comment
-comment|/**  * Combination of Runnable and Configurable  */
+comment|/**  * Any task that will run as a separate thread in the metastore should implement this  * interface.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|RunnableConfigurable
+name|MetastoreTaskThread
 extends|extends
 name|Configurable
 extends|,
 name|Runnable
-block|{ }
+block|{
+comment|/**    * Get the frequency at which the thread should be scheduled in the thread pool.  You must call    * {@link #setConf(Configuration)} before calling this method.    * @param unit TimeUnit to express the frequency in.    * @return frequency    */
+name|long
+name|runFrequency
+parameter_list|(
+name|TimeUnit
+name|unit
+parameter_list|)
+function_decl|;
+block|}
 end_interface
 
 end_unit

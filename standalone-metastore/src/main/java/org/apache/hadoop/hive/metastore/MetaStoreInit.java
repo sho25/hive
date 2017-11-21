@@ -235,8 +235,6 @@ try|try
 block|{
 comment|// We always call init because the hook name in the configuration could
 comment|// have changed.
-name|MetaStoreInit
-operator|.
 name|initConnectionUrlHook
 argument_list|(
 name|originalConf

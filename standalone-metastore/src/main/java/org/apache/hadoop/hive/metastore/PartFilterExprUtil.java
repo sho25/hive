@@ -484,6 +484,30 @@ name|MetaException
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|matches
+argument_list|(
+literal|".* class not found"
+argument_list|)
+condition|)
+block|{
+comment|// TODO MS-SPLIT For now if we cannot load the default PartitionExpressionForMetastore
+comment|// class (since it's from ql) load the DefaultPartitionExpressionProxy, which just throws
+comment|// UnsupportedOperationExceptions.  This allows existing Hive instances to work but also
+comment|// allows us to instantiate the metastore stand alone for testing.  Not sure if this is
+comment|// the best long term solution.
+return|return
+operator|new
+name|DefaultPartitionExpressionProxy
+argument_list|()
+return|;
+block|}
 name|LOG
 operator|.
 name|error

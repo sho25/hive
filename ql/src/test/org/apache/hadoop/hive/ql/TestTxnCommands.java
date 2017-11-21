@@ -59,7 +59,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|RunnableConfigurable
+name|MetastoreTaskThread
 import|;
 end_import
 
@@ -366,16 +366,6 @@ operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|After
 import|;
 end_import
 
@@ -3264,7 +3254,7 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 expr_stmt|;
-name|RunnableConfigurable
+name|MetastoreTaskThread
 name|houseKeeperService
 init|=
 operator|new

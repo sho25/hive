@@ -79,7 +79,6 @@ interface|interface
 name|JDOConnectionURLHook
 block|{
 comment|/**    * Gets the connection URL to supply to JDO. In addition to initialization,    * this method will be called after a connection failure for each reconnect    * attempt.    *    * @param conf The configuration used to initialize this instance of the HMS    * @return the connection URL    * @throws Exception    */
-specifier|public
 name|String
 name|getJdoConnectionUrl
 parameter_list|(
@@ -90,7 +89,6 @@ throws|throws
 name|Exception
 function_decl|;
 comment|/**    * Alerts this that the connection URL was bad. Can be used to collect stats,    * etc.    *    * @param url    */
-specifier|public
 name|void
 name|notifyBadConnectionUrl
 parameter_list|(

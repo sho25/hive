@@ -61,7 +61,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|RunnableConfigurable
+name|MetastoreTaskThread
 import|;
 end_import
 
@@ -152,22 +152,6 @@ operator|.
 name|txn
 operator|.
 name|TxnUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|TestTxnCommands2
 import|;
 end_import
 
@@ -9323,7 +9307,7 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-name|RunnableConfigurable
+name|MetastoreTaskThread
 name|writeSetService
 init|=
 operator|new

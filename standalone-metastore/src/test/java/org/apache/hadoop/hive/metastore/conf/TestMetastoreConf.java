@@ -1077,7 +1077,7 @@ literal|"30s"
 argument_list|,
 literal|"test.str.list"
 argument_list|,
-literal|"d,e"
+literal|"d"
 argument_list|,
 literal|"test.class"
 argument_list|,
@@ -1236,7 +1236,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|2
+literal|1
 argument_list|,
 name|list
 operator|.
@@ -1253,18 +1253,6 @@ operator|.
 name|contains
 argument_list|(
 literal|"d"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|list
-operator|.
-name|contains
-argument_list|(
-literal|"e"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1463,8 +1451,7 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Ignore
-comment|// Ignore for now as Hive's tests create a hive-site.xml in the test directory
+name|Test
 specifier|public
 name|void
 name|readHiveSiteWithHiveConfDir
@@ -1517,8 +1504,7 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Ignore
-comment|// Ignore for now as Hive's tests create a hive-site.xml in the test directory
+name|Test
 specifier|public
 name|void
 name|readHiveSiteWithHiveHomeDir
@@ -1567,8 +1553,7 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Ignore
-comment|// Ignore for now as Hive's tests create a hive-metastoresite.xml in the test directory
+name|Test
 specifier|public
 name|void
 name|readHiveMetastoreSiteWithHiveConfDir
@@ -1621,8 +1606,7 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Ignore
-comment|// Ignore for now as Hive's tests create a hive-metastoresite.xml in the test directory
+name|Test
 specifier|public
 name|void
 name|readHiveMetastoreSiteWithHiveHomeDir
