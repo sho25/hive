@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/**  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*   Licensed to the Apache Software Foundation (ASF) under one   or more contributor license agreements.  See the NOTICE file   distributed with this work for additional information   regarding copyright ownership.  The ASF licenses this file   to you under the Apache License, Version 2.0 (the   "License"); you may not use this file except in compliance   with the License.  You may obtain a copy of the License at        http://www.apache.org/licenses/LICENSE-2.0    Unless required by applicable law or agreed to in writing, software   distributed under the License is distributed on an "AS IS" BASIS,   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   See the License for the specific language governing permissions and   limitations under the License.  */
 end_comment
 
 begin_package
@@ -168,6 +168,20 @@ operator|.
 name|plan
 operator|.
 name|UnlockTableDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|UserGroupInformation
 import|;
 end_import
 
@@ -470,6 +484,26 @@ operator|.
 name|thrift
 operator|.
 name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|security
+operator|.
+name|PrivilegedExceptionAction
 import|;
 end_import
 
@@ -3113,6 +3147,35 @@ name|heartbeatInterval
 operator|>
 literal|0
 assert|;
+name|UserGroupInformation
+name|currentUser
+decl_stmt|;
+try|try
+block|{
+name|currentUser
+operator|=
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|LockException
+argument_list|(
+literal|"error while getting current user,"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 name|Heartbeater
 name|heartbeater
 init|=
@@ -3124,6 +3187,8 @@ argument_list|,
 name|conf
 argument_list|,
 name|queryId
+argument_list|,
+name|currentUser
 argument_list|)
 decl_stmt|;
 comment|// For negative testing purpose..
@@ -4053,6 +4118,10 @@ specifier|private
 name|HiveConf
 name|conf
 decl_stmt|;
+specifier|private
+name|UserGroupInformation
+name|currentUser
+decl_stmt|;
 name|LockException
 name|lockException
 decl_stmt|;
@@ -4070,7 +4139,7 @@ return|return
 name|lockException
 return|;
 block|}
-comment|/**      *      * @param txnMgr transaction manager for this operation      */
+comment|/**      *      * @param txnMgr transaction manager for this operation      * @param currentUser      */
 name|Heartbeater
 parameter_list|(
 name|HiveTxnManager
@@ -4081,6 +4150,9 @@ name|conf
 parameter_list|,
 name|String
 name|queryId
+parameter_list|,
+name|UserGroupInformation
+name|currentUser
 parameter_list|)
 block|{
 name|this
@@ -4094,6 +4166,12 @@ operator|.
 name|conf
 operator|=
 name|conf
+expr_stmt|;
+name|this
+operator|.
+name|currentUser
+operator|=
+name|currentUser
 expr_stmt|;
 name|lockException
 operator|=
@@ -4163,14 +4241,35 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Heartbeating..."
+literal|"Heartbeating...for currentUser: "
+operator|+
+name|currentUser
 argument_list|)
 expr_stmt|;
+name|currentUser
+operator|.
+name|doAs
+argument_list|(
+call|(
+name|PrivilegedExceptionAction
+argument_list|<
+name|Object
+argument_list|>
+call|)
+argument_list|()
+operator|->
+block|{
 name|txnMgr
 operator|.
 name|heartbeat
 argument_list|()
-expr_stmt|;
+block|;
+return|return
+literal|null
+return|;
+block|}
+block|)
+empty_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -4185,6 +4284,10 @@ argument_list|(
 literal|"Failed trying to heartbeat queryId="
 operator|+
 name|queryId
+operator|+
+literal|", currentUser: "
+operator|+
+name|currentUser
 operator|+
 literal|": "
 operator|+
@@ -4205,13 +4308,16 @@ name|Throwable
 name|t
 parameter_list|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
+name|String
+name|errorMsg
+init|=
 literal|"Failed trying to heartbeat queryId="
 operator|+
 name|queryId
+operator|+
+literal|", currentUser: "
+operator|+
+name|currentUser
 operator|+
 literal|": "
 operator|+
@@ -4219,6 +4325,12 @@ name|t
 operator|.
 name|getMessage
 argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|errorMsg
 argument_list|,
 name|t
 argument_list|)
@@ -4228,16 +4340,7 @@ operator|=
 operator|new
 name|LockException
 argument_list|(
-literal|"Failed trying to heartbeat queryId="
-operator|+
-name|queryId
-operator|+
-literal|": "
-operator|+
-name|t
-operator|.
-name|getMessage
-argument_list|()
+name|errorMsg
 argument_list|,
 name|t
 argument_list|)
@@ -4245,8 +4348,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
-block|}
 end_class
 
+unit|}
 end_unit
 
