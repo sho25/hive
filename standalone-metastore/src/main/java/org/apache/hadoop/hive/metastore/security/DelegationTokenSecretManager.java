@@ -354,6 +354,12 @@ argument_list|(
 name|tokenStrForm
 argument_list|)
 expr_stmt|;
+comment|//when a token is created the renewer of the token is stored
+comment|//as shortName in AbstractDelegationTokenIdentifier.setRenewer()
+comment|//this seems like an inconsistency because while cancelling the token
+comment|//it uses the shortname to compare the renewer while it does not use
+comment|//shortname during token renewal. Use getShortUserName() until its fixed
+comment|//in HADOOP-15068
 name|String
 name|user
 init|=
@@ -362,7 +368,7 @@ operator|.
 name|getCurrentUser
 argument_list|()
 operator|.
-name|getUserName
+name|getShortUserName
 argument_list|()
 decl_stmt|;
 return|return
