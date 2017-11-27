@@ -3098,22 +3098,27 @@ name|totalUpdated
 argument_list|)
 expr_stmt|;
 block|}
+name|int
+name|result
+init|=
+operator|(
+name|unusedGuaranteed
+operator|+=
+name|delta
+operator|)
+decl_stmt|;
 name|WM_LOG
 operator|.
 name|info
 argument_list|(
-literal|"Setting unused: "
+literal|"Setting unused to "
 operator|+
-name|unusedGuaranteed
+name|result
 operator|+
-literal|" plus "
+literal|" based on remaining delta "
 operator|+
 name|delta
 argument_list|)
-expr_stmt|;
-name|unusedGuaranteed
-operator|+=
-name|delta
 expr_stmt|;
 block|}
 else|else
@@ -3131,22 +3136,27 @@ name|unusedGuaranteed
 condition|)
 block|{
 comment|// Somebody took away our unwanted ducks.
+name|int
+name|result
+init|=
+operator|(
+name|unusedGuaranteed
+operator|-=
+name|delta
+operator|)
+decl_stmt|;
 name|WM_LOG
 operator|.
 name|info
 argument_list|(
-literal|"Setting unused: "
+literal|"Setting unused to "
 operator|+
-name|unusedGuaranteed
+name|result
 operator|+
-literal|" minus "
+literal|" based on full delta "
 operator|+
 name|delta
 argument_list|)
-expr_stmt|;
-name|unusedGuaranteed
-operator|-=
-name|delta
 expr_stmt|;
 return|return;
 block|}
@@ -3183,7 +3193,7 @@ name|WM_LOG
 operator|.
 name|info
 argument_list|(
-literal|"Unused is 0; revoked "
+literal|"Setting unused to 0; revoked "
 operator|+
 name|totalUpdated
 operator|+
@@ -6265,14 +6275,29 @@ name|updatedCount
 operator|<=
 literal|1
 assert|;
-name|unusedGuaranteed
-operator|+=
-operator|(
-literal|1
-operator|-
+if|if
+condition|(
 name|updatedCount
-operator|)
+operator|==
+literal|0
+condition|)
+block|{
+name|int
+name|result
+init|=
+operator|++
+name|unusedGuaranteed
+decl_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Returning the unused duck; unused is now "
+operator|+
+name|result
+argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|toUpdate
@@ -8143,7 +8168,6 @@ argument_list|,
 name|task
 argument_list|)
 expr_stmt|;
-comment|// TODO: [!!!] is it possible that we are losing the guaranteed task here? dbl check paths
 block|}
 block|}
 block|}
@@ -8365,7 +8389,12 @@ name|TaskInfo
 argument_list|>
 name|downgradedTask
 init|=
+operator|new
+name|Ref
+argument_list|<>
+argument_list|(
 literal|null
+argument_list|)
 decl_stmt|;
 name|writeLock
 operator|.
@@ -8511,84 +8540,6 @@ operator|.
 name|triedAssigningTask
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|unusedGuaranteed
-operator|>
-literal|0
-condition|)
-block|{
-synchronized|synchronized
-init|(
-name|taskInfo
-init|)
-block|{
-assert|assert
-operator|!
-name|taskInfo
-operator|.
-name|isPendingUpdate
-assert|;
-comment|// No updates before it's running.
-name|taskInfo
-operator|.
-name|isGuaranteed
-operator|=
-literal|true
-expr_stmt|;
-block|}
-operator|--
-name|unusedGuaranteed
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// We could be scheduling a guaranteed task when a higher priority task cannot be
-comment|// scheduled. Try to take a duck away from a lower priority task here.
-name|downgradedTask
-operator|=
-operator|new
-name|Ref
-argument_list|<>
-argument_list|(
-literal|null
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|findGuaranteedToReallocate
-argument_list|(
-name|taskInfo
-argument_list|,
-name|downgradedTask
-argument_list|)
-condition|)
-block|{
-comment|// We are revoking another duck; don't wait. We could also give the duck
-comment|// to this task in the callback instead.
-synchronized|synchronized
-init|(
-name|taskInfo
-init|)
-block|{
-assert|assert
-operator|!
-name|taskInfo
-operator|.
-name|isPendingUpdate
-assert|;
-comment|// No updates before it's running.
-name|taskInfo
-operator|.
-name|isGuaranteed
-operator|=
-literal|true
-expr_stmt|;
-block|}
-comment|// Note: after this, the method MUST send the downgrade message to downgradedTask
-comment|//       (outside of the writeLock, preferably), before exiting.
-block|}
-block|}
 name|ScheduleResult
 name|scheduleResult
 init|=
@@ -8597,8 +8548,11 @@ argument_list|(
 name|taskInfo
 argument_list|,
 name|totalResource
+argument_list|,
+name|downgradedTask
 argument_list|)
 decl_stmt|;
+comment|// Note: we must handle downgradedTask after this. We do it at the end, outside the lock.
 if|if
 condition|(
 name|LOG
@@ -9068,10 +9022,6 @@ block|}
 if|if
 condition|(
 name|downgradedTask
-operator|!=
-literal|null
-operator|&&
-name|downgradedTask
 operator|.
 name|value
 operator|!=
@@ -9082,7 +9032,7 @@ name|WM_LOG
 operator|.
 name|info
 argument_list|(
-literal|"downgrading "
+literal|"Downgrading "
 operator|+
 name|downgradedTask
 operator|.
@@ -9284,6 +9234,12 @@ name|taskInfo
 parameter_list|,
 name|Resource
 name|totalResource
+parameter_list|,
+name|Ref
+argument_list|<
+name|TaskInfo
+argument_list|>
+name|downgradedTask
 parameter_list|)
 block|{
 name|Preconditions
@@ -9325,12 +9281,135 @@ condition|(
 name|selectHostResult
 operator|.
 name|scheduleResult
-operator|==
+operator|!=
 name|ScheduleResult
 operator|.
 name|SCHEDULED
 condition|)
 block|{
+return|return
+name|selectHostResult
+operator|.
+name|scheduleResult
+return|;
+block|}
+if|if
+condition|(
+name|unusedGuaranteed
+operator|>
+literal|0
+condition|)
+block|{
+name|boolean
+name|wasGuaranteed
+init|=
+literal|false
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|taskInfo
+init|)
+block|{
+assert|assert
+operator|!
+name|taskInfo
+operator|.
+name|isPendingUpdate
+assert|;
+comment|// No updates before it's running.
+name|wasGuaranteed
+operator|=
+name|taskInfo
+operator|.
+name|isGuaranteed
+expr_stmt|;
+name|taskInfo
+operator|.
+name|isGuaranteed
+operator|=
+literal|true
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|wasGuaranteed
+condition|)
+block|{
+comment|// This should never happen - we only schedule one attempt once.
+name|WM_LOG
+operator|.
+name|error
+argument_list|(
+literal|"The task had guaranteed flag set before scheduling: "
+operator|+
+name|taskInfo
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|int
+name|result
+init|=
+operator|--
+name|unusedGuaranteed
+decl_stmt|;
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Using an unused duck for "
+operator|+
+name|taskInfo
+operator|.
+name|attemptId
+operator|+
+literal|"; unused is now "
+operator|+
+name|result
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|// We could be scheduling a guaranteed task when a higher priority task cannot be
+comment|// scheduled. Try to take a duck away from a lower priority task here.
+if|if
+condition|(
+name|findGuaranteedToReallocate
+argument_list|(
+name|taskInfo
+argument_list|,
+name|downgradedTask
+argument_list|)
+condition|)
+block|{
+comment|// We are revoking another duck; don't wait. We could also give the duck
+comment|// to this task in the callback instead.
+synchronized|synchronized
+init|(
+name|taskInfo
+init|)
+block|{
+assert|assert
+operator|!
+name|taskInfo
+operator|.
+name|isPendingUpdate
+assert|;
+comment|// No updates before it's running.
+name|taskInfo
+operator|.
+name|isGuaranteed
+operator|=
+literal|true
+expr_stmt|;
+block|}
+comment|// Note: after this, the caller MUST send the downgrade message to downgradedTask
+comment|//       (outside of the writeLock, preferably), before exiting.
+block|}
+block|}
 name|NodeInfo
 name|nodeInfo
 init|=
@@ -9479,7 +9558,6 @@ argument_list|,
 name|container
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|selectHostResult
 operator|.
@@ -14466,6 +14544,8 @@ name|ti
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|VisibleForTesting
 name|int
 name|getUnusedGuaranteedCount
 parameter_list|()
