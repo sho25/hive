@@ -313,6 +313,18 @@ name|ALTER_TRIGGER
 block|,
 name|DROP_TRIGGER
 block|,
+name|CREATE_POOL
+block|,
+name|ALTER_POOL
+block|,
+name|DROP_POOL
+block|,
+name|CREATE_MAPPING
+block|,
+name|ALTER_MAPPING
+block|,
+name|DROP_MAPPING
+block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,

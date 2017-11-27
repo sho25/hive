@@ -177,6 +177,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|sun
+operator|.
+name|tools
+operator|.
+name|extcheck
+operator|.
+name|Main
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache

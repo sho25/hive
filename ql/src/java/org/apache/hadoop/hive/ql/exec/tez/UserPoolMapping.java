@@ -451,7 +451,7 @@ name|Mapping
 argument_list|(
 name|mapping
 operator|.
-name|getPoolName
+name|getPoolPath
 argument_list|()
 argument_list|,
 name|mapping

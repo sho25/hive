@@ -907,7 +907,7 @@ argument_list|)
 decl_stmt|;
 name|mapping
 operator|.
-name|setPoolName
+name|setPoolPath
 argument_list|(
 name|pool
 argument_list|)
