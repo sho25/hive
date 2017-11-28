@@ -3228,6 +3228,13 @@ argument_list|(
 literal|"Received submission failed event for fragment ID "
 operator|+
 name|fragmentId
+operator|+
+literal|": "
+operator|+
+name|throwable
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
