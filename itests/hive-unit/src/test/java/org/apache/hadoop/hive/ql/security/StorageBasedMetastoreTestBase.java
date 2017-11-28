@@ -405,14 +405,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|int
-name|port
-init|=
-name|MetaStoreTestUtils
-operator|.
-name|findFreePort
-argument_list|()
-decl_stmt|;
 comment|// Turn on metastore-side authorization
 name|System
 operator|.
@@ -475,20 +467,16 @@ operator|=
 name|createHiveConf
 argument_list|()
 expr_stmt|;
+name|int
+name|port
+init|=
 name|MetaStoreTestUtils
 operator|.
-name|startMetaStore
+name|startMetaStoreWithRetry
 argument_list|(
-name|port
-argument_list|,
-name|HadoopThriftAuthBridge
-operator|.
-name|getBridge
-argument_list|()
-argument_list|,
 name|clientHiveConf
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|// Turn off client-side authorization
 name|clientHiveConf
 operator|.

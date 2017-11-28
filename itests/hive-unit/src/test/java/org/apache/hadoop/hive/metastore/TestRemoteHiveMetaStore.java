@@ -147,8 +147,10 @@ name|port
 operator|=
 name|MetaStoreTestUtils
 operator|.
-name|findFreePort
-argument_list|()
+name|startMetaStoreWithRetry
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|System
 operator|.
@@ -159,20 +161,6 @@ argument_list|(
 literal|"Starting MetaStore Server on port "
 operator|+
 name|port
-argument_list|)
-expr_stmt|;
-name|MetaStoreTestUtils
-operator|.
-name|startMetaStore
-argument_list|(
-name|port
-argument_list|,
-name|HadoopThriftAuthBridge
-operator|.
-name|getBridge
-argument_list|()
-argument_list|,
-name|hiveConf
 argument_list|)
 expr_stmt|;
 name|isServerStarted
