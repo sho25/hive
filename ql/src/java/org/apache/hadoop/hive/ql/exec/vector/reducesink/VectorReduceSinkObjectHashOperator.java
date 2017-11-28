@@ -1848,6 +1848,7 @@ argument_list|(
 name|keyLength
 argument_list|)
 expr_stmt|;
+block|}
 name|keyWritable
 operator|.
 name|setHashCode
@@ -1855,7 +1856,6 @@ argument_list|(
 name|hashCode
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 operator|!
