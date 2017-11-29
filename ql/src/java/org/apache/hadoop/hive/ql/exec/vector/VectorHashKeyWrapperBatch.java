@@ -6616,6 +6616,16 @@ argument_list|)
 argument_list|)
 return|;
 case|case
+name|DECIMAL_64
+case|:
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Getting writable for DECIMAL_64 not supported"
+argument_list|)
+throw|;
+case|case
 name|TIMESTAMP
 case|:
 return|return

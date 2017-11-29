@@ -1467,7 +1467,7 @@ name|bigTableKeyExpressions
 operator|=
 name|vectorMapJoinInfo
 operator|.
-name|getBigTableKeyExpressions
+name|getSlimmedBigTableKeyExpressions
 argument_list|()
 expr_stmt|;
 name|bigTableValueColumnMap
@@ -1495,7 +1495,7 @@ name|bigTableValueExpressions
 operator|=
 name|vectorMapJoinInfo
 operator|.
-name|getBigTableValueExpressions
+name|getSlimmedBigTableValueExpressions
 argument_list|()
 expr_stmt|;
 name|bigTableRetainedMapping
