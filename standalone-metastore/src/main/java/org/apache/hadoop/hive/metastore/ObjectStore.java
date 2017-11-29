@@ -57229,12 +57229,6 @@ if|if
 condition|(
 name|resourcePlan
 operator|.
-name|isSetStatus
-argument_list|()
-operator|&&
-operator|(
-name|resourcePlan
-operator|.
 name|isSetQueryParallelism
 argument_list|()
 operator|||
@@ -57253,7 +57247,14 @@ name|equals
 argument_list|(
 name|name
 argument_list|)
-operator|)
+condition|)
+block|{
+if|if
+condition|(
+name|resourcePlan
+operator|.
+name|isSetStatus
+argument_list|()
 condition|)
 block|{
 throw|throw
@@ -57263,6 +57264,28 @@ argument_list|(
 literal|"Cannot change values during status switch."
 argument_list|)
 throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|resourcePlan
+operator|.
+name|getStatus
+argument_list|()
+operator|==
+name|WMResourcePlanStatus
+operator|.
+name|DISABLED
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"Resource plan must be disabled to edit it."
+argument_list|)
+throw|;
+block|}
 block|}
 if|if
 condition|(
