@@ -1993,7 +1993,11 @@ comment|// i think this features is never really used from the command line
 name|String
 name|defaultTestSrcTables
 init|=
-literal|"src,src1,srcbucket,srcbucket2,src_json,src_thrift,src_sequencefile,srcpart,alltypesorc,src_hbase,cbo_t1,cbo_t2,cbo_t3,src_cbo,part,lineitem"
+literal|"src,src1,srcbucket,srcbucket2,src_json,src_thrift,"
+operator|+
+literal|"src_sequencefile,srcpart,alltypesorc,src_hbase,cbo_t1,cbo_t2,cbo_t3,src_cbo,part,"
+operator|+
+literal|"lineitem,alltypesparquet"
 decl_stmt|;
 for|for
 control|(
