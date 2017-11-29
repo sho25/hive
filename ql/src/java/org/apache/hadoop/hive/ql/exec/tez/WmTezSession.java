@@ -669,12 +669,6 @@ name|clusterFraction
 operator|=
 literal|0f
 expr_stmt|;
-name|this
-operator|.
-name|queryId
-operator|=
-literal|null
-expr_stmt|;
 block|}
 name|double
 name|getClusterFraction

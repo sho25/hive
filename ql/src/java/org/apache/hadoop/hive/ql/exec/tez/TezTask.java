@@ -1492,13 +1492,6 @@ argument_list|(
 name|desiredCounters
 argument_list|)
 expr_stmt|;
-name|session
-operator|.
-name|setTriggerContext
-argument_list|(
-name|triggerContext
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|info
@@ -1518,6 +1511,13 @@ operator|.
 name|setTezSession
 argument_list|(
 name|session
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
+name|setTriggerContext
+argument_list|(
+name|triggerContext
 argument_list|)
 expr_stmt|;
 try|try
@@ -1573,10 +1573,6 @@ name|Configuration
 name|sessionConf
 init|=
 operator|(
-name|session
-operator|!=
-literal|null
-operator|&&
 name|session
 operator|.
 name|getConf
@@ -3703,6 +3699,15 @@ operator|+
 literal|" retrying..."
 argument_list|)
 expr_stmt|;
+comment|// TODO: this is temporary, need to refactor how reopen is invoked.
+name|TriggerContext
+name|oldCtx
+init|=
+name|sessionState
+operator|.
+name|getTriggerContext
+argument_list|()
+decl_stmt|;
 name|sessionState
 operator|=
 name|sessionState
@@ -3712,6 +3717,13 @@ argument_list|(
 name|conf
 argument_list|,
 name|inputOutputJars
+argument_list|)
+expr_stmt|;
+name|sessionState
+operator|.
+name|setTriggerContext
+argument_list|(
+name|oldCtx
 argument_list|)
 expr_stmt|;
 name|dagClient

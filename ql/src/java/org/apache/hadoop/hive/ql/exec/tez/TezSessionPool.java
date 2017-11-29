@@ -721,6 +721,15 @@ operator|>
 literal|0
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|parentSessionState
+operator|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|threadCount
@@ -779,15 +788,6 @@ argument_list|(
 name|initialSize
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
-name|parentSessionState
-operator|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-expr_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1554,6 +1554,33 @@ argument_list|(
 name|newSession
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|==
+literal|null
+operator|&&
+name|parentSessionState
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Tez session relies on a threadlocal for open... If we are on some non-session thread,
+comment|// just use the same SessionState we used for the initial sessions.
+comment|// Technically, given that all pool sessions are initially based on this state, shoudln't
+comment|// we also set this at all times and not rely on an external session stuff? We should
+comment|// probably just get rid of the thread local usage in TezSessionState.
+name|SessionState
+operator|.
+name|setCurrentSessionState
+argument_list|(
+name|parentSessionState
+argument_list|)
+expr_stmt|;
+block|}
 name|newSession
 operator|.
 name|open

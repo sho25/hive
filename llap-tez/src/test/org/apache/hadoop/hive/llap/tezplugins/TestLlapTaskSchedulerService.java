@@ -3471,7 +3471,6 @@ name|isGuaranteed
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO#       ts.notifyStarted(task);
 name|tsWrapper
 operator|.
 name|ts
