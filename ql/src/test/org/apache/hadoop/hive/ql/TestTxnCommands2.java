@@ -735,10 +735,6 @@ name|LoggerFactory
 import|;
 end_import
 
-begin_comment
-comment|/**  * TODO: this should be merged with TestTxnCommands once that is checked in  * specifically the tests; the supporting code here is just a clone of TestTxnCommands  */
-end_comment
-
 begin_class
 specifier|public
 class|class

@@ -1629,10 +1629,23 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|"'"
+literal|"',"
 argument_list|)
 expr_stmt|;
 block|}
+name|sb
+operator|.
+name|setLength
+argument_list|(
+name|sb
+operator|.
+name|length
+argument_list|()
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
+comment|//remove trailing ,
 name|sb
 operator|.
 name|append
