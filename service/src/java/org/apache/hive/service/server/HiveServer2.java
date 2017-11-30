@@ -119,6 +119,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|ExecutionException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|Executors
 import|;
 end_import
@@ -1710,6 +1722,8 @@ argument_list|(
 literal|"Initializing workload management"
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|wm
 operator|=
 name|WorkloadManager
@@ -1723,6 +1737,25 @@ argument_list|,
 name|resourcePlan
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ExecutionException
+decl||
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|ServiceException
+argument_list|(
+literal|"Unable to instantiate Workload Manager"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 name|tezSessionPoolManager
 operator|.

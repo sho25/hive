@@ -258,6 +258,13 @@ name|NoPoolMappingException
 name|ex
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"NoPoolMappingException thrown. Getting an un-managed session.."
+argument_list|)
+expr_stmt|;
 return|return
 name|getUnmanagedSession
 argument_list|(

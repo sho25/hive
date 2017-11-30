@@ -976,6 +976,10 @@ parameter_list|,
 name|QueryAllocationManager
 name|qam
 parameter_list|)
+throws|throws
+name|ExecutionException
+throws|,
+name|InterruptedException
 block|{
 name|super
 argument_list|(
@@ -1009,6 +1013,10 @@ parameter_list|,
 name|WMFullResourcePlan
 name|plan
 parameter_list|)
+throws|throws
+name|ExecutionException
+throws|,
+name|InterruptedException
 block|{
 name|super
 argument_list|(
