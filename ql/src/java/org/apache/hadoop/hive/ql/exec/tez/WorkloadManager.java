@@ -1262,6 +1262,24 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
+name|allocationManager
+operator|=
+name|qam
+expr_stmt|;
+name|this
+operator|.
+name|allocationManager
+operator|.
+name|setClusterChangedCallback
+argument_list|(
+parameter_list|()
+lambda|->
+name|notifyOfClusterStateChange
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
 name|amComm
 operator|=
 name|amComm
@@ -1354,10 +1372,6 @@ name|RestrictedConfigChecker
 argument_list|(
 name|conf
 argument_list|)
-expr_stmt|;
-name|allocationManager
-operator|=
-name|qam
 expr_stmt|;
 comment|// Only creates the expiration tracker if expiration is configured.
 name|expirationTracker
@@ -7405,10 +7419,9 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// TODO: use this
 specifier|public
 name|void
-name|nofityOfClusterStateChange
+name|notifyOfClusterStateChange
 parameter_list|()
 block|{
 name|currentLock

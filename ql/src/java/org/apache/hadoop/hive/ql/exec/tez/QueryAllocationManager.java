@@ -31,6 +31,10 @@ name|List
 import|;
 end_import
 
+begin_comment
+comment|/**  * Represents the mapping from logical resource allocations to queries from WM, to actual physical  * allocations performed using some implementation of a scheduler.  */
+end_comment
+
 begin_interface
 interface|interface
 name|QueryAllocationManager
@@ -55,6 +59,14 @@ argument_list|<
 name|WmTezSession
 argument_list|>
 name|sessions
+parameter_list|)
+function_decl|;
+comment|/**    * Sets a callback to be invoked on cluster changes relevant to resource allocation.    */
+name|void
+name|setClusterChangedCallback
+parameter_list|(
+name|Runnable
+name|clusterChangedCallback
 parameter_list|)
 function_decl|;
 block|}
