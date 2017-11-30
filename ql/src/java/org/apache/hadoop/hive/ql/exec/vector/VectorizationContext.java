@@ -3512,6 +3512,23 @@ operator|.
 name|CASE_INSENSITIVE
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Pattern
+name|listTypePattern
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"array.*"
+argument_list|,
+name|Pattern
+operator|.
+name|CASE_INSENSITIVE
+argument_list|)
+decl_stmt|;
 comment|//Map column number to type
 specifier|private
 name|OutputColumnManager
@@ -20112,6 +20129,12 @@ name|STRUCT
 case|:
 return|return
 literal|"Struct"
+return|;
+case|case
+name|LIST
+case|:
+return|return
+literal|"List"
 return|;
 default|default:
 throw|throw
