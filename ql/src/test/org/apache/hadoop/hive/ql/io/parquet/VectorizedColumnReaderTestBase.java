@@ -1010,6 +1010,62 @@ literal|"repeated binary list_decimal_field (DECIMAL(5,2));"
 operator|+
 literal|"repeated int32 list_int32_field_for_repeat_test;"
 operator|+
+literal|"repeated group map_int32 (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required int32 key;\n"
+operator|+
+literal|"  optional int32 value;\n"
+operator|+
+literal|"}\n"
+operator|+
+literal|"repeated group map_int64 (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required int64 key;\n"
+operator|+
+literal|"  optional int64 value;\n"
+operator|+
+literal|"}\n"
+operator|+
+literal|"repeated group map_double (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required double key;\n"
+operator|+
+literal|"  optional double value;\n"
+operator|+
+literal|"}\n"
+operator|+
+literal|"repeated group map_float (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required float key;\n"
+operator|+
+literal|"  optional float value;\n"
+operator|+
+literal|"}\n"
+operator|+
+literal|"repeated group map_binary (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required binary key;\n"
+operator|+
+literal|"  optional binary value;\n"
+operator|+
+literal|"}\n"
+operator|+
+literal|"repeated group map_decimal (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required binary key (DECIMAL(5,2));\n"
+operator|+
+literal|"  optional binary value (DECIMAL(5,2));\n"
+operator|+
+literal|"}\n"
+operator|+
+literal|"repeated group map_int32_for_repeat_test (MAP_KEY_VALUE) {\n"
+operator|+
+literal|"  required int32 key;\n"
+operator|+
+literal|"  optional int32 value;\n"
+operator|+
+literal|"}\n"
+operator|+
 literal|"} "
 argument_list|)
 decl_stmt|;
