@@ -586,6 +586,27 @@ literal|"Resetting already initialized AvroSerDe"
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"AvroSerde::initialize(): Preset value of avro.schema.literal == "
+operator|+
+name|properties
+operator|.
+name|get
+argument_list|(
+name|AvroSerdeUtils
+operator|.
+name|AvroTableProperties
+operator|.
+name|SCHEMA_LITERAL
+operator|.
+name|getPropName
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|schema
 operator|=
 literal|null
@@ -752,6 +773,7 @@ argument_list|,
 name|columnCommentProperty
 argument_list|)
 expr_stmt|;
+block|}
 name|properties
 operator|.
 name|setProperty
@@ -771,7 +793,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|LOG

@@ -7663,6 +7663,30 @@ operator|+
 literal|"with constant group by keys."
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_TABLE_PROPERTIES_FROM_SERDE
+argument_list|(
+literal|"hive.optimize.update.table.properties.from.serde"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to update table-properties by initializing tables' SerDe instances during logical-optimization. \n"
+operator|+
+literal|"By doing so, certain SerDe classes (like AvroSerDe) can pre-calculate table-specific information, and \n"
+operator|+
+literal|"store it in table-properties, to be used later in the SerDe, while running the job."
+argument_list|)
+block|,
+name|HIVE_OPTIMIZE_TABLE_PROPERTIES_FROM_SERDE_LIST
+argument_list|(
+literal|"hive.optimize.update.table.properties.from.serde.list"
+argument_list|,
+literal|"org.apache.hadoop.hive.serde2.avro.AvroSerDe"
+argument_list|,
+literal|"The comma-separated list of SerDe classes that are considered when enhancing table-properties \n"
+operator|+
+literal|"during logical optimization."
+argument_list|)
+block|,
 comment|// CTE
 name|HIVE_CTE_MATERIALIZE_THRESHOLD
 argument_list|(
