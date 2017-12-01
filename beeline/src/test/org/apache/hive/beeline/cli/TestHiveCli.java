@@ -551,6 +551,30 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testCommentStripping
+parameter_list|()
+block|{
+comment|// this should work as comments are stripped by HiveCli
+name|verifyCMD
+argument_list|(
+literal|"!ls --abcdefghijklmnopqrstuvwxyz\n"
+argument_list|,
+literal|"src"
+argument_list|,
+name|os
+argument_list|,
+literal|null
+argument_list|,
+name|ERRNO_OK
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testSetPromptValue
 parameter_list|()
 block|{

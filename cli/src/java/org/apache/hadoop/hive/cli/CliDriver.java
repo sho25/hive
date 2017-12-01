@@ -1304,10 +1304,14 @@ literal|"!"
 argument_list|)
 condition|)
 block|{
+comment|// for shell commands, use unstripped command
 name|String
 name|shell_cmd
 init|=
-name|cmd_trimmed
+name|cmd
+operator|.
+name|trim
+argument_list|()
 operator|.
 name|substring
 argument_list|(
