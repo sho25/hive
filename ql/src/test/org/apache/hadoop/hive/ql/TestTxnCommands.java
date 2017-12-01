@@ -4409,6 +4409,20 @@ literal|"when matched then update set cur=0 "
 operator|+
 literal|"when not matched then insert values(s.key,s.data,1)"
 decl_stmt|;
+comment|//to allow cross join from 'teeCurMatch'
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STRICT_CHECKS_CARTESIAN
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 name|stmt

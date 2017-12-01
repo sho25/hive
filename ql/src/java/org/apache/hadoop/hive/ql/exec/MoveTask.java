@@ -1628,7 +1628,7 @@ name|supportsAcid
 argument_list|()
 condition|)
 block|{
-comment|//Acid LM doesn't maintain getOutputLockObjects(); this 'if' just makes it more explicit
+comment|//Acid LM doesn't maintain getOutputLockObjects(); this 'if' just makes logic more explicit
 return|return;
 block|}
 name|HiveLockManager
@@ -2066,7 +2066,7 @@ operator|.
 name|INSERT
 condition|)
 block|{
-comment|//'targetPath' is table root of un-partitioned table/partition
+comment|//'targetPath' is table root of un-partitioned table or partition
 comment|//'sourcePath' result of 'select ...' part of CTAS statement
 assert|assert
 name|lfd
@@ -2672,6 +2672,7 @@ operator|.
 name|isMmTable
 argument_list|()
 decl_stmt|;
+comment|//it seems that LoadTableDesc has Operation.INSERT only for CTAS...
 comment|// Create a data container
 name|DataContainer
 name|dc
@@ -2782,11 +2783,6 @@ argument_list|,
 name|tbd
 operator|.
 name|getStmtId
-argument_list|()
-argument_list|,
-name|tbd
-operator|.
-name|isMmTable
 argument_list|()
 argument_list|)
 expr_stmt|;

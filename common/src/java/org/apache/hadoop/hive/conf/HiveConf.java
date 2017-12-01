@@ -8452,7 +8452,9 @@ literal|"4: Make the table 'quarter-acid' as it only supports insert. But it doe
 operator|+
 literal|"This is intended to be used as an internal property for future versions of ACID. (See\n"
 operator|+
-literal|"HIVE-14035 for details.)"
+literal|"HIVE-14035 for details.  User sets it tblproperites via transactional_properties.)"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|HIVE_MAX_OPEN_TXNS

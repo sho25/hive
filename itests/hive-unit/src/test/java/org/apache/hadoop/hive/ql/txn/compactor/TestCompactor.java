@@ -491,6 +491,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|api
+operator|.
+name|hive_metastoreConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|txn
 operator|.
 name|CompactionInfo
@@ -1204,20 +1222,6 @@ argument_list|,
 literal|"nonstrict"
 argument_list|)
 expr_stmt|;
-name|hiveConf
-operator|.
-name|setVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEMAPREDMODE
-argument_list|,
-literal|"nonstrict"
-argument_list|)
-expr_stmt|;
-comment|//"org.apache.hadoop.hive.ql.io.HiveInputFormat"
 name|TxnDbUtil
 operator|.
 name|setConfValues
@@ -5768,6 +5772,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|6L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -5932,7 +5938,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Start a third batch, but don't close it.
+comment|// Start a third batch, but don't close it.  this delta will be ignored by compaction since
+comment|// it has an open txn in it
 name|writeBatch
 argument_list|(
 name|connection
@@ -6158,6 +6165,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|6L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -6664,6 +6673,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|6L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -7115,6 +7126,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|6L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -7508,6 +7521,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|6L
+argument_list|,
+literal|2
 argument_list|)
 expr_stmt|;
 block|}
@@ -7939,6 +7954,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|4L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// Verify that we have got correct set of delete_deltas.
@@ -8119,6 +8136,8 @@ argument_list|,
 literal|4L
 argument_list|,
 literal|4L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -8530,6 +8549,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|4L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// Verify that we have got correct set of delete_deltas.
@@ -8709,6 +8730,8 @@ argument_list|,
 literal|0L
 argument_list|,
 literal|0L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -9174,6 +9197,8 @@ argument_list|,
 literal|3L
 argument_list|,
 literal|6L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 comment|// Verify that we have got correct set of delete_deltas also
@@ -9353,6 +9378,8 @@ argument_list|,
 literal|0L
 argument_list|,
 literal|0L
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -10582,6 +10609,9 @@ name|min
 parameter_list|,
 name|long
 name|max
+parameter_list|,
+name|int
+name|numBuckets
 parameter_list|)
 throws|throws
 name|IOException
@@ -10772,6 +10802,22 @@ argument_list|,
 name|columnTypesProperty
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|BUCKET_COUNT
+argument_list|,
+name|Integer
+operator|.
+name|toString
+argument_list|(
+name|numBuckets
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|HiveConf
 operator|.
 name|setBoolVar
@@ -10801,7 +10847,7 @@ name|getRawReader
 argument_list|(
 name|conf
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 name|bucket
 argument_list|,

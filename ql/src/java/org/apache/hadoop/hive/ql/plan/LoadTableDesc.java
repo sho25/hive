@@ -215,14 +215,14 @@ specifier|public
 enum|enum
 name|LoadFileType
 block|{
+comment|/**      * This corresponds to INSERT OVERWRITE and REPL LOAD for INSERT OVERWRITE event.      * Remove all existing data before copy/move      */
 name|REPLACE_ALL
 block|,
-comment|// Remove all existing data before copy/move
+comment|/**      * This corresponds to INSERT INTO and LOAD DATA.      * If any file exist while copy, then just duplicate the file      */
 name|KEEP_EXISTING
 block|,
-comment|// If any file exist while copy, then just duplicate the file
+comment|/**      * This corresponds to REPL LOAD where if we re-apply the same event then need to overwrite      * the file instead of making a duplicate copy.      * If any file exist while copy, then just overwrite the file      */
 name|OVERWRITE_EXISTING
-comment|// If any file exist while copy, then just overwrite the file
 block|}
 specifier|public
 name|LoadTableDesc
@@ -1031,21 +1031,6 @@ name|currentTransactionId
 return|;
 block|}
 specifier|public
-name|void
-name|setTxnId
-parameter_list|(
-name|Long
-name|txnId
-parameter_list|)
-block|{
-name|this
-operator|.
-name|currentTransactionId
-operator|=
-name|txnId
-expr_stmt|;
-block|}
-specifier|public
 name|int
 name|getStmtId
 parameter_list|()
@@ -1054,6 +1039,7 @@ return|return
 name|stmtId
 return|;
 block|}
+comment|//todo: should this not be passed in the c'tor?
 specifier|public
 name|void
 name|setStmtId

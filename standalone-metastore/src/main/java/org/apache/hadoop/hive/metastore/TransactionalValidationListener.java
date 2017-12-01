@@ -772,7 +772,27 @@ name|oldTransactionalValue
 argument_list|)
 condition|)
 block|{
-comment|//only need to check conformance if alter table enabled aicd
+if|if
+condition|(
+operator|!
+name|isTransactionalPropertiesPresent
+condition|)
+block|{
+name|normazlieTransactionalPropertyDefault
+argument_list|(
+name|newTable
+argument_list|)
+expr_stmt|;
+name|isTransactionalPropertiesPresent
+operator|=
+literal|true
+expr_stmt|;
+name|transactionalPropertiesValue
+operator|=
+name|DEFAULT_TRANSACTIONAL_PROPERTY
+expr_stmt|;
+block|}
+comment|//only need to check conformance if alter table enabled acid
 if|if
 condition|(
 operator|!
@@ -1235,6 +1255,19 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|transactionalProperties
+operator|==
+literal|null
+condition|)
+block|{
+name|normazlieTransactionalPropertyDefault
+argument_list|(
+name|newTable
+argument_list|)
+expr_stmt|;
+block|}
 name|initializeTransactionalProperties
 argument_list|(
 name|newTable
@@ -1250,6 +1283,30 @@ argument_list|(
 literal|"'transactional' property of TBLPROPERTIES may only have value 'true'"
 argument_list|)
 throw|;
+block|}
+comment|/**    * When a table is marked transactional=true but transactional_properties is not set then    * transactional_properties should take on the default value.  Easier to make this explicit in    * table definition than keep checking everywhere if it's set or not.    */
+specifier|private
+name|void
+name|normazlieTransactionalPropertyDefault
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+block|{
+name|table
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_TRANSACTIONAL_PROPERTIES
+argument_list|,
+name|DEFAULT_TRANSACTIONAL_PROPERTY
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Check that InputFormatClass/OutputFormatClass should implement    * AcidInputFormat/AcidOutputFormat    */
 specifier|private

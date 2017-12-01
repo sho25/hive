@@ -7443,6 +7443,37 @@ argument_list|,
 literal|"1000000"
 argument_list|)
 expr_stmt|;
+name|AcidUtils
+operator|.
+name|setTransactionalTableScan
+argument_list|(
+name|conf
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setBoolean
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_TRANSACTIONAL_PROPERTIES
+argument_list|,
+literal|"default"
+argument_list|)
+expr_stmt|;
 name|OrcInputFormat
 operator|.
 name|Context
@@ -7523,7 +7554,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/3/base_0/1"
+literal|"mock:/a/3/base_0/bucket_00001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -7537,7 +7568,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/4/base_0/1"
+literal|"mock:/a/4/base_0/bucket_00001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -7551,7 +7582,7 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/5/base_0/1"
+literal|"mock:/a/5/base_0/bucket_00001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -7565,7 +7596,35 @@ argument_list|,
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/5/delta_0_25/1"
+literal|"mock:/a/5/delta_0_25/bucket_00001"
+argument_list|,
+literal|1000
+argument_list|,
+operator|new
+name|byte
+index|[
+literal|1
+index|]
+argument_list|)
+argument_list|,
+operator|new
+name|MockFile
+argument_list|(
+literal|"mock:/a/6/delta_27_29/bucket_00001"
+argument_list|,
+literal|1000
+argument_list|,
+operator|new
+name|byte
+index|[
+literal|1
+index|]
+argument_list|)
+argument_list|,
+operator|new
+name|MockFile
+argument_list|(
+literal|"mock:/a/6/delete_delta_27_29/bucket_00001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -8012,7 +8071,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// The fifth will not be combined because of delta files.
+comment|// The fifth could be combined again.
 name|ss
 operator|=
 name|createOrCombineStrategies
@@ -8022,6 +8081,63 @@ argument_list|,
 name|fs
 argument_list|,
 literal|"mock:/a/5"
+argument_list|,
+name|combineCtx
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|ss
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|combineCtx
+operator|.
+name|combined
+operator|instanceof
+name|OrcInputFormat
+operator|.
+name|ETLSplitStrategy
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|4
+argument_list|,
+name|etlSs
+operator|.
+name|files
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|3
+argument_list|,
+name|etlSs
+operator|.
+name|dirs
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// The sixth will not be combined because of delete delta files.  Is that desired? HIVE-18110
+name|ss
+operator|=
+name|createOrCombineStrategies
+argument_list|(
+name|context
+argument_list|,
+name|fs
+argument_list|,
+literal|"mock:/a/6"
 argument_list|,
 name|combineCtx
 argument_list|)
@@ -8059,7 +8175,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|2
+literal|4
 argument_list|,
 name|etlSs
 operator|.
@@ -8071,7 +8187,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|2
+literal|3
 argument_list|,
 name|etlSs
 operator|.
@@ -8148,7 +8264,7 @@ name|baseFiles
 argument_list|,
 name|adi
 operator|.
-name|parsedDeltas
+name|deleteEvents
 argument_list|,
 literal|null
 argument_list|,
@@ -8263,7 +8379,7 @@ name|baseFiles
 argument_list|,
 name|adi
 operator|.
-name|parsedDeltas
+name|deleteEvents
 argument_list|,
 literal|null
 argument_list|,
@@ -27633,12 +27749,16 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: open to read data - split 1 => mock:/mocktable8/0_0
-comment|// call-2: split 2 - find hive.acid.key.index in footer of delta_x_y/bucket_00001
-comment|// call-3: split 2 - read delta_x_y/bucket_00001
+comment|// call-1: open(mock:/mocktable7/0_0)
+comment|// call-2: open(mock:/mocktable7/0_0)
+comment|// call-3: listLocatedFileStatuses(mock:/mocktable7)
+comment|// call-4: getFileStatus(mock:/mocktable7/delta_0000001_0000001_0000/_metadata_acid)
+comment|// call-5: open(mock:/mocktable7/delta_0000001_0000001_0000/bucket_00001)
+comment|// call-6: getFileStatus(mock:/mocktable7/delta_0000001_0000001_0000/_metadata_acid)
+comment|// call-7: open(mock:/mocktable7/delta_0000001_0000001_0000/bucket_00001)
 name|assertEquals
 argument_list|(
-literal|5
+literal|7
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -28196,11 +28316,13 @@ expr_stmt|;
 block|}
 block|}
 comment|// call-1: open to read data - split 1 => mock:/mocktable8/0_0
-comment|// call-2: split 2 - find hive.acid.key.index in footer of delta_x_y/bucket_00001
-comment|// call-3: split 2 - read delta_x_y/bucket_00001
+comment|// call-2: listLocatedFileStatus(mock:/mocktable8)
+comment|// call-3: getFileStatus(mock:/mocktable8/delta_0000001_0000001_0000/_metadata_acid)
+comment|// call-4: getFileStatus(mock:/mocktable8/delta_0000001_0000001_0000/_metadata_acid)
+comment|// call-5: open(mock:/mocktable8/delta_0000001_0000001_0000/bucket_00001)
 name|assertEquals
 argument_list|(
-literal|3
+literal|5
 argument_list|,
 name|readOpsDelta
 argument_list|)

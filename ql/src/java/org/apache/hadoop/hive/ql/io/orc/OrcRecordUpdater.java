@@ -1212,6 +1212,7 @@ name|fields
 argument_list|)
 return|;
 block|}
+comment|/**    * @param path - partition root    */
 name|OrcRecordUpdater
 parameter_list|(
 name|Path

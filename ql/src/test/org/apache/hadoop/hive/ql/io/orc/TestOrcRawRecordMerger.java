@@ -2789,6 +2789,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|BUCKET
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|Reader
@@ -2916,6 +2918,8 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|()
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|RecordReader
@@ -3129,6 +3133,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|BUCKET
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|FileSystem
@@ -3206,6 +3212,8 @@ argument_list|,
 operator|new
 name|ValidReadTxnList
 argument_list|()
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -7399,6 +7407,8 @@ name|event
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|//minor comp, so we ignore 'base_0000100' files so all Deletes end up first since
+comment|// they all modify primordial rows
 name|assertEquals
 argument_list|(
 name|OrcRecordUpdater
@@ -7872,7 +7882,7 @@ name|conf
 argument_list|,
 literal|true
 argument_list|,
-name|baseReader
+literal|null
 argument_list|,
 literal|false
 argument_list|,
@@ -7911,6 +7921,17 @@ operator|.
 name|isMajorCompaction
 argument_list|(
 literal|true
+argument_list|)
+operator|.
+name|baseDir
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|root
+argument_list|,
+literal|"base_0000100"
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;

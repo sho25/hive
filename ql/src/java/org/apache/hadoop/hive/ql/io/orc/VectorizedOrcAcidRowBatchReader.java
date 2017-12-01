@@ -447,20 +447,6 @@ name|hadoop
 operator|.
 name|mapred
 operator|.
-name|InputSplit
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|mapred
-operator|.
 name|JobConf
 import|;
 end_import
@@ -989,7 +975,7 @@ name|JobConf
 name|conf
 parameter_list|,
 name|OrcSplit
-name|inputSplit
+name|orcSplit
 parameter_list|,
 name|Reporter
 name|reporter
@@ -1047,13 +1033,6 @@ name|acidOperationalProperties
 operator|.
 name|isSplitUpdate
 argument_list|()
-operator|||
-operator|!
-operator|(
-name|inputSplit
-operator|instanceof
-name|OrcSplit
-operator|)
 decl_stmt|;
 if|if
 condition|(
@@ -1068,15 +1047,6 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-specifier|final
-name|OrcSplit
-name|orcSplit
-init|=
-operator|(
-name|OrcSplit
-operator|)
-name|inputSplit
-decl_stmt|;
 name|reporter
 operator|.
 name|setStatus
@@ -1382,6 +1352,11 @@ name|int
 name|bucketProperty
 decl_stmt|;
 specifier|private
+specifier|final
+name|long
+name|syntheticTxnId
+decl_stmt|;
+specifier|private
 name|OffsetAndBucketProperty
 parameter_list|(
 name|long
@@ -1389,6 +1364,9 @@ name|rowIdOffset
 parameter_list|,
 name|int
 name|bucketProperty
+parameter_list|,
+name|long
+name|syntheticTxnId
 parameter_list|)
 block|{
 name|this
@@ -1403,9 +1381,15 @@ name|bucketProperty
 operator|=
 name|bucketProperty
 expr_stmt|;
+name|this
+operator|.
+name|syntheticTxnId
+operator|=
+name|syntheticTxnId
+expr_stmt|;
 block|}
 block|}
-comment|/**    * See {@link #next(NullWritable, VectorizedRowBatch)} fist and    * {@link OrcRawRecordMerger.OriginalReaderPair}.    * When reading a split of an "original" file and we need to decorate data with ROW__ID.    * This requires treating multiple files that are part of the same bucket (tranche for unbucketed    * tables) as a single logical file to number rowids consistently.    *    * todo: This logic is executed per split of every "original" file.  The computed result is the    * same for every split form the same file so this could be optimized by moving it to    * before/during splt computation and passing the info in the split.  (HIVE-17917)    */
+comment|/**    * See {@link #next(NullWritable, VectorizedRowBatch)} fist and    * {@link OrcRawRecordMerger.OriginalReaderPair}.    * When reading a split of an "original" file and we need to decorate data with ROW__ID.    * This requires treating multiple files that are part of the same bucket (tranche for unbucketed    * tables) as a single logical file to number rowids consistently.    *    * todo: This logic is executed per split of every "original" file.  The computed result is the    * same for every split form the same file so this could be optimized by moving it to    * before/during split computation and passing the info in the split.  (HIVE-17917)    */
 specifier|private
 name|OffsetAndBucketProperty
 name|computeOffsetAndBucket
@@ -1428,6 +1412,9 @@ operator|!
 name|needSyntheticRowIds
 argument_list|(
 name|split
+operator|.
+name|isOriginal
+argument_list|()
 argument_list|,
 operator|!
 name|deleteEventRegistry
@@ -1439,20 +1426,87 @@ name|rowIdProjected
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|split
+operator|.
+name|isOriginal
+argument_list|()
+condition|)
+block|{
+comment|/**          * Even if we don't need to project ROW_IDs, we still need to check the transaction ID that          * created the file to see if it's committed.  See more in          * {@link #next(NullWritable, VectorizedRowBatch)}.  (In practice getAcidState() should          * filter out base/delta files but this makes fewer dependencies)          */
+name|OrcRawRecordMerger
+operator|.
+name|TransactionMetaData
+name|syntheticTxnInfo
+init|=
+name|OrcRawRecordMerger
+operator|.
+name|TransactionMetaData
+operator|.
+name|findTransactionIDForSynthetcRowIDs
+argument_list|(
+name|split
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|split
+operator|.
+name|getRootDir
+argument_list|()
+argument_list|,
+name|conf
+argument_list|)
+decl_stmt|;
 return|return
 operator|new
 name|OffsetAndBucketProperty
 argument_list|(
-literal|0
+operator|-
+literal|1
 argument_list|,
-literal|0
+operator|-
+literal|1
+argument_list|,
+name|syntheticTxnInfo
+operator|.
+name|syntheticTransactionId
 argument_list|)
+return|;
+block|}
+return|return
+literal|null
 return|;
 block|}
 name|long
 name|rowIdOffset
 init|=
 literal|0
+decl_stmt|;
+name|OrcRawRecordMerger
+operator|.
+name|TransactionMetaData
+name|syntheticTxnInfo
+init|=
+name|OrcRawRecordMerger
+operator|.
+name|TransactionMetaData
+operator|.
+name|findTransactionIDForSynthetcRowIDs
+argument_list|(
+name|split
+operator|.
+name|getPath
+argument_list|()
+argument_list|,
+name|split
+operator|.
+name|getRootDir
+argument_list|()
+argument_list|,
+name|conf
+argument_list|)
 decl_stmt|;
 name|int
 name|bucketId
@@ -1491,7 +1545,9 @@ argument_list|)
 operator|.
 name|statementId
 argument_list|(
-literal|0
+name|syntheticTxnInfo
+operator|.
+name|statementId
 argument_list|)
 operator|.
 name|bucket
@@ -1509,10 +1565,9 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
-name|split
+name|syntheticTxnInfo
 operator|.
-name|getRootDir
-argument_list|()
+name|folder
 argument_list|,
 name|conf
 argument_list|,
@@ -1629,6 +1684,10 @@ argument_list|(
 name|rowIdOffset
 argument_list|,
 name|bucketProperty
+argument_list|,
+name|syntheticTxnInfo
+operator|.
+name|syntheticTransactionId
 argument_list|)
 return|;
 block|}
@@ -1695,6 +1754,9 @@ operator|!
 name|needSyntheticRowIds
 argument_list|(
 name|split
+operator|.
+name|isOriginal
+argument_list|()
 argument_list|,
 name|hasDeletes
 argument_list|,
@@ -1711,8 +1773,8 @@ specifier|static
 name|boolean
 name|needSyntheticRowIds
 parameter_list|(
-name|OrcSplit
-name|split
+name|boolean
+name|isOriginal
 parameter_list|,
 name|boolean
 name|hasDeletes
@@ -1722,10 +1784,7 @@ name|rowIdProjected
 parameter_list|)
 block|{
 return|return
-name|split
-operator|.
 name|isOriginal
-argument_list|()
 operator|&&
 operator|(
 name|hasDeletes
@@ -1847,6 +1906,7 @@ operator|.
 name|getParent
 argument_list|()
 expr_stmt|;
+comment|//todo: why not just use getRootDir()?
 assert|assert
 name|root
 operator|.
@@ -2089,15 +2149,50 @@ block|{
 comment|/*        * If there are deletes and reading original file, we must produce synthetic ROW_IDs in order        * to see if any deletes apply        */
 if|if
 condition|(
-name|rowIdProjected
-operator|||
+name|needSyntheticRowIds
+argument_list|(
+literal|true
+argument_list|,
 operator|!
 name|deleteEventRegistry
 operator|.
 name|isEmpty
 argument_list|()
+argument_list|,
+name|rowIdProjected
+argument_list|)
 condition|)
 block|{
+assert|assert
+name|syntheticProps
+operator|!=
+literal|null
+operator|&&
+name|syntheticProps
+operator|.
+name|rowIdOffset
+operator|>=
+literal|0
+operator|:
+literal|""
+operator|+
+name|syntheticProps
+assert|;
+assert|assert
+name|syntheticProps
+operator|!=
+literal|null
+operator|&&
+name|syntheticProps
+operator|.
+name|bucketProperty
+operator|>=
+literal|0
+operator|:
+literal|""
+operator|+
+name|syntheticProps
+assert|;
 if|if
 condition|(
 name|innerReader
@@ -2156,7 +2251,6 @@ name|isRepeating
 operator|=
 literal|true
 expr_stmt|;
-comment|//all "original" is considered written by txnid:0 which committed
 operator|(
 operator|(
 name|LongColumnVector
@@ -2174,7 +2268,9 @@ index|[
 literal|0
 index|]
 operator|=
-literal|0
+name|syntheticProps
+operator|.
+name|syntheticTxnId
 expr_stmt|;
 comment|/**          * This is {@link RecordIdentifier#getBucketProperty()}          * Also see {@link BucketCodec}          */
 name|recordIdColumnVector
@@ -2349,6 +2445,46 @@ index|[
 literal|2
 index|]
 expr_stmt|;
+comment|//these are insert events so (original txn == current) txn for all rows
+name|innerRecordIdColumnVector
+index|[
+name|OrcRecordUpdater
+operator|.
+name|CURRENT_TRANSACTION
+index|]
+operator|=
+name|recordIdColumnVector
+operator|.
+name|fields
+index|[
+literal|0
+index|]
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|syntheticProps
+operator|.
+name|syntheticTxnId
+operator|>
+literal|0
+condition|)
+block|{
+comment|//"originals" (written before table was converted to acid) is considered written by
+comment|// txnid:0 which is always committed so there is no need to check wrt invalid transactions
+comment|//But originals written by Load Data for example can be in base_x or delta_x_x so we must
+comment|//check if 'x' is committed or not evn if ROW_ID is not needed in the Operator pipeline.
+name|findRecordsWithInvalidTransactionIds
+argument_list|(
+name|innerRecordIdColumnVector
+argument_list|,
+name|vectorizedRowBatchBase
+operator|.
+name|size
+argument_list|,
+name|selectedBitSet
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 else|else
@@ -2361,7 +2497,6 @@ argument_list|,
 name|selectedBitSet
 argument_list|)
 expr_stmt|;
-comment|/**        * All "original" data belongs to txnid:0 and is always valid/committed for every reader        * So only do findRecordsWithInvalidTransactionIds() wrt {@link validTxnList} for !isOriginal        */
 block|}
 comment|// Case 2- find rows which have been deleted.
 name|this
@@ -2527,11 +2662,6 @@ block|}
 else|else
 block|{
 comment|// Finally, link up the columnVector from the base VectorizedRowBatch to outgoing batch.
-comment|// NOTE: We only link up the user columns and not the ACID metadata columns because this
-comment|// vectorized code path is not being used in cases of update/delete, when the metadata columns
-comment|// would be expected to be passed up the operator pipeline. This is because
-comment|// currently the update/delete specifically disable vectorized code paths.
-comment|// This happens at ql/exec/Utilities.java::3293 when it checks for mapWork.getVectorMode()
 name|StructColumnVector
 name|payloadStruct
 init|=

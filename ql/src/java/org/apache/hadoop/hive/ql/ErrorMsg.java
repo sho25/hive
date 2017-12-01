@@ -1836,15 +1836,6 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|LOAD_DATA_ON_ACID_TABLE
-argument_list|(
-literal|10266
-argument_list|,
-literal|"LOAD DATA... statement is not supported on transactional table {0}."
-argument_list|,
-literal|true
-argument_list|)
-block|,
 name|LOCK_NO_SUCH_LOCK
 argument_list|(
 literal|10270
@@ -2702,6 +2693,17 @@ argument_list|,
 literal|"Must use HiveInputFormat to read ACID tables "
 operator|+
 literal|"(set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat)"
+argument_list|)
+block|,
+name|ACID_LOAD_DATA_INVALID_FILE_NAME
+argument_list|(
+literal|30023
+argument_list|,
+literal|"{0} file name is not valid in Load Data into Acid "
+operator|+
+literal|"table {1}.  Examples of valid names are: 00000_0, 00000_0_copy_1"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 name|CONCATENATE_UNSUPPORTED_FILE_FORMAT

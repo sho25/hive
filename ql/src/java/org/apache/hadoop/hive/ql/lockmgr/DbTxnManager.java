@@ -179,6 +179,26 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|api
+operator|.
+name|Query
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -1360,6 +1380,17 @@ operator|&&
 name|isExplicitTransaction
 condition|)
 block|{
+if|if
+condition|(
+name|allowOperationInATransaction
+argument_list|(
+name|queryPlan
+argument_list|)
+condition|)
+block|{
+break|break;
+block|}
+comment|//look at queryPlan.outputs(WriteEntity.t - that's the table)
 comment|//for example, drop table in an explicit txn is not allowed
 comment|//in some cases this requires looking at more than just the operation
 comment|//for example HiveOperation.LOAD - OK if target is MM table but not OK if non-acid table
@@ -1395,6 +1426,118 @@ throw|;
 block|}
 block|}
 comment|/*     Should we allow writing to non-transactional tables in an explicit transaction?  The user may     issue ROLLBACK but these tables won't rollback.     Can do this by checking ReadEntity/WriteEntity to determine whether it's reading/writing     any non acid and raise an appropriate error     * Driver.acidSinks and Driver.acidInQuery can be used if any acid is in the query*/
+block|}
+comment|/**    * This modifies the logic wrt what operations are allowed in a transaction.  Multi-statement    * transaction support is incomplete but it makes some Acid tests cases much easier to write.    */
+specifier|private
+name|boolean
+name|allowOperationInATransaction
+parameter_list|(
+name|QueryPlan
+name|queryPlan
+parameter_list|)
+block|{
+comment|//Acid and MM tables support Load Data with transactional semantics.  This will allow Load Data
+comment|//in a txn assuming we can determine the target is a suitable table type.
+if|if
+condition|(
+name|queryPlan
+operator|.
+name|getOperation
+argument_list|()
+operator|==
+name|HiveOperation
+operator|.
+name|LOAD
+operator|&&
+name|queryPlan
+operator|.
+name|getOutputs
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|queryPlan
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|1
+condition|)
+block|{
+name|WriteEntity
+name|writeEntity
+init|=
+name|queryPlan
+operator|.
+name|getOutputs
+argument_list|()
+operator|.
+name|iterator
+argument_list|()
+operator|.
+name|next
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|AcidUtils
+operator|.
+name|isFullAcidTable
+argument_list|(
+name|writeEntity
+operator|.
+name|getTable
+argument_list|()
+argument_list|)
+operator|||
+name|AcidUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|writeEntity
+operator|.
+name|getTable
+argument_list|()
+argument_list|)
+condition|)
+block|{
+switch|switch
+condition|(
+name|writeEntity
+operator|.
+name|getWriteType
+argument_list|()
+condition|)
+block|{
+case|case
+name|INSERT
+case|:
+comment|//allow operation in a txn
+return|return
+literal|true
+return|;
+case|case
+name|INSERT_OVERWRITE
+case|:
+comment|//see HIVE-18154
+return|return
+literal|false
+return|;
+default|default:
+comment|//not relevant for LOAD
+return|return
+literal|false
+return|;
+block|}
+block|}
+block|}
+comment|//todo: handle Insert Overwrite as well: HIVE-18154
+return|return
+literal|false
+return|;
 block|}
 comment|/**    * Normally client should call {@link #acquireLocks(org.apache.hadoop.hive.ql.QueryPlan, org.apache.hadoop.hive.ql.Context, String)}    * @param isBlocking if false, the method will return immediately; thus the locks may be in LockState.WAITING    * @return null if no locks were needed    */
 annotation|@

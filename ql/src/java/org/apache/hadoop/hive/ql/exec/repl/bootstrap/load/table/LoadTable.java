@@ -1618,6 +1618,7 @@ name|LoadFileType
 operator|.
 name|OVERWRITE_EXISTING
 argument_list|,
+comment|//todo: what is the point of this?  If this is for replication, who would have opened a txn?
 name|SessionState
 operator|.
 name|get

@@ -351,6 +351,7 @@ specifier|private
 name|boolean
 name|hasFooter
 decl_stmt|;
+comment|/**    * This means {@link AcidUtils.AcidBaseFileType#ORIGINAL_BASE}    */
 specifier|private
 name|boolean
 name|isOriginal

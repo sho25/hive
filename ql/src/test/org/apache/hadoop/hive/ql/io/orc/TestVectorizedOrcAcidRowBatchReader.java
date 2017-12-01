@@ -477,16 +477,6 @@ name|Test
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-import|;
-end_import
-
 begin_comment
 comment|/**  * This class tests the VectorizedOrcAcidRowBatchReader by creating an actual split and a set  * of delete delta files. The split is on an insert delta and there are multiple delete deltas  * with interleaving list of record ids that get deleted. Correctness is tested by validating  * that the correct set of record ids are returned in sorted order for valid transactions only.  */
 end_comment
@@ -1447,7 +1437,7 @@ name|baseFiles
 argument_list|,
 name|adi
 operator|.
-name|parsedDeltas
+name|deleteEvents
 argument_list|,
 literal|null
 argument_list|,

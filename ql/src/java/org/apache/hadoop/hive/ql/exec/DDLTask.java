@@ -29231,6 +29231,8 @@ name|AcidUtils
 operator|.
 name|isToInsertOnlyTable
 argument_list|(
+name|tbl
+argument_list|,
 name|alterTbl
 operator|.
 name|getProps

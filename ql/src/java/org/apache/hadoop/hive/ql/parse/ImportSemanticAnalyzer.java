@@ -2831,13 +2831,6 @@ argument_list|)
 decl_stmt|;
 name|loadTableWork
 operator|.
-name|setTxnId
-argument_list|(
-name|txnId
-argument_list|)
-expr_stmt|;
-name|loadTableWork
-operator|.
 name|setStmtId
 argument_list|(
 name|stmtId
@@ -2913,6 +2906,9 @@ return|return
 name|loadTableTask
 return|;
 block|}
+comment|/**    * todo: this is odd: transactions are opened for all statements.  what is this supposed to check?    */
+annotation|@
+name|Deprecated
 specifier|private
 specifier|static
 name|boolean
@@ -3696,13 +3692,6 @@ argument_list|,
 name|txnId
 argument_list|)
 decl_stmt|;
-name|loadTableWork
-operator|.
-name|setTxnId
-argument_list|(
-name|txnId
-argument_list|)
-expr_stmt|;
 name|loadTableWork
 operator|.
 name|setStmtId

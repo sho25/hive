@@ -811,7 +811,6 @@ operator|+
 literal|"/warehouse"
 decl_stmt|;
 comment|//bucket count for test tables; set it to 1 for easier debugging
-specifier|protected
 specifier|static
 name|int
 name|BUCKET_COUNT
@@ -975,7 +974,6 @@ literal|"'transactional'='true'"
 argument_list|)
 expr_stmt|;
 block|}
-specifier|protected
 name|void
 name|setUpWithTableProperties
 parameter_list|(
@@ -1039,19 +1037,6 @@ operator|.
 name|varname
 argument_list|,
 name|TEST_WAREHOUSE_DIR
-argument_list|)
-expr_stmt|;
-name|hiveConf
-operator|.
-name|setVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVEMAPREDMODE
-argument_list|,
-literal|"nonstrict"
 argument_list|)
 expr_stmt|;
 name|hiveConf
@@ -3042,7 +3027,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"alter table acidTblLegacy SET TBLPROPERTIES ('transactional_properties' = 'default')"
+literal|"alter table acidTblLegacy SET TBLPROPERTIES ('transactional_properties' = 'insert_only')"
 argument_list|)
 expr_stmt|;
 block|}
