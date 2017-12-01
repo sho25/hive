@@ -859,7 +859,8 @@ argument_list|,
 name|advertiseURI
 argument_list|,
 name|layout
-comment|// , config  -- needed in later log4j versions
+argument_list|,
+name|config
 argument_list|)
 decl_stmt|;
 if|if
