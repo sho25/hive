@@ -962,16 +962,6 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-specifier|final
-name|ExecutorService
-name|pool
-init|=
-name|Executors
-operator|.
-name|newCachedThreadPool
-argument_list|()
-decl_stmt|;
-specifier|private
 name|HiveMaterializedViewsRegistry
 parameter_list|()
 block|{   }
@@ -986,7 +976,7 @@ return|return
 name|SINGLETON
 return|;
 block|}
-comment|/**    * Initialize the registry for the given database. It will extract the materialized views    * that are enabled for rewriting from the metastore for the current user, parse them,    * and register them in this cache.    *    * The loading process runs on the background; the method returns in the moment that the    * runnable task is created, thus the views will still not be loaded in the cache when    * it does.    */
+comment|/**    * Initialize the registry for the given database. It will extract the materialized views    * that are enabled for rewriting from the metastore for the current user, parse them,    * and register them in this cache.    *    * The loading process runs on the background; the method returns in the moment that the    * runnable task is created, thus the views will still not be loaded in the cache when    * it returns.    */
 specifier|public
 name|void
 name|init
@@ -996,6 +986,14 @@ name|Hive
 name|db
 parameter_list|)
 block|{
+name|ExecutorService
+name|pool
+init|=
+name|Executors
+operator|.
+name|newCachedThreadPool
+argument_list|()
+decl_stmt|;
 name|pool
 operator|.
 name|submit
@@ -1006,6 +1004,11 @@ argument_list|(
 name|db
 argument_list|)
 argument_list|)
+expr_stmt|;
+name|pool
+operator|.
+name|shutdown
+argument_list|()
 expr_stmt|;
 block|}
 specifier|private
@@ -1112,7 +1115,7 @@ block|}
 block|}
 comment|/**    * Adds the materialized view to the cache.    *    * @param materializedViewTable the materialized view    */
 specifier|public
-name|RelOptMaterialization
+name|void
 name|addMaterializedView
 parameter_list|(
 name|Table
@@ -1129,10 +1132,13 @@ name|isRewriteEnabled
 argument_list|()
 condition|)
 block|{
-return|return
-literal|null
-return|;
+return|return;
 block|}
+name|materializedViewTable
+operator|.
+name|getFullyQualifiedName
+argument_list|()
+expr_stmt|;
 name|ConcurrentMap
 argument_list|<
 name|ViewKey
@@ -1188,18 +1194,11 @@ specifier|final
 name|ViewKey
 name|vk
 init|=
-operator|new
 name|ViewKey
+operator|.
+name|forTable
 argument_list|(
 name|materializedViewTable
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
-name|materializedViewTable
-operator|.
-name|getCreateTime
-argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -1212,9 +1211,7 @@ name|vk
 argument_list|)
 condition|)
 block|{
-return|return
-literal|null
-return|;
+return|return;
 block|}
 comment|// Add to cache
 specifier|final
@@ -1256,9 +1253,7 @@ operator|+
 literal|" ignored; error creating view replacement"
 argument_list|)
 expr_stmt|;
-return|return
-literal|null
-return|;
+return|return;
 block|}
 specifier|final
 name|RelNode
@@ -1290,9 +1285,7 @@ operator|+
 literal|" ignored; error parsing original query"
 argument_list|)
 expr_stmt|;
-return|return
-literal|null
-return|;
+return|return;
 block|}
 name|RelOptMaterialization
 name|materialization
@@ -1348,9 +1341,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-return|return
-name|materialization
-return|;
+return|return;
 block|}
 comment|/**    * Removes the materialized view from the cache.    *    * @param materializedViewTable the materialized view to remove    */
 specifier|public
@@ -1361,36 +1352,25 @@ name|Table
 name|materializedViewTable
 parameter_list|)
 block|{
-comment|// Bail out if it is not enabled for rewriting
-if|if
-condition|(
-operator|!
-name|materializedViewTable
-operator|.
-name|isRewriteEnabled
-argument_list|()
-condition|)
-block|{
-return|return;
-block|}
 specifier|final
 name|ViewKey
 name|vk
 init|=
-operator|new
 name|ViewKey
+operator|.
+name|forTable
 argument_list|(
 name|materializedViewTable
-operator|.
-name|getTableName
-argument_list|()
-argument_list|,
-name|materializedViewTable
-operator|.
-name|getCreateTime
-argument_list|()
 argument_list|)
 decl_stmt|;
+name|ConcurrentMap
+argument_list|<
+name|ViewKey
+argument_list|,
+name|RelOptMaterialization
+argument_list|>
+name|dbMap
+init|=
 name|materializedViews
 operator|.
 name|get
@@ -1400,12 +1380,22 @@ operator|.
 name|getDbName
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|dbMap
+operator|!=
+literal|null
+condition|)
+block|{
+name|dbMap
 operator|.
 name|remove
 argument_list|(
 name|vk
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Returns the materialized views in the cache for the given database.    *    * @param dbName the database    * @return the collection of materialized views, or the empty collection if none    */
 name|Collection
@@ -2354,6 +2344,31 @@ name|creationDate
 operator|=
 name|creationTime
 expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|ViewKey
+name|forTable
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+block|{
+return|return
+operator|new
+name|ViewKey
+argument_list|(
+name|table
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+name|table
+operator|.
+name|getCreateTime
+argument_list|()
+argument_list|)
+return|;
 block|}
 annotation|@
 name|Override

@@ -8172,6 +8172,9 @@ name|DriverContext
 argument_list|()
 decl_stmt|;
 name|Task
+argument_list|<
+name|?
+argument_list|>
 name|task
 decl_stmt|;
 if|if
@@ -8225,7 +8228,12 @@ operator|new
 name|TezTask
 argument_list|()
 expr_stmt|;
+operator|(
+operator|(
+name|TezTask
+operator|)
 name|task
+operator|)
 operator|.
 name|setWork
 argument_list|(
@@ -8241,7 +8249,12 @@ operator|new
 name|MergeFileTask
 argument_list|()
 expr_stmt|;
+operator|(
+operator|(
+name|MergeFileTask
+operator|)
 name|task
+operator|)
 operator|.
 name|setWork
 argument_list|(
@@ -10553,39 +10566,6 @@ argument_list|,
 name|environmentContext
 argument_list|)
 expr_stmt|;
-comment|// Remove or add to materialized view rewriting cache
-if|if
-condition|(
-name|alterMVDesc
-operator|.
-name|isRewriteEnable
-argument_list|()
-condition|)
-block|{
-name|HiveMaterializedViewsRegistry
-operator|.
-name|get
-argument_list|()
-operator|.
-name|addMaterializedView
-argument_list|(
-name|mv
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|HiveMaterializedViewsRegistry
-operator|.
-name|get
-argument_list|()
-operator|.
-name|dropMaterializedView
-argument_list|(
-name|oldMV
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -25591,7 +25571,9 @@ name|extraTasks
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Task
@@ -28341,7 +28323,9 @@ operator|.
 name|isStoredAsSubDirectories
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 comment|// TODO [MM gap?]: by design; no-one seems to use LB tables. They will work, but not convert.
 comment|//                 It's possible to work around this by re-creating and re-inserting the table.
 throw|throw
@@ -28372,7 +28356,9 @@ operator|.
 name|isStoredAsSubDirectories
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 throw|throw
 operator|new
 name|HiveException
@@ -28590,6 +28576,7 @@ argument_list|,
 literal|true
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -28597,6 +28584,7 @@ argument_list|(
 literal|"delete returned false"
 argument_list|)
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -32530,26 +32518,6 @@ name|getIfNotExists
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Add to cache if it is a materialized view
-if|if
-condition|(
-name|tbl
-operator|.
-name|isMaterializedView
-argument_list|()
-condition|)
-block|{
-name|HiveMaterializedViewsRegistry
-operator|.
-name|get
-argument_list|()
-operator|.
-name|addMaterializedView
-argument_list|(
-name|tbl
-argument_list|)
-expr_stmt|;
-block|}
 name|addIfAbsentByName
 argument_list|(
 operator|new

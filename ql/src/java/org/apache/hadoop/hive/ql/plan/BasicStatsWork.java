@@ -551,6 +551,7 @@ return|return
 literal|true
 return|;
 block|}
+comment|// CREATE MV ... AS
 comment|// ALTER MV ... REBUILD
 if|if
 condition|(
@@ -566,15 +567,6 @@ name|getCreateViewDesc
 argument_list|()
 operator|!=
 literal|null
-operator|&&
-name|getLoadFileDesc
-argument_list|()
-operator|.
-name|getCreateViewDesc
-argument_list|()
-operator|.
-name|isReplace
-argument_list|()
 condition|)
 block|{
 return|return
