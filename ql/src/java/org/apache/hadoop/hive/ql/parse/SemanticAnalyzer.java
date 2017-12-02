@@ -11188,6 +11188,17 @@ argument_list|,
 name|ast
 argument_list|)
 expr_stmt|;
+name|qbp
+operator|.
+name|setDestToOpType
+argument_list|(
+name|ctx_1
+operator|.
+name|dest
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
@@ -41073,6 +41084,12 @@ name|destTableIsAcid
 init|=
 literal|false
 decl_stmt|;
+comment|// true for full ACID table and MM table
+name|boolean
+name|destTableIsFullAcid
+init|=
+literal|false
+decl_stmt|;
 comment|// should the destination table be written to using ACID
 name|boolean
 name|destTableIsTemporary
@@ -41187,6 +41204,15 @@ name|dest
 argument_list|)
 expr_stmt|;
 name|destTableIsAcid
+operator|=
+name|AcidUtils
+operator|.
+name|isAcidTable
+argument_list|(
+name|dest_tab
+argument_list|)
+expr_stmt|;
+name|destTableIsFullAcid
 operator|=
 name|AcidUtils
 operator|.
@@ -41470,7 +41496,7 @@ name|NOT_ACID
 decl_stmt|;
 if|if
 condition|(
-name|destTableIsAcid
+name|destTableIsFullAcid
 condition|)
 block|{
 name|acidOp
@@ -41768,6 +41794,15 @@ name|destTableIsAcid
 operator|=
 name|AcidUtils
 operator|.
+name|isAcidTable
+argument_list|(
+name|dest_tab
+argument_list|)
+expr_stmt|;
+name|destTableIsFullAcid
+operator|=
+name|AcidUtils
+operator|.
 name|isFullAcidTable
 argument_list|(
 name|dest_tab
@@ -41981,7 +42016,7 @@ name|NOT_ACID
 decl_stmt|;
 if|if
 condition|(
-name|destTableIsAcid
+name|destTableIsFullAcid
 condition|)
 block|{
 name|acidOp
@@ -42127,6 +42162,7 @@ operator|&&
 operator|!
 name|destTableIsAcid
 operator|)
+comment|// // Both Full-acid and MM tables are excluded.
 condition|?
 name|LoadFileType
 operator|.
@@ -42562,6 +42598,19 @@ operator|&&
 name|AcidUtils
 operator|.
 name|isAcidTable
+argument_list|(
+name|tblDesc
+argument_list|)
+expr_stmt|;
+name|destTableIsFullAcid
+operator|=
+name|tblDesc
+operator|!=
+literal|null
+operator|&&
+name|AcidUtils
+operator|.
+name|isFullAcidTable
 argument_list|(
 name|tblDesc
 argument_list|)
@@ -43200,7 +43249,7 @@ comment|// If this table is working with ACID semantics, turn off merging
 name|canBeMerged
 operator|&=
 operator|!
-name|destTableIsAcid
+name|destTableIsFullAcid
 expr_stmt|;
 comment|// Generate the partition columns from the parent input
 if|if
@@ -43280,6 +43329,8 @@ argument_list|,
 name|isMmCtas
 argument_list|,
 name|dest_type
+argument_list|,
+name|qb
 argument_list|)
 decl_stmt|;
 if|if
@@ -43958,6 +44009,9 @@ name|isMmCtas
 parameter_list|,
 name|Integer
 name|dest_type
+parameter_list|,
+name|QB
+name|qb
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -44022,6 +44076,16 @@ operator|.
 name|containsKey
 argument_list|(
 name|destTableFullName
+argument_list|)
+operator|&&
+name|qb
+operator|.
+name|getParseInfo
+argument_list|()
+operator|.
+name|isDestToOpTypeInsertOverwrite
+argument_list|(
+name|dest
 argument_list|)
 condition|)
 block|{

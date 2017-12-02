@@ -1235,6 +1235,8 @@ argument_list|(
 name|fs
 argument_list|,
 name|intermediatePath
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Step3: move to the file destination

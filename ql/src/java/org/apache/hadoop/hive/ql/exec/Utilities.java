@@ -9116,6 +9116,8 @@ argument_list|,
 name|hconf
 argument_list|,
 name|filesKept
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|perfLogger
@@ -9576,6 +9578,9 @@ name|fs
 parameter_list|,
 name|Path
 name|path
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -9591,6 +9596,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+name|isBaseDir
 argument_list|)
 expr_stmt|;
 block|}
@@ -9616,6 +9623,9 @@ name|conf
 parameter_list|,
 name|Configuration
 name|hconf
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -9671,6 +9681,8 @@ argument_list|,
 name|conf
 argument_list|,
 name|hconf
+argument_list|,
+name|isBaseDir
 argument_list|)
 return|;
 block|}
@@ -9697,6 +9709,9 @@ name|conf
 parameter_list|,
 name|Configuration
 name|hconf
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -9715,6 +9730,8 @@ argument_list|,
 name|hconf
 argument_list|,
 literal|null
+argument_list|,
+name|isBaseDir
 argument_list|)
 return|;
 block|}
@@ -9748,6 +9765,9 @@ argument_list|<
 name|Path
 argument_list|>
 name|filesKept
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -9813,6 +9833,8 @@ argument_list|,
 literal|false
 argument_list|,
 name|filesKept
+argument_list|,
+name|isBaseDir
 argument_list|)
 return|;
 block|}
@@ -9933,6 +9955,9 @@ argument_list|<
 name|Path
 argument_list|>
 name|filesKept
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -10080,8 +10105,10 @@ name|equals
 argument_list|(
 name|AcidUtils
 operator|.
-name|deltaSubdir
+name|baseOrDeltaSubdir
 argument_list|(
+name|isBaseDir
+argument_list|,
 name|txnId
 argument_list|,
 name|txnId
@@ -10133,6 +10160,19 @@ argument_list|,
 name|unionSuffix
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|path
+argument_list|)
+condition|)
+block|{
+continue|continue;
+block|}
 block|}
 block|}
 name|FileStatus
@@ -10233,6 +10273,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|items
+argument_list|,
+name|isBaseDir
 argument_list|)
 decl_stmt|;
 name|taskIDToFile
@@ -10360,6 +10402,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|items
+argument_list|,
+name|isBaseDir
 argument_list|)
 decl_stmt|;
 name|taskIDToFile
@@ -10429,6 +10473,9 @@ parameter_list|,
 name|FileStatus
 index|[]
 name|items
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -10480,8 +10527,10 @@ name|equals
 argument_list|(
 name|AcidUtils
 operator|.
-name|deltaSubdir
+name|baseOrDeltaSubdir
 argument_list|(
+name|isBaseDir
+argument_list|,
 name|txnId
 argument_list|,
 name|txnId
@@ -22532,6 +22581,9 @@ name|stmtId
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -22640,6 +22692,8 @@ argument_list|,
 name|txnId
 argument_list|,
 name|stmtId
+argument_list|,
+name|isBaseDir
 argument_list|)
 return|;
 block|}
@@ -23166,6 +23220,9 @@ name|txnId
 parameter_list|,
 name|int
 name|stmtId
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -23247,8 +23304,10 @@ name|append
 argument_list|(
 name|AcidUtils
 operator|.
-name|deltaSubdir
+name|baseOrDeltaSubdir
 argument_list|(
+name|isBaseDir
+argument_list|,
 name|txnId
 argument_list|,
 name|txnId
@@ -23319,6 +23378,9 @@ name|stmtId
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|boolean
+name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -23344,6 +23406,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|conf
+argument_list|,
+name|isBaseDir
 argument_list|)
 decl_stmt|;
 if|if
@@ -23430,6 +23494,9 @@ name|stmtId
 parameter_list|,
 name|String
 name|unionSuffix
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -23457,6 +23524,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|unionSuffix
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 name|manifestPath
@@ -23581,6 +23650,9 @@ name|stmtId
 parameter_list|,
 name|String
 name|unionSuffix
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 block|{
 name|Path
@@ -23595,8 +23667,10 @@ literal|"_tmp."
 operator|+
 name|AcidUtils
 operator|.
-name|deltaSubdir
+name|baseOrDeltaSubdir
 argument_list|(
+name|isInsertOverwrite
+argument_list|,
 name|txnId
 argument_list|,
 name|txnId
@@ -23717,6 +23791,9 @@ name|isMmTable
 parameter_list|,
 name|boolean
 name|isMmCtas
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|IOException
@@ -23745,6 +23822,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|unionSuffix
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 if|if
@@ -23789,6 +23868,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|hconf
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 expr_stmt|;
 return|return;
@@ -23938,6 +24019,10 @@ argument_list|,
 name|stmtId
 argument_list|,
 literal|true
+argument_list|,
+literal|false
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 if|if
@@ -23997,6 +24082,8 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|hconf
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 name|ArrayList
@@ -24364,6 +24451,8 @@ argument_list|,
 name|isMmTable
 argument_list|,
 literal|null
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 comment|// create empty buckets if necessary

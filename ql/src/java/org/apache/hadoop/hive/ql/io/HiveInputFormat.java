@@ -3541,7 +3541,31 @@ name|hadAcidState
 operator|=
 literal|true
 expr_stmt|;
-comment|// TODO [MM gap]: for IOW, we also need to count in base dir, if any
+comment|// Find the base, created for IOW.
+name|Path
+name|base
+init|=
+name|dirInfo
+operator|.
+name|getBaseDirectory
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|base
+operator|!=
+literal|null
+condition|)
+block|{
+name|finalPaths
+operator|.
+name|add
+argument_list|(
+name|base
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Find the parsed delta files.
 for|for
 control|(
 name|AcidUtils

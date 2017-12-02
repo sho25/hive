@@ -1203,6 +1203,8 @@ name|getStmtId
 argument_list|()
 argument_list|,
 literal|null
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1642,6 +1644,8 @@ argument_list|,
 name|reporter
 argument_list|,
 name|isMmTable
+argument_list|,
+literal|false
 argument_list|,
 literal|false
 argument_list|)
