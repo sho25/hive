@@ -191,6 +191,87 @@ name|lr
 argument_list|)
 return|;
 block|}
+comment|// this is a lossy invert of the function above, which produces a hashcode
+comment|// which collides with the current winner of the register (we lose all higher
+comment|// bits, but we get all bits useful for lesser p-bit options)
+comment|// +-------------|-------------+
+comment|// |xxxx100000000|1000000000000|  (lr=9 + idx=1024)
+comment|// +-------------|-------------+
+comment|//                \
+comment|// +---------------|-----------+
+comment|// |xxxx10000000010|00000000000|  (lr=2 + idx=0)
+comment|// +---------------|-----------+
+comment|// This shows the relevant bits of the original hash value
+comment|// and how the conversion is moving bits from the index value
+comment|// over to the leading zero computation
+specifier|public
+name|void
+name|extractLowBitsTo
+parameter_list|(
+name|HLLRegister
+name|dest
+parameter_list|)
+block|{
+for|for
+control|(
+name|int
+name|idx
+init|=
+literal|0
+init|;
+name|idx
+operator|<
+name|register
+operator|.
+name|length
+condition|;
+name|idx
+operator|++
+control|)
+block|{
+name|byte
+name|lr
+init|=
+name|register
+index|[
+name|idx
+index|]
+decl_stmt|;
+comment|// this can be a max of 65, never> 127
+if|if
+condition|(
+name|lr
+operator|!=
+literal|0
+condition|)
+block|{
+name|dest
+operator|.
+name|add
+argument_list|(
+call|(
+name|long
+call|)
+argument_list|(
+operator|(
+literal|1
+operator|<<
+operator|(
+name|p
+operator|+
+name|lr
+operator|-
+literal|1
+operator|)
+operator|)
+operator||
+name|idx
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 specifier|public
 name|boolean
 name|set
