@@ -25,7 +25,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertFalse
+name|assertTrue
 import|;
 end_import
 
@@ -37,7 +37,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertTrue
+name|fail
 import|;
 end_import
 
@@ -457,11 +457,9 @@ argument_list|(
 literal|"alter table t1 change column c1 c1 smallint"
 argument_list|)
 expr_stmt|;
-name|assertTrue
+name|fail
 argument_list|(
 literal|"Exception not thrown"
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -507,7 +505,7 @@ name|Exception
 name|e2
 parameter_list|)
 block|{
-name|assertTrue
+name|fail
 argument_list|(
 literal|"Unexpected Exception: "
 operator|+
@@ -515,8 +513,6 @@ name|e2
 operator|.
 name|getMessage
 argument_list|()
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
