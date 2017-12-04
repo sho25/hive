@@ -2491,19 +2491,18 @@ block|}
 comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS), unless isFinalJob and    * {@link BlobStorageUtils#areOptimizationsEnabled(Configuration)} are both true, then return a path on    * the blobstore.    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    * @param isFinalJob true if the required {@link Path} will be used for the final job (e.g. the final FSOP)    *    * @return A path to the new temporary directory    */
 specifier|public
 name|Path
-name|getTempDirForPath
+name|getTempDirForInterimJobPath
 parameter_list|(
 name|Path
 name|path
-parameter_list|,
-name|boolean
-name|isFinalJob
 parameter_list|)
 block|{
-if|if
-condition|(
-operator|(
-operator|(
+comment|// For better write performance, we use HDFS for temporary data when object store is used.
+comment|// Note that the scratch directory configuration variable must use HDFS or any other
+comment|// non-blobstorage system to take advantage of this performance.
+name|boolean
+name|isBlobstorageOptimized
+init|=
 name|BlobStorageUtils
 operator|.
 name|isBlobStoragePath
@@ -2520,20 +2519,6 @@ name|isBlobStorageAsScratchDir
 argument_list|(
 name|conf
 argument_list|)
-operator|)
-operator|||
-name|isPathLocal
-argument_list|(
-name|path
-argument_list|)
-operator|)
-condition|)
-block|{
-if|if
-condition|(
-operator|!
-operator|(
-name|isFinalJob
 operator|&&
 name|BlobStorageUtils
 operator|.
@@ -2541,17 +2526,21 @@ name|areOptimizationsEnabled
 argument_list|(
 name|conf
 argument_list|)
-operator|)
+decl_stmt|;
+if|if
+condition|(
+name|isPathLocal
+argument_list|(
+name|path
+argument_list|)
+operator|||
+name|isBlobstorageOptimized
 condition|)
 block|{
-comment|// For better write performance, we use HDFS for temporary data when object store is used.
-comment|// Note that the scratch directory configuration variable must use HDFS or any other non-blobstorage system
-comment|// to take advantage of this performance.
 return|return
 name|getMRTmpPath
 argument_list|()
 return|;
-block|}
 block|}
 return|return
 name|getExtTmpPathRelTo
@@ -2563,18 +2552,16 @@ block|}
 comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS)    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    * @return A path to the new temporary directory    */
 specifier|public
 name|Path
-name|getTempDirForPath
+name|getTempDirForFinalJobPath
 parameter_list|(
 name|Path
 name|path
 parameter_list|)
 block|{
 return|return
-name|getTempDirForPath
+name|getExtTmpPathRelTo
 argument_list|(
 name|path
-argument_list|,
-literal|false
 argument_list|)
 return|;
 block|}

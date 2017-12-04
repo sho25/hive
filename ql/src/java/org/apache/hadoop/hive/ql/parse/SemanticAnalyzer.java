@@ -41346,11 +41346,9 @@ name|queryTmpdir
 operator|=
 name|ctx
 operator|.
-name|getTempDirForPath
+name|getTempDirForFinalJobPath
 argument_list|(
 name|dest_path
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -41892,11 +41890,9 @@ name|dest_path
 else|:
 name|ctx
 operator|.
-name|getTempDirForPath
+name|getTempDirForFinalJobPath
 argument_list|(
 name|dest_path
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 if|if
@@ -42461,11 +42457,9 @@ name|qPath
 else|:
 name|ctx
 operator|.
-name|getTempDirForPath
+name|getTempDirForFinalJobPath
 argument_list|(
 name|qPath
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 if|if
@@ -44405,7 +44399,7 @@ name|statsTmpLoc
 init|=
 name|ctx
 operator|.
-name|getTempDirForPath
+name|getTempDirForInterimJobPath
 argument_list|(
 name|dest_path
 argument_list|)
@@ -66385,7 +66379,7 @@ name|statsTmpLoc
 init|=
 name|ctx
 operator|.
-name|getTempDirForPath
+name|getTempDirForInterimJobPath
 argument_list|(
 name|tab
 operator|.

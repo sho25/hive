@@ -11539,14 +11539,12 @@ name|tmpDir
 init|=
 name|baseCtx
 operator|.
-name|getTempDirForPath
+name|getTempDirForFinalJobPath
 argument_list|(
 name|fileSinkDesc
 operator|.
 name|getDestPath
 argument_list|()
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 comment|// Change all the linked file sink descriptors
