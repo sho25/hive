@@ -919,7 +919,7 @@ operator|<<
 literal|3
 return|;
 block|}
-specifier|private
+specifier|public
 name|long
 name|lengthForPrimitiveArrayOfSize
 parameter_list|(

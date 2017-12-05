@@ -33,26 +33,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|concurrent
@@ -114,18 +94,6 @@ operator|.
 name|util
 operator|.
 name|IntervalDayTimeUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|sun
-operator|.
-name|util
-operator|.
-name|calendar
-operator|.
-name|BaseCalendar
 import|;
 end_import
 
@@ -749,6 +717,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Return a copy of this object.    */
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|clone
