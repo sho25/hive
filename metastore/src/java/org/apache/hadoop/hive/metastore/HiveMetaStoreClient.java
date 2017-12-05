@@ -13405,7 +13405,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|validateResourcePlan
 parameter_list|(
 name|String
@@ -13442,7 +13445,7 @@ argument_list|(
 name|request
 argument_list|)
 operator|.
-name|isIsValid
+name|getErrors
 argument_list|()
 return|;
 block|}

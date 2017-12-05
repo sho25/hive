@@ -42087,8 +42087,11 @@ name|TException
 block|{
 try|try
 block|{
-name|boolean
-name|isValid
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|errors
 init|=
 name|getMS
 argument_list|()
@@ -42110,9 +42113,9 @@ argument_list|()
 decl_stmt|;
 name|resp
 operator|.
-name|setIsValid
+name|setErrors
 argument_list|(
-name|isValid
+name|errors
 argument_list|)
 expr_stmt|;
 return|return

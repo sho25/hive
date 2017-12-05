@@ -528,6 +528,22 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+specifier|public
+name|void
+name|showErrors
+parameter_list|(
+name|DataOutputStream
+name|out
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|errors
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
 block|}
 end_interface
 

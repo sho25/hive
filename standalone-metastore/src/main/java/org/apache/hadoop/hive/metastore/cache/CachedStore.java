@@ -14351,7 +14351,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|List
+argument_list|<
+name|String
+argument_list|>
 name|validateResourcePlan
 parameter_list|(
 name|String
