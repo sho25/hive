@@ -2612,13 +2612,6 @@ operator|+
 literal|"for partition columns"
 argument_list|)
 block|,
-name|STATISTICS_CLONING_FAILED
-argument_list|(
-literal|30013
-argument_list|,
-literal|"Cloning of statistics failed"
-argument_list|)
-block|,
 name|STATSAGGREGATOR_SOURCETASK_NULL
 argument_list|(
 literal|30014

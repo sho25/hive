@@ -506,8 +506,6 @@ specifier|public
 name|ColStatistics
 name|clone
 parameter_list|()
-throws|throws
-name|CloneNotSupportedException
 block|{
 name|ColStatistics
 name|clone
