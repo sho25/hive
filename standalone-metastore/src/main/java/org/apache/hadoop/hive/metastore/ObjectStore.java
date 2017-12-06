@@ -45422,7 +45422,10 @@ argument_list|()
 condition|)
 block|{
 return|return
-literal|null
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
 return|;
 block|}
 name|boolean
@@ -45989,9 +45992,11 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// LastAnalyzed is stored per column, but thrift object has it per multiple columns.
 comment|// Luckily, nobody actually uses it, so we will set to lowest value of all columns for now.
 name|ColumnStatisticsDesc
