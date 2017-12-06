@@ -211,7 +211,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 import|;
 end_import
 
@@ -248,6 +248,24 @@ operator|.
 name|api
 operator|.
 name|hive_metastoreConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
 import|;
 end_import
 
@@ -3580,7 +3598,7 @@ name|schemas
 operator|.
 name|add
 argument_list|(
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldSchemaFromTypeInfo
 argument_list|(
@@ -3731,7 +3749,7 @@ name|schemas
 operator|.
 name|add
 argument_list|(
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldSchemaFromTypeInfo
 argument_list|(
@@ -3826,7 +3844,7 @@ name|schemas
 operator|.
 name|add
 argument_list|(
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldSchemaFromTypeInfo
 argument_list|(
@@ -3917,7 +3935,7 @@ name|schemas
 operator|.
 name|add
 argument_list|(
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldSchemaFromTypeInfo
 argument_list|(
@@ -4099,7 +4117,7 @@ name|schemas
 operator|.
 name|add
 argument_list|(
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldSchemaFromTypeInfo
 argument_list|(

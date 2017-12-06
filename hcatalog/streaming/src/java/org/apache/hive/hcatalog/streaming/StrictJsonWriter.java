@@ -45,7 +45,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|api
+operator|.
+name|Table
 import|;
 end_import
 
@@ -61,9 +63,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|utils
 operator|.
-name|Table
+name|MetaStoreUtils
 import|;
 end_import
 

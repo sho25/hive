@@ -1416,8 +1416,8 @@ name|getPath
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//    Driver driver = new Driver(hiveConf);
-comment|//    SessionState.start(new CliSessionState(hiveConf));
+comment|//    Driver driver = new Driver(conf);
+comment|//    SessionState.start(new CliSessionState(conf));
 name|hiveMetaStoreClient
 operator|=
 operator|new

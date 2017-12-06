@@ -89,7 +89,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|utils
+operator|.
+name|FileUtils
 import|;
 end_import
 
@@ -1240,7 +1242,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|MetaStoreUtils
+name|FileUtils
 operator|.
 name|isDirEmpty
 argument_list|(

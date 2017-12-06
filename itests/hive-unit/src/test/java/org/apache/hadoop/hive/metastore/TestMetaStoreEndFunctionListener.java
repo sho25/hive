@@ -129,6 +129,24 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestMetaStoreEventListener. Test case for  * {@link org.apache.hadoop.hive.metastore.MetaStoreEndFunctionListener}  */
 end_comment

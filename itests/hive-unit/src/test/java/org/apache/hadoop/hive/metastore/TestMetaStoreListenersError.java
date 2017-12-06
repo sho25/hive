@@ -87,6 +87,24 @@ name|HadoopThriftAuthBridge
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * Test for unwrapping InvocationTargetException, which is thrown from  * constructor of listener class  */
 end_comment

@@ -333,7 +333,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * The source HiveConf object used to create the QueryState. If runAsync is false, and the      * confOverLay is empty then we will reuse the hiveConf object as a backing datastore for the      * QueryState. We will create a clone of the hiveConf object otherwise.      * @param hiveConf The source HiveConf      * @return The builder      */
+comment|/**      * The source HiveConf object used to create the QueryState. If runAsync is false, and the      * confOverLay is empty then we will reuse the conf object as a backing datastore for the      * QueryState. We will create a clone of the conf object otherwise.      * @param hiveConf The source HiveConf      * @return The builder      */
 specifier|public
 name|Builder
 name|withHiveConf
@@ -352,7 +352,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Creates the QueryState object. The default values are:      * - runAsync false      * - confOverlay null      * - generateNewQueryId false      * - hiveConf null      * @return The generated QueryState object      */
+comment|/**      * Creates the QueryState object. The default values are:      * - runAsync false      * - confOverlay null      * - generateNewQueryId false      * - conf null      * @return The generated QueryState object      */
 specifier|public
 name|QueryState
 name|build

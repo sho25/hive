@@ -659,7 +659,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 import|;
 end_import
 
@@ -1336,6 +1336,24 @@ operator|.
 name|txn
 operator|.
 name|TxnStore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
 import|;
 end_import
 
@@ -27243,7 +27261,7 @@ block|{
 name|Deserializer
 name|oldSerde
 init|=
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getDeserializer
 argument_list|(

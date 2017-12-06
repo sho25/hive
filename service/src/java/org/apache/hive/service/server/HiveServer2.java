@@ -1459,7 +1459,7 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-comment|// Set host name in hiveConf
+comment|// Set host name in conf
 try|try
 block|{
 name|hiveConf

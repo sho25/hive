@@ -279,7 +279,7 @@ block|}
 name|Deserializer
 name|s
 init|=
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getDeserializer
 argument_list|(
@@ -291,7 +291,7 @@ literal|false
 argument_list|)
 decl_stmt|;
 return|return
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldsFromDeserializer
 argument_list|(

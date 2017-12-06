@@ -39,7 +39,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 import|;
 end_import
 
@@ -392,7 +392,7 @@ name|FieldSchema
 argument_list|>
 name|result
 init|=
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldsFromDeserializer
 argument_list|(

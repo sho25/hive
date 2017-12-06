@@ -275,7 +275,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 import|;
 end_import
 
@@ -434,6 +434,24 @@ operator|.
 name|api
 operator|.
 name|hive_metastoreConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
 import|;
 end_import
 
@@ -1779,7 +1797,7 @@ throws|throws
 name|Exception
 block|{
 return|return
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getDeserializerClass
 argument_list|(
@@ -1832,7 +1850,7 @@ block|{
 try|try
 block|{
 return|return
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getDeserializer
 argument_list|(
@@ -3681,7 +3699,7 @@ block|}
 else|else
 block|{
 return|return
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldsFromDeserializer
 argument_list|(

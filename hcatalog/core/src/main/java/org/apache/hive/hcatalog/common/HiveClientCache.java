@@ -564,7 +564,7 @@ name|enableStats
 decl_stmt|;
 comment|// Since HiveMetaStoreClient is not threadsafe, hive clients are not  shared across threads.
 comment|// Thread local variable containing each thread's unique ID, is used as one of the keys for the cache
-comment|// causing each thread to get a different client even if the hiveConf is same.
+comment|// causing each thread to get a different client even if the conf is same.
 specifier|private
 specifier|static
 specifier|final

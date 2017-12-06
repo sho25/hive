@@ -767,7 +767,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|//    try {
-comment|//      FileDump.printJsonData(hiveConf, bucket.toString(), delta);
+comment|//      FileDump.printJsonData(conf, bucket.toString(), delta);
 comment|//    }
 comment|//    catch(FileNotFoundException ex) {
 empty_stmt|;
@@ -3338,7 +3338,6 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-comment|//hiveConf.setBoolVar(HiveConf.ConfVars.HIVETESTMODEFAILHEARTBEATER, true);
 name|runStatementOnDriver
 argument_list|(
 literal|"start transaction"

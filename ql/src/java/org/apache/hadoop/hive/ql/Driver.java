@@ -445,7 +445,23 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|ColumnType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|HiveMetaStoreUtils
 import|;
 end_import
 
@@ -2469,7 +2485,7 @@ try|try
 block|{
 name|lst
 operator|=
-name|MetaStoreUtils
+name|HiveMetaStoreUtils
 operator|.
 name|getFieldsFromDeserializer
 argument_list|(
@@ -2616,7 +2632,7 @@ name|f
 operator|.
 name|setType
 argument_list|(
-name|MetaStoreUtils
+name|ColumnType
 operator|.
 name|typeToThriftType
 argument_list|(

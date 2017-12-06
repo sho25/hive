@@ -117,7 +117,7 @@ name|hiveConf
 parameter_list|)
 block|{
 comment|// Null HiveConf is passed in jdbc driver side code since driver side is supposed to be
-comment|// independent of hiveConf object. Create new HiveConf object here in this case.
+comment|// independent of conf object. Create new HiveConf object here in this case.
 if|if
 condition|(
 name|hiveConf

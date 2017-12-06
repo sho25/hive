@@ -169,7 +169,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|MetaStoreUtils
+name|api
+operator|.
+name|hive_metastoreConstants
 import|;
 end_import
 
@@ -185,9 +187,9 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|api
+name|utils
 operator|.
-name|hive_metastoreConstants
+name|MetaStoreUtils
 import|;
 end_import
 
@@ -645,14 +647,6 @@ name|MetaStoreUtils
 operator|.
 name|getSchemaWithoutCols
 argument_list|(
-name|part
-operator|.
-name|getTPartition
-argument_list|()
-operator|.
-name|getSd
-argument_list|()
-argument_list|,
 name|part
 operator|.
 name|getTPartition

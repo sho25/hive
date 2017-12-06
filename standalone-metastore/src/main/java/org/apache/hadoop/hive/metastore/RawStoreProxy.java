@@ -511,7 +511,7 @@ name|MetaException
 block|{
 comment|// Using the hook on startup ensures that the hook always has priority
 comment|// over settings in *.xml.  The thread local conf needs to be used because at this point
-comment|// it has already been initialized using hiveConf.
+comment|// it has already been initialized using conf.
 name|MetaStoreInit
 operator|.
 name|updateConnectionURL

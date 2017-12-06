@@ -2037,6 +2037,21 @@ argument_list|,
 literal|"Factory class for making encoding and decoding messages in the events generated."
 argument_list|)
 block|,
+name|EVENT_DB_LISTENER_TTL
+argument_list|(
+literal|"metastore.event.db.listener.timetolive"
+argument_list|,
+literal|"hive.metastore.event.db.listener.timetolive"
+argument_list|,
+literal|86400
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"time after which events will be removed from the database listener queue"
+argument_list|)
+block|,
 name|EVENT_DB_NOTIFICATION_API_AUTH
 argument_list|(
 literal|"metastore.metastore.event.db.notification.api.auth"
@@ -3387,6 +3402,43 @@ argument_list|)
 block|,
 comment|// We need to track this as some listeners pass it through our config and we need to honor
 comment|// the system properties.
+name|HIVE_AUTHORIZATION_MANAGER
+argument_list|(
+literal|"hive.security.authorization.manager"
+argument_list|,
+literal|"hive.security.authorization.manager"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
+argument_list|,
+literal|"The Hive client authorization manager class name. The user defined authorization class should implement \n"
+operator|+
+literal|"interface org.apache.hadoop.hive.ql.security.authorization.HiveAuthorizationProvider."
+argument_list|)
+block|,
+name|HIVE_METASTORE_AUTHENTICATOR_MANAGER
+argument_list|(
+literal|"hive.security.metastore.authenticator.manager"
+argument_list|,
+literal|"hive.security.metastore.authenticator.manager"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator"
+argument_list|,
+literal|"authenticator manager class name to be used in the metastore for authentication. \n"
+operator|+
+literal|"The user defined authenticator should implement interface org.apache.hadoop.hive.ql.security.HiveAuthenticationProvider."
+argument_list|)
+block|,
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+argument_list|(
+literal|"hive.security.metastore.authorization.auth.reads"
+argument_list|,
+literal|"hive.security.metastore.authorization.auth.reads"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If this is true, metastore authorizer authorizes read actions on database, table"
+argument_list|)
+block|,
 name|HIVE_METASTORE_AUTHORIZATION_MANAGER
 argument_list|(
 name|NO_SUCH_KEY

@@ -7651,7 +7651,7 @@ argument_list|)
 return|;
 comment|// One last check.
 block|}
-comment|/**    * Creates and initializes a JobConf object that can be used to execute    * the DAG. The configuration object will contain configurations from mapred-site    * overlaid with key/value pairs from the hiveConf object. Finally it will also    * contain some hive specific configurations that do not change from DAG to DAG.    *    * @param hiveConf Current hiveConf for the execution    * @return JobConf base configuration for job execution    * @throws IOException    */
+comment|/**    * Creates and initializes a JobConf object that can be used to execute    * the DAG. The configuration object will contain configurations from mapred-site    * overlaid with key/value pairs from the conf object. Finally it will also    * contain some hive specific configurations that do not change from DAG to DAG.    *    * @param hiveConf Current conf for the execution    * @return JobConf base configuration for job execution    * @throws IOException    */
 specifier|public
 name|JobConf
 name|createConfiguration
