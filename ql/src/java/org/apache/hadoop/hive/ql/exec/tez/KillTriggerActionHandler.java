@@ -133,6 +133,9 @@ class|class
 name|KillTriggerActionHandler
 implements|implements
 name|TriggerActionHandler
+argument_list|<
+name|TezSessionState
+argument_list|>
 block|{
 specifier|private
 specifier|static
@@ -213,7 +216,7 @@ name|queryId
 init|=
 name|sessionState
 operator|.
-name|getTriggerContext
+name|getWmContext
 argument_list|()
 operator|.
 name|getQueryId

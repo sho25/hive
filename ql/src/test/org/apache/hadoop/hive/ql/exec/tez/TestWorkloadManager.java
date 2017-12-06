@@ -455,6 +455,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|wm
+operator|.
+name|WmContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|tez
 operator|.
 name|dag
@@ -687,6 +705,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1160,7 +1180,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|TezSessionState
+name|WmTezSession
 name|getSession
 parameter_list|(
 name|TezSessionState
@@ -1171,12 +1191,16 @@ name|input
 parameter_list|,
 name|HiveConf
 name|conf
+parameter_list|,
+specifier|final
+name|WmContext
+name|wmContext
 parameter_list|)
 throws|throws
 name|Exception
 block|{
 comment|// We want to wait for the iteration to finish and set the cluster fraction.
-name|TezSessionState
+name|WmTezSession
 name|state
 init|=
 name|super
@@ -1188,6 +1212,8 @@ argument_list|,
 name|input
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|ensureWm
@@ -1402,6 +1428,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|verify
@@ -1478,6 +1506,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|verify
@@ -1513,6 +1543,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -1600,6 +1632,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1650,6 +1684,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1742,6 +1778,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1895,6 +1933,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1935,6 +1975,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2029,6 +2071,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|session
@@ -2234,6 +2278,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2269,6 +2315,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2304,6 +2352,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2351,6 +2401,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2386,6 +2438,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2722,6 +2776,8 @@ argument_list|,
 name|mi
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2867,6 +2923,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionA2
@@ -2889,6 +2947,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionB1
@@ -2911,6 +2971,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -3054,6 +3116,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|sessionB1
@@ -3263,6 +3327,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|session2
@@ -3285,6 +3351,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3432,6 +3500,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// First, try to reuse from the same pool - should "just work".
@@ -3456,6 +3526,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -3499,6 +3571,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// Now try to reuse with no other sessions remaining. Should still work.
@@ -3523,6 +3597,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -3981,6 +4057,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionA2
@@ -4003,6 +4081,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4070,6 +4150,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertSame
@@ -4136,6 +4218,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4309,6 +4393,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4544,6 +4630,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4761,6 +4849,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionB1
@@ -4783,6 +4873,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionB2
@@ -4805,6 +4897,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionC1
@@ -4827,6 +4921,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|,
 name|sessionD1
@@ -4849,6 +4945,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -6046,6 +6144,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// [A: 1, B: 0]
@@ -6318,6 +6418,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// [A: 1, B: 1]
@@ -6624,6 +6726,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// [A: 1, B: 2]
@@ -7058,6 +7162,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// [A: 1, B: 0, B.x: 0, B.y: 0, C: 0]
@@ -7748,6 +7854,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|// [A: 1, B: 0, B.x: 1, B.y: 0, C: 0]
@@ -8604,6 +8712,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|fail
@@ -8947,6 +9057,8 @@ literal|null
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals

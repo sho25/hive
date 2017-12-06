@@ -615,7 +615,7 @@ name|ql
 operator|.
 name|wm
 operator|.
-name|TriggerContext
+name|WmContext
 import|;
 end_import
 
@@ -987,8 +987,8 @@ operator|.
 name|OTHER
 decl_stmt|;
 specifier|private
-name|TriggerContext
-name|triggerContext
+name|WmContext
+name|wmContext
 decl_stmt|;
 specifier|public
 name|void
@@ -1006,28 +1006,28 @@ name|operation
 expr_stmt|;
 block|}
 specifier|public
-name|TriggerContext
-name|getTriggerContext
+name|WmContext
+name|getWmContext
 parameter_list|()
 block|{
 return|return
-name|triggerContext
+name|wmContext
 return|;
 block|}
 specifier|public
 name|void
-name|setTriggerContext
+name|setWmContext
 parameter_list|(
 specifier|final
-name|TriggerContext
-name|triggerContext
+name|WmContext
+name|wmContext
 parameter_list|)
 block|{
 name|this
 operator|.
-name|triggerContext
+name|wmContext
 operator|=
-name|triggerContext
+name|wmContext
 expr_stmt|;
 block|}
 comment|/**    * These ops require special handling in various places    * (note that Insert into Acid table is in OTHER category)    */

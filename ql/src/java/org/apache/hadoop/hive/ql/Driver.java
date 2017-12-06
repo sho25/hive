@@ -1603,7 +1603,7 @@ name|ql
 operator|.
 name|wm
 operator|.
-name|TriggerContext
+name|WmContext
 import|;
 end_import
 
@@ -4613,11 +4613,11 @@ name|getQueryStartTime
 argument_list|()
 expr_stmt|;
 block|}
-name|TriggerContext
-name|triggerContext
+name|WmContext
+name|wmContext
 init|=
 operator|new
-name|TriggerContext
+name|WmContext
 argument_list|(
 name|queryStartTime
 argument_list|,
@@ -4626,9 +4626,9 @@ argument_list|)
 decl_stmt|;
 name|ctx
 operator|.
-name|setTriggerContext
+name|setWmContext
 argument_list|(
-name|triggerContext
+name|wmContext
 argument_list|)
 expr_stmt|;
 block|}

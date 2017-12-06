@@ -19,11 +19,29 @@ name|wm
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|codehaus
+operator|.
+name|jackson
+operator|.
+name|map
+operator|.
+name|annotate
+operator|.
+name|JsonSerialize
+import|;
+end_import
+
 begin_comment
 comment|/**  * Trigger interface which gets mapped to CREATE TRIGGER .. queries. A trigger can have a name, expression and action.  * Trigger is a simple expression which gets evaluated during the lifecycle of query and executes an action  * if the expression defined in trigger evaluates to true.  */
 end_comment
 
 begin_interface
+annotation|@
+name|JsonSerialize
 specifier|public
 interface|interface
 name|Trigger

@@ -12581,6 +12581,25 @@ argument_list|,
 literal|"Display breakdown of execution steps, for every query executed by the shell."
 argument_list|)
 block|,
+name|TEZ_SESSION_EVENTS_SUMMARY
+argument_list|(
+literal|"hive.tez.session.events.print.summary"
+argument_list|,
+literal|"none"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"text"
+argument_list|,
+literal|"json"
+argument_list|)
+argument_list|,
+literal|"Display summary of all tez sessions related events in text or json format"
+argument_list|)
+block|,
 name|TEZ_EXEC_INPLACE_PROGRESS
 argument_list|(
 literal|"hive.tez.exec.inplace.progress"

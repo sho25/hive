@@ -57,6 +57,9 @@ begin_interface
 specifier|public
 interface|interface
 name|TriggerActionHandler
+parameter_list|<
+name|SessionType
+parameter_list|>
 block|{
 comment|/**    * Applies the action defined in the rule for the specified queries    *    * @param queriesViolated - violated queries and the rule it violated    */
 name|void
@@ -64,7 +67,7 @@ name|applyAction
 parameter_list|(
 name|Map
 argument_list|<
-name|TezSessionState
+name|SessionType
 argument_list|,
 name|Trigger
 argument_list|>

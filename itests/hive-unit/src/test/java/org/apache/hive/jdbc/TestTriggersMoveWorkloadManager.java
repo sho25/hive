@@ -60,54 +60,6 @@ import|;
 end_import
 
 begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNotNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertTrue
-import|;
-end_import
-
-begin_import
 import|import
 name|java
 operator|.
@@ -124,36 +76,6 @@ operator|.
 name|net
 operator|.
 name|URL
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Connection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|SQLException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Statement
 import|;
 end_import
 
@@ -850,8 +772,6 @@ operator|.
 name|newArrayList
 argument_list|(
 name|moveTrigger
-argument_list|,
-name|killTrigger
 argument_list|)
 argument_list|,
 name|Lists
@@ -875,15 +795,161 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.tez.session.events.print.summary=json"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|errCaptureExpect
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Workload Manager Events Summary"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI Cluster %: 80.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: KILL Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"GET\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"MOVE\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"KILL\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"RETURN\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"slow_query_move\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"slow_query_kill\""
+argument_list|)
+expr_stmt|;
+comment|// violation in BI queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|moveTrigger
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
+comment|// violation in ETL queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|killTrigger
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|killTrigger
 operator|+
 literal|" violated"
+argument_list|,
+name|errCaptureExpect
 argument_list|)
 expr_stmt|;
 block|}
@@ -995,13 +1061,467 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col==t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.tez.session.events.print.summary=json"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|errCaptureExpect
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Workload Manager Events Summary"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI Cluster %: 80.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"GET\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"MOVE\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"RETURN\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"move_big_read\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"slow_query_kill\""
+argument_list|)
+expr_stmt|;
+comment|// violation in BI queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|moveTrigger
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 literal|null
+argument_list|,
+name|errCaptureExpect
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|timeout
+operator|=
+literal|60000
+argument_list|)
+specifier|public
+name|void
+name|testTriggerMoveBackKill
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|Expression
+name|moveExpression1
+init|=
+name|ExpressionFactory
+operator|.
+name|fromString
+argument_list|(
+literal|"HDFS_BYTES_READ> 100"
+argument_list|)
+decl_stmt|;
+name|Expression
+name|moveExpression2
+init|=
+name|ExpressionFactory
+operator|.
+name|fromString
+argument_list|(
+literal|"SHUFFLE_BYTES> 200"
+argument_list|)
+decl_stmt|;
+name|Expression
+name|killExpression
+init|=
+name|ExpressionFactory
+operator|.
+name|fromString
+argument_list|(
+literal|"EXECUTION_TIME> 2000"
+argument_list|)
+decl_stmt|;
+name|Trigger
+name|moveTrigger1
+init|=
+operator|new
+name|ExecutionTrigger
+argument_list|(
+literal|"move_big_read"
+argument_list|,
+name|moveExpression1
+argument_list|,
+operator|new
+name|Action
+argument_list|(
+name|Action
+operator|.
+name|Type
+operator|.
+name|MOVE_TO_POOL
+argument_list|,
+literal|"ETL"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|Trigger
+name|moveTrigger2
+init|=
+operator|new
+name|ExecutionTrigger
+argument_list|(
+literal|"move_high"
+argument_list|,
+name|moveExpression2
+argument_list|,
+operator|new
+name|Action
+argument_list|(
+name|Action
+operator|.
+name|Type
+operator|.
+name|MOVE_TO_POOL
+argument_list|,
+literal|"BI"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|Trigger
+name|killTrigger
+init|=
+operator|new
+name|ExecutionTrigger
+argument_list|(
+literal|"slow_query_kill"
+argument_list|,
+name|killExpression
+argument_list|,
+operator|new
+name|Action
+argument_list|(
+name|Action
+operator|.
+name|Type
+operator|.
+name|KILL_QUERY
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|setupTriggers
+argument_list|(
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|moveTrigger1
+argument_list|,
+name|killTrigger
+argument_list|)
+argument_list|,
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|moveTrigger2
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"select sleep(t1.under_col, 1), t1.value from "
+operator|+
+name|tableName
+operator|+
+literal|" t1 join "
+operator|+
+name|tableName
+operator|+
+literal|" t2 on t1.under_col>=t2.under_col"
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.tez.session.events.print.summary=json"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|errCaptureExpect
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Workload Manager Events Summary"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI Cluster %: 80.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: BI Cluster %: 80.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: KILL Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"GET\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"MOVE\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"MOVE\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"KILL\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"RETURN\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"move_big_read\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"slow_query_kill\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"move_high\""
+argument_list|)
+expr_stmt|;
+comment|// violation in BI queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|moveTrigger1
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
+comment|// violation in ETL queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|moveTrigger2
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
+comment|// violation in BI queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|killTrigger
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
+name|runQueryWithTrigger
+argument_list|(
+name|query
+argument_list|,
+name|setCmds
+argument_list|,
+name|killTrigger
+operator|+
+literal|" violated"
+argument_list|,
+name|errCaptureExpect
 argument_list|)
 expr_stmt|;
 block|}
@@ -1113,15 +1633,135 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.tez.session.events.print.summary=json"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|errCaptureExpect
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Workload Manager Events Summary"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI Cluster %: 80.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: KILL Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"GET\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"KILL\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"eventType\" : \"RETURN\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"move_big_read\""
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"name\" : \"kill_big_read\""
+argument_list|)
+expr_stmt|;
+comment|// violation in BI queue
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"violationMsg\" : \"Trigger "
+operator|+
+name|killTrigger
+operator|+
+literal|" violated"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|killTrigger
 operator|+
 literal|" violated"
+argument_list|,
+name|errCaptureExpect
 argument_list|)
 expr_stmt|;
 block|}
