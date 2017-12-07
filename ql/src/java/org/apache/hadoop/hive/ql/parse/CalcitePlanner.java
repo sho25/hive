@@ -10070,7 +10070,8 @@ literal|null
 decl_stmt|;
 name|subqueryId
 operator|=
-literal|0
+operator|-
+literal|1
 expr_stmt|;
 comment|/*        * recreate cluster, so that it picks up the additional traitDef        */
 specifier|final
@@ -18848,6 +18849,11 @@ argument_list|(
 name|qbSQ
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|subqueryId
+operator|++
+expr_stmt|;
 name|RelNode
 name|subQueryRelNode
 init|=
@@ -19175,11 +19181,6 @@ argument_list|(
 name|srcRel
 argument_list|)
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|subqueryId
-operator|++
 expr_stmt|;
 return|return
 name|filterRel
