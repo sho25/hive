@@ -5320,7 +5320,7 @@ name|HIVE_STRICT_CHECKS_CARTESIAN
 argument_list|(
 literal|"hive.strict.checks.cartesian.product"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Enabling strict Cartesian join checks disallows the following:\n"
 operator|+
