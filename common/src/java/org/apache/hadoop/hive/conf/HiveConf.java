@@ -9017,6 +9017,8 @@ argument_list|(
 literal|"mysql"
 argument_list|,
 literal|"postgresql"
+argument_list|,
+literal|"derby"
 argument_list|)
 argument_list|,
 literal|"Type of the metadata database."
@@ -9071,7 +9073,7 @@ name|HIVE_DRUID_PASSIVE_WAIT_TIME
 argument_list|(
 literal|"hive.druid.passiveWaitTimeMs"
 argument_list|,
-literal|30000
+literal|30000L
 argument_list|,
 literal|"Wait time in ms default to 30 seconds."
 argument_list|)

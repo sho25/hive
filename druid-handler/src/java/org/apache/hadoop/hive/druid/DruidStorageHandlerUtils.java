@@ -915,20 +915,6 @@ name|jdbi
 operator|.
 name|v2
 operator|.
-name|TransactionCallback
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|skife
-operator|.
-name|jdbi
-operator|.
-name|v2
-operator|.
 name|exceptions
 operator|.
 name|CallbackFailedException
@@ -1103,7 +1089,27 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Collections
 import|;
 end_import
 
@@ -1748,7 +1754,7 @@ name|List
 argument_list|<
 name|DataSegment
 argument_list|>
-name|getPublishedSegments
+name|getCreatedSegments
 parameter_list|(
 name|Path
 name|taskDir
@@ -2263,11 +2269,18 @@ return|;
 block|}
 end_function
 
+begin_comment
+comment|/**    * First computes the segments timeline to accommodate new segments for insert into case    * Then moves segments to druid deep storage with updated metadata/version    * ALL IS DONE IN ONE TRANSACTION    *    * @param connector DBI connector to commit    * @param metadataStorageTablesConfig Druid metadata tables definitions    * @param dataSource Druid datasource name    * @param segments List of segments to move and commit to metadata    * @param overwrite if it is an insert overwrite    * @param conf Configuration    * @param dataSegmentPusher segment pusher    *    * @return List of successfully published Druid segments.    * This list has the updated versions and metadata about segments after move and timeline sorting    *    * @throws CallbackFailedException    */
+end_comment
+
 begin_function
 specifier|public
 specifier|static
-name|void
-name|publishSegments
+name|List
+argument_list|<
+name|DataSegment
+argument_list|>
+name|publishSegmentsAndCommit
 parameter_list|(
 specifier|final
 name|SQLMetadataConnector
@@ -2291,9 +2304,6 @@ parameter_list|,
 name|boolean
 name|overwrite
 parameter_list|,
-name|String
-name|segmentDirectory
-parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
@@ -2303,6 +2313,7 @@ parameter_list|)
 throws|throws
 name|CallbackFailedException
 block|{
+return|return
 name|connector
 operator|.
 name|getDBI
@@ -2310,18 +2321,12 @@ argument_list|()
 operator|.
 name|inTransaction
 argument_list|(
-call|(
-name|TransactionCallback
-argument_list|<
-name|Void
-argument_list|>
-call|)
-argument_list|(
+parameter_list|(
 name|handle
-argument_list|,
+parameter_list|,
 name|transactionStatus
-argument_list|)
-operator|->
+parameter_list|)
+lambda|->
 block|{
 comment|// We create the timeline for the existing and new segments
 name|VersionedIntervalTimeline
@@ -2331,7 +2336,7 @@ argument_list|,
 name|DataSegment
 argument_list|>
 name|timeline
-block|;
+decl_stmt|;
 if|if
 condition|(
 name|overwrite
@@ -2375,7 +2380,9 @@ condition|)
 block|{
 comment|// If there are no new segments, we can just bail out
 return|return
-literal|null
+name|Collections
+operator|.
+name|EMPTY_LIST
 return|;
 block|}
 comment|// Otherwise, build a timeline of existing segments in metadata storage
@@ -2424,24 +2431,25 @@ name|metadataStorageTablesConfig
 argument_list|)
 expr_stmt|;
 block|}
-name|final
+specifier|final
 name|List
 argument_list|<
 name|DataSegment
 argument_list|>
 name|finalSegmentsToPublish
-operator|=
+init|=
 name|Lists
 operator|.
 name|newArrayList
 argument_list|()
-argument_list|;               for
-operator|(
+decl_stmt|;
+for|for
+control|(
 name|DataSegment
 name|segment
-operator|:
+range|:
 name|segments
-operator|)
+control|)
 block|{
 name|List
 argument_list|<
@@ -2453,7 +2461,7 @@ name|DataSegment
 argument_list|>
 argument_list|>
 name|existingChunks
-operator|=
+init|=
 name|timeline
 operator|.
 name|lookup
@@ -2463,7 +2471,7 @@ operator|.
 name|getInterval
 argument_list|()
 argument_list|)
-block|;
+decl_stmt|;
 if|if
 condition|(
 name|existingChunks
@@ -2506,24 +2514,25 @@ block|}
 comment|// Find out the segment with latest version and maximum partition number
 name|SegmentIdentifier
 name|max
-operator|=
+init|=
 literal|null
-argument_list|;
-name|final
+decl_stmt|;
+specifier|final
 name|ShardSpec
 name|newShardSpec
-argument_list|;
-name|final
+decl_stmt|;
+specifier|final
 name|String
 name|newVersion
-argument_list|;                 if
-operator|(
+decl_stmt|;
+if|if
+condition|(
 operator|!
 name|existingChunks
 operator|.
 name|isEmpty
 argument_list|()
-operator|)
+condition|)
 block|{
 comment|// Some existing chunk, Find max
 name|TimelineObjectHolder
@@ -2533,14 +2542,14 @@ argument_list|,
 name|DataSegment
 argument_list|>
 name|existingHolder
-operator|=
+init|=
 name|Iterables
 operator|.
 name|getOnlyElement
 argument_list|(
 name|existingChunks
 argument_list|)
-block|;
+decl_stmt|;
 for|for
 control|(
 name|PartitionChunk
@@ -2595,15 +2604,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-end_function
-
-begin_expr_stmt
-unit|}                  if
-operator|(
+block|}
+if|if
+condition|(
 name|max
 operator|==
 literal|null
-operator|)
+condition|)
 block|{
 comment|// No existing shard present in the database, use the current version.
 name|newShardSpec
@@ -2612,17 +2619,15 @@ name|segment
 operator|.
 name|getShardSpec
 argument_list|()
-block|;
+expr_stmt|;
 name|newVersion
 operator|=
 name|segment
 operator|.
 name|getVersion
 argument_list|()
-block|;                 }
-end_expr_stmt
-
-begin_else
+expr_stmt|;
+block|}
 else|else
 block|{
 comment|// use version of existing max segment to generate new shard spec
@@ -2644,9 +2649,6 @@ name|getVersion
 argument_list|()
 expr_stmt|;
 block|}
-end_else
-
-begin_decl_stmt
 name|DataSegment
 name|publishedSegment
 init|=
@@ -2671,9 +2673,6 @@ argument_list|,
 name|dataSegmentPusher
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_expr_stmt
 name|finalSegmentsToPublish
 operator|.
 name|add
@@ -2681,9 +2680,6 @@ argument_list|(
 name|publishedSegment
 argument_list|)
 expr_stmt|;
-end_expr_stmt
-
-begin_expr_stmt
 name|timeline
 operator|.
 name|add
@@ -2709,15 +2705,9 @@ name|publishedSegment
 argument_list|)
 argument_list|)
 expr_stmt|;
-end_expr_stmt
-
-begin_comment
-unit|}
+block|}
 comment|// Publish new segments to metadata storage
-end_comment
-
-begin_decl_stmt
-unit|final
+specifier|final
 name|PreparedBatch
 name|batch
 init|=
@@ -2740,9 +2730,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-end_decl_stmt
-
-begin_for
 for|for
 control|(
 specifier|final
@@ -2895,29 +2882,22 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-end_for
-
-begin_expr_stmt
 name|batch
 operator|.
 name|execute
 argument_list|()
 expr_stmt|;
-end_expr_stmt
-
-begin_return
 return|return
-literal|null
+name|finalSegmentsToPublish
 return|;
-end_return
-
-begin_empty_stmt
-unit|}     )
-empty_stmt|;
-end_empty_stmt
+block|}
+argument_list|)
+return|;
+block|}
+end_function
 
 begin_function
-unit|}    public
+specifier|public
 specifier|static
 name|void
 name|disableDataSourceWithHandle

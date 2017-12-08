@@ -1412,7 +1412,7 @@ name|dataSegmentList
 init|=
 name|DruidStorageHandlerUtils
 operator|.
-name|getPublishedSegments
+name|getCreatedSegments
 argument_list|(
 name|segmentDescriptroPath
 argument_list|,

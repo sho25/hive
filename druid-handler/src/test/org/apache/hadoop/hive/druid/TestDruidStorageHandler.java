@@ -2442,7 +2442,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -2453,11 +2453,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
@@ -2853,7 +2848,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -2864,11 +2859,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
@@ -3752,7 +3742,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -3763,11 +3753,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
@@ -4177,7 +4162,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -4188,11 +4173,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
@@ -4599,7 +4579,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -4610,11 +4590,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
@@ -5150,7 +5125,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -5161,11 +5136,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
@@ -5450,7 +5420,7 @@ argument_list|)
 decl_stmt|;
 name|DruidStorageHandlerUtils
 operator|.
-name|publishSegments
+name|publishSegmentsAndCommit
 argument_list|(
 name|connector
 argument_list|,
@@ -5461,11 +5431,6 @@ argument_list|,
 name|existingSegments
 argument_list|,
 literal|true
-argument_list|,
-name|taskDirPath
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|config
 argument_list|,
