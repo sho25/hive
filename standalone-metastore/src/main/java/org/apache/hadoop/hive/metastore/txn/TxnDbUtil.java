@@ -376,7 +376,11 @@ literal|"  CTC_DATABASE varchar(128) NOT NULL,"
 operator|+
 literal|"  CTC_TABLE varchar(128),"
 operator|+
-literal|"  CTC_PARTITION varchar(767))"
+literal|"  CTC_PARTITION varchar(767),"
+operator|+
+literal|"  CTC_ID bigint GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) NOT NULL,"
+operator|+
+literal|"  CTC_TIMESTAMP timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL)"
 argument_list|)
 expr_stmt|;
 name|stmt

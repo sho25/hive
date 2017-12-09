@@ -273,7 +273,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|FileUtils
+name|BlobStorageUtils
 import|;
 end_import
 
@@ -289,7 +289,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|BlobStorageUtils
+name|FileUtils
 import|;
 end_import
 
@@ -962,6 +962,11 @@ comment|// Identify whether the query involves an UPDATE, DELETE or MERGE
 specifier|private
 name|boolean
 name|isUpdateDeleteMerge
+decl_stmt|;
+comment|// Whether the analyzer has been instantiated to read and load materialized view plans
+specifier|private
+name|boolean
+name|isLoadingMaterializedView
 decl_stmt|;
 comment|/**    * This determines the prefix of the    * {@link org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx#dest}    * name for a given subtree of the AST.  Most of the times there is only 1 destination in a    * given tree but multi-insert has several and multi-insert representing MERGE must use    * different prefixes to encode the purpose of different Insert branches    */
 specifier|private
@@ -4438,6 +4443,30 @@ operator|.
 name|isUpdateDeleteMerge
 operator|=
 name|isUpdate
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isLoadingMaterializedView
+parameter_list|()
+block|{
+return|return
+name|isLoadingMaterializedView
+return|;
+block|}
+specifier|public
+name|void
+name|setIsLoadingMaterializedView
+parameter_list|(
+name|boolean
+name|isLoadingMaterializedView
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isLoadingMaterializedView
+operator|=
+name|isLoadingMaterializedView
 expr_stmt|;
 block|}
 specifier|public

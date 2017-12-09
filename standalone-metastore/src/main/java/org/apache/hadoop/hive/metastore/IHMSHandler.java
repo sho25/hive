@@ -19,6 +19,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -137,11 +147,19 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|List
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|txn
+operator|.
+name|TxnStore
 import|;
 end_import
 
@@ -181,6 +199,11 @@ name|getMS
 parameter_list|()
 throws|throws
 name|MetaException
+function_decl|;
+comment|/**    * Get a reference to the underlying TxnStore.    * @return the TxnStore instance.    */
+name|TxnStore
+name|getTxnHandler
+parameter_list|()
 function_decl|;
 comment|/**    * Get a reference to Hive's warehouse object (the class that does all the physical operations).    * @return Warehouse instance.    */
 name|Warehouse

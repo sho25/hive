@@ -577,6 +577,13 @@ name|stmt
 operator|.
 name|execute
 argument_list|(
+literal|"set hive.txn.manager = org.apache.hadoop.hive.ql.lockmgr.DummyTxnManager"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
 literal|"drop table if exists "
 operator|+
 name|tableName

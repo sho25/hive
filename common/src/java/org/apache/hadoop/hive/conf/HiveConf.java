@@ -5565,6 +5565,23 @@ argument_list|,
 literal|"Whether to try to rewrite queries using the materialized views enabled for rewriting"
 argument_list|)
 block|,
+name|HIVE_MATERIALIZED_VIEW_REWRITING_TIME_WINDOW
+argument_list|(
+literal|"hive.materializedview.rewriting.time.window"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Time window, specified in seconds, after which outdated materialized views become invalid for automatic query rewriting.\n"
+operator|+
+literal|"For instance, if a materialized view is created and afterwards one of its source tables is changed at "
+operator|+
+literal|"moment in time t0, the materialized view will not be considered for rewriting anymore after t0 plus "
+operator|+
+literal|"the value assigned to this property. Default value 0 means that the materialized view cannot be "
+operator|+
+literal|"outdated to be used automatically in query rewriting."
+argument_list|)
+block|,
 name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
 argument_list|(
 literal|"hive.materializedview.fileformat"
