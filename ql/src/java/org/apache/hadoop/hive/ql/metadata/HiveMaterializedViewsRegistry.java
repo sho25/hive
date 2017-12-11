@@ -227,22 +227,6 @@ name|apache
 operator|.
 name|calcite
 operator|.
-name|adapter
-operator|.
-name|druid
-operator|.
-name|LocalInterval
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
 name|jdbc
 operator|.
 name|JavaTypeFactoryImpl
@@ -858,6 +842,18 @@ operator|.
 name|typeinfo
 operator|.
 name|TypeInfoUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|joda
+operator|.
+name|time
+operator|.
+name|Interval
 import|;
 end_import
 
@@ -2041,11 +2037,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO: Default interval will be an Interval once Calcite 1.15.0 is released.
-comment|// We will need to update the type of this list.
 name|List
 argument_list|<
-name|LocalInterval
+name|Interval
 argument_list|>
 name|intervals
 init|=

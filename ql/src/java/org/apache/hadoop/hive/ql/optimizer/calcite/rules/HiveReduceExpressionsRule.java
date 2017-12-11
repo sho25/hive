@@ -437,6 +437,8 @@ name|HiveJoin
 operator|.
 name|class
 argument_list|,
+literal|false
+argument_list|,
 name|HiveRelFactories
 operator|.
 name|HIVE_BUILDER
@@ -583,6 +585,8 @@ argument_list|,
 name|predicates
 argument_list|,
 literal|true
+argument_list|,
+literal|false
 argument_list|)
 condition|)
 block|{
