@@ -533,7 +533,7 @@ argument_list|(
 name|col
 argument_list|)
 operator|.
-name|toString
+name|getExprString
 argument_list|()
 argument_list|)
 expr_stmt|;
