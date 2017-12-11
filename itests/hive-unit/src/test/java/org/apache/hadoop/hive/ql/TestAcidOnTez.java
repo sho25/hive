@@ -5338,6 +5338,15 @@ name|hiveConf
 argument_list|)
 decl_stmt|;
 comment|// make a clone of existing hive conf
+name|confForTez
+operator|.
+name|setBoolean
+argument_list|(
+literal|"hive.stats.column.autogather"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|setupTez
 argument_list|(
 name|confForTez

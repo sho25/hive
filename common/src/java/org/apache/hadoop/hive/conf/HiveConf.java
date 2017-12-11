@@ -7838,7 +7838,7 @@ name|HIVESTATSCOLAUTOGATHER
 argument_list|(
 literal|"hive.stats.column.autogather"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"A flag to gather column statistics automatically."
 argument_list|)
