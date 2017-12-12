@@ -2168,6 +2168,7 @@ name|vectorTableScanDesc
 argument_list|)
 return|;
 block|}
+comment|/*    * This TableScanDesc flag is strictly set by the Vectorizer class for vectorized MapWork    * vertices.    */
 specifier|public
 name|void
 name|setVectorized

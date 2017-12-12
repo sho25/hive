@@ -694,15 +694,9 @@ condition|)
 block|{
 if|if
 condition|(
-name|row
-operator|instanceof
-name|VectorizedRowBatch
+name|vectorized
 condition|)
 block|{
-comment|// We need to check with 'instanceof' instead of just checking
-comment|// vectorized because the row can be a VectorizedRowBatch when
-comment|// FetchOptimizer kicks in even if the operator pipeline is not
-comment|// vectorized
 name|VectorizedRowBatch
 name|batch
 init|=
@@ -1502,6 +1496,7 @@ name|Stat
 argument_list|>
 argument_list|()
 expr_stmt|;
+comment|/*      * This TableScanDesc flag is strictly set by the Vectorizer class for vectorized MapWork      * vertices.      */
 name|vectorized
 operator|=
 name|conf

@@ -10969,6 +10969,22 @@ name|currentBaseWork
 operator|=
 name|mapWork
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|validateTableScanOperator
+argument_list|(
+name|tableScanOperator
+argument_list|,
+name|mapWork
+argument_list|)
+condition|)
+block|{
+comment|// The "not vectorized" information has been stored in the MapWork vertex.
+return|return
+literal|false
+return|;
+block|}
 try|try
 block|{
 name|validateAndVectorizeMapOperators
