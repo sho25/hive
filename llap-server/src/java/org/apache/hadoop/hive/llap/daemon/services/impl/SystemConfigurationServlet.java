@@ -781,8 +781,10 @@ operator|.
 name|MAC
 condition|)
 block|{
-comment|// Red Hat/CentOS: /sys/kernel/mm/redhat_transparent_hugepage/defrag
-comment|// Ubuntu/Debian, OEL, SLES: /sys/kernel/mm/transparent_hugepage/defrag
+comment|// Red Hat: /sys/kernel/mm/redhat_transparent_hugepage/enabled
+comment|//          /sys/kernel/mm/redhat_transparent_hugepage/defrag
+comment|// CentOS/Ubuntu/Debian, OEL, SLES: /sys/kernel/mm/transparent_hugepage/enabled
+comment|//                                  /sys/kernel/mm/transparent_hugepage/defrag
 name|String
 name|thpFileName
 init|=
@@ -890,7 +892,7 @@ block|}
 name|String
 name|thpDefragFileName
 init|=
-literal|"/sys/kernel/mm/transparent_hugepage/enabled"
+literal|"/sys/kernel/mm/transparent_hugepage/defrag"
 decl_stmt|;
 name|String
 name|thpDefragFileStr
@@ -920,7 +922,7 @@ argument_list|)
 expr_stmt|;
 name|thpDefragFileName
 operator|=
-literal|"/sys/kernel/mm/redhat_transparent_hugepage/enabled"
+literal|"/sys/kernel/mm/redhat_transparent_hugepage/defrag"
 expr_stmt|;
 name|thpDefragFileStr
 operator|=
