@@ -7668,6 +7668,17 @@ operator|+
 literal|"The value \"-1\" means no limit."
 argument_list|)
 block|,
+name|XPRODSMALLTABLEROWSTHRESHOLD
+argument_list|(
+literal|"hive.xprod.mapjoin.small.table.rows"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Maximum number of rows on build side"
+operator|+
+literal|" of map join before it switches over to cross product edge"
+argument_list|)
+block|,
 name|HIVECONVERTJOINMAXSHUFFLESIZE
 argument_list|(
 literal|"hive.auto.convert.join.shuffle.max.size"
