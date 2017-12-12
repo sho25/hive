@@ -430,33 +430,23 @@ return|return
 name|TEST_DATA_DIR
 return|;
 block|}
-annotation|@
-name|Override
-annotation|@
-name|Before
-specifier|public
-name|void
-name|setUp
+specifier|private
+name|boolean
+name|shouldVectorize
 parameter_list|()
-throws|throws
-name|Exception
 block|{
-name|setUpInternal
-argument_list|()
-expr_stmt|;
+return|return
 name|hiveConf
 operator|.
-name|setBoolVar
+name|getBoolVar
 argument_list|(
 name|HiveConf
 operator|.
 name|ConfVars
 operator|.
 name|HIVE_VECTORIZATION_ENABLED
-argument_list|,
-literal|true
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 comment|/**    * Tests that Acid can work with un-bucketed tables.    */
 annotation|@
@@ -2455,7 +2445,8 @@ argument_list|)
 expr_stmt|;
 name|assertVectorized
 argument_list|(
-literal|true
+name|shouldVectorize
+argument_list|()
 argument_list|,
 literal|"update T set b = 88 where b = 80"
 argument_list|)
@@ -2467,7 +2458,8 @@ argument_list|)
 expr_stmt|;
 name|assertVectorized
 argument_list|(
-literal|true
+name|shouldVectorize
+argument_list|()
 argument_list|,
 literal|"delete from T where b = 8"
 argument_list|)
@@ -3646,7 +3638,8 @@ argument_list|)
 expr_stmt|;
 name|assertVectorized
 argument_list|(
-literal|true
+name|shouldVectorize
+argument_list|()
 argument_list|,
 name|query
 argument_list|)
@@ -3694,7 +3687,8 @@ argument_list|)
 expr_stmt|;
 name|assertVectorized
 argument_list|(
-literal|true
+name|shouldVectorize
+argument_list|()
 argument_list|,
 name|query
 argument_list|)
@@ -3759,7 +3753,8 @@ argument_list|)
 expr_stmt|;
 name|assertVectorized
 argument_list|(
-literal|true
+name|shouldVectorize
+argument_list|()
 argument_list|,
 name|query
 argument_list|)
@@ -3910,7 +3905,8 @@ argument_list|)
 expr_stmt|;
 name|assertVectorized
 argument_list|(
-literal|true
+name|shouldVectorize
+argument_list|()
 argument_list|,
 name|query
 argument_list|)
