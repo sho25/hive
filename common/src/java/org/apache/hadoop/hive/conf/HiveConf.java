@@ -14757,6 +14757,10 @@ operator|+
 literal|",fs.s3a.secret.key"
 operator|+
 literal|",fs.s3a.proxy.password"
+operator|+
+literal|",dfs.adls.oauth2.credential"
+operator|+
+literal|",fs.adl.oauth2.credential"
 argument_list|,
 literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
 argument_list|)
