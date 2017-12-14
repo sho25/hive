@@ -10282,15 +10282,28 @@ operator|+
 literal|"workload management is enabled and used for these sessions."
 argument_list|)
 block|,
-name|HIVE_SERVER2_TEZ_WM_WORKER_THREADS
+name|HIVE_SERVER2_WM_WORKER_THREADS
 argument_list|(
-literal|"hive.server2.tez.wm.worker.threads"
+literal|"hive.server2.wm.worker.threads"
 argument_list|,
 literal|4
 argument_list|,
 literal|"Number of worker threads to use to perform the synchronous operations with Tez\n"
 operator|+
 literal|"sessions for workload management (e.g. opening, closing, etc.)"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WM_ALLOW_ANY_POOL_VIA_JDBC
+argument_list|(
+literal|"hive.server2.wm.allow.any.pool.via.jdbc"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Applies when a user specifies a target WM pool in the JDBC connection string. If\n"
+operator|+
+literal|"false, the user can only specify a pool he is mapped to (e.g. make a choice among\n"
+operator|+
+literal|"multiple group mappings); if true, the user can specify any existing pool."
 argument_list|)
 block|,
 name|HIVE_SERVER2_TEZ_WM_AM_REGISTRY_TIMEOUT

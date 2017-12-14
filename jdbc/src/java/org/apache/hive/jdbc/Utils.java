@@ -607,6 +607,13 @@ name|INIT_FILE
 init|=
 literal|"initFile"
 decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|WM_POOL
+init|=
+literal|"wmPool"
+decl_stmt|;
 comment|// --------------- Begin 2 way ssl options -------------------------
 comment|// Use two way ssl. This param will take effect only when ssl=true
 specifier|static

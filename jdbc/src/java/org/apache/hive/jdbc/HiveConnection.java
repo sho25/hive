@@ -1384,6 +1384,12 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+name|String
+name|wmPool
+init|=
+literal|null
+decl_stmt|;
+specifier|private
 name|Properties
 name|clientInfo
 decl_stmt|;
@@ -1585,6 +1591,17 @@ name|INIT_FILE
 argument_list|)
 expr_stmt|;
 block|}
+name|wmPool
+operator|=
+name|sessConfMap
+operator|.
+name|get
+argument_list|(
+name|JdbcConnectionParams
+operator|.
+name|WM_POOL
+argument_list|)
+expr_stmt|;
 comment|// add supported protocols
 name|supportedProtocols
 operator|.
@@ -4225,6 +4242,23 @@ name|fetchSize
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|wmPool
+operator|!=
+literal|null
+condition|)
+block|{
+name|openConf
+operator|.
+name|put
+argument_list|(
+literal|"set:hivevar:wmpool"
+argument_list|,
+name|wmPool
+argument_list|)
+expr_stmt|;
+block|}
 comment|// set the session configuration
 name|Map
 argument_list|<
