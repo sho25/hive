@@ -1654,11 +1654,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * NOTE: this whole logic is replicated from Calcite's RelDecorrelator  *  and is exteneded to make it suitable for HIVE  *  TODO:  *    We should get rid of this and replace it with Calcite's RelDecorrelator  *    once that works with Join, Project etc instead of LogicalJoin, LogicalProject.  *    Also we need to have CALCITE-1511 fixed  *  * RelDecorrelator replaces all correlated expressions (corExp) in a relational  * expression (RelNode) tree with non-correlated expressions that are produced  * from joining the RelNode that produces the corExp with the RelNode that  * references it.  *  *<p>TODO:</p>  *<ul>  *<li>replace {@code CorelMap} constructor parameter with a RelNode  *<li>make {@link #currentRel} immutable (would require a fresh  *      RelDecorrelator for each node being decorrelated)</li>  *<li>make fields of {@code CorelMap} immutable</li>  *<li>make sub-class rules static, and have them create their own  *   de-correlator</li>  *</ul>  */
+comment|/**  * NOTE: this whole logic is replicated from Calcite's RelDecorrelator  *  and is exteneded to make it suitable for HIVE  *    We should get rid of this and replace it with Calcite's RelDecorrelator  *    once that works with Join, Project etc instead of LogicalJoin, LogicalProject.  *    At this point this has differed from Calcite's version significantly so cannot  *    get rid of this.  *  * RelDecorrelator replaces all correlated expressions (corExp) in a relational  * expression (RelNode) tree with non-correlated expressions that are produced  * from joining the RelNode that produces the corExp with the RelNode that  * references it.  *  *<p>TODO:</p>  *<ul>  *<li>replace {@code CorelMap} constructor parameter with a RelNode  *<li>make {@link #currentRel} immutable (would require a fresh  *      RelDecorrelator for each node being decorrelated)</li>  *<li>make fields of {@code CorelMap} immutable</li>  *<li>make sub-class rules static, and have them create their own  *   de-correlator</li>  *</ul>  */
 end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|HiveRelDecorrelator
 implements|implements
@@ -4061,7 +4062,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-block|{
 if|if
 condition|(
 name|rel
@@ -4874,7 +4874,6 @@ name|corDefOutputs
 argument_list|)
 return|;
 block|}
-block|}
 specifier|public
 name|Frame
 name|decorrelateRel
@@ -4884,7 +4883,6 @@ name|rel
 parameter_list|)
 throws|throws
 name|SemanticException
-block|{
 block|{
 comment|//
 comment|// Rewrite logic:
@@ -5186,7 +5184,6 @@ argument_list|,
 name|corDefOutputs
 argument_list|)
 return|;
-block|}
 block|}
 comment|/**    * Rewrite LogicalProject.    *    * @param rel the project rel to rewrite    */
 specifier|public
@@ -6125,7 +6122,7 @@ name|CorDef
 argument_list|,
 name|Integer
 argument_list|>
-name|map
+name|coreMap
 init|=
 operator|new
 name|TreeMap
@@ -6158,7 +6155,7 @@ argument_list|(
 name|def
 argument_list|)
 operator|||
-name|map
+name|coreMap
 operator|.
 name|containsKey
 argument_list|(
@@ -6255,7 +6252,7 @@ name|getValue
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|map
+name|coreMap
 operator|.
 name|put
 argument_list|(
@@ -6284,7 +6281,7 @@ comment|// If all correlation variables are now satisfied, skip creating a value
 comment|// generator.
 if|if
 condition|(
-name|map
+name|coreMap
 operator|.
 name|size
 argument_list|()
@@ -6295,7 +6292,7 @@ name|size
 argument_list|()
 condition|)
 block|{
-name|map
+name|coreMap
 operator|.
 name|putAll
 argument_list|(
@@ -6317,7 +6314,7 @@ name|frame
 operator|.
 name|oldToNewOutputs
 argument_list|,
-name|map
+name|coreMap
 argument_list|)
 return|;
 block|}
@@ -6338,7 +6335,7 @@ decl_stmt|;
 comment|// can directly add positions into corDefOutputs since join
 comment|// does not change the output ordering from the inputs.
 name|RelNode
-name|valueGen
+name|valueGenRel
 init|=
 name|createValueGenerator
 argument_list|(
@@ -6360,7 +6357,7 @@ name|frame
 operator|.
 name|r
 argument_list|,
-name|valueGen
+name|valueGenRel
 argument_list|,
 name|rexBuilder
 operator|.
@@ -6859,7 +6856,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-block|{
 comment|//
 comment|// Rewrite logic:
 comment|//
@@ -7167,7 +7163,6 @@ operator|.
 name|corDefOutputs
 argument_list|)
 return|;
-block|}
 block|}
 comment|/**      * Rewrite LogicalFilter.      *      * @param rel the filter rel to rewrite      */
 specifier|public
@@ -9650,7 +9645,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Remove correlated variables from the tree at root corRel    *    * @param correlate Correlator    */
+comment|/**    * Remove correlated variables from the tree at root corRel.    *    * @param correlate Correlator    */
 specifier|private
 name|void
 name|removeCorVarFromTree
@@ -10521,22 +10516,27 @@ name|RemoveCorrelationRexShuttle
 extends|extends
 name|RexShuttle
 block|{
+specifier|private
 specifier|final
 name|RexBuilder
 name|rexBuilder
 decl_stmt|;
+specifier|private
 specifier|final
 name|RelDataTypeFactory
 name|typeFactory
 decl_stmt|;
+specifier|private
 specifier|final
 name|boolean
 name|projectPulledAboveLeftCorrelator
 decl_stmt|;
+specifier|private
 specifier|final
 name|RexInputRef
 name|nullIndicator
 decl_stmt|;
+specifier|private
 specifier|final
 name|ImmutableSet
 argument_list|<
@@ -10544,7 +10544,6 @@ name|Integer
 argument_list|>
 name|isCount
 decl_stmt|;
-specifier|public
 name|RemoveCorrelationRexShuttle
 parameter_list|(
 name|RexBuilder
@@ -11213,7 +11212,6 @@ name|RemoveSingleAggregateRule
 extends|extends
 name|RelOptRule
 block|{
-specifier|public
 name|RemoveSingleAggregateRule
 parameter_list|()
 block|{
@@ -11448,7 +11446,6 @@ name|RemoveCorrelationForScalarProjectRule
 extends|extends
 name|RelOptRule
 block|{
-specifier|public
 name|RemoveCorrelationForScalarProjectRule
 parameter_list|()
 block|{
@@ -12181,7 +12178,6 @@ name|RemoveCorrelationForScalarAggregateRule
 extends|extends
 name|RelOptRule
 block|{
-specifier|public
 name|RemoveCorrelationForScalarAggregateRule
 parameter_list|()
 block|{
@@ -13500,11 +13496,11 @@ name|AdjustProjectForCountAggregateRule
 extends|extends
 name|RelOptRule
 block|{
+specifier|private
 specifier|final
 name|boolean
 name|flavor
 decl_stmt|;
-specifier|public
 name|AdjustProjectForCountAggregateRule
 parameter_list|(
 name|boolean
@@ -14069,17 +14065,17 @@ argument_list|<
 name|CorRef
 argument_list|>
 block|{
-specifier|public
+specifier|private
 specifier|final
 name|int
 name|uniqueKey
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|CorrelationId
 name|corr
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|int
 name|field
@@ -14302,12 +14298,12 @@ argument_list|<
 name|CorDef
 argument_list|>
 block|{
-specifier|public
+specifier|private
 specifier|final
 name|CorrelationId
 name|corr
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|final
 name|int
 name|field
@@ -14535,6 +14531,7 @@ block|}
 comment|/** A map of the locations of    * {@link org.apache.calcite.rel.logical.LogicalCorrelate}    * in a tree of {@link RelNode}s.    *    *<p>It is used to drive the decorrelation process.    * Treat it as immutable; rebuild if you modify the tree.    *    *<p>There are three maps:<ol>    *    *<li>{@link #mapRefRelToCorRef} maps a {@link RelNode} to the correlated    * variables it references;    *    *<li>{@link #mapCorToCorRel} maps a correlated variable to the    * {@link Correlate} providing it;    *    *<li>{@link #mapFieldAccessToCorRef} maps a rex field access to    * the corVar it represents. Because typeFlattener does not clone or    * modify a correlated field access this map does not need to be    * updated.    *    *</ol> */
 specifier|private
 specifier|static
+specifier|final
 class|class
 name|CorelMap
 block|{
@@ -15076,33 +15073,18 @@ comment|// if there are aggregate functions or grouping sets we will need
 comment|// value generator
 if|if
 condition|(
-operator|(
-operator|(
-operator|(
-name|HiveAggregate
-operator|)
 name|rel
-operator|)
 operator|.
 name|getAggCallList
 argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
-operator|==
-literal|true
 operator|&&
-operator|(
-operator|(
-name|HiveAggregate
-operator|)
+operator|!
 name|rel
-operator|)
 operator|.
 name|indicator
-operator|==
-literal|false
-operator|)
 condition|)
 block|{
 name|this
@@ -15147,33 +15129,18 @@ parameter_list|)
 block|{
 if|if
 condition|(
-operator|(
-operator|(
-operator|(
-name|LogicalAggregate
-operator|)
 name|rel
-operator|)
 operator|.
 name|getAggCallList
 argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
-operator|==
-literal|true
 operator|&&
-operator|(
-operator|(
-name|LogicalAggregate
-operator|)
+operator|!
 name|rel
-operator|)
 operator|.
 name|indicator
-operator|==
-literal|false
-operator|)
 condition|)
 block|{
 name|this
@@ -15250,6 +15217,7 @@ name|CorelMapBuilder
 extends|extends
 name|HiveRelShuttleImpl
 block|{
+specifier|private
 specifier|final
 name|SortedMap
 argument_list|<
@@ -15264,6 +15232,7 @@ name|TreeMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
+specifier|private
 specifier|final
 name|SortedSetMultimap
 argument_list|<
@@ -15324,6 +15293,7 @@ block|}
 block|}
 argument_list|)
 decl_stmt|;
+specifier|private
 specifier|final
 name|Map
 argument_list|<
@@ -15338,6 +15308,7 @@ name|HashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
+specifier|private
 specifier|final
 name|Holder
 argument_list|<
@@ -15352,11 +15323,13 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+specifier|private
 name|int
 name|corrIdGenerator
 init|=
 literal|0
 decl_stmt|;
+specifier|private
 specifier|final
 name|List
 argument_list|<
@@ -16056,10 +16029,12 @@ specifier|static
 class|class
 name|Frame
 block|{
+specifier|private
 specifier|final
 name|RelNode
 name|r
 decl_stmt|;
+specifier|private
 specifier|final
 name|ImmutableSortedMap
 argument_list|<
@@ -16069,6 +16044,7 @@ name|Integer
 argument_list|>
 name|corDefOutputs
 decl_stmt|;
+specifier|private
 specifier|final
 name|ImmutableSortedMap
 argument_list|<

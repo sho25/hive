@@ -1030,7 +1030,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Builder for relational expressions.  * TODO:  *  Note that this is copied from Calcite's RelBulder  *  because CALCITE-1493 hasn't been fixed yet  *  This should be deleted and replaced with RelBuilder in SubqueryRemoveRule  *  once CALCITE-1493 is fixed.  *  *<p>{@code RelBuilder} does not make possible anything that you could not  * also accomplish by calling the factory methods of the particular relational  * expression. But it makes common tasks more straightforward and concise.  *  *<p>{@code RelBuilder} uses factories to create relational expressions.  * By default, it uses the default factories, which create logical relational  * expressions ({@link org.apache.calcite.rel.logical.LogicalFilter},  * {@link org.apache.calcite.rel.logical.LogicalProject} and so forth).  * But you could override those factories so that, say, {@code filter} creates  * instead a {@code HiveFilter}.  *  *<p>It is not thread-safe.  */
+comment|/**  * Builder for relational expressions.  * TODO:  *  Note that this is copied from Calcite's RelBulder  *  because CALCITE-1493 hasn't been fixed yet  *  This should be deleted and replaced with RelBuilder in SubqueryRemoveRule  *  once CALCITE-1493 is fixed.  *  EDIT: Although CALCITE-1493 has been fixed and released but HIVE now has special handling  *    in join (it gets a flag to see if semi join is to be created or not). So we still can not  *    replace this with Calcite's RelBuilder  *  *<p>{@code RelBuilder} does not make possible anything that you could not  * also accomplish by calling the factory methods of the particular relational  * expression. But it makes common tasks more straightforward and concise.  *  *<p>{@code RelBuilder} uses factories to create relational expressions.  * By default, it uses the default factories, which create logical relational  * expressions ({@link org.apache.calcite.rel.logical.LogicalFilter},  * {@link org.apache.calcite.rel.logical.LogicalProject} and so forth).  * But you could override those factories so that, say, {@code filter} creates  * instead a {@code HiveFilter}.  *  *<p>It is not thread-safe.  */
 end_comment
 
 begin_class
@@ -1079,12 +1079,12 @@ return|;
 block|}
 block|}
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|final
 name|RelOptCluster
 name|cluster
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|final
 name|RelOptSchema
 name|relOptSchema
@@ -8460,6 +8460,7 @@ name|GroupKeyImpl
 implements|implements
 name|GroupKey
 block|{
+specifier|private
 specifier|final
 name|ImmutableList
 argument_list|<
@@ -8467,10 +8468,12 @@ name|RexNode
 argument_list|>
 name|nodes
 decl_stmt|;
+specifier|private
 specifier|final
 name|boolean
 name|indicator
 decl_stmt|;
+specifier|private
 specifier|final
 name|ImmutableList
 argument_list|<
@@ -8481,6 +8484,7 @@ argument_list|>
 argument_list|>
 name|nodeLists
 decl_stmt|;
+specifier|private
 specifier|final
 name|String
 name|alias
@@ -8723,6 +8727,7 @@ block|}
 comment|/** Builder stack frame.    *    *<p>Describes a previously created relational expression and    * information about how table aliases map into its row type. */
 specifier|private
 specifier|static
+specifier|final
 class|class
 name|Frame
 block|{
@@ -8788,10 +8793,12 @@ return|;
 block|}
 block|}
 decl_stmt|;
+specifier|private
 specifier|final
 name|RelNode
 name|rel
 decl_stmt|;
+specifier|private
 specifier|final
 name|ImmutableList
 argument_list|<

@@ -61,20 +61,6 @@ name|calcite
 operator|.
 name|plan
 operator|.
-name|RelOptRuleOperand
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|plan
-operator|.
 name|RelOptUtil
 import|;
 end_import
@@ -401,20 +387,6 @@ name|apache
 operator|.
 name|calcite
 operator|.
-name|tools
-operator|.
-name|RelBuilderFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
 name|util
 operator|.
 name|Pair
@@ -620,7 +592,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * NOTE: this rule is replicated from Calcite's SubqueryRemoveRule  * Transform that converts IN, EXISTS and scalar sub-queries into joins.  * TODO:  *  Reason this is replicated instead of using Calcite's is  *    Calcite creates null literal with null type but hive needs it to be properly typed  *    Need fix for Calcite-1493  *  *<p>Sub-queries are represented by {@link RexSubQuery} expressions.  *  *<p>A sub-query may or may not be correlated. If a sub-query is correlated,  * the wrapped {@link RelNode} will contain a {@link RexCorrelVariable} before  * the rewrite, and the product of the rewrite will be a {@link Correlate}.  * The Correlate can be removed using {@link RelDecorrelator}.  */
+comment|/**  * NOTE: this rule is replicated from Calcite's SubqueryRemoveRule  * Transform that converts IN, EXISTS and scalar sub-queries into joins.  * TODO:  *  Reason this is replicated instead of using Calcite's is  *    Calcite creates null literal with null type but hive needs it to be properly typed  *  *<p>Sub-queries are represented by {@link RexSubQuery} expressions.  *  *<p>A sub-query may or may not be correlated. If a sub-query is correlated,  * the wrapped {@link RelNode} will contain a {@link RexCorrelVariable} before  * the rewrite, and the product of the rewrite will be a {@link Correlate}.  * The Correlate can be removed using {@link RelDecorrelator}.  */
 end_comment
 
 begin_class
@@ -692,7 +664,6 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-comment|//TODO: replace HiveSubQRemoveRelBuilder with calcite's once calcite 1.11.0 is released
 specifier|final
 name|HiveSubQRemoveRelBuilder
 name|builder
@@ -951,7 +922,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// if subquery is in PROJECT
 elseif|else
 if|if
 condition|(
@@ -960,6 +930,7 @@ operator|instanceof
 name|Project
 condition|)
 block|{
+comment|// if subquery is in PROJECT
 specifier|final
 name|Project
 name|project
@@ -1167,7 +1138,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/*private HiveSubQueryRemoveRule(RelOptRuleOperand operand,                                RelBuilderFactory relBuilderFactory,                                String description) {         super(operand, relBuilderFactory, description);     } */
 comment|// given a subquery it checks to see what is the aggegate function
 comment|/// if COUNT returns true since COUNT produces 0 on empty result set
 specifier|private
@@ -1496,8 +1466,8 @@ operator|.
 name|USER_DEFINED_FUNCTION
 argument_list|)
 decl_stmt|;
-comment|// we create FILTER (sq_count_check(count())<= 1) instead of PROJECT because RelFieldTrimmer
-comment|//  ends up getting rid of Project since it is not used further up the tree
+comment|//we create FILTER (sq_count_check(count())<= 1) instead of PROJECT because RelFieldTrimmer
+comment|// ends up getting rid of Project since it is not used further up the tree
 name|builder
 operator|.
 name|filter
@@ -1562,6 +1532,7 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
 name|builder
 operator|.
 name|join
@@ -1580,6 +1551,7 @@ argument_list|,
 name|variablesSet
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|conf
@@ -1613,7 +1585,8 @@ name|isCorrScalarAgg
 condition|)
 block|{
 comment|// Transformation :
-comment|// Outer Query Left Join (inner query) on correlated predicate and preserve rows only from left side.
+comment|// Outer Query Left Join (inner query) on correlated predicate
+comment|//      and preserve rows only from left side.
 name|builder
 operator|.
 name|push
@@ -2081,8 +2054,9 @@ operator|.
 name|USER_DEFINED_FUNCTION
 argument_list|)
 decl_stmt|;
-comment|// we create FILTER (sq_count_check(count())> 0) instead of PROJECT because RelFieldTrimmer
-comment|//  ends up getting rid of Project since it is not used further up the tree
+comment|// we create FILTER (sq_count_check(count())> 0) instead of PROJECT
+comment|// because RelFieldTrimmer ends up getting rid of Project
+comment|// since it is not used further up the tree
 name|builder
 operator|.
 name|filter
@@ -2255,6 +2229,7 @@ argument_list|)
 expr_stmt|;
 block|}
 else|else
+block|{
 name|builder
 operator|.
 name|join
@@ -2273,6 +2248,7 @@ argument_list|,
 name|variablesSet
 argument_list|)
 expr_stmt|;
+block|}
 name|offset
 operator|+=
 literal|2
@@ -2782,8 +2758,8 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-comment|//Calcite creates null literal with Null type here but because HIVE doesn't support null type
-comment|// it is appropriately typed boolean
+comment|//Calcite creates null literal with Null type here but
+comment|// because HIVE doesn't support null type it is appropriately typed boolean
 name|operands
 operator|.
 name|add
@@ -2813,8 +2789,8 @@ name|BOOLEAN
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// we are creating filter here so should not be returning NULL. Not sure why Calcite return NULL
-comment|//operands.add(builder.or(keyIsNulls), builder.literal(false));
+comment|// we are creating filter here so should not be returning NULL.
+comment|// Not sure why Calcite return NULL
 block|}
 name|RexNode
 name|b
@@ -2933,7 +2909,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/** Returns a reference to a particular field, by offset, across several      * inputs on a {@link RelBuilder}'s stack. */
+comment|/** Returns a reference to a particular field, by offset, across several    * inputs on a {@link RelBuilder}'s stack. */
 specifier|private
 name|RexInputRef
 name|field
@@ -3012,7 +2988,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/** Returns a list of expressions that project the first {@code fieldCount}      * fields of the top input on a {@link RelBuilder}'s stack. */
+comment|/** Returns a list of expressions that project the first {@code fieldCount}    * fields of the top input on a {@link RelBuilder}'s stack. */
 specifier|private
 specifier|static
 name|List
@@ -3072,7 +3048,7 @@ return|return
 name|projects
 return|;
 block|}
-comment|/** Shuttle that replaces occurrences of a given      * {@link org.apache.calcite.rex.RexSubQuery} with a replacement      * expression. */
+comment|/** Shuttle that replaces occurrences of a given    * {@link org.apache.calcite.rex.RexSubQuery} with a replacement    * expression. */
 specifier|private
 specifier|static
 class|class
@@ -3090,7 +3066,6 @@ specifier|final
 name|RexNode
 name|replacement
 decl_stmt|;
-specifier|public
 name|ReplaceSubQueryShuttle
 parameter_list|(
 name|RexSubQuery
@@ -3145,9 +3120,10 @@ comment|// TODO:
 comment|// Following HiveSubQueryFinder has been copied from RexUtil::SubQueryFinder
 comment|// since there is BUG in there (CALCITE-1726).
 comment|// Once CALCITE-1726 is fixed we should get rid of the following code
-comment|/** Visitor that throws {@link org.apache.calcite.util.Util.FoundOne} if      * applied to an expression that contains a {@link RexSubQuery}. */
+comment|/** Visitor that throws {@link org.apache.calcite.util.Util.FoundOne} if    * applied to an expression that contains a {@link RexSubQuery}. */
 specifier|public
 specifier|static
+specifier|final
 class|class
 name|HiveSubQueryFinder
 extends|extends
