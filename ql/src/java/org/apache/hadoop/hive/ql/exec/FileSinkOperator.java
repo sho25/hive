@@ -2929,13 +2929,6 @@ operator|new
 name|LongWritable
 argument_list|()
 decl_stmt|;
-specifier|private
-specifier|transient
-name|boolean
-name|isNativeTable
-init|=
-literal|true
-decl_stmt|;
 comment|/**    * The evaluators for the multiFile sprayer. If the table under consideration has 1000 buckets,    * it is not a good idea to start so many reducers - if the maximum number of reducers is 100,    * each reducer can write 10 files - this way we effectively get 1000 files.    */
 specifier|private
 specifier|transient
@@ -3274,17 +3267,6 @@ expr_stmt|;
 name|filesCreated
 operator|=
 literal|false
-expr_stmt|;
-name|isNativeTable
-operator|=
-operator|!
-name|conf
-operator|.
-name|getTableInfo
-argument_list|()
-operator|.
-name|isNonNative
-argument_list|()
 expr_stmt|;
 name|isTemporary
 operator|=
@@ -4648,6 +4630,7 @@ comment|// in recent hadoop versions, use deleteOnExit to clean tmp files.
 if|if
 condition|(
 name|isNativeTable
+argument_list|()
 operator|&&
 name|fs
 operator|!=
@@ -4728,6 +4711,7 @@ argument_list|,
 name|taskId
 argument_list|,
 name|isNativeTable
+argument_list|()
 argument_list|,
 name|isSkewedStoredAsSubDirectories
 argument_list|)
@@ -4815,6 +4799,7 @@ block|}
 if|if
 condition|(
 name|isNativeTable
+argument_list|()
 operator|&&
 operator|!
 name|conf
@@ -7894,6 +7879,7 @@ block|}
 if|if
 condition|(
 name|isNativeTable
+argument_list|()
 condition|)
 block|{
 name|fsp
@@ -7988,6 +7974,7 @@ operator|!
 name|autoDelete
 operator|&&
 name|isNativeTable
+argument_list|()
 operator|&&
 operator|!
 name|conf
@@ -8061,6 +8048,7 @@ literal|null
 operator|)
 operator|&&
 name|isNativeTable
+argument_list|()
 condition|)
 block|{
 name|Path
@@ -9146,6 +9134,22 @@ return|;
 block|}
 return|return
 name|conf
+return|;
+block|}
+specifier|private
+name|boolean
+name|isNativeTable
+parameter_list|()
+block|{
+return|return
+operator|!
+name|conf
+operator|.
+name|getTableInfo
+argument_list|()
+operator|.
+name|isNonNative
+argument_list|()
 return|;
 block|}
 block|}
