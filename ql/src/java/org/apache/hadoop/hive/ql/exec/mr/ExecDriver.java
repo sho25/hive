@@ -2967,6 +2967,7 @@ literal|"tez"
 argument_list|)
 condition|)
 block|{
+comment|// TODO: this is the only place that uses keepTmpDir. Why?
 name|TezSessionPoolManager
 operator|.
 name|closeIfNotDefault
