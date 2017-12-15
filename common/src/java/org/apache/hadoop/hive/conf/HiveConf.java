@@ -3710,6 +3710,15 @@ argument_list|,
 literal|"Number of threads to use to read file metadata in background to cache it."
 argument_list|)
 block|,
+name|METASTORE_URI_RESOLVER
+argument_list|(
+literal|"hive.metastore.uri.resolver"
+argument_list|,
+literal|""
+argument_list|,
+literal|"If set, fully qualified class name of resolver for hive metastore uri's"
+argument_list|)
+block|,
 name|METASTORETHRIFTCONNECTIONRETRIES
 argument_list|(
 literal|"hive.metastore.connect.retries"

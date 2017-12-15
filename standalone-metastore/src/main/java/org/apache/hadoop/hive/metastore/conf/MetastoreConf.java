@@ -3308,6 +3308,17 @@ argument_list|,
 literal|"time after which transactions are declared aborted if the client has not sent a heartbeat."
 argument_list|)
 block|,
+name|URI_RESOLVER
+argument_list|(
+literal|"metastore.uri.resolver"
+argument_list|,
+literal|"hive.metastore.uri.resolver"
+argument_list|,
+literal|""
+argument_list|,
+literal|"If set, fully qualified class name of resolver for hive metastore uri's"
+argument_list|)
+block|,
 name|USERS_IN_ADMIN_ROLE
 argument_list|(
 literal|"metastore.users.in.admin.role"
