@@ -745,6 +745,14 @@ argument_list|,
 name|hconf
 argument_list|,
 name|currTask
+argument_list|,
+name|parseCtx
+operator|.
+name|getQueryState
+argument_list|()
+operator|.
+name|getLineageState
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

@@ -503,6 +503,24 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
 begin_comment
 comment|/**  * Utility class for index support.  * Currently used for BITMAP and AGGREGATE index  *  */
 end_comment
@@ -1406,6 +1424,9 @@ name|indexTableName
 parameter_list|,
 name|String
 name|dbName
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 comment|// Don't try to index optimize the query to build the index
@@ -1439,6 +1460,8 @@ argument_list|()
 operator|.
 name|getUserName
 argument_list|()
+argument_list|,
+name|lineageState
 argument_list|)
 decl_stmt|;
 name|driver

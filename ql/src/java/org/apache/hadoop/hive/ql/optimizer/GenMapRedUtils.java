@@ -7683,7 +7683,7 @@ name|targetPathToPartitionInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param fsInput The FileSink operator.    * @param finalName the final destination path the merge job should output.    * @param dependencyTask    * @param mvTasks    * @param conf    * @param currTask    * @throws SemanticException     * create a Map-only merge job using CombineHiveInputFormat for all partitions with    * following operators:    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo& pathToAlias to include the dynamic    *          partition    *          directories.    *    */
+comment|/**    * @param fsInput The FileSink operator.    * @param finalName the final destination path the merge job should output.    * @param dependencyTask    * @param mvTasks    * @param conf    * @param currTask    * @param lineageState    * @throws SemanticException     * create a Map-only merge job using CombineHiveInputFormat for all partitions with    * following operators:    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo& pathToAlias to include the dynamic    *          partition    *          directories.    *    */
 specifier|public
 specifier|static
 name|void
@@ -7717,6 +7717,9 @@ extends|extends
 name|Serializable
 argument_list|>
 name|currTask
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -8494,14 +8497,6 @@ literal|false
 argument_list|)
 argument_list|,
 literal|false
-argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getLineageState
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -8568,6 +8563,8 @@ argument_list|,
 name|mvTask
 argument_list|,
 name|dependencyTask
+argument_list|,
+name|lineageState
 argument_list|)
 decl_stmt|;
 comment|// keep the dynamic partition context in conditional task resolver context
@@ -10250,7 +10247,7 @@ name|linkedTargetPath
 argument_list|)
 return|;
 block|}
-comment|/**    * Merges the given Conditional input path and the linked MoveWork into one only MoveWork.    * This is an optimization for BlobStore systems to avoid doing two renames or copies that are not necessary.    *    * @param condInputPath A path that the ConditionalTask uses as input for its sub-tasks.    * @param linkedMoveWork A MoveWork that the ConditionalTask uses to link to its sub-tasks.    * @return A new MoveWork that has the Conditional input path as source and the linkedMoveWork as target.    */
+comment|/**    * Merges the given Conditional input path and the linked MoveWork into one only MoveWork.    * This is an optimization for BlobStore systems to avoid doing two renames or copies that are not necessary.    *    * @param condInputPath A path that the ConditionalTask uses as input for its sub-tasks.    * @param linkedMoveWork A MoveWork that the ConditionalTask uses to link to its sub-tasks.    * @param lineageState A LineageState used to track what changes.    * @return A new MoveWork that has the Conditional input path as source and the linkedMoveWork as target.    */
 annotation|@
 name|VisibleForTesting
 specifier|protected
@@ -10263,6 +10260,9 @@ name|condInputPath
 parameter_list|,
 name|MoveWork
 name|linkedMoveWork
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 name|MoveWork
@@ -10283,17 +10283,6 @@ name|LoadTableDesc
 name|tableDesc
 init|=
 literal|null
-decl_stmt|;
-name|LineageState
-name|lineageState
-init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getLineageState
-argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -10412,7 +10401,7 @@ return|return
 name|newWork
 return|;
 block|}
-comment|/**    * Construct a conditional task given the current leaf task, the MoveWork and the MapredWork.    *    * @param conf    *          HiveConf    * @param currTask    *          current leaf task    * @param dummyMoveWork    *          MoveWork for the move task    * @param mergeWork    *          MapredWork for the merge task.    * @param condInputPath    *          the input directory of the merge/move task    * @param condOutputPath    *          the output directory of the merge/move task    * @param moveTaskToLink    *          a MoveTask that may be linked to the conditional sub-tasks    * @param dependencyTask    *          a dependency task that may be linked to the conditional sub-tasks    * @return The conditional task    */
+comment|/**    * Construct a conditional task given the current leaf task, the MoveWork and the MapredWork.    *    * @param conf    *          HiveConf    * @param currTask    *          current leaf task    * @param dummyMoveWork    *          MoveWork for the move task    * @param mergeWork    *          MapredWork for the merge task.    * @param condInputPath    *          the input directory of the merge/move task    * @param condOutputPath    *          the output directory of the merge/move task    * @param moveTaskToLink    *          a MoveTask that may be linked to the conditional sub-tasks    * @param dependencyTask    *          a dependency task that may be linked to the conditional sub-tasks    * @param lineageState    *          to track activity    * @return The conditional task    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -10454,6 +10443,9 @@ name|moveTaskToLink
 parameter_list|,
 name|DependencyCollectionTask
 name|dependencyTask
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 if|if
@@ -10540,6 +10532,8 @@ name|moveTaskToLink
 operator|.
 name|getWork
 argument_list|()
+argument_list|,
+name|lineageState
 argument_list|)
 expr_stmt|;
 block|}

@@ -311,6 +311,24 @@ name|PartitionDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
 begin_comment
 comment|/**  * Index handler for indexes that have aggregate functions on indexed columns.  *  */
 end_comment
@@ -674,6 +692,9 @@ name|baseTableName
 parameter_list|,
 name|String
 name|dbName
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 name|List
@@ -1181,6 +1202,8 @@ argument_list|,
 name|indexTableName
 argument_list|,
 name|dbName
+argument_list|,
+name|lineageState
 argument_list|)
 decl_stmt|;
 return|return

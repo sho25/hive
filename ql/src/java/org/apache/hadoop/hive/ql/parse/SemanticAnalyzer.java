@@ -44630,19 +44630,9 @@ condition|(
 name|ltd
 operator|!=
 literal|null
-operator|&&
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|!=
-literal|null
 condition|)
 block|{
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|queryState
 operator|.
 name|getLineageState
 argument_list|()
@@ -44745,10 +44735,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|queryState
 operator|.
 name|getLineageState
 argument_list|()
@@ -72200,10 +72187,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// we just use view name as location.
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|queryState
 operator|.
 name|getLineageState
 argument_list|()

@@ -2720,6 +2720,15 @@ return|return
 literal|true
 return|;
 block|}
+specifier|public
+name|QueryState
+name|getQueryState
+parameter_list|()
+block|{
+return|return
+name|queryState
+return|;
+block|}
 block|}
 end_class
 

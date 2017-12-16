@@ -27,6 +27,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|collect
 operator|.
 name|Lists
@@ -660,11 +674,16 @@ name|FORMAT_VERSION
 init|=
 literal|"1.0"
 decl_stmt|;
-specifier|final
+comment|/**    * An edge in lineage.    */
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|static
+specifier|final
 class|class
 name|Edge
 block|{
+comment|/**      * The types of Edge.      */
 specifier|public
 specifier|static
 enum|enum
@@ -743,11 +762,16 @@ name|type
 expr_stmt|;
 block|}
 block|}
-specifier|final
+comment|/**    * A vertex in lineage.    */
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|static
+specifier|final
 class|class
 name|Vertex
 block|{
+comment|/**      * A type in lineage.      */
 specifier|public
 specifier|static
 enum|enum
@@ -886,6 +910,39 @@ operator|==
 name|vertex
 operator|.
 name|type
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|Type
+name|getType
+parameter_list|()
+block|{
+return|return
+name|type
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|String
+name|getLabel
+parameter_list|()
+block|{
+return|return
+name|label
+return|;
+block|}
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|int
+name|getId
+parameter_list|()
+block|{
+return|return
+name|id
 return|;
 block|}
 block|}
@@ -1382,6 +1439,7 @@ block|}
 block|}
 comment|/**    * Logger an error to console if available.    */
 specifier|private
+specifier|static
 name|void
 name|log
 parameter_list|(
@@ -1414,7 +1472,10 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Based on the final select operator, find out all the target columns.    * For each target column, find out its sources based on the dependency index.    */
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
+specifier|static
 name|List
 argument_list|<
 name|Edge
@@ -2047,6 +2108,7 @@ name|edges
 return|;
 block|}
 specifier|private
+specifier|static
 name|void
 name|addEdge
 parameter_list|(
@@ -2120,6 +2182,7 @@ expr_stmt|;
 block|}
 comment|/**    * Find an edge from all edges that has the same source vertices.    * If found, add the more targets to this edge's target vertex list.    * Otherwise, create a new edge and add to edge list.    */
 specifier|private
+specifier|static
 name|void
 name|addEdge
 parameter_list|(
@@ -2225,6 +2288,7 @@ block|}
 block|}
 comment|/**    * Convert a list of columns to a set of vertices.    * Use cached vertices if possible.    */
 specifier|private
+specifier|static
 name|Set
 argument_list|<
 name|Vertex
@@ -2385,6 +2449,7 @@ return|;
 block|}
 comment|/**    * Find a vertex from a cache, or create one if not.    */
 specifier|private
+specifier|static
 name|Vertex
 name|getOrCreateVertex
 parameter_list|(
@@ -2448,6 +2513,7 @@ return|;
 block|}
 comment|/**    * Find an edge that has the same type, expression, and sources.    */
 specifier|private
+specifier|static
 name|Edge
 name|findSimilarEdgeBySources
 parameter_list|(
@@ -2522,6 +2588,7 @@ return|;
 block|}
 comment|/**    * Generate normalized name for a given target column.    */
 specifier|private
+specifier|static
 name|String
 name|getTargetFieldName
 parameter_list|(
@@ -2651,7 +2718,10 @@ name|fieldName
 return|;
 block|}
 comment|/**    * Get all the vertices of all edges. Targets at first,    * then sources. Assign id to each vertex.    */
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
+specifier|static
 name|Set
 argument_list|<
 name|Vertex

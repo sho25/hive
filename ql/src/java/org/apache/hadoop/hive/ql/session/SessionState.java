@@ -1537,10 +1537,6 @@ operator|.
 name|newHashMap
 argument_list|()
 decl_stmt|;
-comment|/**    * Lineage state.    */
-name|LineageState
-name|ls
-decl_stmt|;
 specifier|private
 specifier|final
 name|String
@@ -1646,16 +1642,6 @@ name|Closeable
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/**    * Get the lineage state stored in this session.    *    * @return LineageState    */
-specifier|public
-name|LineageState
-name|getLineageState
-parameter_list|()
-block|{
-return|return
-name|ls
-return|;
-block|}
 specifier|public
 name|HiveConf
 name|getConf
@@ -1965,12 +1951,6 @@ name|ConfVars
 operator|.
 name|HIVESESSIONSILENT
 argument_list|)
-expr_stmt|;
-name|ls
-operator|=
-operator|new
-name|LineageState
-argument_list|()
 expr_stmt|;
 name|resourceMaps
 operator|=

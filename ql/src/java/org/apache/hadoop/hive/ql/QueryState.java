@@ -79,6 +79,24 @@ name|HiveOperation
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
 begin_comment
 comment|/**  * The class to store query level info such as queryId. Multiple queries can run  * in the same session, so SessionState is to hold common session related info, and  * each QueryState is to hold query related info.  */
 end_comment
@@ -99,12 +117,21 @@ specifier|private
 name|HiveOperation
 name|commandType
 decl_stmt|;
+comment|/**    * Per-query Lineage state to track what happens in the query    */
+specifier|private
+name|LineageState
+name|lineageState
+init|=
+operator|new
+name|LineageState
+argument_list|()
+decl_stmt|;
 comment|/**    * transaction manager used in the query.    */
 specifier|private
 name|HiveTxnManager
 name|txnManager
 decl_stmt|;
-comment|/**    * Private constructor, use QueryState.Builder instead    * @param conf The query specific configuration object    */
+comment|/**    * Private constructor, use QueryState.Builder instead.    * @param conf The query specific configuration object    */
 specifier|private
 name|QueryState
 parameter_list|(
@@ -208,6 +235,30 @@ name|queryConf
 return|;
 block|}
 specifier|public
+name|LineageState
+name|getLineageState
+parameter_list|()
+block|{
+return|return
+name|lineageState
+return|;
+block|}
+specifier|public
+name|void
+name|setLineageState
+parameter_list|(
+name|LineageState
+name|lineageState
+parameter_list|)
+block|{
+name|this
+operator|.
+name|lineageState
+operator|=
+name|lineageState
+expr_stmt|;
+block|}
+specifier|public
 name|HiveTxnManager
 name|getTxnManager
 parameter_list|()
@@ -266,7 +317,13 @@ name|hiveConf
 init|=
 literal|null
 decl_stmt|;
-comment|/**      * Default constructor - use this builder to create a QueryState object      */
+specifier|private
+name|LineageState
+name|lineageState
+init|=
+literal|null
+decl_stmt|;
+comment|/**      * Default constructor - use this builder to create a QueryState object.      */
 specifier|public
 name|Builder
 parameter_list|()
@@ -347,6 +404,25 @@ operator|.
 name|hiveConf
 operator|=
 name|hiveConf
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+comment|/**      * add a LineageState that will be set in the built QueryState      * @param lineageState the source lineageState      * @return the builder      */
+specifier|public
+name|Builder
+name|withLineageState
+parameter_list|(
+name|LineageState
+name|lineageState
+parameter_list|)
+block|{
+name|this
+operator|.
+name|lineageState
+operator|=
+name|lineageState
 expr_stmt|;
 return|return
 name|this
@@ -498,12 +574,32 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-return|return
+name|QueryState
+name|queryState
+init|=
 operator|new
 name|QueryState
 argument_list|(
 name|queryConf
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|lineageState
+operator|!=
+literal|null
+condition|)
+block|{
+name|queryState
+operator|.
+name|setLineageState
+argument_list|(
+name|lineageState
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|queryState
 return|;
 block|}
 block|}

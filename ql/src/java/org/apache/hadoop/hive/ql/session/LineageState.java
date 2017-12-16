@@ -221,6 +221,7 @@ name|LineageInfo
 name|linfo
 decl_stmt|;
 comment|/**    * Constructor.    */
+specifier|public
 name|LineageState
 parameter_list|()
 block|{

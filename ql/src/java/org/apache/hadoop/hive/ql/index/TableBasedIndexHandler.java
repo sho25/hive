@@ -311,6 +311,24 @@ name|TableDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
 begin_comment
 comment|/**  * Index handler for indexes that use tables to store indexes.  */
 end_comment
@@ -407,6 +425,9 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 throws|throws
 name|HiveException
@@ -517,6 +538,8 @@ name|indexTbl
 operator|.
 name|getDbName
 argument_list|()
+argument_list|,
+name|lineageState
 argument_list|)
 decl_stmt|;
 name|indexBuilderTasks
@@ -685,6 +708,8 @@ name|indexTbl
 operator|.
 name|getDbName
 argument_list|()
+argument_list|,
+name|lineageState
 argument_list|)
 decl_stmt|;
 name|indexBuilderTasks
@@ -754,6 +779,9 @@ name|baseTableName
 parameter_list|,
 name|String
 name|dbName
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 throws|throws
 name|HiveException
@@ -784,6 +812,8 @@ argument_list|,
 name|baseTableName
 argument_list|,
 name|dbName
+argument_list|,
+name|lineageState
 argument_list|)
 return|;
 block|}
@@ -829,6 +859,9 @@ name|baseTableName
 parameter_list|,
 name|String
 name|dbName
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 throws|throws
 name|HiveException

@@ -265,6 +265,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -353,6 +371,10 @@ name|ReadEntity
 argument_list|>
 name|inputs
 decl_stmt|;
+specifier|private
+name|LineageState
+name|lineageState
+decl_stmt|;
 specifier|public
 name|IndexUpdater
 parameter_list|(
@@ -370,6 +392,9 @@ name|inputs
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 block|{
 name|this
@@ -397,6 +422,12 @@ name|IndexUpdater
 operator|.
 name|class
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|lineageState
+operator|=
+name|lineageState
 expr_stmt|;
 name|this
 operator|.
@@ -961,6 +992,8 @@ argument_list|(
 name|this
 operator|.
 name|conf
+argument_list|,
+name|lineageState
 argument_list|)
 decl_stmt|;
 name|driver

@@ -1960,10 +1960,7 @@ name|dbNameOrPattern
 argument_list|,
 name|tblNameOrPattern
 argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|queryState
 operator|.
 name|getLineageState
 argument_list|()
@@ -2185,10 +2182,7 @@ argument_list|()
 argument_list|,
 name|dbNameOrPattern
 argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|queryState
 operator|.
 name|getLineageState
 argument_list|()

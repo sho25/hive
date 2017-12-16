@@ -970,6 +970,11 @@ argument_list|(
 name|conf
 argument_list|,
 name|runCtx
+argument_list|,
+name|queryState
+operator|.
+name|getLineageState
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|CommandProcessorResponse

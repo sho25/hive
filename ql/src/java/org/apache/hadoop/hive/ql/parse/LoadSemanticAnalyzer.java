@@ -2120,14 +2120,6 @@ argument_list|,
 literal|true
 argument_list|,
 name|isLocal
-argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getLineageState
-argument_list|()
 argument_list|)
 argument_list|,
 name|conf

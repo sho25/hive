@@ -2648,6 +2648,14 @@ argument_list|,
 name|context
 operator|.
 name|currentTask
+argument_list|,
+name|parseContext
+operator|.
+name|getQueryState
+argument_list|()
+operator|.
+name|getLineageState
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

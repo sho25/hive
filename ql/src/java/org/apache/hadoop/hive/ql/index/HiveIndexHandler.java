@@ -213,6 +213,24 @@ name|ExprNodeDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|LineageState
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveIndexHandler defines a pluggable interface for adding new index handlers  * to Hive.  */
 end_comment
@@ -281,7 +299,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Requests that the handler generate a plan for building the index; the plan    * should read the base table and write out the index representation.    *    * @param baseTbl    *          the definition of the table being indexed    *    * @param index    *          the definition of the index    *    * @param baseTblPartitions    *          list of base table partitions with each element mirrors to the    *          corresponding one in indexTblPartitions    *    * @param indexTbl    *          the definition of the index table, or null if usesIndexTable()    *          returns null    *    * @param inputs    *          inputs for hooks, supplemental outputs going    *          along with the return value    *    * @param outputs    *          outputs for hooks, supplemental outputs going    *          along with the return value    *    * @return list of tasks to be executed in parallel for building the index    *    * @throws HiveException if plan generation fails    */
+comment|/**    * Requests that the handler generate a plan for building the index; the plan    * should read the base table and write out the index representation.    *    * @param baseTbl    *          the definition of the table being indexed    *    * @param index    *          the definition of the index    *    * @param baseTblPartitions    *          list of base table partitions with each element mirrors to the    *          corresponding one in indexTblPartitions    *    * @param indexTbl    *          the definition of the index table, or null if usesIndexTable()    *          returns null    *    * @param inputs    *          inputs for hooks, supplemental outputs going    *          along with the return value    *    * @param outputs    *          outputs for hooks, supplemental outputs going    *          along with the return value    *    * @param lineageState    *          tracks Lineage for the query    *    * @return list of tasks to be executed in parallel for building the index    *    * @throws HiveException if plan generation fails    */
 name|List
 argument_list|<
 name|Task
@@ -359,6 +377,9 @@ argument_list|<
 name|WriteEntity
 argument_list|>
 name|outputs
+parameter_list|,
+name|LineageState
+name|lineageState
 parameter_list|)
 throws|throws
 name|HiveException
