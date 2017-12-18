@@ -1008,6 +1008,8 @@ literal|"repeated binary list_binary_field;"
 operator|+
 literal|"repeated binary list_decimal_field (DECIMAL(5,2));"
 operator|+
+literal|"repeated binary list_binary_field_for_repeat_test;"
+operator|+
 literal|"repeated int32 list_int32_field_for_repeat_test;"
 operator|+
 literal|"repeated group map_int32 (MAP_KEY_VALUE) {\n"
