@@ -1086,7 +1086,7 @@ name|acidResourcesInQuery
 operator|=
 name|sem
 operator|.
-name|hasAcidInQuery
+name|hasTransactionalInQuery
 argument_list|()
 expr_stmt|;
 name|this

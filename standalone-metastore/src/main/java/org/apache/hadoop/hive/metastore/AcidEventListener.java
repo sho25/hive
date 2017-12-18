@@ -286,7 +286,7 @@ if|if
 condition|(
 name|TxnUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tableEvent
 operator|.
@@ -336,7 +336,7 @@ if|if
 condition|(
 name|TxnUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|partitionEvent
 operator|.
@@ -414,7 +414,7 @@ init|=
 literal|false
 decl_stmt|;
 comment|// Since TxnUtils.getTxnStore calls TxnHandler.setConf -> checkQFileTestHack -> TxnDbUtil.setConfValues,
-comment|// which may change the values of below two entries, we need to avoid pulluting the original values
+comment|// which may change the values of below two entries, we need to avoid polluting the original values
 if|if
 condition|(
 name|hackOn

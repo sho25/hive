@@ -959,7 +959,7 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setTransactionalTableScan
+name|setAcidTableScan
 argument_list|(
 name|job
 argument_list|,

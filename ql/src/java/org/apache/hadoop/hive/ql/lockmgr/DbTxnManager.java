@@ -1405,7 +1405,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/*     Should we allow writing to non-transactional tables in an explicit transaction?  The user may     issue ROLLBACK but these tables won't rollback.     Can do this by checking ReadEntity/WriteEntity to determine whether it's reading/writing     any non acid and raise an appropriate error     * Driver.acidSinks and Driver.acidInQuery can be used if any acid is in the query*/
+comment|/*     Should we allow writing to non-transactional tables in an explicit transaction?  The user may     issue ROLLBACK but these tables won't rollback.     Can do this by checking ReadEntity/WriteEntity to determine whether it's reading/writing     any non acid and raise an appropriate error     * Driver.acidSinks and Driver.transactionalInQuery can be used if any acid is in the query*/
 block|}
 comment|/**    * This modifies the logic wrt what operations are allowed in a transaction.  Multi-statement    * transaction support is incomplete but it makes some Acid tests cases much easier to write.    */
 specifier|private
@@ -1465,7 +1465,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|writeEntity
 operator|.
@@ -1897,7 +1897,7 @@ name|setIsAcid
 argument_list|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|t
 argument_list|)
@@ -2162,7 +2162,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|t
 argument_list|)
@@ -2213,7 +2213,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|t
 argument_list|)
@@ -2356,7 +2356,7 @@ name|setIsAcid
 argument_list|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|t
 argument_list|)

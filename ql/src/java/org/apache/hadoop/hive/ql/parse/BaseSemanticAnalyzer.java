@@ -1273,7 +1273,7 @@ comment|// whether any ACID table or Insert-only (mm) table is involved in a que
 comment|// They both require DbTxnManager and both need to recordValidTxns when acquiring locks in Driver
 specifier|protected
 name|boolean
-name|acidInQuery
+name|transactionalInQuery
 decl_stmt|;
 specifier|protected
 name|HiveTxnManager
@@ -8932,11 +8932,11 @@ return|;
 block|}
 specifier|public
 name|boolean
-name|hasAcidInQuery
+name|hasTransactionalInQuery
 parameter_list|()
 block|{
 return|return
-name|acidInQuery
+name|transactionalInQuery
 return|;
 block|}
 comment|/**    * Construct list bucketing context.    *    * @param skewedColNames    * @param skewedValues    * @param skewedColValueLocationMaps    * @param isStoredAsSubDirectories    * @return    */

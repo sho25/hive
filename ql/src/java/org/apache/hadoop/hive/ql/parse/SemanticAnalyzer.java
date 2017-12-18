@@ -40610,7 +40610,7 @@ argument_list|,
 operator|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -41064,15 +41064,11 @@ literal|null
 decl_stmt|;
 comment|// destination table if any
 name|boolean
-name|destTableIsAcid
-init|=
-literal|false
+name|destTableIsTransactional
 decl_stmt|;
 comment|// true for full ACID table and MM table
 name|boolean
 name|destTableIsFullAcid
-init|=
-literal|false
 decl_stmt|;
 comment|// should the destination table be written to using ACID
 name|boolean
@@ -41187,11 +41183,11 @@ argument_list|(
 name|dest
 argument_list|)
 expr_stmt|;
-name|destTableIsAcid
+name|destTableIsTransactional
 operator|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -41200,7 +41196,7 @@ name|destTableIsFullAcid
 operator|=
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -41629,6 +41625,7 @@ argument_list|,
 name|dest
 argument_list|)
 expr_stmt|;
+comment|//todo: should this be done for MM?  is it ok to use CombineHiveInputFormat with MM
 name|checkAcidConstraints
 argument_list|(
 name|qb
@@ -41636,32 +41633,6 @@ argument_list|,
 name|table_desc
 argument_list|,
 name|dest_tab
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|AcidUtils
-operator|.
-name|isInsertOnlyTable
-argument_list|(
-name|table_desc
-operator|.
-name|getProperties
-argument_list|()
-argument_list|)
-condition|)
-block|{
-name|acidOp
-operator|=
-name|getAcidType
-argument_list|(
-name|table_desc
-operator|.
-name|getOutputFileFormatClass
-argument_list|()
-argument_list|,
-name|dest
 argument_list|)
 expr_stmt|;
 block|}
@@ -41774,7 +41745,7 @@ argument_list|()
 argument_list|)
 operator|&&
 operator|!
-name|destTableIsAcid
+name|destTableIsTransactional
 operator|)
 condition|?
 name|LoadFileType
@@ -41908,11 +41879,11 @@ operator|.
 name|getTable
 argument_list|()
 expr_stmt|;
-name|destTableIsAcid
+name|destTableIsTransactional
 operator|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -41921,7 +41892,7 @@ name|destTableIsFullAcid
 operator|=
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -42147,6 +42118,7 @@ argument_list|,
 name|dest
 argument_list|)
 expr_stmt|;
+comment|//todo: should this be done for MM?  is it ok to use CombineHiveInputFormat with MM?
 name|checkAcidConstraints
 argument_list|(
 name|qb
@@ -42154,35 +42126,6 @@ argument_list|,
 name|table_desc
 argument_list|,
 name|dest_tab
-argument_list|)
-expr_stmt|;
-block|}
-if|if
-condition|(
-name|AcidUtils
-operator|.
-name|isInsertOnlyTable
-argument_list|(
-name|dest_part
-operator|.
-name|getTable
-argument_list|()
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-condition|)
-block|{
-name|acidOp
-operator|=
-name|getAcidType
-argument_list|(
-name|table_desc
-operator|.
-name|getOutputFileFormatClass
-argument_list|()
-argument_list|,
-name|dest
 argument_list|)
 expr_stmt|;
 block|}
@@ -42276,7 +42219,7 @@ argument_list|()
 argument_list|)
 operator|&&
 operator|!
-name|destTableIsAcid
+name|destTableIsTransactional
 operator|)
 comment|// // Both Full-acid and MM tables are excluded.
 condition|?
@@ -42703,7 +42646,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|destTableIsAcid
+name|destTableIsTransactional
 operator|=
 name|tblDesc
 operator|!=
@@ -42711,7 +42654,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tblDesc
 argument_list|)
@@ -42724,7 +42667,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|tblDesc
 argument_list|)
@@ -42819,8 +42762,9 @@ name|cols
 argument_list|,
 name|colTypes
 argument_list|,
-name|destTableIsAcid
+name|destTableIsFullAcid
 condition|?
+comment|//there is a change here - prev version had 'transadtional', one beofre' acid'
 name|Operation
 operator|.
 name|INSERT
@@ -43418,10 +43362,11 @@ name|dest_path
 argument_list|,
 name|currentTableId
 argument_list|,
-name|destTableIsAcid
+name|destTableIsFullAcid
 argument_list|,
 name|destTableIsTemporary
 argument_list|,
+comment|//this was 1/4 acid
 name|destTableIsMaterialization
 argument_list|,
 name|queryTmpdir
@@ -45741,11 +45686,6 @@ return|return
 name|colName
 return|;
 block|}
-comment|// Check constraints on acid tables.  This includes
-comment|// * Check that the table is bucketed
-comment|// * Check that the table is not sorted
-comment|// This method assumes you have already decided that this is an Acid write.  Don't call it if
-comment|// that isn't true.
 specifier|private
 name|void
 name|checkAcidConstraints
@@ -45774,41 +45714,6 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|table
-operator|.
-name|getSortCols
-argument_list|()
-operator|!=
-literal|null
-operator|&&
-name|table
-operator|.
-name|getSortCols
-argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|ErrorMsg
-operator|.
-name|ACID_NO_SORTED_BUCKETS
-argument_list|,
-name|table
-operator|.
-name|getTableName
-argument_list|()
-argument_list|)
-throw|;
-block|}
 block|}
 comment|/**    * Generate the conversion SelectOperator that converts the columns into the    * types that are expected by the table_desc.    */
 name|Operator
@@ -74530,27 +74435,15 @@ name|tbl
 operator|!=
 literal|null
 operator|&&
-operator|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tbl
 argument_list|)
-operator|||
-name|AcidUtils
-operator|.
-name|isInsertOnlyTable
-argument_list|(
-name|tbl
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-operator|)
 condition|)
 block|{
-name|acidInQuery
+name|transactionalInQuery
 operator|=
 literal|true
 expr_stmt|;
@@ -74848,27 +74741,15 @@ name|tbl
 operator|!=
 literal|null
 operator|&&
-operator|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tbl
 argument_list|)
-operator|||
-name|AcidUtils
-operator|.
-name|isInsertOnlyTable
-argument_list|(
-name|tbl
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-operator|)
 condition|)
 block|{
-name|acidInQuery
+name|transactionalInQuery
 operator|=
 literal|true
 expr_stmt|;

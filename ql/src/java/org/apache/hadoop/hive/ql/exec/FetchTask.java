@@ -77,20 +77,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|conf
-operator|.
-name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|ql
@@ -377,20 +363,6 @@ name|JobConf
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-import|;
-end_import
-
 begin_comment
 comment|/**  * FetchTask implementation.  **/
 end_comment
@@ -585,7 +557,7 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setTransactionalTableScan
+name|setAcidTableScan
 argument_list|(
 name|job
 argument_list|,

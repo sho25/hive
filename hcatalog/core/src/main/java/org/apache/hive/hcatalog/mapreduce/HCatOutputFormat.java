@@ -805,7 +805,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|table
 argument_list|)
@@ -819,7 +819,14 @@ name|ErrorType
 operator|.
 name|ERROR_NOT_SUPPORTED
 argument_list|,
-literal|"Store into an insert-only ACID table from Pig/Mapreduce is not supported"
+literal|"Store into a transactional table "
+operator|+
+name|table
+operator|.
+name|getFullyQualifiedName
+argument_list|()
+operator|+
+literal|" from Pig/Mapreduce is not supported"
 argument_list|)
 throw|;
 block|}

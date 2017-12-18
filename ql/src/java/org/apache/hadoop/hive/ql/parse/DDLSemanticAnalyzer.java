@@ -14735,7 +14735,7 @@ condition|(
 operator|!
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tab
 argument_list|)
@@ -14743,8 +14743,8 @@ operator|&&
 name|convertingToAcid
 condition|)
 block|{
-comment|//non to acid conversion (property itself) must be mutexed to prevent concurrent writes.
-comment|// See HIVE-16688 for use case.
+comment|//non-acid to transactional conversion (property itself) must be mutexed to prevent concurrent writes.
+comment|// See HIVE-16688 for use cases.
 return|return
 name|WriteType
 operator|.
@@ -16058,7 +16058,7 @@ name|isAcid
 init|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tblObj
 argument_list|)

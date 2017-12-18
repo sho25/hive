@@ -1899,7 +1899,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 return|;
 block|}
@@ -2342,7 +2342,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 decl_stmt|;
 if|if
@@ -10211,7 +10211,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 decl_stmt|;
 name|boolean

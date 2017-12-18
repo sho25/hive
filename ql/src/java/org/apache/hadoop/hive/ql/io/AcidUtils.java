@@ -1996,6 +1996,7 @@ return|return
 name|result
 return|;
 block|}
+comment|//This is used for (full) Acid tables.  InsertOnly use NOT_ACID
 specifier|public
 enum|enum
 name|Operation
@@ -2160,6 +2161,7 @@ name|fileId
 return|;
 block|}
 block|}
+comment|/**    * Current syntax for creating full acid transactional tables is any one of following 3 ways:    * create table T (a int, b int) stored as orc tblproperties('transactional'='true').    * create table T (a int, b int) stored as orc tblproperties('transactional'='true',    * 'transactional_properties'='default').    * create table T (a int, b int) stored as orc tblproperties('transactional'='true',    * 'transactional_properties'='split_update').    * These are all identical and create a table capable of insert/update/delete/merge operations    * with full ACID semantics at Snapshot Isolation.  These tables require ORC input/output format.    *    * To create a 1/4 acid, aka Micro Managed table:    * create table T (a int, b int) stored as orc tblproperties('transactional'='true',    * 'transactional_properties'='insert_only').    * These tables only support insert operation (also with full ACID semantics at SI).    *    */
 specifier|public
 specifier|static
 class|class
@@ -5854,10 +5856,11 @@ literal|"true"
 argument_list|)
 return|;
 block|}
+comment|/**    * Means it's a full acid table    */
 specifier|public
 specifier|static
 name|void
-name|setTransactionalTableScan
+name|setAcidTableScan
 parameter_list|(
 name|Map
 argument_list|<
@@ -5877,7 +5880,7 @@ name|put
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 operator|.
 name|varname
 argument_list|,
@@ -5894,7 +5897,7 @@ comment|/**    * Means it's a full acid table    */
 specifier|public
 specifier|static
 name|void
-name|setTransactionalTableScan
+name|setAcidTableScan
 parameter_list|(
 name|Configuration
 name|conf
@@ -5911,7 +5914,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 argument_list|,
 name|isFullAcidTable
 argument_list|)
@@ -5939,11 +5942,11 @@ name|DELETE_DELTA_PREFIX
 argument_list|)
 return|;
 block|}
-comment|/** Checks if a table is a valid ACID table.    * Note, users are responsible for using the correct TxnManager. We do not look at    * SessionState.get().getTxnMgr().supportsAcid() here    * @param table table    * @return true if table is a legit ACID table, false otherwise    * ToDo: this shoudl be renamed isTransactionalTable() since that is what it's checking and covers    * both Acid and MM tables. HIVE-18124    */
+comment|/**    * Should produce the same result as    * {@link org.apache.hadoop.hive.metastore.txn.TxnUtils#isTransactionalTable(org.apache.hadoop.hive.metastore.api.Table)}    */
 specifier|public
 specifier|static
 name|boolean
-name|isAcidTable
+name|isTransactionalTable
 parameter_list|(
 name|Table
 name|table
@@ -6007,11 +6010,10 @@ literal|"true"
 argument_list|)
 return|;
 block|}
-comment|/**    * ToDo: this shoudl be renamed isTransactionalTable() since that is what it's checking and convers    * both Acid and MM tables. HIVE-18124    */
 specifier|public
 specifier|static
 name|boolean
-name|isAcidTable
+name|isTransactionalTable
 parameter_list|(
 name|CreateTableDesc
 name|table
@@ -6088,18 +6090,18 @@ literal|"true"
 argument_list|)
 return|;
 block|}
-comment|/**    * after isTransactionalTable() then make this isAcid() HIVE-18124    */
+comment|/**    * Should produce the same result as    * {@link org.apache.hadoop.hive.metastore.txn.TxnUtils#isAcidTable(org.apache.hadoop.hive.metastore.api.Table)}    */
 specifier|public
 specifier|static
 name|boolean
-name|isFullAcidTable
+name|isAcidTable
 parameter_list|(
 name|Table
 name|table
 parameter_list|)
 block|{
 return|return
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|table
 argument_list|)
@@ -6116,7 +6118,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|isFullAcidTable
+name|isAcidTable
 parameter_list|(
 name|CreateTableDesc
 name|td
@@ -6543,7 +6545,7 @@ literal|" found but is not readable.  Consider waiting or orcfiledump --recover"
 argument_list|)
 throw|;
 block|}
-comment|/**    * Checks if a table is an ACID table that only supports INSERT, but not UPDATE/DELETE    * @param params table properties    * @return true if table is an INSERT_ONLY table, false otherwise    */
+comment|/**    * Checks if a table is a transactional table that only supports INSERT, but not UPDATE/DELETE    * @param params table properties    * @return true if table is an INSERT_ONLY table, false otherwise    */
 specifier|public
 specifier|static
 name|boolean
@@ -6577,7 +6579,7 @@ name|table
 parameter_list|)
 block|{
 return|return
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|table
 argument_list|)

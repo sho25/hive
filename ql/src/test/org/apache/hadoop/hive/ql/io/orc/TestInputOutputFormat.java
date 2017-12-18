@@ -7445,7 +7445,7 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setTransactionalTableScan
+name|setAcidTableScan
 argument_list|(
 name|conf
 argument_list|,
@@ -17934,7 +17934,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 argument_list|,
 literal|true
 argument_list|)
@@ -26104,7 +26104,11 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"hive.transactional.table.scan"
+name|ConfVars
+operator|.
+name|HIVE_ACID_TABLE_SCAN
+operator|.
+name|varname
 argument_list|,
 literal|"true"
 argument_list|)
@@ -26674,7 +26678,11 @@ name|conf
 operator|.
 name|set
 argument_list|(
-literal|"hive.transactional.table.scan"
+name|ConfVars
+operator|.
+name|HIVE_ACID_TABLE_SCAN
+operator|.
+name|varname
 argument_list|,
 literal|"true"
 argument_list|)
@@ -27531,7 +27539,7 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setTransactionalTableScan
+name|setAcidTableScan
 argument_list|(
 name|conf
 argument_list|,
@@ -28097,7 +28105,7 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setTransactionalTableScan
+name|setAcidTableScan
 argument_list|(
 name|conf
 argument_list|,

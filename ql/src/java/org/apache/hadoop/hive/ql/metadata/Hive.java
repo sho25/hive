@@ -9017,7 +9017,7 @@ name|isFullAcidTable
 init|=
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|tbl
 argument_list|)
@@ -12550,7 +12550,7 @@ name|isFullAcidTable
 init|=
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|tbl
 argument_list|)

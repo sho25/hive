@@ -6199,9 +6199,9 @@ argument_list|,
 literal|"Use schema evolution to convert self-describing file format's data to the schema desired by the reader."
 argument_list|)
 block|,
-name|HIVE_TRANSACTIONAL_TABLE_SCAN
+name|HIVE_ACID_TABLE_SCAN
 argument_list|(
-literal|"hive.transactional.table.scan"
+literal|"hive.acid.table.scan"
 argument_list|,
 literal|false
 argument_list|,

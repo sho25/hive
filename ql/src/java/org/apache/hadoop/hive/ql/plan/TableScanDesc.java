@@ -582,7 +582,7 @@ name|isAcidTable
 operator|=
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|this
 operator|.

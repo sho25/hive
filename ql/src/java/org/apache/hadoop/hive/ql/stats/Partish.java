@@ -230,7 +230,7 @@ block|{
 return|return
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|getTable
 argument_list|()

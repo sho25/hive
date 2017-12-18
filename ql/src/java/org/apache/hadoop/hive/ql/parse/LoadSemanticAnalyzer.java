@@ -1216,7 +1216,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|table
 argument_list|)
@@ -1258,14 +1258,7 @@ argument_list|()
 argument_list|,
 name|table
 operator|.
-name|getDbName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|table
-operator|.
-name|getTableName
+name|getFullyQualifiedName
 argument_list|()
 argument_list|)
 throw|;
@@ -1996,7 +1989,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|ts
 operator|.

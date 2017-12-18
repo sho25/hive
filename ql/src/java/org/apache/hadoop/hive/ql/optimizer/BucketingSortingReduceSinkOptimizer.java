@@ -2342,7 +2342,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isAcidTable
 argument_list|(
 name|tab
 argument_list|)
