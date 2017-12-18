@@ -2147,8 +2147,9 @@ name|isOriginal
 condition|)
 block|{
 comment|/*        * If there are deletes and reading original file, we must produce synthetic ROW_IDs in order        * to see if any deletes apply        */
-if|if
-condition|(
+name|boolean
+name|needSyntheticRowId
+init|=
 name|needSyntheticRowIds
 argument_list|(
 literal|true
@@ -2161,6 +2162,10 @@ argument_list|()
 argument_list|,
 name|rowIdProjected
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|needSyntheticRowId
 condition|)
 block|{
 assert|assert
@@ -2474,6 +2479,11 @@ comment|//"originals" (written before table was converted to acid) is considered
 comment|// txnid:0 which is always committed so there is no need to check wrt invalid transactions
 comment|//But originals written by Load Data for example can be in base_x or delta_x_x so we must
 comment|//check if 'x' is committed or not evn if ROW_ID is not needed in the Operator pipeline.
+if|if
+condition|(
+name|needSyntheticRowId
+condition|)
+block|{
 name|findRecordsWithInvalidTransactionIds
 argument_list|(
 name|innerRecordIdColumnVector
@@ -2485,6 +2495,36 @@ argument_list|,
 name|selectedBitSet
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|/*since ROW_IDs are not needed we didn't create the ColumnVectors to hold them but we           * still have to check if the data being read is committed as far as current           * reader (transactions) is concerned.  Since here we are reading 'original' schema file,           * all rows in it have been created by the same txn, namely 'syntheticProps.syntheticTxnId'           */
+if|if
+condition|(
+operator|!
+name|validTxnList
+operator|.
+name|isTxnValid
+argument_list|(
+name|syntheticProps
+operator|.
+name|syntheticTxnId
+argument_list|)
+condition|)
+block|{
+name|selectedBitSet
+operator|.
+name|clear
+argument_list|(
+literal|0
+argument_list|,
+name|vectorizedRowBatchBase
+operator|.
+name|size
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 else|else
