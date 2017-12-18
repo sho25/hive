@@ -779,6 +779,20 @@ name|parquet
 operator|.
 name|schema
 operator|.
+name|GroupType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|schema
+operator|.
 name|InvalidSchemaException
 import|;
 end_import
@@ -1045,6 +1059,14 @@ decl_stmt|;
 specifier|private
 name|Path
 name|cacheFsPath
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|MAP_DEFINITION_LEVEL_MAX
+init|=
+literal|3
 decl_stmt|;
 comment|/**    * For each request column, the reader to read this column. This is NULL if this column    * is missing from the file, in which case we populate the attribute with NULL.    */
 specifier|private
@@ -3402,16 +3424,89 @@ name|type
 argument_list|)
 throw|;
 block|}
+comment|// to handle the different Map definition in Parquet, eg:
+comment|// definition has 1 group:
+comment|//   repeated group map (MAP_KEY_VALUE)
+comment|//     {required binary key (UTF8); optional binary value (UTF8);}
+comment|// definition has 2 groups:
+comment|//   optional group m1 (MAP) {
+comment|//     repeated group map (MAP_KEY_VALUE)
+comment|//       {required binary key (UTF8); optional binary value (UTF8);}
+comment|//   }
+name|int
+name|nestGroup
+init|=
+literal|0
+decl_stmt|;
+name|GroupType
+name|groupType
+init|=
+name|type
+operator|.
+name|asGroupType
+argument_list|()
+decl_stmt|;
+comment|// if FieldCount == 2, get types for key& value,
+comment|// otherwise, continue to get the group type until MAP_DEFINITION_LEVEL_MAX.
+while|while
+condition|(
+name|groupType
+operator|.
+name|getFieldCount
+argument_list|()
+operator|<
+literal|2
+condition|)
+block|{
+if|if
+condition|(
+name|nestGroup
+operator|>
+name|MAP_DEFINITION_LEVEL_MAX
+condition|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"More than "
+operator|+
+name|MAP_DEFINITION_LEVEL_MAX
+operator|+
+literal|" level is found in Map definition, "
+operator|+
+literal|"Failed to get the field types for Map with type "
+operator|+
+name|type
+argument_list|)
+throw|;
+block|}
+name|groupType
+operator|=
+name|groupType
+operator|.
+name|getFields
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|asGroupType
+argument_list|()
+expr_stmt|;
+name|nestGroup
+operator|++
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|Type
 argument_list|>
 name|kvTypes
 init|=
-name|type
-operator|.
-name|asGroupType
-argument_list|()
+name|groupType
 operator|.
 name|getFields
 argument_list|()
