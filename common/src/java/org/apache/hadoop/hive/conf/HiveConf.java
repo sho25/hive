@@ -14679,6 +14679,7 @@ argument_list|,
 literal|"Whether to use listFiles (optimized on S3) instead of globStatus when on S3."
 argument_list|)
 block|,
+comment|// If a parameter is added to the restricted list, add a test in TestRestrictedList.Java
 name|HIVE_CONF_RESTRICTED_LIST
 argument_list|(
 literal|"hive.conf.restricted.list"
@@ -14737,7 +14738,11 @@ literal|"hive.druid.broker.address.default,"
 operator|+
 literal|"hive.druid.coordinator.address.default,"
 operator|+
-literal|"hikari."
+literal|"hikari.,"
+operator|+
+literal|"hadoop.bin.path,"
+operator|+
+literal|"yarn.bin.path"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
@@ -21024,6 +21029,20 @@ name|location
 parameter_list|)
 block|{
 name|hiveSiteURL
+operator|=
+name|location
+expr_stmt|;
+block|}
+specifier|public
+specifier|static
+name|void
+name|setHivemetastoreSiteUrl
+parameter_list|(
+name|URL
+name|location
+parameter_list|)
+block|{
+name|hivemetastoreSiteUrl
 operator|=
 name|location
 expr_stmt|;

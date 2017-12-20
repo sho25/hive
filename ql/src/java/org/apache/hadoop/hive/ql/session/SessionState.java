@@ -3623,6 +3623,25 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// _hive.tmp_table_space, _hive.hdfs.session.path, and _hive.local.session.path are respectively
+comment|// saved in hdfsTmpTableSpace, hdfsSessionPath and localSessionPath.  Saving them as conf
+comment|// variables is useful to expose them to end users.  But, end users shouldn't change them.
+comment|// Adding them to restricted list.
+name|conf
+operator|.
+name|addToRestrictList
+argument_list|(
+name|LOCAL_SESSION_PATH_KEY
+operator|+
+literal|","
+operator|+
+name|HDFS_SESSION_PATH_KEY
+operator|+
+literal|","
+operator|+
+name|TMP_TABLE_SPACE_KEY
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Create the root scratch dir on hdfs (if it doesn't already exist) and make it writable    * @param conf    * @return    * @throws IOException    */
 specifier|private
