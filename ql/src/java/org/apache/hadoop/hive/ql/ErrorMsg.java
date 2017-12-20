@@ -153,6 +153,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|parse
@@ -2486,6 +2502,24 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|SPARK_CREATE_CLIENT_INVALID_QUEUE
+argument_list|(
+literal|20014
+argument_list|,
+literal|"Spark job is submitted to an invalid queue: {0}."
+operator|+
+literal|" Please fix and try again."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_RUNTIME_OOM
+argument_list|(
+literal|20015
+argument_list|,
+literal|"Spark job failed because of out of memory."
+argument_list|)
+block|,
 comment|// An exception from runtime that will show the full stack to client
 name|UNRESOLVED_RT_EXCEPTION
 argument_list|(
@@ -2739,6 +2773,110 @@ argument_list|(
 literal|30035
 argument_list|,
 literal|"Concatenate/Merge can not be performed on transactional tables"
+argument_list|)
+block|,
+name|SPARK_GET_JOB_INFO_TIMEOUT
+argument_list|(
+literal|30036
+argument_list|,
+literal|"Spark job timed out after {0} seconds while getting job info"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_JOB_MONITOR_TIMEOUT
+argument_list|(
+literal|30037
+argument_list|,
+literal|"Job hasn't been submitted after {0}s."
+operator|+
+literal|" Aborting it.\nPossible reasons include network issues, "
+operator|+
+literal|"errors in remote driver or the cluster has no available resources, etc.\n"
+operator|+
+literal|"Please check YARN or Spark driver's logs for further information.\n"
+operator|+
+literal|"The timeout is controlled by "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|SPARK_JOB_MONITOR_TIMEOUT
+operator|+
+literal|"."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+comment|// Various errors when creating Spark client
+name|SPARK_CREATE_CLIENT_TIMEOUT
+argument_list|(
+literal|30038
+argument_list|,
+literal|"Timed out while creating Spark client for session {0}."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_CREATE_CLIENT_QUEUE_FULL
+argument_list|(
+literal|30039
+argument_list|,
+literal|"Failed to create Spark client because job queue is full: {0}."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_CREATE_CLIENT_INTERRUPTED
+argument_list|(
+literal|30040
+argument_list|,
+literal|"Interrupted while creating Spark client for session {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_CREATE_CLIENT_ERROR
+argument_list|(
+literal|30041
+argument_list|,
+literal|"Failed to create Spark client for Spark session {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_CREATE_CLIENT_INVALID_RESOURCE_REQUEST
+argument_list|(
+literal|30042
+argument_list|,
+literal|"Failed to create Spark client due to invalid resource request: {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_CREATE_CLIENT_CLOSED_SESSION
+argument_list|(
+literal|30043
+argument_list|,
+literal|"Cannot create Spark client on a closed session {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_JOB_INTERRUPTED
+argument_list|(
+literal|30044
+argument_list|,
+literal|"Spark job was interrupted while executing"
+argument_list|)
+block|,
+comment|//========================== 40000 range starts here ========================//
+name|SPARK_JOB_RUNTIME_ERROR
+argument_list|(
+literal|40001
+argument_list|,
+literal|"Spark job failed during runtime. Please check stacktrace for the root cause."
 argument_list|)
 block|;
 specifier|private
