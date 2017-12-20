@@ -78026,12 +78026,14 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+comment|// We need to use the expanded text for the materialized view, as it will contain
+comment|// the qualified table aliases, etc.
 name|String
 name|viewText
 init|=
 name|tab
 operator|.
-name|getViewOriginalText
+name|getViewExpandedText
 argument_list|()
 decl_stmt|;
 if|if
