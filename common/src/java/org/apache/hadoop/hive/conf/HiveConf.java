@@ -8159,7 +8159,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|1.0
+literal|10.0
 argument_list|,
 literal|"Hive/Tez optimizer estimates the data size flowing through each of the operators. In the absence\n"
 operator|+
