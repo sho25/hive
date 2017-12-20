@@ -2605,6 +2605,23 @@ operator|.
 name|CASE_INSENSITIVE
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Pattern
+name|mapTypePattern
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"map.*"
+argument_list|,
+name|Pattern
+operator|.
+name|CASE_INSENSITIVE
+argument_list|)
+decl_stmt|;
 comment|//Map column number to type
 specifier|private
 name|OutputColumnManager
@@ -19124,6 +19141,12 @@ name|LIST
 case|:
 return|return
 literal|"List"
+return|;
+case|case
+name|MAP
+case|:
+return|return
+literal|"Map"
 return|;
 default|default:
 throw|throw
