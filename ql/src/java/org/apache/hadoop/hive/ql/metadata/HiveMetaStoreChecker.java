@@ -2063,7 +2063,7 @@ name|executor
 operator|=
 name|MoreExecutors
 operator|.
-name|sameThreadExecutor
+name|newDirectExecutorService
 argument_list|()
 expr_stmt|;
 block|}

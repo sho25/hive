@@ -695,16 +695,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Ignore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Rule
 import|;
 end_import
@@ -983,9 +973,6 @@ name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
 expr_stmt|;
 block|}
-comment|// This test fails due to conflict of guava classes with hive-exec jar.
-annotation|@
-name|Ignore
 annotation|@
 name|Test
 specifier|public

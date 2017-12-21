@@ -65,6 +65,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Comparator
 import|;
 end_import
@@ -1048,7 +1058,7 @@ name|FetchInputFormatSplit
 argument_list|>
 name|iterSplits
 init|=
-name|Iterators
+name|Collections
 operator|.
 name|emptyIterator
 argument_list|()
@@ -3847,7 +3857,7 @@ name|this
 operator|.
 name|iterSplits
 operator|=
-name|Iterators
+name|Collections
 operator|.
 name|emptyIterator
 argument_list|()
