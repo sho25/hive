@@ -4991,6 +4991,9 @@ parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
 parameter_list|,
+name|String
+name|copyFrom
+parameter_list|,
 name|int
 name|defaultPoolSize
 parameter_list|)
@@ -5000,12 +5003,16 @@ throws|,
 name|InvalidObjectException
 throws|,
 name|MetaException
+throws|,
+name|NoSuchObjectException
 block|{
 name|objectStore
 operator|.
 name|createResourcePlan
 argument_list|(
 name|resourcePlan
+argument_list|,
+name|copyFrom
 argument_list|,
 name|defaultPoolSize
 argument_list|)
@@ -5068,6 +5075,9 @@ name|canActivateDisabled
 parameter_list|,
 name|boolean
 name|canDeactivate
+parameter_list|,
+name|boolean
+name|isReplace
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
@@ -5090,6 +5100,8 @@ argument_list|,
 name|canActivateDisabled
 argument_list|,
 name|canDeactivate
+argument_list|,
+name|isReplace
 argument_list|)
 return|;
 block|}

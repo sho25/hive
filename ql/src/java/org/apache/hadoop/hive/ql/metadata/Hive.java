@@ -25951,6 +25951,9 @@ name|createResourcePlan
 parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
+parameter_list|,
+name|String
+name|copyFromName
 parameter_list|)
 throws|throws
 name|HiveException
@@ -25963,6 +25966,8 @@ operator|.
 name|createResourcePlan
 argument_list|(
 name|resourcePlan
+argument_list|,
+name|copyFromName
 argument_list|)
 expr_stmt|;
 block|}
@@ -26114,6 +26119,9 @@ name|canActivateDisabled
 parameter_list|,
 name|boolean
 name|isForceDeactivate
+parameter_list|,
+name|boolean
+name|isReplace
 parameter_list|)
 throws|throws
 name|HiveException
@@ -26133,6 +26141,8 @@ argument_list|,
 name|canActivateDisabled
 argument_list|,
 name|isForceDeactivate
+argument_list|,
+name|isReplace
 argument_list|)
 return|;
 block|}

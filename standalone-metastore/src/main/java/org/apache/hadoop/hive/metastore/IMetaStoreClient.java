@@ -4769,6 +4769,9 @@ name|createResourcePlan
 parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
+parameter_list|,
+name|String
+name|copyFromName
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -4830,6 +4833,9 @@ name|canActivateDisabled
 parameter_list|,
 name|boolean
 name|isForceDeactivate
+parameter_list|,
+name|boolean
+name|isReplace
 parameter_list|)
 throws|throws
 name|NoSuchObjectException

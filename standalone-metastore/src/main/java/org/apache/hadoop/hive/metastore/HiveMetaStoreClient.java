@@ -12872,6 +12872,9 @@ name|createResourcePlan
 parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
+parameter_list|,
+name|String
+name|copyFromName
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -12892,6 +12895,13 @@ operator|.
 name|setResourcePlan
 argument_list|(
 name|resourcePlan
+argument_list|)
+expr_stmt|;
+name|request
+operator|.
+name|setCopyFrom
+argument_list|(
+name|copyFromName
 argument_list|)
 expr_stmt|;
 name|client
@@ -13034,6 +13044,9 @@ name|canActivateDisabled
 parameter_list|,
 name|boolean
 name|isForceDeactivate
+parameter_list|,
+name|boolean
+name|isReplace
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -13077,6 +13090,13 @@ operator|.
 name|setIsForceDeactivate
 argument_list|(
 name|isForceDeactivate
+argument_list|)
+expr_stmt|;
+name|request
+operator|.
+name|setIsReplace
+argument_list|(
+name|isReplace
 argument_list|)
 expr_stmt|;
 name|WMAlterResourcePlanResponse

@@ -3238,6 +3238,9 @@ parameter_list|(
 name|WMResourcePlan
 name|resourcePlan
 parameter_list|,
+name|String
+name|copyFrom
+parameter_list|,
 name|int
 name|defaultPoolSize
 parameter_list|)
@@ -3247,6 +3250,8 @@ throws|,
 name|MetaException
 throws|,
 name|InvalidObjectException
+throws|,
+name|NoSuchObjectException
 function_decl|;
 name|WMResourcePlan
 name|getResourcePlan
@@ -3282,6 +3287,9 @@ name|canActivateDisabled
 parameter_list|,
 name|boolean
 name|canDeactivate
+parameter_list|,
+name|boolean
+name|isReplace
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
