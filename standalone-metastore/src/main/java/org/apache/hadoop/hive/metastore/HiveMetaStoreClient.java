@@ -13031,6 +13031,9 @@ name|resourcePlan
 parameter_list|,
 name|boolean
 name|canActivateDisabled
+parameter_list|,
+name|boolean
+name|isForceDeactivate
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -13067,6 +13070,13 @@ operator|.
 name|setIsEnableAndActivate
 argument_list|(
 name|canActivateDisabled
+argument_list|)
+expr_stmt|;
+name|request
+operator|.
+name|setIsForceDeactivate
+argument_list|(
+name|isForceDeactivate
 argument_list|)
 expr_stmt|;
 name|WMAlterResourcePlanResponse

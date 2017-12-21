@@ -4827,6 +4827,9 @@ name|resourcePlan
 parameter_list|,
 name|boolean
 name|canActivateDisabled
+parameter_list|,
+name|boolean
+name|isForceDeactivate
 parameter_list|)
 throws|throws
 name|NoSuchObjectException

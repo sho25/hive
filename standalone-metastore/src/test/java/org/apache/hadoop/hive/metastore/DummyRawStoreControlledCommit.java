@@ -5065,6 +5065,9 @@ name|resourcePlan
 parameter_list|,
 name|boolean
 name|canActivateDisabled
+parameter_list|,
+name|boolean
+name|canDeactivate
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
@@ -5085,6 +5088,8 @@ argument_list|,
 name|resourcePlan
 argument_list|,
 name|canActivateDisabled
+argument_list|,
+name|canDeactivate
 argument_list|)
 return|;
 block|}

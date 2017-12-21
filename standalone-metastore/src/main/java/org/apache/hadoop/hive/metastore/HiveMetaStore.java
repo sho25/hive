@@ -41970,6 +41970,11 @@ name|request
 operator|.
 name|isIsEnableAndActivate
 argument_list|()
+argument_list|,
+name|request
+operator|.
+name|isIsForceDeactivate
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
