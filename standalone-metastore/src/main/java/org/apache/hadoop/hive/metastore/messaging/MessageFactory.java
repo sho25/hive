@@ -360,6 +360,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|ALTER_DATABASE_EVENT
+init|=
+literal|"ALTER_DATABASE"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DROP_DATABASE_EVENT
 init|=
 literal|"DROP_DATABASE"
@@ -653,6 +661,19 @@ name|buildCreateDatabaseMessage
 parameter_list|(
 name|Database
 name|db
+parameter_list|)
+function_decl|;
+comment|/**    * Factory method for AlterDatabaseMessage.    * @param beforeDb The Database before alter.    * @param afterDb The Database after alter.    * @return AlterDatabaseMessage instance.    */
+specifier|public
+specifier|abstract
+name|AlterDatabaseMessage
+name|buildAlterDatabaseMessage
+parameter_list|(
+name|Database
+name|beforeDb
+parameter_list|,
+name|Database
+name|afterDb
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for DropDatabaseMessage.    * @param db The Database being dropped.    * @return DropDatabaseMessage instance.    */

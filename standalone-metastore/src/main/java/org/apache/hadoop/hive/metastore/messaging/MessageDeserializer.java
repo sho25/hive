@@ -63,6 +63,15 @@ name|messageBody
 argument_list|)
 return|;
 case|case
+name|ALTER_DATABASE
+case|:
+return|return
+name|getAlterDatabaseMessage
+argument_list|(
+name|messageBody
+argument_list|)
+return|;
+case|case
 name|DROP_DATABASE
 case|:
 return|return
@@ -241,6 +250,16 @@ specifier|public
 specifier|abstract
 name|CreateDatabaseMessage
 name|getCreateDatabaseMessage
+parameter_list|(
+name|String
+name|messageBody
+parameter_list|)
+function_decl|;
+comment|/**    * Method to de-serialize AlterDatabaseMessage instance.    */
+specifier|public
+specifier|abstract
+name|AlterDatabaseMessage
+name|getAlterDatabaseMessage
 parameter_list|(
 name|String
 name|messageBody

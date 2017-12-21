@@ -68,6 +68,13 @@ operator|.
 name|DROP_PARTITION_EVENT
 argument_list|)
 operator|,
+name|ALTER_DATABASE
+argument_list|(
+name|MessageFactory
+operator|.
+name|ALTER_DATABASE_EVENT
+argument_list|)
+operator|,
 name|ALTER_TABLE
 argument_list|(
 name|MessageFactory

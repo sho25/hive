@@ -7035,6 +7035,8 @@ argument_list|(
 name|dbName
 argument_list|,
 name|principalDesc
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|addAlterDbDesc
