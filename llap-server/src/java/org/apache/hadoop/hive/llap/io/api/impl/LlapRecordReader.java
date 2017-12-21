@@ -820,6 +820,12 @@ init|=
 literal|true
 decl_stmt|;
 specifier|private
+name|int
+name|maxQueueSize
+init|=
+literal|0
+decl_stmt|;
+specifier|private
 name|Throwable
 name|pendingError
 init|=
@@ -2362,12 +2368,21 @@ literal|"next will block"
 argument_list|)
 expr_stmt|;
 block|}
+name|boolean
+name|didWait
+init|=
+literal|false
+decl_stmt|;
 while|while
 condition|(
 name|isNothingToReport
 argument_list|()
 condition|)
 block|{
+name|didWait
+operator|=
+literal|true
+expr_stmt|;
 name|pendingData
 operator|.
 name|wait
@@ -2375,6 +2390,29 @@ argument_list|(
 literal|100
 argument_list|)
 expr_stmt|;
+block|}
+comment|// If we didn't wait, check for interruption explicitly.
+comment|// TODO: given that we also want a queue limit, might make sense to rely on a blocking queue;
+comment|//       or a more advanced lock. But do double check that they will ALWAYS check interrupt.
+comment|//       Hive operators don't, so if we don't either, everything goes to hell.
+if|if
+condition|(
+operator|!
+name|didWait
+operator|&&
+name|Thread
+operator|.
+name|interrupted
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|InterruptedException
+argument_list|(
+literal|"Thread interrupted"
+argument_list|)
+throw|;
 block|}
 if|if
 condition|(
@@ -2393,6 +2431,20 @@ expr_stmt|;
 block|}
 name|rethrowErrorIfAny
 argument_list|()
+expr_stmt|;
+name|maxQueueSize
+operator|=
+name|Math
+operator|.
+name|max
+argument_list|(
+name|pendingData
+operator|.
+name|size
+argument_list|()
+argument_list|,
+name|maxQueueSize
+argument_list|)
 expr_stmt|;
 name|lastCvb
 operator|=
@@ -2534,6 +2586,17 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|LlapIoImpl
+operator|.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Maximum queue length observed "
+operator|+
+name|maxQueueSize
+argument_list|)
+expr_stmt|;
 name|LlapIoImpl
 operator|.
 name|LOG
