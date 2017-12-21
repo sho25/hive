@@ -75,11 +75,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|api
+name|io
 operator|.
-name|hive_metastoreConstants
+name|AcidUtils
 import|;
 end_import
 
@@ -1638,51 +1638,15 @@ name|e
 argument_list|)
 throw|;
 block|}
-comment|// 1 - check if TBLPROPERTIES ('transactional'='true') is set on table
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|params
-init|=
-name|t
-operator|.
-name|getParameters
-argument_list|()
-decl_stmt|;
+comment|// 1 - check that the table is Acid
 if|if
 condition|(
-name|params
-operator|!=
-literal|null
-condition|)
-block|{
-name|String
-name|transactionalProp
-init|=
-name|params
-operator|.
-name|get
-argument_list|(
-name|hive_metastoreConstants
-operator|.
-name|TABLE_IS_TRANSACTIONAL
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|transactionalProp
-operator|==
-literal|null
-operator|||
 operator|!
-name|transactionalProp
+name|AcidUtils
 operator|.
-name|equalsIgnoreCase
+name|isAcidTable
 argument_list|(
-literal|"true"
+name|t
 argument_list|)
 condition|)
 block|{
@@ -1690,9 +1654,11 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"'transactional' property is not set on Table "
+literal|"HiveEndPoint "
 operator|+
 name|endPoint
+operator|+
+literal|" must use an acid table"
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -1707,12 +1673,9 @@ name|endPoint
 operator|.
 name|table
 argument_list|,
-literal|"\'transactional\' property"
-operator|+
-literal|" is not set on Table"
+literal|"is not an Acid table"
 argument_list|)
 throw|;
-block|}
 block|}
 comment|// 2 - check if partitionvals are legitimate
 if|if
