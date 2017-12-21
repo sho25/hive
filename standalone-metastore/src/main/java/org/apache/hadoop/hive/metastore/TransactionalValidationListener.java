@@ -840,7 +840,14 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"The table must be stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC): "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|newTable
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -940,7 +947,14 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"TBLPROPERTIES with 'transactional'='true' cannot be unset"
+literal|"TBLPROPERTIES with 'transactional'='true' cannot be unset: "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|newTable
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1245,7 +1259,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"'transactional'='false' is no longer a valid property and will be ignored"
+literal|"'transactional'='false' is no longer a valid property and will be ignored: "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|newTable
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return;
@@ -1289,7 +1310,14 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"The table must be stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC): "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|newTable
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1374,7 +1402,14 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"'transactional' property of TBLPROPERTIES may only have value 'true'"
+literal|"'transactional' property of TBLPROPERTIES may only have value 'true': "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|newTable
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1403,7 +1438,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Check that InputFormatClass/OutputFormatClass should implement    * AcidInputFormat/AcidOutputFormat    */
-specifier|private
+specifier|public
+specifier|static
 name|boolean
 name|conformToAcid
 parameter_list|(
@@ -1426,6 +1462,15 @@ block|{
 name|Class
 name|inputFormatClass
 init|=
+name|sd
+operator|.
+name|getInputFormat
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|Class
 operator|.
 name|forName
@@ -1439,6 +1484,15 @@ decl_stmt|;
 name|Class
 name|outputFormatClass
 init|=
+name|sd
+operator|.
+name|getOutputFormat
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|Class
 operator|.
 name|forName
@@ -1497,13 +1551,37 @@ name|ClassNotFoundException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|MetaException
+name|LOG
+operator|.
+name|warn
 argument_list|(
-literal|"Invalid input/output format for table"
+literal|"Could not verify InputFormat="
+operator|+
+name|sd
+operator|.
+name|getInputFormat
+argument_list|()
+operator|+
+literal|" or OutputFormat="
+operator|+
+name|sd
+operator|.
+name|getOutputFormat
+argument_list|()
+operator|+
+literal|"  for "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|table
 argument_list|)
-throw|;
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
 block|}
 return|return
 literal|true
@@ -1619,9 +1697,16 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"Invalid transactional properties specified for the "
+literal|"Invalid transactional properties specified for "
 operator|+
-literal|"table with the error "
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|table
+argument_list|)
+operator|+
+literal|" with the error "
 operator|+
 name|validationError
 argument_list|)

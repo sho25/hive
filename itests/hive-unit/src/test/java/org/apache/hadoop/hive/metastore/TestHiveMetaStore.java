@@ -21632,7 +21632,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"'transactional' property of TBLPROPERTIES may only have value 'true'"
+literal|"'transactional' property of TBLPROPERTIES may only have value 'true': acidDb.acidTable"
 argument_list|,
 name|e
 operator|.
@@ -21698,7 +21698,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"'transactional' property of TBLPROPERTIES may only have value 'true'"
+literal|"'transactional' property of TBLPROPERTIES may only have value 'true': acidDb.acidTable"
 argument_list|,
 name|e
 operator|.
@@ -21764,7 +21764,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"The table must be stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC): acidDb.acidTable"
 argument_list|,
 name|e
 operator|.
@@ -21857,7 +21857,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"The table must be stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC): acidDb.acidTable"
 argument_list|,
 name|e
 operator|.
@@ -21985,12 +21985,6 @@ literal|"false"
 argument_list|)
 expr_stmt|;
 name|t
-operator|=
-operator|new
-name|Table
-argument_list|()
-expr_stmt|;
-name|t
 operator|.
 name|setParameters
 argument_list|(
@@ -22028,7 +22022,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"TBLPROPERTIES with 'transactional'='true' cannot be unset"
+literal|"TBLPROPERTIES with 'transactional'='true' cannot be unset: aciddb.acidtable"
 argument_list|,
 name|e
 operator|.
@@ -22127,7 +22121,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"The table must be stored using an ACID compliant format (such as ORC)"
+literal|"The table must be stored using an ACID compliant format (such as ORC): aciddb.acidtable1"
 argument_list|,
 name|e
 operator|.
