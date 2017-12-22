@@ -438,7 +438,7 @@ expr_stmt|;
 comment|//Tstage is just a simple way to generate test data
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -813,7 +813,7 @@ expr_stmt|;
 comment|//Tstage is just a simple way to generate test data
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -1178,7 +1178,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table T (a int, b int) stored as orc"
+literal|"create table T (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 comment|//per acid write to test nonAcid2acid conversion mixed with load data
@@ -1189,7 +1189,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -1489,7 +1489,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -1778,7 +1778,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 comment|//this creates an ORC data file with correct schema under table root
@@ -1954,7 +1954,7 @@ expr_stmt|;
 comment|//Tstage is just a simple way to generate test data
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -2149,7 +2149,7 @@ expr_stmt|;
 comment|//Tstage is just a simple way to generate test data
 name|runStatementOnDriver
 argument_list|(
-literal|"create table Tstage (a int, b int) stored as orc"
+literal|"create table Tstage (a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver

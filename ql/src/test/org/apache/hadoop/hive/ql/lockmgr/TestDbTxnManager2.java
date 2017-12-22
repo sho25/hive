@@ -4975,7 +4975,7 @@ name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table nonAcidPart(a int, b int) partitioned by (p string) stored as orc"
+literal|"create table nonAcidPart(a int, b int) partitioned by (p string) stored as orc TBLPROPERTIES ('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver

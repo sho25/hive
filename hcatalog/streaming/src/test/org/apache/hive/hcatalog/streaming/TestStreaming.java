@@ -4015,6 +4015,8 @@ operator|+
 literal|" buckets  stored as orc  location "
 operator|+
 name|tableLoc
+operator|+
+literal|" TBLPROPERTIES ('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runDDL

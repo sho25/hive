@@ -1471,6 +1471,17 @@ operator|.
 name|TRUE
 argument_list|)
 expr_stmt|;
+name|tableParams
+operator|.
+name|put
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
 name|tbl
 operator|.
 name|setParameters

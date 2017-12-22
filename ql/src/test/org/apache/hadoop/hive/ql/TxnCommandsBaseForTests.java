@@ -147,6 +147,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|conf
+operator|.
+name|MetastoreConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|txn
 operator|.
 name|TxnDbUtil
@@ -424,7 +442,6 @@ name|setUpInternal
 argument_list|()
 expr_stmt|;
 block|}
-specifier|protected
 name|void
 name|setUpInternal
 parameter_list|()
@@ -724,7 +741,7 @@ name|Table
 operator|.
 name|NONACIDNONBUCKET
 operator|+
-literal|"(a int, b int) stored as orc"
+literal|"(a int, b int) stored as orc TBLPROPERTIES ('transactional'='false')"
 argument_list|)
 expr_stmt|;
 block|}

@@ -926,6 +926,11 @@ literal|"stored as "
 operator|+
 name|storageFormat
 expr_stmt|;
+comment|//HCat doesn't support transactional tables
+name|createTable
+operator|+=
+literal|" TBLPROPERTIES ('transactional'='false')"
+expr_stmt|;
 name|executeStatementOnDriver
 argument_list|(
 name|createTable

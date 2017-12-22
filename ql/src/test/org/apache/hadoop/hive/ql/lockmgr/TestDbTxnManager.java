@@ -3265,6 +3265,24 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|badConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SUPPORT_CONCURRENCY
+argument_list|)
+condition|)
+block|{
+comment|//TxnManagerFactory is a singleton, so if the default is true, it has already been
+comment|//created and won't throw
+return|return;
+block|}
 name|badConf
 operator|.
 name|setVar

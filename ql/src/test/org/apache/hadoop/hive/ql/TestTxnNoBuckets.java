@@ -237,6 +237,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -511,7 +521,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table tmp (c1 integer, c2 integer, c3 integer) stored as orc"
+literal|"create table tmp (c1 integer, c2 integer, c3 integer) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -1585,6 +1595,7 @@ operator|.
 name|ACIDTBL
 argument_list|)
 expr_stmt|;
+comment|//todo: try this with acid default - it seem makeing table acid in listener is too late
 name|rs
 operator|=
 name|runStatementOnDriver
@@ -3496,7 +3507,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table T(a int, b int) stored as orc"
+literal|"create table T(a int, b int) stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
 name|int
@@ -4653,6 +4664,81 @@ argument_list|()
 operator|.
 name|getHighValue
 argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"enable after HIVE-18294"
+argument_list|)
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDefault
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists T"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table T (a int, b int) stored as orc"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into T values(1,2),(3,4)"
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"select ROW__ID, a, b, INPUT__FILE__NAME from T order by a, b"
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+name|query
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+index|[]
+name|expected
+init|=
+block|{
+comment|//this proves data is written in Acid layout so T was made Acid
+block|{
+literal|"{\"transactionid\":15,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
+block|,
+literal|"t/delta_0000015_0000015_0000/bucket_00000"
+block|}
+block|,
+block|{
+literal|"{\"transactionid\":15,\"bucketid\":536870912,\"rowid\":1}\t3\t4"
+block|,
+literal|"t/delta_0000015_0000015_0000/bucket_00000"
+block|}
+block|}
+decl_stmt|;
+name|checkExpected
+argument_list|(
+name|rs
+argument_list|,
+name|expected
+argument_list|,
+literal|"insert data"
 argument_list|)
 expr_stmt|;
 block|}
