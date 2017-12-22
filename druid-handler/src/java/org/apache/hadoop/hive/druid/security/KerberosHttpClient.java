@@ -598,6 +598,11 @@ operator|.
 name|getCurrentUser
 argument_list|()
 decl_stmt|;
+name|currentUser
+operator|.
+name|checkTGTAndReloginFromKeytab
+argument_list|()
+expr_stmt|;
 name|log
 operator|.
 name|debug
