@@ -287,7 +287,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|IDriver
 import|;
 end_import
 
@@ -798,7 +798,7 @@ parameter_list|(
 name|String
 name|tablename
 parameter_list|,
-name|Driver
+name|IDriver
 name|driver
 parameter_list|)
 throws|throws
@@ -861,7 +861,7 @@ parameter_list|,
 name|String
 name|partitionedBy
 parameter_list|,
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -972,7 +972,7 @@ parameter_list|(
 name|String
 name|cmd
 parameter_list|,
-name|Driver
+name|IDriver
 name|driver
 parameter_list|)
 throws|throws
@@ -5945,7 +5945,7 @@ specifier|static
 name|void
 name|setupAllTypesTable
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|)
 throws|throws

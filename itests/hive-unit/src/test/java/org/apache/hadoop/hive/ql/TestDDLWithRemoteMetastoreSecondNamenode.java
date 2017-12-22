@@ -493,7 +493,7 @@ name|jobConf
 decl_stmt|;
 specifier|private
 specifier|static
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 specifier|private
@@ -721,8 +721,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|jobConf
 argument_list|)

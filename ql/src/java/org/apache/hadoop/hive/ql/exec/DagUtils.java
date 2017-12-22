@@ -21,20 +21,6 @@ end_package
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Strings
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -71,25 +57,23 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|mapreduce
 operator|.
-name|ql
-operator|.
-name|Driver
+name|MRJobConfig
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|apache
+name|google
 operator|.
-name|hadoop
+name|common
 operator|.
-name|mapreduce
+name|base
 operator|.
-name|MRJobConfig
+name|Strings
 import|;
 end_import
 
@@ -98,6 +82,14 @@ specifier|public
 class|class
 name|DagUtils
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MAPREDUCE_WORKFLOW_NODE_NAME
+init|=
+literal|"mapreduce.workflow.node.name"
+decl_stmt|;
 specifier|public
 specifier|static
 name|String
@@ -155,7 +147,7 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|Driver
+name|DagUtils
 operator|.
 name|MAPREDUCE_WORKFLOW_NODE_NAME
 argument_list|)

@@ -135,7 +135,7 @@ class|class
 name|TestCreateUdfEntities
 block|{
 specifier|private
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 specifier|private
@@ -159,7 +159,7 @@ init|=
 operator|new
 name|HiveConf
 argument_list|(
-name|Driver
+name|IDriver
 operator|.
 name|class
 argument_list|)
@@ -173,8 +173,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|conf
 argument_list|)

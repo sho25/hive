@@ -725,7 +725,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|IDriver
 import|;
 end_import
 
@@ -1517,7 +1533,7 @@ name|HiveConf
 name|conf
 decl_stmt|;
 specifier|private
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 specifier|private
@@ -1869,8 +1885,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|conf
 argument_list|)
@@ -15406,7 +15423,7 @@ specifier|static
 name|Path
 name|createDbAndTable
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -15594,7 +15611,7 @@ specifier|static
 name|Path
 name|addPartition
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -15663,7 +15680,7 @@ specifier|static
 name|Path
 name|getPartitionPath
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -16143,7 +16160,7 @@ specifier|static
 name|boolean
 name|runDDL
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -16269,7 +16286,7 @@ name|String
 argument_list|>
 name|queryTable
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String

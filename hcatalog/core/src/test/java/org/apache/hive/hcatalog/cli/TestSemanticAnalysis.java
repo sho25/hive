@@ -183,7 +183,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|IDriver
 import|;
 end_import
 
@@ -502,7 +518,7 @@ init|=
 literal|"junit_sem_analysis"
 decl_stmt|;
 specifier|private
-name|Driver
+name|IDriver
 name|hcatDriver
 init|=
 literal|null
@@ -599,8 +615,9 @@ argument_list|)
 expr_stmt|;
 name|hcatDriver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hcatConf
 argument_list|)

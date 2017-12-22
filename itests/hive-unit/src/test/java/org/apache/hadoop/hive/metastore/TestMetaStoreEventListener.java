@@ -19,20 +19,6 @@ end_package
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -98,16 +84,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -729,29 +705,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|security
-operator|.
-name|HadoopThriftAuthBridge
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|utils
-operator|.
-name|MetaStoreUtils
+name|DriverFactory
 import|;
 end_import
 
@@ -767,7 +723,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|IDriver
 import|;
 end_import
 
@@ -807,6 +763,30 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestMetaStoreEventListener. Test case for  * {@link org.apache.hadoop.hive.metastore.MetaStoreEventListener} and  * {@link org.apache.hadoop.hive.metastore.MetaStorePreEventListener}  */
 end_comment
@@ -827,7 +807,7 @@ name|HiveMetaStoreClient
 name|msc
 decl_stmt|;
 specifier|private
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 specifier|private
@@ -1040,8 +1020,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hiveConf
 argument_list|)

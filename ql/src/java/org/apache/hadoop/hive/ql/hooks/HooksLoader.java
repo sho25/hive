@@ -126,6 +126,7 @@ expr_stmt|;
 block|}
 comment|/**    * Delegates to {@link #getHooks(HiveConf.ConfVars)} and prints the to the specified {@link SessionState.LogHelper} if    * a {@link ClassNotFoundException} is thrown.    *    * @param hookConfVar the configuration variable specifying a comma separated list of the hook class names    * @param console the {@link SessionState.LogHelper} to print to if a {@link ClassNotFoundException} is thrown by the    *                {@link #getHooks(HiveConf.ConfVars)} method    *    * @return a list of the hooks objects, in the order they are listed in the value of hookConfVar    *    * @throws ClassNotFoundException if the specified class names could not be found    * @throws IllegalAccessException if the specified class names could not be accessed    * @throws InstantiationException if the specified class names could not be instantiated    */
 specifier|public
+specifier|final
 parameter_list|<
 name|T
 extends|extends
@@ -146,6 +147,12 @@ name|SessionState
 operator|.
 name|LogHelper
 name|console
+parameter_list|,
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|clazz
 parameter_list|)
 throws|throws
 name|IllegalAccessException
@@ -160,6 +167,8 @@ return|return
 name|getHooks
 argument_list|(
 name|hookConfVar
+argument_list|,
+name|clazz
 argument_list|)
 return|;
 block|}
@@ -190,7 +199,7 @@ name|e
 throw|;
 block|}
 block|}
-comment|/**    * Returns the hooks specified in a configuration variable. The hooks are returned in a list in the order they were    * specified in the configuration variable. The value of the specified conf variable should be a comma separated list    * of class names where each class implements the {@link Hook} interface. The method uses reflection to an instance    * of each class and then returns them in a {@link List}.    *    * @param hookConfVar The configuration variable specifying a comma separated list of the hook class names    *    * @return a list of the hooks objects, in the order they are listed in the value of hookConfVar    *    * @throws ClassNotFoundException if the specified class names could not be found    * @throws IllegalAccessException if the specified class names could not be accessed    * @throws InstantiationException if the specified class names could not be instantiated    */
+comment|/**    * Returns the hooks specified in a configuration variable. The hooks are returned in a list in the order they were    * specified in the configuration variable. The value of the specified conf variable should be a comma separated list    * of class names where each class implements the {@link Hook} interface. The method uses reflection to an instance    * of each class and then returns them in a {@link List}.    *    * @param hookConfVar The configuration variable specifying a comma separated list of the hook class names    * @param class2    * @param class1    * @param console    *    * @return a list of the hooks objects, in the order they are listed in the value of hookConfVar    *    * @throws ClassNotFoundException if the specified class names could not be found    * @throws IllegalAccessException if the specified class names could not be accessed    * @throws InstantiationException if the specified class names could not be instantiated    */
 specifier|public
 parameter_list|<
 name|T
@@ -207,6 +216,12 @@ name|HiveConf
 operator|.
 name|ConfVars
 name|hookConfVar
+parameter_list|,
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|clazz
 parameter_list|)
 throws|throws
 name|InstantiationException

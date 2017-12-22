@@ -334,6 +334,10 @@ operator|.
 name|HIVE_QUERY_LIFETIME_HOOKS
 argument_list|,
 name|console
+argument_list|,
+name|QueryLifeTimeHook
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
 block|}

@@ -221,7 +221,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|IDriver
 import|;
 end_import
 
@@ -924,11 +940,12 @@ name|cmd
 init|=
 literal|"select a.key+1 from src a"
 decl_stmt|;
-name|Driver
+name|IDriver
 name|d
 init|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|conf
 argument_list|)

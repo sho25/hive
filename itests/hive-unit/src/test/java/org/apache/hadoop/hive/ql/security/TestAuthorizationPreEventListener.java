@@ -225,7 +225,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|IDriver
 import|;
 end_import
 
@@ -307,7 +323,7 @@ name|HiveMetaStoreClient
 name|msc
 decl_stmt|;
 specifier|private
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 annotation|@
@@ -497,8 +513,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|clientHiveConf
 argument_list|)

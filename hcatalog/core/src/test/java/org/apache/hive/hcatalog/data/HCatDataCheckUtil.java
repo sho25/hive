@@ -129,7 +129,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|IDriver
 import|;
 end_import
 
@@ -211,7 +227,7 @@ argument_list|)
 decl_stmt|;
 specifier|public
 specifier|static
-name|Driver
+name|IDriver
 name|instantiateDriver
 parameter_list|(
 name|MiniCluster
@@ -322,11 +338,12 @@ name|getAllProperties
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Driver
+name|IDriver
 name|driver
 init|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -435,7 +452,7 @@ specifier|static
 name|void
 name|createTable
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -500,7 +517,7 @@ specifier|static
 name|void
 name|dropTable
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String
@@ -529,7 +546,7 @@ name|String
 argument_list|>
 name|formattedRun
 parameter_list|(
-name|Driver
+name|IDriver
 name|driver
 parameter_list|,
 name|String

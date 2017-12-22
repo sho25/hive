@@ -3734,6 +3734,10 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_SESSION_HOOK
+argument_list|,
+name|HiveSessionHook
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 for|for

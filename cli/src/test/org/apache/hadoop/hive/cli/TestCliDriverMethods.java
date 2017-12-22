@@ -429,7 +429,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|IDriver
 import|;
 end_import
 
@@ -935,12 +935,12 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|Driver
+name|IDriver
 name|proc
 init|=
 name|mock
 argument_list|(
-name|Driver
+name|IDriver
 operator|.
 name|class
 argument_list|)

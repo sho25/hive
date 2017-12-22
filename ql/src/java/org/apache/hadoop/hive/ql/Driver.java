@@ -533,6 +533,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|DagUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|ExplainTask
 import|;
 end_import
@@ -1391,24 +1409,6 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|processors
-operator|.
 name|CommandProcessorResponse
 import|;
 end_import
@@ -1796,16 +1796,8 @@ specifier|public
 class|class
 name|Driver
 implements|implements
-name|CommandProcessor
+name|IDriver
 block|{
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|MAPREDUCE_WORKFLOW_NODE_NAME
-init|=
-literal|"mapreduce.workflow.node.name"
-decl_stmt|;
 specifier|static
 specifier|final
 specifier|private
@@ -2305,6 +2297,8 @@ return|return
 name|cs
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Schema
 name|getSchema
@@ -2704,6 +2698,8 @@ name|maxRows
 return|;
 block|}
 comment|/**    * Set the maximum number of rows returned by getResults    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setMaxRows
@@ -3132,6 +3128,9 @@ name|txnMgr
 expr_stmt|;
 block|}
 comment|/**    * Generating the new QueryState object. Making sure, that the new queryId is generated.    * @param conf The HiveConf which should be used    * @return The new QueryState object    */
+comment|// move to driverFactory ; with those constructors...
+annotation|@
+name|Deprecated
 specifier|private
 specifier|static
 name|QueryState
@@ -3202,6 +3201,8 @@ argument_list|()
 return|;
 block|}
 comment|/**    * Compile a new query. Any currently-planned query associated with this Driver is discarded.    * Do not reset id for inner queries(index, etc). Task ids are used for task identity check.    *    * @param command    *          The SQL query to compile.    */
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compile
@@ -3816,6 +3817,10 @@ operator|.
 name|SEMANTIC_ANALYZER_HOOK
 argument_list|,
 name|console
+argument_list|,
+name|HiveSemanticAnalyzerHook
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 comment|// Flush the metastore cache.  This assures that we don't pick up objects from a previous
@@ -7313,6 +7318,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @return The current query plan associated with this Driver, if any.    */
+annotation|@
+name|Override
 specifier|public
 name|QueryPlan
 name|getPlan
@@ -7323,6 +7330,8 @@ name|plan
 return|;
 block|}
 comment|/**    * @return The current FetchTask associated with the Driver's plan, if any.    */
+annotation|@
+name|Override
 specifier|public
 name|FetchTask
 name|getFetchTask
@@ -8072,6 +8081,8 @@ literal|false
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|CommandProcessorResponse
 name|run
@@ -8399,6 +8410,8 @@ name|cpr
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|CommandProcessorResponse
 name|compileAndRespond
@@ -9129,6 +9142,10 @@ operator|.
 name|HIVE_DRIVER_RUN_HOOKS
 argument_list|,
 name|console
+argument_list|,
+name|HiveDriverRunHook
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
 for|for
@@ -10408,6 +10425,10 @@ operator|.
 name|PREEXECHOOKS
 argument_list|,
 name|console
+argument_list|,
+name|ExecuteWithHookContext
+operator|.
+name|class
 argument_list|)
 control|)
 block|{
@@ -11465,6 +11486,10 @@ operator|.
 name|POSTEXECHOOKS
 argument_list|,
 name|console
+argument_list|,
+name|ExecuteWithHookContext
+operator|.
+name|class
 argument_list|)
 control|)
 block|{
@@ -12536,6 +12561,10 @@ operator|.
 name|ONFAILUREHOOKS
 argument_list|,
 name|console
+argument_list|,
+name|ExecuteWithHookContext
+operator|.
+name|class
 argument_list|)
 control|)
 block|{
@@ -12701,6 +12730,8 @@ name|conf
 operator|.
 name|set
 argument_list|(
+name|DagUtils
+operator|.
 name|MAPREDUCE_WORKFLOW_NODE_NAME
 argument_list|,
 name|tsk
@@ -12855,6 +12886,8 @@ return|return
 name|tskRun
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isFetchingTable
@@ -12871,6 +12904,8 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|getResults
@@ -13159,6 +13194,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|resetFetch
@@ -13263,6 +13300,8 @@ return|return
 name|tryCount
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setTryCount
@@ -13645,6 +13684,8 @@ literal|0
 return|;
 block|}
 comment|// is called to stop the query if it is running, clean query results, and release resources.
+annotation|@
+name|Override
 specifier|public
 name|int
 name|close
@@ -13732,6 +13773,8 @@ return|;
 block|}
 comment|// is usually called after close() to commit or rollback a query and end the driver life cycle.
 comment|// do not understand why it is needed and wonder if it could be combined with close.
+annotation|@
+name|Override
 specifier|public
 name|void
 name|destroy
@@ -13865,6 +13908,8 @@ return|return
 name|errorMessage
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|QueryDisplay
 name|getQueryDisplay
@@ -13875,6 +13920,8 @@ name|queryDisplay
 return|;
 block|}
 comment|/**    * Set the HS2 operation handle's guid string    * @param opId base64 encoded guid string    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setOperationId
@@ -13891,6 +13938,8 @@ name|opId
 expr_stmt|;
 block|}
 comment|/**    * Resets QueryState to get new queryId on Driver reuse.    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|resetQueryState

@@ -627,7 +627,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|IDriver
 import|;
 end_import
 
@@ -1460,7 +1460,7 @@ if|if
 condition|(
 name|proc
 operator|instanceof
-name|Driver
+name|IDriver
 condition|)
 block|{
 comment|// Let Driver strip comments using sql parser
@@ -1648,14 +1648,14 @@ if|if
 condition|(
 name|proc
 operator|instanceof
-name|Driver
+name|IDriver
 condition|)
 block|{
-name|Driver
+name|IDriver
 name|qp
 init|=
 operator|(
-name|Driver
+name|IDriver
 operator|)
 name|proc
 decl_stmt|;
@@ -2127,7 +2127,7 @@ specifier|private
 name|void
 name|printHeader
 parameter_list|(
-name|Driver
+name|IDriver
 name|qp
 parameter_list|,
 name|PrintStream

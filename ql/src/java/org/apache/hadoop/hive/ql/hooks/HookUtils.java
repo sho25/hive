@@ -119,6 +119,10 @@ argument_list|(
 name|ConfVars
 operator|.
 name|QUERYREDACTORHOOKS
+argument_list|,
+name|Redactor
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 for|for

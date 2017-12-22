@@ -305,7 +305,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
 import|;
 end_import
 
@@ -888,8 +888,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hiveConf
 argument_list|)

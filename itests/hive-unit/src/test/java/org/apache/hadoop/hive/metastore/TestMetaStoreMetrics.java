@@ -95,29 +95,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|ql
 operator|.
-name|security
-operator|.
-name|HadoopThriftAuthBridge
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|utils
-operator|.
-name|MetaStoreUtils
+name|DriverFactory
 import|;
 end_import
 
@@ -133,7 +113,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|IDriver
 import|;
 end_import
 
@@ -201,7 +181,7 @@ name|hiveConf
 decl_stmt|;
 specifier|private
 specifier|static
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 annotation|@
@@ -316,8 +296,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hiveConf
 argument_list|)

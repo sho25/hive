@@ -623,7 +623,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
+name|DriverFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|IDriver
 import|;
 end_import
 
@@ -1095,7 +1111,7 @@ name|msPort
 decl_stmt|;
 specifier|private
 specifier|static
-name|Driver
+name|IDriver
 name|driver
 decl_stmt|;
 specifier|private
@@ -1117,7 +1133,7 @@ name|int
 name|msPortMirror
 decl_stmt|;
 specifier|static
-name|Driver
+name|IDriver
 name|driverMirror
 decl_stmt|;
 specifier|static
@@ -1511,8 +1527,9 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hconf
 argument_list|)
@@ -1603,8 +1620,9 @@ argument_list|)
 expr_stmt|;
 name|driverMirror
 operator|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hconfMirror
 argument_list|)
@@ -4704,11 +4722,12 @@ argument_list|(
 literal|"Entered new thread"
 argument_list|)
 expr_stmt|;
-name|Driver
+name|IDriver
 name|driver2
 init|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hconf
 argument_list|)
@@ -5186,11 +5205,12 @@ argument_list|(
 literal|"Entered new thread"
 argument_list|)
 expr_stmt|;
-name|Driver
+name|IDriver
 name|driver2
 init|=
-operator|new
-name|Driver
+name|DriverFactory
+operator|.
+name|newDriver
 argument_list|(
 name|hconf
 argument_list|)
@@ -26772,7 +26792,7 @@ parameter_list|(
 name|String
 name|name
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 block|{
@@ -28103,7 +28123,7 @@ parameter_list|,
 name|int
 name|colNum
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28135,7 +28155,7 @@ parameter_list|,
 name|boolean
 name|reuse
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28215,7 +28235,7 @@ name|String
 index|[]
 name|data
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28315,7 +28335,7 @@ name|String
 argument_list|>
 name|getOutput
 parameter_list|(
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28376,7 +28396,7 @@ specifier|private
 name|void
 name|printOutput
 parameter_list|(
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28721,7 +28741,7 @@ name|String
 index|[]
 name|data
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28758,7 +28778,7 @@ parameter_list|,
 name|String
 name|data
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28790,7 +28810,7 @@ name|String
 index|[]
 name|data
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28818,7 +28838,7 @@ parameter_list|(
 name|String
 name|cmd
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -28896,7 +28916,7 @@ parameter_list|,
 name|String
 name|pattern
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -29001,7 +29021,7 @@ parameter_list|(
 name|String
 name|cmd
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
@@ -29056,7 +29076,7 @@ parameter_list|,
 name|boolean
 name|errorOnFail
 parameter_list|,
-name|Driver
+name|IDriver
 name|myDriver
 parameter_list|)
 throws|throws
