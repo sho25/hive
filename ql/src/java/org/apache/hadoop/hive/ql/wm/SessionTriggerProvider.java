@@ -75,14 +75,12 @@ decl_stmt|;
 specifier|public
 name|SessionTriggerProvider
 parameter_list|(
-specifier|final
 name|List
 argument_list|<
 name|TezSessionState
 argument_list|>
 name|openSessions
 parameter_list|,
-specifier|final
 name|List
 argument_list|<
 name|Trigger

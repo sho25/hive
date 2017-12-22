@@ -103,6 +103,10 @@ name|poolPath
 decl_stmt|;
 specifier|private
 name|boolean
+name|isUnmanagedPool
+decl_stmt|;
+specifier|private
+name|boolean
 name|drop
 decl_stmt|;
 specifier|public
@@ -123,6 +127,9 @@ name|poolPath
 parameter_list|,
 name|boolean
 name|drop
+parameter_list|,
+name|boolean
+name|isUnmanagedPool
 parameter_list|)
 block|{
 name|this
@@ -142,6 +149,12 @@ operator|.
 name|poolPath
 operator|=
 name|poolPath
+expr_stmt|;
+name|this
+operator|.
+name|isUnmanagedPool
+operator|=
+name|isUnmanagedPool
 expr_stmt|;
 name|this
 operator|.
@@ -202,7 +215,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"triggerName"
+literal|"Trigger name"
 argument_list|,
 name|explainLevels
 operator|=
@@ -249,7 +262,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"poolPath"
+literal|"Pool path"
 argument_list|,
 name|explainLevels
 operator|=
@@ -269,11 +282,33 @@ block|}
 argument_list|)
 specifier|public
 name|String
+name|getPoolPathForExplain
+parameter_list|()
+block|{
+return|return
+name|isUnmanagedPool
+condition|?
+literal|"<unmanaged queries>"
+else|:
+name|poolPath
+return|;
+block|}
+specifier|public
+name|String
 name|getPoolPath
 parameter_list|()
 block|{
 return|return
 name|poolPath
+return|;
+block|}
+specifier|public
+name|boolean
+name|isUnmanagedPool
+parameter_list|()
+block|{
+return|return
+name|isUnmanagedPool
 return|;
 block|}
 specifier|public
