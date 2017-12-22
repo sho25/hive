@@ -7655,6 +7655,19 @@ operator|+
 literal|"and follow-up operators in the query plan and merges them if they meet some preconditions. Tez only."
 argument_list|)
 block|,
+name|HIVE_SHARED_WORK_EXTENDED_OPTIMIZATION
+argument_list|(
+literal|"hive.optimize.shared.work.extended"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable shared work extended optimizer. The optimizer tries to merge equal operators\n"
+operator|+
+literal|"after a work boundary after shared work optimizer has been executed. Requires hive.optimize.shared.work\n"
+operator|+
+literal|"to be set to true. Tez only."
+argument_list|)
+block|,
 name|HIVE_COMBINE_EQUIVALENT_WORK_OPTIMIZATION
 argument_list|(
 literal|"hive.combine.equivalent.work.optimization"
