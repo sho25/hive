@@ -1001,10 +1001,21 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+comment|// need to use a new filesystem object here to have the correct ugi
+name|FileSystem
+name|proxyFs
+init|=
+name|p
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|FileStatus
 name|stat
 init|=
-name|fs
+name|proxyFs
 operator|.
 name|getFileStatus
 argument_list|(
