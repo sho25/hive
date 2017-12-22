@@ -2066,6 +2066,17 @@ parameter_list|()
 throws|throws
 name|JMSException
 block|{
+if|if
+condition|(
+name|conn
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// We want message to be sent when session commits, thus we run in
 comment|// transacted mode.
 return|return
