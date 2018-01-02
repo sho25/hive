@@ -6617,7 +6617,7 @@ name|ConfVars
 operator|.
 name|HIVECONVERTJOINNOCONDITIONALTASKTHRESHOLD
 argument_list|,
-literal|10000
+literal|100000
 argument_list|)
 expr_stmt|;
 block|}
