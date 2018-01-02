@@ -7922,6 +7922,15 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+operator|!
+name|checkConcurrency
+argument_list|()
+condition|)
+block|{
+return|return;
+block|}
+if|if
+condition|(
 name|txnMgr
 operator|.
 name|isTxnOpen

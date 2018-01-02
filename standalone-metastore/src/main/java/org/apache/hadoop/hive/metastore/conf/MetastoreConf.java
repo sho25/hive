@@ -422,7 +422,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A set of definitions of config values used by the Metastore.  One of the key aims of this  * class is to provide backwards compatibility with existing Hive configuration keys while  * allowing the metastore to have its own, Hive independant keys.   For this reason access to the  * underlying Configuration object should always be done via the static methods provided here  * rather than directly via {@link Configuration#get(String)} and  * {@link Configuration#set(String, String)}.  All the methods of this class will handle checking  * both the MetastoreConf key and the Hive key.  The algorithm is, on reads, to check first the  * MetastoreConf key, then the Hive key, then return the default if neither are set.  On write  * the Metastore key only is set.  *  * This class does not extend Configuration.  Rather it provides static methods for operating on  * a Configuration object.  This allows it to work on HiveConf objects, which otherwise would not  * be the case.  */
+comment|/**  * A set of definitions of config values used by the Metastore.  One of the key aims of this  * class is to provide backwards compatibility with existing Hive configuration keys while  * allowing the metastore to have its own, Hive independent keys.   For this reason access to the  * underlying Configuration object should always be done via the static methods provided here  * rather than directly via {@link Configuration#get(String)} and  * {@link Configuration#set(String, String)}.  All the methods of this class will handle checking  * both the MetastoreConf key and the Hive key.  The algorithm is, on reads, to check first the  * MetastoreConf key, then the Hive key, then return the default if neither are set.  On write  * the Metastore key only is set.  *  * This class does not extend Configuration.  Rather it provides static methods for operating on  * a Configuration object.  This allows it to work on HiveConf objects, which otherwise would not  * be the case.  */
 end_comment
 
 begin_class
@@ -1653,6 +1653,19 @@ argument_list|,
 literal|"APP"
 argument_list|,
 literal|"Username to use against metastore database"
+argument_list|)
+block|,
+name|CREATE_TABLES_AS_ACID
+argument_list|(
+literal|"metastore.create.as.acid"
+argument_list|,
+literal|"hive.create.as.acid"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether the eligible tables should be created as full ACID by default. Does \n"
+operator|+
+literal|"not apply to external tables, the ones using storage handlers, etc."
 argument_list|)
 block|,
 name|COUNT_OPEN_TXNS_INTERVAL
