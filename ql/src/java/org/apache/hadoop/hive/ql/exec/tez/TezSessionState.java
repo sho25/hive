@@ -3874,11 +3874,18 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|// Finally add the files to AM. The old code seems to do this twice, first for all the new
-comment|// resources regardless of type; and then for all the session resources that are not of type
-comment|// file (see branch-1 calls to addAppMasterLocalFiles: from updateSession and with resourceMap
-comment|// from submit).
+comment|// Finally, add the files to the existing AM (if any). The old code seems to do this twice,
+comment|// first for all the new resources regardless of type; and then for all the session resources
+comment|// that are not of type file (see branch-1 calls to addAppMasterLocalFiles: from updateSession
+comment|// and with resourceMap from submit).
 comment|// TODO: Do we really need all this nonsense?
+if|if
+condition|(
+name|session
+operator|!=
+literal|null
+condition|)
+block|{
 if|if
 condition|(
 name|newResources
@@ -3932,6 +3939,7 @@ name|localizedResources
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Close a tez session. Will cleanup any tez/am related resources. After closing a session no    * further DAGs can be executed against it. Only called by session management classes; some    * sessions should not simply be closed by users - e.g. pool sessions need to be restarted.    *    * @param keepDagFilesDir    *          whether or not to remove the scratch dir at the same time.    * @throws Exception    */
