@@ -580,6 +580,8 @@ argument_list|(
 name|hiveconf
 argument_list|,
 name|sparkConf
+argument_list|,
+name|sessionId
 argument_list|)
 return|;
 block|}

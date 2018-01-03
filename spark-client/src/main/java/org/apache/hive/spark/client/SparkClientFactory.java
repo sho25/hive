@@ -306,6 +306,9 @@ name|sparkConf
 parameter_list|,
 name|HiveConf
 name|hiveConf
+parameter_list|,
+name|String
+name|sessionId
 parameter_list|)
 throws|throws
 name|IOException
@@ -332,6 +335,8 @@ argument_list|,
 name|sparkConf
 argument_list|,
 name|hiveConf
+argument_list|,
+name|sessionId
 argument_list|)
 return|;
 block|}

@@ -848,6 +848,11 @@ specifier|transient
 name|long
 name|sparkClientTimtout
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|sessionId
+decl_stmt|;
 name|RemoteHiveSparkClient
 parameter_list|(
 name|HiveConf
@@ -860,6 +865,9 @@ argument_list|,
 name|String
 argument_list|>
 name|conf
+parameter_list|,
+name|String
+name|sessionId
 parameter_list|)
 throws|throws
 name|Exception
@@ -902,6 +910,12 @@ name|conf
 operator|=
 name|conf
 expr_stmt|;
+name|this
+operator|.
+name|sessionId
+operator|=
+name|sessionId
+expr_stmt|;
 name|createRemoteClient
 argument_list|()
 expr_stmt|;
@@ -922,6 +936,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|hiveConf
+argument_list|,
+name|sessionId
 argument_list|)
 expr_stmt|;
 if|if

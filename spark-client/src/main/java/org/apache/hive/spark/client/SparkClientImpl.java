@@ -754,6 +754,9 @@ name|conf
 parameter_list|,
 name|HiveConf
 name|hiveConf
+parameter_list|,
+name|String
+name|sessionid
 parameter_list|)
 throws|throws
 name|IOException
@@ -782,17 +785,6 @@ name|newConcurrentMap
 argument_list|()
 expr_stmt|;
 name|String
-name|clientId
-init|=
-name|UUID
-operator|.
-name|randomUUID
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-decl_stmt|;
-name|String
 name|secret
 init|=
 name|rpcServer
@@ -808,7 +800,7 @@ name|startDriver
 argument_list|(
 name|rpcServer
 argument_list|,
-name|clientId
+name|sessionid
 argument_list|,
 name|secret
 argument_list|)
@@ -832,7 +824,7 @@ name|rpcServer
 operator|.
 name|registerClient
 argument_list|(
-name|clientId
+name|sessionid
 argument_list|,
 name|secret
 argument_list|,
