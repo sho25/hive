@@ -277,7 +277,7 @@ literal|"  STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'"
 operator|+
 literal|"  WITH SERDEPROPERTIES ('hbase.columns.mapping' = ':key,cf:val')"
 operator|+
-literal|"  TBLPROPERTIES ('hbase.table.name' = '"
+literal|"  TBLPROPERTIES ('hbase.mapreduce.hfileoutputformat.table.name' = '"
 operator|+
 name|HBASE_SRC_NAME
 operator|+
