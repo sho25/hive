@@ -1190,6 +1190,22 @@ name|void
 name|allocateBucketArray
 parameter_list|()
 block|{
+comment|// We allocate pairs, so we cannot go above highest Integer power of 2 / 4.
+if|if
+condition|(
+name|logicalHashBucketCount
+operator|>
+name|ONE_QUARTER_LIMIT
+condition|)
+block|{
+name|throwExpandError
+argument_list|(
+name|ONE_QUARTER_LIMIT
+argument_list|,
+literal|"Long"
+argument_list|)
+expr_stmt|;
+block|}
 name|int
 name|slotPairArraySize
 init|=

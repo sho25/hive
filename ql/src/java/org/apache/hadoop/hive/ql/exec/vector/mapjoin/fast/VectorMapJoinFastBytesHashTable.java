@@ -976,6 +976,22 @@ name|void
 name|allocateBucketArray
 parameter_list|()
 block|{
+comment|// We allocate triples, so we cannot go above highest Integer power of 2 / 6.
+if|if
+condition|(
+name|logicalHashBucketCount
+operator|>
+name|ONE_SIXTH_LIMIT
+condition|)
+block|{
+name|throwExpandError
+argument_list|(
+name|ONE_SIXTH_LIMIT
+argument_list|,
+literal|"Bytes"
+argument_list|)
+expr_stmt|;
+block|}
 name|int
 name|slotTripleArraySize
 init|=
