@@ -13958,6 +13958,17 @@ argument_list|,
 literal|"llap.task.scheduler.node.disable.backoff.factor"
 argument_list|)
 block|,
+name|LLAP_TASK_SCHEDULER_PREEMPT_INDEPENDENT
+argument_list|(
+literal|"hive.llap.task.scheduler.preempt.independent"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether the AM LLAP scheduler should preempt a lower priority task for a higher pri one\n"
+operator|+
+literal|"even if the former doesn't depend on the latter (e.g. for two parallel sides of a union)."
+argument_list|)
+block|,
 name|LLAP_TASK_SCHEDULER_NUM_SCHEDULABLE_TASKS_PER_NODE
 argument_list|(
 literal|"hive.llap.task.scheduler.num.schedulable.tasks.per.node"
