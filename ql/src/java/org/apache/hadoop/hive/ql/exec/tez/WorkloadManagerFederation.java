@@ -154,7 +154,6 @@ parameter_list|,
 name|boolean
 name|isUnmanagedLlapMode
 parameter_list|,
-specifier|final
 name|WmContext
 name|wmContext
 parameter_list|)
@@ -307,7 +306,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"NoPoolMappingException thrown. Getting an un-managed session.."
+literal|"NoPoolMappingException thrown. Getting an un-managed session"
 argument_list|)
 expr_stmt|;
 return|return

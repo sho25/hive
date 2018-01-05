@@ -153,6 +153,11 @@ specifier|final
 name|Long
 name|submitToRunningDuration
 decl_stmt|;
+specifier|private
+specifier|final
+name|Long
+name|getSessionDuration
+decl_stmt|;
 name|QueryExecutionBreakdownSummary
 parameter_list|(
 name|PerfLogger
@@ -202,6 +207,19 @@ argument_list|(
 name|PerfLogger
 operator|.
 name|TEZ_SUBMIT_TO_RUNNING
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|getSessionDuration
+operator|=
+name|perfLogger
+operator|.
+name|getDuration
+argument_list|(
+name|PerfLogger
+operator|.
+name|TEZ_GET_SESSION
 argument_list|)
 expr_stmt|;
 block|}
@@ -339,6 +357,8 @@ init|=
 name|dagSubmitStartTime
 operator|-
 name|compileEndTime
+operator|-
+name|getSessionDuration
 decl_stmt|;
 name|console
 operator|.
@@ -349,6 +369,18 @@ argument_list|(
 literal|"Prepare Plan"
 argument_list|,
 name|totalDAGPrep
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+name|format
+argument_list|(
+literal|"Get Query Coordinator (AM)"
+argument_list|,
+name|getSessionDuration
 argument_list|)
 argument_list|)
 expr_stmt|;

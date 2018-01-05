@@ -460,6 +460,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|TEZ_GET_SESSION
+init|=
+literal|"TezGetSession"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SPARK_SUBMIT_TO_RUNNING
 init|=
 literal|"SparkSubmitToRunning"
