@@ -5339,15 +5339,6 @@ name|hiveConf
 argument_list|)
 decl_stmt|;
 comment|// make a clone of existing hive conf
-name|confForTez
-operator|.
-name|setBoolean
-argument_list|(
-literal|"hive.stats.column.autogather"
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
 name|setupTez
 argument_list|(
 name|confForTez
@@ -5518,7 +5509,7 @@ literal|"warehouse/t/delta_0000021_0000021_0000/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":21,\"bucketid\":536936448,\"rowid\":1}\t5\t6"
+literal|"{\"transactionid\":21,\"bucketid\":536936448,\"rowid\":2}\t5\t6"
 block|,
 literal|"warehouse/t/delta_0000021_0000021_0000/bucket_00001"
 block|}
@@ -5530,7 +5521,7 @@ literal|"warehouse/t/delta_0000021_0000021_0000/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":21,\"bucketid\":536936448,\"rowid\":2}\t9\t10"
+literal|"{\"transactionid\":21,\"bucketid\":536936448,\"rowid\":1}\t9\t10"
 block|,
 literal|"warehouse/t/delta_0000021_0000021_0000/bucket_00001"
 block|}
