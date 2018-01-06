@@ -3253,7 +3253,7 @@ name|InvalidObjectException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|getResourcePlan
 parameter_list|(
 name|String

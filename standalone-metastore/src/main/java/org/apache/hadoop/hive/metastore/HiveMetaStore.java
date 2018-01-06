@@ -41956,7 +41956,7 @@ name|TException
 block|{
 try|try
 block|{
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|rp
 init|=
 name|getMS

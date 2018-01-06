@@ -517,7 +517,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|resourcePlan
 decl_stmt|;
 comment|// optional
@@ -854,7 +854,7 @@ name|TType
 operator|.
 name|STRUCT
 argument_list|,
-name|WMResourcePlan
+name|WMFullResourcePlan
 operator|.
 name|class
 argument_list|)
@@ -915,7 +915,7 @@ operator|.
 name|resourcePlan
 operator|=
 operator|new
-name|WMResourcePlan
+name|WMFullResourcePlan
 argument_list|(
 name|other
 operator|.
@@ -952,7 +952,7 @@ literal|null
 expr_stmt|;
 block|}
 specifier|public
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|getResourcePlan
 parameter_list|()
 block|{
@@ -966,7 +966,7 @@ specifier|public
 name|void
 name|setResourcePlan
 parameter_list|(
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|resourcePlan
 parameter_list|)
 block|{
@@ -1060,7 +1060,7 @@ block|{
 name|setResourcePlan
 argument_list|(
 operator|(
-name|WMResourcePlan
+name|WMFullResourcePlan
 operator|)
 name|value
 argument_list|)
@@ -1941,7 +1941,7 @@ operator|.
 name|resourcePlan
 operator|=
 operator|new
-name|WMResourcePlan
+name|WMFullResourcePlan
 argument_list|()
 expr_stmt|;
 name|struct
@@ -2292,7 +2292,7 @@ operator|.
 name|resourcePlan
 operator|=
 operator|new
-name|WMResourcePlan
+name|WMFullResourcePlan
 argument_list|()
 expr_stmt|;
 name|struct

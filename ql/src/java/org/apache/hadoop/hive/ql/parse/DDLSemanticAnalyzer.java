@@ -21,26 +21,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|tez
-operator|.
-name|WorkloadManager
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -7848,7 +7828,9 @@ argument_list|(
 name|showResourcePlanDesc
 operator|.
 name|getSchema
-argument_list|()
+argument_list|(
+name|rpName
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;

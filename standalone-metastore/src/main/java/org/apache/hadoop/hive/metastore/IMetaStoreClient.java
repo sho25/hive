@@ -4780,7 +4780,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|getResourcePlan
 parameter_list|(
 name|String

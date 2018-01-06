@@ -12915,7 +12915,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|getResourcePlan
 parameter_list|(
 name|String

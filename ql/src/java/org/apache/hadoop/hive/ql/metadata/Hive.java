@@ -25987,7 +25987,7 @@ throw|;
 block|}
 block|}
 specifier|public
-name|WMResourcePlan
+name|WMFullResourcePlan
 name|getResourcePlan
 parameter_list|(
 name|String
