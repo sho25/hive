@@ -499,6 +499,18 @@ parameter_list|)
 throws|throws
 name|HiveSQLException
 function_decl|;
+name|void
+name|setApplicationName
+parameter_list|(
+name|SessionHandle
+name|sh
+parameter_list|,
+name|String
+name|value
+parameter_list|)
+throws|throws
+name|HiveSQLException
+function_decl|;
 block|}
 end_interface
 

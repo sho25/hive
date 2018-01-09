@@ -1448,6 +1448,16 @@ name|get
 argument_list|(
 literal|"wmpool"
 argument_list|)
+argument_list|,
+name|ss
+operator|.
+name|getHiveVariables
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"wmapp"
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|WmContext

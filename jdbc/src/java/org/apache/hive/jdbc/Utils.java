@@ -614,6 +614,26 @@ name|WM_POOL
 init|=
 literal|"wmPool"
 decl_stmt|;
+comment|// We support ways to specify application name modeled after some existing DBs, since
+comment|// there's no standard approach.
+comment|// MSSQL: applicationName https://docs.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url
+comment|// Postgres 9~: ApplicationName https://jdbc.postgresql.org/documentation/91/connect.html
+comment|// Note: various ODBC names used include "Application Name", "APP", etc. Add those?
+specifier|static
+specifier|final
+name|String
+index|[]
+name|APPLICATION
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"applicationName"
+block|,
+literal|"ApplicationName"
+block|}
+decl_stmt|;
 comment|// --------------- Begin 2 way ssl options -------------------------
 comment|// Use two way ssl. This param will take effect only when ssl=true
 specifier|static

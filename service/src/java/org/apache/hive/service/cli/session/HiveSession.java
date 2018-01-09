@@ -614,6 +614,13 @@ name|Runnable
 name|work
 parameter_list|)
 function_decl|;
+name|void
+name|setApplicationName
+parameter_list|(
+name|String
+name|value
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

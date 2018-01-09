@@ -51,6 +51,8 @@ block|{
 name|USER
 block|,
 name|GROUP
+block|,
+name|APPLICATION
 block|}
 specifier|public
 name|MWMMapping
