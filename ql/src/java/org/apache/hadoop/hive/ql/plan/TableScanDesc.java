@@ -367,7 +367,6 @@ name|ExprNodeGenericFuncDesc
 name|filterExpr
 decl_stmt|;
 specifier|private
-specifier|transient
 name|Serializable
 name|filterObject
 decl_stmt|;
