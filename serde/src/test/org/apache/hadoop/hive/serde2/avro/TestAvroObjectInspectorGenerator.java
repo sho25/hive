@@ -562,6 +562,34 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SINGLE_ITEM_UNION_SCHEMA
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"namespace\": \"test.a.rossa\",\n"
+operator|+
+literal|"  \"name\": \"oneUnion\",\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\":\"aUnion\",\n"
+operator|+
+literal|"      \"type\":[\"string\"]\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|UNION_SCHEMA
 init|=
 literal|"{\n"

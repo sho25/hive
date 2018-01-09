@@ -335,6 +335,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -1825,6 +1835,104 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|canDeserializeSingleItemUnions
+parameter_list|()
+throws|throws
+name|SerDeException
+throws|,
+name|IOException
+block|{
+name|Schema
+name|s
+init|=
+name|AvroSerdeUtils
+operator|.
+name|getSchemaFor
+argument_list|(
+name|TestAvroObjectInspectorGenerator
+operator|.
+name|SINGLE_ITEM_UNION_SCHEMA
+argument_list|)
+decl_stmt|;
+name|GenericData
+operator|.
+name|Record
+name|record
+init|=
+operator|new
+name|GenericData
+operator|.
+name|Record
+argument_list|(
+name|s
+argument_list|)
+decl_stmt|;
+name|record
+operator|.
+name|put
+argument_list|(
+literal|"aUnion"
+argument_list|,
+literal|"this is a string"
+argument_list|)
+expr_stmt|;
+name|ResultPair
+name|result
+init|=
+name|unionTester
+argument_list|(
+name|s
+argument_list|,
+name|record
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|result
+operator|.
+name|value
+operator|instanceof
+name|String
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"this is a string"
+argument_list|,
+name|result
+operator|.
+name|value
+argument_list|)
+expr_stmt|;
+name|UnionObjectInspector
+name|uoi
+init|=
+operator|(
+name|UnionObjectInspector
+operator|)
+name|result
+operator|.
+name|oi
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|uoi
+operator|.
+name|getTag
+argument_list|(
+name|result
+operator|.
+name|unionObject
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|canDeserializeUnions
 parameter_list|()
 throws|throws
@@ -2594,6 +2702,215 @@ argument_list|,
 name|theUnion
 argument_list|)
 return|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|primitiveSchemaEvolution
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|Schema
+name|fileSchema
+init|=
+name|AvroSerdeUtils
+operator|.
+name|getSchemaFor
+argument_list|(
+literal|"{\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"name\": \"r1\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\": \"int_field\",\n"
+operator|+
+literal|"      \"type\": \"int\"\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+argument_list|)
+decl_stmt|;
+name|Schema
+name|readerSchema
+init|=
+name|AvroSerdeUtils
+operator|.
+name|getSchemaFor
+argument_list|(
+literal|"{\n"
+operator|+
+literal|"  \"type\": \"record\",\n"
+operator|+
+literal|"  \"name\": \"r1\",\n"
+operator|+
+literal|"  \"fields\": [\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\": \"int_field\",\n"
+operator|+
+literal|"      \"type\": \"int\"\n"
+operator|+
+literal|"    },\n"
+operator|+
+literal|"    {\n"
+operator|+
+literal|"      \"name\": \"dec_field\",\n"
+operator|+
+literal|"      \"type\": [\n"
+operator|+
+literal|"        \"null\",\n"
+operator|+
+literal|"        {\n"
+operator|+
+literal|"          \"type\": \"bytes\",\n"
+operator|+
+literal|"          \"logicalType\": \"decimal\",\n"
+operator|+
+literal|"          \"precision\": 5,\n"
+operator|+
+literal|"          \"scale\": 4\n"
+operator|+
+literal|"        }\n"
+operator|+
+literal|"      ],\n"
+operator|+
+literal|"      \"default\": null\n"
+operator|+
+literal|"    }\n"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+argument_list|)
+decl_stmt|;
+name|GenericData
+operator|.
+name|Record
+name|record
+init|=
+operator|new
+name|GenericData
+operator|.
+name|Record
+argument_list|(
+name|fileSchema
+argument_list|)
+decl_stmt|;
+name|record
+operator|.
+name|put
+argument_list|(
+literal|"int_field"
+argument_list|,
+literal|1
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|GENERIC_DATA
+operator|.
+name|validate
+argument_list|(
+name|fileSchema
+argument_list|,
+name|record
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|AvroGenericRecordWritable
+name|garw
+init|=
+name|Utils
+operator|.
+name|serializeAndDeserializeRecord
+argument_list|(
+name|record
+argument_list|)
+decl_stmt|;
+name|AvroObjectInspectorGenerator
+name|aoig
+init|=
+operator|new
+name|AvroObjectInspectorGenerator
+argument_list|(
+name|readerSchema
+argument_list|)
+decl_stmt|;
+name|AvroDeserializer
+name|de
+init|=
+operator|new
+name|AvroDeserializer
+argument_list|()
+decl_stmt|;
+name|List
+argument_list|<
+name|Object
+argument_list|>
+name|row
+init|=
+operator|(
+name|List
+argument_list|<
+name|Object
+argument_list|>
+operator|)
+name|de
+operator|.
+name|deserialize
+argument_list|(
+name|aoig
+operator|.
+name|getColumnNames
+argument_list|()
+argument_list|,
+name|aoig
+operator|.
+name|getColumnTypes
+argument_list|()
+argument_list|,
+name|garw
+argument_list|,
+name|readerSchema
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|row
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertNull
+argument_list|(
+name|row
+operator|.
+name|get
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
