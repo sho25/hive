@@ -462,7 +462,7 @@ literal|"(tok_not_matched "
 operator|+
 literal|"(tok_insert "
 operator|+
-literal|"(tok_value_row "
+literal|"(tok_function struct "
 operator|+
 literal|"(. (tok_table_or_col source) a) "
 operator|+
@@ -529,7 +529,7 @@ literal|"(tok_not_matched "
 operator|+
 literal|"(tok_insert "
 operator|+
-literal|"(tok_value_row "
+literal|"(tok_function struct "
 operator|+
 literal|"(. (tok_table_or_col source) a) "
 operator|+
@@ -874,7 +874,7 @@ literal|"(tok_not_matched "
 operator|+
 literal|"(tok_insert "
 operator|+
-literal|"(tok_value_row (. (tok_table_or_col source) a2) (. (tok_table_or_col source) b2)))))"
+literal|"(tok_function struct (. (tok_table_or_col source) a2) (. (tok_table_or_col source) b2)))))"
 argument_list|)
 expr_stmt|;
 block|}

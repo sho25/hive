@@ -7574,6 +7574,34 @@ return|return
 name|pcA
 return|;
 block|}
+if|if
+condition|(
+name|pcA
+operator|==
+name|PrimitiveCategory
+operator|.
+name|VOID
+condition|)
+block|{
+comment|// Handle NULL, we return the type of pcB
+return|return
+name|pcB
+return|;
+block|}
+if|if
+condition|(
+name|pcB
+operator|==
+name|PrimitiveCategory
+operator|.
+name|VOID
+condition|)
+block|{
+comment|// Handle NULL, we return the type of pcA
+return|return
+name|pcA
+return|;
+block|}
 name|PrimitiveGrouping
 name|pgA
 init|=
