@@ -294,8 +294,8 @@ name|ioMetrics
 decl_stmt|;
 comment|// Note that the pool is per EDC - within EDC, CVBs are expected to have the same schema.
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|int
 name|CVB_POOL_SIZE
 init|=
@@ -441,6 +441,8 @@ parameter_list|(
 name|BatchType
 name|data
 parameter_list|)
+throws|throws
+name|InterruptedException
 block|{
 if|if
 condition|(
@@ -558,6 +560,8 @@ name|ColumnVectorBatch
 argument_list|>
 name|downstreamConsumer
 parameter_list|)
+throws|throws
+name|InterruptedException
 function_decl|;
 annotation|@
 name|Override
@@ -565,6 +569,8 @@ specifier|public
 name|void
 name|setDone
 parameter_list|()
+throws|throws
+name|InterruptedException
 block|{
 name|downstreamConsumer
 operator|.
@@ -581,6 +587,8 @@ parameter_list|(
 name|Throwable
 name|t
 parameter_list|)
+throws|throws
+name|InterruptedException
 block|{
 name|downstreamConsumer
 operator|.

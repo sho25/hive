@@ -2218,6 +2218,8 @@ name|performDataRead
 parameter_list|()
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 name|long
 name|startTime
@@ -3004,6 +3006,8 @@ parameter_list|,
 name|Throwable
 name|t
 parameter_list|)
+throws|throws
+name|InterruptedException
 block|{
 name|recordReaderTime
 argument_list|(

@@ -43,14 +43,18 @@ parameter_list|(
 name|T
 name|data
 parameter_list|)
+throws|throws
+name|InterruptedException
 function_decl|;
-comment|/** No more data will be produced; done */
+comment|/** No more data will be produced; done. */
 specifier|public
 name|void
 name|setDone
 parameter_list|()
+throws|throws
+name|InterruptedException
 function_decl|;
-comment|/** No more data will be produced; error during production */
+comment|/** No more data will be produced; error during production. */
 specifier|public
 name|void
 name|setError
@@ -58,6 +62,8 @@ parameter_list|(
 name|Throwable
 name|t
 parameter_list|)
+throws|throws
+name|InterruptedException
 function_decl|;
 block|}
 end_interface

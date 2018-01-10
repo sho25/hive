@@ -696,6 +696,11 @@ specifier|final
 name|String
 name|hostName
 decl_stmt|;
+specifier|private
+specifier|final
+name|Configuration
+name|daemonConf
+decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -718,6 +723,9 @@ name|cvp
 parameter_list|,
 name|ExecutorService
 name|executor
+parameter_list|,
+name|Configuration
+name|daemonConf
 parameter_list|)
 block|{
 name|this
@@ -731,6 +739,12 @@ operator|.
 name|cvp
 operator|=
 name|cvp
+expr_stmt|;
+name|this
+operator|.
+name|daemonConf
+operator|=
+name|daemonConf
 expr_stmt|;
 name|this
 operator|.
@@ -887,6 +901,8 @@ argument_list|,
 name|sourceSerDe
 argument_list|,
 name|reporter
+argument_list|,
+name|daemonConf
 argument_list|)
 decl_stmt|;
 if|if

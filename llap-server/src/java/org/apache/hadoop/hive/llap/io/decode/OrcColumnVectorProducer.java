@@ -660,6 +660,15 @@ operator|=
 name|tracePool
 expr_stmt|;
 block|}
+specifier|public
+name|Configuration
+name|getConf
+parameter_list|()
+block|{
+return|return
+name|conf
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

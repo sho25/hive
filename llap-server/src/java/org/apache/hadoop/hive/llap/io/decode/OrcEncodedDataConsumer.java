@@ -988,6 +988,8 @@ name|ColumnVectorBatch
 argument_list|>
 name|downstreamConsumer
 parameter_list|)
+throws|throws
+name|InterruptedException
 block|{
 name|long
 name|startTime

@@ -4349,6 +4349,8 @@ name|performDataRead
 parameter_list|()
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 name|boolean
 name|isOk
@@ -4963,6 +4965,8 @@ name|startTime
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 if|if
 condition|(
@@ -5421,6 +5425,8 @@ name|slice
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 name|LlapIoImpl
 operator|.
@@ -6018,6 +6024,8 @@ name|startTime
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 name|logProcessOneSlice
 argument_list|(
@@ -6615,6 +6623,8 @@ name|startTime
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 if|if
 condition|(
@@ -10125,6 +10135,8 @@ operator|.
 name|CacheStripeData
 name|diskData
 parameter_list|)
+throws|throws
+name|InterruptedException
 block|{
 if|if
 condition|(

@@ -13096,6 +13096,30 @@ argument_list|,
 literal|"Whether to enable time counters for LLAP IO layer (time spent in HDFS, etc.)"
 argument_list|)
 block|,
+name|LLAP_IO_VRB_QUEUE_LIMIT_BASE
+argument_list|(
+literal|"hive.llap.io.vrb.queue.limit.base"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"The default queue size for VRBs produced by a LLAP IO thread when the processing is\n"
+operator|+
+literal|"slower than the IO. The actual queue size is set per fragment, and is adjusted down\n"
+operator|+
+literal|"from the base, depending on the schema."
+argument_list|)
+block|,
+name|LLAP_IO_VRB_QUEUE_LIMIT_MIN
+argument_list|(
+literal|"hive.llap.io.vrb.queue.limit.min"
+argument_list|,
+literal|10
+argument_list|,
+literal|"The minimum queue size for VRBs produced by a LLAP IO thread when the processing is\n"
+operator|+
+literal|"slower than the IO (used when determining the size from base size)."
+argument_list|)
+block|,
 name|LLAP_AUTO_ALLOW_UBER
 argument_list|(
 literal|"hive.llap.auto.allow.uber"

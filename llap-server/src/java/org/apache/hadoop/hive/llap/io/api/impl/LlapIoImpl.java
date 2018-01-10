@@ -1861,6 +1861,8 @@ argument_list|,
 name|cvp
 argument_list|,
 name|executor
+argument_list|,
+name|daemonConf
 argument_list|)
 return|;
 block|}
