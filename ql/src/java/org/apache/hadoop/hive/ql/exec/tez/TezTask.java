@@ -3441,6 +3441,12 @@ name|sessionStateRef
 operator|.
 name|value
 operator|=
+literal|null
+expr_stmt|;
+name|sessionStateRef
+operator|.
+name|value
+operator|=
 name|sessionState
 operator|=
 name|getNewTezSessionOnError
@@ -3508,6 +3514,12 @@ name|sessionStateRef
 operator|.
 name|value
 operator|=
+literal|null
+expr_stmt|;
+name|sessionStateRef
+operator|.
+name|value
+operator|=
 name|sessionState
 operator|=
 name|getNewTezSessionOnError
@@ -3535,16 +3547,16 @@ name|retryException
 parameter_list|)
 block|{
 comment|// we failed to submit after retrying. Destroy session and bail.
-name|sessionState
-operator|.
-name|destroy
-argument_list|()
-expr_stmt|;
 name|sessionStateRef
 operator|.
 name|value
 operator|=
 literal|null
+expr_stmt|;
+name|sessionState
+operator|.
+name|destroy
+argument_list|()
 expr_stmt|;
 throw|throw
 name|retryException

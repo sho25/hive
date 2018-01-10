@@ -1336,6 +1336,33 @@ name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|dagResourcesDir
+operator|+
+literal|"; "
+operator|+
+name|additionalFilesNotFromConf
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" additional files, "
+operator|+
+name|localizedResources
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" localized resources"
+return|;
+block|}
 block|}
 specifier|private
 name|HiveResources
@@ -1943,6 +1970,15 @@ name|resources
 operator|=
 name|resources
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Setting resources to "
+operator|+
+name|resources
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -1966,6 +2002,15 @@ argument_list|(
 name|conf
 argument_list|,
 name|additionalFilesNotFromConf
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Created new resources: "
+operator|+
+name|resources
 argument_list|)
 expr_stmt|;
 block|}
@@ -3688,6 +3733,23 @@ name|URISyntaxException
 throws|,
 name|TezException
 block|{
+if|if
+condition|(
+name|resources
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"Ensure called on an unitialized (or closed) session "
+operator|+
+name|sessionId
+argument_list|)
+throw|;
+block|}
 name|String
 name|dir
 init|=
@@ -3952,6 +4014,16 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|console
+operator|=
+literal|null
+expr_stmt|;
+name|appJarLr
+operator|=
+literal|null
+expr_stmt|;
+try|try
+block|{
 if|if
 condition|(
 name|session
@@ -3970,6 +4042,10 @@ name|closeClient
 argument_list|(
 name|session
 argument_list|)
+expr_stmt|;
+name|session
+operator|=
+literal|null
 expr_stmt|;
 block|}
 elseif|else
@@ -4029,6 +4105,10 @@ argument_list|()
 expr_stmt|;
 comment|// ignore
 block|}
+name|sessionFuture
+operator|=
+literal|null
+expr_stmt|;
 if|if
 condition|(
 name|asyncSession
@@ -4050,9 +4130,17 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+finally|finally
+block|{
+try|try
+block|{
 name|cleanupScratchDir
 argument_list|()
 expr_stmt|;
+block|}
+finally|finally
+block|{
 if|if
 condition|(
 operator|!
@@ -4063,27 +4151,8 @@ name|cleanupDagResources
 argument_list|()
 expr_stmt|;
 block|}
-name|session
-operator|=
-literal|null
-expr_stmt|;
-name|sessionFuture
-operator|=
-literal|null
-expr_stmt|;
-name|console
-operator|=
-literal|null
-expr_stmt|;
-name|tezScratchDir
-operator|=
-literal|null
-expr_stmt|;
-comment|// Do not reset dag resources; if it wasn't cleaned it's still needed.
-name|appJarLr
-operator|=
-literal|null
-expr_stmt|;
+block|}
+block|}
 block|}
 specifier|private
 name|void
@@ -4122,6 +4191,13 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+name|tezScratchDir
+operator|!=
+literal|null
+condition|)
+block|{
 name|FileSystem
 name|fs
 init|=
@@ -4146,6 +4222,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+block|}
 specifier|protected
 specifier|final
 name|void
@@ -4153,6 +4230,26 @@ name|cleanupDagResources
 parameter_list|()
 throws|throws
 name|IOException
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Attemting to clean up resources for "
+operator|+
+name|sessionId
+operator|+
+literal|": "
+operator|+
+name|resources
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|resources
+operator|!=
+literal|null
+condition|)
 block|{
 name|FileSystem
 name|fs
@@ -4181,6 +4278,7 @@ name|resources
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|String
