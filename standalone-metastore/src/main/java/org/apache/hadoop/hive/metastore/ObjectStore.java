@@ -61795,6 +61795,18 @@ decl_stmt|;
 name|MWMPool
 name|pool
 init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|mapping
+operator|.
+name|isSetPoolPath
+argument_list|()
+condition|)
+block|{
+name|pool
+operator|=
 name|getPool
 argument_list|(
 name|resourcePlan
@@ -61804,7 +61816,8 @@ operator|.
 name|getPoolPath
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
@@ -61847,7 +61860,7 @@ name|pm
 operator|.
 name|newQuery
 argument_list|(
-name|MWMPool
+name|MWMMapping
 operator|.
 name|class
 argument_list|,
@@ -61883,6 +61896,9 @@ argument_list|(
 name|resourcePlan
 argument_list|,
 name|entityType
+operator|.
+name|toString
+argument_list|()
 argument_list|,
 name|entityName
 argument_list|)
