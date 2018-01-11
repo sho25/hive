@@ -4360,7 +4360,7 @@ argument_list|(
 literal|" HAVING count(*)> 1"
 argument_list|)
 expr_stmt|;
-comment|//say table T has partiton p, we are generating
+comment|//say table T has partition p, we are generating
 comment|//select cardinality_violation(ROW_ID, p) WHERE ... GROUP BY ROW__ID, p
 comment|//the Group By args are passed to cardinality_violation to add the violating value to the error msg
 try|try
