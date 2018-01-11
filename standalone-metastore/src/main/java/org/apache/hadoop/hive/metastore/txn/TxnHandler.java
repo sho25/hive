@@ -5053,6 +5053,10 @@ block|}
 comment|/**    * Gets the information of the last transaction committed for the input table    * given the transaction snapshot provided.    */
 annotation|@
 name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|List
 argument_list|<
@@ -5139,6 +5143,10 @@ block|}
 comment|/**    * Gets the information of the last transaction committed for the input table    * given the transaction snapshot provided.    */
 annotation|@
 name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|BasicTxnInfo
 name|getLastCompletedTransactionForTable
@@ -5439,6 +5447,10 @@ block|}
 comment|/**    * Gets the information of the first transaction for the given table    * after the transaction with the input id was committed (if any).     */
 annotation|@
 name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
 specifier|public
 name|BasicTxnInfo
 name|getFirstCompletedTransactionForTableAfterCommit
