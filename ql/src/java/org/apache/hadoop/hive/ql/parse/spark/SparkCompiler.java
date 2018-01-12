@@ -1468,6 +1468,14 @@ argument_list|(
 name|procCtx
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|conf
+operator|.
+name|isSparkDPPAny
+argument_list|()
+condition|)
+block|{
 comment|// Remove DPP based on expected size of the output data
 name|runRemoveDynamicPruning
 argument_list|(
@@ -1480,6 +1488,15 @@ argument_list|(
 name|procCtx
 argument_list|)
 expr_stmt|;
+comment|// Remove nested DPPs
+name|SparkUtilities
+operator|.
+name|removeNestedDPP
+argument_list|(
+name|procCtx
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Re-run constant propagation so we fold any new constants introduced by the operator optimizers
 comment|// Specifically necessary for DPP because we might have created lots of "and true and true" conditions
 if|if
@@ -1653,17 +1670,6 @@ name|OptimizeSparkProcContext
 name|procCtx
 parameter_list|)
 block|{
-if|if
-condition|(
-operator|!
-name|conf
-operator|.
-name|isSparkDPPAny
-argument_list|()
-condition|)
-block|{
-return|return;
-block|}
 name|boolean
 name|cycleFree
 init|=
