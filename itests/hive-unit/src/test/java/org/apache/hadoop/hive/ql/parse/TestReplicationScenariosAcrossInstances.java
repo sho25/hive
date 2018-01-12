@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*   Licensed to the Apache Software Foundation (ASF) under one   or more contributor license agreements.  See the NOTICE file   distributed with this work for additional information   regarding copyright ownership.  The ASF licenses this file   to you under the Apache License, Version 2.0 (the   "License"); you may not use this file except in compliance   with the License.  You may obtain a copy of the License at<p>   http://www.apache.org/licenses/LICENSE-2.0<p>   Unless required by applicable law or agreed to in writing, software   distributed under the License is distributed on an "AS IS" BASIS,   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.   See the License for the specific language governing permissions and   limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -309,6 +309,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -417,6 +427,11 @@ name|primary
 decl_stmt|,
 name|replica
 decl_stmt|;
+specifier|private
+specifier|static
+name|MiniDFSCluster
+name|miniDFSCluster
+decl_stmt|;
 annotation|@
 name|BeforeClass
 specifier|public
@@ -462,9 +477,8 @@ argument_list|,
 literal|"*"
 argument_list|)
 expr_stmt|;
-name|MiniDFSCluster
 name|miniDFSCluster
-init|=
+operator|=
 operator|new
 name|MiniDFSCluster
 operator|.
@@ -485,7 +499,7 @@ argument_list|)
 operator|.
 name|build
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|primary
 operator|=
 operator|new
@@ -1760,6 +1774,488 @@ literal|"japan"
 argument_list|,
 literal|"china"
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMetadataBootstrapDump
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table  acid_table (key int, value int) partitioned by (load_date date) "
+operator|+
+literal|"clustered by(key) into 2 buckets stored as orc tblproperties ('transactional'='true')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table1 (i int, j int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table1 values (1,2)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'hive.repl.dump.metadata.only'='true'"
+argument_list|,
+literal|"'hive.repl.dump.include.acid.tables'='true'"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"acid_table"
+block|,
+literal|"table1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from table1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalMetadataReplication
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+comment|////////////  Bootstrap   ////////////
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|bootstrapTuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table1 (i int, j int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table2 (a int, city string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table3 (i int, j int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table1 values (1,2)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'hive.repl.dump.metadata.only'='true'"
+argument_list|,
+literal|"'hive.repl.dump.include.acid.tables'='true'"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|bootstrapTuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"table1"
+block|,
+literal|"table2"
+block|,
+literal|"table3"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from table1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|////////////  First Incremental ////////////
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|incrementalOneTuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table table1 rename to renamed_table1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table2 partition(country='india') values (1,'mumbai') "
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table4 (i int, j int)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+operator|+
+literal|" from "
+operator|+
+name|bootstrapTuple
+operator|.
+name|lastReplicationId
+operator|+
+literal|" to "
+operator|+
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|bootstrapTuple
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|+
+literal|100L
+operator|+
+literal|" limit 100 "
+operator|+
+literal|"with ('hive.repl.dump.metadata.only'='true')"
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|incrementalOneTuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"renamed_table1"
+block|,
+literal|"table2"
+block|,
+literal|"table3"
+block|,
+literal|"table4"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from renamed_table1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from table2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|////////////  Second Incremental ////////////
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|secondIncremental
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"alter table table2 add columns (zipcode int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table table3 change i a string"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table table3 set tblproperties('custom.property'='custom.value')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table renamed_table1"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+operator|+
+literal|" from "
+operator|+
+name|incrementalOneTuple
+operator|.
+name|lastReplicationId
+operator|+
+literal|" with ('hive.repl.dump.metadata.only'='true')"
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|secondIncremental
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"table2"
+block|,
+literal|"table3"
+block|,
+literal|"table4"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"desc table3"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"a                   \tstring              \t                    "
+block|,
+literal|"j                   \tint                 \t                    "
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"desc table2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"a                   \tint                 \t                    "
+block|,
+literal|"city                \tstring              \t                    "
+block|,
+literal|"country             \tstring              \t                    "
+block|,
+literal|"zipcode             \tint                 \t                    "
+block|,
+literal|"\t \t "
+block|,
+literal|"# Partition Information\t \t "
+block|,
+literal|"# col_name            \tdata_type           \tcomment             "
+block|,
+literal|"country             \tstring              \t                    "
+block|,         }
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tblproperties table3('custom.property')"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"custom.value\t "
+block|}
 argument_list|)
 expr_stmt|;
 block|}

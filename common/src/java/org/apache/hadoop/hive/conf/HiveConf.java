@@ -2915,6 +2915,32 @@ argument_list|,
 literal|"TTL of dump dirs before cleanup."
 argument_list|)
 block|,
+name|REPL_DUMP_METADATA_ONLY
+argument_list|(
+literal|"hive.repl.dump.metadata.only"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Indicates whether replication dump only metadata information or data + metadata."
+argument_list|)
+block|,
+name|REPL_DUMP_INCLUDE_ACID_TABLES
+argument_list|(
+literal|"hive.repl.dump.include.acid.tables"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Indicates if repl dump should include information about ACID tables. It should be \n"
+operator|+
+literal|"used in conjunction with 'hive.repl.dump.metadata.only' to enable copying of \n"
+operator|+
+literal|"metadata for acid tables which do not require the corresponding transaction \n"
+operator|+
+literal|"semantics to be applied on target. This can be removed when ACID table \n"
+operator|+
+literal|"replication is supported."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
