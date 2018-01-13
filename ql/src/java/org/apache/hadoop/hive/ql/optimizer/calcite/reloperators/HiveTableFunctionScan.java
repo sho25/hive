@@ -189,7 +189,7 @@ implements|implements
 name|HiveRelNode
 block|{
 comment|/**    * @param cluster    *          cluster - Cluster that this relational expression belongs to    * @param traitSet    * @param inputs    *          inputs - 0 or more relational inputs    * @param rexCall    *          rexCall - Function invocation expression    * @param elementType    *          elementType - Element type of the collection that will implement    *          this table    * @param rowType    *          rowType - Row type produced by function    * @param columnMappings    *          columnMappings - Column mappings associated with this function    */
-specifier|public
+specifier|private
 name|HiveTableFunctionScan
 parameter_list|(
 name|RelOptCluster
@@ -273,9 +273,7 @@ parameter_list|)
 throws|throws
 name|CalciteSemanticException
 block|{
-name|HiveTableFunctionScan
-name|hiveTableFunctionScan
-init|=
+return|return
 operator|new
 name|HiveTableFunctionScan
 argument_list|(
@@ -293,9 +291,6 @@ name|rowType
 argument_list|,
 name|columnMappings
 argument_list|)
-decl_stmt|;
-return|return
-name|hiveTableFunctionScan
 return|;
 block|}
 annotation|@
@@ -329,9 +324,7 @@ argument_list|>
 name|columnMappings
 parameter_list|)
 block|{
-name|HiveTableFunctionScan
-name|htfs
-init|=
+return|return
 operator|new
 name|HiveTableFunctionScan
 argument_list|(
@@ -350,9 +343,6 @@ name|rowType
 argument_list|,
 name|columnMappings
 argument_list|)
-decl_stmt|;
-return|return
-name|htfs
 return|;
 block|}
 annotation|@
