@@ -968,6 +968,17 @@ argument_list|()
 return|;
 block|}
 block|}
+comment|/**    * A vector expression which implements a checked execution to account for overflow handling    * should override this method and return true. In such a case Vectorizer will use Checked    * variation of the vector expression to process data    * @return true if vector expression implements a Checked variation of vector expression    */
+specifier|public
+name|boolean
+name|supportsCheckedExecution
+parameter_list|()
+block|{
+comment|// default is false
+return|return
+literal|false
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

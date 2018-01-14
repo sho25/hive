@@ -1326,6 +1326,11 @@ specifier|private
 name|HiveVectorAdaptorUsageMode
 name|hiveVectorAdaptorUsageMode
 decl_stmt|;
+comment|//when set to true use the overflow checked vector expressions
+specifier|private
+name|boolean
+name|useCheckedVectorExpressions
+decl_stmt|;
 specifier|private
 name|boolean
 name|reuseScratchColumns
@@ -1377,6 +1382,21 @@ operator|.
 name|setReuseColumns
 argument_list|(
 name|reuseScratchColumns
+argument_list|)
+expr_stmt|;
+name|useCheckedVectorExpressions
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_USE_CHECKED_EXPRESSIONS
 argument_list|)
 expr_stmt|;
 block|}
@@ -8884,6 +8904,8 @@ argument_list|(
 name|udfClass
 argument_list|,
 name|descriptor
+argument_list|,
+name|useCheckedVectorExpressions
 argument_list|)
 decl_stmt|;
 if|if
@@ -9757,6 +9779,8 @@ argument_list|(
 name|udfClass
 argument_list|,
 name|descriptor
+argument_list|,
+name|useCheckedVectorExpressions
 argument_list|)
 decl_stmt|;
 if|if

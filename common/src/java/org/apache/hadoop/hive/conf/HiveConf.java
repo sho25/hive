@@ -12167,6 +12167,19 @@ argument_list|,
 literal|"This flag should be set to true to enable vectorization of ROW__ID."
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_USE_CHECKED_EXPRESSIONS
+argument_list|(
+literal|"hive.vectorized.use.checked.expressions"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to use overflow checked vector expressions when available.\n"
+operator|+
+literal|"For example, arithmetic expressions which can overflow the output data type can be evaluated using\n"
+operator|+
+literal|" checked vector expressions so that they produce same result as non-vectorized evaluation."
+argument_list|)
+block|,
 name|HIVE_VECTORIZED_INPUT_FORMAT_SUPPORTS_ENABLED
 argument_list|(
 literal|"hive.vectorized.input.format.supports.enabled"
@@ -12198,7 +12211,7 @@ argument_list|)
 argument_list|,
 literal|"internal use only, used to override the hive.vectorized.execution.enabled setting and\n"
 operator|+
-literal|"turn off vectorization.  The default is false, or course"
+literal|"turn off vectorization.  The default is false, of course"
 argument_list|,
 literal|true
 argument_list|)
