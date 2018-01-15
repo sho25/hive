@@ -2941,6 +2941,18 @@ operator|+
 literal|"replication is supported."
 argument_list|)
 block|,
+comment|//https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/TransparentEncryption.html#Running_as_the_superuser
+name|REPL_ADD_RAW_RESERVED_NAMESPACE
+argument_list|(
+literal|"hive.repl.add.raw.reserved.namespace"
+argument_list|,
+literal|false
+argument_list|,
+literal|"For TDE with same encryption keys on source and target, allow Distcp super user to access \n"
+operator|+
+literal|"the raw bytes from filesystem without decrypting on source and then encrypting on target."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
