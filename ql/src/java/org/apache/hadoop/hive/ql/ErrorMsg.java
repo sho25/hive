@@ -2662,17 +2662,6 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|STATSAGGREGATOR_MISSED_SOMESTATS
-argument_list|(
-literal|30016
-argument_list|,
-literal|"Stats type {0} is missing from stats aggregator. If you don't want the query "
-operator|+
-literal|"to fail because of this, set hive.stats.atomic=false"
-argument_list|,
-literal|true
-argument_list|)
-block|,
 name|STATS_SKIPPING_BY_ERROR
 argument_list|(
 literal|30017
