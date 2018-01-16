@@ -143,14 +143,6 @@ specifier|final
 class|class
 name|SparkClientFactory
 block|{
-comment|/** Used to run the driver in-process, mostly for testing. */
-specifier|static
-specifier|final
-name|String
-name|CONF_KEY_IN_PROCESS
-init|=
-literal|"spark.client.do_not_use.run_driver_in_process"
-decl_stmt|;
 comment|/** Used by client and driver to share a client ID for establishing an RPC session. */
 specifier|static
 specifier|final
