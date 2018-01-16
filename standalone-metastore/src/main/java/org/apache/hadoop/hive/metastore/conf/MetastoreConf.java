@@ -2123,7 +2123,22 @@ literal|"metastore.filter.hook"
 argument_list|,
 literal|"hive.metastore.filter.hook"
 argument_list|,
-literal|"org.apache.hadoop.hive.metastore.DefaultMetaStoreFilterHookImpl"
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|DefaultMetaStoreFilterHookImpl
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 literal|"Metastore hook class for filtering the metadata read results. If hive.security.authorization.manager"
 operator|+

@@ -231,7 +231,7 @@ return|;
 block|}
 specifier|public
 name|PartitionBuilder
-name|setDbAndTableName
+name|fromTable
 parameter_list|(
 name|Table
 name|table
@@ -254,6 +254,17 @@ name|table
 operator|.
 name|getTableName
 argument_list|()
+expr_stmt|;
+name|setCols
+argument_list|(
+name|table
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getCols
+argument_list|()
+argument_list|)
 expr_stmt|;
 return|return
 name|this
