@@ -1595,6 +1595,8 @@ name|class
 argument_list|)
 argument_list|,
 name|isGuaranteed
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|this
