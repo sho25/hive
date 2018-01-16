@@ -4360,6 +4360,20 @@ throw|;
 block|}
 specifier|public
 specifier|static
+name|void
+name|setHiveSiteLocation
+parameter_list|(
+name|URL
+name|location
+parameter_list|)
+block|{
+name|hiveSiteURL
+operator|=
+name|location
+expr_stmt|;
+block|}
+specifier|public
+specifier|static
 name|Configuration
 name|newMetastoreConf
 parameter_list|()
@@ -4413,6 +4427,14 @@ argument_list|)
 expr_stmt|;
 comment|// Add in hive-site.xml.  We add this first so that it gets overridden by the new metastore
 comment|// specific files if they exist.
+if|if
+condition|(
+name|hiveSiteURL
+operator|==
+literal|null
+condition|)
+block|{
+comment|/*        * this 'if' is pretty lame - QTestUtil.QTestUtil() uses hiveSiteURL to load a specific        * hive-site.xml from data/conf/<subdir> so this makes it follow the same logic - otherwise        * HiveConf and MetastoreConf may load different hive-site.xml  ( For example,        * HiveConf uses data/conf/spark/hive-site.xml and MetastoreConf data/conf/hive-site.xml)        */
 name|hiveSiteURL
 operator|=
 name|findConfigFile
@@ -4422,6 +4444,7 @@ argument_list|,
 literal|"hive-site.xml"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|hiveSiteURL
