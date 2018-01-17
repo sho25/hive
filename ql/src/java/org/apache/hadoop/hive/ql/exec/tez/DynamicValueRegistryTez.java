@@ -207,6 +207,26 @@ name|ql
 operator|.
 name|plan
 operator|.
+name|DynamicValue
+operator|.
+name|NoDynamicValuesException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
 name|ExprNodeDesc
 import|;
 end_import
@@ -545,7 +565,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IllegalStateException
+name|NoDynamicValuesException
 argument_list|(
 literal|"Value does not exist in registry: "
 operator|+
