@@ -6534,6 +6534,15 @@ operator|+
 literal|"padding tolerance config (hive.exec.orc.block.padding.tolerance)."
 argument_list|)
 block|,
+name|HIVE_ORC_CODEC_POOL
+argument_list|(
+literal|"hive.use.orc.codec.pool"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use codec pool in ORC. Disable if there are bugs with codec reuse."
+argument_list|)
+block|,
 name|HIVEUSEEXPLICITRCFILEHEADER
 argument_list|(
 literal|"hive.exec.rcfile.use.explicit.header"

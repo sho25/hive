@@ -246,6 +246,9 @@ name|pf
 parameter_list|,
 name|IoTrace
 name|trace
+parameter_list|,
+name|boolean
+name|useCodecPool
 parameter_list|)
 throws|throws
 name|IOException
