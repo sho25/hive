@@ -859,15 +859,7 @@ argument_list|)
 operator|&&
 name|FunctionRegistry
 operator|.
-name|isDeterministic
-argument_list|(
-name|this
-argument_list|)
-operator|&&
-operator|!
-name|FunctionRegistry
-operator|.
-name|isStateful
+name|isConsistentWithinQuery
 argument_list|(
 name|this
 argument_list|)

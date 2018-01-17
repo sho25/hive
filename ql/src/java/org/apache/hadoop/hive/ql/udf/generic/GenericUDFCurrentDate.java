@@ -196,11 +196,11 @@ import|;
 end_import
 
 begin_comment
-comment|// If there is a new UDFType to describe a function that is deterministic within a query
+comment|// This function is not a deterministic function, but a runtime constant.
 end_comment
 
 begin_comment
-comment|// but changes value between queries, this function would fall into that category.
+comment|// The return value is constant within a query but can be different between queries.
 end_comment
 
 begin_class
@@ -208,6 +208,10 @@ annotation|@
 name|UDFType
 argument_list|(
 name|deterministic
+operator|=
+literal|false
+argument_list|,
+name|runtimeConstant
 operator|=
 literal|true
 argument_list|)

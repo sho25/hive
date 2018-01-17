@@ -11298,6 +11298,14 @@ name|isDeterministic
 argument_list|(
 name|udf
 argument_list|)
+operator|&&
+operator|!
+name|FunctionRegistry
+operator|.
+name|isRuntimeConstant
+argument_list|(
+name|udf
+argument_list|)
 condition|)
 block|{
 return|return

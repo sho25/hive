@@ -121,6 +121,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|UDFType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -182,10 +200,25 @@ import|;
 end_import
 
 begin_comment
-comment|// deterministic in the query range
+comment|// This function is not a deterministic function, but a runtime constant.
+end_comment
+
+begin_comment
+comment|// The return value is constant within a query but can be different between queries.
 end_comment
 
 begin_class
+annotation|@
+name|UDFType
+argument_list|(
+name|deterministic
+operator|=
+literal|false
+argument_list|,
+name|runtimeConstant
+operator|=
+literal|true
+argument_list|)
 annotation|@
 name|Description
 argument_list|(

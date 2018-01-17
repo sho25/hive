@@ -665,7 +665,7 @@ operator|&&
 operator|!
 name|FunctionRegistry
 operator|.
-name|isDeterministic
+name|isConsistentWithinQuery
 argument_list|(
 name|hiveUDF
 argument_list|)

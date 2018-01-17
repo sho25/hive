@@ -956,7 +956,7 @@ operator|&&
 operator|!
 name|FunctionRegistry
 operator|.
-name|isDeterministic
+name|isConsistentWithinQuery
 argument_list|(
 operator|(
 operator|(

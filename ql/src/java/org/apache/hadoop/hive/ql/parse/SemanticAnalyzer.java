@@ -33997,7 +33997,7 @@ name|prev
 operator|!=
 literal|null
 operator|&&
-name|isDeterministic
+name|isConsistentWithinQuery
 argument_list|(
 name|inputExpr
 argument_list|)
@@ -34119,7 +34119,7 @@ return|;
 block|}
 specifier|private
 name|boolean
-name|isDeterministic
+name|isConsistentWithinQuery
 parameter_list|(
 name|ExprNodeDesc
 name|expr
@@ -34137,7 +34137,7 @@ argument_list|(
 name|expr
 argument_list|)
 operator|.
-name|isDeterministic
+name|isConsistentWithinQuery
 argument_list|()
 return|;
 block|}

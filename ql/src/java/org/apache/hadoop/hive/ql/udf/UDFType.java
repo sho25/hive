@@ -162,6 +162,13 @@ parameter_list|()
 default|default
 literal|false
 function_decl|;
+comment|/**    * Property used to mark functions like current_timestamp, current_date, current_database().    * These functions aren't actually deterministic (the values can change between queries),    * but the value returned by these functions should be consistent for the life of the query,    * so constant folding still applies for these functions.    * Queries using these functions should not be eligible for materialized views or query caching.    * @return true if the function is a runtime constant    */
+name|boolean
+name|runtimeConstant
+parameter_list|()
+default|default
+literal|false
+function_decl|;
 comment|/**    * A UDF is considered distinctLike if the UDF can be evaluated on just the    * distinct values of a column. Examples include min and max UDFs. This    * information is used by metadata-only optimizer.    *    * @return true if UDF is distinctLike    */
 name|boolean
 name|distinctLike

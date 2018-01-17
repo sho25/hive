@@ -506,7 +506,7 @@ operator|)
 operator|&&
 name|eval
 operator|.
-name|isDeterministic
+name|isConsistentWithinQuery
 argument_list|()
 condition|)
 block|{

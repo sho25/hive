@@ -358,7 +358,7 @@ condition|(
 operator|!
 name|FunctionRegistry
 operator|.
-name|isDeterministic
+name|isConsistentWithinQuery
 argument_list|(
 name|fd
 operator|.

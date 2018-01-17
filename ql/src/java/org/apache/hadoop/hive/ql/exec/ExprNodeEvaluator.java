@@ -301,6 +301,36 @@ return|return
 literal|false
 return|;
 block|}
+comment|/**    * Return whether this node (or any children nodes) are runtime constants.    */
+specifier|public
+name|boolean
+name|isRuntimeConstant
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|/**    * Returns whether the expression, for a single query, returns the same result given    * the same arguments. This includes deterministic functions as well as runtime    * constants (which may not be deterministic across queries).    */
+specifier|public
+name|boolean
+name|isConsistentWithinQuery
+parameter_list|()
+block|{
+return|return
+operator|(
+name|isDeterministic
+argument_list|()
+operator|||
+name|isRuntimeConstant
+argument_list|()
+operator|)
+operator|&&
+operator|!
+name|isStateful
+argument_list|()
+return|;
+block|}
 comment|/**    * Return child evaluators if exist    */
 specifier|public
 name|ExprNodeEvaluator
