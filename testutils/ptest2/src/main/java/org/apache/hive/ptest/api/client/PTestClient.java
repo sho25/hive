@@ -2130,6 +2130,16 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|//TODO This line can be removed once precommit jenkins jobs move to Java 8
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"https.protocols"
+argument_list|,
+literal|"TLSv1,TLSv1.1,TLSv1.2"
+argument_list|)
+expr_stmt|;
 name|CommandLineParser
 name|parser
 init|=
