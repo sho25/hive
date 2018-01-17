@@ -1398,6 +1398,27 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+specifier|final
+name|TimestampLocalTZTypeInfo
+name|tsTZTypeInfo
+init|=
+operator|new
+name|TimestampLocalTZTypeInfo
+argument_list|(
+name|configuration
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_LOCAL_TIME_ZONE
+operator|.
+name|varname
+argument_list|)
+argument_list|)
+decl_stmt|;
 comment|// Druid query
 name|String
 name|druidQuery
@@ -1526,6 +1547,10 @@ name|Lists
 operator|.
 name|transform
 argument_list|(
+name|Lists
+operator|.
+name|transform
+argument_list|(
 name|Utilities
 operator|.
 name|getColumnTypes
@@ -1541,6 +1566,17 @@ name|getPrimitiveTypeInfo
 argument_list|(
 name|type
 argument_list|)
+argument_list|)
+argument_list|,
+name|e
+lambda|->
+name|e
+operator|instanceof
+name|TimestampLocalTZTypeInfo
+condition|?
+name|tsTZTypeInfo
+else|:
+name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1810,9 +1846,7 @@ comment|// field name
 name|PrimitiveTypeInfo
 name|type
 init|=
-name|TypeInfoFactory
-operator|.
-name|timestampLocalTZTypeInfo
+name|tsTZTypeInfo
 decl_stmt|;
 comment|// field type
 name|columnTypes
@@ -1868,6 +1902,12 @@ name|columnTypes
 operator|.
 name|add
 argument_list|(
+name|type
+operator|instanceof
+name|TimestampLocalTZTypeInfo
+condition|?
+name|tsTZTypeInfo
+else|:
 name|type
 argument_list|)
 expr_stmt|;
@@ -2064,17 +2104,9 @@ name|i
 operator|++
 control|)
 block|{
-name|mapColumnNamesTypes
-operator|.
-name|put
-argument_list|(
-name|propColumnNames
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-argument_list|,
+name|PrimitiveTypeInfo
+name|type
+init|=
 name|TypeInfoFactory
 operator|.
 name|getPrimitiveTypeInfo
@@ -2086,6 +2118,31 @@ argument_list|(
 name|i
 argument_list|)
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|type
+operator|instanceof
+name|TimestampLocalTZTypeInfo
+condition|)
+block|{
+name|type
+operator|=
+name|tsTZTypeInfo
+expr_stmt|;
+block|}
+name|mapColumnNamesTypes
+operator|.
+name|put
+argument_list|(
+name|propColumnNames
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+argument_list|,
+name|type
 argument_list|)
 expr_stmt|;
 block|}
@@ -2110,6 +2167,8 @@ name|TimeseriesQuery
 operator|)
 name|query
 argument_list|,
+name|tsTZTypeInfo
+argument_list|,
 name|columnNames
 argument_list|,
 name|columnTypes
@@ -2132,6 +2191,8 @@ operator|(
 name|TopNQuery
 operator|)
 name|query
+argument_list|,
+name|tsTZTypeInfo
 argument_list|,
 name|columnNames
 argument_list|,
@@ -2198,6 +2259,8 @@ name|SelectQuery
 operator|)
 name|query
 argument_list|,
+name|tsTZTypeInfo
+argument_list|,
 name|columnNames
 argument_list|,
 name|columnTypes
@@ -2222,6 +2285,8 @@ operator|(
 name|GroupByQuery
 operator|)
 name|query
+argument_list|,
+name|tsTZTypeInfo
 argument_list|,
 name|columnNames
 argument_list|,
@@ -2550,6 +2615,9 @@ parameter_list|(
 name|TimeseriesQuery
 name|query
 parameter_list|,
+name|TimestampLocalTZTypeInfo
+name|timeColumnTypeInfo
+parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -2585,9 +2653,7 @@ name|columnTypes
 operator|.
 name|add
 argument_list|(
-name|TypeInfoFactory
-operator|.
-name|timestampLocalTZTypeInfo
+name|timeColumnTypeInfo
 argument_list|)
 expr_stmt|;
 comment|// Aggregator columns
@@ -2704,6 +2770,9 @@ parameter_list|(
 name|TopNQuery
 name|query
 parameter_list|,
+name|TimestampLocalTZTypeInfo
+name|timeColumnTypeInfo
+parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -2739,9 +2808,7 @@ name|columnTypes
 operator|.
 name|add
 argument_list|(
-name|TypeInfoFactory
-operator|.
-name|timestampLocalTZTypeInfo
+name|timeColumnTypeInfo
 argument_list|)
 expr_stmt|;
 comment|// Dimension column
@@ -2881,6 +2948,9 @@ parameter_list|(
 name|SelectQuery
 name|query
 parameter_list|,
+name|TimestampLocalTZTypeInfo
+name|timeColumnTypeInfo
+parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -2921,9 +2991,7 @@ name|columnTypes
 operator|.
 name|add
 argument_list|(
-name|TypeInfoFactory
-operator|.
-name|timestampLocalTZTypeInfo
+name|timeColumnTypeInfo
 argument_list|)
 expr_stmt|;
 comment|// Dimension columns
@@ -3124,6 +3192,9 @@ parameter_list|(
 name|GroupByQuery
 name|query
 parameter_list|,
+name|TimestampLocalTZTypeInfo
+name|timeColumnTypeInfo
+parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -3159,9 +3230,7 @@ name|columnTypes
 operator|.
 name|add
 argument_list|(
-name|TypeInfoFactory
-operator|.
-name|timestampLocalTZTypeInfo
+name|timeColumnTypeInfo
 argument_list|)
 expr_stmt|;
 comment|// Dimension columns
