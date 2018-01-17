@@ -153,6 +153,26 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|VectorizedRowBatch
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|objectinspector
@@ -374,6 +394,32 @@ name|ListColumnVector
 operator|)
 name|column
 decl_stmt|;
+comment|// before readBatch, initial the size of offsets& lengths as the default value,
+comment|// the actual size will be assigned in setChildrenInfo() after reading complete.
+name|lcv
+operator|.
+name|offsets
+operator|=
+operator|new
+name|long
+index|[
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_SIZE
+index|]
+expr_stmt|;
+name|lcv
+operator|.
+name|lengths
+operator|=
+operator|new
+name|long
+index|[
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_SIZE
+index|]
+expr_stmt|;
 comment|// Because the length of ListColumnVector.child can't be known now,
 comment|// the valueList will save all data for ListColumnVector temporary.
 name|List
