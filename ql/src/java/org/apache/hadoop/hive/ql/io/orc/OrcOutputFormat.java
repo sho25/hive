@@ -1922,6 +1922,11 @@ name|writerOptions
 argument_list|(
 name|options
 operator|.
+name|getTableProperties
+argument_list|()
+argument_list|,
+name|options
+operator|.
 name|getConfiguration
 argument_list|()
 argument_list|)
