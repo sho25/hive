@@ -2032,7 +2032,7 @@ name|averageSize
 operator|.
 name|getTotalSize
 argument_list|()
-operator|<=
+operator|<
 literal|0
 condition|)
 block|{
