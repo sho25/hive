@@ -13290,7 +13290,7 @@ parameter_list|(
 name|String
 name|resourcePlanName
 parameter_list|,
-name|WMResourcePlan
+name|WMNullableResourcePlan
 name|resourcePlan
 parameter_list|,
 name|boolean
@@ -13666,7 +13666,7 @@ specifier|public
 name|void
 name|alterWMPool
 parameter_list|(
-name|WMPool
+name|WMNullablePool
 name|pool
 parameter_list|,
 name|String

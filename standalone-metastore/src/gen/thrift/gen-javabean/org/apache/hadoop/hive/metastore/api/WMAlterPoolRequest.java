@@ -562,7 +562,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|WMPool
+name|WMNullablePool
 name|pool
 decl_stmt|;
 comment|// optional
@@ -925,7 +925,7 @@ name|TType
 operator|.
 name|STRUCT
 argument_list|,
-name|WMPool
+name|WMNullablePool
 operator|.
 name|class
 argument_list|)
@@ -1043,7 +1043,7 @@ operator|.
 name|pool
 operator|=
 operator|new
-name|WMPool
+name|WMNullablePool
 argument_list|(
 name|other
 operator|.
@@ -1103,7 +1103,7 @@ literal|null
 expr_stmt|;
 block|}
 specifier|public
-name|WMPool
+name|WMNullablePool
 name|getPool
 parameter_list|()
 block|{
@@ -1117,7 +1117,7 @@ specifier|public
 name|void
 name|setPool
 parameter_list|(
-name|WMPool
+name|WMNullablePool
 name|pool
 parameter_list|)
 block|{
@@ -1285,7 +1285,7 @@ block|{
 name|setPool
 argument_list|(
 operator|(
-name|WMPool
+name|WMNullablePool
 operator|)
 name|value
 argument_list|)
@@ -2418,7 +2418,7 @@ operator|.
 name|pool
 operator|=
 operator|new
-name|WMPool
+name|WMNullablePool
 argument_list|()
 expr_stmt|;
 name|struct
@@ -2906,7 +2906,7 @@ operator|.
 name|pool
 operator|=
 operator|new
-name|WMPool
+name|WMNullablePool
 argument_list|()
 expr_stmt|;
 name|struct
