@@ -10241,6 +10241,27 @@ argument_list|,
 literal|"Whether to allow several parallel operations (such as SQL statements) in one session."
 argument_list|)
 block|,
+name|HIVE_SERVER2_MATERIALIZED_VIEWS_REGISTRY_IMPL
+argument_list|(
+literal|"hive.server2.materializedviews.registry.impl"
+argument_list|,
+literal|"DEFAULT"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"DEFAULT"
+argument_list|,
+literal|"DUMMY"
+argument_list|)
+argument_list|,
+literal|"The implementation that we should use for the materialized views registry. \n"
+operator|+
+literal|"  DEFAULT: Default cache for materialized views\n"
+operator|+
+literal|"  DUMMY: Do not cache materialized views and hence forward requests to metastore"
+argument_list|)
+block|,
 comment|// HiveServer2 WebUI
 name|HIVE_SERVER2_WEBUI_BIND_HOST
 argument_list|(

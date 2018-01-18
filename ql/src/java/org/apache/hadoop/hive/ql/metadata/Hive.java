@@ -8871,6 +8871,8 @@ argument_list|()
 operator|.
 name|createMaterializedView
 argument_list|(
+name|conf
+argument_list|,
 name|materializedViewTable
 argument_list|)
 expr_stmt|;

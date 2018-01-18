@@ -717,6 +717,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveMaterializedViewsRegistry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|HiveParser
@@ -4527,6 +4545,15 @@ block|}
 name|ss
 operator|.
 name|updateThreadName
+argument_list|()
+expr_stmt|;
+comment|// Create views registry
+name|HiveMaterializedViewsRegistry
+operator|.
+name|get
+argument_list|()
+operator|.
+name|init
 argument_list|()
 expr_stmt|;
 comment|// execute cli driver work

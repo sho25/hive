@@ -1920,6 +1920,13 @@ name|SessionState
 operator|.
 name|get
 argument_list|()
+operator|==
+literal|null
+operator|||
+name|SessionState
+operator|.
+name|get
+argument_list|()
 operator|.
 name|getTempTables
 argument_list|()
