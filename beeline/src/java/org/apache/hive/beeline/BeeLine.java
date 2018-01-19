@@ -4245,7 +4245,7 @@ name|commandLine
 operator|.
 name|getOptionValue
 argument_list|(
-literal|"slient"
+literal|"silent"
 argument_list|)
 argument_list|)
 argument_list|)
