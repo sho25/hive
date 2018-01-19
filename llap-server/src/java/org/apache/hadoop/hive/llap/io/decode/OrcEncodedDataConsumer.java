@@ -1902,6 +1902,16 @@ name|i
 operator|++
 control|)
 block|{
+if|if
+condition|(
+name|columnReaders
+index|[
+name|i
+index|]
+operator|==
+literal|null
+condition|)
+continue|continue;
 comment|// TODO: we could/should trace seek destinations; pps needs a "peek" method
 name|columnReaders
 index|[
@@ -1988,6 +1998,13 @@ index|[
 name|i
 index|]
 decl_stmt|;
+if|if
+condition|(
+name|reader
+operator|==
+literal|null
+condition|)
+continue|continue;
 comment|// Note: we assume this never happens for SerDe reader - the batch would never have vectors.
 comment|// That is always true now; but it wasn't some day, the below would throw in getColumnData.
 operator|(

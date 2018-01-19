@@ -13448,6 +13448,13 @@ range|:
 name|fields
 control|)
 block|{
+if|if
+condition|(
+name|child
+operator|!=
+literal|null
+condition|)
+block|{
 operator|(
 operator|(
 name|SettableTreeReader
@@ -13462,6 +13469,7 @@ argument_list|,
 name|sameStripe
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
