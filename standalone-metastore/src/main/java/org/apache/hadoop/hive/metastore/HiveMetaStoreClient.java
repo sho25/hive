@@ -13405,10 +13405,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|List
-argument_list|<
-name|String
-argument_list|>
+name|WMValidateResourcePlanResponse
 name|validateResourcePlan
 parameter_list|(
 name|String
@@ -13444,9 +13441,6 @@ name|validate_resource_plan
 argument_list|(
 name|request
 argument_list|)
-operator|.
-name|getErrors
-argument_list|()
 return|;
 block|}
 annotation|@

@@ -1527,7 +1527,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 1 gB"
+literal|" SHUFFLE_BYTES> 1gB"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1581,7 +1581,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 1 TB"
+literal|" SHUFFLE_BYTES> 1TB"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1637,7 +1637,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 100 B"
+literal|" SHUFFLE_BYTES> 100"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1687,7 +1687,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 100bytes"
+literal|" SHUFFLE_BYTES> 100"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1752,7 +1752,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid size unit"
+literal|"Invalid expression:  SHUFFLE_BYTES> 300GiB"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -1783,7 +1783,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid size unit"
+literal|"Invalid expression:  SHUFFLE_BYTES> 300 foo"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -1808,7 +1808,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300 s"
+literal|" elapsed_TIME> 300sec"
 argument_list|)
 decl_stmt|;
 name|Expression
@@ -1857,7 +1857,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300 seconds"
+literal|" elapsed_TIME> 300seconds"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1905,7 +1905,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300 sec"
+literal|" elapsed_TIME> 300sec"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1953,7 +1953,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300s"
+literal|" elapsed_TIME> 300second"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2097,7 +2097,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300000000 microseconds"
+literal|" elapsed_TIME> 300000000microseconds"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2214,14 +2214,14 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid time unit"
+literal|"Invalid expression:  elapsed_TIME> 300lightyears"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300 light years"
+literal|" elapsed_TIME> 300lightyears"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2245,7 +2245,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid time unit"
+literal|"Invalid expression:  elapsed_TIME> 300secTOR"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2329,7 +2329,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid move action expression (MOVE TO    ). Pool name is empty"
+literal|"Invalid action expression: MOVE TO  "
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2645,7 +2645,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid predicate in expression"
+literal|"Invalid expression: BYTES_READ< 1024"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2676,7 +2676,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid predicate in expression"
+literal|"Invalid expression: BYTES_READ>"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2707,7 +2707,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Counter name cannot be empty!"
+literal|"Invalid expression:> 1024"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2738,7 +2738,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid predicate in expression"
+literal|"Invalid expression: BYTES_READ> 1024> 1025"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2769,7 +2769,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid predicate in expression"
+literal|"Invalid expression: BYTES_READ> BYTES_READ> 1025"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2800,7 +2800,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid size unit"
+literal|"Invalid expression: BYTES_READ> 1024aaaa"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2831,7 +2831,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Invalid counter value"
+literal|"Invalid expression: BYTES_READ> foo1024"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -2862,7 +2862,7 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-literal|"Illegal value for counter limit. Expected a positive long value."
+literal|"Invalid expression: BYTES_READ> -1024"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
