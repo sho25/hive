@@ -5453,6 +5453,76 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Test 'describe extended' on tables that have special white space characters in the row format.    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDescribeExtended
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|SCRIPT_TEXT
+init|=
+literal|"drop table if exists describeDelim;"
+operator|+
+literal|"create table describeDelim (orderid int, orderdate string, customerid int)"
+operator|+
+literal|" ROW FORMAT DELIMITED FIELDS terminated by '\\t' LINES terminated by '\\n';"
+operator|+
+literal|"describe extended describeDelim;"
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|argList
+init|=
+name|getBaseArgs
+argument_list|(
+name|miniHS2
+operator|.
+name|getBaseJdbcURL
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|testScriptFile
+argument_list|(
+name|SCRIPT_TEXT
+argument_list|,
+name|argList
+argument_list|,
+name|OutStream
+operator|.
+name|OUT
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+operator|new
+name|Tuple
+argument_list|<>
+argument_list|(
+literal|"Detailed Table Information.*line.delim=\\\\n"
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+operator|new
+name|Tuple
+argument_list|<>
+argument_list|(
+literal|"Detailed Table Information.*field.delim=\\\\t"
+argument_list|,
+literal|true
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
