@@ -2200,6 +2200,11 @@ literal|"Workload management is enabled but there's no resource plan"
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|hasQueue
+condition|)
+block|{
 comment|// Initialize workload management.
 name|LOG
 operator|.
@@ -2241,6 +2246,7 @@ argument_list|,
 name|e
 argument_list|)
 throw|;
+block|}
 block|}
 if|if
 condition|(
