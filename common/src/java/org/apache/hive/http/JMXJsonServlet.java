@@ -1371,9 +1371,7 @@ literal|" of "
 operator|+
 name|oname
 operator|+
-literal|" threw an exception"
-argument_list|,
-name|e
+literal|" is unsupported"
 argument_list|)
 expr_stmt|;
 block|}
