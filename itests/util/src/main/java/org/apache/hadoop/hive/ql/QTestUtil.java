@@ -545,34 +545,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Throwables
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -659,7 +631,7 @@ name|lang3
 operator|.
 name|tuple
 operator|.
-name|Pair
+name|ImmutablePair
 import|;
 end_import
 
@@ -675,7 +647,7 @@ name|lang3
 operator|.
 name|tuple
 operator|.
-name|ImmutablePair
+name|Pair
 import|;
 end_import
 
@@ -1635,6 +1607,34 @@ name|google
 operator|.
 name|common
 operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Throwables
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|collect
 operator|.
 name|ImmutableList
@@ -1758,6 +1758,24 @@ init|=
 literal|"build.dir"
 decl_stmt|;
 comment|// typically target
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|PATH_HDFS_REGEX
+init|=
+literal|"(hdfs://)([a-zA-Z0-9:/_\\-\\.=])+"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|PATH_HDFS_WITH_DATE_USER_GROUP_REGEX
+init|=
+literal|"([a-z]+) ([a-z]+)([ ]+)([0-9]+) ([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}) "
+operator|+
+name|PATH_HDFS_REGEX
+decl_stmt|;
 specifier|private
 name|String
 name|testWarehouse
@@ -1771,6 +1789,10 @@ specifier|protected
 specifier|final
 name|String
 name|outDir
+decl_stmt|;
+specifier|protected
+name|String
+name|overrideResultsDir
 decl_stmt|;
 specifier|protected
 specifier|final
@@ -3815,7 +3837,7 @@ name|String
 name|confDir
 parameter_list|,
 name|String
-name|hadzoopVer
+name|hadoopVer
 parameter_list|,
 name|String
 name|initScript
@@ -9554,6 +9576,18 @@ name|add
 argument_list|(
 name|this
 operator|.
+name|clusterType
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|configs
+operator|.
+name|add
+argument_list|(
+name|this
+operator|.
 name|hadoopVer
 argument_list|)
 expr_stmt|;
@@ -9594,7 +9628,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// example file names are input1.q.out_0.20.0_minimr or input2.q.out_0.17
+comment|// example file names are input1.q.out_mr_0.17 or input2.q.out_0.17
 for|for
 control|(
 name|String
@@ -10167,8 +10201,6 @@ literal|".*file:.*"
 block|,
 literal|".*pfile:.*"
 block|,
-literal|".*hdfs:.*"
-block|,
 literal|".*/tmp/.*"
 block|,
 literal|".*invalidscheme:.*"
@@ -10467,6 +10499,26 @@ argument_list|(
 literal|"(pblob|s3.?|swift|wasb.?).*hive-staging.*"
 argument_list|,
 literal|"### BLOBSTORE_STAGING_PATH ###"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|add
+argument_list|(
+name|toPatternPair
+argument_list|(
+name|PATH_HDFS_WITH_DATE_USER_GROUP_REGEX
+argument_list|,
+literal|"### USER ### ### GROUP ###$3$4 ### HDFS DATE ### $6### HDFS PATH ###"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|add
+argument_list|(
+name|toPatternPair
+argument_list|(
+name|PATH_HDFS_REGEX
+argument_list|,
+literal|"$1### HDFS PATH ###"
 argument_list|)
 argument_list|)
 expr_stmt|;
