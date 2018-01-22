@@ -2143,6 +2143,9 @@ name|get
 argument_list|(
 name|col
 argument_list|)
+operator|.
+name|getExprString
+argument_list|()
 decl_stmt|;
 name|explainColMap
 operator|.
