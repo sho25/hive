@@ -39,6 +39,20 @@ end_import
 
 begin_import
 import|import
+name|io
+operator|.
+name|druid
+operator|.
+name|query
+operator|.
+name|spec
+operator|.
+name|LegacySegmentSpec
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|fasterxml
@@ -66,6 +80,18 @@ operator|.
 name|module
 operator|.
 name|SimpleModule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|joda
+operator|.
+name|time
+operator|.
+name|Interval
 import|;
 end_import
 

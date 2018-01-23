@@ -192,7 +192,7 @@ literal|" \"granularity\": \"DAY\", "
 operator|+
 literal|" \"descending\": \"true\", "
 operator|+
-literal|" \"intervals\": [ \"2012-01-01T00:00:00.000/2012-01-03T00:00:00.000\" ]}"
+literal|" \"intervals\": [ \"2012-01-01T00:00:00.000-08:00/2012-01-03T00:00:00.000-08:00\" ]}"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -204,7 +204,7 @@ literal|"[HiveDruidSplit{{\"queryType\":\"timeseries\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_datasource\"},"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T00:00:00.000-08:00/2012-01-03T00:00:00.000-08:00\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T08:00:00.000Z/2012-01-03T08:00:00.000Z\"]},"
 operator|+
 literal|"\"descending\":true,"
 operator|+
@@ -264,7 +264,7 @@ literal|" \"granularity\": \"all\", "
 operator|+
 literal|" \"intervals\": [  "
 operator|+
-literal|"  \"2013-08-31T00:00:00.000/2013-09-03T00:00:00.000\" "
+literal|"  \"2013-08-31T00:00:00.000-07:00/2013-09-03T00:00:00.000-07:00\" "
 operator|+
 literal|" ]}"
 decl_stmt|;
@@ -286,7 +286,7 @@ literal|"\"metric\":{\"type\":\"LegacyTopNMetricSpec\",\"metric\":\"count\"},"
 operator|+
 literal|"\"threshold\":5,"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-08-31T00:00:00.000-07:00/2013-09-03T00:00:00.000-07:00\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-08-31T07:00:00.000Z/2013-09-03T07:00:00.000Z\"]},"
 operator|+
 literal|"\"filter\":null,"
 operator|+
@@ -332,7 +332,7 @@ literal|"  { \"type\": \"doubleSum\", \"name\": \"data_transfer\", \"fieldName\"
 operator|+
 literal|" ], "
 operator|+
-literal|" \"intervals\": [ \"2012-01-01T00:00:00.000/2012-01-03T00:00:00.000\" ]"
+literal|" \"intervals\": [ \"2012-01-01T00:00:00.000-08:00/2012-01-03T00:00:00.000-08:00\" ]"
 operator|+
 literal|" }"
 decl_stmt|;
@@ -346,7 +346,7 @@ literal|"[HiveDruidSplit{{\"queryType\":\"groupBy\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_datasource\"},"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T00:00:00.000-08:00/2012-01-03T00:00:00.000-08:00\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T08:00:00.000Z/2012-01-03T08:00:00.000Z\"]},"
 operator|+
 literal|"\"virtualColumns\":[],"
 operator|+
@@ -390,7 +390,7 @@ literal|" \"metrics\":[\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],
 operator|+
 literal|" \"granularity\": \"all\",  "
 operator|+
-literal|" \"intervals\": [     \"2013-01-01/2013-01-02\"   ],  "
+literal|" \"intervals\": [     \"2013-01-01T00:00:00.000-08:00/2013-01-02T00:00:00.000-08:00\"   ],  "
 operator|+
 literal|" \"pagingSpec\":{\"pagingIdentifiers\": {}, \"threshold\":5}, "
 operator|+
@@ -406,7 +406,7 @@ literal|"[HiveDruidSplit{{\"queryType\":\"select\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"wikipedia\"},"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-01-01T00:00:00.000-08:00/2013-01-02T00:00:00.000-08:00\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-01-01T08:00:00.000Z/2013-01-02T08:00:00.000Z\"]},"
 operator|+
 literal|"\"descending\":false,"
 operator|+
