@@ -5667,7 +5667,15 @@ name|HIVE_MATERIALIZED_VIEW_REWRITING_TIME_WINDOW
 argument_list|(
 literal|"hive.materializedview.rewriting.time.window"
 argument_list|,
-literal|0
+literal|"0s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
 argument_list|,
 literal|"Time window, specified in seconds, after which outdated materialized views become invalid for automatic query rewriting.\n"
 operator|+
@@ -5710,6 +5718,65 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
 argument_list|,
 literal|"Default SerDe used for materialized views"
+argument_list|)
+block|,
+name|HIVE_MATERIALIZATIONS_INVALIDATION_CACHE_IMPL
+argument_list|(
+literal|"hive.metastore.materializations.invalidation.impl"
+argument_list|,
+literal|"DEFAULT"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"DEFAULT"
+argument_list|,
+literal|"DISABLE"
+argument_list|)
+argument_list|,
+literal|"The implementation that we should use for the materializations invalidation cache. \n"
+operator|+
+literal|"  DEFAULT: Default implementation for invalidation cache\n"
+operator|+
+literal|"  DISABLE: Disable invalidation cache (debugging purposes)"
+argument_list|)
+block|,
+name|HIVE_MATERIALIZATIONS_INVALIDATION_CACHE_CLEAN_FREQUENCY
+argument_list|(
+literal|"hive.metastore.materializations.invalidation.clean.frequency"
+argument_list|,
+literal|"3600s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Frequency at which timer task runs to remove unnecessary transactions information from"
+operator|+
+literal|"materializations invalidation cache."
+argument_list|)
+block|,
+name|HIVE_MATERIALIZATIONS_INVALIDATION_CACHE_EXPIRY_DURATION
+argument_list|(
+literal|"hive.metastore.materializations.invalidation.max.duration"
+argument_list|,
+literal|"86400s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Maximum duration for query producing a materialization. After this time, transactions"
+operator|+
+literal|"information that is not relevant for materializations can be removed from invalidation cache."
 argument_list|)
 block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,

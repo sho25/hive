@@ -91,6 +91,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|MaterializationsCacheCleanerTask
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|MetastoreTaskThread
 import|;
 end_import
@@ -2433,6 +2449,65 @@ argument_list|,
 literal|"class implementing the jdo persistence"
 argument_list|)
 block|,
+name|MATERIALIZATIONS_INVALIDATION_CACHE_IMPL
+argument_list|(
+literal|"metastore.materializations.invalidation.impl"
+argument_list|,
+literal|"hive.metastore.materializations.invalidation.impl"
+argument_list|,
+literal|"DEFAULT"
+argument_list|,
+operator|new
+name|Validator
+operator|.
+name|StringSet
+argument_list|(
+literal|"DEFAULT"
+argument_list|,
+literal|"DISABLE"
+argument_list|)
+argument_list|,
+literal|"The implementation that we should use for the materializations invalidation cache. \n"
+operator|+
+literal|"  DEFAULT: Default implementation for invalidation cache\n"
+operator|+
+literal|"  DISABLE: Disable invalidation cache (debugging purposes)"
+argument_list|)
+block|,
+name|MATERIALIZATIONS_INVALIDATION_CACHE_CLEAN_FREQUENCY
+argument_list|(
+literal|"metastore.materializations.invalidation.clean.frequency"
+argument_list|,
+literal|"hive.metastore.materializations.invalidation.clean.frequency"
+argument_list|,
+literal|3600
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"Frequency at which timer task runs to remove unnecessary transaction entries from"
+operator|+
+literal|"materializations invalidation cache."
+argument_list|)
+block|,
+name|MATERIALIZATIONS_INVALIDATION_CACHE_EXPIRY_DURATION
+argument_list|(
+literal|"metastore.materializations.invalidation.max.duration"
+argument_list|,
+literal|"hive.metastore.materializations.invalidation.max.duration"
+argument_list|,
+literal|86400
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"Maximum duration for query producing a materialization. After this time, transaction"
+operator|+
+literal|"entries that are not relevant for materializations can be removed from invalidation cache."
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
@@ -3076,6 +3151,15 @@ operator|+
 literal|","
 operator|+
 literal|"org.apache.hadoop.hive.metastore.repl.DumpDirCleanerTask"
+operator|+
+literal|","
+operator|+
+name|MaterializationsCacheCleanerTask
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 literal|"Comma separated list of tasks that will be started in separate threads.  These will "
 operator|+
