@@ -622,15 +622,6 @@ operator|+
 literal|"LIMIT must also be specified"
 argument_list|)
 block|,
-name|NO_CARTESIAN_PRODUCT
-argument_list|(
-literal|10052
-argument_list|,
-literal|"In strict mode, cartesian product is not allowed. "
-operator|+
-literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
-argument_list|)
-block|,
 name|UNION_NOTIN_SUBQ
 argument_list|(
 literal|10053
@@ -660,9 +651,11 @@ name|NO_VALID_PARTN
 argument_list|(
 literal|10056
 argument_list|,
-literal|"The query does not reference any valid partition. "
-operator|+
-literal|"To run this query, set hive.mapred.mode=nonstrict"
+name|HiveConf
+operator|.
+name|StrictChecks
+operator|.
+name|NO_PARTITIONLESS_MSG
 argument_list|)
 block|,
 name|NO_OUTER_MAPJOIN
@@ -1150,28 +1143,6 @@ argument_list|(
 literal|10122
 argument_list|,
 literal|"Bucketized tables do not support INSERT INTO:"
-argument_list|)
-block|,
-name|NO_COMPARE_BIGINT_STRING
-argument_list|(
-literal|10123
-argument_list|,
-literal|"In strict mode, comparing bigints and strings is not allowed, "
-operator|+
-literal|"it may result in a loss of precision. "
-operator|+
-literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
-argument_list|)
-block|,
-name|NO_COMPARE_BIGINT_DOUBLE
-argument_list|(
-literal|10124
-argument_list|,
-literal|"In strict mode, comparing bigints and doubles is not allowed, "
-operator|+
-literal|"it may result in a loss of precision. "
-operator|+
-literal|"If you really want to perform the operation, set hive.mapred.mode=nonstrict"
 argument_list|)
 block|,
 name|PARTSPEC_DIFFER_FROM_SCHEMA

@@ -21822,7 +21822,7 @@ operator|.
 name|HIVE_STRICT_CHECKS_LARGE_QUERY
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -21897,7 +21897,7 @@ block|{
 return|return
 name|what
 operator|+
-literal|" are disabled for safety reasons. If you know what you are doing, please set"
+literal|" are disabled for safety reasons. If you know what you are doing, please set "
 operator|+
 name|setting
 operator|.
