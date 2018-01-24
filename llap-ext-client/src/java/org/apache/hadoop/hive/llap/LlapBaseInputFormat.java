@@ -2657,13 +2657,14 @@ init|=
 name|rand
 operator|.
 name|nextInt
-argument_list|()
-operator|%
+argument_list|(
 name|allInstances
 operator|.
 name|size
 argument_list|()
+argument_list|)
 decl_stmt|;
+empty_stmt|;
 name|serviceInstance
 operator|=
 name|allInstances
