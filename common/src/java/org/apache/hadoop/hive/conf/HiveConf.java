@@ -9545,6 +9545,15 @@ argument_list|,
 literal|"Whether to print the names of the columns in query output."
 argument_list|)
 block|,
+name|HIVE_CLI_PRINT_ESCAPE_CRLF
+argument_list|(
+literal|"hive.cli.print.escape.crlf"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to print carriage returns and line feeds in row output as escaped \\r and \\n"
+argument_list|)
+block|,
 name|HIVE_CLI_TEZ_SESSION_ASYNC
 argument_list|(
 literal|"hive.cli.tez.session.async"

@@ -193,6 +193,8 @@ literal|"!set silent true"
 block|,
 literal|"!set showheader false"
 block|,
+literal|"!set escapeCRLF false"
+block|,
 literal|"USE default;"
 block|,
 literal|"SHOW TABLES;"
@@ -228,6 +230,8 @@ block|,
 literal|"!set silent false"
 block|,
 literal|"!set showheader true"
+block|,
+literal|"!set escapeCRLF false"
 block|,
 literal|"!set outputformat table"
 block|,

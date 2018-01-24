@@ -5682,6 +5682,14 @@ expr_stmt|;
 name|getOpts
 argument_list|()
 operator|.
+name|setEscapeCRLF
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|getOpts
+argument_list|()
+operator|.
 name|setOutputFormat
 argument_list|(
 literal|"dsv"
