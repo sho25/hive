@@ -3945,6 +3945,7 @@ name|VALUES_TMP_TABLE_NAME_PREFIX
 init|=
 literal|"Values__Tmp__Table__"
 decl_stmt|;
+comment|/** Marks the temporary table created for a serialized CTE. The table is scoped to the query. */
 specifier|static
 specifier|final
 name|String
@@ -74139,6 +74140,9 @@ argument_list|<
 name|Order
 argument_list|>
 name|sortCols
+parameter_list|,
+name|boolean
+name|isMaterialization
 parameter_list|)
 block|{
 name|Map
@@ -74343,6 +74347,9 @@ operator|)
 operator|&&
 operator|!
 name|isExt
+operator|&&
+operator|!
+name|isMaterialization
 operator|&&
 name|StringUtils
 operator|.
@@ -75848,6 +75855,8 @@ argument_list|,
 name|dbDotTab
 argument_list|,
 name|sortCols
+argument_list|,
+name|isMaterialization
 argument_list|)
 expr_stmt|;
 name|CreateTableDesc
@@ -76005,6 +76014,8 @@ argument_list|,
 name|dbDotTab
 argument_list|,
 name|sortCols
+argument_list|,
+name|isMaterialization
 argument_list|)
 expr_stmt|;
 if|if
@@ -76506,6 +76517,8 @@ argument_list|,
 name|dbDotTab
 argument_list|,
 name|sortCols
+argument_list|,
+name|isMaterialization
 argument_list|)
 expr_stmt|;
 name|tableDesc
