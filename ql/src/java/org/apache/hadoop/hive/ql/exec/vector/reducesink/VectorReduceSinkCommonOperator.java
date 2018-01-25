@@ -2282,6 +2282,12 @@ name|numRows
 argument_list|)
 expr_stmt|;
 block|}
+name|this
+operator|.
+name|runTimeNumRows
+operator|=
+name|numRows
+expr_stmt|;
 name|recordCounter
 operator|.
 name|set

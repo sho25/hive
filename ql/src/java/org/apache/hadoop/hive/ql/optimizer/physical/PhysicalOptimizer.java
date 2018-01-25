@@ -402,16 +402,6 @@ name|ConfVars
 operator|.
 name|HIVE_VECTORIZATION_ENABLED
 argument_list|)
-operator|&&
-name|pctx
-operator|.
-name|getContext
-argument_list|()
-operator|.
-name|getExplainAnalyze
-argument_list|()
-operator|==
-literal|null
 condition|)
 block|{
 name|resolvers

@@ -4277,13 +4277,6 @@ name|ConfVars
 operator|.
 name|HIVE_VECTORIZATION_ENABLED
 argument_list|)
-operator|&&
-name|ctx
-operator|.
-name|getExplainAnalyze
-argument_list|()
-operator|==
-literal|null
 condition|)
 block|{
 operator|(
