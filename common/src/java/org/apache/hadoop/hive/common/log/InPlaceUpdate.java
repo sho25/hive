@@ -1003,22 +1003,11 @@ name|SPARK_EXEC_INPLACE_PROGRESS
 argument_list|)
 expr_stmt|;
 block|}
-comment|// we need at least 80 chars wide terminal to display in-place updates properly
 return|return
 name|inPlaceUpdates
 operator|&&
 name|isUnixTerminal
 argument_list|()
-operator|&&
-name|TerminalFactory
-operator|.
-name|get
-argument_list|()
-operator|.
-name|getWidth
-argument_list|()
-operator|>=
-name|MIN_TERMINAL_WIDTH
 return|;
 block|}
 specifier|private
