@@ -1888,9 +1888,8 @@ name|createdTable
 operator|.
 name|getCreationMetadata
 argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
+operator|==
+literal|null
 argument_list|)
 expr_stmt|;
 comment|// Storage Descriptor data

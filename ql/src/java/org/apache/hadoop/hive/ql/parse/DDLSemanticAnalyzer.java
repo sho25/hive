@@ -29564,7 +29564,7 @@ operator|.
 name|getCreationMetadata
 argument_list|()
 operator|.
-name|keySet
+name|getTablesUsed
 argument_list|()
 control|)
 block|{

@@ -51,6 +51,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -419,7 +429,7 @@ name|serdeProps
 decl_stmt|;
 comment|// only used for materialized views
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -1134,7 +1144,7 @@ name|ifNotExists
 expr_stmt|;
 block|}
 specifier|public
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -1149,7 +1159,7 @@ specifier|public
 name|void
 name|setTablesUsed
 parameter_list|(
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>

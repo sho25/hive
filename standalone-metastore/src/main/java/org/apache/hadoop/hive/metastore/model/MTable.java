@@ -101,12 +101,7 @@ name|boolean
 name|rewriteEnabled
 decl_stmt|;
 specifier|private
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+name|MCreationMetadata
 name|creationMetadata
 decl_stmt|;
 specifier|private
@@ -165,12 +160,7 @@ parameter_list|,
 name|boolean
 name|rewriteEnabled
 parameter_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+name|MCreationMetadata
 name|creationMetadata
 parameter_list|,
 name|String
@@ -463,12 +453,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the metadata information related to a materialized view creation    */
 specifier|public
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+name|MCreationMetadata
 name|getCreationMetadata
 parameter_list|()
 block|{
@@ -481,12 +466,7 @@ specifier|public
 name|void
 name|setCreationMetadata
 parameter_list|(
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+name|MCreationMetadata
 name|creationMetadata
 parameter_list|)
 block|{

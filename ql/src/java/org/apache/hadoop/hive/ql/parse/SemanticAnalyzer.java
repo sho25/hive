@@ -72400,7 +72400,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -72412,14 +72412,14 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
 name|tablesUsed
 init|=
 operator|new
-name|ArrayList
+name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
