@@ -97,6 +97,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Iterator
 import|;
 end_import
@@ -118,6 +128,20 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
+name|Configuration
 import|;
 end_import
 
@@ -194,6 +218,22 @@ operator|.
 name|client
 operator|.
 name|ConnectionFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hbase
+operator|.
+name|client
+operator|.
+name|HBaseAdmin
 import|;
 end_import
 
@@ -864,6 +904,19 @@ name|IOException
 block|{
 name|List
 argument_list|<
+name|String
+argument_list|>
+name|columnFamilies
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"testFamily"
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
 name|Put
 argument_list|>
 name|myPuts
@@ -1094,7 +1147,7 @@ argument_list|(
 literal|"MyDatabase"
 argument_list|)
 decl_stmt|;
-comment|//Table name will be lower case unless specified by hbase.mapreduce.hfileoutputformat.table.name property
+comment|//Table name will be lower case unless specified by hbase.table.name property
 name|String
 name|hbaseTableName
 init|=
@@ -1154,7 +1207,7 @@ literal|"'org.apache.hadoop.hive.hbase.HBaseStorageHandler'"
 operator|+
 literal|" WITH SERDEPROPERTIES ('hbase.columns.mapping'=':key,testFamily:testQualifier1,testFamily:testQualifier2')"
 operator|+
-literal|" TBLPROPERTIES ('hbase.mapreduce.hfileoutputformat.table.name'='"
+literal|" TBLPROPERTIES ('hbase.table.name'='"
 operator|+
 name|hbaseTableName
 operator|+
@@ -1210,16 +1263,6 @@ argument_list|(
 name|tableQuery
 argument_list|)
 decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|responseThree
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|Connection
 name|connection
 init|=
@@ -1499,7 +1542,7 @@ argument_list|(
 literal|"MyDatabase"
 argument_list|)
 decl_stmt|;
-comment|//Table name will be lower case unless specified by hbase.mapreduce.hfileoutputformat.table.name property
+comment|//Table name will be lower case unless specified by hbase.table.name property
 name|String
 name|hbaseTableName
 init|=
@@ -1620,16 +1663,6 @@ argument_list|(
 name|tableQuery
 argument_list|)
 decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|responseThree
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|Connection
 name|connection
 init|=
@@ -1990,7 +2023,7 @@ argument_list|(
 literal|"MyDatabase"
 argument_list|)
 decl_stmt|;
-comment|//Table name will be lower case unless specified by hbase.mapreduce.hfileoutputformat.table.name property
+comment|//Table name will be lower case unless specified by hbase.table.name property
 name|String
 name|hbaseTableName
 init|=
@@ -2141,16 +2174,6 @@ argument_list|(
 name|tableQuery
 argument_list|)
 decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|responseThree
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|Connection
 name|connection
 init|=

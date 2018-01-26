@@ -464,7 +464,7 @@ specifier|final
 name|String
 name|HBASE_TABLE_NAME
 init|=
-literal|"hbase.mapreduce.hfileoutputformat.table.name"
+literal|"hbase.table.name"
 decl_stmt|;
 specifier|public
 specifier|static

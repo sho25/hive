@@ -670,7 +670,7 @@ name|properties
 operator|.
 name|put
 argument_list|(
-literal|"hbase.mapreduce.hfileoutputformat.table.name"
+literal|"hbase.table.name"
 argument_list|,
 literal|"hbase_table_0"
 argument_list|)
