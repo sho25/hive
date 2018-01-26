@@ -1465,18 +1465,6 @@ name|outputColumn
 argument_list|)
 expr_stmt|;
 block|}
-name|vOutContext
-operator|.
-name|setInitialTypeInfos
-argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-name|outputTypeInfos
-argument_list|)
-argument_list|)
-expr_stmt|;
 block|}
 comment|/*    * Allocate overflow batch columns by hand.    */
 specifier|private
