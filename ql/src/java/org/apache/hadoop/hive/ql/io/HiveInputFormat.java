@@ -1540,7 +1540,7 @@ name|isVectorized
 init|=
 name|Utilities
 operator|.
-name|getUseVectorizedInputFileFormat
+name|getIsVectorized
 argument_list|(
 name|conf
 argument_list|)

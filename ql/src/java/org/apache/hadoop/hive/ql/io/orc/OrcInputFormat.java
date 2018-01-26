@@ -3429,7 +3429,7 @@ if|if
 condition|(
 name|Utilities
 operator|.
-name|getUseVectorizedInputFileFormat
+name|getIsVectorized
 argument_list|(
 name|conf
 argument_list|)
@@ -11449,7 +11449,7 @@ name|vectorMode
 init|=
 name|Utilities
 operator|.
-name|getUseVectorizedInputFileFormat
+name|getIsVectorized
 argument_list|(
 name|conf
 argument_list|)

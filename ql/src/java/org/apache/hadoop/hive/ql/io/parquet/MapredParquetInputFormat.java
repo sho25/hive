@@ -564,7 +564,7 @@ if|if
 condition|(
 name|Utilities
 operator|.
-name|getUseVectorizedInputFileFormat
+name|getIsVectorized
 argument_list|(
 name|job
 argument_list|)

@@ -20723,11 +20723,11 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Returns true if a plan is both configured for vectorized execution    * and the node is vectorized and the Input File Format is marked VectorizedInputFileFormat.    *    * The plan may be configured for vectorization    * but vectorization disallowed eg. for FetchOperator execution.    */
+comment|/**    * Returns true if a plan is both configured for vectorized execution    * and the node is vectorized.    *    * The plan may be configured for vectorization    * but vectorization disallowed eg. for FetchOperator execution.    */
 specifier|public
 specifier|static
 name|boolean
-name|getUseVectorizedInputFileFormat
+name|getIsVectorized
 parameter_list|(
 name|Configuration
 name|conf
@@ -20756,15 +20756,6 @@ operator|.
 name|getBoolean
 argument_list|(
 name|VECTOR_MODE
-argument_list|,
-literal|false
-argument_list|)
-operator|&&
-name|conf
-operator|.
-name|getBoolean
-argument_list|(
-name|USE_VECTORIZED_INPUT_FILE_FORMAT
 argument_list|,
 literal|false
 argument_list|)
@@ -20808,17 +20799,10 @@ name|conf
 argument_list|)
 decl_stmt|;
 return|return
-operator|(
 name|mapWork
 operator|.
 name|getVectorMode
 argument_list|()
-operator|&&
-name|mapWork
-operator|.
-name|getUseVectorizedInputFileFormat
-argument_list|()
-operator|)
 return|;
 block|}
 else|else
@@ -20832,7 +20816,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|getUseVectorizedInputFileFormat
+name|getIsVectorized
 parameter_list|(
 name|Configuration
 name|conf
@@ -20858,11 +20842,6 @@ operator|&&
 name|mapWork
 operator|.
 name|getVectorMode
-argument_list|()
-operator|&&
-name|mapWork
-operator|.
-name|getUseVectorizedInputFileFormat
 argument_list|()
 return|;
 block|}
