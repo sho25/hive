@@ -1150,7 +1150,7 @@ name|isAcidTable
 init|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tableHandle
 argument_list|)

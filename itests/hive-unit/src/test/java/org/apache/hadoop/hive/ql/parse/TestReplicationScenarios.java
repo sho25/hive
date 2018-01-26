@@ -25857,11 +25857,35 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".mm_table (key int, value int) PARTITIONED BY (load_date date) "
+operator|+
+literal|"CLUSTERED BY(key) INTO 2 BUCKETS STORED AS ORC TBLPROPERTIES ('transactional'='true',"
+operator|+
+literal|" 'transactional_properties'='insert_only')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
 name|verifyIfTableExist
 argument_list|(
 name|dbName
 argument_list|,
 literal|"acid_table"
+argument_list|,
+name|metaStoreClient
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|dbName
+argument_list|,
+literal|"mm_table"
 argument_list|,
 name|metaStoreClient
 argument_list|)
@@ -25938,6 +25962,17 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"acid_table"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"mm_table"
 argument_list|,
 name|metaStoreClientMirror
 argument_list|)
@@ -26061,11 +26096,35 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".mm_table_incremental (key int, value int) PARTITIONED BY (load_date date) "
+operator|+
+literal|"CLUSTERED BY(key) INTO 2 BUCKETS STORED AS ORC TBLPROPERTIES ('transactional'='true',"
+operator|+
+literal|" 'transactional_properties'='insert_only')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
 name|verifyIfTableExist
 argument_list|(
 name|dbName
 argument_list|,
 literal|"acid_table_incremental"
+argument_list|,
+name|metaStoreClient
+argument_list|)
+expr_stmt|;
+name|verifyIfTableExist
+argument_list|(
+name|dbName
+argument_list|,
+literal|"mm_table_incremental"
 argument_list|,
 name|metaStoreClient
 argument_list|)
@@ -26164,6 +26223,17 @@ operator|+
 literal|"_dupe"
 argument_list|,
 literal|"acid_table_incremental"
+argument_list|,
+name|metaStoreClientMirror
+argument_list|)
+expr_stmt|;
+name|verifyIfTableNotExist
+argument_list|(
+name|dbName
+operator|+
+literal|"_dupe"
+argument_list|,
+literal|"mm_table_incremental"
 argument_list|,
 name|metaStoreClientMirror
 argument_list|)
