@@ -553,6 +553,8 @@ argument_list|(
 name|job
 argument_list|,
 name|ts
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|AcidUtils
