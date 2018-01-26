@@ -157,6 +157,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|TreeSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|regex
 operator|.
 name|Pattern
@@ -1255,7 +1265,7 @@ argument_list|>
 name|testFiles
 init|=
 operator|new
-name|LinkedHashSet
+name|TreeSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
