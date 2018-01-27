@@ -285,7 +285,7 @@ name|getCurrentTrashDir
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Starts the service with adding extra configuration to the default ones. Be aware, as the    * current MetaStore does not implement clean shutdown, starting MetaStoreService is possible    * only once per test.    *    * @param confOverlay The extra parameters which should be set before starting the service    * @throws Exception if any Exception occurs    */
+comment|/**    * Starts the service with adding extra configuration to the default ones. Be aware, as the    * current MetaStore does not implement clean shutdown, starting MetaStoreService is possible only    * once per test.    *    * @param metastoreOverlay The extra metastore parameters which should be set before starting the    *          service    * @param configurationOverlay The extra other parameters which should be set before starting the    *          service    * @throws Exception if any Exception occurs    */
 specifier|public
 name|void
 name|start
@@ -298,12 +298,20 @@ name|ConfVars
 argument_list|,
 name|String
 argument_list|>
-name|confOverlay
+name|metastoreOverlay
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|configurationOverlay
 parameter_list|)
 throws|throws
 name|Exception
 block|{
-comment|// Set confOverlay parameters
+comment|// Set metastoreOverlay parameters
 for|for
 control|(
 name|Map
@@ -318,7 +326,7 @@ name|String
 argument_list|>
 name|entry
 range|:
-name|confOverlay
+name|metastoreOverlay
 operator|.
 name|entrySet
 argument_list|()
@@ -330,6 +338,41 @@ name|setVar
 argument_list|(
 name|configuration
 argument_list|,
+name|entry
+operator|.
+name|getKey
+argument_list|()
+argument_list|,
+name|entry
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Set other configurationOverlay parameters
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|entry
+range|:
+name|configurationOverlay
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+name|configuration
+operator|.
+name|set
+argument_list|(
 name|entry
 operator|.
 name|getKey
