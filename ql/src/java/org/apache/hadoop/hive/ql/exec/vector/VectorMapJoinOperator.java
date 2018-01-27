@@ -1292,6 +1292,7 @@ name|actualRow
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Only used by spillBigTableRow?
 comment|// Code borrowed from VectorReduceSinkOperator
 specifier|private
 name|Object
@@ -1338,9 +1339,9 @@ literal|0
 init|;
 name|i
 operator|<
-name|vrb
+name|singleRow
 operator|.
-name|projectionSize
+name|length
 condition|;
 name|i
 operator|++
