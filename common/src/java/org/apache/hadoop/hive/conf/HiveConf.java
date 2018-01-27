@@ -12462,6 +12462,15 @@ operator|+
 literal|"when tez is used as the execution engine."
 argument_list|)
 block|,
+name|HIVE_TEZ_BMJ_USE_SUBCACHE
+argument_list|(
+literal|"hive.tez.bmj.use.subcache"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Use subcache to reuse hashtable across multiple tasks"
+argument_list|)
+block|,
 name|HIVE_CHECK_CROSS_PRODUCT
 argument_list|(
 literal|"hive.exec.check.crossproducts"

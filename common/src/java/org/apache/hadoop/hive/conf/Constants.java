@@ -47,6 +47,22 @@ name|LLAP_LOGGER_NAME_RFA
 init|=
 literal|"RFA"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_NUM_BUCKETS
+init|=
+literal|"llap.num.buckets"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LLAP_BUCKET_ID
+init|=
+literal|"llap.bucket.id"
+decl_stmt|;
 comment|/* Constants for Druid storage handler */
 specifier|public
 specifier|static

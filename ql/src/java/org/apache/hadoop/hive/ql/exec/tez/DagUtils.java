@@ -4742,8 +4742,15 @@ comment|// Not HiveInputFormat, or a custom VertexManager will take care of grou
 if|if
 condition|(
 name|vertexHasCustomInput
+operator|&&
+name|vertexType
+operator|==
+name|VertexType
+operator|.
+name|MULTI_INPUT_UNINITIALIZED_EDGES
 condition|)
 block|{
+comment|// SMB Join.
 name|dataSource
 operator|=
 name|MultiMRInput
