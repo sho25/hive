@@ -333,6 +333,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -1291,6 +1309,18 @@ name|HiveVectorAdaptorUsageMode
 name|hiveVectorAdaptorUsageMode
 decl_stmt|;
 specifier|private
+name|boolean
+name|reuseScratchColumns
+init|=
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_TESTING_REUSE_SCRATCH_COLUMNS
+operator|.
+name|defaultBoolVal
+decl_stmt|;
+specifier|private
 name|void
 name|setHiveConfVars
 parameter_list|(
@@ -1307,6 +1337,30 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|reuseScratchColumns
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_TESTING_REUSE_SCRATCH_COLUMNS
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|ocm
+operator|.
+name|setReuseColumns
+argument_list|(
+name|reuseScratchColumns
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -1321,6 +1375,23 @@ operator|=
 name|vContextEnvironment
 operator|.
 name|hiveVectorAdaptorUsageMode
+expr_stmt|;
+name|this
+operator|.
+name|reuseScratchColumns
+operator|=
+name|vContextEnvironment
+operator|.
+name|reuseScratchColumns
+expr_stmt|;
+name|this
+operator|.
+name|ocm
+operator|.
+name|setReuseColumns
+argument_list|(
+name|reuseScratchColumns
+argument_list|)
 expr_stmt|;
 block|}
 comment|// Convenient constructor for initial batch creation takes
@@ -1982,6 +2053,8 @@ expr_stmt|;
 block|}
 comment|// Finishes the vectorization context after all the initial
 comment|// columns have been added.
+annotation|@
+name|VisibleForTesting
 specifier|public
 name|void
 name|finishedAddingInitialColumns
@@ -2003,6 +2076,17 @@ operator|new
 name|OutputColumnManager
 argument_list|(
 name|firstOutputColumnIndex
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|ocm
+operator|.
+name|setReuseColumns
+argument_list|(
+name|this
+operator|.
+name|reuseScratchColumns
 argument_list|)
 expr_stmt|;
 name|this
@@ -2622,7 +2706,7 @@ operator|.
 name|CASE_INSENSITIVE
 argument_list|)
 decl_stmt|;
-comment|//Map column number to type
+comment|//Map column number to type (this is always non-null for a useful vec context)
 specifier|private
 name|OutputColumnManager
 name|ocm
@@ -3418,6 +3502,12 @@ name|outputColCount
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+name|boolean
+name|reuseScratchColumns
+init|=
+literal|true
+decl_stmt|;
 specifier|protected
 name|OutputColumnManager
 parameter_list|(
@@ -3728,6 +3818,10 @@ condition|(
 name|initialOutputCol
 operator|<
 literal|0
+operator|||
+name|reuseScratchColumns
+operator|==
+literal|false
 condition|)
 block|{
 comment|// This is a test
@@ -3857,6 +3951,23 @@ operator|-
 name|initialOutputCol
 index|]
 return|;
+block|}
+comment|// Allow debugging by disabling column reuse (input cols are never reused by design, only
+comment|// scratch cols are)
+specifier|public
+name|void
+name|setReuseColumns
+parameter_list|(
+name|boolean
+name|reuseColumns
+parameter_list|)
+block|{
+name|this
+operator|.
+name|reuseScratchColumns
+operator|=
+name|reuseColumns
+expr_stmt|;
 block|}
 block|}
 specifier|public

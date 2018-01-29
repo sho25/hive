@@ -12188,6 +12188,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_TESTING_REUSE_SCRATCH_COLUMNS
+argument_list|(
+literal|"hive.vectorized.reuse.scratch.columns"
+argument_list|,
+literal|true
+argument_list|,
+literal|"internal use only. Disable this to debug scratch column state issues"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_VECTORIZATION_COMPLEX_TYPES_ENABLED
 argument_list|(
 literal|"hive.vectorized.complex.types.enabled"
