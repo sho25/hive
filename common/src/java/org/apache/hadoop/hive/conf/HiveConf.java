@@ -3371,6 +3371,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_IN_TEST_IDE
+argument_list|(
+literal|"hive.in.ide.test"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal usage only, true if test running in ide"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_TESTING_SHORT_LOGS
 argument_list|(
 literal|"hive.testing.short.logs"

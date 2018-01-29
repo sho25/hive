@@ -504,7 +504,9 @@ name|getInstance
 argument_list|()
 operator|.
 name|getExecJarPathLocal
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 operator|+
 literal|"!/"
 argument_list|)

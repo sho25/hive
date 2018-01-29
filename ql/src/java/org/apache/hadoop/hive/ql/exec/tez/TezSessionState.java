@@ -1009,20 +1009,6 @@ name|jackson
 operator|.
 name|annotate
 operator|.
-name|JsonIgnore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|codehaus
-operator|.
-name|jackson
-operator|.
-name|annotate
-operator|.
 name|JsonProperty
 import|;
 end_import
@@ -1437,6 +1423,8 @@ operator|=
 name|conf
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -1512,9 +1500,11 @@ name|sessionFuture
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 try|try
 block|{
 name|session
@@ -1598,18 +1588,22 @@ name|session
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|sessionFuture
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 try|try
 block|{
 name|session
@@ -2023,7 +2017,9 @@ argument_list|(
 name|utils
 operator|.
 name|getExecJarPathLocal
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// configuration for the application master
@@ -2913,6 +2909,7 @@ if|if
 condition|(
 name|isOnThread
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -2921,6 +2918,7 @@ name|ie
 argument_list|)
 throw|;
 comment|//ignore
+block|}
 block|}
 name|isSuccessful
 operator|=
@@ -3035,7 +3033,9 @@ name|sessionFuture
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 try|try
 block|{
 name|this
@@ -3864,7 +3864,9 @@ condition|(
 operator|!
 name|hasResources
 condition|)
+block|{
 break|break;
+block|}
 block|}
 block|}
 if|if
@@ -5111,6 +5113,7 @@ argument_list|)
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|AssertionError
@@ -5118,6 +5121,7 @@ argument_list|(
 literal|"Not in use"
 argument_list|)
 throw|;
+block|}
 block|}
 comment|/** Mark session as being in use from TezTask, for safety/debugging purposes. */
 specifier|public

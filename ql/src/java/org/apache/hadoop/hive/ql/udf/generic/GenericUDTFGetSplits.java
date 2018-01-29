@@ -2887,7 +2887,12 @@ argument_list|(
 name|utils
 operator|.
 name|getExecJarPathLocal
+argument_list|(
+name|ctx
+operator|.
+name|getConf
 argument_list|()
+argument_list|)
 argument_list|,
 name|utils
 argument_list|,
