@@ -470,9 +470,9 @@ literal|"  optional group mapCol (MAP) {\n"
 operator|+
 literal|"    repeated group map (MAP_KEY_VALUE) {\n"
 operator|+
-literal|"      required binary key;\n"
+literal|"      required binary key (UTF8);\n"
 operator|+
-literal|"      optional binary value;\n"
+literal|"      optional binary value (UTF8);\n"
 operator|+
 literal|"    }\n"
 operator|+
@@ -503,7 +503,7 @@ literal|"  optional group mapCol (MAP) {\n"
 operator|+
 literal|"    repeated group map (MAP_KEY_VALUE) {\n"
 operator|+
-literal|"      required binary key;\n"
+literal|"      required binary key (UTF8);\n"
 operator|+
 literal|"      optional fixed_len_byte_array(3) value (DECIMAL(5,2));\n"
 operator|+
