@@ -13828,6 +13828,10 @@ name|BOTTOM_UP
 argument_list|,
 name|HiveDruidRules
 operator|.
+name|FILTER_DATE_RANGE_RULE
+argument_list|,
+name|HiveDruidRules
+operator|.
 name|FILTER
 argument_list|,
 name|HiveDruidRules
