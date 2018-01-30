@@ -168,6 +168,10 @@ specifier|private
 name|Long
 name|currentTransactionId
 decl_stmt|;
+specifier|private
+name|boolean
+name|isInsertOverwrite
+decl_stmt|;
 comment|// TODO: the below seem like they should just be combined into partitionDesc
 specifier|private
 name|org
@@ -971,6 +975,32 @@ operator|.
 name|inheritTableSpecs
 operator|=
 name|inheritTableSpecs
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isInsertOverwrite
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|isInsertOverwrite
+return|;
+block|}
+specifier|public
+name|void
+name|setInsertOverwrite
+parameter_list|(
+name|boolean
+name|v
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isInsertOverwrite
+operator|=
+name|v
 expr_stmt|;
 block|}
 comment|/**    * @return the lbCtx    */

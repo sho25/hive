@@ -11738,6 +11738,9 @@ name|stmtId
 parameter_list|,
 name|boolean
 name|isMmTable
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -11870,7 +11873,7 @@ literal|1
 argument_list|,
 name|conf
 argument_list|,
-literal|false
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 for|for
@@ -12107,6 +12110,9 @@ name|AcidUtils
 operator|.
 name|Operation
 name|operation
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -12226,6 +12232,8 @@ operator|.
 name|getParameters
 argument_list|()
 argument_list|)
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 specifier|final

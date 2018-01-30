@@ -3635,6 +3635,11 @@ argument_list|()
 operator|.
 name|getWriteType
 argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|isInsertOverwrite
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// publish DP columns to its subscribers
