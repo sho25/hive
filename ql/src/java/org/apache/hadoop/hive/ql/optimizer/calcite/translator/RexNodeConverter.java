@@ -3004,6 +3004,8 @@ argument_list|()
 operator|.
 name|makeCall
 argument_list|(
+name|retType
+argument_list|,
 name|calciteOp
 argument_list|,
 name|childRexNodeLst
