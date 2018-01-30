@@ -3067,6 +3067,20 @@ operator|.
 name|NetUtil
 operator|.
 name|class
+operator|,
+comment|// netty4
+name|org
+operator|.
+name|jboss
+operator|.
+name|netty
+operator|.
+name|util
+operator|.
+name|NetUtil
+operator|.
+name|class
+comment|//netty3
 block|}
 empty_stmt|;
 for|for
