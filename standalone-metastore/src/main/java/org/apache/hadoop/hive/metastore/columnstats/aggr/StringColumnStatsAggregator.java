@@ -1099,7 +1099,7 @@ name|setAvgColLen
 argument_list|(
 name|Math
 operator|.
-name|min
+name|max
 argument_list|(
 name|aggregateData
 operator|.
