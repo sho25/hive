@@ -9961,6 +9961,12 @@ condition|?
 literal|true
 else|:
 literal|false
+argument_list|,
+operator|!
+name|tbl
+operator|.
+name|isTemporary
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -13252,6 +13258,12 @@ condition|?
 literal|true
 else|:
 literal|false
+argument_list|,
+operator|!
+name|tbl
+operator|.
+name|isTemporary
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -22013,6 +22025,9 @@ name|deletePathFilter
 parameter_list|,
 name|boolean
 name|isMmTableOverwrite
+parameter_list|,
+name|boolean
+name|isNeedRecycle
 parameter_list|)
 throws|throws
 name|HiveException
@@ -22121,6 +22136,8 @@ argument_list|,
 name|isMmTableOverwrite
 argument_list|,
 literal|0
+argument_list|,
+name|isNeedRecycle
 argument_list|)
 expr_stmt|;
 block|}
@@ -22365,6 +22382,9 @@ name|isMmTableOverwrite
 parameter_list|,
 name|int
 name|lbLevels
+parameter_list|,
+name|boolean
+name|isNeedRecycle
 parameter_list|)
 throws|throws
 name|HiveException
@@ -22458,6 +22478,8 @@ argument_list|,
 name|conf
 argument_list|,
 name|purge
+argument_list|,
+name|isNeedRecycle
 argument_list|)
 expr_stmt|;
 block|}
@@ -22536,6 +22558,9 @@ name|conf
 parameter_list|,
 name|boolean
 name|purge
+parameter_list|,
+name|boolean
+name|isNeedRecycle
 parameter_list|)
 throws|throws
 name|IOException
@@ -22544,6 +22569,8 @@ name|HiveException
 block|{
 if|if
 condition|(
+name|isNeedRecycle
+operator|&&
 name|conf
 operator|.
 name|getBoolVar
