@@ -2014,6 +2014,17 @@ name|makeSessionId
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|getConsole
+argument_list|()
+operator|.
+name|printInfo
+argument_list|(
+literal|"Hive Session ID = "
+operator|+
+name|getSessionId
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 comment|// Using system classloader as the parent. Using thread context
 comment|// classloader as parent can pollute the session. See HIVE-11878
