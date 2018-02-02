@@ -3101,6 +3101,33 @@ argument_list|,
 literal|"Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore."
 argument_list|)
 block|,
+name|THRIFT_URI_SELECTION
+argument_list|(
+literal|"metastore.thrift.uri.selection"
+argument_list|,
+literal|"hive.metastore.uri.selection"
+argument_list|,
+literal|"RANDOM"
+argument_list|,
+operator|new
+name|Validator
+operator|.
+name|StringSet
+argument_list|(
+literal|"RANDOM"
+argument_list|,
+literal|"SEQUENTIAL"
+argument_list|)
+argument_list|,
+literal|"Determines the selection mechanism used by metastore client to connect to remote "
+operator|+
+literal|"metastore.  SEQUENTIAL implies that the first valid metastore from the URIs specified "
+operator|+
+literal|"as part of hive.metastore.uris will be picked.  RANDOM implies that the metastore "
+operator|+
+literal|"will be picked randomly"
+argument_list|)
+block|,
 name|TIMEDOUT_TXN_REAPER_START
 argument_list|(
 literal|"metastore.timedout.txn.reaper.start"

@@ -1368,10 +1368,26 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// make metastore URIS random
+if|if
+condition|(
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_URI_SELECTION
+argument_list|)
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"RANDOM"
+argument_list|)
+condition|)
+block|{
 name|List
-argument_list|<
-name|?
-argument_list|>
 name|uriList
 init|=
 name|Arrays
@@ -1399,6 +1415,7 @@ operator|.
 name|toArray
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2017,12 +2034,32 @@ block|{
 name|close
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_URI_SELECTION
+argument_list|)
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"RANDOM"
+argument_list|)
+condition|)
+block|{
 comment|// Swap the first element of the metastoreUris[] with a random element from the rest
 comment|// of the array. Rationale being that this method will generally be called when the default
 comment|// connection has died and the default connection is likely to be the first array element.
 name|promoteRandomMetaStoreURI
 argument_list|()
 expr_stmt|;
+block|}
 name|open
 argument_list|()
 expr_stmt|;
