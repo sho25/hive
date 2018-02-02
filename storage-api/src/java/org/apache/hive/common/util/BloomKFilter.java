@@ -87,6 +87,7 @@ class|class
 name|BloomKFilter
 block|{
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|BYTE_ARRAY_4
@@ -98,6 +99,7 @@ literal|4
 index|]
 decl_stmt|;
 specifier|private
+specifier|final
 name|byte
 index|[]
 name|BYTE_ARRAY_8
@@ -184,6 +186,7 @@ name|DEFAULT_BLOCK_SIZE
 index|]
 decl_stmt|;
 specifier|private
+specifier|final
 name|BitSet
 name|bitSet
 decl_stmt|;
