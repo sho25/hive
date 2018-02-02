@@ -614,6 +614,14 @@ name|WM_POOL
 init|=
 literal|"wmPool"
 decl_stmt|;
+comment|// Cookie prefix
+specifier|static
+specifier|final
+name|String
+name|HTTP_COOKIE_PREFIX
+init|=
+literal|"http.cookie."
+decl_stmt|;
 comment|// We support ways to specify application name modeled after some existing DBs, since
 comment|// there's no standard approach.
 comment|// MSSQL: applicationName https://docs.microsoft.com/en-us/sql/connect/jdbc/building-the-connection-url

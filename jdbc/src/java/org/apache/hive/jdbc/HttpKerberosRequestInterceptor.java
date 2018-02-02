@@ -173,6 +173,14 @@ argument_list|,
 name|String
 argument_list|>
 name|additionalHeaders
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|customCookies
 parameter_list|)
 block|{
 name|super
@@ -184,6 +192,8 @@ argument_list|,
 name|isSSL
 argument_list|,
 name|additionalHeaders
+argument_list|,
+name|customCookies
 argument_list|)
 expr_stmt|;
 name|this

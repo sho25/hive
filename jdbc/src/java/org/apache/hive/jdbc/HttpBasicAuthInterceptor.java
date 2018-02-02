@@ -124,7 +124,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The class is instantiated with the username and password, it is then  * used to add header with these credentials to HTTP requests  *  */
+comment|/**  * The class is instantiated with the username and password, it is then used to add header with  * these credentials to HTTP requests  *  */
 end_comment
 
 begin_class
@@ -165,6 +165,14 @@ argument_list|,
 name|String
 argument_list|>
 name|additionalHeaders
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|customCookies
 parameter_list|)
 block|{
 name|super
@@ -176,6 +184,8 @@ argument_list|,
 name|isSSL
 argument_list|,
 name|additionalHeaders
+argument_list|,
+name|customCookies
 argument_list|)
 expr_stmt|;
 name|this
