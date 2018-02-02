@@ -1533,6 +1533,11 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists myctas"
+argument_list|)
+expr_stmt|;
 name|int
 index|[]
 index|[]
@@ -1793,6 +1798,60 @@ argument_list|,
 literal|"Unexpected row count after ctas from union distinct query"
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testCtasEmpty
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|MetastoreConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|CREATE_TABLES_AS_ACID
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists myctas"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table myctas stored as ORC as"
+operator|+
+literal|" select a, b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select ROW__ID, a, b, INPUT__FILE__NAME"
+operator|+
+literal|" from myctas order by ROW__ID"
+argument_list|)
+decl_stmt|;
 block|}
 comment|/**    * Insert into unbucketed acid table from union all query    * Union All is flattend so nested subdirs are created and acid move drops them since    * delta dirs have unique names    */
 annotation|@
