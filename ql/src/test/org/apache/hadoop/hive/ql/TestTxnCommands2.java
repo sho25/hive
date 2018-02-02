@@ -3095,7 +3095,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 original bucket files in the location (000000_0 and 000001_0)
@@ -3268,7 +3268,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Everything should be same as before
@@ -3433,7 +3433,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 original bucket files (000000_0 and 000001_0), plus a new delta directory.
@@ -3512,7 +3512,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -3707,7 +3707,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3784,7 +3784,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -3999,7 +3999,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Before Cleaner, there should be 5 items:
@@ -4050,7 +4050,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -4103,7 +4103,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -4280,7 +4280,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 original bucket files in the location (000000_0 and 000001_0)
@@ -4453,7 +4453,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Everything should be same as before
@@ -4618,7 +4618,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 original bucket files (000000_0 and 000001_0), plus one delta directory
@@ -4705,7 +4705,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -4785,7 +4785,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -4980,7 +4980,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5057,7 +5057,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -5203,7 +5203,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Before Cleaner, there should be 5 items:
@@ -5254,7 +5254,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5307,7 +5307,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -5480,7 +5480,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 original bucket files in the location (000000_0 and 000001_0)
@@ -5653,7 +5653,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Everything should be same as before
@@ -5825,7 +5825,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5920,7 +5920,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -6085,7 +6085,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Arrays
@@ -6181,7 +6181,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Arrays
@@ -6346,7 +6346,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Arrays
@@ -6474,7 +6474,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -6684,7 +6684,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Arrays
@@ -6767,7 +6767,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Arrays
@@ -7008,7 +7008,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// Before Cleaner, there should be 6 items:
@@ -7059,7 +7059,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -7109,7 +7109,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Arrays
@@ -11375,7 +11375,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -11452,7 +11452,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -14611,7 +14611,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs in the location
@@ -14722,7 +14722,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs, plus a base dir in the location
@@ -14936,7 +14936,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs, plus a base dir in the location
@@ -15111,7 +15111,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -15266,7 +15266,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs in the location
@@ -15365,7 +15365,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs, plus a base dir in the location
@@ -15581,7 +15581,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs, plus 2 base dirs in the location
@@ -15768,7 +15768,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 comment|// There should be 2 delta dirs, plus 2 base dirs in the location
@@ -15935,7 +15935,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -16188,7 +16188,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|int
@@ -16255,7 +16255,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert

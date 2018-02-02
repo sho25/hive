@@ -4969,7 +4969,7 @@ block|}
 block|}
 return|;
 block|}
-comment|/**    * We can only use a 'base' if it doesn't have an open txn (from specific reader's point of view)    * A 'base' with open txn in its range doesn't have 'enough history' info to produce a correct    * snapshot for this reader.    * Note that such base is NOT obsolete.  Obsolete files are those that are "covered" by other    * files within the snapshot.    */
+comment|/**    * We can only use a 'base' if it doesn't have an open txn (from specific reader's point of view)    * A 'base' with open txn in its range doesn't have 'enough history' info to produce a correct    * snapshot for this reader.    * Note that such base is NOT obsolete.  Obsolete files are those that are "covered" by other    * files within the snapshot.    * A base produced by Insert Overwrite is different.  Logically it's a delta file but one that    * causes anything written previously is ignored (hence the overwrite).  In this case, base_x    * is visible if txnid:x is committed for current reader.    */
 specifier|private
 specifier|static
 name|boolean
@@ -4980,7 +4980,15 @@ name|baseTxnId
 parameter_list|,
 name|ValidTxnList
 name|txnList
+parameter_list|,
+name|Path
+name|baseDir
+parameter_list|,
+name|FileSystem
+name|fs
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 if|if
 condition|(
@@ -4995,6 +5003,29 @@ comment|//such base is created by 1st compaction in case of non-acid to acid tab
 comment|//By definition there are no open txns with id< 1.
 return|return
 literal|true
+return|;
+block|}
+if|if
+condition|(
+operator|!
+name|MetaDataFile
+operator|.
+name|isCompacted
+argument_list|(
+name|baseDir
+argument_list|,
+name|fs
+argument_list|)
+condition|)
+block|{
+comment|//this is the IOW case
+return|return
+name|txnList
+operator|.
+name|isTxnValid
+argument_list|(
+name|baseTxnId
+argument_list|)
 return|;
 block|}
 return|return
@@ -5148,6 +5179,10 @@ argument_list|(
 name|txn
 argument_list|,
 name|txnList
+argument_list|,
+name|p
+argument_list|,
+name|fs
 argument_list|)
 condition|)
 block|{
@@ -5182,6 +5217,10 @@ argument_list|(
 name|txn
 argument_list|,
 name|txnList
+argument_list|,
+name|p
+argument_list|,
+name|fs
 argument_list|)
 condition|)
 block|{
@@ -7015,7 +7054,7 @@ operator|||
 name|hasProps
 return|;
 block|}
-comment|/**    * Load Data commands against Acid tables write {@link AcidBaseFileType#ORIGINAL_BASE} type files    * into delta_x_x/ (or base_x in case there is Overwrite clause).  {@link MetaDataFile} is a    * small JSON file in this directory that indicates that these files don't have Acid metadata    * columns and so the values for these columns need to be assigned at read time/compaction.    */
+comment|/**    * General facility to place a metadta file into a dir created by acid/compactor write.    *    * Load Data commands against Acid tables write {@link AcidBaseFileType#ORIGINAL_BASE} type files    * into delta_x_x/ (or base_x in case there is Overwrite clause).  {@link MetaDataFile} is a    * small JSON file in this directory that indicates that these files don't have Acid metadata    * columns and so the values for these columns need to be assigned at read time/compaction.    */
 specifier|public
 specifier|static
 class|class
@@ -7058,33 +7097,24 @@ specifier|private
 interface|interface
 name|Value
 block|{
-comment|//plain ORC file
+comment|//written by Major compaction
 name|String
-name|RAW
+name|COMPACTED
 init|=
-literal|"raw"
-decl_stmt|;
-comment|//result of acid write, i.e. decorated with ROW__ID info
-name|String
-name|NATIVE
-init|=
-literal|"native"
+literal|"compacted"
 decl_stmt|;
 block|}
 comment|/**      * @param baseOrDeltaDir detla or base dir, must exist      */
 specifier|public
 specifier|static
 name|void
-name|createMetaFile
+name|createCompactorMarker
 parameter_list|(
 name|Path
 name|baseOrDeltaDir
 parameter_list|,
 name|FileSystem
 name|fs
-parameter_list|,
-name|boolean
-name|isRawFormat
 parameter_list|)
 throws|throws
 name|IOException
@@ -7133,15 +7163,9 @@ name|Field
 operator|.
 name|DATA_FORMAT
 argument_list|,
-name|isRawFormat
-condition|?
 name|Value
 operator|.
-name|RAW
-else|:
-name|Value
-operator|.
-name|NATIVE
+name|COMPACTED
 argument_list|)
 expr_stmt|;
 try|try
@@ -7209,11 +7233,9 @@ name|ioe
 throw|;
 block|}
 block|}
-comment|//should be useful for import/export
-specifier|public
 specifier|static
 name|boolean
-name|isImport
+name|isCompacted
 parameter_list|(
 name|Path
 name|baseOrDeltaDir
@@ -7341,15 +7363,7 @@ block|{
 case|case
 name|Value
 operator|.
-name|NATIVE
-case|:
-return|return
-literal|false
-return|;
-case|case
-name|Value
-operator|.
-name|RAW
+name|COMPACTED
 case|:
 return|return
 literal|true
