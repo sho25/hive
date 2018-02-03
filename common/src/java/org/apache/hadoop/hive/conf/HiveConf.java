@@ -5366,9 +5366,9 @@ operator|+
 literal|"variables when invoking the script operator"
 argument_list|)
 block|,
-name|HIVE_STRICT_CHECKS_LARGE_QUERY
+name|HIVE_STRICT_CHECKS_ORDERBY_NO_LIMIT
 argument_list|(
-literal|"hive.strict.checks.large.query"
+literal|"hive.strict.checks.orderby.no.limit"
 argument_list|,
 literal|false
 argument_list|,
@@ -5376,9 +5376,20 @@ literal|"Enabling strict large query checks disallows the following:\n"
 operator|+
 literal|"  Orderby without limit.\n"
 operator|+
+literal|"Note that this check currently does not consider data size, only the query pattern."
+argument_list|)
+block|,
+name|HIVE_STRICT_CHECKS_NO_PARTITION_FILTER
+argument_list|(
+literal|"hive.strict.checks.no.partition.filter"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enabling strict large query checks disallows the following:\n"
+operator|+
 literal|"  No partition being picked up for a query against partitioned table.\n"
 operator|+
-literal|"Note that these checks currently do not consider data size, only the query pattern."
+literal|"Note that this check currently does not consider data size, only the query pattern."
 argument_list|)
 block|,
 name|HIVE_STRICT_CHECKS_TYPE_SAFETY
@@ -21879,7 +21890,7 @@ literal|"Order by-s without limit"
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_STRICT_CHECKS_LARGE_QUERY
+name|HIVE_STRICT_CHECKS_ORDERBY_NO_LIMIT
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -21894,7 +21905,7 @@ literal|"Queries against partitioned tables without a partition filter"
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_STRICT_CHECKS_LARGE_QUERY
+name|HIVE_STRICT_CHECKS_NO_PARTITION_FILTER
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -21963,7 +21974,7 @@ name|setting
 operator|.
 name|varname
 operator|+
-literal|" to false and that "
+literal|" to false and make sure that "
 operator|+
 name|ConfVars
 operator|.
@@ -21971,11 +21982,9 @@ name|HIVEMAPREDMODE
 operator|.
 name|varname
 operator|+
-literal|" is not"
+literal|" is not set to 'strict' to proceed. Note that you may get errors or incorrect "
 operator|+
-literal|" set to 'strict' to proceed. Note that if you may get errors or incorrect results if"
-operator|+
-literal|" you make a mistake while using some of the unsafe features."
+literal|"results if you make a mistake while using some of the unsafe features."
 return|;
 block|}
 specifier|public
@@ -21994,7 +22003,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_STRICT_CHECKS_LARGE_QUERY
+name|HIVE_STRICT_CHECKS_ORDERBY_NO_LIMIT
 argument_list|)
 condition|?
 literal|null
@@ -22018,7 +22027,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_STRICT_CHECKS_LARGE_QUERY
+name|HIVE_STRICT_CHECKS_NO_PARTITION_FILTER
 argument_list|)
 condition|?
 literal|null
