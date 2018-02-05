@@ -15337,17 +15337,17 @@ if|if
 condition|(
 name|LOG
 operator|.
-name|isInfoEnabled
+name|isDebugEnabled
 argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Content Summary {} length: {} num files: {}"
+literal|"Content Summary cached for {} length: {} num files: {} "
 operator|+
-literal|" num directories: {}"
+literal|"num directories: {}"
 argument_list|,
 name|dirPath
 argument_list|,
@@ -15397,7 +15397,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Content Summary not cached for {}"
 argument_list|,
