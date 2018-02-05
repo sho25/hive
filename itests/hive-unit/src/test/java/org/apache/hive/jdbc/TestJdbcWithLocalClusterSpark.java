@@ -451,6 +451,15 @@ argument_list|,
 literal|"local-cluster[2,2,1024]"
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"hive.spark.client.connect.timeout"
+argument_list|,
+literal|"30000ms"
+argument_list|)
+expr_stmt|;
 comment|// FIXME: Hadoop3 made the incompatible change for dfs.client.datanode-restart.timeout
 comment|// while spark2 is still using Hadoop2.
 comment|// Spark requires Hive to support Hadoop3 first then Spark can start
