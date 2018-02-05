@@ -3054,7 +3054,9 @@ name|apache
 operator|.
 name|log4j
 operator|.
-name|NDC
+name|config
+operator|.
+name|Log4j1ConfigurationFactory
 operator|.
 name|class
 operator|,
