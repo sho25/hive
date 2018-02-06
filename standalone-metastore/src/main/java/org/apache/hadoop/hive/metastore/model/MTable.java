@@ -101,10 +101,6 @@ name|boolean
 name|rewriteEnabled
 decl_stmt|;
 specifier|private
-name|MCreationMetadata
-name|creationMetadata
-decl_stmt|;
-specifier|private
 name|String
 name|tableType
 decl_stmt|;
@@ -159,9 +155,6 @@ name|viewExpandedText
 parameter_list|,
 name|boolean
 name|rewriteEnabled
-parameter_list|,
-name|MCreationMetadata
-name|creationMetadata
 parameter_list|,
 name|String
 name|tableType
@@ -239,12 +232,6 @@ operator|.
 name|rewriteEnabled
 operator|=
 name|rewriteEnabled
-expr_stmt|;
-name|this
-operator|.
-name|creationMetadata
-operator|=
-name|creationMetadata
 expr_stmt|;
 name|this
 operator|.
@@ -449,32 +436,6 @@ operator|.
 name|rewriteEnabled
 operator|=
 name|rewriteEnabled
-expr_stmt|;
-block|}
-comment|/**    * @return the metadata information related to a materialized view creation    */
-specifier|public
-name|MCreationMetadata
-name|getCreationMetadata
-parameter_list|()
-block|{
-return|return
-name|creationMetadata
-return|;
-block|}
-comment|/**    * @param creationMetadata the metadata information to set    */
-specifier|public
-name|void
-name|setCreationMetadata
-parameter_list|(
-name|MCreationMetadata
-name|creationMetadata
-parameter_list|)
-block|{
-name|this
-operator|.
-name|creationMetadata
-operator|=
-name|creationMetadata
 expr_stmt|;
 block|}
 comment|/**    * @return the owner    */
