@@ -11759,6 +11759,19 @@ comment|// To produce the same effect, we will find all the partitions affected 
 comment|// Note: we ignore the statement ID here, because it's currently irrelevant for MoveTask
 comment|//       where this is used; we always want to load everything; also the only case where
 comment|//       we have multiple statements anyway is union.
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
+argument_list|(
+literal|"Looking for dynamic partitions in {} ({} levels)"
+argument_list|,
+name|loadPath
+argument_list|,
+name|numDP
+argument_list|)
+expr_stmt|;
 name|Path
 index|[]
 name|leafStatus

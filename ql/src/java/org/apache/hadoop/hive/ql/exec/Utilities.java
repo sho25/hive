@@ -22609,7 +22609,7 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|boolean
+name|Boolean
 name|isBaseDir
 parameter_list|)
 throws|throws
@@ -22643,8 +22643,6 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
-argument_list|,
-name|isBaseDir
 argument_list|)
 expr_stmt|;
 block|}
@@ -22671,11 +22669,17 @@ return|;
 block|}
 comment|// TODO: for some reason, globStatus doesn't work for masks like "...blah/*/delta_0000007_0000007*"
 comment|//       the last star throws it off. So, for now, if stmtId is missing use recursion.
+comment|//       For the same reason, we cannot use it if we don't know isBaseDir. Currently, we don't
+comment|//       /want/ to know isBaseDir because that is error prone; so, it ends up never being used.
 if|if
 condition|(
 name|stmtId
 operator|<
 literal|0
+operator|||
+name|isBaseDir
+operator|==
+literal|null
 operator|||
 operator|(
 name|HiveConf
@@ -23409,9 +23413,6 @@ name|stmtId
 parameter_list|,
 name|Configuration
 name|conf
-parameter_list|,
-name|boolean
-name|isBaseDir
 parameter_list|)
 throws|throws
 name|IOException
@@ -23438,7 +23439,7 @@ name|stmtId
 argument_list|,
 name|conf
 argument_list|,
-name|isBaseDir
+literal|null
 argument_list|)
 decl_stmt|;
 if|if
@@ -23665,6 +23666,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|// TODO: we should get rid of isInsertOverwrite here too.
 specifier|private
 specifier|static
 name|Path
@@ -23899,8 +23901,6 @@ argument_list|,
 name|stmtId
 argument_list|,
 name|hconf
-argument_list|,
-name|isInsertOverwrite
 argument_list|)
 expr_stmt|;
 return|return;
@@ -24052,8 +24052,6 @@ argument_list|,
 literal|true
 argument_list|,
 literal|false
-argument_list|,
-name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 if|if
