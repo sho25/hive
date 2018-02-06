@@ -2436,6 +2436,36 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+literal|"bi"
+argument_list|,
+name|Action
+operator|.
+name|fromMetastoreExpression
+argument_list|(
+literal|"MOVE TO bi"
+argument_list|)
+operator|.
+name|getPoolName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"bi.c1.c2"
+argument_list|,
+name|Action
+operator|.
+name|fromMetastoreExpression
+argument_list|(
+literal|"MOVE TO bi.c1.c2"
+argument_list|)
+operator|.
+name|getPoolName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
 literal|"MOVE TO etl"
 argument_list|,
 name|Action

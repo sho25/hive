@@ -399,7 +399,7 @@ name|poolNode
 operator|.
 name|getChild
 argument_list|(
-literal|0
+name|i
 argument_list|)
 operator|.
 name|getText
