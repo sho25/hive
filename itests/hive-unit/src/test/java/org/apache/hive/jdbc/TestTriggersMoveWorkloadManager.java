@@ -516,9 +516,24 @@ name|setTimeVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_TRIGGER_VALIDATION_INTERVAL_MS
+name|HIVE_TRIGGER_VALIDATION_INTERVAL
 argument_list|,
-literal|100
+literal|50
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setTimeVar
+argument_list|(
+name|ConfVars
+operator|.
+name|TEZ_DAG_STATUS_CHECK_INTERVAL
+argument_list|,
+literal|50
 argument_list|,
 name|TimeUnit
 operator|.
@@ -1525,6 +1540,41 @@ name|errCaptureExpect
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: disabling this test as tez publishes counters only after task completion which will cause write side counters
+comment|// to be not validated correctly (DAG will be completed before validation)
+comment|//  @Test(timeout = 60000)
+comment|//  public void testTriggerMoveKill() throws Exception {
+comment|//    Expression moveExpression1 = ExpressionFactory.fromString("HDFS_BYTES_READ> 100");
+comment|//    Expression moveExpression2 = ExpressionFactory.fromString("HDFS_BYTES_WRITTEN> 200");
+comment|//    Trigger moveTrigger1 = new ExecutionTrigger("move_big_read", moveExpression1,
+comment|//      new Action(Action.Type.MOVE_TO_POOL, "ETL"));
+comment|//    Trigger killTrigger = new ExecutionTrigger("big_write_kill", moveExpression2,
+comment|//      new Action(Action.Type.KILL_QUERY));
+comment|//    setupTriggers(Lists.newArrayList(moveTrigger1), Lists.newArrayList(killTrigger));
+comment|//    String query = "select t1.under_col, t1.value from " + tableName + " t1 join " + tableName +
+comment|//      " t2 on t1.under_col>=t2.under_col order by t1.under_col, t1.value";
+comment|//    List<String> setCmds = new ArrayList<>();
+comment|//    setCmds.add("set hive.tez.session.events.print.summary=json");
+comment|//    setCmds.add("set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter");
+comment|//    setCmds.add("set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter");
+comment|//    List<String> errCaptureExpect = new ArrayList<>();
+comment|//    errCaptureExpect.add("Workload Manager Events Summary");
+comment|//    errCaptureExpect.add("Event: GET Pool: BI Cluster %: 80.00");
+comment|//    errCaptureExpect.add("Event: MOVE Pool: ETL Cluster %: 20.00");
+comment|//    errCaptureExpect.add("Event: KILL Pool: null Cluster %: 0.00");
+comment|//    errCaptureExpect.add("Event: RETURN Pool: null Cluster %: 0.00");
+comment|//    errCaptureExpect.add("\"eventType\" : \"GET\"");
+comment|//    errCaptureExpect.add("\"eventType\" : \"MOVE\"");
+comment|//    errCaptureExpect.add("\"eventType\" : \"KILL\"");
+comment|//    errCaptureExpect.add("\"eventType\" : \"RETURN\"");
+comment|//    errCaptureExpect.add("\"name\" : \"move_big_read\"");
+comment|//    errCaptureExpect.add("\"name\" : \"big_write_kill\"");
+comment|//    // violation in BI queue
+comment|//    errCaptureExpect.add("\"violationMsg\" : \"Trigger " + moveTrigger1 + " violated");
+comment|//    // violation in ETL queue
+comment|//    errCaptureExpect.add("\"violationMsg\" : \"Trigger " + killTrigger + " violated");
+comment|//    runQueryWithTrigger(query, setCmds, killTrigger + " violated", errCaptureExpect);
+comment|//  }
 annotation|@
 name|Test
 argument_list|(

@@ -1731,7 +1731,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_TRIGGER_VALIDATION_INTERVAL_MS
+name|HIVE_TRIGGER_VALIDATION_INTERVAL
 argument_list|,
 name|TimeUnit
 operator|.

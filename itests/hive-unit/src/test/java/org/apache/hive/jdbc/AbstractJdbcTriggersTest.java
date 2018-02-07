@@ -520,7 +520,7 @@ name|setTimeVar
 argument_list|(
 name|ConfVars
 operator|.
-name|HIVE_TRIGGER_VALIDATION_INTERVAL_MS
+name|HIVE_TRIGGER_VALIDATION_INTERVAL
 argument_list|,
 literal|100
 argument_list|,

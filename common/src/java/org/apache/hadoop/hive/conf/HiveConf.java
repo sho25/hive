@@ -12820,6 +12820,23 @@ operator|+
 literal|" only if the execution engine is tez."
 argument_list|)
 block|,
+name|TEZ_DAG_STATUS_CHECK_INTERVAL
+argument_list|(
+literal|"hive.tez.dag.status.check.interval"
+argument_list|,
+literal|"500ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Interval between subsequent DAG status invocation."
+argument_list|)
+block|,
 name|SPARK_EXEC_INPLACE_PROGRESS
 argument_list|(
 literal|"hive.spark.exec.inplace.progress"
@@ -14459,9 +14476,9 @@ argument_list|,
 literal|"logger used for llap-daemons."
 argument_list|)
 block|,
-name|HIVE_TRIGGER_VALIDATION_INTERVAL_MS
+name|HIVE_TRIGGER_VALIDATION_INTERVAL
 argument_list|(
-literal|"hive.trigger.validation.interval.ms"
+literal|"hive.trigger.validation.interval"
 argument_list|,
 literal|"500ms"
 argument_list|,

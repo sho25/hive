@@ -339,6 +339,26 @@ decl_stmt|;
 comment|// there could be interval where desired counter value is not populated by the time we make this check
 if|if
 condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Validating trigger: {} against currentCounters: {}"
+argument_list|,
+name|currentTrigger
+argument_list|,
+name|currentCounters
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|currentCounters
 operator|.
 name|containsKey
