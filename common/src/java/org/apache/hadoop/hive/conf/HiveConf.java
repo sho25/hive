@@ -15090,6 +15090,79 @@ argument_list|,
 literal|"Maximum number of threads that Hive uses to list file information from file systems (recommended> 1 for blobstore)."
 argument_list|)
 block|,
+name|HIVE_QUERY_RESULTS_CACHE_ENABLED
+argument_list|(
+literal|"hive.query.results.cache.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If the query results cache is enabled. This will keep results of previously executed queries "
+operator|+
+literal|"to be reused if the same query is executed again."
+argument_list|)
+block|,
+name|HIVE_QUERY_RESULTS_CACHE_DIRECTORY
+argument_list|(
+literal|"hive.query.results.cache.directory"
+argument_list|,
+literal|"/tmp/hive/_resultscache_"
+argument_list|,
+literal|"Location of the query results cache directory. Temporary results from queries "
+operator|+
+literal|"will be moved to this location."
+argument_list|)
+block|,
+name|HIVE_QUERY_RESULTS_CACHE_MAX_ENTRY_LIFETIME
+argument_list|(
+literal|"hive.query.results.cache.max.entry.lifetime"
+argument_list|,
+literal|"3600s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Maximum lifetime in seconds for an entry in the query results cache. A nonpositive value means infinite."
+argument_list|)
+block|,
+name|HIVE_QUERY_RESULTS_CACHE_MAX_SIZE
+argument_list|(
+literal|"hive.query.results.cache.max.size"
+argument_list|,
+operator|(
+name|long
+operator|)
+literal|2
+operator|*
+literal|1024
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum total size in bytes that the query results cache directory is allowed to use on the filesystem."
+argument_list|)
+block|,
+name|HIVE_QUERY_RESULTS_CACHE_MAX_ENTRY_SIZE
+argument_list|(
+literal|"hive.query.results.cache.max.entry.size"
+argument_list|,
+operator|(
+name|long
+operator|)
+literal|10
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"Maximum size in bytes that a single query result is allowed to use in the results cache directory"
+argument_list|)
+block|,
 comment|/* BLOBSTORE section */
 name|HIVE_BLOBSTORE_SUPPORTED_SCHEMES
 argument_list|(

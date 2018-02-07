@@ -468,6 +468,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SAVE_TO_RESULTS_CACHE
+init|=
+literal|"saveToResultsCache"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SPARK_SUBMIT_TO_RUNNING
 init|=
 literal|"SparkSubmitToRunning"

@@ -2057,6 +2057,26 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|HiveRelOpMaterializationValidator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|HiveRexExecutorImpl
 import|;
 end_import
@@ -10711,6 +10731,46 @@ argument_list|,
 literal|"Calcite: Plan generation"
 argument_list|)
 expr_stmt|;
+comment|// Validate query materialization (materialized views, query results caching.
+comment|// This check needs to occur before constant folding, which may remove some
+comment|// function calls from the query plan.
+name|HiveRelOpMaterializationValidator
+name|matValidator
+init|=
+operator|new
+name|HiveRelOpMaterializationValidator
+argument_list|()
+decl_stmt|;
+name|matValidator
+operator|.
+name|validateQueryMaterialization
+argument_list|(
+name|calciteGenPlan
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|matValidator
+operator|.
+name|isValidMaterialization
+argument_list|()
+condition|)
+block|{
+name|String
+name|reason
+init|=
+name|matValidator
+operator|.
+name|getInvalidMaterializationReason
+argument_list|()
+decl_stmt|;
+name|setInvalidQueryMaterializationReason
+argument_list|(
+name|reason
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Create executor
 name|RexExecutor
 name|executorProvider

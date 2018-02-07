@@ -1053,6 +1053,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|cache
+operator|.
+name|results
+operator|.
+name|QueryResultsCache
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|exec
 operator|.
 name|FunctionRegistry
@@ -6524,6 +6544,12 @@ condition|)
 block|{
 return|return;
 block|}
+comment|// Remove any cached results from the previous test.
+name|QueryResultsCache
+operator|.
+name|cleanupInstance
+argument_list|()
+expr_stmt|;
 comment|// allocate and initialize a new conf since a test can
 comment|// modify conf by using 'set' commands
 name|conf
