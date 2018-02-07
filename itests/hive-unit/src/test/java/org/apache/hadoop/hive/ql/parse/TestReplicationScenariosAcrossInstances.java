@@ -29,6 +29,20 @@ name|commons
 operator|.
 name|lang3
 operator|.
+name|RandomStringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
 name|StringUtils
 import|;
 end_import
@@ -156,6 +170,16 @@ operator|.
 name|shims
 operator|.
 name|Utils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
 import|;
 end_import
 
@@ -319,6 +343,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -428,9 +462,10 @@ decl_stmt|,
 name|replica
 decl_stmt|;
 specifier|private
-specifier|static
-name|MiniDFSCluster
-name|miniDFSCluster
+name|String
+name|primaryDbName
+decl_stmt|,
+name|replicatedDbName
 decl_stmt|;
 annotation|@
 name|BeforeClass
@@ -477,8 +512,9 @@ argument_list|,
 literal|"*"
 argument_list|)
 expr_stmt|;
+name|MiniDFSCluster
 name|miniDFSCluster
-operator|=
+init|=
 operator|new
 name|MiniDFSCluster
 operator|.
@@ -499,7 +535,44 @@ argument_list|)
 operator|.
 name|build
 argument_list|()
+decl_stmt|;
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|overridesForHiveConf
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+block|{
+block|{
+name|put
+argument_list|(
+literal|"fs.defaultFS"
+argument_list|,
+name|miniDFSCluster
+operator|.
+name|getFileSystem
+argument_list|()
+operator|.
+name|getUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|)
 expr_stmt|;
+block|}
+block|}
+decl_stmt|;
 name|primary
 operator|=
 operator|new
@@ -508,6 +581,8 @@ argument_list|(
 name|LOG
 argument_list|,
 name|miniDFSCluster
+argument_list|,
+name|overridesForHiveConf
 argument_list|)
 expr_stmt|;
 name|replica
@@ -518,6 +593,8 @@ argument_list|(
 name|LOG
 argument_list|,
 name|miniDFSCluster
+argument_list|,
+name|overridesForHiveConf
 argument_list|)
 expr_stmt|;
 block|}
@@ -542,12 +619,6 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-specifier|private
-name|String
-name|primaryDbName
-decl_stmt|,
-name|replicatedDbName
-decl_stmt|;
 annotation|@
 name|Before
 specifier|public
@@ -597,6 +668,38 @@ argument_list|(
 literal|"create database "
 operator|+
 name|primaryDbName
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|After
+specifier|public
+name|void
+name|tearDown
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database if exists "
+operator|+
+name|primaryDbName
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database if exists "
+operator|+
+name|replicatedDbName
+operator|+
+literal|" cascade"
 argument_list|)
 expr_stmt|;
 block|}
@@ -656,7 +759,7 @@ literal|"CREATE FUNCTION "
 operator|+
 name|primaryDbName
 operator|+
-literal|".testFunction as 'hivemall.tools.string.StopwordUDF' "
+literal|".testFunctionOne as 'hivemall.tools.string.StopwordUDF' "
 operator|+
 literal|"using jar  'ivy://io.github.myui:hivemall:0.4.0-2'"
 argument_list|)
@@ -715,7 +818,7 @@ name|verifyResult
 argument_list|(
 name|replicatedDbName
 operator|+
-literal|".testFunction"
+literal|".testFunctionOne"
 argument_list|)
 expr_stmt|;
 comment|// Test the idempotent behavior of CREATE FUNCTION
@@ -757,7 +860,7 @@ name|verifyResult
 argument_list|(
 name|replicatedDbName
 operator|+
-literal|".testFunction"
+literal|".testFunctionOne"
 argument_list|)
 expr_stmt|;
 block|}
@@ -778,7 +881,7 @@ literal|"CREATE FUNCTION "
 operator|+
 name|primaryDbName
 operator|+
-literal|".testFunction as 'hivemall.tools.string.StopwordUDF' "
+literal|".testFunctionAnother as 'hivemall.tools.string.StopwordUDF' "
 operator|+
 literal|"using jar  'ivy://io.github.myui:hivemall:0.4.0-2'"
 argument_list|)
@@ -830,7 +933,7 @@ literal|"Drop FUNCTION "
 operator|+
 name|primaryDbName
 operator|+
-literal|".testFunction "
+literal|".testFunctionAnother "
 argument_list|)
 expr_stmt|;
 name|WarehouseInstance
@@ -876,7 +979,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"SHOW FUNCTIONS LIKE '*testfunction*'"
+literal|"SHOW FUNCTIONS LIKE '*testfunctionanother*'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -912,7 +1015,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"SHOW FUNCTIONS LIKE '*testfunction*'"
+literal|"SHOW FUNCTIONS LIKE '*testfunctionanother*'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1600,7 +1703,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|parallelExecutionOfReplicationBootStrapLoad
+name|testParallelExecutionOfReplicationBootStrapLoad
 parameter_list|()
 throws|throws
 name|Throwable
@@ -1774,6 +1877,21 @@ literal|"japan"
 argument_list|,
 literal|"china"
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|EXECPARALLEL
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -2258,6 +2376,725 @@ literal|"custom.value\t "
 block|}
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBootStrapDumpOfWarehouse
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|randomOne
+init|=
+name|RandomStringUtils
+operator|.
+name|random
+argument_list|(
+literal|10
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+name|String
+name|randomTwo
+init|=
+name|RandomStringUtils
+operator|.
+name|random
+argument_list|(
+literal|10
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+name|String
+name|dbOne
+init|=
+name|primaryDbName
+operator|+
+name|randomOne
+decl_stmt|;
+name|String
+name|dbTwo
+init|=
+name|primaryDbName
+operator|+
+name|randomTwo
+decl_stmt|;
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (i int, j int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create database "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (i int, j int) partitioned by (load_date date) "
+operator|+
+literal|"clustered by(i) into 2 buckets stored as orc tblproperties ('transactional'='true') "
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create database "
+operator|+
+name|dbTwo
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbTwo
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (i int, j int)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"`*`"
+argument_list|,
+literal|null
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'hive.repl.dump.metadata.only'='true'"
+argument_list|,
+literal|"'hive.repl.dump.include.acid.tables'='true'"
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|/*       Due to the limitation that we can only have one instance of Persistence Manager Factory in a JVM       we are not able to create multiple embedded derby instances for two different MetaStore instances.     */
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|primaryDbName
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbOne
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbTwo
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+comment|/*        End of additional steps     */
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"show databases"
+argument_list|)
+operator|.
+name|verifyFailure
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+name|primaryDbName
+block|,
+name|dbOne
+block|,
+name|dbTwo
+block|}
+argument_list|)
+operator|.
+name|load
+argument_list|(
+literal|""
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show databases"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"default"
+block|,
+name|primaryDbName
+block|,
+name|dbOne
+block|,
+name|dbTwo
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbTwo
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+expr_stmt|;
+comment|/*       Start of cleanup     */
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|primaryDbName
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbOne
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbTwo
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+comment|/*        End of cleanup     */
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalDumpOfWarehouse
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|randomOne
+init|=
+name|RandomStringUtils
+operator|.
+name|random
+argument_list|(
+literal|10
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+name|String
+name|randomTwo
+init|=
+name|RandomStringUtils
+operator|.
+name|random
+argument_list|(
+literal|10
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+decl_stmt|;
+name|String
+name|dbOne
+init|=
+name|primaryDbName
+operator|+
+name|randomOne
+decl_stmt|;
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|bootstrapTuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (i int, j int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create database "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (i int, j int) partitioned by (load_date date) "
+operator|+
+literal|"clustered by(i) into 2 buckets stored as orc tblproperties ('transactional'='true') "
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"`*`"
+argument_list|,
+literal|null
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'hive.repl.dump.metadata.only'='true'"
+argument_list|,
+literal|"'hive.repl.dump.include.acid.tables'='true'"
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|String
+name|dbTwo
+init|=
+name|primaryDbName
+operator|+
+name|randomTwo
+decl_stmt|;
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|incrementalTuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"create database "
+operator|+
+name|dbTwo
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbTwo
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (i int, j int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t2 (a int, b int)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"`*`"
+argument_list|,
+name|bootstrapTuple
+operator|.
+name|lastReplicationId
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'hive.repl.dump.metadata.only'='true'"
+argument_list|,
+literal|"'hive.repl.dump.include.acid.tables'='true'"
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|/*       Due to the limitation that we can only have one instance of Persistence Manager Factory in a JVM       we are not able to create multiple embedded derby instances for two different MetaStore instances.     */
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|primaryDbName
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbOne
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbTwo
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+comment|/*       End of additional steps     */
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"show databases"
+argument_list|)
+operator|.
+name|verifyFailure
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+name|primaryDbName
+block|,
+name|dbOne
+block|,
+name|dbTwo
+block|}
+argument_list|)
+operator|.
+name|load
+argument_list|(
+literal|""
+argument_list|,
+name|bootstrapTuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show databases"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"default"
+block|,
+name|primaryDbName
+block|,
+name|dbOne
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+literal|""
+argument_list|,
+name|incrementalTuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show databases"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"default"
+block|,
+name|primaryDbName
+block|,
+name|dbOne
+block|,
+name|dbTwo
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbTwo
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|dbOne
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|,
+literal|"t2"
+block|}
+argument_list|)
+expr_stmt|;
+comment|/*        Start of cleanup     */
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|primaryDbName
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbOne
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|run
+argument_list|(
+literal|"drop database "
+operator|+
+name|dbTwo
+operator|+
+literal|" cascade"
+argument_list|)
+expr_stmt|;
+comment|/*        End of cleanup     */
 block|}
 block|}
 end_class

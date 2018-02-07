@@ -932,9 +932,6 @@ argument_list|,
 name|MS_SERVICE_PRINCIPAL
 argument_list|,
 name|db
-operator|.
-name|getName
-argument_list|()
 argument_list|,
 name|now
 argument_list|()

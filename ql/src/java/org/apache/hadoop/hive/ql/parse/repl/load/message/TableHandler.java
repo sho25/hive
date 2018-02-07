@@ -154,25 +154,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// Path being passed to us is a table dump location. We go ahead and load it in as needed.
-comment|// If tblName is null, then we default to the table name specified in _metadata, which is good.
-comment|// or are both specified, in which case, that's what we are intended to create the new table as.
-if|if
-condition|(
-name|context
-operator|.
-name|isDbNameEmpty
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"Database name cannot be null for a table load"
-argument_list|)
-throw|;
-block|}
 try|try
 block|{
 name|List

@@ -731,6 +731,18 @@ begin_import
 import|import
 name|org
 operator|.
+name|datanucleus
+operator|.
+name|util
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -1161,6 +1173,27 @@ block|}
 break|break;
 block|}
 block|}
+if|if
+condition|(
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|parsedDbName
+argument_list|)
+condition|)
+block|{
+name|parsedDbName
+operator|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getCurrentDatabase
+argument_list|()
+expr_stmt|;
+block|}
 comment|// parsing statement is now done, on to logic.
 name|tableExists
 operator|=
@@ -1401,6 +1434,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|/**    * The same code is used from both the "repl load" as well as "import".    * Given that "repl load" now supports two modes "repl load dbName [location]" and    * "repl load [location]" in which case the database name has to be taken from the table metadata    * by default and then over-ridden if something specified on the command line.    *    * hence for import to work correctly we have to pass in the sessionState default Db via the    * parsedDbName parameter    */
 specifier|public
 specifier|static
 name|boolean
@@ -1428,7 +1462,7 @@ name|String
 name|parsedTableName
 parameter_list|,
 name|String
-name|parsedDbName
+name|overrideDBName
 parameter_list|,
 name|LinkedHashMap
 argument_list|<
@@ -1534,10 +1568,6 @@ argument_list|)
 expr_stmt|;
 name|MetaData
 name|rv
-init|=
-operator|new
-name|MetaData
-argument_list|()
 decl_stmt|;
 try|try
 block|{
@@ -1653,25 +1683,25 @@ block|}
 name|String
 name|dbname
 init|=
-name|SessionState
+name|rv
 operator|.
-name|get
+name|getTable
 argument_list|()
 operator|.
-name|getCurrentDatabase
+name|getDbName
 argument_list|()
 decl_stmt|;
 if|if
 condition|(
 operator|(
-name|parsedDbName
+name|overrideDBName
 operator|!=
 literal|null
 operator|)
 operator|&&
 operator|(
 operator|!
-name|parsedDbName
+name|overrideDBName
 operator|.
 name|isEmpty
 argument_list|()
@@ -1681,7 +1711,7 @@ block|{
 comment|// If the parsed statement contained a db.tablename specification, prefer that.
 name|dbname
 operator|=
-name|parsedDbName
+name|overrideDBName
 expr_stmt|;
 block|}
 comment|// Create table associated with the import

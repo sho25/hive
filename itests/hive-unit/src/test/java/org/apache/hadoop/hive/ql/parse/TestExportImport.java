@@ -648,6 +648,101 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|databaseTheTableIsImportedIntoShouldBeParsedFromCommandLine
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|path
+init|=
+literal|"hdfs:///tmp/"
+operator|+
+name|dbName
+operator|+
+literal|"/"
+decl_stmt|;
+name|String
+name|exportPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"1/'"
+decl_stmt|;
+name|srcHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"create table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 (i int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 values (1),(2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportPath
+argument_list|)
+expr_stmt|;
+name|destHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"create database test1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use default"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table test1.t1 from "
+operator|+
+name|exportPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from test1.t1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

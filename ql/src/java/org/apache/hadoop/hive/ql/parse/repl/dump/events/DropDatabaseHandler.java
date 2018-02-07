@@ -87,11 +87,11 @@ end_import
 
 begin_class
 class|class
-name|DropConstraintHandler
+name|DropDatabaseHandler
 extends|extends
 name|AbstractEventHandler
 block|{
-name|DropConstraintHandler
+name|DropDatabaseHandler
 parameter_list|(
 name|NotificationEvent
 name|event
@@ -119,7 +119,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing#{} DROP_CONSTRAINT_MESSAGE message : {}"
+literal|"Processing#{} DROP_DATABASE message : {}"
 argument_list|,
 name|fromEventId
 argument_list|()
@@ -166,7 +166,7 @@ block|{
 return|return
 name|DumpType
 operator|.
-name|EVENT_DROP_CONSTRAINT
+name|EVENT_DROP_DATABASE
 return|;
 block|}
 block|}
