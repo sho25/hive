@@ -189,6 +189,8 @@ name|MetaException
 block|{
 try|try
 block|{
+if|if
+condition|(
 name|FileUtils
 operator|.
 name|moveToTrash
@@ -201,7 +203,12 @@ name|conf
 argument_list|,
 name|ifPurge
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 if|if
 condition|(
 name|fs
