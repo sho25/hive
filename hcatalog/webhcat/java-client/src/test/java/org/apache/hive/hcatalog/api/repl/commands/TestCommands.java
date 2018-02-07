@@ -131,22 +131,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|DriverFactory
 import|;
 end_import
@@ -819,8 +803,6 @@ name|testDropDatabaseCommand
 parameter_list|()
 throws|throws
 name|HCatException
-throws|,
-name|CommandNeedRetryException
 block|{
 name|String
 name|dbName
@@ -1025,8 +1007,6 @@ name|testDropTableCommand
 parameter_list|()
 throws|throws
 name|HCatException
-throws|,
-name|CommandNeedRetryException
 block|{
 name|String
 name|dbName
@@ -1615,8 +1595,6 @@ name|testDropPartitionCommand
 parameter_list|()
 throws|throws
 name|HCatException
-throws|,
-name|CommandNeedRetryException
 throws|,
 name|MetaException
 block|{
@@ -2332,8 +2310,6 @@ parameter_list|()
 throws|throws
 name|HCatException
 throws|,
-name|CommandNeedRetryException
-throws|,
 name|MetaException
 block|{
 comment|// Secondary DropTableCommand test for testing repl-drop-tables' effect on partitions inside a partitioned table
@@ -2896,8 +2872,6 @@ name|testBasicReplEximCommands
 parameter_list|()
 throws|throws
 name|IOException
-throws|,
-name|CommandNeedRetryException
 block|{
 comment|// repl export, has repl.last.id and repl.scope=all in it
 comment|// import repl dump, table has repl.last.id on it (will likely be 0)
@@ -3587,8 +3561,6 @@ name|testMetadataReplEximCommands
 parameter_list|()
 throws|throws
 name|IOException
-throws|,
-name|CommandNeedRetryException
 block|{
 comment|// repl metadata export, has repl.last.id and repl.scope=metadata
 comment|// import repl metadata dump, table metadata changed, allows override, has repl.last.id
@@ -4247,9 +4219,7 @@ name|void
 name|testNoopReplEximCommands
 parameter_list|()
 throws|throws
-name|CommandNeedRetryException
-throws|,
-name|IOException
+name|Exception
 block|{
 comment|// repl noop export on non-existant table, has repl.noop, does not error
 comment|// import repl noop dump, no error

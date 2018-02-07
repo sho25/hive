@@ -709,22 +709,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|DriverFactory
 import|;
 end_import
@@ -4161,6 +4145,8 @@ comment|// expecting this exception
 block|}
 block|}
 comment|/**    * @deprecated use {@link #checkDataWritten2(Path, long, long, int, String, boolean, String...)} -    * there is little value in using InputFormat directly    */
+annotation|@
+name|Deprecated
 specifier|private
 name|void
 name|checkDataWritten
@@ -4272,6 +4258,7 @@ name|pd
 range|:
 name|current
 control|)
+block|{
 name|System
 operator|.
 name|out
@@ -4287,6 +4274,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4333,6 +4321,7 @@ argument_list|()
 operator|>
 name|max
 condition|)
+block|{
 name|max
 operator|=
 name|pd
@@ -4340,6 +4329,7 @@ operator|.
 name|getMaxTransaction
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|pd
@@ -4349,6 +4339,7 @@ argument_list|()
 operator|<
 name|min
 condition|)
+block|{
 name|min
 operator|=
 name|pd
@@ -4356,6 +4347,7 @@ operator|.
 name|getMinTransaction
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|Assert
 operator|.
@@ -4712,6 +4704,7 @@ name|pd
 range|:
 name|current
 control|)
+block|{
 name|System
 operator|.
 name|out
@@ -4727,6 +4720,7 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4773,6 +4767,7 @@ argument_list|()
 operator|>
 name|max
 condition|)
+block|{
 name|max
 operator|=
 name|pd
@@ -4780,6 +4775,7 @@ operator|.
 name|getMaxTransaction
 argument_list|()
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|pd
@@ -4789,6 +4785,7 @@ argument_list|()
 operator|<
 name|min
 condition|)
+block|{
 name|min
 operator|=
 name|pd
@@ -4796,6 +4793,7 @@ operator|.
 name|getMinTransaction
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|Assert
 operator|.
@@ -15226,7 +15224,9 @@ argument_list|(
 literal|"delta"
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|File
 index|[]
 name|bucketFiles
@@ -15256,7 +15256,9 @@ argument_list|(
 literal|"length"
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 name|Integer
 name|bucketNum
 init|=
@@ -15628,11 +15630,7 @@ index|[]
 name|partNames
 parameter_list|)
 throws|throws
-name|QueryFailedException
-throws|,
-name|CommandNeedRetryException
-throws|,
-name|IOException
+name|Exception
 block|{
 name|String
 name|partSpec
@@ -15690,9 +15688,7 @@ name|String
 name|partSpec
 parameter_list|)
 throws|throws
-name|CommandNeedRetryException
-throws|,
-name|IOException
+name|Exception
 block|{
 name|ArrayList
 argument_list|<
@@ -16055,9 +16051,11 @@ name|values
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|StringBuilder
 name|strbuf
 init|=
@@ -16185,29 +16183,6 @@ argument_list|(
 name|sql
 argument_list|)
 expr_stmt|;
-name|int
-name|retryCount
-init|=
-literal|1
-decl_stmt|;
-comment|// # of times to retry if first attempt fails
-for|for
-control|(
-name|int
-name|attempt
-init|=
-literal|0
-init|;
-name|attempt
-operator|<=
-name|retryCount
-condition|;
-operator|++
-name|attempt
-control|)
-block|{
-try|try
-block|{
 comment|//LOG.debug("Running Hive Query: "+ sql);
 name|CommandProcessorResponse
 name|cpr
@@ -16246,34 +16221,6 @@ operator|+
 name|cpr
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandNeedRetryException
-name|e
-parameter_list|)
-block|{
-if|if
-condition|(
-name|attempt
-operator|==
-name|retryCount
-condition|)
-block|{
-throw|throw
-operator|new
-name|QueryFailedException
-argument_list|(
-name|sql
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
-continue|continue;
-block|}
-block|}
-comment|// for
 return|return
 literal|false
 return|;
@@ -16293,8 +16240,6 @@ name|String
 name|query
 parameter_list|)
 throws|throws
-name|CommandNeedRetryException
-throws|,
 name|IOException
 block|{
 name|CommandProcessorResponse
@@ -16418,9 +16363,11 @@ name|this
 operator|==
 name|o
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|o
@@ -16435,9 +16382,11 @@ operator|.
 name|getClass
 argument_list|()
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|SampleRec
 name|that
 init|=
@@ -16454,9 +16403,11 @@ name|that
 operator|.
 name|field2
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 if|if
 condition|(
 name|field1
@@ -16479,9 +16430,11 @@ name|field1
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 return|return
 operator|!
 operator|(

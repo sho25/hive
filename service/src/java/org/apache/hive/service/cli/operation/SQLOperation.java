@@ -413,22 +413,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|DriverFactory
 import|;
 end_import
@@ -978,11 +962,6 @@ comment|/**  * SQLOperation.  *  */
 end_comment
 
 begin_class
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"deprecation"
-argument_list|)
 specifier|public
 class|class
 name|SQLOperation
@@ -1560,15 +1539,6 @@ expr_stmt|;
 comment|// In Hive server mode, we are not able to retry in the FetchTask
 comment|// case, when calling fetch queries since execute() has returned.
 comment|// For now, we disable the test attempts.
-name|driver
-operator|.
-name|setTryCount
-argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
-argument_list|)
-expr_stmt|;
 name|response
 operator|=
 name|driver
@@ -1804,15 +1774,6 @@ block|}
 comment|// In Hive server mode, we are not able to retry in the FetchTask
 comment|// case, when calling fetch queries since execute() has returned.
 comment|// For now, we disable the test attempts.
-name|driver
-operator|.
-name|setTryCount
-argument_list|(
-name|Integer
-operator|.
-name|MAX_VALUE
-argument_list|)
-expr_stmt|;
 name|response
 operator|=
 name|driver
@@ -2934,20 +2895,6 @@ block|}
 catch|catch
 parameter_list|(
 name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveSQLException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandNeedRetryException
 name|e
 parameter_list|)
 block|{

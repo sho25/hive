@@ -391,22 +391,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|DriverFactory
 import|;
 end_import
@@ -544,16 +528,6 @@ operator|.
 name|util
 operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
 import|;
 end_import
 
@@ -701,6 +675,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, String)}    */
+annotation|@
+name|Deprecated
 specifier|public
 name|StreamingConnection
 name|newConnection
@@ -736,6 +712,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, HiveConf, String)}    */
+annotation|@
+name|Deprecated
 specifier|public
 name|StreamingConnection
 name|newConnection
@@ -774,6 +752,8 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, HiveConf, UserGroupInformation, String)}    */
+annotation|@
+name|Deprecated
 specifier|public
 name|StreamingConnection
 name|newConnection
@@ -1129,9 +1109,11 @@ name|this
 operator|==
 name|o
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|o
@@ -1945,6 +1927,8 @@ name|ugi
 return|;
 block|}
 comment|/**      * Acquires a new batch of transactions from Hive.      *      * @param numTransactions is a hint from client indicating how many transactions client needs.      * @param recordWriter  Used to write record. The same writer instance can      *                      be shared with another TransactionBatch (to the same endpoint)      *                      only after the first TransactionBatch has been closed.      *                      Writer will be closed when the TransactionBatch is closed.      * @return      * @throws StreamingIOFailure if failed to create new RecordUpdater for batch      * @throws TransactionBatchUnAvailable if failed to acquire a new Transaction batch      * @throws ImpersonationFailed failed to run command as proxyUser      * @throws InterruptedException      */
+annotation|@
+name|Override
 specifier|public
 name|TransactionBatch
 name|fetchTransactionBatch
@@ -2401,29 +2385,6 @@ parameter_list|)
 throws|throws
 name|QueryFailedException
 block|{
-name|int
-name|retryCount
-init|=
-literal|1
-decl_stmt|;
-comment|// # of times to retry if first attempt fails
-for|for
-control|(
-name|int
-name|attempt
-init|=
-literal|0
-init|;
-name|attempt
-operator|<=
-name|retryCount
-condition|;
-operator|++
-name|attempt
-control|)
-block|{
-try|try
-block|{
 if|if
 condition|(
 name|LOG
@@ -2451,37 +2412,6 @@ argument_list|)
 expr_stmt|;
 return|return
 literal|true
-return|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandNeedRetryException
-name|e
-parameter_list|)
-block|{
-if|if
-condition|(
-name|attempt
-operator|==
-name|retryCount
-condition|)
-block|{
-throw|throw
-operator|new
-name|QueryFailedException
-argument_list|(
-name|sql
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
-continue|continue;
-block|}
-block|}
-comment|// for
-return|return
-literal|false
 return|;
 block|}
 specifier|private
@@ -3453,6 +3383,7 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 throw|throw
 operator|new
 name|InvalidTrasactionState
@@ -3464,6 +3395,7 @@ operator|+
 name|endPt
 argument_list|)
 throw|;
+block|}
 operator|++
 name|currentTxnIndex
 expr_stmt|;

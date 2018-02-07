@@ -149,18 +149,9 @@ name|String
 name|guid64
 parameter_list|)
 function_decl|;
-name|void
-name|setTryCount
-parameter_list|(
-name|int
-name|maxValue
-parameter_list|)
-function_decl|;
 name|CommandProcessorResponse
 name|run
 parameter_list|()
-throws|throws
-name|CommandNeedRetryException
 function_decl|;
 annotation|@
 name|Override
@@ -170,8 +161,6 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
-throws|throws
-name|CommandNeedRetryException
 function_decl|;
 comment|// create some "cover" to the result?
 name|boolean
@@ -182,8 +171,6 @@ name|res
 parameter_list|)
 throws|throws
 name|IOException
-throws|,
-name|CommandNeedRetryException
 function_decl|;
 name|void
 name|setMaxRows

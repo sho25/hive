@@ -527,13 +527,6 @@ comment|// and there is no transformer or UDTF and no block sampling
 comment|// is used.
 if|if
 condition|(
-name|ctx
-operator|.
-name|getTryCount
-argument_list|()
-operator|==
-literal|0
-operator|&&
 name|topOps
 operator|.
 name|size

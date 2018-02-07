@@ -81,22 +81,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|CompilationOpContext
 import|;
 end_import
@@ -779,8 +763,6 @@ name|res
 parameter_list|)
 throws|throws
 name|IOException
-throws|,
-name|CommandNeedRetryException
 block|{
 name|sink
 operator|.
@@ -891,8 +873,10 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|CommandNeedRetryException
-argument_list|()
+name|HiveException
+argument_list|(
+literal|"leastNumRows check failed"
+argument_list|)
 throw|;
 block|}
 comment|// Closing the operator can sometimes yield more rows (HIVE-11892)
@@ -913,16 +897,6 @@ block|}
 return|return
 literal|true
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandNeedRetryException
-name|e
-parameter_list|)
-block|{
-throw|throw
-name|e
-throw|;
 block|}
 catch|catch
 parameter_list|(

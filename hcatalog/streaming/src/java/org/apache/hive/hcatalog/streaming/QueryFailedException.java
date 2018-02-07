@@ -17,22 +17,6 @@ name|streaming
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -49,7 +33,7 @@ parameter_list|(
 name|String
 name|query
 parameter_list|,
-name|CommandNeedRetryException
+name|Exception
 name|e
 parameter_list|)
 block|{

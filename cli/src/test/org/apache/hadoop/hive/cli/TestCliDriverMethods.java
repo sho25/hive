@@ -37,18 +37,6 @@ name|mockito
 operator|.
 name|Matchers
 operator|.
-name|anyInt
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Matchers
-operator|.
 name|anyString
 import|;
 end_import
@@ -62,18 +50,6 @@ operator|.
 name|Matchers
 operator|.
 name|eq
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|doThrow
 import|;
 end_import
 
@@ -413,22 +389,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|IDriver
 import|;
 end_import
@@ -448,20 +408,6 @@ operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|Shell
 import|;
 end_import
 
@@ -532,8 +478,6 @@ specifier|public
 name|void
 name|testThatCliDriverPrintsHeaderForCommandsWithSchema
 parameter_list|()
-throws|throws
-name|CommandNeedRetryException
 block|{
 name|Schema
 name|mockSchema
@@ -621,8 +565,6 @@ specifier|public
 name|void
 name|testThatCliDriverPrintsNoHeaderForCommandsWithNoSchema
 parameter_list|()
-throws|throws
-name|CommandNeedRetryException
 block|{
 name|Schema
 name|mockSchema
@@ -882,8 +824,6 @@ parameter_list|(
 name|Schema
 name|mockSchema
 parameter_list|)
-throws|throws
-name|CommandNeedRetryException
 block|{
 name|CliDriver
 name|cliDriver

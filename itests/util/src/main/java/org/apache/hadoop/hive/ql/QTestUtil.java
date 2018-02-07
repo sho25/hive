@@ -8234,8 +8234,6 @@ name|String
 name|tname
 parameter_list|)
 block|{
-try|try
-block|{
 return|return
 name|drv
 operator|.
@@ -8252,36 +8250,6 @@ operator|.
 name|getResponseCode
 argument_list|()
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandNeedRetryException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"driver failed to run the command: "
-operator|+
-name|tname
-operator|+
-literal|" due to the exception: "
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-return|return
-operator|-
-literal|1
-return|;
-block|}
 block|}
 end_function
 

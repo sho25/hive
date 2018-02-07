@@ -61,9 +61,9 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 import|;
@@ -82,22 +82,6 @@ operator|.
 name|conf
 operator|.
 name|HiveConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|CommandNeedRetryException
 import|;
 end_import
 
@@ -212,7 +196,7 @@ name|void
 name|Setup
 parameter_list|()
 throws|throws
-name|CommandNeedRetryException
+name|Exception
 block|{
 name|Driver
 name|driver

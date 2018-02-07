@@ -19,22 +19,6 @@ name|processors
 package|;
 end_package
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|CommandNeedRetryException
-import|;
-end_import
-
 begin_interface
 specifier|public
 interface|interface
@@ -46,8 +30,6 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
-throws|throws
-name|CommandNeedRetryException
 function_decl|;
 block|}
 end_interface

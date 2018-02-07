@@ -187,7 +187,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CommandNeedRetryException
+name|metadata
+operator|.
+name|HiveException
 import|;
 end_import
 
@@ -604,7 +606,7 @@ name|String
 name|command
 parameter_list|)
 throws|throws
-name|CommandNeedRetryException
+name|HiveException
 block|{
 name|ArrayList
 argument_list|<
@@ -889,19 +891,26 @@ operator|!=
 literal|0
 condition|)
 block|{
+name|String
+name|message
+init|=
+literal|"Syntax error on hadoop options: dfs "
+operator|+
+name|command
+decl_stmt|;
 name|console
 operator|.
 name|printError
 argument_list|(
-literal|"Syntax error on hadoop options: dfs "
-operator|+
-name|command
+name|message
 argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|CommandNeedRetryException
-argument_list|()
+name|HiveException
+argument_list|(
+name|message
+argument_list|)
 throw|;
 block|}
 return|return
