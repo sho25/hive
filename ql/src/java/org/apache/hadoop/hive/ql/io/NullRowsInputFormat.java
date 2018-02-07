@@ -378,7 +378,7 @@ name|String
 name|path
 parameter_list|)
 block|{
-name|super
+name|this
 argument_list|(
 operator|new
 name|Path
@@ -387,6 +387,19 @@ name|path
 argument_list|,
 literal|"null"
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|DummyInputSplit
+parameter_list|(
+name|Path
+name|path
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|path
 argument_list|,
 literal|0
 argument_list|,
@@ -667,9 +680,11 @@ name|counter
 operator|>=
 name|MAX_ROW
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|makeNullVrb
 argument_list|(
 name|value
@@ -901,6 +916,7 @@ name|paths
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IOException
@@ -908,6 +924,7 @@ argument_list|(
 literal|"Cannot find path in conf"
 argument_list|)
 throw|;
+block|}
 name|InputSplit
 index|[]
 name|result

@@ -1996,6 +1996,15 @@ argument_list|)
 expr_stmt|;
 name|job
 operator|.
+name|setMapRunnerClass
+argument_list|(
+name|ExecMapRunner
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|job
+operator|.
 name|setMapperClass
 argument_list|(
 name|ExecMapper

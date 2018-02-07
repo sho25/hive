@@ -383,16 +383,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collections
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Enumeration
 import|;
 end_import
@@ -2998,6 +2988,14 @@ name|String
 name|REDUCENAME
 init|=
 literal|"Reducer "
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|ENSURE_OPERATORS_EXECUTED
+init|=
+literal|"ENSURE_OPERATORS_EXECUTED"
 decl_stmt|;
 annotation|@
 name|Deprecated
