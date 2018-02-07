@@ -7282,6 +7282,15 @@ operator|+
 literal|"query will fail if hive.enforce.bucketmapjoin is set to true."
 argument_list|)
 block|,
+name|HIVE_ENFORCE_NOT_NULL_CONSTRAINT
+argument_list|(
+literal|"hive.constraint.notnull.enforce"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Should \"IS NOT NULL \" constraint be enforced?"
+argument_list|)
+block|,
 name|HIVE_AUTO_SORTMERGE_JOIN
 argument_list|(
 literal|"hive.auto.convert.sortmerge.join"

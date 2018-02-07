@@ -1302,6 +1302,8 @@ argument_list|>
 name|operator
 parameter_list|)
 block|{
+comment|// since removeParent/removeChild updates the childOperators and parentOperators list in place
+comment|// we need to make a copy of list to iterator over them
 name|List
 argument_list|<
 name|Operator
@@ -1313,10 +1315,15 @@ argument_list|>
 argument_list|>
 name|children
 init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
 name|operator
 operator|.
 name|getChildOperators
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
@@ -1329,10 +1336,15 @@ argument_list|>
 argument_list|>
 name|parents
 init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
 name|operator
 operator|.
 name|getParentOperators
 argument_list|()
+argument_list|)
 decl_stmt|;
 for|for
 control|(

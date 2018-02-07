@@ -4894,10 +4894,12 @@ name|enable
 operator|=
 literal|true
 expr_stmt|;
-comment|// validate is true by default if we enable the constraint
+comment|// validate is false by default if we enable the constraint
+comment|// TODO: A constraint like NOT NULL could be enabled using ALTER but VALIDATE remains
+comment|//  false in such cases. Ideally VALIDATE should be set to true to validate existing data
 name|validate
 operator|=
-literal|true
+literal|false
 expr_stmt|;
 block|}
 elseif|else
@@ -4966,8 +4968,21 @@ literal|true
 expr_stmt|;
 block|}
 block|}
+comment|// NOT NULL constraint could be enforced/enabled
 if|if
 condition|(
+name|child
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|!=
+name|HiveParser
+operator|.
+name|TOK_NOT_NULL
+operator|&&
 name|enable
 condition|)
 block|{

@@ -4462,7 +4462,6 @@ block|}
 block|}
 block|}
 block|}
-specifier|private
 specifier|static
 name|ExprNodeDesc
 name|toExprNodeDesc

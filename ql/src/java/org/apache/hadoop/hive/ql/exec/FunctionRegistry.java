@@ -2787,6 +2787,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"enforce_constraint"
+argument_list|,
+name|GenericUDFEnforceNotNullConstraint
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"pmod"
 argument_list|,
 name|GenericUDFPosMod
