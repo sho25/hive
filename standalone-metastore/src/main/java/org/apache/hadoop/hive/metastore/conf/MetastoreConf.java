@@ -2299,7 +2299,17 @@ argument_list|,
 operator|-
 literal|1
 argument_list|,
-literal|"This limits the number of partitions that can be requested from the metastore for a given table.\n"
+literal|"This limits the number of partitions (whole partition objects) that can be requested "
+operator|+
+literal|"from the metastore for a give table. MetaStore API methods using this are: \n"
+operator|+
+literal|"get_partitions, \n"
+operator|+
+literal|"get_partitions_with_auth, \n"
+operator|+
+literal|"get_partitions_by_filter, \n"
+operator|+
+literal|"get_partitions_by_expr.\n"
 operator|+
 literal|"The default value \"-1\" means no limit."
 argument_list|)

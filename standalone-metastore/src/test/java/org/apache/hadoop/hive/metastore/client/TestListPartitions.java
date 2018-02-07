@@ -6811,7 +6811,6 @@ literal|"dd"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//TODO: surprisingly listPartitionNames returns everything when 0 parts are requested
 name|partitionNames
 operator|=
 name|client
@@ -6828,7 +6827,7 @@ operator|)
 literal|0
 argument_list|)
 expr_stmt|;
-name|assertFalse
+name|assertTrue
 argument_list|(
 name|partitionNames
 operator|.
@@ -6836,25 +6835,7 @@ name|isEmpty
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertCorrectPartitionNames
-argument_list|(
-name|partitionNames
-argument_list|,
-name|testValues
-argument_list|,
-name|Lists
-operator|.
-name|newArrayList
-argument_list|(
-literal|"yyyy"
-argument_list|,
-literal|"mm"
-argument_list|,
-literal|"dd"
-argument_list|)
-argument_list|)
-expr_stmt|;
-comment|//TODO: surprisingly listPartitionNames doesn't fail when>100 parts are requested
+comment|//This method does not depend on MetastoreConf.LIMIT_PARTITION_REQUEST setting:
 name|partitionNames
 operator|=
 name|client

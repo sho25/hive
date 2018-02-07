@@ -17199,6 +17199,17 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|max
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+name|pns
+return|;
+block|}
 name|dbName
 operator|=
 name|normalizeIdentifier
