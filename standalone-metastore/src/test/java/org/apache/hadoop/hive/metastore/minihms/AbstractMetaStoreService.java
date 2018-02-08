@@ -203,7 +203,7 @@ specifier|abstract
 class|class
 name|AbstractMetaStoreService
 block|{
-specifier|protected
+specifier|private
 name|Configuration
 name|configuration
 decl_stmt|;
@@ -236,6 +236,16 @@ argument_list|(
 name|configuration
 argument_list|)
 expr_stmt|;
+block|}
+comment|/**    * Returns the actual configuration of the MetaStore.    * @return The actual configuration    */
+specifier|protected
+name|Configuration
+name|getConfiguration
+parameter_list|()
+block|{
+return|return
+name|configuration
+return|;
 block|}
 comment|/**    * Starts the MetaStoreService. Be aware, as the current MetaStore does not implement clean    * shutdown, starting MetaStoreService is possible only once per test.    *    * @throws Exception if any Exception occurs    */
 specifier|public

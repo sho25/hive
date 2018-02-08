@@ -489,6 +489,10 @@ name|Collectors
 import|;
 end_import
 
+begin_comment
+comment|/**  * Test class for IMetaStoreClient API. Testing the Database related functions.  */
+end_comment
+
 begin_class
 annotation|@
 name|RunWith
@@ -2317,7 +2321,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Creates an index in the given database for testing purposes    * @param databaseName The database name in which the index should be creatd    * @throws TException If there is an error during the index creation    */
+comment|/**    * Creates an index in the given database for testing purposes.    * @param databaseName The database name in which the index should be creatd    * @throws TException If there is an error during the index creation    */
 specifier|private
 name|void
 name|createIndex

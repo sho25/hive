@@ -60,6 +60,7 @@ specifier|public
 class|class
 name|MiniHMS
 block|{
+comment|/**    * The possible MetaStore types.    */
 specifier|public
 enum|enum
 name|MiniHMSType
@@ -70,6 +71,7 @@ name|REMOTE
 block|,
 name|CLUSTER
 block|}
+comment|/**    * Builder for creating a Mini MetaStore object.    */
 specifier|public
 specifier|static
 class|class

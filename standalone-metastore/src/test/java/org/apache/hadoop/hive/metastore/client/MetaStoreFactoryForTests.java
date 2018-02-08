@@ -161,6 +161,7 @@ end_comment
 
 begin_class
 specifier|public
+specifier|final
 class|class
 name|MetaStoreFactoryForTests
 block|{
@@ -172,6 +173,10 @@ name|DEFAULT_LIMIT_PARTITION_REQUEST
 init|=
 literal|100
 decl_stmt|;
+specifier|private
+name|MetaStoreFactoryForTests
+parameter_list|()
+block|{}
 comment|/**    * We would like to run the tests with 2 MetaStore configurations    * - Embedded - Where the MetaStore is running in the same thread, and does not use Thrift    * - Remote - Where the MetaStore is started in a different thread, and uses Thrift for    * communication    *    * Or if the test.hms.client.configs system property is set, it would return a single test    * MetaStoreService which uses these configs. In this case the MetaStore should be created    * manually or by an external application.    * @return The list of the test MetaStoreService implementations usable by @Parameterized    * .Parameters    */
 specifier|public
 specifier|static
