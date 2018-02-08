@@ -950,14 +950,6 @@ argument_list|()
 operator|.
 name|getNumReduceSinks
 argument_list|()
-argument_list|,
-name|joinOp
-operator|.
-name|getOpTraits
-argument_list|()
-operator|.
-name|getBucketingVersion
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|mapJoinOp
