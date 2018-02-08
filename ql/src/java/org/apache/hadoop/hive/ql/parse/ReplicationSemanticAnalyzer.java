@@ -3055,6 +3055,8 @@ name|alterTblDesc
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// Link the update repl state task with dependency collection task
@@ -3199,6 +3201,8 @@ name|alterDbDesc
 argument_list|)
 argument_list|,
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// Link the update repl state task with dependency collection task
