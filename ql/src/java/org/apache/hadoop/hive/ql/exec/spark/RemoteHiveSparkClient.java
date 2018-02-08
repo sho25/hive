@@ -938,6 +938,13 @@ argument_list|,
 name|hiveConf
 argument_list|,
 name|sessionId
+argument_list|,
+name|SessionState
+operator|.
+name|LogHelper
+operator|.
+name|getInfoStream
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
