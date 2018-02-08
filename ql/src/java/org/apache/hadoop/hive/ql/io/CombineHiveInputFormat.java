@@ -2262,7 +2262,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"CombineHiveInputSplit: pool is already created for "
 operator|+

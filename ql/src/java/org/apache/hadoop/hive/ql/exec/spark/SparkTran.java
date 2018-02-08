@@ -97,14 +97,6 @@ name|getName
 parameter_list|()
 function_decl|;
 specifier|public
-name|void
-name|setName
-parameter_list|(
-name|String
-name|name
-parameter_list|)
-function_decl|;
-specifier|public
 name|Boolean
 name|isCacheEnable
 parameter_list|()
