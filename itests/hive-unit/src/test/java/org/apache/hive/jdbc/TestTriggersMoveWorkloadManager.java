@@ -723,7 +723,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"EXECUTION_TIME> 1000"
+literal|"EXECUTION_TIME> 1sec"
 argument_list|)
 decl_stmt|;
 name|Expression
@@ -733,7 +733,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"EXECUTION_TIME> 5000"
+literal|"EXECUTION_TIME> 5000ms"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -952,6 +952,13 @@ operator|+
 name|killTrigger
 operator|+
 literal|" violated"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"subscribedCounters\" : [ \"EXECUTION_TIME\" ]"
 argument_list|)
 expr_stmt|;
 name|runQueryWithTrigger
@@ -1192,6 +1199,13 @@ operator|+
 name|moveTrigger
 operator|+
 literal|" violated"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"subscribedCounters\" : [ \"HDFS_BYTES_READ\", \"EXECUTION_TIME\" ]"
 argument_list|)
 expr_stmt|;
 name|runQueryWithTrigger
@@ -1526,6 +1540,13 @@ operator|+
 literal|" violated"
 argument_list|)
 expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"subscribedCounters\" : [ \"HDFS_BYTES_READ\", \"EXECUTION_TIME\", \"SHUFFLE_BYTES\" ]"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
@@ -1573,6 +1594,7 @@ comment|//    // violation in BI queue
 comment|//    errCaptureExpect.add("\"violationMsg\" : \"Trigger " + moveTrigger1 + " violated");
 comment|//    // violation in ETL queue
 comment|//    errCaptureExpect.add("\"violationMsg\" : \"Trigger " + killTrigger + " violated");
+comment|//    errCaptureExpect.add("\"subscribedCounters\" : [ \"HDFS_BYTES_READ\", \"HDFS_BYTES_WRITTEN\" ]");
 comment|//    runQueryWithTrigger(query, setCmds, killTrigger + " violated", errCaptureExpect);
 comment|//  }
 annotation|@
@@ -1799,6 +1821,13 @@ operator|+
 name|killTrigger
 operator|+
 literal|" violated"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"\"subscribedCounters\" : [ \"HDFS_BYTES_READ\" ]"
 argument_list|)
 expr_stmt|;
 name|runQueryWithTrigger
