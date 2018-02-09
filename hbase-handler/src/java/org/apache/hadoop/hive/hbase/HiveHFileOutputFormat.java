@@ -1115,24 +1115,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Hive actually wants a file as task output (not a directory), so
-comment|// replace the empty directory with an empty file to keep it happy.
-name|fs
-operator|.
-name|delete
-argument_list|(
-name|taskAttemptOutputdir
-argument_list|,
-literal|true
-argument_list|)
-expr_stmt|;
-name|fs
-operator|.
-name|createNewFile
-argument_list|(
-name|taskAttemptOutputdir
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
