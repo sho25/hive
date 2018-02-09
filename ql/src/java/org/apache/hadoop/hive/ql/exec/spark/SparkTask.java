@@ -1140,6 +1140,13 @@ name|isShutdown
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Killing Spark job"
+argument_list|)
+expr_stmt|;
 name|killJob
 argument_list|()
 expr_stmt|;
@@ -2150,7 +2157,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"failed to kill job"
+literal|"Failed to kill Spark job"
 argument_list|,
 name|e
 argument_list|)
@@ -2757,6 +2764,13 @@ name|InterruptedException
 operator|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Killing Spark job since query was interrupted"
+argument_list|)
+expr_stmt|;
 name|killJob
 argument_list|()
 expr_stmt|;

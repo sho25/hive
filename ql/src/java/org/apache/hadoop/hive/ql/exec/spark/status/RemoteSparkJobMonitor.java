@@ -1031,6 +1031,19 @@ condition|(
 name|e
 operator|instanceof
 name|InterruptedException
+operator|||
+operator|(
+name|e
+operator|instanceof
+name|HiveException
+operator|&&
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|InterruptedException
+operator|)
 condition|)
 block|{
 name|finalException
@@ -1045,7 +1058,16 @@ operator|.
 name|SPARK_JOB_INTERRUPTED
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Interrupted while monitoring the Hive on Spark application, exiting"
+argument_list|)
+expr_stmt|;
 block|}
+else|else
+block|{
 name|String
 name|msg
 init|=
@@ -1108,6 +1130,7 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|rc
 operator|=
 literal|1
