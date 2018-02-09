@@ -373,6 +373,18 @@ operator|.
 name|getRemoteJobState
 argument_list|()
 decl_stmt|;
+name|Preconditions
+operator|.
+name|checkState
+argument_list|(
+name|sparkJobStatus
+operator|.
+name|isRemoteActive
+argument_list|()
+argument_list|,
+literal|"Connection to remote Spark driver was lost"
+argument_list|)
+expr_stmt|;
 switch|switch
 condition|(
 name|state
@@ -728,28 +740,6 @@ expr_stmt|;
 name|lastProgressMap
 operator|=
 name|progressMap
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|sparkJobState
-operator|==
-literal|null
-condition|)
-block|{
-comment|// in case the remote context crashes between JobStarted and JobSubmitted
-name|Preconditions
-operator|.
-name|checkState
-argument_list|(
-name|sparkJobStatus
-operator|.
-name|isRemoteActive
-argument_list|()
-argument_list|,
-literal|"Remote context becomes inactive."
-argument_list|)
 expr_stmt|;
 block|}
 break|break;
