@@ -238,7 +238,7 @@ name|DB_ORACLE
 init|=
 literal|"oracle"
 decl_stmt|;
-comment|/***    * Get JDBC connection to metastore db    *    * @param userName metastore connection username    * @param password metastore connection password    * @param printInfo print connection parameters    * @param conf hive config object    * @return metastore connection object    * @throws org.apache.hadoop.hive.metastore.HiveMetaException    */
+comment|/***    * Get JDBC connection to metastore db    *    * @param dbType the type of the meteastore database    * @param userName metastore connection username    * @param password metastore connection password    * @param printInfo print connection parameters    * @param conf hive config object    * @param schema the schema to create the connection for    * @return metastore connection object    * @throws org.apache.hadoop.hive.metastore.HiveMetaException    */
 specifier|public
 specifier|static
 name|Connection
@@ -261,6 +261,9 @@ name|printInfo
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|String
+name|schema
 parameter_list|)
 throws|throws
 name|HiveMetaException
@@ -375,7 +378,9 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Connect using the JDBC URL and user/pass from conf
-return|return
+name|Connection
+name|conn
+init|=
 name|DriverManager
 operator|.
 name|getConnection
@@ -386,26 +391,30 @@ name|userName
 argument_list|,
 name|password
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|schema
+operator|!=
+literal|null
+condition|)
+block|{
+name|conn
+operator|.
+name|setSchema
+argument_list|(
+name|schema
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|conn
 return|;
 block|}
 catch|catch
 parameter_list|(
 name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveMetaException
-argument_list|(
-literal|"Failed to get schema version."
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
-catch|catch
-parameter_list|(
+decl||
 name|SQLException
 name|e
 parameter_list|)
@@ -444,6 +453,9 @@ name|getConnectionToMetastore
 parameter_list|(
 name|MetaStoreConnectionInfo
 name|info
+parameter_list|,
+name|String
+name|schema
 parameter_list|)
 throws|throws
 name|HiveMetaException
@@ -480,6 +492,8 @@ name|info
 operator|.
 name|getConf
 argument_list|()
+argument_list|,
+name|schema
 argument_list|)
 return|;
 block|}
@@ -2568,6 +2582,11 @@ specifier|final
 name|String
 name|dbType
 decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|metaDbType
+decl_stmt|;
 specifier|public
 name|MetaStoreConnectionInfo
 parameter_list|(
@@ -2591,6 +2610,9 @@ name|conf
 parameter_list|,
 name|String
 name|dbType
+parameter_list|,
+name|String
+name|metaDbType
 parameter_list|)
 block|{
 name|super
@@ -2637,6 +2659,12 @@ operator|.
 name|dbType
 operator|=
 name|dbType
+expr_stmt|;
+name|this
+operator|.
+name|metaDbType
+operator|=
+name|metaDbType
 expr_stmt|;
 block|}
 specifier|public
@@ -2709,6 +2737,15 @@ parameter_list|()
 block|{
 return|return
 name|dbType
+return|;
+block|}
+specifier|public
+name|String
+name|getMetaDbType
+parameter_list|()
+block|{
+return|return
+name|metaDbType
 return|;
 block|}
 block|}

@@ -1082,9 +1082,7 @@ init|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|(
-name|conn
-argument_list|)
+argument_list|()
 decl_stmt|;
 comment|// Test an invalid case with multiple versions
 name|String
@@ -1121,9 +1119,7 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|(
-name|conn
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertFalse
 argument_list|(
@@ -1161,9 +1157,7 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|(
-name|conn
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1202,9 +1196,7 @@ operator|=
 name|schemaTool
 operator|.
 name|validateSchemaVersions
-argument_list|(
-name|conn
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|assertFalse
 argument_list|(
