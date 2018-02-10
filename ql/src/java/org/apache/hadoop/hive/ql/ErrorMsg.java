@@ -2343,6 +2343,13 @@ argument_list|,
 literal|"Alter table with non-partitioned table does not support cascade"
 argument_list|)
 block|,
+name|HIVE_GROUPING_SETS_SIZE_LIMIT
+argument_list|(
+literal|10411
+argument_list|,
+literal|"Grouping sets size cannot be greater than 64"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

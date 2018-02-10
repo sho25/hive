@@ -887,14 +887,14 @@ specifier|private
 specifier|final
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|grpSets
 init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -1365,7 +1365,7 @@ operator|.
 name|getGroupSets
 argument_list|()
 decl_stmt|;
-name|int
+name|long
 name|bitmap
 init|=
 literal|0
@@ -5488,7 +5488,7 @@ argument_list|(
 operator|new
 name|ExprNodeConstantDesc
 argument_list|(
-literal|"0"
+literal|"0L"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7826,7 +7826,7 @@ operator|=
 operator|new
 name|ExprNodeConstantDesc
 argument_list|(
-literal|"0"
+literal|"0L"
 argument_list|)
 expr_stmt|;
 block|}

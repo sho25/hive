@@ -775,7 +775,7 @@ name|hadoop
 operator|.
 name|io
 operator|.
-name|IntWritable
+name|LongWritable
 import|;
 end_import
 
@@ -1087,7 +1087,7 @@ specifier|private
 specifier|transient
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|groupingSets
 decl_stmt|;
@@ -1101,7 +1101,7 @@ decl_stmt|;
 comment|// bitsets acquired from grouping set values
 specifier|private
 specifier|transient
-name|IntWritable
+name|LongWritable
 index|[]
 name|newKeysGroupingSets
 decl_stmt|;
@@ -1197,7 +1197,7 @@ specifier|static
 name|FastBitSet
 name|groupingSet2BitSet
 parameter_list|(
-name|int
+name|long
 name|value
 parameter_list|,
 name|int
@@ -1471,7 +1471,7 @@ expr_stmt|;
 name|newKeysGroupingSets
 operator|=
 operator|new
-name|IntWritable
+name|LongWritable
 index|[
 name|groupingSets
 operator|.
@@ -1497,7 +1497,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|Integer
+name|Long
 name|groupingSet
 range|:
 name|groupingSets
@@ -1510,7 +1510,7 @@ name|pos
 index|]
 operator|=
 operator|new
-name|IntWritable
+name|LongWritable
 argument_list|(
 name|groupingSet
 argument_list|)
@@ -6166,10 +6166,10 @@ name|pos
 index|]
 operator|=
 operator|new
-name|IntWritable
+name|LongWritable
 argument_list|(
 operator|(
-literal|1
+literal|1L
 operator|<<
 name|pos
 operator|)
@@ -6490,7 +6490,7 @@ argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|listGroupingSets
 init|=
@@ -6512,11 +6512,11 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|Integer
+name|Long
 name|emptyGrouping
 init|=
 operator|(
-literal|1
+literal|1L
 operator|<<
 name|groupingSetPosition
 operator|)

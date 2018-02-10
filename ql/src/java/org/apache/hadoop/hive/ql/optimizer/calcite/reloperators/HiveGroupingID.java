@@ -169,7 +169,7 @@ name|OTHER
 argument_list|,
 name|ReturnTypes
 operator|.
-name|INTEGER
+name|BIGINT
 argument_list|,
 name|InferTypes
 operator|.

@@ -2149,7 +2149,7 @@ name|createSqlType
 argument_list|(
 name|SqlTypeName
 operator|.
-name|INTEGER
+name|BIGINT
 argument_list|)
 argument_list|,
 name|HiveGroupingID

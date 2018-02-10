@@ -838,7 +838,7 @@ decl_stmt|;
 comment|// The field bits (i.e. which fields to include) or "id" for each grouping set.
 specifier|private
 specifier|transient
-name|int
+name|long
 index|[]
 name|groupingSets
 decl_stmt|;
@@ -1993,7 +1993,7 @@ name|long
 name|val
 init|=
 operator|(
-literal|1
+literal|1L
 operator|<<
 name|pos
 operator|)
@@ -3832,7 +3832,7 @@ operator|.
 name|toArray
 argument_list|(
 operator|new
-name|Integer
+name|Long
 index|[
 literal|0
 index|]
@@ -3864,7 +3864,7 @@ literal|0
 decl_stmt|;
 for|for
 control|(
-name|int
+name|long
 name|groupingSet
 range|:
 name|groupingSets

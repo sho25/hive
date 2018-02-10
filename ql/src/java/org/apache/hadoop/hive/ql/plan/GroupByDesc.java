@@ -372,7 +372,7 @@ decl_stmt|;
 specifier|private
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|listGroupingSets
 decl_stmt|;
@@ -494,7 +494,7 @@ parameter_list|,
 specifier|final
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|listGroupingSets
 parameter_list|,
@@ -596,7 +596,7 @@ parameter_list|,
 specifier|final
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|listGroupingSets
 parameter_list|,
@@ -1289,7 +1289,7 @@ comment|// So, the starting position of grouping set need to be known
 specifier|public
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|getListGroupingSets
 parameter_list|()
@@ -1305,7 +1305,7 @@ parameter_list|(
 specifier|final
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|listGroupingSets
 parameter_list|)
@@ -1498,7 +1498,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|Integer
+name|Long
 argument_list|>
 name|listGroupingSets
 init|=

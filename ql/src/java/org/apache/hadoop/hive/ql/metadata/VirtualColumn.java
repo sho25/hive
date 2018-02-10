@@ -405,7 +405,7 @@ literal|"GROUPING__ID"
 argument_list|,
 name|TypeInfoFactory
 operator|.
-name|intTypeInfo
+name|longTypeInfo
 argument_list|)
 block|;
 specifier|public
