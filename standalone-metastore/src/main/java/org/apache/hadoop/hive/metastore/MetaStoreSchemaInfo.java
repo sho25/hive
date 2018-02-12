@@ -222,7 +222,7 @@ name|UPGRADE_FILE_PREFIX
 init|=
 literal|"upgrade-"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -230,7 +230,7 @@ name|INIT_FILE_PREFIX
 init|=
 literal|"hive-schema-"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -238,7 +238,7 @@ name|VERSION_UPGRADE_LIST
 init|=
 literal|"upgrade.order"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -247,9 +247,12 @@ init|=
 literal|"pre-"
 decl_stmt|;
 specifier|protected
+specifier|static
 specifier|final
 name|String
-name|dbType
+name|CREATE_USER_PREFIX
+init|=
+literal|"create-user"
 decl_stmt|;
 specifier|private
 name|String
@@ -259,7 +262,12 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|String
-name|hiveHome
+name|metastoreHome
+decl_stmt|;
+specifier|protected
+specifier|final
+name|String
+name|dbType
 decl_stmt|;
 comment|// Some version upgrades often don't change schema. So they are equivalent to
 comment|// a version
@@ -304,7 +312,7 @@ specifier|public
 name|MetaStoreSchemaInfo
 parameter_list|(
 name|String
-name|hiveHome
+name|metastoreHome
 parameter_list|,
 name|String
 name|dbType
@@ -314,9 +322,9 @@ name|HiveMetaException
 block|{
 name|this
 operator|.
-name|hiveHome
+name|metastoreHome
 operator|=
-name|hiveHome
+name|metastoreHome
 expr_stmt|;
 name|this
 operator|.
@@ -694,6 +702,63 @@ return|return
 name|initScriptName
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getCreateUserScript
+parameter_list|()
+throws|throws
+name|HiveMetaException
+block|{
+name|String
+name|createScript
+init|=
+name|CREATE_USER_PREFIX
+operator|+
+literal|"."
+operator|+
+name|dbType
+operator|+
+name|SQL_FILE_EXTENSION
+decl_stmt|;
+comment|// check if the file exists
+if|if
+condition|(
+operator|!
+operator|(
+operator|new
+name|File
+argument_list|(
+name|getMetaStoreScriptDir
+argument_list|()
+operator|+
+name|File
+operator|.
+name|separatorChar
+operator|+
+name|createScript
+argument_list|)
+operator|.
+name|exists
+argument_list|()
+operator|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveMetaException
+argument_list|(
+literal|"Unable to find create user file, expected: "
+operator|+
+name|createScript
+argument_list|)
+throw|;
+block|}
+return|return
+name|createScript
+return|;
+block|}
 comment|/**    * Find the directory of metastore scripts    * @return    */
 annotation|@
 name|Override
@@ -703,7 +768,7 @@ name|getMetaStoreScriptDir
 parameter_list|()
 block|{
 return|return
-name|hiveHome
+name|metastoreHome
 operator|+
 name|File
 operator|.
@@ -1025,6 +1090,8 @@ name|connectionInfo
 operator|.
 name|getMetaDbType
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|needsQuotedIdentifier

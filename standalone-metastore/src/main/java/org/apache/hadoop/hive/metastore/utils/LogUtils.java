@@ -192,7 +192,7 @@ specifier|final
 name|String
 name|HIVE_L4J
 init|=
-literal|"hive-log4j2.properties"
+literal|"metastore-log4j2.properties"
 decl_stmt|;
 specifier|private
 specifier|static

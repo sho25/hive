@@ -1526,6 +1526,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"derby"
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|buildCommand
@@ -1699,6 +1701,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"derby"
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|buildCommand
@@ -1915,6 +1919,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"mysql"
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|buildCommand
@@ -2090,6 +2096,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"mysql"
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|String
@@ -2211,6 +2219,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"mysql"
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|String
@@ -2389,6 +2399,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"oracle"
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|buildCommand
@@ -2516,6 +2528,8 @@ operator|.
 name|getDbCommandParser
 argument_list|(
 literal|"postgres"
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|String
@@ -2610,6 +2624,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|expectedSQL

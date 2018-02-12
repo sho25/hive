@@ -110,6 +110,13 @@ parameter_list|)
 throws|throws
 name|HiveMetaException
 function_decl|;
+comment|/**    * Get SQL script that will create the user and database for Metastore to use.    * @return filename    * @throws HiveMetaException if something goes wrong.    */
+name|String
+name|getCreateUserScript
+parameter_list|()
+throws|throws
+name|HiveMetaException
+function_decl|;
 comment|/**    * Find the directory of metastore scripts    *    * @return the path of directory where the sql scripts are    */
 name|String
 name|getMetaStoreScriptDir
