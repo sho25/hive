@@ -8634,7 +8634,7 @@ name|PartitionDesc
 name|pd
 parameter_list|,
 name|boolean
-name|isAcidTable
+name|isFullAcidTable
 parameter_list|,
 name|Set
 argument_list|<
@@ -8710,7 +8710,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isAcidTable
+name|isFullAcidTable
 condition|)
 block|{
 comment|// Today, ACID tables are only ORC and that format is vectorizable.  Verify these
@@ -9561,14 +9561,14 @@ throws|throws
 name|SemanticException
 block|{
 name|boolean
-name|isAcidTable
+name|isFullAcidTable
 init|=
 name|tableScanOperator
 operator|.
 name|getConf
 argument_list|()
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|()
 decl_stmt|;
 comment|// These names/types are the data columns plus partition columns.
@@ -9938,7 +9938,7 @@ name|verifyAndSetVectorPartDesc
 argument_list|(
 name|partDesc
 argument_list|,
-name|isAcidTable
+name|isFullAcidTable
 argument_list|,
 name|inputFileFormatClassNameSet
 argument_list|,

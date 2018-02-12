@@ -959,11 +959,13 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setAcidTableScan
+name|setAcidOperationalProperties
 argument_list|(
 name|job
 argument_list|,
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|job

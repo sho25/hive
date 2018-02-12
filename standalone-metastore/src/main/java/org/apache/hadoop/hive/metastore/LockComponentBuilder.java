@@ -225,7 +225,7 @@ return|;
 block|}
 specifier|public
 name|LockComponentBuilder
-name|setIsAcid
+name|setIsFullAcid
 parameter_list|(
 name|boolean
 name|t

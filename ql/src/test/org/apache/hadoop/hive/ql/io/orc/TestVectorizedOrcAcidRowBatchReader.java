@@ -663,7 +663,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_ACID_TABLE_SCAN
+name|HIVE_TRANSACTIONAL_TABLE_SCAN
 operator|.
 name|varname
 argument_list|,

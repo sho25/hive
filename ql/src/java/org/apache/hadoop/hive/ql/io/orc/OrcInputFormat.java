@@ -1862,7 +1862,7 @@ block|}
 comment|/**    * We can derive if a split is ACID or not from the flags encoded in OrcSplit.    * If the file split is not instance of OrcSplit then its definitely not ACID.    * If file split is instance of OrcSplit and the flags contain hasBase or deltas then it's    * definitely ACID.    * Else fallback to configuration object/table property.    * @param conf    * @param inputSplit    * @return    */
 specifier|public
 name|boolean
-name|isAcidRead
+name|isFullAcidRead
 parameter_list|(
 name|Configuration
 name|conf
@@ -1891,15 +1891,11 @@ comment|//   return true;
 comment|// }
 comment|/*      * Fallback for the case when OrcSplit flags do not contain hasBase and deltas      */
 return|return
-name|HiveConf
+name|AcidUtils
 operator|.
-name|getBoolVar
+name|isFullAcidScan
 argument_list|(
 name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 return|;
 block|}
@@ -2331,23 +2327,14 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|boolean
-name|isTransactionalTableScan
-init|=
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|HIVE_ACID_TABLE_SCAN
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
-name|isTransactionalTableScan
+name|AcidUtils
+operator|.
+name|isFullAcidScan
+argument_list|(
+name|conf
+argument_list|)
 condition|)
 block|{
 name|raiseAcidTablesMustBeReadWithAcidReaderException
@@ -10201,17 +10188,13 @@ argument_list|)
 expr_stmt|;
 block|}
 name|boolean
-name|isTransactionalTableScan
+name|isAcidTableScan
 init|=
-name|HiveConf
+name|AcidUtils
 operator|.
-name|getBoolVar
+name|isFullAcidScan
 argument_list|(
 name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -10237,7 +10220,7 @@ name|getDesiredRowTypeDescr
 argument_list|(
 name|conf
 argument_list|,
-name|isTransactionalTableScan
+name|isAcidTableScan
 argument_list|,
 name|Integer
 operator|.
@@ -10302,9 +10285,9 @@ name|toString
 argument_list|()
 operator|)
 operator|+
-literal|" transactional scan property "
+literal|" ACID scan property "
 operator|+
-name|isTransactionalTableScan
+name|isAcidTableScan
 argument_list|)
 expr_stmt|;
 block|}
@@ -11457,7 +11440,7 @@ decl_stmt|;
 name|boolean
 name|isAcidRead
 init|=
-name|isAcidRead
+name|isFullAcidRead
 argument_list|(
 name|conf
 argument_list|,

@@ -1999,15 +1999,11 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|HiveConf
+name|AcidUtils
 operator|.
-name|getBoolVar
+name|isFullAcidScan
 argument_list|(
 name|jobConf
-argument_list|,
-name|ConfVars
-operator|.
-name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 condition|)
 block|{

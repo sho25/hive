@@ -14533,7 +14533,7 @@ name|isAcid
 init|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|ts
 operator|.
@@ -40059,7 +40059,7 @@ argument_list|,
 operator|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -41331,7 +41331,7 @@ name|destTableIsFullAcid
 operator|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -42039,7 +42039,7 @@ name|destTableIsFullAcid
 operator|=
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -42823,7 +42823,7 @@ literal|null
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|tblDesc
 argument_list|)
@@ -79270,7 +79270,7 @@ operator|&&
 operator|!
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|table
 argument_list|)

@@ -6314,13 +6314,14 @@ argument_list|,
 literal|"Use schema evolution to convert self-describing file format's data to the schema desired by the reader."
 argument_list|)
 block|,
-name|HIVE_ACID_TABLE_SCAN
+comment|/** Don't use this directly - use AcidUtils! */
+name|HIVE_TRANSACTIONAL_TABLE_SCAN
 argument_list|(
-literal|"hive.acid.table.scan"
+literal|"hive.transactional.table.scan"
 argument_list|,
 literal|false
 argument_list|,
-literal|"internal usage only -- do transaction (ACID) table scan."
+literal|"internal usage only -- do transaction (ACID or insert-only) table scan."
 argument_list|,
 literal|true
 argument_list|)

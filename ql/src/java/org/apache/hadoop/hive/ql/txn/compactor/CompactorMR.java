@@ -477,6 +477,26 @@ name|ql
 operator|.
 name|io
 operator|.
+name|AcidUtils
+operator|.
+name|AcidOperationalProperties
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
 name|HiveInputFormat
 import|;
 end_import
@@ -1358,6 +1378,8 @@ operator|.
 name|setAcidOperationalProperties
 argument_list|(
 name|job
+argument_list|,
+literal|true
 argument_list|,
 name|AcidUtils
 operator|.
@@ -2580,7 +2602,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Set the column names and types into the job conf for the input format    * to use.    * @param job the job to update    * @param cols the columns of the table    */
+comment|/**    * Set the column names and types into the job conf for the input format    * to use.    * @param job the job to update    * @param cols the columns of the table    * @param map     */
 specifier|private
 name|void
 name|setColumnTypes
@@ -2696,21 +2718,6 @@ name|colTypes
 operator|.
 name|toString
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|HiveConf
-operator|.
-name|setBoolVar
-argument_list|(
-name|job
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_ACID_TABLE_SCAN
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|HiveConf

@@ -1053,6 +1053,8 @@ name|boolean
 name|shouldExport
 parameter_list|()
 block|{
+comment|// Note: this is a temporary setting that is needed because replication does not support
+comment|//       ACID or MM tables at the moment. It will eventually be removed.
 if|if
 condition|(
 name|conf
@@ -1068,7 +1070,7 @@ argument_list|)
 operator|&&
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|tableSpec
 operator|.

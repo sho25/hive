@@ -1642,7 +1642,7 @@ condition|(
 operator|!
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)

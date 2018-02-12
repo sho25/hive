@@ -29777,7 +29777,7 @@ condition|(
 operator|!
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isTransactionalTable
 argument_list|(
 name|table
 argument_list|)

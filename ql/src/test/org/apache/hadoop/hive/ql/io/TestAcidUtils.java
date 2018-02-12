@@ -5899,6 +5899,8 @@ name|setAcidOperationalProperties
 argument_list|(
 name|testConf
 argument_list|,
+literal|true
+argument_list|,
 name|oprProps
 argument_list|)
 expr_stmt|;
@@ -5965,6 +5967,8 @@ operator|.
 name|setAcidOperationalProperties
 argument_list|(
 name|parameters
+argument_list|,
+literal|true
 argument_list|,
 name|oprProps
 argument_list|)

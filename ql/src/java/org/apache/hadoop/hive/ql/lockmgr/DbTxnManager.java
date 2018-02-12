@@ -1465,17 +1465,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isAcidTable
-argument_list|(
-name|writeEntity
-operator|.
-name|getTable
-argument_list|()
-argument_list|)
-operator|||
-name|AcidUtils
-operator|.
-name|isInsertOnlyTable
+name|isTransactionalTable
 argument_list|(
 name|writeEntity
 operator|.
@@ -1506,6 +1496,7 @@ comment|//see HIVE-18154
 return|return
 literal|false
 return|;
+comment|// TODO: is this still relevant for insert-only tables?
 default|default:
 comment|//not relevant for LOAD
 return|return
@@ -1893,11 +1884,11 @@ condition|)
 block|{
 name|compBuilder
 operator|.
-name|setIsAcid
+name|setIsFullAcid
 argument_list|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)
@@ -2213,7 +2204,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)
@@ -2352,11 +2343,11 @@ condition|)
 block|{
 name|compBuilder
 operator|.
-name|setIsAcid
+name|setIsFullAcid
 argument_list|(
 name|AcidUtils
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|(
 name|t
 argument_list|)

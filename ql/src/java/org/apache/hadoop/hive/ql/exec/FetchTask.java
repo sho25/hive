@@ -543,7 +543,7 @@ argument_list|)
 expr_stmt|;
 name|AcidUtils
 operator|.
-name|setAcidTableScan
+name|setAcidOperationalProperties
 argument_list|(
 name|job
 argument_list|,
@@ -552,15 +552,8 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
-name|isAcidTable
+name|isTranscationalTable
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|AcidUtils
-operator|.
-name|setAcidOperationalProperties
-argument_list|(
-name|job
 argument_list|,
 name|ts
 operator|.

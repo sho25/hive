@@ -996,15 +996,11 @@ specifier|final
 name|boolean
 name|isAcidRead
 init|=
-name|HiveConf
+name|AcidUtils
 operator|.
-name|getBoolVar
+name|isFullAcidScan
 argument_list|(
 name|conf
-argument_list|,
-name|ConfVars
-operator|.
-name|HIVE_ACID_TABLE_SCAN
 argument_list|)
 decl_stmt|;
 specifier|final

@@ -3642,7 +3642,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 name|boolean
-name|isAcidTable
+name|isFullAcidTable
 init|=
 literal|false
 decl_stmt|;
@@ -3702,14 +3702,14 @@ argument_list|,
 name|alias_id
 argument_list|)
 expr_stmt|;
-name|isAcidTable
+name|isFullAcidTable
 operator|=
 name|tsOp
 operator|.
 name|getConf
 argument_list|()
 operator|.
-name|isAcidTable
+name|isFullAcidTable
 argument_list|()
 expr_stmt|;
 block|}
@@ -3924,14 +3924,14 @@ condition|)
 block|{
 if|if
 condition|(
-name|isAcidTable
+name|isFullAcidTable
 condition|)
 block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Skip Global Limit optimization for ACID table"
+literal|"Skipping Global Limit optimization for an ACID table"
 argument_list|)
 expr_stmt|;
 name|parseCtx
