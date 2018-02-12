@@ -77208,6 +77208,33 @@ literal|"Unrecognized command."
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|isExt
+operator|&&
+name|hasEnabledOrValidatedConstraints
+argument_list|(
+name|notNullConstraints
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|INVALID_CSTR_SYNTAX
+operator|.
+name|getMsg
+argument_list|(
+literal|"Constraints are disallowed with External tables. "
+operator|+
+literal|"Only RELY is allowed."
+argument_list|)
+argument_list|)
+throw|;
+block|}
 name|storageFormat
 operator|.
 name|fillDefaultStorageFormat
