@@ -902,14 +902,6 @@ literal|"D"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Now that the properties are in, we can instantiate SessionState.
-name|SessionState
-operator|.
-name|start
-argument_list|(
-name|ss
-argument_list|)
-expr_stmt|;
 comment|// -h
 if|if
 condition|(
@@ -1067,6 +1059,14 @@ name|grp
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Now that the properties are in, we can instantiate SessionState.
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|ss
+argument_list|)
+expr_stmt|;
 comment|// all done parsing, let's run stuff!
 if|if
 condition|(
@@ -1639,7 +1639,12 @@ name|driver
 init|=
 operator|new
 name|HCatDriver
+argument_list|(
+name|ss
+operator|.
+name|getConf
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|int
 name|ret

@@ -375,6 +375,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|QueryState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|processors
 operator|.
 name|CommandProcessorResponse
@@ -500,7 +516,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  *  * The general approach is to use an instance of Driver to use Driver.run() to create tables  * Use Driver.compileAndRespond() (which also starts a txn) to generate QueryPlan which can then be  * passed to HiveTxnManager.acquireLocks().  * Same HiveTxnManager is used to commitTxn()/rollback etc.  This can exercise almost the entire  * code path that CLI would but with the advantage that you can create a 2nd HiveTxnManager and then  * simulate interleaved transactional/locking operations but all from within a single thread.  * The later not only controls concurrency precisely but is the only way to run in UT env with DerbyDB.  *   * A slightly different (and simpler) approach is to use "start transaction/(commit/rollback)"  * command with the Driver.run().  This allows you to "see" the state of the Lock Manager after  * each statement and can also simulate concurrent (but very controlled) work but w/o forking any  * threads.  The limitation here is that not all statements are allowed in an explicit transaction.  * For example, "drop table foo".  This approach will also cause the query to execute which will  * make tests slower but will exericise the code path that is much closer to the actual user calls.  *   * In either approach, each logical "session" should use it's own Transaction Manager.  This requires  * using {@link #swapTxnManager(HiveTxnManager)} since in the SessionState the TM is associated with  * each thread.    */
+comment|/**  * See additional tests in {@link org.apache.hadoop.hive.ql.lockmgr.TestDbTxnManager}  * Tests here are "end-to-end"ish and simulate concurrent queries.  *  * The general approach is to use an instance of Driver to use Driver.run() to create tables  * Use Driver.compileAndRespond() (which also starts a txn) to generate QueryPlan which can then be  * passed to HiveTxnManager.acquireLocks().  * Same HiveTxnManager is used to commitTxn()/rollback etc.  This can exercise almost the entire  * code path that CLI would but with the advantage that you can create a 2nd HiveTxnManager and then  * simulate interleaved transactional/locking operations but all from within a single thread.  * The later not only controls concurrency precisely but is the only way to run in UT env with DerbyDB.  *  * A slightly different (and simpler) approach is to use "start transaction/(commit/rollback)"  * command with the Driver.run().  This allows you to "see" the state of the Lock Manager after  * each statement and can also simulate concurrent (but very controlled) work but w/o forking any  * threads.  The limitation here is that not all statements are allowed in an explicit transaction.  * For example, "drop table foo".  This approach will also cause the query to execute which will  * make tests slower but will exericise the code path that is much closer to the actual user calls.  *  * In either approach, each logical "session" should use it's own Transaction Manager.  This requires  * using {@link #swapTxnManager(HiveTxnManager)} since in the SessionState the TM is associated with  * each thread.  */
 end_comment
 
 begin_class
@@ -621,7 +637,24 @@ operator|=
 operator|new
 name|Driver
 argument_list|(
+operator|new
+name|QueryState
+operator|.
+name|Builder
+argument_list|()
+operator|.
+name|withHiveConf
+argument_list|(
 name|conf
+argument_list|)
+operator|.
+name|nonIsolated
+argument_list|()
+operator|.
+name|build
+argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|TxnDbUtil

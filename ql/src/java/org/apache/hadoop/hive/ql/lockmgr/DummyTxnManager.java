@@ -335,6 +335,10 @@ specifier|private
 name|HiveLockManager
 name|lockMgr
 decl_stmt|;
+specifier|private
+name|HiveLockManagerCtx
+name|lockManagerCtx
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -496,15 +500,19 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
-name|lockMgr
-operator|.
-name|setContext
-argument_list|(
+name|lockManagerCtx
+operator|=
 operator|new
 name|HiveLockManagerCtx
 argument_list|(
 name|conf
 argument_list|)
+expr_stmt|;
+name|lockMgr
+operator|.
+name|setContext
+argument_list|(
+name|lockManagerCtx
 argument_list|)
 expr_stmt|;
 block|}
@@ -579,6 +587,13 @@ block|}
 block|}
 comment|// Force a re-read of the configuration file.  This is done because
 comment|// different queries in the session may be using the same lock manager.
+name|lockManagerCtx
+operator|.
+name|setConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|lockMgr
 operator|.
 name|refresh
@@ -651,7 +666,9 @@ name|lockMgr
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 name|List
 argument_list|<
 name|HiveLockObj
@@ -1226,6 +1243,8 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|destruct

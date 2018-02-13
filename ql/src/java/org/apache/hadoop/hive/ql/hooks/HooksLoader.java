@@ -150,7 +150,7 @@ name|console
 parameter_list|,
 name|Class
 argument_list|<
-name|?
+name|T
 argument_list|>
 name|clazz
 parameter_list|)
@@ -219,7 +219,7 @@ name|hookConfVar
 parameter_list|,
 name|Class
 argument_list|<
-name|?
+name|T
 argument_list|>
 name|clazz
 parameter_list|)

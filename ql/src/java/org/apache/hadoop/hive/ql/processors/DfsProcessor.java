@@ -674,9 +674,6 @@ literal|' '
 case|:
 if|if
 condition|(
-operator|(
-name|int
-operator|)
 name|y
 operator|==
 literal|0
@@ -729,9 +726,6 @@ literal|'"'
 case|:
 if|if
 condition|(
-operator|(
-name|int
-operator|)
 name|y
 operator|==
 literal|0
@@ -790,9 +784,6 @@ literal|'\''
 case|:
 if|if
 condition|(
-operator|(
-name|int
-operator|)
 name|y
 operator|==
 literal|0
@@ -883,9 +874,6 @@ block|}
 block|}
 if|if
 condition|(
-operator|(
-name|int
-operator|)
 name|y
 operator|!=
 literal|0
@@ -929,6 +917,15 @@ index|]
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|close
+parameter_list|()
+throws|throws
+name|Exception
+block|{   }
 block|}
 end_class
 

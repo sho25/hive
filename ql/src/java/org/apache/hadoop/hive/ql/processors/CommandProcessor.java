@@ -23,6 +23,8 @@ begin_interface
 specifier|public
 interface|interface
 name|CommandProcessor
+extends|extends
+name|AutoCloseable
 block|{
 name|CommandProcessorResponse
 name|run

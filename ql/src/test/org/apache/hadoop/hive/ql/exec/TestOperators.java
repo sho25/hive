@@ -3032,7 +3032,9 @@ name|driver
 init|=
 operator|new
 name|Driver
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|CommandProcessorResponse
 name|response
