@@ -502,6 +502,7 @@ argument_list|>
 name|supportRemovedReasons
 decl_stmt|;
 specifier|private
+specifier|transient
 name|VectorizerReason
 name|notVectorizedReason
 decl_stmt|;
