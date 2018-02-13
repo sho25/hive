@@ -839,6 +839,11 @@ name|getSplitLocationProvider
 argument_list|(
 name|conf
 argument_list|,
+name|work
+operator|.
+name|getCacheAffinity
+argument_list|()
+argument_list|,
 name|LOG
 argument_list|)
 expr_stmt|;
@@ -931,28 +936,6 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|splitLocationProvider
-operator|=
-name|Utils
-operator|.
-name|getSplitLocationProvider
-argument_list|(
-name|conf
-argument_list|,
-name|LOG
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"SplitLocationProvider: "
-operator|+
-name|splitLocationProvider
-argument_list|)
-expr_stmt|;
 comment|// Read all credentials into the credentials instance stored in JobConf.
 name|ShimLoader
 operator|.
@@ -973,6 +956,33 @@ operator|.
 name|getMapWork
 argument_list|(
 name|jobConf
+argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|splitLocationProvider
+operator|=
+name|Utils
+operator|.
+name|getSplitLocationProvider
+argument_list|(
+name|conf
+argument_list|,
+name|work
+operator|.
+name|getCacheAffinity
+argument_list|()
+argument_list|,
+name|LOG
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"SplitLocationProvider: "
+operator|+
+name|splitLocationProvider
 argument_list|)
 expr_stmt|;
 comment|// Events can start coming in the moment the InputInitializer is created. The pruner

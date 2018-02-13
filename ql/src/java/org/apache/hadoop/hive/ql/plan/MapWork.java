@@ -569,6 +569,90 @@ name|MapWork
 extends|extends
 name|BaseWork
 block|{
+specifier|public
+enum|enum
+name|LlapIODescriptor
+block|{
+name|DISABLED
+argument_list|(
+literal|null
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|NO_INPUTS
+argument_list|(
+literal|"no inputs"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|UNKNOWN
+argument_list|(
+literal|"unknown"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|SOME_INPUTS
+argument_list|(
+literal|"some inputs"
+argument_list|,
+literal|false
+argument_list|)
+block|,
+name|ACID
+argument_list|(
+literal|"may be used (ACID table)"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|ALL_INPUTS
+argument_list|(
+literal|"all inputs"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|CACHE_ONLY
+argument_list|(
+literal|"all inputs (cache only)"
+argument_list|,
+literal|true
+argument_list|)
+block|;
+specifier|final
+name|String
+name|desc
+decl_stmt|;
+specifier|final
+name|boolean
+name|cached
+decl_stmt|;
+name|LlapIODescriptor
+parameter_list|(
+name|String
+name|desc
+parameter_list|,
+name|boolean
+name|cached
+parameter_list|)
+block|{
+name|this
+operator|.
+name|desc
+operator|=
+name|desc
+expr_stmt|;
+name|this
+operator|.
+name|cached
+operator|=
+name|cached
+expr_stmt|;
+block|}
+block|}
 comment|// use LinkedHashMap to make sure the iteration order is
 comment|// deterministic, to ease testing
 specifier|private
@@ -964,7 +1048,7 @@ name|includedBuckets
 decl_stmt|;
 comment|/** Whether LLAP IO will be used for inputs. */
 specifier|private
-name|String
+name|LlapIODescriptor
 name|llapIoDesc
 decl_stmt|;
 specifier|private
@@ -1719,7 +1803,7 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|static
-name|String
+name|LlapIODescriptor
 name|deriveLlapIoDescString
 parameter_list|(
 name|boolean
@@ -1751,7 +1835,9 @@ name|isLlapOn
 condition|)
 block|{
 return|return
-literal|null
+name|LlapIODescriptor
+operator|.
+name|DISABLED
 return|;
 comment|// LLAP IO is off, don't output.
 block|}
@@ -1765,9 +1851,11 @@ name|hasCacheOnly
 condition|)
 block|{
 return|return
-literal|"no inputs"
+name|LlapIODescriptor
+operator|.
+name|NO_INPUTS
 return|;
-comment|// Cannot use with input formats.
+comment|//"no inputs"; // Cannot use with input formats.
 block|}
 if|if
 condition|(
@@ -1776,9 +1864,11 @@ name|hasPathToPartInfo
 condition|)
 block|{
 return|return
-literal|"unknown"
+name|LlapIODescriptor
+operator|.
+name|UNKNOWN
 return|;
-comment|// No information to judge.
+comment|//"unknown"; // No information to judge.
 block|}
 name|int
 name|varieties
@@ -1823,9 +1913,11 @@ literal|1
 condition|)
 block|{
 return|return
-literal|"some inputs"
+name|LlapIODescriptor
+operator|.
+name|SOME_INPUTS
 return|;
-comment|// Will probably never actually happen.
+comment|//"some inputs"; // Will probably never actually happen.
 block|}
 if|if
 condition|(
@@ -1833,8 +1925,11 @@ name|hasAcid
 condition|)
 block|{
 return|return
-literal|"may be used (ACID table)"
+name|LlapIODescriptor
+operator|.
+name|ACID
 return|;
+comment|//"may be used (ACID table)";
 block|}
 if|if
 condition|(
@@ -1842,7 +1937,9 @@ name|hasLlap
 condition|)
 block|{
 return|return
-literal|"all inputs"
+name|LlapIODescriptor
+operator|.
+name|ALL_INPUTS
 return|;
 block|}
 if|if
@@ -1851,11 +1948,15 @@ name|hasCacheOnly
 condition|)
 block|{
 return|return
-literal|"all inputs (cache only)"
+name|LlapIODescriptor
+operator|.
+name|CACHE_ONLY
 return|;
 block|}
 return|return
-literal|"no inputs"
+name|LlapIODescriptor
+operator|.
+name|NO_INPUTS
 return|;
 block|}
 specifier|public
@@ -2058,11 +2159,24 @@ name|SUMMARY_PATH
 argument_list|)
 specifier|public
 name|String
-name|getLlapIoDesc
+name|getLlapIoDescString
 parameter_list|()
 block|{
 return|return
 name|llapIoDesc
+operator|.
+name|desc
+return|;
+block|}
+specifier|public
+name|boolean
+name|getCacheAffinity
+parameter_list|()
+block|{
+return|return
+name|llapIoDesc
+operator|.
+name|cached
 return|;
 block|}
 specifier|public
