@@ -28996,6 +28996,46 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|TableType
+operator|.
+name|INDEX_TABLE
+operator|.
+name|name
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|indexTbl
+operator|.
+name|getTableType
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidObjectException
+argument_list|(
+literal|"The table "
+operator|+
+name|indexTbl
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" provided as index table must have "
+operator|+
+name|TableType
+operator|.
+name|INDEX_TABLE
+operator|+
+literal|" table type"
+argument_list|)
+throw|;
+block|}
 try|try
 block|{
 name|indexTbl

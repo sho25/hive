@@ -715,6 +715,16 @@ name|getCols
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|setType
+argument_list|(
+name|TableType
+operator|.
+name|INDEX_TABLE
+operator|.
+name|name
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|this
 return|;
