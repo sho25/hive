@@ -61,9 +61,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|index
+name|io
 operator|.
-name|SplitFilter
+name|HiveInputFormat
 operator|.
 name|HiveInputSplitComparator
 import|;

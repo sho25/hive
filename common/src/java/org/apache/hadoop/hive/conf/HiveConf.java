@@ -3467,7 +3467,7 @@ literal|"hive.exec.drop.ignorenonexistent"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Do not report an error if DROP TABLE/VIEW/Index/Function specifies a non-existent table/view/index/function"
+literal|"Do not report an error if DROP TABLE/VIEW/Index/Function specifies a non-existent table/view/function"
 argument_list|)
 block|,
 name|HIVEIGNOREMAPJOINHINT
@@ -7386,15 +7386,6 @@ argument_list|,
 literal|"Whether to enable automatic use of indexes"
 argument_list|)
 block|,
-name|HIVEINDEXAUTOUPDATE
-argument_list|(
-literal|"hive.optimize.index.autoupdate"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether to update stale indexes automatically"
-argument_list|)
-block|,
 name|HIVEOPTPPD
 argument_list|(
 literal|"hive.optimize.ppd"
@@ -7861,81 +7852,6 @@ argument_list|,
 literal|"If the number of references to a CTE clause exceeds this threshold, Hive will materialize it\n"
 operator|+
 literal|"before executing the main query block. -1 will disable this feature."
-argument_list|)
-block|,
-comment|// Indexes
-name|HIVEOPTINDEXFILTER_COMPACT_MINSIZE
-argument_list|(
-literal|"hive.optimize.index.filter.compact.minsize"
-argument_list|,
-operator|(
-name|long
-operator|)
-literal|5
-operator|*
-literal|1024
-operator|*
-literal|1024
-operator|*
-literal|1024
-argument_list|,
-literal|"Minimum size (in bytes) of the inputs on which a compact index is automatically used."
-argument_list|)
-block|,
-comment|// 5G
-name|HIVEOPTINDEXFILTER_COMPACT_MAXSIZE
-argument_list|(
-literal|"hive.optimize.index.filter.compact.maxsize"
-argument_list|,
-operator|(
-name|long
-operator|)
-operator|-
-literal|1
-argument_list|,
-literal|"Maximum size (in bytes) of the inputs on which a compact index is automatically used.  A negative number is equivalent to infinity."
-argument_list|)
-block|,
-comment|// infinity
-name|HIVE_INDEX_COMPACT_QUERY_MAX_ENTRIES
-argument_list|(
-literal|"hive.index.compact.query.max.entries"
-argument_list|,
-operator|(
-name|long
-operator|)
-literal|10000000
-argument_list|,
-literal|"The maximum number of index entries to read during a query that uses the compact index. Negative value is equivalent to infinity."
-argument_list|)
-block|,
-comment|// 10M
-name|HIVE_INDEX_COMPACT_QUERY_MAX_SIZE
-argument_list|(
-literal|"hive.index.compact.query.max.size"
-argument_list|,
-operator|(
-name|long
-operator|)
-literal|10
-operator|*
-literal|1024
-operator|*
-literal|1024
-operator|*
-literal|1024
-argument_list|,
-literal|"The maximum number of bytes that a query using the compact index can read. Negative value is equivalent to infinity."
-argument_list|)
-block|,
-comment|// 10G
-name|HIVE_INDEX_COMPACT_BINARY_SEARCH
-argument_list|(
-literal|"hive.index.compact.binary.search"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether or not to use a binary search to find the entries in an index table that match the filter, where possible"
 argument_list|)
 block|,
 comment|// Statistics
@@ -9295,15 +9211,6 @@ argument_list|,
 literal|"Whether archiving operations are permitted"
 argument_list|)
 block|,
-name|HIVEOPTGBYUSINGINDEX
-argument_list|(
-literal|"hive.optimize.index.groupby"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether to enable optimization of group-by queries using Aggregate indexes."
-argument_list|)
-block|,
 name|HIVEFETCHTASKCONVERSION
 argument_list|(
 literal|"hive.fetch.task.conversion"
@@ -9655,35 +9562,6 @@ argument_list|,
 literal|"Whether to throw an exception if dynamic partition insert generates empty results."
 argument_list|)
 block|,
-name|HIVE_INDEX_COMPACT_FILE
-argument_list|(
-literal|"hive.index.compact.file"
-argument_list|,
-literal|""
-argument_list|,
-literal|"internal variable"
-argument_list|)
-block|,
-name|HIVE_INDEX_BLOCKFILTER_FILE
-argument_list|(
-literal|"hive.index.blockfilter.file"
-argument_list|,
-literal|""
-argument_list|,
-literal|"internal variable"
-argument_list|)
-block|,
-name|HIVE_INDEX_IGNORE_HDFS_LOC
-argument_list|(
-literal|"hive.index.compact.file.ignore.hdfs"
-argument_list|,
-literal|false
-argument_list|,
-literal|"When true the HDFS location stored in the index file will be ignored at runtime.\n"
-operator|+
-literal|"If the data got moved or the name of the cluster got changed, the index data should still be usable."
-argument_list|)
-block|,
 name|HIVE_EXIM_URI_SCHEME_WL
 argument_list|(
 literal|"hive.exim.uri.scheme.whitelist"
@@ -9740,23 +9618,6 @@ argument_list|,
 literal|"should rework the mapred work or not.\n"
 operator|+
 literal|"This is first introduced by SymlinkTextInputFormat to replace symlink files with real paths at compile time."
-argument_list|)
-block|,
-name|HIVE_CONCATENATE_CHECK_INDEX
-argument_list|(
-literal|"hive.exec.concatenate.check.index"
-argument_list|,
-literal|true
-argument_list|,
-literal|"If this is set to true, Hive will throw error when doing\n"
-operator|+
-literal|"'alter table tbl_name [partSpec] concatenate' on a table/partition\n"
-operator|+
-literal|"that has indexes on it. The reason the user want to set this to true\n"
-operator|+
-literal|"is because it can help user to avoid handling all index drop, recreation,\n"
-operator|+
-literal|"rebuild work. This is very helpful for tables with thousands of partitions."
 argument_list|)
 block|,
 name|HIVE_IO_EXCEPTION_HANDLERS
@@ -20573,12 +20434,6 @@ block|,
 name|ConfVars
 operator|.
 name|HIVE_COMPAT
-operator|.
-name|varname
-block|,
-name|ConfVars
-operator|.
-name|HIVE_CONCATENATE_CHECK_INDEX
 operator|.
 name|varname
 block|,

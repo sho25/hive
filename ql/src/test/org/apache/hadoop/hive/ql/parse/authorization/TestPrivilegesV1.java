@@ -411,15 +411,6 @@ argument_list|)
 expr_stmt|;
 name|grantUserTable
 argument_list|(
-literal|"index"
-argument_list|,
-name|PrivilegeType
-operator|.
-name|INDEX
-argument_list|)
-expr_stmt|;
-name|grantUserTable
-argument_list|(
 literal|"lock"
 argument_list|,
 name|PrivilegeType

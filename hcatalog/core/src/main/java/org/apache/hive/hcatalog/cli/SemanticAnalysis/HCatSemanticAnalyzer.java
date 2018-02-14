@@ -733,27 +733,6 @@ name|HiveParser
 operator|.
 name|TOK_ALTERDATABASE_PROPERTIES
 case|:
-comment|// Index DDL
-case|case
-name|HiveParser
-operator|.
-name|TOK_ALTERINDEX_PROPERTIES
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_CREATEINDEX
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_DROPINDEX
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_SHOWINDEXES
-case|:
 comment|// View DDL
 comment|// "alter view add partition" does not work because of the nature of implementation
 comment|// of the DDL in hive. Hive will internally invoke another Driver on the select statement,
@@ -1039,27 +1018,6 @@ case|case
 name|HiveParser
 operator|.
 name|TOK_ALTERDATABASE_PROPERTIES
-case|:
-comment|// Index DDL
-case|case
-name|HiveParser
-operator|.
-name|TOK_ALTERINDEX_PROPERTIES
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_CREATEINDEX
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_DROPINDEX
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_SHOWINDEXES
 case|:
 break|break;
 comment|// View DDL

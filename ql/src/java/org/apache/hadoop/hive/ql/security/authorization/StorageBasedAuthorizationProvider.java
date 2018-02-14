@@ -27,16 +27,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|FileNotFoundException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|IOException
 import|;
 end_import
@@ -1334,16 +1324,6 @@ name|FsAction
 operator|.
 name|WRITE
 return|;
-case|case
-name|INDEX
-case|:
-throw|throw
-operator|new
-name|AuthorizationException
-argument_list|(
-literal|"StorageBasedAuthorizationProvider cannot handle INDEX privilege"
-argument_list|)
-throw|;
 case|case
 name|LOCK
 case|:

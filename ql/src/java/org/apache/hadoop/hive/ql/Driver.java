@@ -4675,9 +4675,6 @@ case|case
 name|SHOWFUNCTIONS
 case|:
 case|case
-name|SHOWINDEXES
-case|:
-case|case
 name|SHOWPARTITIONS
 case|:
 case|case

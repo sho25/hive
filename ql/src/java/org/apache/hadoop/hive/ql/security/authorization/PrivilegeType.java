@@ -113,15 +113,6 @@ argument_list|,
 literal|"Drop"
 argument_list|)
 block|,
-name|INDEX
-argument_list|(
-name|HiveParser
-operator|.
-name|TOK_PRIV_INDEX
-argument_list|,
-literal|"Index"
-argument_list|)
-block|,
 name|LOCK
 argument_list|(
 name|HiveParser

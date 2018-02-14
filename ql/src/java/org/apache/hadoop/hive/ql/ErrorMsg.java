@@ -274,13 +274,6 @@ argument_list|,
 literal|"Invalid column reference"
 argument_list|)
 block|,
-name|INVALID_INDEX
-argument_list|(
-literal|10003
-argument_list|,
-literal|"Invalid index"
-argument_list|)
-block|,
 name|INVALID_TABLE_OR_COLUMN
 argument_list|(
 literal|10004
@@ -1582,13 +1575,6 @@ operator|+
 literal|" cannot be exchanged."
 argument_list|)
 block|,
-name|TRUNCATE_COLUMN_INDEXED_TABLE
-argument_list|(
-literal|10236
-argument_list|,
-literal|"Can not truncate columns from table with indexes"
-argument_list|)
-block|,
 name|TRUNCATE_COLUMN_NOT_RC
 argument_list|(
 literal|10237
@@ -2134,13 +2120,6 @@ argument_list|(
 literal|10316
 argument_list|,
 literal|"Error while retrieving table metadata"
-argument_list|)
-block|,
-name|CANNOT_DROP_INDEX
-argument_list|(
-literal|10317
-argument_list|,
-literal|"Error while dropping index"
 argument_list|)
 block|,
 name|INVALID_AST_TREE

@@ -616,10 +616,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * IndexPredicateAnalyzer decomposes predicates, separating the parts  * which can be satisfied by an index from the parts which cannot.  * Currently, it only supports pure conjunctions over binary expressions  * comparing a column reference with a constant value.  It is assumed  * that all column aliases encountered refer to the same table.  */
+comment|/**  * IndexPredicateAnalyzer decomposes predicates, separating the parts  * which can be satisfied by an index from the parts which cannot.  * Currently, it only supports pure conjunctions over binary expressions  * comparing a column reference with a constant value.  It is assumed  * that all column aliases encountered refer to the same table.  *  * @deprecated kept only because some storagehandlers are using it internally  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|IndexPredicateAnalyzer

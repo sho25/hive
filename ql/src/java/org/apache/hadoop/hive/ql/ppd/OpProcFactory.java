@@ -4220,6 +4220,8 @@ name|DefaultPPD
 implements|implements
 name|NodeProcessor
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
@@ -5133,7 +5135,9 @@ operator|.
 name|isDebugEnabled
 argument_list|()
 condition|)
+block|{
 return|return;
+block|}
 for|for
 control|(
 name|Entry

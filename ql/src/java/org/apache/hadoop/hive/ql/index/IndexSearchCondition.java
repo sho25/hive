@@ -74,10 +74,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * IndexSearchCondition represents an individual search condition  * found by {@link IndexPredicateAnalyzer}.  *  */
+comment|/**  * IndexSearchCondition represents an individual search condition  * found by {@link IndexPredicateAnalyzer}.  *  * @deprecated kept only because some storagehandlers are using it internally  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|IndexSearchCondition
@@ -139,7 +141,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Constructs a search condition, which takes the form    *<pre>column-ref comparison-op constant-value</pre>.    *    * @param columnDesc column being compared    *    * @param comparisonOp comparison operator, e.g. "="    * (taken from GenericUDFBridge.getUdfName())    *    * @param constantDesc constant value to search for    *    * @param indexExpr the comparison expression for the index    *     * @param originalExpr the original comparison expression    */
+comment|/**    * Constructs a search condition, which takes the form    *<pre>column-ref comparison-op constant-value</pre>.    *    * @param columnDesc column being compared    *    * @param comparisonOp comparison operator, e.g. "="    * (taken from GenericUDFBridge.getUdfName())    *    * @param constantDesc constant value to search for    *    * @param indexExpr the comparison expression for the index    *    * @param originalExpr the original comparison expression    */
 specifier|public
 name|IndexSearchCondition
 parameter_list|(

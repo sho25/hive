@@ -1180,9 +1180,11 @@ name|bb
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 name|result
 index|[
 name|ix
@@ -1261,8 +1263,10 @@ name|mpr
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
 comment|// This file is unknown to metastore.
+block|}
 name|ppdResult
 index|[
 name|ix
@@ -1386,7 +1390,9 @@ index|]
 operator|!=
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|HdfsFileStatusWithId
 name|file
 init|=
@@ -1601,9 +1607,11 @@ name|sarg
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|ByteBuffer
 name|serializedSarg
 init|=
@@ -1619,9 +1627,11 @@ name|serializedSarg
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|serializedSarg
 return|;
+block|}
 name|SearchArgument
 name|sarg2
 init|=
@@ -2044,9 +2054,11 @@ name|bb
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|FileStatus
 name|fs
 init|=
