@@ -367,7 +367,7 @@ name|ql
 operator|.
 name|hooks
 operator|.
-name|HooksLoader
+name|HookUtils
 import|;
 end_import
 
@@ -3721,23 +3721,17 @@ name|HiveSessionHook
 argument_list|>
 name|sessionHooks
 init|=
-operator|new
-name|HooksLoader
+name|HookUtils
+operator|.
+name|readHooksFromConf
 argument_list|(
 name|hiveConf
-argument_list|)
-operator|.
-name|getHooks
-argument_list|(
+argument_list|,
 name|HiveConf
 operator|.
 name|ConfVars
 operator|.
 name|HIVE_SERVER2_SESSION_HOOK
-argument_list|,
-name|HiveSessionHook
-operator|.
-name|class
 argument_list|)
 decl_stmt|;
 for|for
