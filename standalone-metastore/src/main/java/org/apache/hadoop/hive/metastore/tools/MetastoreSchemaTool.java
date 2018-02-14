@@ -1203,7 +1203,7 @@ name|printInfo
 argument_list|,
 name|conf
 argument_list|,
-name|hiveDb
+literal|null
 argument_list|)
 return|;
 block|}
