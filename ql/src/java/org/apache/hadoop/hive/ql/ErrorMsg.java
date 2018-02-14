@@ -2755,13 +2755,13 @@ name|SPARK_JOB_MONITOR_TIMEOUT
 argument_list|(
 literal|30037
 argument_list|,
-literal|"Job hasn't been submitted after {0}s."
+literal|"Job hasn''t been submitted after {0}s."
 operator|+
 literal|" Aborting it.\nPossible reasons include network issues, "
 operator|+
 literal|"errors in remote driver or the cluster has no available resources, etc.\n"
 operator|+
-literal|"Please check YARN or Spark driver's logs for further information.\n"
+literal|"Please check YARN or Spark driver''s logs for further information.\n"
 operator|+
 literal|"The timeout is controlled by "
 operator|+
