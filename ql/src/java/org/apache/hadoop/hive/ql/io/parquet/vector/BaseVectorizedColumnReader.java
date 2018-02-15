@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed under the Apache License, Version 2.0 (the "License");  * you may not use this file except in compliance with the License.  * You may obtain a copy of the License at  *  * http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -22,6 +22,24 @@ operator|.
 name|vector
 package|;
 end_package
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfo
+import|;
+end_import
 
 begin_import
 import|import
@@ -62,20 +80,6 @@ operator|.
 name|column
 operator|.
 name|ColumnDescriptor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|parquet
-operator|.
-name|column
-operator|.
-name|Dictionary
 import|;
 end_import
 
@@ -231,6 +235,20 @@ name|parquet
 operator|.
 name|schema
 operator|.
+name|DecimalMetadata
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|schema
+operator|.
 name|Type
 import|;
 end_import
@@ -369,7 +387,7 @@ decl_stmt|;
 comment|/**    * The dictionary, if this column has dictionary encoding.    */
 specifier|protected
 specifier|final
-name|Dictionary
+name|ParquetDataColumnReader
 name|dictionary
 decl_stmt|;
 comment|/**    * If true, the current page is dictionary encoded.    */
@@ -401,7 +419,7 @@ name|IntIterator
 name|definitionLevelColumn
 decl_stmt|;
 specifier|protected
-name|ValuesReader
+name|ParquetDataColumnReader
 name|dataColumn
 decl_stmt|;
 comment|/**    * Total values in the current page.    */
@@ -424,6 +442,54 @@ specifier|final
 name|Type
 name|type
 decl_stmt|;
+specifier|protected
+specifier|final
+name|TypeInfo
+name|hiveType
+decl_stmt|;
+comment|/**    * Used for VectorizedDummyColumnReader.    */
+specifier|public
+name|BaseVectorizedColumnReader
+parameter_list|()
+block|{
+name|this
+operator|.
+name|pageReader
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|descriptor
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|type
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|dictionary
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|hiveType
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|maxDefLevel
+operator|=
+operator|-
+literal|1
+expr_stmt|;
+block|}
 specifier|public
 name|BaseVectorizedColumnReader
 parameter_list|(
@@ -437,7 +503,10 @@ name|boolean
 name|skipTimestampConversion
 parameter_list|,
 name|Type
-name|type
+name|parquetType
+parameter_list|,
+name|TypeInfo
+name|hiveType
 parameter_list|)
 throws|throws
 name|IOException
@@ -452,7 +521,7 @@ name|this
 operator|.
 name|type
 operator|=
-name|type
+name|parquetType
 expr_stmt|;
 name|this
 operator|.
@@ -475,6 +544,12 @@ name|skipTimestampConversion
 operator|=
 name|skipTimestampConversion
 expr_stmt|;
+name|this
+operator|.
+name|hiveType
+operator|=
+name|hiveType
+expr_stmt|;
 name|DictionaryPage
 name|dictionaryPage
 init|=
@@ -496,6 +571,17 @@ name|this
 operator|.
 name|dictionary
 operator|=
+name|ParquetDataColumnReaderFactory
+operator|.
+name|getDataColumnReaderByTypeOnDictionary
+argument_list|(
+name|parquetType
+operator|.
+name|asPrimitiveType
+argument_list|()
+argument_list|,
+name|hiveType
+argument_list|,
 name|dictionaryPage
 operator|.
 name|getEncoding
@@ -506,6 +592,9 @@ argument_list|(
 name|descriptor
 argument_list|,
 name|dictionaryPage
+argument_list|)
+argument_list|,
+name|skipTimestampConversion
 argument_list|)
 expr_stmt|;
 name|this
@@ -597,7 +686,6 @@ condition|)
 block|{
 return|return;
 block|}
-comment|// TODO: Why is this a visitor?
 name|page
 operator|.
 name|accept
@@ -724,6 +812,17 @@ throw|;
 block|}
 name|dataColumn
 operator|=
+name|ParquetDataColumnReaderFactory
+operator|.
+name|getDataColumnReaderByType
+argument_list|(
+name|type
+operator|.
+name|asPrimitiveType
+argument_list|()
+argument_list|,
+name|hiveType
+argument_list|,
 name|dataEncoding
 operator|.
 name|getDictionaryBasedValuesReader
@@ -733,6 +832,12 @@ argument_list|,
 name|VALUES
 argument_list|,
 name|dictionary
+operator|.
+name|getDictionary
+argument_list|()
+argument_list|)
+argument_list|,
+name|skipTimestampConversion
 argument_list|)
 expr_stmt|;
 name|this
@@ -746,6 +851,17 @@ else|else
 block|{
 name|dataColumn
 operator|=
+name|ParquetDataColumnReaderFactory
+operator|.
+name|getDataColumnReaderByType
+argument_list|(
+name|type
+operator|.
+name|asPrimitiveType
+argument_list|()
+argument_list|,
+name|hiveType
+argument_list|,
 name|dataEncoding
 operator|.
 name|getValuesReader
@@ -753,6 +869,9 @@ argument_list|(
 name|descriptor
 argument_list|,
 name|VALUES
+argument_list|)
+argument_list|,
+name|skipTimestampConversion
 argument_list|)
 expr_stmt|;
 name|this
@@ -1179,7 +1298,47 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Utility classes to abstract over different way to read ints with different encodings.    * TODO: remove this layer of abstraction?    */
+comment|/**    * Check the underlying Parquet file is able to parse as Hive Decimal type.    *    * @param type    */
+specifier|protected
+name|void
+name|decimalTypeCheck
+parameter_list|(
+name|Type
+name|type
+parameter_list|)
+block|{
+name|DecimalMetadata
+name|decimalMetadata
+init|=
+name|type
+operator|.
+name|asPrimitiveType
+argument_list|()
+operator|.
+name|getDecimalMetadata
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|decimalMetadata
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"The underlying Parquet type cannot be able to "
+operator|+
+literal|"converted to Hive Decimal type: "
+operator|+
+name|type
+argument_list|)
+throw|;
+block|}
+block|}
+comment|/**    * Utility classes to abstract over different way to read ints with different encodings.    */
 specifier|abstract
 specifier|static
 class|class
