@@ -1681,6 +1681,9 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|initTriggers
+argument_list|()
+expr_stmt|;
 name|tezAmPool
 operator|.
 name|start
@@ -1717,6 +1720,19 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
+block|}
+specifier|private
+name|void
+name|initTriggers
+parameter_list|()
+block|{
+if|if
+condition|(
+name|triggerValidatorRunnable
+operator|==
+literal|null
+condition|)
+block|{
 specifier|final
 name|long
 name|triggerValidationIntervalMs
@@ -1767,6 +1783,7 @@ argument_list|(
 name|triggerValidationIntervalMs
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 name|void

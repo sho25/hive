@@ -913,8 +913,6 @@ specifier|final
 name|HiveConf
 name|conf
 parameter_list|)
-throws|throws
-name|HiveException
 block|{
 if|if
 condition|(

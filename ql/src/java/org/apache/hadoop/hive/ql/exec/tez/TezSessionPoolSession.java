@@ -477,6 +477,15 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Started trigger validator with interval: {} ms"
+argument_list|,
+name|triggerValidationIntervalMs
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 name|void
@@ -498,6 +507,13 @@ expr_stmt|;
 name|scheduledExecutorService
 operator|=
 literal|null
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Stopped trigger validator"
+argument_list|)
 expr_stmt|;
 block|}
 block|}
