@@ -524,10 +524,13 @@ argument_list|()
 expr_stmt|;
 name|console
 operator|=
+operator|new
 name|SessionState
 operator|.
-name|getConsole
-argument_list|()
+name|LogHelper
+argument_list|(
+name|LOG
+argument_list|)
 expr_stmt|;
 name|out
 operator|=

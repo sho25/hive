@@ -356,6 +356,13 @@ operator|.
 name|currentTimeMillis
 argument_list|()
 expr_stmt|;
+name|JobHandle
+operator|.
+name|State
+name|state
+init|=
+literal|null
+decl_stmt|;
 while|while
 condition|(
 literal|true
@@ -363,16 +370,13 @@ condition|)
 block|{
 try|try
 block|{
-name|JobHandle
-operator|.
-name|State
 name|state
-init|=
+operator|=
 name|sparkJobStatus
 operator|.
 name|getRemoteJobState
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 name|Preconditions
 operator|.
 name|checkState
@@ -447,15 +451,6 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|console
-operator|.
-name|printError
-argument_list|(
-literal|"Status: "
-operator|+
-name|state
-argument_list|)
-expr_stmt|;
 name|sparkJobStatus
 operator|.
 name|setError
@@ -488,7 +483,7 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"state = "
+literal|"Spark job state = "
 operator|+
 name|state
 argument_list|)
@@ -589,14 +584,14 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"\nStatus: Running (Hive on Spark job["
+literal|"Spark job["
 operator|+
 name|sparkJobStatus
 operator|.
 name|getJobId
 argument_list|()
 operator|+
-literal|"])"
+literal|"] status = RUNNING"
 argument_list|)
 expr_stmt|;
 name|running
@@ -800,13 +795,20 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Status: Finished successfully in "
+literal|"Spark job["
+operator|+
+name|sparkJobStatus
+operator|.
+name|getJobId
+argument_list|()
+operator|+
+literal|"] finished successfully in "
 operator|+
 name|String
 operator|.
 name|format
 argument_list|(
-literal|"%.2f seconds"
+literal|"%.2f second(s)"
 argument_list|,
 name|duration
 argument_list|)
@@ -1008,7 +1010,14 @@ name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Status: Cancelled"
+literal|"Spark job["
+operator|+
+name|sparkJobStatus
+operator|.
+name|getJobId
+argument_list|()
+operator|+
+literal|" was cancelled"
 argument_list|)
 expr_stmt|;
 name|running
@@ -1105,7 +1114,20 @@ argument_list|(
 name|e
 argument_list|)
 operator|+
-literal|"'"
+literal|"' Last known state = "
+operator|+
+operator|(
+name|state
+operator|!=
+literal|null
+condition|?
+name|state
+operator|.
+name|name
+argument_list|()
+else|:
+literal|"UNKNOWN"
+operator|)
 decl_stmt|;
 name|msg
 operator|=
