@@ -548,6 +548,18 @@ expr_stmt|;
 name|printAppInfo
 argument_list|()
 expr_stmt|;
+name|console
+operator|.
+name|printInfo
+argument_list|(
+literal|"Hive on Spark Session Web UI URL: "
+operator|+
+name|sparkJobStatus
+operator|.
+name|getWebUIURL
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// print job stages.
 name|console
 operator|.

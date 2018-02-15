@@ -311,9 +311,6 @@ name|hiveConf
 parameter_list|,
 name|String
 name|sessionId
-parameter_list|,
-name|PrintStream
-name|consoleStream
 parameter_list|)
 throws|throws
 name|IOException
@@ -342,8 +339,6 @@ argument_list|,
 name|hiveConf
 argument_list|,
 name|sessionId
-argument_list|,
-name|consoleStream
 argument_list|)
 return|;
 block|}

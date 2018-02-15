@@ -150,6 +150,10 @@ name|SparkStatistics
 name|getSparkStatistics
 parameter_list|()
 function_decl|;
+name|String
+name|getWebUIURL
+parameter_list|()
+function_decl|;
 name|void
 name|cleanup
 parameter_list|()
