@@ -316,25 +316,13 @@ name|outputColVector
 operator|.
 name|isNull
 decl_stmt|;
-name|outputColVector
-operator|.
-name|noNulls
-operator|=
-name|arg2ColVector
-operator|.
-name|noNulls
-operator|&&
-name|arg3ColVector
-operator|.
-name|noNulls
-expr_stmt|;
+comment|// We do not need to do a column reset since we are carefully changing the output.
 name|outputColVector
 operator|.
 name|isRepeating
 operator|=
 literal|false
 expr_stmt|;
-comment|// may override later
 name|int
 name|n
 init|=
@@ -375,6 +363,20 @@ condition|)
 block|{
 if|if
 condition|(
+operator|(
+name|arg1ColVector
+operator|.
+name|noNulls
+operator|||
+operator|!
+name|arg1ColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+operator|)
+operator|&&
 name|vector1
 index|[
 literal|0
@@ -445,6 +447,13 @@ name|sel
 argument_list|,
 name|n
 argument_list|)
+expr_stmt|;
+comment|/*      * Do careful maintenance of NULLs.      */
+name|outputColVector
+operator|.
+name|noNulls
+operator|=
+literal|false
 expr_stmt|;
 if|if
 condition|(

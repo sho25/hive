@@ -962,17 +962,7 @@ block|{
 comment|//Nothing to do
 return|return;
 block|}
-name|batch
-operator|.
-name|cols
-index|[
-name|outputColumnNum
-index|]
-operator|.
-name|noNulls
-operator|=
-literal|true
-expr_stmt|;
+comment|/*      * Do careful maintenance of the outputColVector.noNulls flag.      */
 comment|/* If all input columns are repeating, just evaluate function      * for row 0 in the batch and set output repeating.      */
 if|if
 condition|(

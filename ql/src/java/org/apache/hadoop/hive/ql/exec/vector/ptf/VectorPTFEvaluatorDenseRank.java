@@ -267,12 +267,6 @@ literal|true
 expr_stmt|;
 name|longColVector
 operator|.
-name|noNulls
-operator|=
-literal|true
-expr_stmt|;
-name|longColVector
-operator|.
 name|isNull
 index|[
 literal|0

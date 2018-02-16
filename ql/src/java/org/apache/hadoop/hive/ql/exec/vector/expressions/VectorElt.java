@@ -113,6 +113,10 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_comment
+comment|/*  * ELT(index, string, ....) returns the string column/expression value at the specified  * index expression.  *  * The first argument expression indicates the index of the string to be retrieved from  * remaining arguments.  We return NULL when the index number is less than 1 or  * index number is greater than the number of the string arguments.  */
+end_comment
+
 begin_class
 specifier|public
 class|class

@@ -25,6 +25,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -298,22 +308,13 @@ name|outputColVector
 operator|.
 name|isNull
 decl_stmt|;
-name|outputColVector
-operator|.
-name|noNulls
-operator|=
-name|arg2ColVector
-operator|.
-name|noNulls
-expr_stmt|;
-comment|// nulls can only come from arg2
+comment|// We do not need to do a column reset since we are carefully changing the output.
 name|outputColVector
 operator|.
 name|isRepeating
 operator|=
 literal|false
 expr_stmt|;
-comment|// may override later
 name|int
 name|n
 init|=
@@ -348,6 +349,20 @@ condition|)
 block|{
 if|if
 condition|(
+operator|(
+name|arg1ColVector
+operator|.
+name|noNulls
+operator|||
+operator|!
+name|arg1ColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+operator|)
+operator|&&
 name|vector1
 index|[
 literal|0
@@ -436,6 +451,13 @@ index|[
 name|j
 index|]
 decl_stmt|;
+name|outputIsNull
+index|[
+name|i
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|outputColVector
 operator|.
 name|set
@@ -463,6 +485,19 @@ block|}
 block|}
 else|else
 block|{
+name|Arrays
+operator|.
+name|fill
+argument_list|(
+name|outputIsNull
+argument_list|,
+literal|0
+argument_list|,
+name|n
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -507,6 +542,14 @@ block|}
 else|else
 comment|/* there are nulls */
 block|{
+comment|// Carefully handle NULLs...
+comment|/*        * For better performance on LONG/DOUBLE we don't want the conditional        * statements inside the for loop.        */
+name|outputColVector
+operator|.
+name|noNulls
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|batch

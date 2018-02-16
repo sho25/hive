@@ -513,6 +513,7 @@ block|{
 comment|// Nothing to do
 return|return;
 block|}
+comment|/*      * Propagate null values for a two-input operator and set isRepeating and noNulls appropriately.      */
 name|NullUtil
 operator|.
 name|propagateNullsColCol

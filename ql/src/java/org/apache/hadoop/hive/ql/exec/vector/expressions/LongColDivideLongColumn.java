@@ -295,19 +295,7 @@ condition|)
 block|{
 return|return;
 block|}
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-name|inputColVector1
-operator|.
-name|isRepeating
-operator|&&
-name|inputColVector2
-operator|.
-name|isRepeating
-expr_stmt|;
-comment|// Handle nulls first
+comment|/*      * Propagate null values for a two-input operator and set isRepeating and noNulls appropriately.      */
 name|NullUtil
 operator|.
 name|propagateNullsColCol

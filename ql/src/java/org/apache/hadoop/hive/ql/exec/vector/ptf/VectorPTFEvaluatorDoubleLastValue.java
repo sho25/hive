@@ -328,6 +328,14 @@ condition|(
 name|doubleColVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|doubleColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 name|lastValue

@@ -388,6 +388,14 @@ condition|(
 name|decimalColVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|decimalColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 name|lastValue

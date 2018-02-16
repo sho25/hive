@@ -25,6 +25,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -246,6 +256,14 @@ index|[
 name|outputColumnNum
 index|]
 decl_stmt|;
+name|boolean
+index|[]
+name|outputIsNull
+init|=
+name|outV
+operator|.
+name|isNull
+decl_stmt|;
 name|int
 index|[]
 name|sel
@@ -346,7 +364,7 @@ operator|.
 name|noNulls
 condition|)
 block|{
-comment|// propagate nulls
+comment|// Carefully handle NULLs...
 comment|/* We'll assume that there *may* be nulls in the input if !noNulls is true        * for an input vector. This is to be more forgiving of errors in loading        * the vectors. A properly-written vectorized iterator will make sure that        * isNull[0] is set if !noNulls and isRepeating are true for the vector.        */
 name|outV
 operator|.
@@ -2362,13 +2380,7 @@ block|}
 else|else
 block|{
 comment|// there are no nulls in either input vector
-comment|// propagate null information
-name|outV
-operator|.
-name|noNulls
-operator|=
-literal|true
-expr_stmt|;
+comment|/*        * Do careful maintenance of the outputColVector.noNulls flag.        */
 comment|// perform data operation
 if|if
 condition|(
@@ -2425,6 +2437,13 @@ name|isRepeating
 operator|=
 literal|true
 expr_stmt|;
+name|outputIsNull
+index|[
+literal|0
+index|]
+operator|=
+literal|false
+expr_stmt|;
 block|}
 elseif|else
 if|if
@@ -2464,6 +2483,13 @@ index|[
 name|j
 index|]
 decl_stmt|;
+name|outputIsNull
+index|[
+name|i
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|outV
 operator|.
 name|setConcat
@@ -2505,6 +2531,19 @@ block|}
 block|}
 else|else
 block|{
+name|Arrays
+operator|.
+name|fill
+argument_list|(
+name|outputIsNull
+argument_list|,
+literal|0
+argument_list|,
+name|n
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -2598,6 +2637,13 @@ index|[
 name|j
 index|]
 decl_stmt|;
+name|outputIsNull
+index|[
+name|i
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|outV
 operator|.
 name|setConcat
@@ -2639,6 +2685,19 @@ block|}
 block|}
 else|else
 block|{
+name|Arrays
+operator|.
+name|fill
+argument_list|(
+name|outputIsNull
+argument_list|,
+literal|0
+argument_list|,
+name|n
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -2726,6 +2785,13 @@ index|[
 name|j
 index|]
 decl_stmt|;
+name|outputIsNull
+index|[
+name|i
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|outV
 operator|.
 name|setConcat
@@ -2767,6 +2833,19 @@ block|}
 block|}
 else|else
 block|{
+name|Arrays
+operator|.
+name|fill
+argument_list|(
+name|outputIsNull
+argument_list|,
+literal|0
+argument_list|,
+name|n
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|int

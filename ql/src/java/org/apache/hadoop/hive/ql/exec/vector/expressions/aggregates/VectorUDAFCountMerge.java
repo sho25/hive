@@ -231,7 +231,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**      * class for storing the current aggregate value.      */
+comment|/**    * class for storing the current aggregate value.    */
 specifier|static
 class|class
 name|Aggregation
@@ -246,8 +246,8 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|transient
 specifier|private
+specifier|transient
 name|long
 name|value
 decl_stmt|;
@@ -306,7 +306,7 @@ specifier|private
 name|void
 name|init
 parameter_list|()
-block|{     }
+block|{   }
 specifier|private
 name|Aggregation
 name|getCurrentAggregationBuffer
@@ -1146,6 +1146,14 @@ condition|(
 name|inputVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|inputVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 name|myagg

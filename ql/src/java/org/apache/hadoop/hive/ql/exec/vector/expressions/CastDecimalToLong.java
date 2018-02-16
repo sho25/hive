@@ -240,6 +240,15 @@ literal|false
 expr_stmt|;
 return|return;
 block|}
+name|outV
+operator|.
+name|isNull
+index|[
+name|i
+index|]
+operator|=
+literal|false
+expr_stmt|;
 switch|switch
 condition|(
 name|integerPrimitiveCategory

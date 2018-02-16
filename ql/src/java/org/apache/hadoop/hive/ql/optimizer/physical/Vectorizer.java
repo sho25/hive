@@ -11238,7 +11238,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Validating and vectorizing MapWork..."
+literal|"Validating and vectorizing MapWork... (vectorizedVertexNum "
+operator|+
+name|vectorizedVertexNum
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 comment|// Set "global" member indicating where to store "not vectorized" information if necessary.
@@ -12203,7 +12207,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Validating and vectorizing ReduceWork..."
+literal|"Validating and vectorizing ReduceWork... (vectorizedVertexNum "
+operator|+
+name|vectorizedVertexNum
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 name|Operator
@@ -22784,21 +22792,6 @@ argument_list|(
 name|expr
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|ve
-operator|.
-name|getOutputColumnNum
-argument_list|()
-operator|==
-operator|-
-literal|1
-condition|)
-block|{
-name|fake
-operator|++
-expr_stmt|;
-block|}
 name|projectedOutputColumns
 index|[
 name|i

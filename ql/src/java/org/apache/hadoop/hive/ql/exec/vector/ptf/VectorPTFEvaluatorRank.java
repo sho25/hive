@@ -250,6 +250,7 @@ argument_list|(
 name|batch
 argument_list|)
 expr_stmt|;
+comment|/*      * Do careful maintenance of the outputColVector.noNulls flag.      */
 name|LongColumnVector
 name|longColVector
 init|=
@@ -266,12 +267,6 @@ decl_stmt|;
 name|longColVector
 operator|.
 name|isRepeating
-operator|=
-literal|true
-expr_stmt|;
-name|longColVector
-operator|.
-name|noNulls
 operator|=
 literal|true
 expr_stmt|;

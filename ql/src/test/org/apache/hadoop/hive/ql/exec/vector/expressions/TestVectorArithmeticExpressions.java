@@ -2647,18 +2647,9 @@ literal|false
 expr_stmt|;
 name|lcv2
 operator|.
-name|noNulls
-operator|=
-literal|false
+name|reset
+argument_list|()
 expr_stmt|;
-comment|// set output noNulls to true to make sure it gets over-written
-name|lcv2
-operator|.
-name|isRepeating
-operator|=
-literal|true
-expr_stmt|;
-comment|// similarly with isRepeating
 name|expr
 operator|.
 name|evaluate

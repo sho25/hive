@@ -294,25 +294,6 @@ name|outputColVector
 operator|.
 name|isNull
 decl_stmt|;
-name|outputColVector
-operator|.
-name|noNulls
-operator|=
-name|arg2ColVector
-operator|.
-name|noNulls
-operator|&&
-name|arg3ColVector
-operator|.
-name|noNulls
-expr_stmt|;
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-literal|false
-expr_stmt|;
-comment|// may override later
 name|int
 name|n
 init|=
@@ -362,6 +343,13 @@ condition|)
 block|{
 return|return;
 block|}
+comment|// We do not need to do a column reset since we are carefully changing the output.
+name|outputColVector
+operator|.
+name|isRepeating
+operator|=
+literal|false
+expr_stmt|;
 comment|/* All the code paths below propagate nulls even if neither arg2 nor arg3      * have nulls. This is to reduce the number of code paths and shorten the      * code, at the expense of maybe doing unnecessary work if neither input      * has nulls. This could be improved in the future by expanding the number      * of code paths.      */
 if|if
 condition|(
@@ -372,6 +360,20 @@ condition|)
 block|{
 if|if
 condition|(
+operator|(
+name|arg1ColVector
+operator|.
+name|noNulls
+operator|||
+operator|!
+name|arg1ColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
+operator|)
+operator|&&
 name|vector1
 index|[
 literal|0
@@ -450,6 +452,14 @@ operator|.
 name|noNulls
 condition|)
 block|{
+comment|// Carefully handle NULLs...
+comment|/*        * For better performance on LONG/DOUBLE we don't want the conditional        * statements inside the for loop.        */
+name|outputColVector
+operator|.
+name|noNulls
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|batch
@@ -607,8 +617,16 @@ block|}
 block|}
 block|}
 else|else
-comment|/* there are nulls */
+comment|/* there are nulls in the inputColVector */
 block|{
+comment|// Carefully handle NULLs...
+comment|/*        * For better performance on LONG/DOUBLE we don't want the conditional        * statements inside the for loop.        */
+name|outputColVector
+operator|.
+name|noNulls
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|batch

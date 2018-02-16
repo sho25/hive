@@ -1238,15 +1238,6 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|true
-argument_list|,
-name|r
-operator|.
-name|noNulls
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
 literal|false
 argument_list|,
 name|r
@@ -1597,15 +1588,6 @@ name|vector
 index|[
 literal|3
 index|]
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|true
-argument_list|,
-name|r
-operator|.
-name|noNulls
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2245,15 +2227,6 @@ name|vector
 index|[
 literal|3
 index|]
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|true
-argument_list|,
-name|r
-operator|.
-name|noNulls
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3836,13 +3809,6 @@ literal|"arg2_3"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertTrue
-argument_list|(
-name|r
-operator|.
-name|noNulls
-argument_list|)
-expr_stmt|;
 comment|// test for null input strings
 name|batch
 operator|=
@@ -4036,13 +4002,6 @@ name|equals
 argument_list|(
 literal|"scalar"
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertTrue
-argument_list|(
-name|r
-operator|.
-name|noNulls
 argument_list|)
 expr_stmt|;
 comment|// test for null input strings

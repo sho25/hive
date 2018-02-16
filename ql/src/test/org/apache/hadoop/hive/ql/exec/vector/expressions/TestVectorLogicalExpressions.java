@@ -455,15 +455,6 @@ expr_stmt|;
 comment|// spot check
 name|Assert
 operator|.
-name|assertTrue
-argument_list|(
-name|outCol
-operator|.
-name|noNulls
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
 name|assertEquals
 argument_list|(
 literal|0
@@ -955,15 +946,6 @@ name|batch
 argument_list|)
 expr_stmt|;
 comment|// spot check
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|outCol
-operator|.
-name|noNulls
-argument_list|)
-expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
@@ -1845,15 +1827,6 @@ argument_list|(
 name|outCol
 operator|.
 name|isRepeating
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|outCol
-operator|.
-name|noNulls
 argument_list|)
 expr_stmt|;
 name|Assert

@@ -410,6 +410,14 @@ condition|(
 name|decimalColVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|decimalColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 name|firstValue
@@ -491,6 +499,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+comment|/*      * Do careful maintenance of the outputColVector.noNulls flag.      */
 comment|// First value is repeated for all batches.
 name|DecimalColumnVector
 name|outputColVector
@@ -534,12 +543,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|outputColVector
-operator|.
-name|noNulls
-operator|=
-literal|true
-expr_stmt|;
 name|outputColVector
 operator|.
 name|isNull

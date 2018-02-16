@@ -331,6 +331,14 @@ condition|(
 name|colVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|colVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 name|count

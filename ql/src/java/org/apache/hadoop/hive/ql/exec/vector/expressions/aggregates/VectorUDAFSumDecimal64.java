@@ -1371,6 +1371,14 @@ condition|(
 name|inputVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|inputVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 if|if

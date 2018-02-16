@@ -2215,6 +2215,7 @@ condition|(
 name|isNull
 condition|)
 block|{
+comment|// NULL does equal NULL here.
 continue|continue;
 block|}
 switch|switch

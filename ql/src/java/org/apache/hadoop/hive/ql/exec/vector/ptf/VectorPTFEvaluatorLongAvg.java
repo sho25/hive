@@ -329,6 +329,14 @@ condition|(
 name|longColVector
 operator|.
 name|noNulls
+operator|||
+operator|!
+name|longColVector
+operator|.
+name|isNull
+index|[
+literal|0
+index|]
 condition|)
 block|{
 comment|// We have a repeated value.  The sum increases by value * batch.size.

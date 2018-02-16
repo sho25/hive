@@ -1164,6 +1164,15 @@ expr_stmt|;
 comment|// copy a null
 name|output
 operator|.
+name|isNull
+index|[
+literal|3
+index|]
+operator|=
+literal|false
+expr_stmt|;
+name|output
+operator|.
 name|setElement
 argument_list|(
 literal|3
@@ -1209,6 +1218,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// copy a value
+name|output
+operator|.
+name|isNull
+index|[
+literal|3
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|output
 operator|.
 name|setElement
@@ -1281,6 +1299,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// overwrite a value
+name|output
+operator|.
+name|isNull
+index|[
+literal|3
+index|]
+operator|=
+literal|false
+expr_stmt|;
 name|output
 operator|.
 name|setElement

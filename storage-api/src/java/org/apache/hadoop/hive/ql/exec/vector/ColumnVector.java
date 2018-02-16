@@ -389,7 +389,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**      * Restore the state of isRepeating and noNulls to what it was      * before flattening. This must only be called just after flattening      * and then evaluating a VectorExpression on the column vector.      * It is an optimization that allows other operations on the same      * column to continue to benefit from the isRepeating and noNulls      * indicators.      */
+comment|/**    * Restore the state of isRepeating and noNulls to what it was    * before flattening. This must only be called just after flattening    * and then evaluating a VectorExpression on the column vector.    * It is an optimization that allows other operations on the same    * column to continue to benefit from the isRepeating and noNulls    * indicators.    */
 specifier|public
 name|void
 name|unFlatten
@@ -419,23 +419,43 @@ operator|=
 name|noNulls
 expr_stmt|;
 block|}
-comment|/**      * Set the element in this column vector from the given input vector.      * This method can assume that the output does not have isRepeating set.      */
+comment|/**    * Set the element in this column vector from the given input vector.    *    * The inputElementNum will be adjusted to 0 if the input column has isRepeating set.    *    * On the other hand, the outElementNum must have been adjusted to 0 in ADVANCE when the output    * has isRepeating set.    *    * IMPORTANT: if the output entry is marked as NULL, this method will do NOTHING.  This    * supports the caller to do output NULL processing in advance that may cause the output results    * operation to be ignored.  Thus, make sure the output isNull entry is set in ADVANCE.    *    * The inputColVector noNulls and isNull entry will be examined.  The output will only    * be set if the input is NOT NULL.  I.e. noNulls || !isNull[inputElementNum] where    * inputElementNum may have been adjusted to 0 for isRepeating.    *    * If the input entry is NULL or out-of-range, the output will be marked as NULL.    * I.e. set output noNull = false and isNull[outElementNum] = true.  An example of out-of-range    * is the DecimalColumnVector which can find the input decimal does not fit in the output    * precision/scale.    *    * (Since we return immediately if the output entry is NULL, we have no need and do not mark    * the output entry to NOT NULL).    *    */
 specifier|public
 specifier|abstract
 name|void
 name|setElement
 parameter_list|(
 name|int
-name|outElementNum
+name|outputElementNum
 parameter_list|,
 name|int
 name|inputElementNum
 parameter_list|,
 name|ColumnVector
-name|inputVector
+name|inputColVector
 parameter_list|)
 function_decl|;
-comment|/**      * Initialize the column vector. This method can be overridden by specific column vector types.      * Use this method only if the individual type of the column vector is not known, otherwise its      * preferable to call specific initialization methods.      */
+comment|/*    * Copy the current object contents into the output. Only copy selected entries    * as indicated by selectedInUse and the sel array.    */
+specifier|public
+specifier|abstract
+name|void
+name|copySelected
+parameter_list|(
+name|boolean
+name|selectedInUse
+parameter_list|,
+name|int
+index|[]
+name|sel
+parameter_list|,
+name|int
+name|size
+parameter_list|,
+name|ColumnVector
+name|outputColVector
+parameter_list|)
+function_decl|;
+comment|/**    * Initialize the column vector. This method can be overridden by specific column vector types.    * Use this method only if the individual type of the column vector is not known, otherwise its    * preferable to call specific initialization methods.    */
 specifier|public
 name|void
 name|init
@@ -443,7 +463,7 @@ parameter_list|()
 block|{
 comment|// Do nothing by default
 block|}
-comment|/**      * Ensure the ColumnVector can hold at least size values.      * This method is deliberately *not* recursive because the complex types      * can easily have more (or less) children than the upper levels.      * @param size the new minimum size      * @param preserveData should the old data be preserved?      */
+comment|/**    * Ensure the ColumnVector can hold at least size values.    * This method is deliberately *not* recursive because the complex types    * can easily have more (or less) children than the upper levels.    * @param size the new minimum size    * @param preserveData should the old data be preserved?    */
 specifier|public
 name|void
 name|ensureSize
@@ -525,7 +545,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**      * Print the value for this column into the given string builder.      * @param buffer the buffer to print into      * @param row the id of the row to print      */
+comment|/**    * Print the value for this column into the given string builder.    * @param buffer the buffer to print into    * @param row the id of the row to print    */
 specifier|public
 specifier|abstract
 name|void
@@ -538,7 +558,7 @@ name|int
 name|row
 parameter_list|)
 function_decl|;
-comment|/**      * Shallow copy of the contents of this vector to the other vector;      * replaces other vector's values.      */
+comment|/**    * Shallow copy of the contents of this vector to the other vector;    * replaces other vector's values.    */
 specifier|public
 name|void
 name|shallowCopyTo

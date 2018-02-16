@@ -961,6 +961,7 @@ name|VectorizedRowBatch
 name|batch
 parameter_list|)
 block|{
+comment|/*      * Do careful maintenance of the outputColVector.noNulls flag.      */
 for|for
 control|(
 name|VectorPTFEvaluatorBase
@@ -1037,12 +1038,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|outputColVector
-operator|.
-name|noNulls
-operator|=
-literal|true
-expr_stmt|;
 switch|switch
 condition|(
 name|evaluator

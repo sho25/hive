@@ -287,51 +287,7 @@ condition|)
 block|{
 return|return;
 block|}
-name|outputColVector
-operator|.
-name|isRepeating
-operator|=
-name|inputColVector1
-operator|.
-name|isRepeating
-operator|&&
-name|inputColVector2
-operator|.
-name|isRepeating
-operator|||
-name|inputColVector1
-operator|.
-name|isRepeating
-operator|&&
-operator|!
-name|inputColVector1
-operator|.
-name|noNulls
-operator|&&
-name|inputColVector1
-operator|.
-name|isNull
-index|[
-literal|0
-index|]
-operator|||
-name|inputColVector2
-operator|.
-name|isRepeating
-operator|&&
-operator|!
-name|inputColVector2
-operator|.
-name|noNulls
-operator|&&
-name|inputColVector2
-operator|.
-name|isNull
-index|[
-literal|0
-index|]
-expr_stmt|;
-comment|// Handle nulls first
+comment|/*      * Propagate null values for a two-input operator and set isRepeating and noNulls appropriately.      */
 name|NullUtil
 operator|.
 name|propagateNullsColCol
@@ -351,7 +307,7 @@ operator|.
 name|selectedInUse
 argument_list|)
 expr_stmt|;
-comment|/* Disregard nulls for processing. In other words,      * the arithmetic operation is performed even if one or       * more inputs are null. This is to improve speed by avoiding      * conditional checks in the inner loop.      */
+comment|/* Disregard nulls for processing. In other words,      * the arithmetic operation is performed even if one or      * more inputs are null. This is to improve speed by avoiding      * conditional checks in the inner loop.      */
 if|if
 condition|(
 name|inputColVector1
@@ -702,7 +658,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/* For the case when the output can have null values, follow       * the convention that the data values must be 1 for long and       * NaN for double. This is to prevent possible later zero-divide errors      * in complex arithmetic expressions like col2 / (col1 - 1)      * in the case when some col1 entries are null.      */
+comment|/* For the case when the output can have null values, follow      * the convention that the data values must be 1 for long and      * NaN for double. This is to prevent possible later zero-divide errors      * in complex arithmetic expressions like col2 / (col1 - 1)      * in the case when some col1 entries are null.      */
 name|NullUtil
 operator|.
 name|setNullDataEntriesLong
