@@ -2329,6 +2329,13 @@ argument_list|,
 literal|"Grouping sets size cannot be greater than 64"
 argument_list|)
 block|,
+name|REBUILD_NO_MATERIALIZED_VIEW
+argument_list|(
+literal|10412
+argument_list|,
+literal|"Rebuild command only valid for materialized views"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

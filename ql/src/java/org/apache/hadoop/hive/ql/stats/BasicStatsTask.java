@@ -1547,15 +1547,6 @@ return|return
 literal|0
 return|;
 block|}
-comment|// Stats task should not set creation signature
-name|res
-operator|.
-name|getTTable
-argument_list|()
-operator|.
-name|unsetCreationMetadata
-argument_list|()
-expr_stmt|;
 name|db
 operator|.
 name|alterTable

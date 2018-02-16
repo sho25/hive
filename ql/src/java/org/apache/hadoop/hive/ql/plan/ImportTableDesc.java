@@ -709,6 +709,8 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO: If the DB name from the creation metadata for any of the tables has changed,
+comment|// we should update it. Currently it refers to the source database name.
 name|this
 operator|.
 name|createViewDesc

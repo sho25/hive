@@ -17507,9 +17507,8 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// TODO: Enable back when HIVE-18387 goes in, as it fixes the issue.
-comment|// The problem is that alter for stats is removing the metadata information.
-comment|// HIVE-18387 rewrites that logic and will fix the issue.
+comment|// TODO: This does not work because materialized views need the creation metadata
+comment|// to be updated in case tables used were replicated to a different database.
 comment|//run("CREATE MATERIALIZED VIEW " + dbName + ".mat_view AS SELECT a FROM " + dbName + ".ptned where b=1", driver);
 comment|//verifySetup("SELECT a from " + dbName + ".mat_view", ptn_data_1, driver);
 name|advanceDumpDir
