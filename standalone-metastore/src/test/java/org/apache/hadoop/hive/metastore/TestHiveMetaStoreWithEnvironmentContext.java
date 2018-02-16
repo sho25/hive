@@ -83,6 +83,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|annotation
+operator|.
+name|MetastoreUnitTest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|Database
@@ -404,6 +422,20 @@ import|;
 end_import
 
 begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|experimental
+operator|.
+name|categories
+operator|.
+name|Category
+import|;
+end_import
+
+begin_import
 import|import static
 name|org
 operator|.
@@ -420,6 +452,13 @@ comment|/**  * TestHiveMetaStoreWithEnvironmentContext. Test case for _with_envi
 end_comment
 
 begin_class
+annotation|@
+name|Category
+argument_list|(
+name|MetastoreUnitTest
+operator|.
+name|class
+argument_list|)
 specifier|public
 class|class
 name|TestHiveMetaStoreWithEnvironmentContext

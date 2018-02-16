@@ -55,6 +55,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|annotation
+operator|.
+name|MetastoreCheckinTest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|Database
@@ -171,11 +189,32 @@ name|Test
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|experimental
+operator|.
+name|categories
+operator|.
+name|Category
+import|;
+end_import
+
 begin_comment
 comment|/**  * Test long running request timeout functionality in MetaStore Server  * HiveMetaStore.HMSHandler.create_database() is used to simulate a long running method.  */
 end_comment
 
 begin_class
+annotation|@
+name|Category
+argument_list|(
+name|MetastoreCheckinTest
+operator|.
+name|class
+argument_list|)
 specifier|public
 class|class
 name|TestHiveMetaStoreTimeout
