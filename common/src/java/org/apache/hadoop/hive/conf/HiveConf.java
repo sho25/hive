@@ -5664,6 +5664,31 @@ argument_list|,
 literal|"Whether to try to rewrite queries using the materialized views enabled for rewriting"
 argument_list|)
 block|,
+name|HIVE_MATERIALIZED_VIEW_REWRITING_SELECTION_STRATEGY
+argument_list|(
+literal|"hive.materializedview.rewriting.strategy"
+argument_list|,
+literal|"heuristic"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"heuristic"
+argument_list|,
+literal|"costbased"
+argument_list|)
+argument_list|,
+literal|"The strategy that should be used to cost and select the materialized view rewriting. \n"
+operator|+
+literal|"  heuristic: Always try to select the plan using the materialized view if rewriting produced one,"
+operator|+
+literal|"choosing the plan with lower cost among possible plans containing a materialized view\n"
+operator|+
+literal|"  costbased: Fully cost-based strategy, always use plan with lower cost, independently on whether "
+operator|+
+literal|"it uses a materialized view or not"
+argument_list|)
+block|,
 name|HIVE_MATERIALIZED_VIEW_REWRITING_TIME_WINDOW
 argument_list|(
 literal|"hive.materializedview.rewriting.time.window"
