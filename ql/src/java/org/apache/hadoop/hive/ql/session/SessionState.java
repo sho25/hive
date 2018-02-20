@@ -3703,7 +3703,8 @@ name|rootHDFSDirPath
 return|;
 block|}
 comment|/**    * Create a given path if it doesn't exist.    *    * @param conf    * @param path    * @param permission    * @param isLocal    * @param isCleanUp    * @return    * @throws IOException    */
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|static
 name|void
 name|createPath
@@ -3776,6 +3777,9 @@ name|path
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+operator|!
 name|fs
 operator|.
 name|mkdirs
@@ -3784,7 +3788,25 @@ name|path
 argument_list|,
 name|fsPermission
 argument_list|)
-expr_stmt|;
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Failed to create directory "
+operator|+
+name|path
+operator|+
+literal|" on fs "
+operator|+
+name|fs
+operator|.
+name|getUri
+argument_list|()
+argument_list|)
+throw|;
+block|}
 name|String
 name|dirType
 init|=
