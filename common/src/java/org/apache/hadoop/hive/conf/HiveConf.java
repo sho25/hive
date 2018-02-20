@@ -10310,6 +10310,15 @@ argument_list|,
 literal|"The maximum number of past queries to show in HiverSever2 WebUI."
 argument_list|)
 block|,
+name|HIVE_SERVER2_WEBUI_USE_PAM
+argument_list|(
+literal|"hive.server2.webui.use.pam"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, the HiveServer2 WebUI will be secured with PAM."
+argument_list|)
+block|,
 comment|// Tez session settings
 name|HIVE_SERVER2_TEZ_INTERACTIVE_QUEUE
 argument_list|(
