@@ -713,6 +713,24 @@ name|metastore
 operator|.
 name|model
 operator|.
+name|MCreationMetadata
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|model
+operator|.
 name|MDatabase
 import|;
 end_import
@@ -1818,6 +1836,22 @@ operator|.
 name|class
 argument_list|,
 literal|"name == ''"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|initQueries
+operator|.
+name|add
+argument_list|(
+name|pm
+operator|.
+name|newQuery
+argument_list|(
+name|MCreationMetadata
+operator|.
+name|class
+argument_list|,
+literal|"dbName == ''"
 argument_list|)
 argument_list|)
 expr_stmt|;

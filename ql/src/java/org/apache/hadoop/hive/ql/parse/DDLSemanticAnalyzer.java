@@ -9130,15 +9130,20 @@ name|ast
 operator|.
 name|getChildCount
 argument_list|()
-operator|!=
-literal|5
+operator|<
+literal|3
 condition|)
 block|{
 throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Invalid syntax for create pool."
+literal|"Expected more arguments: "
+operator|+
+name|ast
+operator|.
+name|toStringTree
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -9362,6 +9367,23 @@ operator|new
 name|SemanticException
 argument_list|(
 literal|"alloc_fraction should be specified for a pool"
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+operator|!
+name|pool
+operator|.
+name|isSetQueryParallelism
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"query_parallelism should be specified for a pool"
 argument_list|)
 throw|;
 block|}
