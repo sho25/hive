@@ -1351,6 +1351,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|collect
 operator|.
 name|Lists
@@ -5580,6 +5594,7 @@ literal|null
 condition|)
 block|{
 comment|// If we had a cache range already, we expect a single matching disk slice.
+comment|// Given that there's cached data we expect there to be some disk data.
 name|Vectors
 name|vectors
 init|=
@@ -5588,6 +5603,11 @@ operator|.
 name|readNextSlice
 argument_list|()
 decl_stmt|;
+assert|assert
+name|vectors
+operator|!=
+literal|null
+assert|;
 if|if
 condition|(
 operator|!
@@ -5679,6 +5699,7 @@ block|}
 else|else
 block|{
 comment|// All the data comes from disk. The reader may have split it into multiple slices.
+comment|// It is also possible there's no data in the file.
 name|Vectors
 name|vectors
 init|=
@@ -5687,11 +5708,15 @@ operator|.
 name|readNextSlice
 argument_list|()
 decl_stmt|;
-assert|assert
+if|if
+condition|(
 name|vectors
-operator|!=
+operator|==
 literal|null
-assert|;
+condition|)
+return|return
+literal|true
+return|;
 name|result
 operator|=
 literal|true
@@ -8301,7 +8326,7 @@ name|MIN_VALUE
 decl_stmt|;
 specifier|private
 name|boolean
-name|hasUnsplittableData
+name|hasAnyData
 init|=
 literal|false
 decl_stmt|;
@@ -8344,6 +8369,13 @@ name|int
 name|targetSliceRowCount
 parameter_list|)
 block|{
+name|Preconditions
+operator|.
+name|checkNotNull
+argument_list|(
+name|offsetReader
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|offsetReader
@@ -8409,9 +8441,12 @@ name|offsetReader
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+comment|// This means the reader has already been closed.
+block|}
 try|try
 block|{
 while|while
@@ -8422,7 +8457,7 @@ name|next
 argument_list|()
 condition|)
 block|{
-name|hasUnsplittableData
+name|hasAnyData
 operator|=
 literal|true
 expr_stmt|;
@@ -8577,11 +8612,6 @@ block|}
 block|}
 try|try
 block|{
-name|Vectors
-name|result
-init|=
-literal|null
-decl_stmt|;
 if|if
 condition|(
 name|rowsPerSlice
@@ -8592,7 +8622,7 @@ operator|(
 operator|!
 name|maySplitTheSplit
 operator|&&
-name|hasUnsplittableData
+name|hasAnyData
 operator|)
 condition|)
 block|{
@@ -8612,7 +8642,7 @@ argument_list|()
 condition|)
 block|{
 comment|// The reader doesn't support offsets. We adjust offsets to match future splits.
-comment|// If cached split was starting at row start, that row would be skipped, so +1
+comment|// If cached split was starting at row start, that row would be skipped, so +1 byte.
 name|firstStartOffset
 operator|=
 name|split
@@ -8715,8 +8745,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-name|result
-operator|=
+return|return
 operator|new
 name|Vectors
 argument_list|(
@@ -8725,7 +8754,7 @@ operator|.
 name|extractCurrentVrbs
 argument_list|()
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 else|else
 block|{
@@ -8734,10 +8763,11 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-block|}
 return|return
-name|result
+literal|null
 return|;
+comment|// There's no more data.
+block|}
 block|}
 finally|finally
 block|{
