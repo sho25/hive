@@ -12815,6 +12815,15 @@ argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
+name|LLAP_IO_ACID_ENABLED
+argument_list|(
+literal|"hive.llap.io.acid"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether the LLAP IO layer is enabled for ACID."
+argument_list|)
+block|,
 name|LLAP_IO_TRACE_SIZE
 argument_list|(
 literal|"hive.llap.io.trace.size"
