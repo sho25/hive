@@ -224,19 +224,9 @@ operator|.
 name|getOutputTypeInfo
 argument_list|()
 decl_stmt|;
-name|Type
-name|columnVectorType
-init|=
-name|VectorizationContext
-operator|.
-name|getColumnVectorTypeFromTypeInfo
-argument_list|(
-name|typeInfo
-argument_list|)
-decl_stmt|;
 name|addKey
 argument_list|(
-name|columnVectorType
+name|typeInfo
 argument_list|)
 expr_stmt|;
 comment|// The output of the key expression is the input column.
