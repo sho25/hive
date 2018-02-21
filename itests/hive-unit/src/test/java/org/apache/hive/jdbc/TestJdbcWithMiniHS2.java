@@ -9018,7 +9018,9 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"description appears truncated"
+literal|"description appears truncated: "
+operator|+
+name|extendedDescription
 argument_list|,
 name|extendedDescription
 operator|.
@@ -9030,7 +9032,9 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"bad line delimiter"
+literal|"bad line delimiter: "
+operator|+
+name|extendedDescription
 argument_list|,
 name|extendedDescription
 operator|.
@@ -9042,13 +9046,75 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"bad field delimiter"
+literal|"bad field delimiter: "
+operator|+
+name|extendedDescription
 argument_list|,
 name|extendedDescription
 operator|.
 name|contains
 argument_list|(
 literal|"field.delim=\\t"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|view
+init|=
+literal|"testDescribeView"
+decl_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"create view "
+operator|+
+name|view
+operator|+
+literal|" as select * from "
+operator|+
+name|table
+argument_list|)
+expr_stmt|;
+name|String
+name|extendedViewDescription
+init|=
+name|getDetailedTableDescription
+argument_list|(
+name|stmt
+argument_list|,
+name|view
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+literal|"bad view text: "
+operator|+
+name|extendedViewDescription
+argument_list|,
+name|extendedViewDescription
+operator|.
+name|contains
+argument_list|(
+literal|"viewOriginalText:select * from "
+operator|+
+name|table
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"bad expanded view text: "
+operator|+
+name|extendedViewDescription
+argument_list|,
+name|extendedViewDescription
+operator|.
+name|contains
+argument_list|(
+literal|"viewExpandedText:select `testdescribe`.`orderid`, `testdescribe`.`orderdate`, "
+operator|+
+literal|"`testdescribe`.`customerid` from `testjdbcminihs2`"
 argument_list|)
 argument_list|)
 expr_stmt|;
