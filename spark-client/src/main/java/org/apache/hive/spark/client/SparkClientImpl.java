@@ -3763,7 +3763,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error reported from remote driver."
+literal|"Error reported from remote driver: {}"
 argument_list|,
 name|msg
 operator|.
