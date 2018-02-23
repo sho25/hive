@@ -18209,6 +18209,24 @@ argument_list|(
 name|posBigTable
 argument_list|)
 decl_stmt|;
+name|boolean
+name|outerJoinHasNoKeys
+init|=
+operator|(
+operator|!
+name|desc
+operator|.
+name|isNoOuterJoin
+argument_list|()
+operator|&&
+name|keyDesc
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|0
+operator|)
+decl_stmt|;
 comment|// For now, we don't support joins on or using DECIMAL_64.
 name|VectorExpression
 index|[]
@@ -19634,6 +19652,13 @@ argument_list|)
 expr_stmt|;
 name|vectorDesc
 operator|.
+name|setOuterJoinHasNoKeys
+argument_list|(
+name|outerJoinHasNoKeys
+argument_list|)
+expr_stmt|;
+name|vectorDesc
+operator|.
 name|setIsFastHashTableEnabled
 argument_list|(
 name|isFastHashTableEnabled
@@ -19696,6 +19721,8 @@ name|hasNullSafes
 operator|||
 operator|!
 name|smallTableExprVectorizes
+operator|||
+name|outerJoinHasNoKeys
 condition|)
 block|{
 name|result
