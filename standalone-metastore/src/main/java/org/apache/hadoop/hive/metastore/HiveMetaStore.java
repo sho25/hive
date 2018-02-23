@@ -44561,15 +44561,9 @@ argument_list|()
 operator|.
 name|init
 argument_list|(
-name|handler
-operator|.
-name|getMS
-argument_list|()
+name|conf
 argument_list|,
 name|handler
-operator|.
-name|getTxnHandler
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|TServerSocket
