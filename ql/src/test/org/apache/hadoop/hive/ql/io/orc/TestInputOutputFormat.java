@@ -347,7 +347,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -17767,7 +17767,7 @@ argument_list|(
 name|conf
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|10
 argument_list|)
@@ -19174,7 +19174,7 @@ argument_list|(
 name|conf
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|10
 argument_list|)
@@ -19287,7 +19287,7 @@ argument_list|(
 name|conf
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|10
 argument_list|)
@@ -27444,12 +27444,12 @@ argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|1
 argument_list|)
@@ -27504,7 +27504,7 @@ name|insert
 argument_list|(
 name|options
 operator|.
-name|getMinimumTransactionId
+name|getMinimumWriteId
 argument_list|()
 argument_list|,
 operator|new
@@ -28012,12 +28012,12 @@ argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|1
 argument_list|)
@@ -28072,7 +28072,7 @@ name|insert
 argument_list|(
 name|options
 operator|.
-name|getMinimumTransactionId
+name|getMinimumWriteId
 argument_list|()
 argument_list|,
 operator|new
@@ -30167,11 +30167,11 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|,
-literal|"100:99:"
+literal|"tbl:100:99:"
 argument_list|)
 expr_stmt|;
 name|conf
@@ -30353,7 +30353,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"trans "
+literal|"writeid "
 operator|+
 name|record
 argument_list|,
@@ -30361,7 +30361,7 @@ literal|1
 argument_list|,
 name|id
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -30613,7 +30613,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"trans "
+literal|"writeid "
 operator|+
 name|record
 argument_list|,
@@ -30621,7 +30621,7 @@ literal|1
 argument_list|,
 name|id
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;

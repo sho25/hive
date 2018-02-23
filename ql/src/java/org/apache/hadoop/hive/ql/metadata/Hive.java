@@ -7750,7 +7750,7 @@ name|currentDb
 argument_list|)
 return|;
 block|}
-comment|/**    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param inheritTableSpecs    * @param isSkewedStoreAsSubdir    * @param isSrcLocal    * @param isAcid    * @param hasFollowingStatsTask    * @return    * @throws HiveException    */
+comment|/**    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param inheritTableSpecs    * @param isSkewedStoreAsSubdir    * @param isSrcLocal    * @param isAcid    * @param hasFollowingStatsTask    * @param writeId    * @param stmtId    * @return    * @throws HiveException    */
 specifier|public
 name|void
 name|loadPartition
@@ -7788,7 +7788,7 @@ name|boolean
 name|hasFollowingStatsTask
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -7824,13 +7824,13 @@ name|isAcid
 argument_list|,
 name|hasFollowingStatsTask
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @return Partition object being loaded with data    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    * @return Partition object being loaded with data    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -7868,7 +7868,7 @@ name|boolean
 name|hasFollowingStatsTask
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -8198,7 +8198,7 @@ name|listFilesCreatedByQuery
 argument_list|(
 name|loadPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -8265,9 +8265,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -8288,7 +8288,7 @@ name|JavaUtils
 operator|.
 name|IdPathFilter
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -8317,7 +8317,7 @@ name|loadFileType
 argument_list|,
 name|destPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -9068,7 +9068,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load Data commands for fullAcid tables write to base_x (if there is overwrite clause) or    * delta_x_x directory - same as any other Acid write.  This method modifies the destPath to add    * this path component.    * @param txnId - id of current transaction (in which this operation is running)    * @param stmtId - see {@link DbTxnManager#getWriteIdAndIncrement()}    * @return appropriately modified path    */
+comment|/**    * Load Data commands for fullAcid tables write to base_x (if there is overwrite clause) or    * delta_x_x directory - same as any other Acid write.  This method modifies the destPath to add    * this path component.    * @param txnId - id of current transaction (in which this operation is running)    * @param stmtId - see {@link DbTxnManager#getStmtIdAndIncrement()}    * @return appropriately modified path    */
 specifier|private
 name|Path
 name|fixFullAcidPathForLoadData
@@ -10531,7 +10531,7 @@ return|return
 name|validPartitions
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param numDP number of dynamic partitions    * @param isAcid true if this is an ACID operation    * @param txnId txnId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param numDP number of dynamic partitions    * @param isAcid true if this is an ACID operation    * @param writeId writeId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
 specifier|public
 name|Map
 argument_list|<
@@ -10581,7 +10581,7 @@ name|isAcid
 parameter_list|,
 specifier|final
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 specifier|final
 name|int
@@ -10705,7 +10705,7 @@ name|numLB
 argument_list|,
 name|loadPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -10978,7 +10978,7 @@ name|isAcid
 argument_list|,
 name|hasFollowingStatsTask
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -11321,7 +11321,15 @@ argument_list|()
 operator|.
 name|addDynamicPartitions
 argument_list|(
-name|txnId
+name|parentSession
+operator|.
+name|getTxnMgr
+argument_list|()
+operator|.
+name|getCurrentTxnId
+argument_list|()
+argument_list|,
+name|writeId
 argument_list|,
 name|tbl
 operator|.
@@ -11388,7 +11396,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param hasFollowingStatsTask    *          if there is any following stats task    * @param isAcidIUDoperation true if this is an ACID based Insert [overwrite]/update/delete    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param hasFollowingStatsTask    *          if there is any following stats task    * @param isAcidIUDoperation true if this is an ACID based Insert [overwrite]/update/delete    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    */
 specifier|public
 name|void
 name|loadTable
@@ -11415,7 +11423,7 @@ name|boolean
 name|hasFollowingStatsTask
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -11555,7 +11563,7 @@ name|listFilesCreatedByQuery
 argument_list|(
 name|loadPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -11605,9 +11613,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -11626,7 +11634,7 @@ name|JavaUtils
 operator|.
 name|IdPathFilter
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -11655,7 +11663,7 @@ name|loadFileType
 argument_list|,
 name|destPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,

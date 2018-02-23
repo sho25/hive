@@ -532,11 +532,11 @@ decl_stmt|;
 comment|// Pre-allocated in constructor. Updated on each write.
 specifier|private
 name|Long
-name|curBatchMinTxnId
+name|curBatchMinWriteId
 decl_stmt|;
 specifier|private
 name|Long
-name|curBatchMaxTxnId
+name|curBatchMaxWriteId
 decl_stmt|;
 specifier|private
 specifier|static
@@ -966,13 +966,13 @@ block|{
 return|return
 name|partitionPath
 operator|+
-literal|" txnIds["
+literal|" writeIds["
 operator|+
-name|curBatchMinTxnId
+name|curBatchMinWriteId
 operator|+
 literal|","
 operator|+
-name|curBatchMaxTxnId
+name|curBatchMaxWriteId
 operator|+
 literal|"]"
 return|;
@@ -1232,7 +1232,7 @@ parameter_list|()
 throws|throws
 name|StreamingIOFailure
 block|{   }
-comment|/**    * Creates a new record updater for the new batch    * @param minTxnId smallest Txnid in the batch    * @param maxTxnID largest Txnid in the batch    * @throws StreamingIOFailure if failed to create record updater    */
+comment|/**    * Creates a new record updater for the new batch    * @param minWriteId smallest writeid in the batch    * @param maxWriteID largest writeid in the batch    * @throws StreamingIOFailure if failed to create record updater    */
 annotation|@
 name|Override
 specifier|public
@@ -1240,23 +1240,23 @@ name|void
 name|newBatch
 parameter_list|(
 name|Long
-name|minTxnId
+name|minWriteId
 parameter_list|,
 name|Long
-name|maxTxnID
+name|maxWriteID
 parameter_list|)
 throws|throws
 name|StreamingIOFailure
 throws|,
 name|SerializationError
 block|{
-name|curBatchMinTxnId
+name|curBatchMinWriteId
 operator|=
-name|minTxnId
+name|minWriteId
 expr_stmt|;
-name|curBatchMaxTxnId
+name|curBatchMaxWriteId
 operator|=
-name|maxTxnID
+name|maxWriteID
 expr_stmt|;
 name|updaters
 operator|=
@@ -1543,10 +1543,10 @@ name|int
 name|bucketId
 parameter_list|,
 name|Long
-name|minTxnId
+name|minWriteId
 parameter_list|,
 name|Long
-name|maxTxnID
+name|maxWriteID
 parameter_list|)
 throws|throws
 name|IOException
@@ -1609,14 +1609,14 @@ argument_list|(
 name|tblProperties
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
-name|minTxnId
+name|minWriteId
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
-name|maxTxnID
+name|maxWriteID
 argument_list|)
 operator|.
 name|statementId
@@ -1694,9 +1694,9 @@ name|createRecordUpdater
 argument_list|(
 name|bucketId
 argument_list|,
-name|curBatchMinTxnId
+name|curBatchMinWriteId
 argument_list|,
-name|curBatchMaxTxnId
+name|curBatchMaxWriteId
 argument_list|)
 expr_stmt|;
 block|}

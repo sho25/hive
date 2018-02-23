@@ -476,7 +476,7 @@ index|]
 operator|=
 name|ri
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 expr_stmt|;
 name|struct
@@ -546,7 +546,7 @@ specifier|public
 name|RecordIdentifier
 parameter_list|(
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|int
 name|bucket
@@ -559,7 +559,7 @@ name|this
 operator|.
 name|transactionId
 operator|=
-name|transactionId
+name|writeId
 expr_stmt|;
 name|this
 operator|.
@@ -577,7 +577,7 @@ block|}
 end_constructor
 
 begin_comment
-comment|/**    * Set the identifier.    * @param transactionId the transaction id    * @param bucketId the bucket id    * @param rowId the row id    */
+comment|/**    * Set the identifier.    * @param writeId the write id    * @param bucketId the bucket id    * @param rowId the row id    */
 end_comment
 
 begin_function
@@ -586,7 +586,7 @@ name|void
 name|setValues
 parameter_list|(
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|int
 name|bucketId
@@ -599,7 +599,7 @@ name|this
 operator|.
 name|transactionId
 operator|=
-name|transactionId
+name|writeId
 expr_stmt|;
 name|this
 operator|.
@@ -675,13 +675,13 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * What was the original transaction id for the last row?    * @return the transaction id    */
+comment|/**    * What was the original write id for the last row?    * @return the write id    */
 end_comment
 
 begin_function
 specifier|public
 name|long
-name|getTransactionId
+name|getWriteId
 parameter_list|()
 block|{
 return|return
@@ -1116,7 +1116,7 @@ operator|+
 literal|")"
 decl_stmt|;
 return|return
-literal|"{originalTxn: "
+literal|"{originalWriteId: "
 operator|+
 name|transactionId
 operator|+

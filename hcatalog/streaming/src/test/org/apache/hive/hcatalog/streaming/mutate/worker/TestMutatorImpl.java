@@ -361,7 +361,7 @@ specifier|private
 specifier|static
 specifier|final
 name|long
-name|TRANSACTION_ID
+name|WRITE_ID
 init|=
 literal|1L
 decl_stmt|;
@@ -459,7 +459,7 @@ name|mockObjectInspector
 argument_list|,
 name|mockOutputFormat
 argument_list|,
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|,
 name|PATH
 argument_list|,
@@ -561,12 +561,12 @@ name|assertThat
 argument_list|(
 name|options
 operator|.
-name|getMinimumTransactionId
+name|getMinimumWriteId
 argument_list|()
 argument_list|,
 name|is
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -574,12 +574,12 @@ name|assertThat
 argument_list|(
 name|options
 operator|.
-name|getMaximumTransactionId
+name|getMaximumWriteId
 argument_list|()
 argument_list|,
 name|is
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -607,7 +607,7 @@ argument_list|)
 operator|.
 name|insert
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|,
 name|RECORD
 argument_list|)
@@ -636,7 +636,7 @@ argument_list|)
 operator|.
 name|update
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|,
 name|RECORD
 argument_list|)
@@ -665,7 +665,7 @@ argument_list|)
 operator|.
 name|delete
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|,
 name|RECORD
 argument_list|)

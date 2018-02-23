@@ -2653,7 +2653,7 @@ argument_list|()
 argument_list|,
 name|tbd
 operator|.
-name|getTxnId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|tbd
@@ -3362,7 +3362,7 @@ argument_list|()
 argument_list|,
 name|tbd
 operator|.
-name|getTxnId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|tbd
@@ -3661,7 +3661,7 @@ operator|.
 name|getLoadTableWork
 argument_list|()
 operator|.
-name|getTxnId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|tbd

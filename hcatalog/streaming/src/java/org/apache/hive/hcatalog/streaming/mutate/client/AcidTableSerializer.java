@@ -302,7 +302,7 @@ if|if
 condition|(
 name|table
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 operator|<=
 literal|0
@@ -312,7 +312,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Transaction ID<= 0. The recipient is probably expecting a transaction ID."
+literal|"Write ID<= 0. The recipient is probably expecting a table write ID."
 argument_list|)
 expr_stmt|;
 block|}
@@ -322,7 +322,7 @@ name|writeLong
 argument_list|(
 name|table
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -557,7 +557,7 @@ name|readBoolean
 argument_list|()
 decl_stmt|;
 name|long
-name|transactionId
+name|writeId
 init|=
 name|in
 operator|.
@@ -601,9 +601,9 @@ argument_list|)
 expr_stmt|;
 name|table
 operator|.
-name|setTransactionId
+name|setWriteId
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 expr_stmt|;
 name|Table

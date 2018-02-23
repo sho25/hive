@@ -271,7 +271,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMinTxnId
+name|getMinWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -284,7 +284,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMaxTxnId
+name|getMaxWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -384,7 +384,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMinTxnId
+name|getMinWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -397,7 +397,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMaxTxnId
+name|getMaxWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -496,7 +496,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMinTxnId
+name|getMinWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -509,7 +509,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMaxTxnId
+name|getMaxWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -701,7 +701,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMinTxnId
+name|getMinWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -714,7 +714,7 @@ name|assertThat
 argument_list|(
 name|deltaMetaData
 operator|.
-name|getMaxTxnId
+name|getMaxWriteId
 argument_list|()
 argument_list|,
 name|is

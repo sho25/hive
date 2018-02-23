@@ -202,6 +202,8 @@ block|,
 name|WriteSetCleaner
 block|,
 name|CompactionScheduler
+block|,
+name|WriteIdAllocator
 block|}
 comment|// Compactor states (Should really be enum)
 name|String
@@ -359,6 +361,36 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Gets the list of valid write ids for the given table wrt to current txn    * @param rqst info on transaction and list of table names associated with given transaction    * @throws NoSuchTxnException    * @throws MetaException    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
+name|GetValidWriteIdsResponse
+name|getValidWriteIds
+parameter_list|(
+name|GetValidWriteIdsRequest
+name|rqst
+parameter_list|)
+throws|throws
+name|NoSuchTxnException
+throws|,
+name|MetaException
+function_decl|;
+comment|/**    * Allocate a write ID for the given table and associate it with a transaction    * @param rqst info on transaction and table to allocate write id    * @throws NoSuchTxnException    * @throws TxnAbortedException    * @throws MetaException    */
+name|AllocateTableWriteIdsResponse
+name|allocateTableWriteIds
+parameter_list|(
+name|AllocateTableWriteIdsRequest
+name|rqst
+parameter_list|)
+throws|throws
+name|NoSuchTxnException
+throws|,
+name|TxnAbortedException
+throws|,
+name|MetaException
+function_decl|;
 comment|/**    * Obtain a lock.    * @param rqst information on the lock to obtain.  If the requester is part of a transaction    *             the txn information must be included in the lock request.    * @return info on the lock, including whether it was obtained.    * @throws NoSuchTxnException    * @throws TxnAbortedException    * @throws MetaException    */
 annotation|@
 name|RetrySemantics
@@ -477,7 +509,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Show list of current compactions    * @param rqst info on which compactions to show    * @return compaction information    * @throws MetaException    */
+comment|/**    * Show list of current compactions.    * @param rqst info on which compactions to show    * @return compaction information    * @throws MetaException    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -509,7 +541,7 @@ name|TxnAbortedException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Clean up corresponding records in metastore tables    * @param type Hive object type    * @param db database object    * @param table table object    * @param partitionIterator partition iterator    * @throws MetaException    */
+comment|/**    * Clean up corresponding records in metastore tables.    * @param type Hive object type    * @param db database object    * @param table table object    * @param partitionIterator partition iterator    * @throws MetaException    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -704,19 +736,19 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Record the highest txn id that the {@code ci} compaction job will pay attention to.    */
+comment|/**    * Record the highest write id that the {@code ci} compaction job will pay attention to.    */
 annotation|@
 name|RetrySemantics
 operator|.
 name|Idempotent
 name|void
-name|setCompactionHighestTxnId
+name|setCompactionHighestWriteId
 parameter_list|(
 name|CompactionInfo
 name|ci
 parameter_list|,
 name|long
-name|highestTxnId
+name|highestWriteId
 parameter_list|)
 throws|throws
 name|MetaException

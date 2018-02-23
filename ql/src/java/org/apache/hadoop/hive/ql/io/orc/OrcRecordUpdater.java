@@ -496,7 +496,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A RecordUpdater where the files are stored as ORC.  * A note on various record structures: the {@code row} coming in (as in {@link #insert(long, Object)}  * for example), is a struct like<RecordIdentifier, f1, ... fn> but what is written to the file  * * is<op, otid, writerId, rowid, ctid,<f1, ... fn>> (see {@link #createEventSchema(ObjectInspector)})  * So there are OIs here to make the translation.  */
+comment|/**  * A RecordUpdater where the files are stored as ORC.  * A note on various record structures: the {@code row} coming in (as in {@link #insert(long, Object)}  * for example), is a struct like<RecordIdentifier, f1, ... fn> but what is written to the file  * * is<op, owid, writerId, rowid, cwid,<f1, ... fn>> (see {@link #createEventSchema(ObjectInspector)})  * So there are OIs here to make the translation.  */
 end_comment
 
 begin_class
@@ -576,7 +576,7 @@ decl_stmt|;
 specifier|final
 specifier|static
 name|int
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 init|=
 literal|1
 decl_stmt|;
@@ -597,7 +597,7 @@ decl_stmt|;
 specifier|final
 specifier|static
 name|int
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 init|=
 literal|4
 decl_stmt|;
@@ -729,7 +729,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|LongWritable
-name|currentTransaction
+name|currentWriteId
 init|=
 operator|new
 name|LongWritable
@@ -741,7 +741,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|LongWritable
-name|originalTransaction
+name|originalWriteId
 init|=
 operator|new
 name|LongWritable
@@ -813,11 +813,11 @@ decl_stmt|;
 comment|// field inside recId to look for row id in
 specifier|private
 name|StructField
-name|originalTxnField
+name|originalWriteIdField
 init|=
 literal|null
 decl_stmt|;
-comment|// field inside recId to look for original txn in
+comment|// field inside recId to look for original write id in
 specifier|private
 name|StructField
 name|bucketField
@@ -842,9 +842,9 @@ decl_stmt|;
 comment|// OI for the long row id inside the recordIdentifier
 specifier|private
 name|LongObjectInspector
-name|origTxnInspector
+name|origWriteIdInspector
 decl_stmt|;
-comment|// OI for the original txn inside the record
+comment|// OI for the original write id inside the record
 comment|// identifer
 specifier|private
 name|IntObjectInspector
@@ -892,7 +892,7 @@ name|struct
 operator|.
 name|getFieldValue
 argument_list|(
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|)
 operator|)
 operator|.
@@ -917,7 +917,7 @@ name|struct
 operator|.
 name|getFieldValue
 argument_list|(
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|)
 operator|)
 operator|.
@@ -1124,7 +1124,7 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|writableLongObjectInspector
 argument_list|,
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1181,7 +1181,7 @@ name|PrimitiveObjectInspectorFactory
 operator|.
 name|writableLongObjectInspector
 argument_list|,
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1536,12 +1536,12 @@ if|if
 condition|(
 name|options
 operator|.
-name|getMinimumTransactionId
+name|getMinimumWriteId
 argument_list|()
 operator|!=
 name|options
 operator|.
-name|getMaximumTransactionId
+name|getMaximumWriteId
 argument_list|()
 operator|&&
 operator|!
@@ -1934,18 +1934,18 @@ name|item
 operator|.
 name|setFieldValue
 argument_list|(
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|)
 expr_stmt|;
 name|item
 operator|.
 name|setFieldValue
 argument_list|(
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|,
-name|originalTransaction
+name|originalWriteId
 argument_list|)
 expr_stmt|;
 name|item
@@ -2080,8 +2080,8 @@ name|getAllStructFieldRefs
 argument_list|()
 decl_stmt|;
 comment|// Go by position, not field name, as field names aren't guaranteed.  The order of fields
-comment|// in RecordIdentifier is transactionId, bucketId, rowId
-name|originalTxnField
+comment|// in RecordIdentifier is writeId, bucketId, rowId
+name|originalWriteIdField
 operator|=
 name|fields
 operator|.
@@ -2090,12 +2090,12 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
-name|origTxnInspector
+name|origWriteIdInspector
 operator|=
 operator|(
 name|LongObjectInspector
 operator|)
-name|originalTxnField
+name|originalWriteIdField
 operator|.
 name|getFieldObjectInspector
 argument_list|()
@@ -2162,7 +2162,7 @@ name|int
 name|operation
 parameter_list|,
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|long
 name|rowId
@@ -2184,11 +2184,11 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|currentTransaction
+name|currentWriteId
 operator|.
 name|set
 argument_list|(
-name|currentTransaction
+name|currentWriteId
 argument_list|)
 expr_stmt|;
 name|Integer
@@ -2196,12 +2196,12 @@ name|currentBucket
 init|=
 literal|null
 decl_stmt|;
-comment|// If this is an insert, originalTransaction should be set to this transaction.  If not,
+comment|// If this is an insert, originalWriteId should be set to this transaction.  If not,
 comment|// it will be reset by the following if anyway.
 name|long
-name|originalTransaction
+name|originalWriteId
 init|=
-name|currentTransaction
+name|currentWriteId
 decl_stmt|;
 if|if
 condition|(
@@ -2226,9 +2226,9 @@ argument_list|,
 name|recIdField
 argument_list|)
 decl_stmt|;
-name|originalTransaction
+name|originalWriteId
 operator|=
-name|origTxnInspector
+name|origWriteIdInspector
 operator|.
 name|get
 argument_list|(
@@ -2238,7 +2238,7 @@ name|getStructFieldData
 argument_list|(
 name|rowIdValue
 argument_list|,
-name|originalTxnField
+name|originalWriteIdField
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2291,11 +2291,11 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|originalTransaction
+name|originalWriteId
 operator|.
 name|set
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 argument_list|)
 expr_stmt|;
 name|item
@@ -2338,7 +2338,7 @@ name|addKey
 argument_list|(
 name|operation
 argument_list|,
-name|originalTransaction
+name|originalWriteId
 argument_list|,
 name|bucket
 operator|.
@@ -2390,7 +2390,7 @@ name|int
 name|operation
 parameter_list|,
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|long
 name|rowId
@@ -2413,7 +2413,7 @@ name|addSimpleEvent
 argument_list|(
 name|operation
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 name|rowId
 argument_list|,
@@ -2433,11 +2433,11 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|currentTransaction
+name|currentWriteId
 operator|.
 name|set
 argument_list|(
-name|currentTransaction
+name|currentWriteId
 argument_list|)
 expr_stmt|;
 name|Object
@@ -2453,9 +2453,9 @@ name|recIdField
 argument_list|)
 decl_stmt|;
 name|long
-name|originalTransaction
+name|originalWriteId
 init|=
-name|origTxnInspector
+name|origWriteIdInspector
 operator|.
 name|get
 argument_list|(
@@ -2465,7 +2465,7 @@ name|getStructFieldData
 argument_list|(
 name|rowValue
 argument_list|,
-name|originalTxnField
+name|originalWriteIdField
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2571,11 +2571,11 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|originalTransaction
+name|originalWriteId
 operator|.
 name|set
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 argument_list|)
 expr_stmt|;
 name|item
@@ -2611,7 +2611,7 @@ name|addKey
 argument_list|(
 name|DELETE_OPERATION
 argument_list|,
-name|originalTransaction
+name|originalWriteId
 argument_list|,
 name|bucket
 operator|.
@@ -2648,7 +2648,7 @@ name|addSimpleEvent
 argument_list|(
 name|INSERT_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 name|insertedRows
 operator|++
@@ -2665,7 +2665,7 @@ name|void
 name|insert
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -2677,12 +2677,12 @@ if|if
 condition|(
 name|this
 operator|.
-name|currentTransaction
+name|currentWriteId
 operator|.
 name|get
 argument_list|()
 operator|!=
-name|currentTransaction
+name|currentWriteId
 condition|)
 block|{
 name|insertedRows
@@ -2702,7 +2702,7 @@ name|addSplitUpdateEvent
 argument_list|(
 name|INSERT_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 name|insertedRows
 operator|++
@@ -2717,7 +2717,7 @@ name|addSimpleEvent
 argument_list|(
 name|INSERT_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 name|insertedRows
 operator|++
@@ -2737,7 +2737,7 @@ name|void
 name|update
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -2749,12 +2749,12 @@ if|if
 condition|(
 name|this
 operator|.
-name|currentTransaction
+name|currentWriteId
 operator|.
 name|get
 argument_list|()
 operator|!=
-name|currentTransaction
+name|currentWriteId
 condition|)
 block|{
 name|insertedRows
@@ -2774,7 +2774,7 @@ name|addSplitUpdateEvent
 argument_list|(
 name|UPDATE_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 operator|-
 literal|1L
@@ -2789,7 +2789,7 @@ name|addSimpleEvent
 argument_list|(
 name|UPDATE_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 operator|-
 literal|1L
@@ -2806,7 +2806,7 @@ name|void
 name|delete
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -2818,12 +2818,12 @@ if|if
 condition|(
 name|this
 operator|.
-name|currentTransaction
+name|currentWriteId
 operator|.
 name|get
 argument_list|()
 operator|!=
-name|currentTransaction
+name|currentWriteId
 condition|)
 block|{
 name|insertedRows
@@ -2843,7 +2843,7 @@ name|addSplitUpdateEvent
 argument_list|(
 name|DELETE_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 operator|-
 literal|1L
@@ -2858,7 +2858,7 @@ name|addSimpleEvent
 argument_list|(
 name|DELETE_OPERATION
 argument_list|,
-name|currentTransaction
+name|currentWriteId
 argument_list|,
 operator|-
 literal|1L

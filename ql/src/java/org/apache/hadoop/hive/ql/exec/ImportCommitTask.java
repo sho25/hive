@@ -145,7 +145,7 @@ literal|"Executing ImportCommit for "
 operator|+
 name|work
 operator|.
-name|getTxnId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -72,12 +72,12 @@ specifier|public
 interface|interface
 name|RecordUpdater
 block|{
-comment|/**    * Insert a new record into the table.    * @param currentTransaction the transaction id of the current transaction.    * @param row the row of data to insert    * @throws IOException    */
+comment|/**    * Insert a new record into the table.    * @param currentWriteId the table write id of the current transaction.    * @param row the row of data to insert    * @throws IOException    */
 name|void
 name|insert
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -85,12 +85,12 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Update an old record with a new set of values.    * @param currentTransaction the current transaction id    * @param row the new values for the row    * @throws IOException    */
+comment|/**    * Update an old record with a new set of values.    * @param currentWriteId the current write id    * @param row the new values for the row    * @throws IOException    */
 name|void
 name|update
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -98,12 +98,12 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**    * Delete a row from the table.    * @param currentTransaction the current transaction id    * @throws IOException    */
+comment|/**    * Delete a row from the table.    * @param currentWriteId the current write id    * @throws IOException    */
 name|void
 name|delete
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row

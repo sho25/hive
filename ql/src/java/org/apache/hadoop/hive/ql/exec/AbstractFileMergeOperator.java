@@ -1194,7 +1194,7 @@ name|taskId
 argument_list|,
 name|conf
 operator|.
-name|getTxnId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|conf
@@ -1509,7 +1509,7 @@ name|mmWriteId
 init|=
 name|conf
 operator|.
-name|getTxnId
+name|getWriteId
 argument_list|()
 decl_stmt|;
 name|int

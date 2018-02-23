@@ -203,9 +203,9 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|highWatermark
-operator|<
 name|txnid
+operator|>
+name|highWatermark
 condition|)
 block|{
 return|return
@@ -225,27 +225,6 @@ operator|<
 literal|0
 return|;
 block|}
-comment|/**    * We cannot use a base file if its range contains an open txn.    * @param txnid from base_xxxx    */
-annotation|@
-name|Override
-specifier|public
-name|boolean
-name|isValidBase
-parameter_list|(
-name|long
-name|txnid
-parameter_list|)
-block|{
-return|return
-name|minOpenTxn
-operator|>
-name|txnid
-operator|&&
-name|txnid
-operator|<=
-name|highWatermark
-return|;
-block|}
 annotation|@
 name|Override
 specifier|public
@@ -262,9 +241,9 @@ block|{
 comment|// check the easy cases first
 if|if
 condition|(
-name|highWatermark
-operator|<
 name|minTxnId
+operator|>
+name|highWatermark
 condition|)
 block|{
 return|return

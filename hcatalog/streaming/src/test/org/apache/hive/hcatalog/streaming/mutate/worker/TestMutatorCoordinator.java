@@ -378,7 +378,7 @@ specifier|private
 specifier|static
 specifier|final
 name|long
-name|TRANSACTION_ID
+name|WRITE_ID
 init|=
 literal|2L
 decl_stmt|;
@@ -594,13 +594,13 @@ name|when
 argument_list|(
 name|mockAcidTable
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 expr_stmt|;
 name|when
@@ -821,7 +821,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -908,7 +908,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1031,7 +1031,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1061,7 +1061,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1168,7 +1168,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1198,7 +1198,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1382,7 +1382,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1417,7 +1417,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1447,7 +1447,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1685,7 +1685,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq
@@ -1803,7 +1803,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|TRANSACTION_ID
+name|WRITE_ID
 argument_list|)
 argument_list|,
 name|eq

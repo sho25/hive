@@ -1467,7 +1467,7 @@ name|void
 name|insert
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -1483,9 +1483,9 @@ literal|"insert "
 operator|+
 name|path
 operator|+
-literal|" currTxn: "
+literal|" currWriteId: "
 operator|+
-name|currentTransaction
+name|currentWriteId
 operator|+
 literal|" obj: "
 operator|+
@@ -1505,7 +1505,7 @@ name|void
 name|update
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -1521,9 +1521,9 @@ literal|"update "
 operator|+
 name|path
 operator|+
-literal|" currTxn: "
+literal|" currWriteId: "
 operator|+
-name|currentTransaction
+name|currentWriteId
 operator|+
 literal|" obj: "
 operator|+
@@ -1543,7 +1543,7 @@ name|void
 name|delete
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -1559,9 +1559,9 @@ literal|"delete "
 operator|+
 name|path
 operator|+
-literal|" currTxn: "
+literal|" currWriteId: "
 operator|+
-name|currentTransaction
+name|currentWriteId
 operator|+
 literal|" obj: "
 operator|+
@@ -2086,7 +2086,7 @@ name|getFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|)
 operator|)
 operator|.

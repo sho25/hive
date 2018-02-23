@@ -22,13 +22,12 @@ specifier|public
 interface|interface
 name|RecordWriter
 block|{
-comment|/** Writes using a hive RecordUpdater    *    * @param transactionId the ID of the Txn in which the write occurs    * @param record the record to be written    */
-specifier|public
+comment|/** Writes using a hive RecordUpdater    *    * @param writeId the write ID of the table mapping to Txn in which the write occurs    * @param record the record to be written    */
 name|void
 name|write
 parameter_list|(
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|byte
 index|[]
@@ -38,7 +37,6 @@ throws|throws
 name|StreamingException
 function_decl|;
 comment|/** Flush records from buffer. Invoked by TransactionBatch.commit() */
-specifier|public
 name|void
 name|flush
 parameter_list|()
@@ -46,7 +44,6 @@ throws|throws
 name|StreamingException
 function_decl|;
 comment|/** Clear bufferred writes. Invoked by TransactionBatch.abort() */
-specifier|public
 name|void
 name|clear
 parameter_list|()
@@ -54,21 +51,19 @@ throws|throws
 name|StreamingException
 function_decl|;
 comment|/** Acquire a new RecordUpdater. Invoked when    * StreamingConnection.fetchTransactionBatch() is called */
-specifier|public
 name|void
 name|newBatch
 parameter_list|(
 name|Long
-name|minTxnId
+name|minWriteId
 parameter_list|,
 name|Long
-name|maxTxnID
+name|maxWriteID
 parameter_list|)
 throws|throws
 name|StreamingException
 function_decl|;
 comment|/** Close the RecordUpdater. Invoked by TransactionBatch.close() */
-specifier|public
 name|void
 name|closeBatch
 parameter_list|()

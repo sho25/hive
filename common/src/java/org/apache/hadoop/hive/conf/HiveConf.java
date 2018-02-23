@@ -5368,7 +5368,7 @@ name|HIVESCRIPT_ENV_BLACKLIST
 argument_list|(
 literal|"hive.script.operator.env.blacklist"
 argument_list|,
-literal|"hive.txn.valid.txns,hive.script.operator.env.blacklist"
+literal|"hive.txn.valid.txns,hive.txn.tables.valid.writeids,hive.txn.valid.writeids,hive.script.operator.env.blacklist"
 argument_list|,
 literal|"Comma separated list of keys from the configuration file not to convert to environment "
 operator|+

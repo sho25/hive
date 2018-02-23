@@ -45,6 +45,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ValidTxnWriteIdList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|Context
@@ -301,10 +317,26 @@ parameter_list|()
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * Get the transactions that are currently valid.  The resulting    * {@link ValidTxnList} object is a thrift object and can    * be  passed to  the processing    * tasks for use in the reading the data.  This call should be made once up    * front by the planner and should never be called on the backend,    * as this will violate the isolation level semantics.    * @return list of valid transactions.    * @throws LockException    */
+comment|/**    * Get the transactions that are currently valid.  The resulting    * {@link ValidTxnList} object can be passed as string to the processing    * tasks for use in the reading the data.  This call should be made once up    * front by the planner and should never be called on the backend,    * as this will violate the isolation level semantics.    * @return list of valid transactions.    * @throws LockException    */
 name|ValidTxnList
 name|getValidTxns
 parameter_list|()
+throws|throws
+name|LockException
+function_decl|;
+comment|/**    * Get the table write Ids that are valid for the current transaction.  The resulting    * {@link ValidTxnWriteIdList} object can be passed as string to the processing    * tasks for use in the reading the data.  This call will return same results as long as validTxnString    * passed is same.    * @param tableList list of tables (<db_name>.<table_name>) read/written by current transaction.    * @param validTxnList snapshot of valid txns for the current txn    * @return list of valid table write Ids.    * @throws LockException    */
+name|ValidTxnWriteIdList
+name|getValidWriteIds
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|tableList
+parameter_list|,
+name|String
+name|validTxnList
+parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
@@ -380,7 +412,7 @@ name|boolean
 name|useNewShowLocksFormat
 parameter_list|()
 function_decl|;
-comment|/**    * Indicate whether this transaction manager supports ACID operations    * @return true if this transaction manager does ACID    */
+comment|/**    * Indicate whether this transaction manager supports ACID operations.    * @return true if this transaction manager does ACID    */
 name|boolean
 name|supportsAcid
 parameter_list|()
@@ -401,14 +433,27 @@ name|boolean
 name|isTxnOpen
 parameter_list|()
 function_decl|;
-comment|/**    * if {@code isTxnOpen()}, returns the currently active transaction ID    */
+comment|/**    * if {@code isTxnOpen()}, returns the currently active transaction ID.    */
 name|long
 name|getCurrentTxnId
 parameter_list|()
 function_decl|;
+comment|/**    * if {@code isTxnOpen()}, returns the table write ID associated with current active transaction.    */
+name|long
+name|getTableWriteId
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
 comment|/**    * Should be though of more as a unique write operation ID in a given txn (at QueryPlan level).    * Each statement writing data within a multi statement txn should have a unique WriteId.    * Even a single statement, (e.g. Merge, multi-insert may generates several writes).    */
 name|int
-name|getWriteIdAndIncrement
+name|getStmtIdAndIncrement
 parameter_list|()
 function_decl|;
 block|}

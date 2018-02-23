@@ -84,7 +84,7 @@ argument_list|)
 decl_stmt|;
 specifier|private
 name|Long
-name|lastTxId
+name|lastWriteId
 decl_stmt|;
 specifier|private
 name|Long
@@ -102,25 +102,25 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|lastTxId
+name|lastWriteId
 operator|!=
 literal|null
 operator|&&
 name|recordIdentifier
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 operator|<
-name|lastTxId
+name|lastWriteId
 condition|)
 block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Non-sequential transaction ID. Expected>{}, recordIdentifier={}"
+literal|"Non-sequential write ID. Expected>{}, recordIdentifier={}"
 argument_list|,
-name|lastTxId
+name|lastWriteId
 argument_list|,
 name|recordIdentifier
 argument_list|)
@@ -132,16 +132,16 @@ block|}
 elseif|else
 if|if
 condition|(
-name|lastTxId
+name|lastWriteId
 operator|!=
 literal|null
 operator|&&
 name|recordIdentifier
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 operator|==
-name|lastTxId
+name|lastWriteId
 operator|&&
 name|lastRowId
 operator|!=
@@ -170,11 +170,11 @@ return|return
 literal|false
 return|;
 block|}
-name|lastTxId
+name|lastWriteId
 operator|=
 name|recordIdentifier
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 expr_stmt|;
 name|lastRowId
@@ -193,7 +193,7 @@ name|void
 name|reset
 parameter_list|()
 block|{
-name|lastTxId
+name|lastWriteId
 operator|=
 literal|null
 expr_stmt|;
@@ -217,9 +217,9 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"SequenceValidator [lastTxId="
+literal|"SequenceValidator [lastWriteId="
 operator|+
-name|lastTxId
+name|lastWriteId
 operator|+
 literal|", lastRowId="
 operator|+

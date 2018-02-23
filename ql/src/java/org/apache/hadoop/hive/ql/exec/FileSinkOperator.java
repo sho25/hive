@@ -1562,7 +1562,7 @@ name|isMmTable
 decl_stmt|;
 specifier|private
 name|Long
-name|txnId
+name|writeId
 decl_stmt|;
 specifier|private
 name|int
@@ -1623,11 +1623,11 @@ operator|=
 literal|null
 expr_stmt|;
 comment|// Should not be used.
-name|txnId
+name|writeId
 operator|=
 name|conf
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 expr_stmt|;
 name|stmtId
@@ -2628,9 +2628,9 @@ operator|.
 name|getInsertOverwrite
 argument_list|()
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -5921,7 +5921,7 @@ name|insert
 argument_list|(
 name|conf
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 argument_list|,
 name|row
@@ -6226,7 +6226,7 @@ name|update
 argument_list|(
 name|conf
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 argument_list|,
 name|row
@@ -6259,7 +6259,7 @@ name|delete
 argument_list|(
 name|conf
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 argument_list|,
 name|row
@@ -7915,7 +7915,7 @@ name|taskId
 argument_list|,
 name|conf
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 argument_list|,
 name|conf
@@ -8270,7 +8270,7 @@ name|mbc
 argument_list|,
 name|conf
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 argument_list|,
 name|conf

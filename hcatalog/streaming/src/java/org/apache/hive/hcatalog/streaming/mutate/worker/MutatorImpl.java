@@ -183,7 +183,7 @@ block|{
 specifier|private
 specifier|final
 name|long
-name|transactionId
+name|writeId
 decl_stmt|;
 specifier|private
 specifier|final
@@ -236,7 +236,7 @@ argument_list|>
 name|outputFormat
 parameter_list|,
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|Path
 name|partitionPath
@@ -267,9 +267,9 @@ name|objectInspector
 expr_stmt|;
 name|this
 operator|.
-name|transactionId
+name|writeId
 operator|=
-name|transactionId
+name|writeId
 expr_stmt|;
 name|this
 operator|.
@@ -307,7 +307,7 @@ name|updater
 operator|.
 name|insert
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|record
 argument_list|)
@@ -329,7 +329,7 @@ name|updater
 operator|.
 name|update
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|record
 argument_list|)
@@ -351,7 +351,7 @@ name|updater
 operator|.
 name|delete
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|record
 argument_list|)
@@ -398,9 +398,9 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"ObjectInspectorMutator [transactionId="
+literal|"ObjectInspectorMutator [writeId="
 operator|+
-name|transactionId
+name|writeId
 operator|+
 literal|", partitionPath="
 operator|+
@@ -468,14 +468,14 @@ argument_list|(
 name|bucketId
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 operator|.
 name|recordIdColumn

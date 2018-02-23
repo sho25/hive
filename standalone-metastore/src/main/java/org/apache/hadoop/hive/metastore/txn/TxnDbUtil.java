@@ -361,7 +361,9 @@ literal|"  TC_TABLE varchar(128),"
 operator|+
 literal|"  TC_PARTITION varchar(767),"
 operator|+
-literal|"  TC_OPERATION_TYPE char(1) NOT NULL)"
+literal|"  TC_OPERATION_TYPE char(1) NOT NULL,"
+operator|+
+literal|"  TC_WRITEID bigint)"
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -380,7 +382,9 @@ literal|"  CTC_PARTITION varchar(767),"
 operator|+
 literal|"  CTC_ID bigint GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) NOT NULL,"
 operator|+
-literal|"  CTC_TIMESTAMP timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL)"
+literal|"  CTC_TIMESTAMP timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,"
+operator|+
+literal|"  CTC_WRITEID bigint)"
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -397,6 +401,34 @@ operator|.
 name|execute
 argument_list|(
 literal|"INSERT INTO NEXT_TXN_ID VALUES(1)"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE TXN_TO_WRITE_ID ("
+operator|+
+literal|" T2W_TXNID bigint NOT NULL,"
+operator|+
+literal|" T2W_DATABASE varchar(128) NOT NULL,"
+operator|+
+literal|" T2W_TABLE varchar(256) NOT NULL,"
+operator|+
+literal|" T2W_WRITEID bigint NOT NULL)"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE NEXT_WRITE_ID ("
+operator|+
+literal|" NWI_DATABASE varchar(128) NOT NULL,"
+operator|+
+literal|" NWI_TABLE varchar(256) NOT NULL,"
+operator|+
+literal|" NWI_NEXT bigint NOT NULL)"
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -489,7 +521,7 @@ literal|" CQ_START bigint,"
 operator|+
 literal|" CQ_RUN_AS varchar(128),"
 operator|+
-literal|" CQ_HIGHEST_TXN_ID bigint,"
+literal|" CQ_HIGHEST_WRITE_ID bigint,"
 operator|+
 literal|" CQ_META_INFO varchar(2048) for bit data,"
 operator|+
@@ -538,7 +570,7 @@ literal|" CC_END bigint,"
 operator|+
 literal|" CC_RUN_AS varchar(128),"
 operator|+
-literal|" CC_HIGHEST_TXN_ID bigint,"
+literal|" CC_HIGHEST_WRITE_ID bigint,"
 operator|+
 literal|" CC_META_INFO varchar(2048) for bit data,"
 operator|+
@@ -865,6 +897,28 @@ argument_list|(
 name|stmt
 argument_list|,
 literal|"NEXT_TXN_ID"
+argument_list|,
+name|retryCount
+argument_list|)
+expr_stmt|;
+name|success
+operator|&=
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"TXN_TO_WRITE_ID"
+argument_list|,
+name|retryCount
+argument_list|)
+expr_stmt|;
+name|success
+operator|&=
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"NEXT_WRITE_ID"
 argument_list|,
 name|retryCount
 argument_list|)

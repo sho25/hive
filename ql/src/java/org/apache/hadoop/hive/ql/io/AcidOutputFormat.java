@@ -245,11 +245,11 @@ name|reporter
 decl_stmt|;
 specifier|private
 name|long
-name|minimumTransactionId
+name|minimumWriteId
 decl_stmt|;
 specifier|private
 name|long
-name|maximumTransactionId
+name|maximumWriteId
 decl_stmt|;
 specifier|private
 name|int
@@ -483,10 +483,10 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * The minimum transaction id that is included in this file.      * @param min minimum transaction id      * @return this      */
+comment|/**      * The minimum write id that is included in this file.      * @param min minimum write id      * @return this      */
 specifier|public
 name|Options
-name|minimumTransactionId
+name|minimumWriteId
 parameter_list|(
 name|long
 name|min
@@ -494,7 +494,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 operator|=
 name|min
 expr_stmt|;
@@ -502,10 +502,10 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * The maximum transaction id that is included in this file.      * @param max maximum transaction id      * @return this      */
+comment|/**      * The maximum write id that is included in this file.      * @param max maximum write id      * @return this      */
 specifier|public
 name|Options
-name|maximumTransactionId
+name|maximumWriteId
 parameter_list|(
 name|long
 name|max
@@ -513,7 +513,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 operator|=
 name|max
 expr_stmt|;
@@ -635,9 +635,9 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Too many statements for transactionId: "
+literal|"Too many statements for writeId: "
 operator|+
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|)
 throw|;
 block|}
@@ -744,20 +744,20 @@ return|;
 block|}
 specifier|public
 name|long
-name|getMinimumTransactionId
+name|getMinimumWriteId
 parameter_list|()
 block|{
 return|return
-name|minimumTransactionId
+name|minimumWriteId
 return|;
 block|}
 specifier|public
 name|long
-name|getMaximumTransactionId
+name|getMaximumWriteId
 parameter_list|()
 block|{
 return|return
-name|maximumTransactionId
+name|maximumWriteId
 return|;
 block|}
 specifier|public

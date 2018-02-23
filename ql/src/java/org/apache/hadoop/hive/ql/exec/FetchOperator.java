@@ -241,7 +241,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 import|;
 end_import
 
@@ -257,7 +257,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -1290,21 +1290,30 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|setValidTxnList
+name|setValidWriteIdList
 parameter_list|(
 name|String
-name|txnStr
+name|writeIdStr
 parameter_list|)
 block|{
 name|job
 operator|.
 name|set
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|,
-name|txnStr
+name|writeIdStr
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"FetchOperator set writeIdStr: "
+operator|+
+name|writeIdStr
 argument_list|)
 expr_stmt|;
 block|}
@@ -2135,7 +2144,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|extractValidTxnList
+name|extractValidWriteIdList
 argument_list|()
 operator|!=
 literal|null
@@ -2908,8 +2917,8 @@ argument_list|)
 return|;
 comment|// No need to process here.
 block|}
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 decl_stmt|;
 if|if
 condition|(
@@ -2927,15 +2936,15 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|validTxnList
+name|validWriteIdList
 operator|=
-name|extractValidTxnList
+name|extractValidWriteIdList
 argument_list|()
 expr_stmt|;
 block|}
 else|else
 block|{
-name|validTxnList
+name|validWriteIdList
 operator|=
 literal|null
 expr_stmt|;
@@ -2943,7 +2952,7 @@ comment|// non-MM case
 block|}
 if|if
 condition|(
-name|validTxnList
+name|validWriteIdList
 operator|!=
 literal|null
 condition|)
@@ -2982,7 +2991,7 @@ argument_list|)
 argument_list|,
 name|job
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|)
 decl_stmt|;
 if|if
@@ -3072,8 +3081,8 @@ argument_list|()
 return|;
 block|}
 specifier|private
-name|ValidTxnList
-name|extractValidTxnList
+name|ValidWriteIdList
+name|extractValidWriteIdList
 parameter_list|()
 block|{
 if|if
@@ -3112,22 +3121,31 @@ name|job
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"FetchOperator get writeIdStr: "
+operator|+
+name|txnString
+argument_list|)
+expr_stmt|;
 return|return
 name|txnString
 operator|==
 literal|null
 condition|?
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 else|:
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
 name|txnString
 argument_list|)

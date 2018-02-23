@@ -209,7 +209,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidTxnWriteIdList
 import|;
 end_import
 
@@ -2718,19 +2718,19 @@ literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":20,\"bucketid\":536870912,\"rowid\":0}\t0\t15"
+literal|"{\"transactionid\":1,\"bucketid\":536870912,\"rowid\":0}\t0\t15"
 block|,
 literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":22,\"bucketid\":536870912,\"rowid\":0}\t0\t17"
+literal|"{\"transactionid\":3,\"bucketid\":536870912,\"rowid\":0}\t0\t17"
 block|,
 literal|"bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":21,\"bucketid\":536870912,\"rowid\":0}\t0\t120"
+literal|"{\"transactionid\":2,\"bucketid\":536870912,\"rowid\":0}\t0\t120"
 block|,
 literal|"bucket_00000"
 block|}
@@ -2760,7 +2760,7 @@ literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"transactionid\":20,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
+literal|"{\"transactionid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
 block|,
 literal|"bucket_00001"
 block|}
@@ -6223,7 +6223,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000024_0000024_0000"
+literal|"delta_0000001_0000001_0000"
 argument_list|,
 name|status
 index|[
@@ -6281,7 +6281,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000025_0000025_0000"
+literal|"delta_0000002_0000002_0000"
 argument_list|,
 name|status
 index|[
@@ -6388,7 +6388,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delete_delta_0000024_0000024_0000"
+literal|"delete_delta_0000001_0000001_0000"
 argument_list|,
 name|status
 index|[
@@ -6868,7 +6868,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000025"
+literal|"base_0000002"
 argument_list|,
 name|status
 index|[
@@ -7098,7 +7098,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000025"
+literal|"base_0000002"
 argument_list|,
 name|status
 index|[
@@ -7273,9 +7273,9 @@ name|hiveConf
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidTxnWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_TABLES_WRITEIDS_KEY
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -7393,9 +7393,9 @@ name|hiveConf
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidTxnWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_TABLES_WRITEIDS_KEY
 argument_list|)
 operator|==
 literal|null
@@ -7403,7 +7403,7 @@ operator|:
 literal|"previous txn should've cleaned it"
 assert|;
 comment|//so now if HIVEFETCHTASKCONVERSION were to use a stale value, it would use a
-comment|//ValidTxnList with HWM=MAX_LONG, i.e. include the data for aborted txn
+comment|//ValidWriteIdList with HWM=MAX_LONG, i.e. include the data for aborted txn
 name|List
 argument_list|<
 name|String

@@ -7764,7 +7764,7 @@ argument_list|()
 condition|?
 name|fsInputDesc
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 else|:
 literal|null
@@ -7849,7 +7849,7 @@ argument_list|()
 condition|?
 name|fsInputDesc
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 else|:
 literal|null
@@ -9887,11 +9887,11 @@ argument_list|)
 expr_stmt|;
 name|fmd
 operator|.
-name|setTxnId
+name|setWriteId
 argument_list|(
 name|fsInputDesc
 operator|.
-name|getTransactionId
+name|getTableWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;

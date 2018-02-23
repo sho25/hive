@@ -38,18 +38,18 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of {@link org.apache.hadoop.hive.common.ValidTxnList} for use by the compactor.  *   * Compaction should only include txns up to smallest open txn (exclussive).  * There may be aborted txns in the snapshot represented by this ValidCompactorTxnList.  * Thus {@link #isTxnRangeValid(long, long)} returns NONE for any range that inluces any unresolved  * transactions.  Any txn above {@code highWatermark} is unresolved.  * These produce the logic we need to assure that the compactor only sees records less than the lowest  * open transaction when choosing which files to compact, but that it still ignores aborted  * records when compacting.  *   * See org.apache.hadoop.hive.metastore.txn.TxnUtils#createValidCompactTxnList() for proper  * way to construct this.  */
+comment|/**  * An implementation of {@link ValidWriteIdList} for use by the compactor.  *  * Compaction should only include txns up to smallest open txn (exclussive).  * There may be aborted write ids in the snapshot represented by this ValidCompactorWriteIdList.  * Thus {@link #isWriteIdRangeValid(long, long)} returns NONE for any range that includes any unresolved  * write ids.  Any write id above {@code highWatermark} is unresolved.  * These produce the logic we need to assure that the compactor only sees records less than the lowest  * open write ids when choosing which files to compact, but that it still ignores aborted  * records when compacting.  *  * See org.apache.hadoop.hive.metastore.txn.TxnUtils#createValidCompactTxnList() for proper  * way to construct this.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 extends|extends
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 block|{
 specifier|public
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 parameter_list|()
 block|{
 name|super
@@ -57,11 +57,14 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|public
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 parameter_list|(
+name|String
+name|tableName
+parameter_list|,
 name|long
 index|[]
-name|abortedTxnList
+name|abortedWriteIdList
 parameter_list|,
 name|BitSet
 name|abortedBits
@@ -72,7 +75,9 @@ parameter_list|)
 block|{
 name|this
 argument_list|(
-name|abortedTxnList
+name|tableName
+argument_list|,
+name|abortedWriteIdList
 argument_list|,
 name|abortedBits
 argument_list|,
@@ -84,13 +89,16 @@ name|MAX_VALUE
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param abortedTxnList list of all aborted transactions    * @param abortedBits bitset marking whether the corresponding transaction is aborted    * @param highWatermark highest committed transaction to be considered for compaction,    *                      equivalently (lowest_open_txn - 1).    */
+comment|/**    * @param tableName table which is under compaction. Full name of format<db_name>.<table_name>    * @param abortedWriteIdList list of all aborted write ids    * @param abortedBits bitset marking whether the corresponding transaction is aborted    * @param highWatermark highest committed write id to be considered for compaction,    *                      equivalently (lowest_open_write_id - 1).    * @param minOpenWriteId minimum write ID which maps to a open transaction    */
 specifier|public
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 parameter_list|(
+name|String
+name|tableName
+parameter_list|,
 name|long
 index|[]
-name|abortedTxnList
+name|abortedWriteIdList
 parameter_list|,
 name|BitSet
 name|abortedBits
@@ -99,19 +107,21 @@ name|long
 name|highWatermark
 parameter_list|,
 name|long
-name|minOpenTxnId
+name|minOpenWriteId
 parameter_list|)
 block|{
 comment|// abortedBits should be all true as everything in exceptions are aborted txns
 name|super
 argument_list|(
-name|abortedTxnList
+name|tableName
+argument_list|,
+name|abortedWriteIdList
 argument_list|,
 name|abortedBits
 argument_list|,
 name|highWatermark
 argument_list|,
-name|minOpenTxnId
+name|minOpenWriteId
 argument_list|)
 expr_stmt|;
 if|if
@@ -175,7 +185,7 @@ operator|=
 name|idx
 expr_stmt|;
 block|}
-comment|/*      * ensure that we throw out any exceptions above highWatermark to make      * {@link #isTxnValid(long)} faster       */
+comment|/*      * ensure that we throw out any exceptions above highWatermark to make      * {@link #isWriteIdValid(long)} faster      */
 name|this
 operator|.
 name|exceptions
@@ -195,7 +205,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 parameter_list|(
 name|String
 name|value
@@ -207,24 +217,24 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns org.apache.hadoop.hive.common.ValidTxnList.RangeResponse.ALL if all txns in    * the range are resolved and RangeResponse.NONE otherwise    */
+comment|/**    * Returns org.apache.hadoop.hive.common.ValidWriteIdList.RangeResponse.ALL if all write ids in    * the range are resolved and RangeResponse.NONE otherwise    */
 annotation|@
 name|Override
 specifier|public
 name|RangeResponse
-name|isTxnRangeValid
+name|isWriteIdRangeValid
 parameter_list|(
 name|long
-name|minTxnId
+name|minWriteId
 parameter_list|,
 name|long
-name|maxTxnId
+name|maxWriteId
 parameter_list|)
 block|{
 return|return
 name|highWatermark
 operator|>=
-name|maxTxnId
+name|maxWriteId
 condition|?
 name|RangeResponse
 operator|.
@@ -239,10 +249,10 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isTxnAborted
+name|isWriteIdAborted
 parameter_list|(
 name|long
-name|txnid
+name|writeId
 parameter_list|)
 block|{
 return|return
@@ -252,7 +262,7 @@ name|binarySearch
 argument_list|(
 name|exceptions
 argument_list|,
-name|txnid
+name|writeId
 argument_list|)
 operator|>=
 literal|0

@@ -1005,7 +1005,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -24784,8 +24784,8 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|,
 name|int
 name|lbLevels
@@ -24900,11 +24900,11 @@ name|getPath
 argument_list|()
 decl_stmt|;
 name|Long
-name|txnId
+name|writeId
 init|=
 name|JavaUtils
 operator|.
-name|extractTxnId
+name|extractWriteId
 argument_list|(
 name|childPath
 argument_list|)
@@ -24917,16 +24917,16 @@ operator|.
 name|isDirectory
 argument_list|()
 operator|||
-name|txnId
+name|writeId
 operator|==
 literal|null
 operator|||
 operator|!
-name|validTxnList
+name|validWriteIdList
 operator|.
-name|isTxnValid
+name|isWriteIdValid
 argument_list|(
-name|txnId
+name|writeId
 argument_list|)
 condition|)
 block|{

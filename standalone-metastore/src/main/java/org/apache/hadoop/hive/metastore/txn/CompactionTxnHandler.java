@@ -1542,7 +1542,7 @@ name|s
 init|=
 literal|"select cq_id, cq_database, cq_table, cq_partition, "
 operator|+
-literal|"cq_type, cq_run_as, cq_highest_txn_id from COMPACTION_QUEUE where cq_state = '"
+literal|"cq_type, cq_run_as, cq_highest_write_id from COMPACTION_QUEUE where cq_state = '"
 operator|+
 name|READY_FOR_CLEANING
 operator|+
@@ -1695,7 +1695,7 @@ argument_list|)
 expr_stmt|;
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|=
 name|rs
 operator|.
@@ -1858,7 +1858,7 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_TXN_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = ?"
+literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = ?"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -2001,7 +2001,7 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
+literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
 argument_list|)
 expr_stmt|;
 name|info
@@ -2032,8 +2032,8 @@ name|executeUpdate
 argument_list|()
 expr_stmt|;
 comment|// Remove entries from completed_txn_components as well, so we don't start looking there
-comment|// again but only up to the highest txn ID include in this compaction job.
-comment|//highestTxnId will be NULL in upgrade scenarios
+comment|// again but only up to the highest write ID include in this compaction job.
+comment|//highestWriteId will be NULL in upgrade scenarios
 name|s
 operator|=
 literal|"delete from COMPLETED_TXN_COMPONENTS where ctc_database = ? and "
@@ -2058,14 +2058,14 @@ if|if
 condition|(
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|!=
 literal|0
 condition|)
 block|{
 name|s
 operator|+=
-literal|" and ctc_txnid<= ?"
+literal|" and ctc_writeid<= ?"
 expr_stmt|;
 block|}
 name|pStmt
@@ -2132,7 +2132,7 @@ if|if
 condition|(
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|!=
 literal|0
 condition|)
@@ -2146,7 +2146,7 @@ operator|++
 argument_list|,
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -2193,13 +2193,13 @@ if|if
 condition|(
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|!=
 literal|0
 condition|)
 name|s
 operator|+=
-literal|" and txn_id<= ?"
+literal|" and tc_writeid<= ?"
 expr_stmt|;
 if|if
 condition|(
@@ -2254,7 +2254,7 @@ if|if
 condition|(
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|!=
 literal|0
 condition|)
@@ -2268,7 +2268,7 @@ operator|++
 argument_list|,
 name|info
 operator|.
-name|highestTxnId
+name|highestWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -3903,13 +3903,13 @@ operator|.
 name|Idempotent
 specifier|public
 name|void
-name|setCompactionHighestTxnId
+name|setCompactionHighestWriteId
 parameter_list|(
 name|CompactionInfo
 name|ci
 parameter_list|,
 name|long
-name|highestTxnId
+name|highestWriteId
 parameter_list|)
 throws|throws
 name|MetaException
@@ -3951,9 +3951,9 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"UPDATE COMPACTION_QUEUE SET CQ_HIGHEST_TXN_ID = "
+literal|"UPDATE COMPACTION_QUEUE SET CQ_HIGHEST_WRITE_ID = "
 operator|+
-name|highestTxnId
+name|highestWriteId
 operator|+
 literal|" WHERE CQ_ID = "
 operator|+
@@ -4002,13 +4002,13 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"setCompactionHighestTxnId("
+literal|"setCompactionHighestWriteId("
 operator|+
 name|ci
 operator|+
 literal|","
 operator|+
-name|highestTxnId
+name|highestWriteId
 operator|+
 literal|")"
 argument_list|)
@@ -4047,11 +4047,11 @@ name|RetryException
 name|ex
 parameter_list|)
 block|{
-name|setCompactionHighestTxnId
+name|setCompactionHighestWriteId
 argument_list|(
 name|ci
 argument_list|,
-name|highestTxnId
+name|highestWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -5175,7 +5175,7 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_TXN_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = ?"
+literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = ?"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -5371,7 +5371,7 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_TXN_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
+literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
 argument_list|)
 expr_stmt|;
 name|CompactionInfo

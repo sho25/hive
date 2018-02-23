@@ -117,7 +117,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -888,12 +888,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|NUM_OTID
 argument_list|)
@@ -1018,12 +1018,12 @@ literal|1
 decl_stmt|;
 name|options
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 name|currTxnId
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|currTxnId
 argument_list|)
@@ -1124,12 +1124,12 @@ literal|2
 expr_stmt|;
 name|options
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 name|currTxnId
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|currTxnId
 argument_list|)
@@ -1230,12 +1230,12 @@ literal|3
 expr_stmt|;
 name|options
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 name|currTxnId
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|currTxnId
 argument_list|)
@@ -1645,11 +1645,11 @@ name|conf
 operator|.
 name|set
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|,
-literal|"14:1:1:5"
+literal|"tbl:14:1:1:5"
 argument_list|)
 expr_stmt|;
 comment|// Exclude transaction 5

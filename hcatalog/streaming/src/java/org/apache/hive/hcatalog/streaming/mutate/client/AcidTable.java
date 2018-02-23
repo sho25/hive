@@ -108,7 +108,7 @@ name|tableType
 decl_stmt|;
 specifier|private
 name|long
-name|transactionId
+name|writeId
 decl_stmt|;
 specifier|private
 name|Table
@@ -154,14 +154,14 @@ operator|=
 name|tableType
 expr_stmt|;
 block|}
-comment|/**    * Returns {@code 0} until such a time that a {@link Transaction} has been acquired (when    * {@link MutatorClient#newTransaction()} exits), at which point this will return the    * {@link Transaction#getTransactionId() transaction id}.    */
+comment|/**    * Returns {@code 0} until such a time that a {@link Transaction} has been acquired (when    * {@link MutatorClient#newTransaction()} exits), at which point this will return the    * write id.    */
 specifier|public
 name|long
-name|getTransactionId
+name|getWriteId
 parameter_list|()
 block|{
 return|return
-name|transactionId
+name|writeId
 return|;
 block|}
 specifier|public
@@ -273,17 +273,17 @@ name|table
 return|;
 block|}
 name|void
-name|setTransactionId
+name|setWriteId
 parameter_list|(
 name|long
-name|transactionId
+name|writeId
 parameter_list|)
 block|{
 name|this
 operator|.
-name|transactionId
+name|writeId
 operator|=
-name|transactionId
+name|writeId
 expr_stmt|;
 block|}
 name|void
@@ -378,9 +378,9 @@ operator|+
 name|getTotalBuckets
 argument_list|()
 operator|+
-literal|", transactionId="
+literal|", writeId="
 operator|+
-name|transactionId
+name|writeId
 operator|+
 literal|"]"
 return|;

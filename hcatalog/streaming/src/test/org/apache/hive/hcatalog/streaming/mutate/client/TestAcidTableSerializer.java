@@ -240,7 +240,7 @@ argument_list|)
 expr_stmt|;
 name|acidTable
 operator|.
-name|setTransactionId
+name|setWriteId
 argument_list|(
 literal|42L
 argument_list|)
@@ -356,7 +356,7 @@ name|assertThat
 argument_list|(
 name|decoded
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|is
@@ -523,7 +523,7 @@ name|assertThat
 argument_list|(
 name|decoded
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|is

@@ -255,7 +255,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidReaderWriteIdList
 import|;
 end_import
 
@@ -271,7 +271,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidReadTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -1196,7 +1196,7 @@ name|setFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|,
 operator|new
 name|LongWritable
@@ -1241,7 +1241,7 @@ name|setFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|,
 operator|new
 name|LongWritable
@@ -1886,7 +1886,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1916,7 +1916,7 @@ literal|120
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1949,7 +1949,7 @@ literal|40
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1979,7 +1979,7 @@ literal|130
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2088,7 +2088,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2118,7 +2118,7 @@ literal|100
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2151,7 +2151,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2181,7 +2181,7 @@ literal|110
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2214,7 +2214,7 @@ literal|10
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2244,7 +2244,7 @@ literal|120
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2277,7 +2277,7 @@ literal|40
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2307,7 +2307,7 @@ literal|130
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2340,7 +2340,7 @@ literal|40
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2370,7 +2370,7 @@ literal|140
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2856,7 +2856,7 @@ argument_list|,
 name|conf
 argument_list|,
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 argument_list|,
 literal|0
@@ -2876,7 +2876,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2906,7 +2906,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2939,7 +2939,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2969,7 +2969,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3019,13 +3019,13 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|static
-name|ValidTxnList
+name|ValidWriteIdList
 name|createMaximalTxnList
 parameter_list|()
 block|{
 return|return
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 return|;
 block|}
@@ -3150,7 +3150,7 @@ argument_list|,
 name|conf
 argument_list|,
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 argument_list|,
 literal|0
@@ -3175,7 +3175,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3205,7 +3205,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3238,7 +3238,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3268,7 +3268,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3301,7 +3301,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3331,7 +3331,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3364,7 +3364,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3394,7 +3394,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3427,7 +3427,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3457,7 +3457,7 @@ literal|0
 argument_list|,
 name|key
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4282,7 +4282,7 @@ literal|10
 argument_list|,
 name|id
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4336,7 +4336,7 @@ literal|40
 argument_list|,
 name|id
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4484,7 +4484,7 @@ name|get
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|)
 operator|.
 name|getFieldName
@@ -4501,7 +4501,7 @@ name|get
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|)
 operator|.
 name|getFieldName
@@ -4817,12 +4817,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|1
 argument_list|)
@@ -4846,12 +4846,12 @@ name|deltaSubdir
 argument_list|(
 name|options
 operator|.
-name|getMinimumTransactionId
+name|getMinimumWriteId
 argument_list|()
 argument_list|,
 name|options
 operator|.
-name|getMaximumTransactionId
+name|getMaximumWriteId
 argument_list|()
 argument_list|,
 name|options
@@ -4901,7 +4901,7 @@ name|insert
 argument_list|(
 name|options
 operator|.
-name|getMaximumTransactionId
+name|getMaximumWriteId
 argument_list|()
 argument_list|,
 operator|new
@@ -5163,7 +5163,7 @@ argument_list|(
 literal|true
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|100
 argument_list|)
@@ -5257,13 +5257,13 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-name|ValidTxnList
-name|txnList
+name|ValidWriteIdList
+name|writeIdList
 init|=
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
-literal|"200:"
+literal|"testEmpty:200:"
 operator|+
 name|Long
 operator|.
@@ -5283,7 +5283,7 @@ name|root
 argument_list|,
 name|conf
 argument_list|,
-name|txnList
+name|writeIdList
 argument_list|)
 decl_stmt|;
 name|Path
@@ -5655,7 +5655,7 @@ argument_list|(
 literal|true
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|100
 argument_list|)
@@ -5706,12 +5706,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|200
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|200
 argument_list|)
@@ -5824,13 +5824,13 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
-name|ValidTxnList
-name|txnList
+name|ValidWriteIdList
+name|writeIdList
 init|=
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
-literal|"200:"
+literal|"testNewBaseAndDelta:200:"
 operator|+
 name|Long
 operator|.
@@ -5850,7 +5850,7 @@ name|root
 argument_list|,
 name|conf
 argument_list|,
-name|txnList
+name|writeIdList
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -8633,13 +8633,13 @@ name|close
 argument_list|()
 expr_stmt|;
 comment|// try ignoring the 200 transaction and make sure it works still
-name|ValidTxnList
-name|txns
+name|ValidWriteIdList
+name|writeIds
 init|=
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
-literal|"2000:200:200"
+literal|"testNewBaseAndDelta:2000:200:200"
 argument_list|)
 decl_stmt|;
 comment|//again 1st split is for base/
@@ -8674,7 +8674,7 @@ literal|false
 argument_list|,
 name|BUCKET
 argument_list|,
-name|txns
+name|writeIds
 argument_list|,
 operator|new
 name|Reader
@@ -8861,7 +8861,7 @@ literal|false
 argument_list|,
 name|BUCKET
 argument_list|,
-name|txns
+name|writeIds
 argument_list|,
 operator|new
 name|Reader
@@ -9436,12 +9436,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|1
 argument_list|)
@@ -9608,12 +9608,12 @@ name|options
 operator|=
 name|options
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|100
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|100
 argument_list|)
@@ -10367,12 +10367,12 @@ argument_list|(
 literal|true
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|0
 argument_list|)
@@ -10549,12 +10549,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|1
 argument_list|)
@@ -10684,12 +10684,12 @@ expr_stmt|;
 comment|// write a delta
 name|options
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|100
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|100
 argument_list|)
@@ -11511,12 +11511,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|1
 argument_list|)
@@ -11625,12 +11625,12 @@ expr_stmt|;
 comment|// write a delta
 name|options
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|2
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|2
 argument_list|)
@@ -12123,12 +12123,12 @@ argument_list|(
 literal|true
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|0
 argument_list|)
@@ -12248,12 +12248,12 @@ argument_list|(
 literal|false
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 literal|10
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 literal|19
 argument_list|)

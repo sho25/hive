@@ -113,7 +113,7 @@ name|tblName
 decl_stmt|;
 specifier|private
 name|long
-name|txnId
+name|writeId
 decl_stmt|;
 specifier|private
 name|int
@@ -129,7 +129,7 @@ name|String
 name|tblName
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -137,9 +137,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|txnId
+name|writeId
 operator|=
-name|txnId
+name|writeId
 expr_stmt|;
 name|this
 operator|.
@@ -162,11 +162,11 @@ expr_stmt|;
 block|}
 specifier|public
 name|long
-name|getTxnId
+name|getWriteId
 parameter_list|()
 block|{
 return|return
-name|txnId
+name|writeId
 return|;
 block|}
 specifier|public

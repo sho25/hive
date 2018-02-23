@@ -2208,8 +2208,55 @@ literal|true
 expr_stmt|;
 block|}
 name|Long
-name|txnId
+name|writeId
 init|=
+literal|0L
+decl_stmt|;
+comment|// Initialize with 0 for non-ACID and non-MM tables.
+if|if
+condition|(
+operator|(
+operator|(
+name|table
+operator|!=
+literal|null
+operator|)
+operator|&&
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|table
+argument_list|)
+operator|)
+operator|||
+name|AcidUtils
+operator|.
+name|isTablePropertyTransactional
+argument_list|(
+name|tblDesc
+operator|.
+name|getTblProps
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// Explain plan doesn't open a txn and hence no need to allocate write id.
+if|if
+condition|(
+name|x
+operator|.
+name|getCtx
+argument_list|()
+operator|.
+name|getExplainConfig
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+name|writeId
+operator|=
 name|SessionState
 operator|.
 name|get
@@ -2218,9 +2265,21 @@ operator|.
 name|getTxnMgr
 argument_list|()
 operator|.
-name|getCurrentTxnId
+name|getTableWriteId
+argument_list|(
+name|tblDesc
+operator|.
+name|getDatabaseName
 argument_list|()
-decl_stmt|;
+argument_list|,
+name|tblDesc
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|int
 name|stmtId
 init|=
@@ -2228,7 +2287,7 @@ literal|0
 decl_stmt|;
 comment|// TODO [MM gap?]: bad merge; tblDesc is no longer CreateTableDesc, but ImportTableDesc.
 comment|//                 We need to verify the tests to see if this works correctly.
-comment|/*     if (isAcid(txnId)) {       tblDesc.setInitialMmWriteId(txnId);     }     */
+comment|/*     if (isAcid(writeId)) {       tblDesc.setInitialMmWriteId(writeId);     }     */
 if|if
 condition|(
 operator|!
@@ -2258,7 +2317,7 @@ name|wh
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -2288,7 +2347,7 @@ name|wh
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -2600,7 +2659,7 @@ name|SemanticAnalyzerWrapperContext
 name|x
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -2656,16 +2715,16 @@ name|AcidUtils
 operator|.
 name|baseDir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|)
 else|:
 name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -2750,7 +2809,7 @@ name|destPath
 operator|+
 literal|"; mm "
 operator|+
-name|txnId
+name|writeId
 operator|+
 literal|" (src "
 operator|+
@@ -2795,7 +2854,7 @@ name|isSourceMm
 operator|||
 name|isAcid
 argument_list|(
-name|txnId
+name|writeId
 argument_list|)
 condition|)
 block|{
@@ -2886,7 +2945,7 @@ argument_list|()
 argument_list|,
 name|lft
 argument_list|,
-name|txnId
+name|writeId
 argument_list|)
 decl_stmt|;
 name|loadTableWork
@@ -2958,7 +3017,7 @@ return|return
 name|loadTableTask
 return|;
 block|}
-comment|/**    * todo: this is odd: transactions are opened for all statements.  what is this supposed to check?    */
+comment|/**    * todo: this is odd: write id allocated for all write operations on ACID tables.  what is this supposed to check?    */
 annotation|@
 name|Deprecated
 specifier|private
@@ -2967,18 +3026,18 @@ name|boolean
 name|isAcid
 parameter_list|(
 name|Long
-name|txnId
+name|writeId
 parameter_list|)
 block|{
 return|return
 operator|(
-name|txnId
+name|writeId
 operator|!=
 literal|null
 operator|)
 operator|&&
 operator|(
-name|txnId
+name|writeId
 operator|!=
 literal|0
 operator|)
@@ -3301,7 +3360,7 @@ name|SemanticAnalyzerWrapperContext
 name|x
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -3503,9 +3562,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -3559,7 +3618,7 @@ name|destPath
 operator|+
 literal|"; mm "
 operator|+
-name|txnId
+name|writeId
 operator|+
 literal|" (src "
 operator|+
@@ -3599,7 +3658,7 @@ name|isSourceMm
 operator|||
 name|isAcid
 argument_list|(
-name|txnId
+name|writeId
 argument_list|)
 condition|)
 block|{
@@ -3741,7 +3800,7 @@ name|LoadFileType
 operator|.
 name|OVERWRITE_EXISTING
 argument_list|,
-name|txnId
+name|writeId
 argument_list|)
 decl_stmt|;
 name|loadTableWork
@@ -5347,7 +5406,7 @@ name|SemanticAnalyzerWrapperContext
 name|x
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -5407,7 +5466,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -5518,7 +5577,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -5625,7 +5684,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -5767,7 +5826,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -5817,7 +5876,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6036,7 +6095,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6073,7 +6132,7 @@ name|String
 name|tblName
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -6115,7 +6174,7 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -6166,7 +6225,7 @@ name|SemanticAnalyzerWrapperContext
 name|x
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -6564,7 +6623,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6621,7 +6680,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6693,7 +6752,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6811,7 +6870,7 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6888,7 +6947,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -7029,7 +7088,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -7214,7 +7273,7 @@ name|replicationSpec
 argument_list|,
 name|x
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,

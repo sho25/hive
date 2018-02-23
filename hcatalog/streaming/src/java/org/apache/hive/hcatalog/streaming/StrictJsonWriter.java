@@ -527,7 +527,7 @@ name|void
 name|write
 parameter_list|(
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|byte
 index|[]
@@ -563,7 +563,7 @@ argument_list|)
 operator|.
 name|insert
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|encodedRow
 argument_list|)
@@ -579,9 +579,9 @@ throw|throw
 operator|new
 name|StreamingIOFailure
 argument_list|(
-literal|"Error writing record in transaction("
+literal|"Error writing record in transaction write id("
 operator|+
-name|transactionId
+name|writeId
 operator|+
 literal|")"
 argument_list|,

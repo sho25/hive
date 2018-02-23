@@ -80,7 +80,7 @@ argument_list|>
 name|outputFormat
 parameter_list|,
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|Path
 name|partitionPath

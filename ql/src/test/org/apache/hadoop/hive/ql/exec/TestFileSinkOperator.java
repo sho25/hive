@@ -151,7 +151,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -2180,13 +2180,15 @@ name|txnId
 operator|>
 literal|0
 condition|)
+block|{
 name|desc
 operator|.
-name|setTransactionId
+name|setTableWriteId
 argument_list|(
 name|txnId
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|writeType
@@ -2197,13 +2199,15 @@ name|Operation
 operator|.
 name|NOT_ACID
 condition|)
+block|{
 name|desc
 operator|.
-name|setTransactionId
+name|setTableWriteId
 argument_list|(
 literal|1L
 argument_list|)
 expr_stmt|;
+block|}
 name|FileSinkOperator
 name|op
 init|=
@@ -4408,8 +4412,8 @@ parameter_list|,
 name|int
 name|bucket
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|,
 name|Path
 name|baseDirectory
@@ -4520,7 +4524,7 @@ name|void
 name|insert
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -4544,7 +4548,7 @@ name|void
 name|update
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row
@@ -4565,7 +4569,7 @@ name|void
 name|delete
 parameter_list|(
 name|long
-name|currentTransaction
+name|currentWriteId
 parameter_list|,
 name|Object
 name|row

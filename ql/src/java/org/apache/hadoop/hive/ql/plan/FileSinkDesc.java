@@ -335,11 +335,11 @@ name|NOT_ACID
 decl_stmt|;
 specifier|private
 name|long
-name|txnId
+name|tableWriteId
 init|=
 literal|0
 decl_stmt|;
-comment|// transaction id for this operation
+comment|// table write id for this operation
 specifier|private
 name|int
 name|statementId
@@ -735,9 +735,9 @@ argument_list|)
 expr_stmt|;
 name|ret
 operator|.
-name|setTransactionId
+name|setTableWriteId
 argument_list|(
-name|txnId
+name|tableWriteId
 argument_list|)
 expr_stmt|;
 name|ret
@@ -901,9 +901,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|tableWriteId
 argument_list|,
-name|txnId
+name|tableWriteId
 argument_list|,
 name|statementId
 argument_list|)
@@ -1775,24 +1775,24 @@ return|;
 block|}
 specifier|public
 name|void
-name|setTransactionId
+name|setTableWriteId
 parameter_list|(
 name|long
 name|id
 parameter_list|)
 block|{
-name|txnId
+name|tableWriteId
 operator|=
 name|id
 expr_stmt|;
 block|}
 specifier|public
 name|long
-name|getTransactionId
+name|getTableWriteId
 parameter_list|()
 block|{
 return|return
-name|txnId
+name|tableWriteId
 return|;
 block|}
 specifier|public

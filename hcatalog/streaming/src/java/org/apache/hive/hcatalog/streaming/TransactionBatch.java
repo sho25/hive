@@ -88,8 +88,7 @@ name|code
 return|;
 block|}
 block|}
-comment|/**    * Activate the next available transaction in the current transaction batch    * @throws StreamingException if not able to switch to next Txn    * @throws InterruptedException if call in interrupted    */
-specifier|public
+comment|/**    * Activate the next available transaction in the current transaction batch.    * @throws StreamingException if not able to switch to next Txn    * @throws InterruptedException if call in interrupted    */
 name|void
 name|beginNextTransaction
 parameter_list|()
@@ -98,20 +97,22 @@ name|StreamingException
 throws|,
 name|InterruptedException
 function_decl|;
-comment|/**    * Get Id of currently open transaction    * @return transaction id    */
-specifier|public
+comment|/**    * Get Id of currently open transaction.    * @return transaction id    */
 name|Long
 name|getCurrentTxnId
 parameter_list|()
 function_decl|;
-comment|/**    * get state of current transaction    */
-specifier|public
+comment|/**    * Get write Id mapping to currently open transaction.    * @return write id    */
+name|Long
+name|getCurrentWriteId
+parameter_list|()
+function_decl|;
+comment|/**    * get state of current transaction.    */
 name|TxnState
 name|getCurrentTransactionState
 parameter_list|()
 function_decl|;
-comment|/**    * Commit the currently open transaction    * @throws StreamingException if there are errors committing    * @throws InterruptedException if call in interrupted    */
-specifier|public
+comment|/**    * Commit the currently open transaction.    * @throws StreamingException if there are errors committing    * @throws InterruptedException if call in interrupted    */
 name|void
 name|commit
 parameter_list|()
@@ -120,8 +121,7 @@ name|StreamingException
 throws|,
 name|InterruptedException
 function_decl|;
-comment|/**    * Abort the currently open transaction    * @throws StreamingException if there are errors    * @throws InterruptedException if call in interrupted    */
-specifier|public
+comment|/**    * Abort the currently open transaction.    * @throws StreamingException if there are errors    * @throws InterruptedException if call in interrupted    */
 name|void
 name|abort
 parameter_list|()
@@ -131,13 +131,11 @@ throws|,
 name|InterruptedException
 function_decl|;
 comment|/**    * Remaining transactions are the ones that are not committed or aborted or open.    * Current open transaction is not considered part of remaining txns.    * @return number of transactions remaining this batch.    */
-specifier|public
 name|int
 name|remainingTransactions
 parameter_list|()
 function_decl|;
-comment|/**    *  Write record using RecordWriter    * @param record  the data to be written    * @throws StreamingException if there are errors when writing    * @throws InterruptedException if call in interrupted    */
-specifier|public
+comment|/**    *  Write record using RecordWriter.    * @param record  the data to be written    * @throws StreamingException if there are errors when writing    * @throws InterruptedException if call in interrupted    */
 name|void
 name|write
 parameter_list|(
@@ -150,8 +148,7 @@ name|StreamingException
 throws|,
 name|InterruptedException
 function_decl|;
-comment|/**    *  Write records using RecordWriter    * @throws StreamingException if there are errors when writing    * @throws InterruptedException if call in interrupted    */
-specifier|public
+comment|/**    *  Write records using RecordWriter.    * @throws StreamingException if there are errors when writing    * @throws InterruptedException if call in interrupted    */
 name|void
 name|write
 parameter_list|(
@@ -167,16 +164,14 @@ name|StreamingException
 throws|,
 name|InterruptedException
 function_decl|;
-comment|/**    * Issues a heartbeat to hive metastore on the current and remaining txn ids    * to keep them from expiring    * @throws StreamingException if there are errors    */
-specifier|public
+comment|/**    * Issues a heartbeat to hive metastore on the current and remaining txn ids    * to keep them from expiring.    * @throws StreamingException if there are errors    */
 name|void
 name|heartbeat
 parameter_list|()
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/**    * Close the TransactionBatch    * @throws StreamingException if there are errors closing batch    * @throws InterruptedException if call in interrupted    */
-specifier|public
+comment|/**    * Close the TransactionBatch.    * @throws StreamingException if there are errors closing batch    * @throws InterruptedException if call in interrupted    */
 name|void
 name|close
 parameter_list|()
@@ -185,7 +180,6 @@ name|StreamingException
 throws|,
 name|InterruptedException
 function_decl|;
-specifier|public
 name|boolean
 name|isClosed
 parameter_list|()

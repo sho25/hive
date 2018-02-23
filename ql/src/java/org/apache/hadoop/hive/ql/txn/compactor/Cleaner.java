@@ -113,7 +113,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -129,7 +129,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 import|;
 end_import
 
@@ -1466,20 +1466,27 @@ operator|.
 name|getLocation
 argument_list|()
 decl_stmt|;
-comment|/**        * Each Compaction only compacts as far as the highest txn id such that all txns below it        * are resolved (i.e. not opened).  This is what "highestTxnId" tracks.  This is only tracked        * since Hive 1.3.0/2.0 - thus may be 0.  See ValidCompactorTxnList and uses for more info.        *         * We only want to clean up to the highestTxnId - otherwise we risk deleteing deltas from        * under an active reader.        *         * Suppose we have deltas D2 D3 for table T, i.e. the last compaction created D3 so now there is a         * clean request for D2.          * Cleaner checks existing locks and finds none.        * Between that check and removeFiles() a query starts (it will be reading D3) and another compaction        * completes which creates D4.        * Now removeFiles() (more specifically AcidUtils.getAcidState()) will declare D3 to be obsolete        * unless ValidTxnList is "capped" at highestTxnId.        */
+comment|/**        * Each Compaction only compacts as far as the highest txn id such that all txns below it        * are resolved (i.e. not opened).  This is what "highestWriteId" tracks.  This is only tracked        * since Hive 1.3.0/2.0 - thus may be 0.  See ValidCompactorWriteIdList and uses for more info.        *         * We only want to clean up to the highestWriteId - otherwise we risk deleteing deltas from        * under an active reader.        *         * Suppose we have deltas D2 D3 for table T, i.e. the last compaction created D3 so now there is a         * clean request for D2.          * Cleaner checks existing locks and finds none.        * Between that check and removeFiles() a query starts (it will be reading D3) and another compaction        * completes which creates D4.        * Now removeFiles() (more specifically AcidUtils.getAcidState()) will declare D3 to be obsolete        * unless ValidTxnList is "capped" at highestWriteId.        */
 specifier|final
-name|ValidTxnList
+name|ValidWriteIdList
 name|txnList
 init|=
+operator|(
 name|ci
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|>
 literal|0
+operator|)
 condition|?
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
+name|ci
+operator|.
+name|getFullTableName
+argument_list|()
+argument_list|,
 operator|new
 name|long
 index|[
@@ -1492,11 +1499,11 @@ argument_list|()
 argument_list|,
 name|ci
 operator|.
-name|highestTxnId
+name|highestWriteId
 argument_list|)
 else|:
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 decl_stmt|;
 if|if
@@ -1672,8 +1679,8 @@ parameter_list|(
 name|String
 name|location
 parameter_list|,
-name|ValidTxnList
-name|txnList
+name|ValidWriteIdList
+name|writeIdList
 parameter_list|)
 throws|throws
 name|IOException
@@ -1695,7 +1702,7 @@ argument_list|)
 argument_list|,
 name|conf
 argument_list|,
-name|txnList
+name|writeIdList
 argument_list|)
 decl_stmt|;
 name|List

@@ -127,7 +127,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 import|;
 end_import
 
@@ -143,7 +143,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -619,8 +619,8 @@ literal|true
 decl_stmt|;
 specifier|private
 specifier|final
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 decl_stmt|;
 specifier|private
 specifier|final
@@ -1144,14 +1144,14 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|)
 decl_stmt|;
 name|this
 operator|.
-name|validTxnList
+name|validWriteIdList
 operator|=
 operator|(
 name|txnString
@@ -1160,13 +1160,36 @@ literal|null
 operator|)
 condition|?
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 else|:
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
 name|txnString
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"VectorizedOrcAcidRowBatchReader:: Read ValidWriteIdList: "
+operator|+
+name|this
+operator|.
+name|validWriteIdList
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" isFullAcidTable: "
+operator|+
+name|AcidUtils
+operator|.
+name|isFullAcidScan
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Clone readerOptions for deleteEvents.
@@ -1326,7 +1349,7 @@ name|orcSplit
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|)
 expr_stmt|;
 block|}
@@ -1396,8 +1419,8 @@ parameter_list|,
 name|JobConf
 name|conf
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|)
 throws|throws
 name|IOException
@@ -1440,7 +1463,7 @@ name|OrcRawRecordMerger
 operator|.
 name|TransactionMetaData
 operator|.
-name|findTransactionIDForSynthetcRowIDs
+name|findWriteIDForSynthetcRowIDs
 argument_list|(
 name|split
 operator|.
@@ -1467,7 +1490,7 @@ literal|1
 argument_list|,
 name|syntheticTxnInfo
 operator|.
-name|syntheticTransactionId
+name|syntheticWriteId
 argument_list|)
 return|;
 block|}
@@ -1489,7 +1512,7 @@ name|OrcRawRecordMerger
 operator|.
 name|TransactionMetaData
 operator|.
-name|findTransactionIDForSynthetcRowIDs
+name|findWriteIDForSynthetcRowIDs
 argument_list|(
 name|split
 operator|.
@@ -1567,7 +1590,7 @@ name|folder
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 literal|false
 argument_list|,
@@ -1683,7 +1706,7 @@ name|bucketProperty
 argument_list|,
 name|syntheticTxnInfo
 operator|.
-name|syntheticTransactionId
+name|syntheticWriteId
 argument_list|)
 return|;
 block|}
@@ -2229,7 +2252,7 @@ name|rootPath
 argument_list|)
 throw|;
 block|}
-comment|/**          * {@link RecordIdentifier#getTransactionId()}          */
+comment|/**          * {@link RecordIdentifier#getWriteId()}          */
 name|recordIdColumnVector
 operator|.
 name|fields
@@ -2408,7 +2431,7 @@ name|innerRecordIdColumnVector
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|=
 name|recordIdColumnVector
@@ -2451,7 +2474,7 @@ name|innerRecordIdColumnVector
 index|[
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 index|]
 operator|=
 name|recordIdColumnVector
@@ -2498,9 +2521,9 @@ comment|/*since ROW_IDs are not needed we didn't create the ColumnVectors to hol
 if|if
 condition|(
 operator|!
-name|validTxnList
+name|validWriteIdList
 operator|.
-name|isTxnValid
+name|isWriteIdValid
 argument_list|(
 name|syntheticProps
 operator|.
@@ -2754,7 +2777,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 expr_stmt|;
 name|recordIdColumnVector
@@ -2861,7 +2884,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 index|]
 operator|.
 name|isRepeating
@@ -2880,7 +2903,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 index|]
 operator|)
 operator|.
@@ -2892,9 +2915,9 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|validTxnList
+name|validWriteIdList
 operator|.
-name|isTxnValid
+name|isWriteIdValid
 argument_list|(
 name|currentTransactionIdForBatch
 argument_list|)
@@ -2924,7 +2947,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 index|]
 operator|)
 operator|.
@@ -2963,9 +2986,9 @@ block|{
 if|if
 condition|(
 operator|!
-name|validTxnList
+name|validWriteIdList
 operator|.
-name|isTxnValid
+name|isWriteIdValid
 argument_list|(
 name|currentTransactionVector
 index|[
@@ -3153,8 +3176,8 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 decl_stmt|;
 name|SortMergedDeleteEventRegistry
 parameter_list|(
@@ -3216,14 +3239,14 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|)
 decl_stmt|;
 name|this
 operator|.
-name|validTxnList
+name|validWriteIdList
 operator|=
 operator|(
 name|txnString
@@ -3232,13 +3255,36 @@ literal|null
 operator|)
 condition|?
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 else|:
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
 name|txnString
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"SortMergedDeleteEventRegistry:: Read ValidWriteIdList: "
+operator|+
+name|this
+operator|.
+name|validWriteIdList
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" isFullAcidTable: "
+operator|+
+name|AcidUtils
+operator|.
+name|isFullAcidScan
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|OrcRawRecordMerger
@@ -3283,7 +3329,7 @@ literal|false
 argument_list|,
 name|bucket
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 name|readerOptions
 argument_list|,
@@ -3420,7 +3466,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|.
 name|isRepeating
@@ -3435,7 +3481,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|)
 operator|.
@@ -3520,7 +3566,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|)
 operator|.
@@ -4178,8 +4224,8 @@ decl_stmt|;
 comment|// The bucket value should be same for all the records.
 specifier|private
 specifier|final
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 decl_stmt|;
 specifier|private
 name|boolean
@@ -4203,8 +4249,8 @@ parameter_list|,
 name|int
 name|bucket
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|,
 name|boolean
 name|isBucketedTable
@@ -4269,9 +4315,9 @@ literal|0
 expr_stmt|;
 name|this
 operator|.
-name|validTxnList
+name|validWriteIdList
 operator|=
-name|validTxnList
+name|validWriteIdList
 expr_stmt|;
 name|this
 operator|.
@@ -4380,9 +4426,9 @@ name|indexPtrInBatch
 expr_stmt|;
 if|if
 condition|(
-name|validTxnList
+name|validWriteIdList
 operator|.
-name|isTxnValid
+name|isWriteIdValid
 argument_list|(
 name|currentTransaction
 argument_list|)
@@ -4430,7 +4476,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|.
 name|isRepeating
@@ -4452,7 +4498,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|)
 operator|.
@@ -4535,7 +4581,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 index|]
 operator|.
 name|isRepeating
@@ -4557,7 +4603,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 index|]
 operator|)
 operator|.
@@ -4871,8 +4917,8 @@ name|compressedOtids
 index|[]
 decl_stmt|;
 specifier|private
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 decl_stmt|;
 specifier|private
 name|Boolean
@@ -4923,14 +4969,14 @@ name|conf
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|)
 decl_stmt|;
 name|this
 operator|.
-name|validTxnList
+name|validWriteIdList
 operator|=
 operator|(
 name|txnString
@@ -4939,13 +4985,36 @@ literal|null
 operator|)
 condition|?
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|()
 else|:
 operator|new
-name|ValidReadTxnList
+name|ValidReaderWriteIdList
 argument_list|(
 name|txnString
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"ColumnizedDeleteEventRegistry:: Read ValidWriteIdList: "
+operator|+
+name|this
+operator|.
+name|validWriteIdList
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" isFullAcidTable: "
+operator|+
+name|AcidUtils
+operator|.
+name|isFullAcidScan
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|this
@@ -5215,7 +5284,7 @@ name|readerOptions
 argument_list|,
 name|bucket
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 name|isBucketedTable
 argument_list|)
@@ -5881,7 +5950,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|.
 name|isRepeating
@@ -5896,7 +5965,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|)
 operator|.
@@ -5922,7 +5991,7 @@ name|cols
 index|[
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 index|]
 operator|)
 operator|.

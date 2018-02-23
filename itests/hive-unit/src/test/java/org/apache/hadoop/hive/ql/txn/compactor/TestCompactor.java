@@ -247,7 +247,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -5728,7 +5728,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000003_0000006"
+literal|"delta_0000001_0000004"
 argument_list|)
 condition|)
 block|{
@@ -5759,13 +5759,13 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"delta_0000001_0000002"
+block|,
+literal|"delta_0000001_0000004"
+block|,
 literal|"delta_0000003_0000004"
 block|,
-literal|"delta_0000003_0000006"
-block|,
 literal|"delta_0000005_0000006"
-block|,
-literal|"delta_0000007_0000008"
 block|}
 decl_stmt|;
 if|if
@@ -5822,9 +5822,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|6L
+literal|4L
 argument_list|,
 literal|1
 argument_list|)
@@ -6157,7 +6157,7 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Expecting 1 file \"base_0000006\" and found "
+literal|"Expecting 1 file \"base_0000004\" and found "
 operator|+
 name|stat
 operator|.
@@ -6194,7 +6194,7 @@ name|assertEquals
 argument_list|(
 name|name
 argument_list|,
-literal|"base_0000006"
+literal|"base_0000004"
 argument_list|)
 expr_stmt|;
 name|checkExpectedTxnsPresent
@@ -6215,9 +6215,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|6L
+literal|4L
 argument_list|,
 literal|1
 argument_list|)
@@ -6631,7 +6631,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000003_0000006"
+literal|"delta_0000001_0000004"
 argument_list|)
 condition|)
 block|{
@@ -6662,11 +6662,11 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"delta_0000001_0000002"
+block|,
+literal|"delta_0000001_0000004"
+block|,
 literal|"delta_0000003_0000004"
-block|,
-literal|"delta_0000003_0000006"
-block|,
-literal|"delta_0000005_0000006"
 block|}
 decl_stmt|;
 if|if
@@ -6723,9 +6723,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|6L
+literal|4L
 argument_list|,
 literal|1
 argument_list|)
@@ -7104,7 +7104,7 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Expecting 1 file \"base_0000006\" and found "
+literal|"Expecting 1 file \"base_0000004\" and found "
 operator|+
 name|stat
 operator|.
@@ -7142,7 +7142,7 @@ name|name
 operator|.
 name|equals
 argument_list|(
-literal|"base_0000006"
+literal|"base_0000004"
 argument_list|)
 condition|)
 block|{
@@ -7154,7 +7154,7 @@ literal|"majorCompactAfterAbort name "
 operator|+
 name|name
 operator|+
-literal|" not equals to base_0000006"
+literal|" not equals to base_0000004"
 argument_list|)
 expr_stmt|;
 block|}
@@ -7176,9 +7176,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|6L
+literal|4L
 argument_list|,
 literal|1
 argument_list|)
@@ -7513,7 +7513,7 @@ name|Assert
 operator|.
 name|fail
 argument_list|(
-literal|"Expecting 1 file \"base_0000006\" and found "
+literal|"Expecting 1 file \"base_0000004\" and found "
 operator|+
 name|stat
 operator|.
@@ -7550,7 +7550,7 @@ name|assertEquals
 argument_list|(
 name|name
 argument_list|,
-literal|"base_0000006"
+literal|"base_0000004"
 argument_list|)
 expr_stmt|;
 name|checkExpectedTxnsPresent
@@ -7571,9 +7571,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|6L
+literal|4L
 argument_list|,
 literal|2
 argument_list|)
@@ -7912,7 +7912,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000003_0000005"
+literal|"delta_0000001_0000003"
 argument_list|)
 condition|)
 block|{
@@ -7943,11 +7943,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000003_0000003_0000"
+literal|"delta_0000001_0000001_0000"
 block|,
-literal|"delta_0000003_0000005"
+literal|"delta_0000001_0000003"
 block|,
-literal|"delta_0000004_0000004_0000"
+literal|"delta_0000002_0000002_0000"
 block|}
 decl_stmt|;
 if|if
@@ -8004,9 +8004,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|4L
+literal|2L
 argument_list|,
 literal|1
 argument_list|)
@@ -8096,7 +8096,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delete_delta_0000003_0000005"
+literal|"delete_delta_0000001_0000003"
 argument_list|)
 condition|)
 block|{
@@ -8127,9 +8127,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delete_delta_0000003_0000005"
+literal|"delete_delta_0000001_0000003"
 block|,
-literal|"delete_delta_0000005_0000005_0000"
+literal|"delete_delta_0000003_0000003_0000"
 block|}
 decl_stmt|;
 if|if
@@ -8186,9 +8186,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|4L
+literal|2L
 argument_list|,
-literal|4L
+literal|2L
 argument_list|,
 literal|1
 argument_list|)
@@ -8507,7 +8507,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000003_0000004"
+literal|"delta_0000001_0000002"
 argument_list|)
 condition|)
 block|{
@@ -8538,11 +8538,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delta_0000003_0000003_0000"
+literal|"delta_0000001_0000001_0000"
 block|,
-literal|"delta_0000003_0000004"
+literal|"delta_0000001_0000002"
 block|,
-literal|"delta_0000004_0000004_0000"
+literal|"delta_0000002_0000002_0000"
 block|}
 decl_stmt|;
 if|if
@@ -8599,9 +8599,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|4L
+literal|2L
 argument_list|,
 literal|1
 argument_list|)
@@ -8691,7 +8691,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delete_delta_0000003_0000004"
+literal|"delete_delta_0000001_0000002"
 argument_list|)
 condition|)
 block|{
@@ -8722,7 +8722,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delete_delta_0000003_0000004"
+literal|"delete_delta_0000001_0000002"
 block|}
 decl_stmt|;
 if|if
@@ -9153,7 +9153,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delta_0000003_0000006"
+literal|"delta_0000001_0000004"
 argument_list|)
 condition|)
 block|{
@@ -9184,13 +9184,13 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"delta_0000001_0000002"
+block|,
+literal|"delta_0000001_0000004"
+block|,
 literal|"delta_0000003_0000004"
 block|,
-literal|"delta_0000003_0000006"
-block|,
 literal|"delta_0000005_0000006"
-block|,
-literal|"delta_0000007_0000008"
 block|}
 decl_stmt|;
 if|if
@@ -9247,9 +9247,9 @@ name|columnTypesProperty
 argument_list|,
 literal|0
 argument_list|,
-literal|3L
+literal|1L
 argument_list|,
-literal|6L
+literal|4L
 argument_list|,
 literal|1
 argument_list|)
@@ -9339,7 +9339,7 @@ index|]
 operator|.
 name|equals
 argument_list|(
-literal|"delete_delta_0000003_0000006"
+literal|"delete_delta_0000001_0000004"
 argument_list|)
 condition|)
 block|{
@@ -9370,7 +9370,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"delete_delta_0000003_0000006"
+literal|"delete_delta_0000001_0000004"
 block|}
 decl_stmt|;
 if|if
@@ -10867,21 +10867,32 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|ValidTxnList
-name|txnList
+name|ValidWriteIdList
+name|writeIdList
 init|=
 operator|new
-name|ValidTxnList
+name|ValidWriteIdList
 argument_list|()
 block|{
 annotation|@
 name|Override
 specifier|public
+name|String
+name|getTableName
+parameter_list|()
+block|{
+return|return
+literal|"AcidTable"
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|boolean
-name|isTxnValid
+name|isWriteIdValid
 parameter_list|(
 name|long
-name|txnid
+name|writeid
 parameter_list|)
 block|{
 return|return
@@ -10892,13 +10903,13 @@ annotation|@
 name|Override
 specifier|public
 name|RangeResponse
-name|isTxnRangeValid
+name|isWriteIdRangeValid
 parameter_list|(
 name|long
-name|minTxnId
+name|minWriteId
 parameter_list|,
 name|long
-name|maxTxnId
+name|maxWriteId
 parameter_list|)
 block|{
 return|return
@@ -10932,7 +10943,7 @@ annotation|@
 name|Override
 specifier|public
 name|Long
-name|getMinOpenTxn
+name|getMinOpenWriteId
 parameter_list|()
 block|{
 return|return
@@ -10957,7 +10968,7 @@ name|Override
 specifier|public
 name|long
 index|[]
-name|getInvalidTransactions
+name|getInvalidWriteIds
 parameter_list|()
 block|{
 return|return
@@ -10986,7 +10997,7 @@ annotation|@
 name|Override
 specifier|public
 name|boolean
-name|isTxnAborted
+name|isWriteIdAborted
 parameter_list|(
 name|long
 name|txnid
@@ -11000,13 +11011,13 @@ annotation|@
 name|Override
 specifier|public
 name|RangeResponse
-name|isTxnRangeAborted
+name|isWriteIdRangeAborted
 parameter_list|(
 name|long
-name|minTxnId
+name|minWriteId
 parameter_list|,
 name|long
-name|maxTxnId
+name|maxWriteId
 parameter_list|)
 block|{
 return|return
@@ -11102,7 +11113,7 @@ literal|true
 argument_list|,
 name|bucket
 argument_list|,
-name|txnList
+name|writeIdList
 argument_list|,
 name|base
 argument_list|,
@@ -11161,7 +11172,7 @@ name|currentTxn
 argument_list|,
 name|identifier
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -11176,7 +11187,7 @@ name|currentTxn
 operator|!=
 name|identifier
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 condition|)
 block|{
@@ -11190,7 +11201,7 @@ literal|1
 argument_list|,
 name|identifier
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;

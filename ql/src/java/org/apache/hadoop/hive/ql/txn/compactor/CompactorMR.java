@@ -227,7 +227,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 import|;
 end_import
 
@@ -243,7 +243,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -1055,8 +1055,8 @@ parameter_list|,
 name|StorageDescriptor
 name|sd
 parameter_list|,
-name|ValidTxnList
-name|txns
+name|ValidWriteIdList
+name|writeIds
 parameter_list|,
 name|CompactionInfo
 name|ci
@@ -1305,11 +1305,11 @@ name|job
 operator|.
 name|set
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|,
-name|txns
+name|writeIds
 operator|.
 name|toString
 argument_list|()
@@ -1565,7 +1565,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Run Compaction which may consist of several jobs on the cluster.    * @param conf Hive configuration file    * @param jobName name to run this job with    * @param t metastore table    * @param sd metastore storage descriptor    * @param txns list of valid transactions    * @param ci CompactionInfo    * @throws java.io.IOException if the job fails    */
+comment|/**    * Run Compaction which may consist of several jobs on the cluster.    * @param conf Hive configuration file    * @param jobName name to run this job with    * @param t metastore table    * @param sd metastore storage descriptor    * @param writeIds list of valid write ids    * @param ci CompactionInfo    * @throws java.io.IOException if the job fails    */
 name|void
 name|run
 parameter_list|(
@@ -1581,8 +1581,8 @@ parameter_list|,
 name|StorageDescriptor
 name|sd
 parameter_list|,
-name|ValidTxnList
-name|txns
+name|ValidWriteIdList
+name|writeIds
 parameter_list|,
 name|CompactionInfo
 name|ci
@@ -1683,7 +1683,7 @@ operator|.
 name|getLocation
 argument_list|()
 argument_list|,
-name|txns
+name|writeIds
 argument_list|,
 name|t
 argument_list|)
@@ -1703,7 +1703,7 @@ name|t
 argument_list|,
 name|sd
 argument_list|,
-name|txns
+name|writeIds
 argument_list|,
 name|ci
 argument_list|)
@@ -1732,7 +1732,7 @@ argument_list|)
 argument_list|,
 name|conf
 argument_list|,
-name|txns
+name|writeIds
 argument_list|,
 literal|false
 argument_list|,
@@ -1849,7 +1849,7 @@ name|t
 argument_list|,
 name|sd
 argument_list|,
-name|txns
+name|writeIds
 argument_list|,
 name|ci
 argument_list|)
@@ -1918,7 +1918,7 @@ argument_list|)
 argument_list|,
 name|conf
 argument_list|,
-name|txns
+name|writeIds
 argument_list|)
 expr_stmt|;
 block|}
@@ -2094,9 +2094,9 @@ literal|"."
 decl_stmt|;
 if|if
 condition|(
-name|txns
+name|writeIds
 operator|.
-name|getMinOpenTxn
+name|getMinOpenWriteId
 argument_list|()
 operator|!=
 literal|null
@@ -2108,11 +2108,11 @@ literal|" with min Open "
 operator|+
 name|JavaUtils
 operator|.
-name|txnIdToString
+name|writeIdToString
 argument_list|(
-name|txns
+name|writeIds
 operator|.
-name|getMinOpenTxn
+name|getMinOpenWriteId
 argument_list|()
 argument_list|)
 operator|+
@@ -2339,7 +2339,7 @@ name|minTxn
 argument_list|,
 name|delta
 operator|.
-name|getMinTransaction
+name|getMinWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2353,7 +2353,7 @@ name|maxTxn
 argument_list|,
 name|delta
 operator|.
-name|getMaxTransaction
+name|getMaxWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2752,8 +2752,8 @@ parameter_list|,
 name|String
 name|location
 parameter_list|,
-name|ValidTxnList
-name|txnList
+name|ValidWriteIdList
+name|writeIdList
 parameter_list|,
 name|Table
 name|t
@@ -2778,7 +2778,7 @@ argument_list|)
 argument_list|,
 name|conf
 argument_list|,
-name|txnList
+name|writeIdList
 argument_list|,
 name|Ref
 operator|.
@@ -4668,19 +4668,19 @@ name|INPUT_FORMAT_CLASS_NAME
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|ValidTxnList
-name|txnList
+name|ValidWriteIdList
+name|writeIdList
 init|=
 operator|new
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 argument_list|(
 name|jobConf
 operator|.
 name|get
 argument_list|(
-name|ValidTxnList
+name|ValidWriteIdList
 operator|.
-name|VALID_TXNS_KEY
+name|VALID_WRITEIDS_KEY
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -4717,7 +4717,7 @@ operator|.
 name|getBucket
 argument_list|()
 argument_list|,
-name|txnList
+name|writeIdList
 argument_list|,
 name|split
 operator|.
@@ -5018,7 +5018,7 @@ argument_list|(
 name|reporter
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 name|jobConf
 operator|.
@@ -5032,7 +5032,7 @@ name|MAX_VALUE
 argument_list|)
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|jobConf
 operator|.
@@ -5198,7 +5198,7 @@ argument_list|(
 name|reporter
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 name|jobConf
 operator|.
@@ -5212,7 +5212,7 @@ name|MAX_VALUE
 argument_list|)
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|jobConf
 operator|.
@@ -5893,7 +5893,7 @@ literal|false
 argument_list|)
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
 name|conf
 operator|.
@@ -5907,7 +5907,7 @@ name|MAX_VALUE
 argument_list|)
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
 name|conf
 operator|.

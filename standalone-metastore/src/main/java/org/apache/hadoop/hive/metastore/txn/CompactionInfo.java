@@ -31,7 +31,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidCompactorTxnList
+name|ValidCompactorWriteIdList
 import|;
 end_import
 
@@ -67,7 +67,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|GetOpenTxnsInfoResponse
+name|TableValidWriteIds
 import|;
 end_import
 
@@ -158,10 +158,10 @@ name|tooManyAborts
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * {@code 0} means it wasn't set (e.g. in case of upgrades, since ResultSet.getLong() will return 0 if field is NULL)     * See {@link TxnStore#setCompactionHighestTxnId(CompactionInfo, long)} for precise definition.    * See also {@link TxnUtils#createValidCompactTxnList(GetOpenTxnsInfoResponse)} and    * {@link ValidCompactorTxnList#highWatermark}    */
+comment|/**    * {@code 0} means it wasn't set (e.g. in case of upgrades, since ResultSet.getLong() will return 0 if field is NULL)     * See {@link TxnStore#setCompactionHighestWriteId(CompactionInfo, long)} for precise definition.    * See also {@link TxnUtils#createValidCompactWriteIdList(TableValidWriteIds)} and    * {@link ValidCompactorWriteIdList#highWatermark}.    */
 specifier|public
 name|long
-name|highestTxnId
+name|highestWriteId
 decl_stmt|;
 name|byte
 index|[]
@@ -480,9 +480,9 @@ name|tooManyAborts
 operator|+
 literal|","
 operator|+
-literal|"highestTxnId:"
+literal|"highestWriteId:"
 operator|+
-name|highestTxnId
+name|highestWriteId
 return|;
 block|}
 comment|/**    * loads object from a row in Select * from COMPACTION_QUEUE    * @param rs ResultSet after call to rs.next()    * @throws SQLException    */
@@ -631,7 +631,7 @@ argument_list|)
 expr_stmt|;
 name|fullCi
 operator|.
-name|highestTxnId
+name|highestWriteId
 operator|=
 name|rs
 operator|.
@@ -824,7 +824,7 @@ literal|12
 argument_list|,
 name|ci
 operator|.
-name|highestTxnId
+name|highestWriteId
 argument_list|)
 expr_stmt|;
 name|pStmt

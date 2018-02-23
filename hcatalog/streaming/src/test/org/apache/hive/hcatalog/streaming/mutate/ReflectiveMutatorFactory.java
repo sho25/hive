@@ -348,7 +348,7 @@ argument_list|>
 name|outputFormat
 parameter_list|,
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|Path
 name|partitionPath
@@ -371,7 +371,7 @@ name|objectInspector
 argument_list|,
 name|outputFormat
 argument_list|,
-name|transactionId
+name|writeId
 argument_list|,
 name|partitionPath
 argument_list|,

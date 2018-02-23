@@ -6464,7 +6464,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":16,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
+literal|"{\"transactionid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6488,7 +6488,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/delta_0000016_0000016_0000/bucket_00001"
+literal|"nonacidorctbl/delta_0000001_0000001_0000/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6607,7 +6607,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000016/bucket_00000"
+literal|"nonacidorctbl/base_0000001/bucket_00000"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6655,7 +6655,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000016/bucket_00001"
+literal|"nonacidorctbl/base_0000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6703,7 +6703,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000016/bucket_00001"
+literal|"nonacidorctbl/base_0000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6727,7 +6727,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":16,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
+literal|"{\"transactionid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6751,7 +6751,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000016/bucket_00001"
+literal|"nonacidorctbl/base_0000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;

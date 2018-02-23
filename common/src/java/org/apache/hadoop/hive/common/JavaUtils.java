@@ -726,7 +726,6 @@ operator|+
 name|extLockId
 return|;
 block|}
-comment|/**    * Utility method for ACID to normalize logging info.  Matches    * org.apache.hadoop.hive.metastore.api.LockResponse#toString    */
 specifier|public
 specifier|static
 name|String
@@ -740,6 +739,21 @@ return|return
 literal|"txnid:"
 operator|+
 name|txnId
+return|;
+block|}
+specifier|public
+specifier|static
+name|String
+name|writeIdToString
+parameter_list|(
+name|long
+name|writeId
+parameter_list|)
+block|{
+return|return
+literal|"writeid:"
+operator|+
+name|writeId
 return|;
 block|}
 specifier|public
@@ -772,7 +786,7 @@ block|}
 specifier|public
 specifier|static
 name|Long
-name|extractTxnId
+name|extractWriteId
 parameter_list|(
 name|Path
 name|file

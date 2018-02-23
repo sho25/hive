@@ -291,7 +291,7 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidTxnList
+name|ValidWriteIdList
 import|;
 end_import
 
@@ -467,8 +467,8 @@ name|length
 decl_stmt|;
 specifier|private
 specifier|final
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 decl_stmt|;
 specifier|private
 specifier|final
@@ -501,7 +501,7 @@ specifier|private
 name|OrcStruct
 name|extraValue
 decl_stmt|;
-comment|/**    * A RecordIdentifier extended with the current transaction id. This is the    * key of our merge sort with the originalTransaction, bucket, and rowId    * ascending and the currentTransaction, statementId descending. This means that if the    * reader is collapsing events to just the last update, just the first    * instance of each record is required.    */
+comment|/**    * A RecordIdentifier extended with the current write id. This is the    * key of our merge sort with the originalWriteId, bucket, and rowId    * ascending and the currentWriteId, statementId descending. This means that if the    * reader is collapsing events to just the last update, just the first    * instance of each record is required.    */
 annotation|@
 name|VisibleForTesting
 specifier|public
@@ -514,14 +514,14 @@ name|RecordIdentifier
 block|{
 specifier|private
 name|long
-name|currentTransactionId
+name|currentWriteId
 decl_stmt|;
 comment|/**      * This is the value from delta file name which may be different from value encode in       * {@link RecordIdentifier#getBucketProperty()} in case of Update/Delete.      * So for Acid 1.0 + multi-stmt txn, if {@code isSameRow() == true}, then it must be an update      * or delete event.  For Acid 2.0 + multi-stmt txn, it must be a delete event.      * No 2 Insert events from can ever agree on {@link RecordIdentifier}      */
 specifier|private
 name|int
 name|statementId
 decl_stmt|;
-comment|//sort on this descending, like currentTransactionId
+comment|//sort on this descending, like currentWriteId
 name|ReaderKey
 parameter_list|()
 block|{
@@ -546,7 +546,7 @@ block|}
 name|ReaderKey
 parameter_list|(
 name|long
-name|originalTransaction
+name|originalWriteId
 parameter_list|,
 name|int
 name|bucket
@@ -555,18 +555,18 @@ name|long
 name|rowId
 parameter_list|,
 name|long
-name|currentTransactionId
+name|currentWriteId
 parameter_list|)
 block|{
 name|this
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 argument_list|,
 name|bucket
 argument_list|,
 name|rowId
 argument_list|,
-name|currentTransactionId
+name|currentWriteId
 argument_list|,
 literal|0
 argument_list|)
@@ -577,7 +577,7 @@ specifier|public
 name|ReaderKey
 parameter_list|(
 name|long
-name|originalTransaction
+name|originalWriteId
 parameter_list|,
 name|int
 name|bucket
@@ -586,7 +586,7 @@ name|long
 name|rowId
 parameter_list|,
 name|long
-name|currentTransactionId
+name|currentWriteId
 parameter_list|,
 name|int
 name|statementId
@@ -594,7 +594,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 argument_list|,
 name|bucket
 argument_list|,
@@ -603,9 +603,9 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|currentTransactionId
+name|currentWriteId
 operator|=
-name|currentTransactionId
+name|currentWriteId
 expr_stmt|;
 name|this
 operator|.
@@ -631,7 +631,7 @@ argument_list|(
 name|other
 argument_list|)
 expr_stmt|;
-name|currentTransactionId
+name|currentWriteId
 operator|=
 operator|(
 operator|(
@@ -640,7 +640,7 @@ operator|)
 name|other
 operator|)
 operator|.
-name|currentTransactionId
+name|currentWriteId
 expr_stmt|;
 name|statementId
 operator|=
@@ -659,7 +659,7 @@ name|void
 name|setValues
 parameter_list|(
 name|long
-name|originalTransactionId
+name|originalWriteId
 parameter_list|,
 name|int
 name|bucket
@@ -668,7 +668,7 @@ name|long
 name|rowId
 parameter_list|,
 name|long
-name|currentTransactionId
+name|currentWriteId
 parameter_list|,
 name|int
 name|statementId
@@ -676,7 +676,7 @@ parameter_list|)
 block|{
 name|setValues
 argument_list|(
-name|originalTransactionId
+name|originalWriteId
 argument_list|,
 name|bucket
 argument_list|,
@@ -685,9 +685,9 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|currentTransactionId
+name|currentWriteId
 operator|=
-name|currentTransactionId
+name|currentWriteId
 expr_stmt|;
 name|this
 operator|.
@@ -714,7 +714,7 @@ argument_list|(
 name|other
 argument_list|)
 operator|&&
-name|currentTransactionId
+name|currentWriteId
 operator|==
 operator|(
 operator|(
@@ -723,7 +723,7 @@ operator|)
 name|other
 operator|)
 operator|.
-name|currentTransactionId
+name|currentWriteId
 operator|&&
 name|statementId
 operator|==
@@ -763,10 +763,10 @@ call|(
 name|int
 call|)
 argument_list|(
-name|currentTransactionId
+name|currentWriteId
 operator|^
 operator|(
-name|currentTransactionId
+name|currentWriteId
 operator|>>>
 literal|32
 operator|)
@@ -831,19 +831,19 @@ name|other
 decl_stmt|;
 if|if
 condition|(
-name|currentTransactionId
+name|currentWriteId
 operator|!=
 name|oth
 operator|.
-name|currentTransactionId
+name|currentWriteId
 condition|)
 block|{
 return|return
-name|currentTransactionId
+name|currentWriteId
 operator|<
 name|oth
 operator|.
-name|currentTransactionId
+name|currentWriteId
 condition|?
 operator|+
 literal|1
@@ -905,22 +905,22 @@ argument_list|)
 operator|==
 literal|0
 operator|&&
-name|currentTransactionId
+name|currentWriteId
 operator|==
 name|other
 operator|.
-name|currentTransactionId
+name|currentWriteId
 return|;
 block|}
 name|long
-name|getCurrentTransactionId
+name|getCurrentWriteId
 parameter_list|()
 block|{
 return|return
-name|currentTransactionId
+name|currentWriteId
 return|;
 block|}
-comment|/**      * Compare rows without considering the currentTransactionId.      * @param other the value to compare to      * @return -1, 0, +1      */
+comment|/**      * Compare rows without considering the currentWriteId.      * @param other the value to compare to      * @return -1, 0, +1      */
 name|int
 name|compareRow
 parameter_list|(
@@ -943,9 +943,9 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"{originalTxn: "
+literal|"{originalWriteId: "
 operator|+
-name|getTransactionId
+name|getWriteId
 argument_list|()
 operator|+
 literal|", "
@@ -958,9 +958,9 @@ operator|+
 name|getRowId
 argument_list|()
 operator|+
-literal|", currentTxn: "
+literal|", currentWriteId "
 operator|+
-name|currentTransactionId
+name|currentWriteId
 operator|+
 literal|", statementId: "
 operator|+
@@ -1715,7 +1715,7 @@ name|setFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|,
 operator|new
 name|LongWritable
@@ -1731,7 +1731,7 @@ name|setFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|,
 operator|new
 name|LongWritable
@@ -1828,7 +1828,7 @@ name|getFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|ORIGINAL_TRANSACTION
+name|ORIGINAL_WRITEID
 argument_list|)
 operator|)
 operator|.
@@ -1866,7 +1866,7 @@ name|getFieldValue
 argument_list|(
 name|OrcRecordUpdater
 operator|.
-name|CURRENT_TRANSACTION
+name|CURRENT_WRITEID
 argument_list|)
 operator|)
 operator|.
@@ -2095,8 +2095,8 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|,
 name|int
 name|statementId
@@ -2194,7 +2194,7 @@ argument_list|()
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 literal|false
 argument_list|,
@@ -2642,8 +2642,8 @@ parameter_list|,
 name|Configuration
 name|conf
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|,
 name|int
 name|statementId
@@ -2738,7 +2738,7 @@ argument_list|()
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 literal|false
 argument_list|,
@@ -3228,7 +3228,7 @@ name|tfp
 init|=
 name|TransactionMetaData
 operator|.
-name|findTransactionIDForSynthetcRowIDs
+name|findWriteIDForSynthetcRowIDs
 argument_list|(
 name|mergerOptions
 operator|.
@@ -3996,8 +3996,8 @@ parameter_list|,
 name|int
 name|bucket
 parameter_list|,
-name|ValidTxnList
-name|validTxnList
+name|ValidWriteIdList
+name|validWriteIdList
 parameter_list|,
 name|Reader
 operator|.
@@ -4040,9 +4040,9 @@ argument_list|()
 expr_stmt|;
 name|this
 operator|.
-name|validTxnList
+name|validWriteIdList
 operator|=
-name|validTxnList
+name|validWriteIdList
 expr_stmt|;
 comment|/**      * @since Hive 3.0      * With split update (HIVE-14035) we have base/, delta/ and delete_delta/ - the latter only      * has Delete events and the others only have Insert events.  Thus {@link #baseReader} is      * a split of a file in base/ or delta/.      *      * For Compaction, each split (for now) is a logical bucket, i.e. all files from base/ + delta(s)/      * for a given bucket ID and delete_delta(s)/      *      * For bucketed tables, the data files are named bucket_N and all rows in this file are such      * that {@link org.apache.hadoop.hive.ql.io.BucketCodec#decodeWriterId(int)} of      * {@link RecordIdentifier#getBucketProperty()} is N.  This is currently true for all types of      * files but may not be true for for delete_delta/ files in the future.      *      * For un-bucketed tables, the system is designed so that it works when there is no relationship      * between delete_delta file name (bucket_N) and the value of {@link RecordIdentifier#getBucketProperty()}.      * (Later we this maybe optimized to take advantage of situations where it is known that      * bucket_N matches bucketProperty().)  This implies that for a given {@link baseReader} all      * files in delete_delta/ have to be opened ({@link ReaderPair} created).  Insert events are      * still written such that N in file name (writerId) matches what's in bucketProperty().      *      * Compactor for un-bucketed tables works exactly the same as for bucketed ones though it      * should be optimized (see HIVE-17206).  In particular, each split is a set of files      * created by a writer with the same writerId, i.e. all bucket_N files across base/&      * deleta/ for the same N. Unlike bucketed tables, there is no relationship between      * any values in user columns to file name.      * The maximum N is determined by the number of writers the system chose for the the "largest"      * write into a given partition.      *      * In both cases, Compactor should be changed so that Minor compaction is run very often and      * only compacts delete_delta/.  Major compaction can do what it does now.      */
 name|boolean
@@ -4379,7 +4379,7 @@ name|readerPairOptions
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 literal|0
 argument_list|)
@@ -4415,7 +4415,7 @@ name|tfp
 init|=
 name|TransactionMetaData
 operator|.
-name|findTransactionIDForSynthetcRowIDs
+name|findWriteIDForSynthetcRowIDs
 argument_list|(
 name|mergerOptions
 operator|.
@@ -4434,7 +4434,7 @@ if|if
 condition|(
 name|tfp
 operator|.
-name|syntheticTransactionId
+name|syntheticWriteId
 operator|>
 literal|0
 condition|)
@@ -4447,7 +4447,7 @@ name|mergerOptions
 argument_list|,
 name|tfp
 operator|.
-name|syntheticTransactionId
+name|syntheticWriteId
 argument_list|,
 name|tfp
 operator|.
@@ -4482,7 +4482,7 @@ name|readerPairOptions
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 name|tfp
 operator|.
@@ -4894,7 +4894,7 @@ name|mergerOptions
 argument_list|,
 name|deltaDir
 operator|.
-name|getMinTransaction
+name|getMinWriteId
 argument_list|()
 argument_list|,
 name|delta
@@ -4917,7 +4917,7 @@ name|rawCompactOptions
 argument_list|,
 name|conf
 argument_list|,
-name|validTxnList
+name|validWriteIdList
 argument_list|,
 name|deltaDir
 operator|.
@@ -5238,7 +5238,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * For use with Load Data statement which places {@link AcidUtils.AcidBaseFileType#ORIGINAL_BASE}    * type files into a base_x/ or delta_x_x.  The data in these are then assigned ROW_IDs at read    * time and made permanent at compaction time.  This is identical to how 'original' files (i.e.    * those that existed in the table before it was converted to an Acid table) except that the    * transaction ID to use in the ROW_ID should be that of the transaction that ran the Load Data.    */
+comment|/**    * For use with Load Data statement which places {@link AcidUtils.AcidBaseFileType#ORIGINAL_BASE}    * type files into a base_x/ or delta_x_x.  The data in these are then assigned ROW_IDs at read    * time and made permanent at compaction time.  This is identical to how 'original' files (i.e.    * those that existed in the table before it was converted to an Acid table) except that the    * write ID to use in the ROW_ID should be that of the transaction that ran the Load Data.    */
 specifier|static
 specifier|final
 class|class
@@ -5246,7 +5246,7 @@ name|TransactionMetaData
 block|{
 specifier|final
 name|long
-name|syntheticTransactionId
+name|syntheticWriteId
 decl_stmt|;
 comment|/**      * folder which determines the transaction id to use in synthetic ROW_IDs      */
 specifier|final
@@ -5260,7 +5260,7 @@ decl_stmt|;
 name|TransactionMetaData
 parameter_list|(
 name|long
-name|syntheticTransactionId
+name|syntheticWriteId
 parameter_list|,
 name|Path
 name|folder
@@ -5268,7 +5268,7 @@ parameter_list|)
 block|{
 name|this
 argument_list|(
-name|syntheticTransactionId
+name|syntheticWriteId
 argument_list|,
 name|folder
 argument_list|,
@@ -5279,7 +5279,7 @@ block|}
 name|TransactionMetaData
 parameter_list|(
 name|long
-name|syntheticTransactionId
+name|syntheticWriteId
 parameter_list|,
 name|Path
 name|folder
@@ -5290,9 +5290,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|syntheticTransactionId
+name|syntheticWriteId
 operator|=
-name|syntheticTransactionId
+name|syntheticWriteId
 expr_stmt|;
 name|this
 operator|.
@@ -5309,7 +5309,7 @@ expr_stmt|;
 block|}
 specifier|static
 name|TransactionMetaData
-name|findTransactionIDForSynthetcRowIDs
+name|findWriteIDForSynthetcRowIDs
 parameter_list|(
 name|Path
 name|splitPath
@@ -5453,12 +5453,12 @@ decl_stmt|;
 assert|assert
 name|pd
 operator|.
-name|getMinTransaction
+name|getMinWriteId
 argument_list|()
 operator|==
 name|pd
 operator|.
-name|getMaxTransaction
+name|getMaxWriteId
 argument_list|()
 operator|:
 literal|"This a delta with raw non acid schema, must be result of single write, no compaction: "
@@ -5471,7 +5471,7 @@ name|TransactionMetaData
 argument_list|(
 name|pd
 operator|.
-name|getMinTransaction
+name|getMinWriteId
 argument_list|()
 argument_list|,
 name|parent
@@ -5528,7 +5528,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * This is done to read non-acid schema files ("original") located in base_x/ or delta_x_x/ which    * happens as a result of Load Data statement.  Setting {@code rootPath} to base_x/ or delta_x_x    * causes {@link AcidUtils#getAcidState(Path, Configuration, ValidTxnList)} in subsequent    * {@link OriginalReaderPair} object to return the files in this dir    * in {@link AcidUtils.Directory#getOriginalFiles()}    * @return modified clone of {@code baseOptions}    */
+comment|/**    * This is done to read non-acid schema files ("original") located in base_x/ or delta_x_x/ which    * happens as a result of Load Data statement.  Setting {@code rootPath} to base_x/ or delta_x_x    * causes {@link AcidUtils#getAcidState(Path, Configuration, ValidWriteIdList)} in subsequent    * {@link OriginalReaderPair} object to return the files in this dir    * in {@link AcidUtils.Directory#getOriginalFiles()}    * @return modified clone of {@code baseOptions}    */
 specifier|private
 name|Options
 name|modifyForNonAcidSchemaRead
@@ -5976,9 +5976,9 @@ comment|// if this transaction isn't ok, skip over it
 if|if
 condition|(
 operator|!
-name|validTxnList
+name|validWriteIdList
 operator|.
-name|isTxnValid
+name|isWriteIdValid
 argument_list|(
 operator|(
 operator|(
@@ -5987,7 +5987,7 @@ operator|)
 name|recordIdentifier
 operator|)
 operator|.
-name|getCurrentTransactionId
+name|getCurrentWriteId
 argument_list|()
 argument_list|)
 condition|)

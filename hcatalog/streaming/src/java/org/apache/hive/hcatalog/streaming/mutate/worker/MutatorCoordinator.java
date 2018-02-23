@@ -541,7 +541,7 @@ name|configuration
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * We expect records grouped by (partitionValues,bucketId) and ordered by (origTxnId,rowId).    *     * @throws BucketIdException The bucket ID in the {@link RecordIdentifier} of the record does not match that computed    *           using the values in the record's bucketed columns.    * @throws RecordSequenceException The record was submitted that was not in the correct ascending (origTxnId, rowId)    *           sequence.    * @throws GroupRevisitedException If an event was submitted for a (partition, bucketId) combination that has already    *           been closed.    * @throws PartitionCreationException Could not create a new partition in the meta store.    * @throws WorkerException    */
+comment|/**    * We expect records grouped by (partitionValues,bucketId) and ordered by (origWriteId,rowId).    *     * @throws BucketIdException The bucket ID in the {@link RecordIdentifier} of the record does not match that computed    *           using the values in the record's bucketed columns.    * @throws RecordSequenceException The record was submitted that was not in the correct ascending (origWriteId, rowId)    *           sequence.    * @throws GroupRevisitedException If an event was submitted for a (partition, bucketId) combination that has already    *           been closed.    * @throws PartitionCreationException Could not create a new partition in the meta store.    * @throws WorkerException    */
 specifier|public
 name|void
 name|insert
@@ -615,7 +615,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * We expect records grouped by (partitionValues,bucketId) and ordered by (origTxnId,rowId).    *     * @throws BucketIdException The bucket ID in the {@link RecordIdentifier} of the record does not match that computed    *           using the values in the record's bucketed columns.    * @throws RecordSequenceException The record was submitted that was not in the correct ascending (origTxnId, rowId)    *           sequence.    * @throws GroupRevisitedException If an event was submitted for a (partition, bucketId) combination that has already    *           been closed.    * @throws PartitionCreationException Could not create a new partition in the meta store.    * @throws WorkerException    */
+comment|/**    * We expect records grouped by (partitionValues,bucketId) and ordered by (origWriteId,rowId).    *     * @throws BucketIdException The bucket ID in the {@link RecordIdentifier} of the record does not match that computed    *           using the values in the record's bucketed columns.    * @throws RecordSequenceException The record was submitted that was not in the correct ascending (origWriteId, rowId)    *           sequence.    * @throws GroupRevisitedException If an event was submitted for a (partition, bucketId) combination that has already    *           been closed.    * @throws PartitionCreationException Could not create a new partition in the meta store.    * @throws WorkerException    */
 specifier|public
 name|void
 name|update
@@ -689,7 +689,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * We expect records grouped by (partitionValues,bucketId) and ordered by (origTxnId,rowId).    *     * @throws BucketIdException The bucket ID in the {@link RecordIdentifier} of the record does not match that computed    *           using the values in the record's bucketed columns.    * @throws RecordSequenceException The record was submitted that was not in the correct ascending (origTxnId, rowId)    *           sequence.    * @throws GroupRevisitedException If an event was submitted for a (partition, bucketId) combination that has already    *           been closed.    * @throws PartitionCreationException Could not create a new partition in the meta store.    * @throws WorkerException    */
+comment|/**    * We expect records grouped by (partitionValues,bucketId) and ordered by (origWriteId,rowId).    *     * @throws BucketIdException The bucket ID in the {@link RecordIdentifier} of the record does not match that computed    *           using the values in the record's bucketed columns.    * @throws RecordSequenceException The record was submitted that was not in the correct ascending (origWriteId, rowId)    *           sequence.    * @throws GroupRevisitedException If an event was submitted for a (partition, bucketId) combination that has already    *           been closed.    * @throws PartitionCreationException Could not create a new partition in the meta store.    * @throws WorkerException    */
 specifier|public
 name|void
 name|delete
@@ -1134,7 +1134,7 @@ name|newPartitionPath
 argument_list|,
 name|table
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|newBucketId
@@ -1151,7 +1151,7 @@ name|outputFormat
 argument_list|,
 name|table
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 argument_list|,
 name|newPartitionPath
@@ -1451,7 +1451,7 @@ name|Path
 name|partitionPath
 parameter_list|,
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|int
 name|bucketId
@@ -1481,14 +1481,14 @@ argument_list|(
 name|bucketId
 argument_list|)
 operator|.
-name|minimumTransactionId
+name|minimumWriteId
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 operator|.
-name|maximumTransactionId
+name|maximumWriteId
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 argument_list|)
 decl_stmt|;

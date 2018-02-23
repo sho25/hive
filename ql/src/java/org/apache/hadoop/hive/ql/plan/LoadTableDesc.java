@@ -166,7 +166,7 @@ name|stmtId
 decl_stmt|;
 specifier|private
 name|Long
-name|currentTransactionId
+name|currentWriteId
 decl_stmt|;
 specifier|private
 name|boolean
@@ -267,11 +267,11 @@ name|inheritTableSpecs
 expr_stmt|;
 name|this
 operator|.
-name|currentTransactionId
+name|currentWriteId
 operator|=
 name|o
 operator|.
-name|currentTransactionId
+name|currentWriteId
 expr_stmt|;
 name|this
 operator|.
@@ -321,7 +321,7 @@ name|Operation
 name|writeType
 parameter_list|,
 name|Long
-name|currentTransactionId
+name|currentWriteId
 parameter_list|)
 block|{
 name|super
@@ -381,11 +381,11 @@ name|partitionSpec
 argument_list|,
 name|loadFileType
 argument_list|,
-name|currentTransactionId
+name|currentWriteId
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * For use with non-ACID compliant operations, such as LOAD    * @param sourcePath    * @param table    * @param partitionSpec    * @param loadFileType    */
+comment|/**    * For use with non-ACID compliant operations, such as LOAD    * @param sourcePath    * @param table    * @param partitionSpec    * @param loadFileType    * @param writeId    */
 specifier|public
 name|LoadTableDesc
 parameter_list|(
@@ -412,7 +412,7 @@ name|loadFileType
 parameter_list|,
 specifier|final
 name|Long
-name|txnId
+name|writeId
 parameter_list|)
 block|{
 name|this
@@ -431,7 +431,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-name|txnId
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -462,7 +462,7 @@ name|Operation
 name|writeType
 parameter_list|,
 name|Long
-name|currentTransactionId
+name|currentWriteId
 parameter_list|)
 block|{
 name|this
@@ -479,7 +479,7 @@ name|REPLACE_ALL
 argument_list|,
 name|writeType
 argument_list|,
-name|currentTransactionId
+name|currentWriteId
 argument_list|)
 expr_stmt|;
 block|}
@@ -515,9 +515,6 @@ argument_list|,
 name|String
 argument_list|>
 name|partitionSpec
-parameter_list|,
-name|Long
-name|txnId
 parameter_list|)
 block|{
 name|this
@@ -538,7 +535,7 @@ name|Operation
 operator|.
 name|NOT_ACID
 argument_list|,
-name|txnId
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -567,7 +564,7 @@ name|boolean
 name|isReplace
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|)
 block|{
 name|super
@@ -654,7 +651,7 @@ argument_list|()
 argument_list|,
 name|lft
 argument_list|,
-name|txnId
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -675,7 +672,7 @@ argument_list|()
 argument_list|,
 name|lft
 argument_list|,
-name|txnId
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -714,7 +711,7 @@ name|LoadFileType
 name|loadFileType
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|)
 block|{
 name|this
@@ -737,9 +734,9 @@ name|loadFileType
 expr_stmt|;
 name|this
 operator|.
-name|currentTransactionId
+name|currentWriteId
 operator|=
-name|txnId
+name|writeId
 expr_stmt|;
 block|}
 annotation|@
@@ -1031,17 +1028,17 @@ expr_stmt|;
 block|}
 specifier|public
 name|long
-name|getTxnId
+name|getWriteId
 parameter_list|()
 block|{
 return|return
-name|currentTransactionId
+name|currentWriteId
 operator|==
 literal|null
 condition|?
 literal|0
 else|:
-name|currentTransactionId
+name|currentWriteId
 return|;
 block|}
 specifier|public
