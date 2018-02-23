@@ -14727,7 +14727,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * Sort more restrictive locks after less restrictive ones    */
+comment|/**    * Sort more restrictive locks after less restrictive ones.  Why?    * Consider insert overwirte table DB.T1 select ... from T2:    * this takes X lock on DB.T1 and S lock on T2    * Also, create table DB.T3: takes S lock on DB.    * so the state of the lock manger is {X(T1), S(T2) S(DB)} all in acquired state.    * This is made possible by HIVE-10242.    * Now a select * from T1 will try to get S(T1) which according to the 'jumpTable' will    * be acquired once it sees S(DB).  So need to check stricter locks first.    */
 specifier|private
 specifier|final
 specifier|static
@@ -15359,7 +15359,7 @@ operator|!=
 literal|0
 return|;
 block|}
-comment|/**    * Lock acquisition is meant to be fair, so every lock can only block on some lock with smaller    * hl_lock_ext_id by only checking earlier locks.    *    * For any given SQL statment all locks required by it are grouped under single extLockId and are    * granted all at once or all locks wait.    *    * This is expected to run at READ_COMMITTED.    *    * If there is a concurrent commitTxn/rollbackTxn, those can only remove rows from HIVE_LOCKS.    * If they happen to be for the same txnid, there will be a WW conflict (in MS DB), if different txnid,    * checkLock() will in the worst case keep locks in Waiting state a little longer.    */
+comment|/**    * Lock acquisition is meant to be fair, so every lock can only block on some lock with smaller    * hl_lock_ext_id by only checking earlier locks.    *    * For any given SQL statement all locks required by it are grouped under single extLockId and are    * granted all at once or all locks wait.    *    * This is expected to run at READ_COMMITTED.    *    * If there is a concurrent commitTxn/rollbackTxn, those can only remove rows from HIVE_LOCKS.    * If they happen to be for the same txnid, there will be a WW conflict (in MS DB), if different txnid,    * checkLock() will in the worst case keep locks in Waiting state a little longer.    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -15422,7 +15422,7 @@ literal|true
 decl_stmt|;
 try|try
 block|{
-comment|/**        * checkLock() must be mutexed against any other checkLock to make sure 2 conflicting locks        * are not granted by parallel checkLock() calls.        */
+comment|/**        * checkLock() must be mutex'd against any other checkLock to make sure 2 conflicting locks        * are not granted by parallel checkLock() calls.        */
 name|handle
 operator|=
 name|getMutexAPI
@@ -16211,7 +16211,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|" and hl_lock_ext_id<= "
+literal|" and hl_lock_ext_id< "
 argument_list|)
 operator|.
 name|append
@@ -16351,91 +16351,11 @@ range|:
 name|locksBeingChecked
 control|)
 block|{
-comment|// Find the lock record we're checking
-name|int
-name|index
-init|=
-operator|-
-literal|1
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|locks
-operator|.
-name|length
-condition|;
-name|i
-operator|++
-control|)
-block|{
-if|if
-condition|(
-name|locks
-index|[
-name|i
-index|]
-operator|.
-name|equals
-argument_list|(
-name|info
-argument_list|)
-condition|)
-block|{
-name|index
-operator|=
-name|i
-expr_stmt|;
-break|break;
-block|}
-block|}
-comment|// If we didn't find the lock, then it must not be in the table
-if|if
-condition|(
-name|index
-operator|==
-operator|-
-literal|1
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|()
-expr_stmt|;
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"How did we get here, we heartbeated our lock before we started! ( "
-operator|+
-name|info
-operator|+
-literal|")"
-argument_list|)
-throw|;
-block|}
 comment|// If we've found it and it's already been marked acquired,
 comment|// then just look at the other locks.
 if|if
 condition|(
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|state
 operator|==
@@ -16454,7 +16374,9 @@ control|(
 name|int
 name|i
 init|=
-name|index
+name|locks
+operator|.
+name|length
 operator|-
 literal|1
 init|;
@@ -16470,10 +16392,7 @@ comment|// Check if we're operating on the same database, if not, move on
 if|if
 condition|(
 operator|!
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|db
 operator|.
@@ -16495,10 +16414,7 @@ comment|// lock the whole database and we need to check it.  Otherwise,
 comment|// check if they are operating on the same table, if not, move on.
 if|if
 condition|(
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|table
 operator|!=
@@ -16514,10 +16430,7 @@ operator|!=
 literal|null
 operator|&&
 operator|!
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|table
 operator|.
@@ -16534,15 +16447,15 @@ condition|)
 block|{
 continue|continue;
 block|}
+comment|// if here, we may be checking a DB level lock against a Table level lock.  Alternatively,
+comment|// we could have used Intention locks (for example a request for S lock on table would
+comment|// cause an IS lock DB that contains the table).  Similarly, at partition level.
 comment|// If partition is null on either of these, then they are claiming to
 comment|// lock the whole table and we need to check it.  Otherwise,
 comment|// check if they are operating on the same partition, if not, move on.
 if|if
 condition|(
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|partition
 operator|!=
@@ -16558,10 +16471,7 @@ operator|!=
 literal|null
 operator|&&
 operator|!
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|partition
 operator|.
@@ -16587,10 +16497,7 @@ name|jumpTable
 operator|.
 name|get
 argument_list|(
-name|locks
-index|[
-name|index
-index|]
+name|info
 operator|.
 name|type
 argument_list|)
