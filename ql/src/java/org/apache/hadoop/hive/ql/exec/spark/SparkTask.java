@@ -919,7 +919,7 @@ literal|1L
 decl_stmt|;
 specifier|private
 specifier|transient
-name|String
+name|int
 name|sparkJobID
 decl_stmt|;
 specifier|private
@@ -1163,13 +1163,6 @@ argument_list|(
 name|jobRef
 argument_list|)
 expr_stmt|;
-name|sparkJobID
-operator|=
-name|jobRef
-operator|.
-name|getJobId
-argument_list|()
-expr_stmt|;
 name|this
 operator|.
 name|jobID
@@ -1197,6 +1190,13 @@ operator|.
 name|getSparkJobStatus
 argument_list|()
 decl_stmt|;
+name|sparkJobID
+operator|=
+name|sparkJobStatus
+operator|.
+name|getJobId
+argument_list|()
+expr_stmt|;
 name|getSparkJobInfo
 argument_list|(
 name|sparkJobStatus
@@ -1240,10 +1240,7 @@ name|format
 argument_list|(
 literal|"=====Spark Job[%s] statistics====="
 argument_list|,
-name|jobRef
-operator|.
-name|getJobId
-argument_list|()
+name|sparkJobID
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1257,7 +1254,18 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Execution completed successfully"
+literal|"Successfully completed Spark Job "
+operator|+
+name|sparkJobID
+operator|+
+literal|" with application ID "
+operator|+
+name|jobID
+operator|+
+literal|" and task ID "
+operator|+
+name|getId
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1578,10 +1586,18 @@ name|Keys
 operator|.
 name|SPARK_JOB_ID
 argument_list|,
+name|Integer
+operator|.
+name|toString
+argument_list|(
 name|jobRef
+operator|.
+name|getSparkJobStatus
+argument_list|()
 operator|.
 name|getJobId
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1980,7 +1996,7 @@ argument_list|()
 return|;
 block|}
 specifier|public
-name|String
+name|int
 name|getSparkJobID
 parameter_list|()
 block|{

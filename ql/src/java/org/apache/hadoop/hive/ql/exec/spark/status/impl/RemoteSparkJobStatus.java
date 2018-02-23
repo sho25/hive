@@ -881,9 +881,7 @@ name|jobIdentifier
 init|=
 literal|"Spark Job["
 operator|+
-name|jobHandle
-operator|.
-name|getClientJobId
+name|getJobId
 argument_list|()
 operator|+
 literal|"] Metrics"
