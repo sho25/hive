@@ -178,6 +178,7 @@ name|count
 operator|=
 literal|3
 expr_stmt|;
+break|break;
 case|case
 literal|3
 case|:
