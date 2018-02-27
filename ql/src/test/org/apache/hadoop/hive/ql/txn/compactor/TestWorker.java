@@ -2422,6 +2422,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -2551,6 +2555,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -3674,6 +3682,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -3803,6 +3815,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -4168,6 +4184,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -4297,6 +4317,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -7039,6 +7063,10 @@ index|]
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+name|AcidUtils
+operator|.
+name|hiddenFileFilter
 argument_list|)
 decl_stmt|;
 name|Assert

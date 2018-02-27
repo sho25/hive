@@ -403,26 +403,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|AcidUtils
-operator|.
-name|Operation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|BucketCodec
 import|;
 end_import
@@ -2100,22 +2080,8 @@ name|hconf
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If we're updating or deleting there may be no file to close.  This can happen
-comment|// because the where clause strained out all of the records for a given bucket.  So
-comment|// before attempting the rename below, check if our file exists.  If it doesn't,
-comment|// then skip the rename.  If it does try it.  We could just blindly try the rename
-comment|// and avoid the extra stat, but that would mask other errors.
-name|Operation
-name|acidOp
-init|=
-name|conf
-operator|.
-name|getWriteType
-argument_list|()
-decl_stmt|;
-name|boolean
-name|needToRename
-init|=
+if|if
+condition|(
 name|outPaths
 index|[
 name|idx
@@ -2123,21 +2089,6 @@ index|]
 operator|!=
 literal|null
 operator|&&
-operator|(
-operator|(
-name|acidOp
-operator|!=
-name|Operation
-operator|.
-name|UPDATE
-operator|&&
-name|acidOp
-operator|!=
-name|Operation
-operator|.
-name|DELETE
-operator|)
-operator|||
 name|fs
 operator|.
 name|exists
@@ -2147,18 +2098,6 @@ index|[
 name|idx
 index|]
 argument_list|)
-operator|)
-decl_stmt|;
-if|if
-condition|(
-name|needToRename
-operator|&&
-name|outPaths
-index|[
-name|idx
-index|]
-operator|!=
-literal|null
 condition|)
 block|{
 if|if
