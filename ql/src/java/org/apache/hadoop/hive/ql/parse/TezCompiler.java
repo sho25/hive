@@ -1791,6 +1791,37 @@ argument_list|,
 literal|"Setup dynamic partition pruning"
 argument_list|)
 expr_stmt|;
+comment|// need to run this; to get consistent filterop conditions(for operator tree matching)
+if|if
+condition|(
+name|procCtx
+operator|.
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEOPTCONSTANTPROPAGATION
+argument_list|)
+condition|)
+block|{
+operator|new
+name|ConstantPropagate
+argument_list|(
+name|ConstantPropagateOption
+operator|.
+name|SHORTCUT
+argument_list|)
+operator|.
+name|transform
+argument_list|(
+name|procCtx
+operator|.
+name|parseContext
+argument_list|)
+expr_stmt|;
+block|}
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -2684,7 +2715,9 @@ name|sjInfo
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|sjInfo
@@ -6587,7 +6620,9 @@ name|sjInfo
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|TableScanOperator
 name|ts
 init|=
@@ -6902,10 +6937,12 @@ operator|.
 name|hasHintEntries
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
 comment|// Created using hint, skip it
+block|}
 name|long
 name|expectedEntries
 init|=
@@ -7620,7 +7657,9 @@ name|sjInfo
 operator|==
 literal|null
 condition|)
+block|{
 continue|continue;
+block|}
 name|TableScanOperator
 name|ts
 init|=
