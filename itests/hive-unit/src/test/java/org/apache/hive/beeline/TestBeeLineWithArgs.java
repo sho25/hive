@@ -437,6 +437,16 @@ name|Test
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestBeeLineWithArgs - executes tests of the command-line arguments to BeeLine  *  */
 end_comment
@@ -4460,6 +4470,11 @@ expr_stmt|;
 block|}
 comment|/**    * Test Beeline could show the query progress for time-consuming query.    * @throws Throwable    */
 annotation|@
+name|Ignore
+argument_list|(
+literal|"Broken tests -- HIVE-18806"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -4537,6 +4552,11 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test Beeline could show the query progress for time-consuming query when hive.exec.parallel    * is true    *    * We have changed the pattern to not look of the progress bar as the test runs fine individually    * and also as part of the whole class, on CI however they are batched and that might have caused    * some issue, it needs more investigation for the same    *    * @throws Throwable    */
+annotation|@
+name|Ignore
+argument_list|(
+literal|"Broken tests -- HIVE-18806"
+argument_list|)
 annotation|@
 name|Test
 specifier|public

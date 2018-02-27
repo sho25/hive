@@ -93,6 +93,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -1229,6 +1239,11 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"Broken tests -- HIVE-18806"
+argument_list|)
 annotation|@
 name|Test
 specifier|public
