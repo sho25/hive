@@ -180,6 +180,12 @@ specifier|final
 name|ShuffleWriteMetrics
 name|shuffleWriteMetrics
 decl_stmt|;
+comment|/** A collection of accumulators that represents metrics about writing data to external systems. */
+specifier|public
+specifier|final
+name|OutputMetrics
+name|outputMetrics
+decl_stmt|;
 specifier|private
 name|Metrics
 parameter_list|()
@@ -206,6 +212,8 @@ argument_list|,
 literal|0L
 argument_list|,
 literal|0L
+argument_list|,
+literal|null
 argument_list|,
 literal|null
 argument_list|,
@@ -256,6 +264,9 @@ name|shuffleReadMetrics
 parameter_list|,
 name|ShuffleWriteMetrics
 name|shuffleWriteMetrics
+parameter_list|,
+name|OutputMetrics
+name|outputMetrics
 parameter_list|)
 block|{
 name|this
@@ -335,6 +346,12 @@ operator|.
 name|shuffleWriteMetrics
 operator|=
 name|shuffleWriteMetrics
+expr_stmt|;
+name|this
+operator|.
+name|outputMetrics
+operator|=
+name|outputMetrics
 expr_stmt|;
 block|}
 specifier|public
@@ -427,6 +444,11 @@ name|optionalShuffleWriteMetrics
 argument_list|(
 name|metrics
 argument_list|)
+argument_list|,
+name|optionalOutputMetrics
+argument_list|(
+name|metrics
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -514,6 +536,34 @@ else|:
 literal|null
 return|;
 block|}
+specifier|private
+specifier|static
+name|OutputMetrics
+name|optionalOutputMetrics
+parameter_list|(
+name|TaskMetrics
+name|metrics
+parameter_list|)
+block|{
+return|return
+operator|(
+name|metrics
+operator|.
+name|outputMetrics
+argument_list|()
+operator|!=
+literal|null
+operator|)
+condition|?
+operator|new
+name|OutputMetrics
+argument_list|(
+name|metrics
+argument_list|)
+else|:
+literal|null
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -575,6 +625,10 @@ operator|+
 literal|", shuffleWriteMetrics="
 operator|+
 name|shuffleWriteMetrics
+operator|+
+literal|", outputMetrics="
+operator|+
+name|outputMetrics
 operator|+
 literal|'}'
 return|;
