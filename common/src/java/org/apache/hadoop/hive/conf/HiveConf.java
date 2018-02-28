@@ -3377,6 +3377,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_IN_TEST_SSL
+argument_list|(
+literal|"hive.in.ssl.test"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal usage only, true in SSL test mode"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_IN_TEST_IDE
 argument_list|(
 literal|"hive.in.ide.test"
