@@ -516,12 +516,12 @@ specifier|private
 name|long
 name|currentWriteId
 decl_stmt|;
-comment|/**      * This is the value from delta file name which may be different from value encode in       * {@link RecordIdentifier#getBucketProperty()} in case of Update/Delete.      * So for Acid 1.0 + multi-stmt txn, if {@code isSameRow() == true}, then it must be an update      * or delete event.  For Acid 2.0 + multi-stmt txn, it must be a delete event.      * No 2 Insert events from can ever agree on {@link RecordIdentifier}      */
 specifier|private
-name|int
-name|statementId
+name|boolean
+name|isDeleteEvent
+init|=
+literal|false
 decl_stmt|;
-comment|//sort on this descending, like currentWriteId
 name|ReaderKey
 parameter_list|()
 block|{
@@ -538,41 +538,9 @@ literal|1
 argument_list|,
 operator|-
 literal|1
-argument_list|,
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
-name|ReaderKey
-parameter_list|(
-name|long
-name|originalWriteId
-parameter_list|,
-name|int
-name|bucket
-parameter_list|,
-name|long
-name|rowId
-parameter_list|,
-name|long
-name|currentWriteId
-parameter_list|)
-block|{
-name|this
-argument_list|(
-name|originalWriteId
-argument_list|,
-name|bucket
-argument_list|,
-name|rowId
-argument_list|,
-name|currentWriteId
-argument_list|,
-literal|0
-argument_list|)
-expr_stmt|;
-block|}
-comment|/**      * @param statementId - set this to 0 if N/A      */
 specifier|public
 name|ReaderKey
 parameter_list|(
@@ -587,9 +555,6 @@ name|rowId
 parameter_list|,
 name|long
 name|currentWriteId
-parameter_list|,
-name|int
-name|statementId
 parameter_list|)
 block|{
 name|super
@@ -606,12 +571,6 @@ operator|.
 name|currentWriteId
 operator|=
 name|currentWriteId
-expr_stmt|;
-name|this
-operator|.
-name|statementId
-operator|=
-name|statementId
 expr_stmt|;
 block|}
 annotation|@
@@ -642,7 +601,7 @@ operator|)
 operator|.
 name|currentWriteId
 expr_stmt|;
-name|statementId
+name|isDeleteEvent
 operator|=
 operator|(
 operator|(
@@ -651,7 +610,7 @@ operator|)
 name|other
 operator|)
 operator|.
-name|statementId
+name|isDeleteEvent
 expr_stmt|;
 block|}
 specifier|public
@@ -670,8 +629,8 @@ parameter_list|,
 name|long
 name|currentWriteId
 parameter_list|,
-name|int
-name|statementId
+name|boolean
+name|isDelete
 parameter_list|)
 block|{
 name|setValues
@@ -691,9 +650,9 @@ name|currentWriteId
 expr_stmt|;
 name|this
 operator|.
-name|statementId
+name|isDeleteEvent
 operator|=
-name|statementId
+name|isDelete
 expr_stmt|;
 block|}
 annotation|@
@@ -724,18 +683,6 @@ name|other
 operator|)
 operator|.
 name|currentWriteId
-operator|&&
-name|statementId
-operator|==
-operator|(
-operator|(
-name|ReaderKey
-operator|)
-name|other
-operator|)
-operator|.
-name|statementId
-comment|//consistent with compareTo()
 return|;
 block|}
 annotation|@
@@ -771,14 +718,6 @@ operator|>>>
 literal|32
 operator|)
 argument_list|)
-expr_stmt|;
-name|result
-operator|=
-literal|31
-operator|*
-name|result
-operator|+
-name|statementId
 expr_stmt|;
 return|return
 name|result
@@ -854,24 +793,24 @@ return|;
 block|}
 if|if
 condition|(
-name|statementId
+name|isDeleteEvent
 operator|!=
 name|oth
 operator|.
-name|statementId
+name|isDeleteEvent
 condition|)
 block|{
+comment|//this is to break a tie if insert + delete of a given row is done within the same
+comment|//txn (so that currentTransactionId is the same for both events) and we want the
+comment|//delete event to sort 1st since it needs to be sent up so that
+comment|// OrcInputFormat.getReader(InputSplit inputSplit, Options options) can skip it.
 return|return
-name|statementId
-operator|<
-name|oth
-operator|.
-name|statementId
+name|isDeleteEvent
 condition|?
-operator|+
+operator|-
 literal|1
 else|:
-operator|-
+operator|+
 literal|1
 return|;
 block|}
@@ -961,10 +900,6 @@ operator|+
 literal|", currentWriteId "
 operator|+
 name|currentWriteId
-operator|+
-literal|", statementId: "
-operator|+
-name|statementId
 operator|+
 literal|"}"
 return|;
@@ -1147,15 +1082,7 @@ specifier|final
 name|RecordIdentifier
 name|maxKey
 decl_stmt|;
-annotation|@
-name|Deprecated
-comment|//HIVE-18158
-specifier|private
-specifier|final
-name|int
-name|statementId
-decl_stmt|;
-comment|/**      * Create a reader that reads from the first key larger than minKey to any      * keys equal to maxKey.      * @param key the key to read into      * @param reader the ORC file reader      * @param minKey only return keys larger than minKey if it is non-null      * @param maxKey only return keys less than or equal to maxKey if it is      *               non-null      * @param options options to provide to read the rows.      * @param statementId id of SQL statement within a transaction      * @throws IOException      */
+comment|/**      * Create a reader that reads from the first key larger than minKey to any      * keys equal to maxKey.      * @param key the key to read into      * @param reader the ORC file reader      * @param minKey only return keys larger than minKey if it is non-null      * @param maxKey only return keys less than or equal to maxKey if it is      *               non-null      * @param options options to provide to read the rows.      * @throws IOException      */
 annotation|@
 name|VisibleForTesting
 name|ReaderPairAcid
@@ -1176,9 +1103,6 @@ name|ReaderImpl
 operator|.
 name|Options
 name|options
-parameter_list|,
-name|int
-name|statementId
 parameter_list|)
 throws|throws
 name|IOException
@@ -1204,12 +1128,6 @@ name|rowsOptions
 argument_list|(
 name|options
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|statementId
-operator|=
-name|statementId
 expr_stmt|;
 name|this
 operator|.
@@ -1425,7 +1343,17 @@ name|nextRecord
 argument_list|()
 argument_list|)
 argument_list|,
-name|statementId
+name|OrcRecordUpdater
+operator|.
+name|getOperation
+argument_list|(
+name|nextRecord
+argument_list|()
+argument_list|)
+operator|==
+name|OrcRecordUpdater
+operator|.
+name|DELETE_OPERATION
 argument_list|)
 expr_stmt|;
 comment|// if this record is larger than maxKey, we need to stop
@@ -1520,6 +1448,7 @@ specifier|final
 name|long
 name|transactionId
 decl_stmt|;
+comment|/**      * @param statementId - this should be from delta_x_y_stmtId file name.  Imagine 2 load data      *                    statements in 1 txn.  The stmtId will be embedded in      *                    {@link RecordIdentifier#bucketId} via {@link BucketCodec} below      */
 name|OriginalReaderPair
 parameter_list|(
 name|ReaderKey
@@ -1930,7 +1859,7 @@ name|nextRowId
 argument_list|,
 name|transactionId
 argument_list|,
-literal|0
+literal|false
 argument_list|)
 expr_stmt|;
 if|if
@@ -4622,8 +4551,6 @@ name|getMaxKey
 argument_list|()
 argument_list|,
 name|eventOptions
-argument_list|,
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -4682,8 +4609,6 @@ name|getMaxKey
 argument_list|()
 argument_list|,
 name|eventOptions
-argument_list|,
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -5033,11 +4958,6 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|deltaEventOptions
-argument_list|,
-name|deltaDir
-operator|.
-name|getStatementId
-argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -5134,11 +5054,6 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|deltaEventOptions
-argument_list|,
-name|deltaDir
-operator|.
-name|getStatementId
-argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -5994,7 +5909,7 @@ condition|)
 block|{
 continue|continue;
 block|}
-comment|/*for multi-statement txns, you may have multiple events for the same       * row in the same (current) transaction.  We want to collapse these to just the last one       * regardless whether we are minor compacting.  Consider INSERT/UPDATE/UPDATE of the       * same row in the same txn.  There is no benefit passing along anything except the last       * event.  If we did want to pass it along, we'd have to include statementId in the row       * returned so that compaction could write it out or make minor minor compaction understand       * how to write out delta files in delta_xxx_yyy_stid format.  There doesn't seem to be any       * value in this.*/
+comment|/*for multi-statement txns, you may have multiple events for the same       * row in the same (current) transaction.  We want to collapse these to just the last one       * regardless whether we are minor compacting.  Consider INSERT/UPDATE/UPDATE of the       * same row in the same txn.  There is no benefit passing along anything except the last       * event.  If we did want to pass it along, we'd have to include statementId in the row       * returned so that compaction could write it out or make minor minor compaction understand       * how to write out delta files in delta_xxx_yyy_stid format.  There doesn't seem to be any       * value in this.       *       * todo: this could be simplified since in Acid2 even if you update the same row 2 times in 1       * txn, it will have different ROW__IDs, i.e. there is no such thing as multiple versions of       * the same physical row.  Leave it for now since this Acid reader should go away altogether       * and org.apache.hadoop.hive.ql.io.orc.VectorizedOrcAcidRowBatchReader will be used.*/
 name|boolean
 name|isSameRow
 init|=

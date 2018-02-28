@@ -1341,6 +1341,7 @@ operator|.
 name|getRootDir
 argument_list|()
 expr_stmt|;
+comment|//why even compute syntheticProps if !isOriginal???
 name|syntheticProps
 operator|=
 name|computeOffsetAndBucket
@@ -1408,7 +1409,7 @@ name|syntheticTxnId
 expr_stmt|;
 block|}
 block|}
-comment|/**    * See {@link #next(NullWritable, VectorizedRowBatch)} fist and    * {@link OrcRawRecordMerger.OriginalReaderPair}.    * When reading a split of an "original" file and we need to decorate data with ROW__ID.    * This requires treating multiple files that are part of the same bucket (tranche for unbucketed    * tables) as a single logical file to number rowids consistently.    *    * todo: This logic is executed per split of every "original" file.  The computed result is the    * same for every split form the same file so this could be optimized by moving it to    * before/during split computation and passing the info in the split.  (HIVE-17917)    */
+comment|/**    * See {@link #next(NullWritable, VectorizedRowBatch)} first and    * {@link OrcRawRecordMerger.OriginalReaderPair}.    * When reading a split of an "original" file and we need to decorate data with ROW__ID.    * This requires treating multiple files that are part of the same bucket (tranche for unbucketed    * tables) as a single logical file to number rowids consistently.    *    * todo: This logic is executed per split of every "original" file.  The computed result is the    * same for every split form the same file so this could be optimized by moving it to    * before/during split computation and passing the info in the split.  (HIVE-17917)    */
 specifier|private
 name|OffsetAndBucketProperty
 name|computeOffsetAndBucket
@@ -1561,6 +1562,7 @@ name|Options
 argument_list|(
 name|conf
 argument_list|)
+comment|//statementId is from directory name (or 0 if there is none)
 operator|.
 name|statementId
 argument_list|(

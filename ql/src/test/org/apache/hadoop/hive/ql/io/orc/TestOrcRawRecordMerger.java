@@ -783,7 +783,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|//todo: why is statementId -1?
 annotation|@
 name|Test
 specifier|public
@@ -827,7 +826,7 @@ literal|1000
 argument_list|,
 literal|200
 argument_list|,
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -928,8 +927,7 @@ literal|3
 argument_list|,
 literal|4
 argument_list|,
-operator|-
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|right
@@ -944,8 +942,7 @@ literal|3
 argument_list|,
 literal|4
 argument_list|,
-operator|-
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -984,8 +981,7 @@ literal|3
 argument_list|,
 literal|4
 argument_list|,
-operator|-
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|right
@@ -1000,8 +996,7 @@ literal|3
 argument_list|,
 literal|4
 argument_list|,
-operator|-
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1040,8 +1035,7 @@ literal|3
 argument_list|,
 literal|100
 argument_list|,
-operator|-
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|right
@@ -1056,8 +1050,7 @@ literal|3
 argument_list|,
 literal|4
 argument_list|,
-operator|-
-literal|1
+literal|false
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -1868,8 +1861,6 @@ name|Reader
 operator|.
 name|Options
 argument_list|()
-argument_list|,
-literal|0
 argument_list|)
 decl_stmt|;
 name|RecordReader
@@ -2070,8 +2061,6 @@ name|Reader
 operator|.
 name|Options
 argument_list|()
-argument_list|,
-literal|0
 argument_list|)
 decl_stmt|;
 name|RecordReader
