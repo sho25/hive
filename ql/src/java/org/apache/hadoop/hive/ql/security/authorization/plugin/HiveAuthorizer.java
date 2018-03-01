@@ -486,7 +486,6 @@ name|HiveAuthzPluginException
 function_decl|;
 comment|/**    * TableMaskingPolicy defines how users can access base tables. It defines a    * policy on what columns and rows are hidden, masked or redacted based on    * user, role or location.    */
 comment|/**    * applyRowFilterAndColumnMasking is called once for each table in a query.     * (part 1) It expects a valid filter condition to be returned. Null indicates no filtering is    * required.    *    * Example: table foo(c int) -> "c> 0&& c % 2 = 0"    *    * (part 2) It expects a valid expression as used in a select clause. Null    * is NOT a valid option. If no transformation is needed simply return the    * column name.    *    * Example: column a -> "a" (no transform)    *    * Example: column a -> "reverse(a)" (call the reverse function on a)    *    * Example: column a -> "5" (replace column a with the constant 5)    *    * @return List<HivePrivilegeObject>    * please return the list of HivePrivilegeObjects that need to be rewritten.    *    * @throws SemanticException    */
-specifier|public
 name|List
 argument_list|<
 name|HivePrivilegeObject
@@ -506,10 +505,16 @@ throws|throws
 name|SemanticException
 function_decl|;
 comment|/**    * needTransform() is called once per user in a query.     * Returning false short-circuits the generation of row/column transforms.    *    * @return    * @throws SemanticException    */
-specifier|public
 name|boolean
 name|needTransform
 parameter_list|()
+function_decl|;
+comment|/**    * @return HivePolicyProvider instance (expected to be a singleton)    * @throws HiveAuthzPluginException    */
+name|HivePolicyProvider
+name|getHivePolicyProvider
+parameter_list|()
+throws|throws
+name|HiveAuthzPluginException
 function_decl|;
 block|}
 end_interface

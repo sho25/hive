@@ -53,6 +53,20 @@ return|return
 literal|null
 return|;
 block|}
+comment|/*    * (non-Javadoc)    *    * @see    * org.apache.hadoop.hive.ql.security.authorization.plugin.HiveAuthorizer#    * getHivePolicyProvider()    */
+annotation|@
+name|Override
+specifier|public
+name|HivePolicyProvider
+name|getHivePolicyProvider
+parameter_list|()
+throws|throws
+name|HiveAuthzPluginException
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 
