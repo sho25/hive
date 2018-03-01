@@ -6994,6 +6994,43 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+comment|// Exchange partition is not allowed with transactional tables.
+comment|// If only source is transactional table, then target will see deleted rows too as no snapshot
+comment|// isolation applicable for non-acid tables.
+comment|// If only target is transactional table, then data would be visible to all ongoing transactions
+comment|// affecting the snapshot isolation.
+comment|// If both source and targets are transactional tables, then target partition may have delta/base
+comment|// files with write IDs may not be valid. It may affect snapshot isolation for on-going txns as well.
+if|if
+condition|(
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|sourceTable
+argument_list|)
+operator|||
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|destTable
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|EXCHANGE_PARTITION_NOT_ALLOWED_WITH_TRANSACTIONAL_TABLES
+operator|.
+name|getMsg
+argument_list|()
+argument_list|)
+throw|;
+block|}
 comment|// check if source partition exists
 name|getPartitions
 argument_list|(

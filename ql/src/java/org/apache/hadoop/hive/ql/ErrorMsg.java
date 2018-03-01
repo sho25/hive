@@ -1575,6 +1575,15 @@ operator|+
 literal|" cannot be exchanged."
 argument_list|)
 block|,
+name|EXCHANGE_PARTITION_NOT_ALLOWED_WITH_TRANSACTIONAL_TABLES
+argument_list|(
+literal|10236
+argument_list|,
+literal|"Exchange partition is not allowed with "
+operator|+
+literal|"transactional tables. Alternatively, shall use load data or insert overwrite to move partitions."
+argument_list|)
+block|,
 name|TRUNCATE_COLUMN_NOT_RC
 argument_list|(
 literal|10237
