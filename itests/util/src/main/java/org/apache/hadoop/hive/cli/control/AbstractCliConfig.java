@@ -261,14 +261,11 @@ name|HiveTestEnvSetup
 operator|.
 name|HIVE_ROOT
 decl_stmt|;
-specifier|public
-specifier|static
 enum|enum
 name|MetastoreType
 block|{
 name|sql
 block|}
-empty_stmt|;
 specifier|private
 name|MetastoreType
 name|metastoreType

@@ -731,7 +731,7 @@ argument_list|)
 expr_stmt|;
 name|setHiveConfDir
 argument_list|(
-literal|""
+literal|"data/conf/llap"
 argument_list|)
 expr_stmt|;
 name|setClusterType
