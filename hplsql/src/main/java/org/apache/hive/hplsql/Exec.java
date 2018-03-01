@@ -6337,32 +6337,6 @@ name|ctx
 argument_list|)
 return|;
 block|}
-comment|/**    * COPY FROM FTP statement    */
-annotation|@
-name|Override
-specifier|public
-name|Integer
-name|visitCopy_from_ftp_stmt
-parameter_list|(
-name|HplsqlParser
-operator|.
-name|Copy_from_ftp_stmtContext
-name|ctx
-parameter_list|)
-block|{
-return|return
-operator|new
-name|Ftp
-argument_list|(
-name|exec
-argument_list|)
-operator|.
-name|run
-argument_list|(
-name|ctx
-argument_list|)
-return|;
-block|}
 comment|/**    * COPY FROM LOCAL statement    */
 annotation|@
 name|Override
