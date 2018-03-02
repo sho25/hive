@@ -497,7 +497,7 @@ name|getParentIntegerIndex
 parameter_list|()
 block|{
 return|return
-name|childIntegerIndex
+name|parentIntegerIndex
 return|;
 block|}
 specifier|public
