@@ -855,11 +855,14 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+comment|// At this entry point, we are going to assume that these are logical table columns.
+comment|// Perhaps we should go thru the code and clean this up to be more explicit; for now, we
+comment|// will start with this single assumption and maintain clear semantics from here.
 name|List
 argument_list|<
 name|Integer
 argument_list|>
-name|includedCols
+name|tableIncludedCols
 init|=
 name|ColumnProjectionUtils
 operator|.
@@ -888,7 +891,7 @@ name|job
 argument_list|,
 name|fileSplit
 argument_list|,
-name|includedCols
+name|tableIncludedCols
 argument_list|,
 name|hostName
 argument_list|,
@@ -952,7 +955,7 @@ name|result
 operator|=
 name|wrapLlapReader
 argument_list|(
-name|includedCols
+name|tableIncludedCols
 argument_list|,
 name|rr
 argument_list|,

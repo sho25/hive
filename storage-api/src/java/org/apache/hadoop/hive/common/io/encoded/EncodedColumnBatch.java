@@ -303,7 +303,7 @@ index|[]
 index|[]
 name|columnData
 decl_stmt|;
-comment|/** Indicates which columns have data. Correspond to columnData elements. */
+comment|/**    * Indicates which columns have data. This is indexed by the column ID in ORC file schema;    * the indices that are not included will not have data. Correspond to columnData elements.    */
 specifier|protected
 name|boolean
 index|[]
@@ -578,8 +578,9 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-return|return;
 block|}
+else|else
+block|{
 name|hasData
 operator|=
 operator|new
@@ -588,6 +589,7 @@ index|[
 name|columnCount
 index|]
 expr_stmt|;
+block|}
 name|ColumnStreamData
 index|[]
 index|[]

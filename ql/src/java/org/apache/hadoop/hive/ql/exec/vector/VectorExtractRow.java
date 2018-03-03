@@ -773,6 +773,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|base
 operator|.
 name|Charsets
@@ -1075,7 +1089,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/*    * Initialize using data type names.    * No projection -- the column range 0 .. types.size()-1    */
-specifier|public
+annotation|@
+name|VisibleForTesting
 name|void
 name|init
 parameter_list|(

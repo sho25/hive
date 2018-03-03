@@ -6247,12 +6247,13 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+comment|// Skip the 0th column that is the root structure.
 for|for
 control|(
 name|int
 name|colIx
 init|=
-literal|0
+literal|1
 init|;
 name|colIx
 operator|<
@@ -6872,6 +6873,14 @@ operator|++
 name|colIx
 control|)
 block|{
+comment|// Skip the 0-th column, since it won't have a vector after reading the text source.
+if|if
+condition|(
+name|colIx
+operator|==
+literal|0
+condition|)
+continue|continue;
 if|if
 condition|(
 operator|!
@@ -6887,14 +6896,6 @@ name|splitIncludes
 index|[
 name|colIx
 index|]
-condition|)
-block|{
-comment|// Skip the 0-th column, since it won't have a vector after reading the text source.
-if|if
-condition|(
-name|colIx
-operator|!=
-literal|0
 condition|)
 block|{
 name|List
@@ -6946,21 +6947,6 @@ argument_list|,
 name|vectors
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|ecb
-operator|.
-name|initColumn
-argument_list|(
-literal|0
-argument_list|,
-name|OrcEncodedColumnBatch
-operator|.
-name|MAX_DATA_STREAMS
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 else|else
 block|{

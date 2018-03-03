@@ -119,11 +119,6 @@ name|SchemaEvolution
 name|getSchemaEvolution
 parameter_list|()
 function_decl|;
-name|boolean
-index|[]
-name|getIncludedColumns
-parameter_list|()
-function_decl|;
 block|}
 end_interface
 
