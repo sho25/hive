@@ -15362,6 +15362,16 @@ condition|)
 block|{
 name|directoryDesc
 operator|.
+name|setInputFormat
+argument_list|(
+name|storageFormat
+operator|.
+name|getInputFormat
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|directoryDesc
+operator|.
 name|setOutputFormat
 argument_list|(
 name|storageFormat
