@@ -12280,6 +12280,33 @@ operator|+
 literal|"this variable must enable that to be used in vectorization"
 argument_list|)
 block|,
+name|HIVE_VECTORIZED_IF_EXPR_MODE
+argument_list|(
+literal|"hive.vectorized.if.expr.mode"
+argument_list|,
+literal|"better"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"adaptor"
+argument_list|,
+literal|"good"
+argument_list|,
+literal|"better"
+argument_list|)
+argument_list|,
+literal|"Specifies the extent to which SQL IF statements will be vectorized.\n"
+operator|+
+literal|"0. adaptor: only use the VectorUDFAdaptor to vectorize IF statements\n"
+operator|+
+literal|"1. good   : use regular vectorized IF expression classes that get good performance\n"
+operator|+
+literal|"2. better : use vectorized IF expression classes that conditionally execute THEN/ELSE\n"
+operator|+
+literal|"            expressions for better performance.\n"
+argument_list|)
+block|,
 name|HIVE_TEST_VECTORIZATION_ENABLED_OVERRIDE
 argument_list|(
 literal|"hive.test.vectorized.execution.enabled.override"
