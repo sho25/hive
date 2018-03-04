@@ -10423,6 +10423,10 @@ literal|"uk_-?[0-9]*_[0-9]*_[0-9]*"
 block|,
 literal|"nn_-?[0-9]*_[0-9]*_[0-9]*"
 block|,
+comment|// not null constraint name
+literal|"dc_-?[0-9]*_[0-9]*_[0-9]*"
+block|,
+comment|// default constraint name
 literal|".*at com\\.sun\\.proxy.*"
 block|,
 literal|".*at com\\.jolbox.*"

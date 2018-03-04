@@ -87,6 +87,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|SQLDefaultConstraint
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|SQLForeignKey
 import|;
 end_import
@@ -286,16 +304,6 @@ operator|.
 name|util
 operator|.
 name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Arrays
 import|;
 end_import
 
@@ -871,6 +879,12 @@ name|SQLNotNullConstraint
 argument_list|>
 name|notNullConstraintCols
 decl_stmt|;
+name|List
+argument_list|<
+name|SQLDefaultConstraint
+argument_list|>
+name|defaultConstraintsCols
+decl_stmt|;
 name|ReplicationSpec
 name|replicationSpec
 decl_stmt|;
@@ -1031,6 +1045,12 @@ argument_list|<
 name|SQLNotNullConstraint
 argument_list|>
 name|notNullConstraintCols
+parameter_list|,
+name|List
+argument_list|<
+name|SQLDefaultConstraint
+argument_list|>
+name|defaultConstraints
 parameter_list|)
 block|{
 name|super
@@ -1113,6 +1133,12 @@ operator|.
 name|notNullConstraintCols
 operator|=
 name|notNullConstraintCols
+expr_stmt|;
+name|this
+operator|.
+name|defaultConstraintsCols
+operator|=
+name|defaultConstraints
 expr_stmt|;
 block|}
 comment|/**    * @param oldName    *          old name of the table    * @param newName    *          new name of the table    * @param expectView    *          Flag to denote if current table can be a view    * @param replicationSpec    *          Replication specification with current event ID    */
@@ -1826,6 +1852,12 @@ name|SQLNotNullConstraint
 argument_list|>
 name|notNullConstraintCols
 parameter_list|,
+name|List
+argument_list|<
+name|SQLDefaultConstraint
+argument_list|>
+name|defaultConstraints
+parameter_list|,
 name|ReplicationSpec
 name|replicationSpec
 parameter_list|)
@@ -1859,6 +1891,12 @@ operator|.
 name|notNullConstraintCols
 operator|=
 name|notNullConstraintCols
+expr_stmt|;
+name|this
+operator|.
+name|defaultConstraintsCols
+operator|=
+name|defaultConstraints
 expr_stmt|;
 name|this
 operator|.
@@ -2400,6 +2438,19 @@ parameter_list|()
 block|{
 return|return
 name|notNullConstraintCols
+return|;
+block|}
+comment|/**    * @return the default constraint cols    */
+specifier|public
+name|List
+argument_list|<
+name|SQLDefaultConstraint
+argument_list|>
+name|getDefaultConstraintCols
+parameter_list|()
+block|{
+return|return
+name|defaultConstraintsCols
 return|;
 block|}
 comment|/**    * @return the drop constraint name of the table    */
