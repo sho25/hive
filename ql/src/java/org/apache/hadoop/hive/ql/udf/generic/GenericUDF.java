@@ -2620,9 +2620,15 @@ name|ParseException
 name|e
 parameter_list|)
 block|{
-return|return
-literal|null
-return|;
+throw|throw
+operator|new
+name|UDFArgumentException
+argument_list|(
+literal|"Unparsable date: "
+operator|+
+name|dateStr
+argument_list|)
+throw|;
 block|}
 break|break;
 case|case
