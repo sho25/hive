@@ -12535,7 +12535,7 @@ name|HIVE_CONVERT_JOIN_BUCKET_MAPJOIN_TEZ
 argument_list|(
 literal|"hive.convert.join.bucket.mapjoin.tez"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether joins can be automatically converted to bucket map joins in hive \n"
 operator|+
