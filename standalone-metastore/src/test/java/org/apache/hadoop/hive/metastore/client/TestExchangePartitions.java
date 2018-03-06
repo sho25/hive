@@ -5108,8 +5108,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// TODO: FileNotFoundException will occur. This use case could be handled in a better way like
-comment|// checking if the partitionsToExchange is empty and throw an exception if it is.
 name|Map
 argument_list|<
 name|String
@@ -9540,8 +9538,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// TODO: FileNotFoundException will occur. This use case could be handled in a better way like
-comment|// checking if the partitionsToExchange is empty and throw an exception if it is.
 name|Map
 argument_list|<
 name|String

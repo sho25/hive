@@ -20112,6 +20112,32 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|partitionsToExchange
+operator|==
+literal|null
+operator|||
+name|partitionsToExchange
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"No partition is found with the values "
+operator|+
+name|partitionSpecs
+operator|+
+literal|" for the table "
+operator|+
+name|sourceTableName
+argument_list|)
+throw|;
+block|}
 name|boolean
 name|sameColumns
 init|=
