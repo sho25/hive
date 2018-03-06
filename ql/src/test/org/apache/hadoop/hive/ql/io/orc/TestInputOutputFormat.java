@@ -19875,13 +19875,13 @@ name|asList
 argument_list|(
 literal|"op"
 argument_list|,
-literal|"otid"
+literal|"owid"
 argument_list|,
 literal|"bucket"
 argument_list|,
 literal|"rowid"
 argument_list|,
-literal|"ctid"
+literal|"cwid"
 argument_list|,
 literal|"row"
 argument_list|)

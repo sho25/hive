@@ -1395,7 +1395,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|long
-name|syntheticTxnId
+name|syntheticWriteId
 decl_stmt|;
 specifier|private
 name|OffsetAndBucketProperty
@@ -1407,7 +1407,7 @@ name|int
 name|bucketProperty
 parameter_list|,
 name|long
-name|syntheticTxnId
+name|syntheticWriteId
 parameter_list|)
 block|{
 name|this
@@ -1424,9 +1424,9 @@ name|bucketProperty
 expr_stmt|;
 name|this
 operator|.
-name|syntheticTxnId
+name|syntheticWriteId
 operator|=
-name|syntheticTxnId
+name|syntheticWriteId
 expr_stmt|;
 block|}
 block|}
@@ -1475,7 +1475,7 @@ name|isOriginal
 argument_list|()
 condition|)
 block|{
-comment|/**          * Even if we don't need to project ROW_IDs, we still need to check the transaction ID that          * created the file to see if it's committed.  See more in          * {@link #next(NullWritable, VectorizedRowBatch)}.  (In practice getAcidState() should          * filter out base/delta files but this makes fewer dependencies)          */
+comment|/**          * Even if we don't need to project ROW_IDs, we still need to check the write ID that          * created the file to see if it's committed.  See more in          * {@link #next(NullWritable, VectorizedRowBatch)}.  (In practice getAcidState() should          * filter out base/delta files but this makes fewer dependencies)          */
 name|OrcRawRecordMerger
 operator|.
 name|TransactionMetaData
@@ -1999,7 +1999,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * There are 2 types of schema from the {@link #baseReader} that this handles.  In the case    * the data was written to a transactional table from the start, every row is decorated with    * transaction related info and looks like<op, otid, writerId, rowid, ctid,<f1, ... fn>>.    *    * The other case is when data was written to non-transactional table and thus only has the user    * data:<f1, ... fn>.  Then this table was then converted to a transactional table but the data    * files are not changed until major compaction.  These are the "original" files.    *    * In this case we may need to decorate the outgoing data with transactional column values at    * read time.  (It's done somewhat out of band via VectorizedRowBatchCtx - ask Teddy Choi).    * The "otid, writerId, rowid" columns represent {@link RecordIdentifier}.  They are assigned    * each time the table is read in a way that needs to project {@link VirtualColumn#ROWID}.    * Major compaction will attach these values to each row permanently.    * It's critical that these generated column values are assigned exactly the same way by each    * read of the same row and by the Compactor.    * See {@link org.apache.hadoop.hive.ql.txn.compactor.CompactorMR} and    * {@link OrcRawRecordMerger.OriginalReaderPairToCompact} for the Compactor read path.    * (Longer term should make compactor use this class)    *    * This only decorates original rows with metadata if something above is requesting these values    * or if there are Delete events to apply.    *    * @return false where there is no more data, i.e. {@code value} is empty    */
+comment|/**    * There are 2 types of schema from the {@link #baseReader} that this handles.  In the case    * the data was written to a transactional table from the start, every row is decorated with    * transaction related info and looks like<op, owid, writerId, rowid, cwid,<f1, ... fn>>.    *    * The other case is when data was written to non-transactional table and thus only has the user    * data:<f1, ... fn>.  Then this table was then converted to a transactional table but the data    * files are not changed until major compaction.  These are the "original" files.    *    * In this case we may need to decorate the outgoing data with transactional column values at    * read time.  (It's done somewhat out of band via VectorizedRowBatchCtx - ask Teddy Choi).    * The "owid, writerId, rowid" columns represent {@link RecordIdentifier}.  They are assigned    * each time the table is read in a way that needs to project {@link VirtualColumn#ROWID}.    * Major compaction will attach these values to each row permanently.    * It's critical that these generated column values are assigned exactly the same way by each    * read of the same row and by the Compactor.    * See {@link org.apache.hadoop.hive.ql.txn.compactor.CompactorMR} and    * {@link OrcRawRecordMerger.OriginalReaderPairToCompact} for the Compactor read path.    * (Longer term should make compactor use this class)    *    * This only decorates original rows with metadata if something above is requesting these values    * or if there are Delete events to apply.    *    * @return false where there is no more data, i.e. {@code value} is empty    */
 annotation|@
 name|Override
 specifier|public
@@ -2201,8 +2201,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Case 1- find rows which belong to transactions that are not valid.
-name|findRecordsWithInvalidTransactionIds
+comment|// Case 1- find rows which belong to write Ids that are not valid.
+name|findRecordsWithInvalidWriteIds
 argument_list|(
 name|vectorizedRowBatchBase
 argument_list|,
@@ -2678,7 +2678,7 @@ index|]
 operator|=
 name|syntheticProps
 operator|.
-name|syntheticTxnId
+name|syntheticWriteId
 expr_stmt|;
 comment|/**        * This is {@link RecordIdentifier#getBucketProperty()}        * Also see {@link BucketCodec}        */
 name|recordIdColumnVector
@@ -2873,13 +2873,13 @@ if|if
 condition|(
 name|syntheticProps
 operator|.
-name|syntheticTxnId
+name|syntheticWriteId
 operator|>
 literal|0
 condition|)
 block|{
 comment|//"originals" (written before table was converted to acid) is considered written by
-comment|// txnid:0 which is always committed so there is no need to check wrt invalid transactions
+comment|// writeid:0 which is always committed so there is no need to check wrt invalid write Ids
 comment|//But originals written by Load Data for example can be in base_x or delta_x_x so we must
 comment|//check if 'x' is committed or not evn if ROW_ID is not needed in the Operator pipeline.
 if|if
@@ -2887,7 +2887,7 @@ condition|(
 name|needSyntheticRowId
 condition|)
 block|{
-name|findRecordsWithInvalidTransactionIds
+name|findRecordsWithInvalidWriteIds
 argument_list|(
 name|innerRecordIdColumnVector
 argument_list|,
@@ -2901,7 +2901,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|/*since ROW_IDs are not needed we didn't create the ColumnVectors to hold them but we         * still have to check if the data being read is committed as far as current         * reader (transactions) is concerned.  Since here we are reading 'original' schema file,         * all rows in it have been created by the same txn, namely 'syntheticProps.syntheticTxnId'         */
+comment|/*since ROW_IDs are not needed we didn't create the ColumnVectors to hold them but we         * still have to check if the data being read is committed as far as current         * reader (transactions) is concerned.  Since here we are reading 'original' schema file,         * all rows in it have been created by the same txn, namely 'syntheticProps.syntheticWriteId'         */
 if|if
 condition|(
 operator|!
@@ -2911,7 +2911,7 @@ name|isWriteIdValid
 argument_list|(
 name|syntheticProps
 operator|.
-name|syntheticTxnId
+name|syntheticWriteId
 argument_list|)
 condition|)
 block|{
@@ -2935,7 +2935,7 @@ return|;
 block|}
 specifier|private
 name|void
-name|findRecordsWithInvalidTransactionIds
+name|findRecordsWithInvalidWriteIds
 parameter_list|(
 name|VectorizedRowBatch
 name|batch
@@ -2944,7 +2944,7 @@ name|BitSet
 name|selectedBitSet
 parameter_list|)
 block|{
-name|findRecordsWithInvalidTransactionIds
+name|findRecordsWithInvalidWriteIds
 argument_list|(
 name|batch
 operator|.
@@ -2960,7 +2960,7 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|findRecordsWithInvalidTransactionIds
+name|findRecordsWithInvalidWriteIds
 parameter_list|(
 name|ColumnVector
 index|[]
@@ -2986,9 +2986,9 @@ name|isRepeating
 condition|)
 block|{
 comment|// When we have repeating values, we can unset the whole bitset at once
-comment|// if the repeating value is not a valid transaction.
+comment|// if the repeating value is not a valid write id.
 name|long
-name|currentTransactionIdForBatch
+name|currentWriteIdForBatch
 init|=
 operator|(
 operator|(
@@ -3014,7 +3014,7 @@ name|validWriteIdList
 operator|.
 name|isWriteIdValid
 argument_list|(
-name|currentTransactionIdForBatch
+name|currentWriteIdForBatch
 argument_list|)
 condition|)
 block|{
@@ -3032,7 +3032,7 @@ return|return;
 block|}
 name|long
 index|[]
-name|currentTransactionVector
+name|currentWriteIdVector
 init|=
 operator|(
 operator|(
@@ -3049,7 +3049,7 @@ operator|.
 name|vector
 decl_stmt|;
 comment|// Loop through the bits that are set to true and mark those rows as false, if their
-comment|// current transactions are not valid.
+comment|// current write ids are not valid.
 for|for
 control|(
 name|int
@@ -3085,7 +3085,7 @@ name|validWriteIdList
 operator|.
 name|isWriteIdValid
 argument_list|(
-name|currentTransactionVector
+name|currentWriteIdVector
 index|[
 name|setBitIndex
 index|]
@@ -3555,7 +3555,7 @@ return|return;
 block|}
 name|long
 index|[]
-name|originalTransaction
+name|originalWriteId
 init|=
 name|cols
 index|[
@@ -3642,10 +3642,10 @@ name|vector
 decl_stmt|;
 comment|// The following repeatedX values will be set, if any of the columns are repeating.
 name|long
-name|repeatedOriginalTransaction
+name|repeatedOriginalWriteId
 init|=
 operator|(
-name|originalTransaction
+name|originalWriteId
 operator|!=
 literal|null
 operator|)
@@ -3756,16 +3756,16 @@ init|=
 operator|new
 name|RecordIdentifier
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 operator|!=
 literal|null
 condition|?
-name|originalTransaction
+name|originalWriteId
 index|[
 name|firstValidIndex
 index|]
 else|:
-name|repeatedOriginalTransaction
+name|repeatedOriginalWriteId
 argument_list|,
 name|bucket
 operator|!=
@@ -3818,16 +3818,16 @@ init|=
 operator|new
 name|RecordIdentifier
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 operator|!=
 literal|null
 condition|?
-name|originalTransaction
+name|originalWriteId
 index|[
 name|lastValidIndex
 index|]
 else|:
-name|repeatedOriginalTransaction
+name|repeatedOriginalWriteId
 argument_list|,
 name|bucket
 operator|!=
@@ -3929,17 +3929,17 @@ operator|.
 name|setValues
 argument_list|(
 operator|(
-name|originalTransaction
+name|originalWriteId
 operator|!=
 literal|null
 operator|)
 condition|?
-name|originalTransaction
+name|originalWriteId
 index|[
 name|currIndex
 index|]
 else|:
-name|repeatedOriginalTransaction
+name|repeatedOriginalWriteId
 argument_list|,
 operator|(
 name|bucket
@@ -4098,14 +4098,14 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * An implementation for DeleteEventRegistry that optimizes for performance by loading    * all the delete events into memory at once from all the delete delta files.    * It starts by reading all the delete events through a regular sort merge logic    * into 3 vectors- one for original transaction id (otid), one for bucket property and one for    * row id.  See {@link BucketCodec} for more about bucket property.    * The otids are likely to be repeated very often, as a single transaction    * often deletes thousands of rows. Hence, the otid vector is compressed to only store the    * toIndex and fromIndex ranges in the larger row id vector. Now, querying whether a    * record id is deleted or not, is done by performing a binary search on the    * compressed otid range. If a match is found, then a binary search is then performed on    * the larger rowId vector between the given toIndex and fromIndex. Of course, there is rough    * heuristic that prevents creation of an instance of this class if the memory pressure is high.    * The SortMergedDeleteEventRegistry is then the fallback method for such scenarios.    */
+comment|/**    * An implementation for DeleteEventRegistry that optimizes for performance by loading    * all the delete events into memory at once from all the delete delta files.    * It starts by reading all the delete events through a regular sort merge logic    * into 3 vectors- one for original Write id (owid), one for bucket property and one for    * row id.  See {@link BucketCodec} for more about bucket property.    * The owids are likely to be repeated very often, as a single transaction    * often deletes thousands of rows. Hence, the owid vector is compressed to only store the    * toIndex and fromIndex ranges in the larger row id vector. Now, querying whether a    * record id is deleted or not, is done by performing a binary search on the    * compressed owid range. If a match is found, then a binary search is then performed on    * the larger rowId vector between the given toIndex and fromIndex. Of course, there is rough    * heuristic that prevents creation of an instance of this class if the memory pressure is high.    * The SortMergedDeleteEventRegistry is then the fallback method for such scenarios.    */
 specifier|static
 class|class
 name|ColumnizedDeleteEventRegistry
 implements|implements
 name|DeleteEventRegistry
 block|{
-comment|/**      * A simple wrapper class to hold the (otid, bucketProperty, rowId) pair.      */
+comment|/**      * A simple wrapper class to hold the (owid, bucketProperty, rowId) pair.      */
 specifier|static
 class|class
 name|DeleteRecordKey
@@ -4117,7 +4117,7 @@ argument_list|>
 block|{
 specifier|private
 name|long
-name|originalTransactionId
+name|originalWriteId
 decl_stmt|;
 comment|/**        * see {@link BucketCodec}        */
 specifier|private
@@ -4133,7 +4133,7 @@ parameter_list|()
 block|{
 name|this
 operator|.
-name|originalTransactionId
+name|originalWriteId
 operator|=
 operator|-
 literal|1
@@ -4151,7 +4151,7 @@ name|void
 name|set
 parameter_list|(
 name|long
-name|otid
+name|owid
 parameter_list|,
 name|int
 name|bucketProperty
@@ -4162,9 +4162,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|originalTransactionId
+name|originalWriteId
 operator|=
-name|otid
+name|owid
 expr_stmt|;
 name|this
 operator|.
@@ -4203,19 +4203,19 @@ return|;
 block|}
 if|if
 condition|(
-name|originalTransactionId
+name|originalWriteId
 operator|!=
 name|other
 operator|.
-name|originalTransactionId
+name|originalWriteId
 condition|)
 block|{
 return|return
-name|originalTransactionId
+name|originalWriteId
 operator|<
 name|other
 operator|.
-name|originalTransactionId
+name|originalWriteId
 condition|?
 operator|-
 literal|1
@@ -4279,9 +4279,9 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"otid: "
+literal|"owid: "
 operator|+
-name|originalTransactionId
+name|originalWriteId
 operator|+
 literal|" bucketP:"
 operator|+
@@ -4495,7 +4495,7 @@ comment|// no more batches to read, exhausted the reader.
 block|}
 block|}
 name|long
-name|currentTransaction
+name|currentWriteId
 init|=
 name|setCurrentDeleteKey
 argument_list|(
@@ -4525,7 +4525,7 @@ name|validWriteIdList
 operator|.
 name|isWriteIdValid
 argument_list|(
-name|currentTransaction
+name|currentWriteId
 argument_list|)
 condition|)
 block|{
@@ -4563,7 +4563,7 @@ name|deleteRecordKey
 parameter_list|)
 block|{
 name|int
-name|originalTransactionIndex
+name|originalWriteIdIndex
 init|=
 name|batch
 operator|.
@@ -4581,7 +4581,7 @@ else|:
 name|indexPtrInBatch
 decl_stmt|;
 name|long
-name|originalTransaction
+name|originalWriteId
 init|=
 operator|(
 operator|(
@@ -4599,7 +4599,7 @@ operator|)
 operator|.
 name|vector
 index|[
-name|originalTransactionIndex
+name|originalWriteIdIndex
 index|]
 decl_stmt|;
 name|int
@@ -4668,7 +4668,7 @@ name|indexPtrInBatch
 index|]
 decl_stmt|;
 name|int
-name|currentTransactionIndex
+name|currentWriteIdIndex
 init|=
 name|batch
 operator|.
@@ -4686,7 +4686,7 @@ else|:
 name|indexPtrInBatch
 decl_stmt|;
 name|long
-name|currentTransaction
+name|currentWriteId
 init|=
 operator|(
 operator|(
@@ -4704,14 +4704,14 @@ operator|)
 operator|.
 name|vector
 index|[
-name|currentTransactionIndex
+name|currentWriteIdIndex
 index|]
 decl_stmt|;
 name|deleteRecordKey
 operator|.
 name|set
 argument_list|(
-name|originalTransaction
+name|originalWriteId
 argument_list|,
 name|bucketProperty
 argument_list|,
@@ -4719,7 +4719,7 @@ name|rowId
 argument_list|)
 expr_stmt|;
 return|return
-name|currentTransaction
+name|currentWriteId
 return|;
 block|}
 specifier|private
@@ -4862,20 +4862,20 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**      * A CompressedOtid class stores a compressed representation of the original      * transaction ids (otids) read from the delete delta files. Since the record ids      * are sorted by (otid, rowId) and otids are highly likely to be repetitive, it is      * efficient to compress them as a CompressedOtid that stores the fromIndex and      * the toIndex. These fromIndex and toIndex reference the larger vector formed by      * concatenating the correspondingly ordered rowIds.      */
+comment|/**      * A CompressedOwid class stores a compressed representation of the original      * write ids (owids) read from the delete delta files. Since the record ids      * are sorted by (owid, rowId) and owids are highly likely to be repetitive, it is      * efficient to compress them as a CompressedOwid that stores the fromIndex and      * the toIndex. These fromIndex and toIndex reference the larger vector formed by      * concatenating the correspondingly ordered rowIds.      */
 specifier|private
 specifier|final
 class|class
-name|CompressedOtid
+name|CompressedOwid
 implements|implements
 name|Comparable
 argument_list|<
-name|CompressedOtid
+name|CompressedOwid
 argument_list|>
 block|{
 specifier|final
 name|long
-name|originalTransactionId
+name|originalWriteId
 decl_stmt|;
 specifier|final
 name|int
@@ -4891,10 +4891,10 @@ name|int
 name|toIndex
 decl_stmt|;
 comment|// exclusive
-name|CompressedOtid
+name|CompressedOwid
 parameter_list|(
 name|long
-name|otid
+name|owid
 parameter_list|,
 name|int
 name|bucketProperty
@@ -4908,9 +4908,9 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|originalTransactionId
+name|originalWriteId
 operator|=
-name|otid
+name|owid
 expr_stmt|;
 name|this
 operator|.
@@ -4937,26 +4937,26 @@ specifier|public
 name|int
 name|compareTo
 parameter_list|(
-name|CompressedOtid
+name|CompressedOwid
 name|other
 parameter_list|)
 block|{
-comment|// When comparing the CompressedOtid, the one with the lesser value is smaller.
+comment|// When comparing the CompressedOwid, the one with the lesser value is smaller.
 if|if
 condition|(
-name|originalTransactionId
+name|originalWriteId
 operator|!=
 name|other
 operator|.
-name|originalTransactionId
+name|originalWriteId
 condition|)
 block|{
 return|return
-name|originalTransactionId
+name|originalWriteId
 operator|<
 name|other
 operator|.
-name|originalTransactionId
+name|originalWriteId
 condition|?
 operator|-
 literal|1
@@ -4991,7 +4991,7 @@ literal|0
 return|;
 block|}
 block|}
-comment|/**      * Food for thought:      * this is a bit problematic - in order to load ColumnizedDeleteEventRegistry we still open      * all delete deltas at once - possibly causing OOM same as for {@link SortMergedDeleteEventRegistry}      * which uses {@link OrcRawRecordMerger}.  Why not load all delete_delta sequentially.  Each      * dd is sorted by {@link RecordIdentifier} so we could create a BTree like structure where the      * 1st level is an array of originalTransactionId where each entry points at an array      * of bucketIds where each entry points at an array of rowIds.  We could probably use ArrayList      * to manage insertion as the structure is built (LinkedList?).  This should reduce memory      * footprint (as far as OrcReader to a single reader) - probably bad for LLAP IO      */
+comment|/**      * Food for thought:      * this is a bit problematic - in order to load ColumnizedDeleteEventRegistry we still open      * all delete deltas at once - possibly causing OOM same as for {@link SortMergedDeleteEventRegistry}      * which uses {@link OrcRawRecordMerger}.  Why not load all delete_delta sequentially.  Each      * dd is sorted by {@link RecordIdentifier} so we could create a BTree like structure where the      * 1st level is an array of originalWriteId where each entry points at an array      * of bucketIds where each entry points at an array of rowIds.  We could probably use ArrayList      * to manage insertion as the structure is built (LinkedList?).  This should reduce memory      * footprint (as far as OrcReader to a single reader) - probably bad for LLAP IO      */
 specifier|private
 name|TreeMap
 argument_list|<
@@ -5007,8 +5007,8 @@ name|rowIds
 index|[]
 decl_stmt|;
 specifier|private
-name|CompressedOtid
-name|compressedOtids
+name|CompressedOwid
+name|compressedOwids
 index|[]
 decl_stmt|;
 specifier|private
@@ -5133,7 +5133,7 @@ literal|null
 expr_stmt|;
 name|this
 operator|.
-name|compressedOtids
+name|compressedOwids
 operator|=
 literal|null
 expr_stmt|;
@@ -5445,7 +5445,7 @@ block|}
 block|}
 name|isEmpty
 operator|=
-name|compressedOtids
+name|compressedOwids
 operator|==
 literal|null
 operator|||
@@ -5472,7 +5472,7 @@ throw|;
 comment|// rethrow the exception so that the caller can handle.
 block|}
 block|}
-comment|/**      * This is not done quite right.  The intent of {@link CompressedOtid} is a hedge against      * "delete from T" that generates a huge number of delete events possibly even 2G - max array      * size.  (assuming no one txn inserts> 2G rows (in a bucket)).  As implemented, the algorithm      * first loads all data into one array otid[] and rowIds[] which defeats the purpose.      * In practice we should be filtering delete evens by min/max ROW_ID from the split.  The later      * is also not yet implemented: HIVE-16812.      */
+comment|/**      * This is not done quite right.  The intent of {@link CompressedOwid} is a hedge against      * "delete from T" that generates a huge number of delete events possibly even 2G - max array      * size.  (assuming no one txn inserts> 2G rows (in a bucket)).  As implemented, the algorithm      * first loads all data into one array owid[] and rowIds[] which defeats the purpose.      * In practice we should be filtering delete evens by min/max ROW_ID from the split.  The later      * is also not yet implemented: HIVE-16812.      */
 specifier|private
 name|void
 name|readAllDeleteEventsFromDeleteDeltas
@@ -5494,12 +5494,12 @@ condition|)
 return|return;
 comment|// trivial case, nothing to read.
 name|int
-name|distinctOtids
+name|distinctOwids
 init|=
 literal|0
 decl_stmt|;
 name|long
-name|lastSeenOtid
+name|lastSeenOwid
 init|=
 operator|-
 literal|1
@@ -5511,7 +5511,7 @@ operator|-
 literal|1
 decl_stmt|;
 name|long
-name|otids
+name|owids
 index|[]
 init|=
 operator|new
@@ -5586,14 +5586,14 @@ operator|.
 name|getValue
 argument_list|()
 decl_stmt|;
-name|otids
+name|owids
 index|[
 name|index
 index|]
 operator|=
 name|deleteRecordKey
 operator|.
-name|originalTransactionId
+name|originalWriteId
 expr_stmt|;
 name|bucketProperties
 index|[
@@ -5618,11 +5618,11 @@ name|index
 expr_stmt|;
 if|if
 condition|(
-name|lastSeenOtid
+name|lastSeenOwid
 operator|!=
 name|deleteRecordKey
 operator|.
-name|originalTransactionId
+name|originalWriteId
 operator|||
 name|lastSeenBucketProperty
 operator|!=
@@ -5632,13 +5632,13 @@ name|bucketProperty
 condition|)
 block|{
 operator|++
-name|distinctOtids
+name|distinctOwids
 expr_stmt|;
-name|lastSeenOtid
+name|lastSeenOwid
 operator|=
 name|deleteRecordKey
 operator|.
-name|originalTransactionId
+name|originalWriteId
 expr_stmt|;
 name|lastSeenBucketProperty
 operator|=
@@ -5677,22 +5677,22 @@ expr_stmt|;
 comment|// Exhausted reading all records, close the reader.
 block|}
 block|}
-comment|// Once we have processed all the delete events and seen all the distinct otids,
-comment|// we compress the otids into CompressedOtid data structure that records
-comment|// the fromIndex(inclusive) and toIndex(exclusive) for each unique otid.
+comment|// Once we have processed all the delete events and seen all the distinct owids,
+comment|// we compress the owids into CompressedOwid data structure that records
+comment|// the fromIndex(inclusive) and toIndex(exclusive) for each unique owid.
 name|this
 operator|.
-name|compressedOtids
+name|compressedOwids
 operator|=
 operator|new
-name|CompressedOtid
+name|CompressedOwid
 index|[
-name|distinctOtids
+name|distinctOwids
 index|]
 expr_stmt|;
-name|lastSeenOtid
+name|lastSeenOwid
 operator|=
-name|otids
+name|owids
 index|[
 literal|0
 index|]
@@ -5722,7 +5722,7 @@ literal|1
 init|;
 name|i
 operator|<
-name|otids
+name|owids
 operator|.
 name|length
 condition|;
@@ -5732,12 +5732,12 @@ control|)
 block|{
 if|if
 condition|(
-name|otids
+name|owids
 index|[
 name|i
 index|]
 operator|!=
-name|lastSeenOtid
+name|lastSeenOwid
 operator|||
 name|lastSeenBucketProperty
 operator|!=
@@ -5747,15 +5747,15 @@ name|i
 index|]
 condition|)
 block|{
-name|compressedOtids
+name|compressedOwids
 index|[
 name|pos
 index|]
 operator|=
 operator|new
-name|CompressedOtid
+name|CompressedOwid
 argument_list|(
-name|lastSeenOtid
+name|lastSeenOwid
 argument_list|,
 name|lastSeenBucketProperty
 argument_list|,
@@ -5764,9 +5764,9 @@ argument_list|,
 name|i
 argument_list|)
 expr_stmt|;
-name|lastSeenOtid
+name|lastSeenOwid
 operator|=
-name|otids
+name|owids
 index|[
 name|i
 index|]
@@ -5787,22 +5787,22 @@ name|pos
 expr_stmt|;
 block|}
 block|}
-comment|// account for the last distinct otid
-name|compressedOtids
+comment|// account for the last distinct owid
+name|compressedOwids
 index|[
 name|pos
 index|]
 operator|=
 operator|new
-name|CompressedOtid
+name|CompressedOwid
 argument_list|(
-name|lastSeenOtid
+name|lastSeenOwid
 argument_list|,
 name|lastSeenBucketProperty
 argument_list|,
 name|fromIndex
 argument_list|,
-name|otids
+name|owids
 operator|.
 name|length
 argument_list|)
@@ -5813,7 +5813,7 @@ name|boolean
 name|isDeleted
 parameter_list|(
 name|long
-name|otid
+name|owid
 parameter_list|,
 name|int
 name|bucketProperty
@@ -5824,7 +5824,7 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|compressedOtids
+name|compressedOwids
 operator|==
 literal|null
 operator|||
@@ -5837,48 +5837,48 @@ return|return
 literal|false
 return|;
 block|}
-comment|// To find if a given (otid, rowId) pair is deleted or not, we perform
+comment|// To find if a given (owid, rowId) pair is deleted or not, we perform
 comment|// two binary searches at most. The first binary search is on the
-comment|// compressed otids. If a match is found, only then we do the next
+comment|// compressed owids. If a match is found, only then we do the next
 comment|// binary search in the larger rowId vector between the given toIndex& fromIndex.
-comment|// Check if otid is outside the range of all otids present.
+comment|// Check if owid is outside the range of all owids present.
 if|if
 condition|(
-name|otid
+name|owid
 operator|<
-name|compressedOtids
+name|compressedOwids
 index|[
 literal|0
 index|]
 operator|.
-name|originalTransactionId
+name|originalWriteId
 operator|||
-name|otid
+name|owid
 operator|>
-name|compressedOtids
+name|compressedOwids
 index|[
-name|compressedOtids
+name|compressedOwids
 operator|.
 name|length
 operator|-
 literal|1
 index|]
 operator|.
-name|originalTransactionId
+name|originalWriteId
 condition|)
 block|{
 return|return
 literal|false
 return|;
 block|}
-comment|// Create a dummy key for searching the otid/bucket in the compressed otid ranges.
-name|CompressedOtid
+comment|// Create a dummy key for searching the owid/bucket in the compressed owid ranges.
+name|CompressedOwid
 name|key
 init|=
 operator|new
-name|CompressedOtid
+name|CompressedOwid
 argument_list|(
-name|otid
+name|owid
 argument_list|,
 name|bucketProperty
 argument_list|,
@@ -5896,7 +5896,7 @@ name|Arrays
 operator|.
 name|binarySearch
 argument_list|(
-name|compressedOtids
+name|compressedOwids
 argument_list|,
 name|key
 argument_list|)
@@ -5908,16 +5908,16 @@ operator|>=
 literal|0
 condition|)
 block|{
-comment|// Otid with the given value found! Searching now for rowId...
+comment|// Owid with the given value found! Searching now for rowId...
 name|key
 operator|=
-name|compressedOtids
+name|compressedOwids
 index|[
 name|pos
 index|]
 expr_stmt|;
-comment|// Retrieve the actual CompressedOtid that matched.
-comment|// Check if rowId is outside the range of all rowIds present for this otid.
+comment|// Retrieve the actual CompressedOwid that matched.
+comment|// Check if rowId is outside the range of all rowIds present for this owid.
 if|if
 condition|(
 name|rowId
@@ -6028,18 +6028,18 @@ name|rowIds
 operator|==
 literal|null
 operator|||
-name|compressedOtids
+name|compressedOwids
 operator|==
 literal|null
 condition|)
 block|{
 return|return;
 block|}
-comment|// Iterate through the batch and for each (otid, rowid) in the batch
+comment|// Iterate through the batch and for each (owid, rowid) in the batch
 comment|// check if it is deleted or not.
 name|long
 index|[]
-name|originalTransactionVector
+name|originalWriteIdVector
 init|=
 name|cols
 index|[
@@ -6067,10 +6067,10 @@ operator|.
 name|vector
 decl_stmt|;
 name|long
-name|repeatedOriginalTransaction
+name|repeatedOriginalWriteId
 init|=
 operator|(
-name|originalTransactionVector
+name|originalWriteIdVector
 operator|!=
 literal|null
 operator|)
@@ -6203,18 +6203,18 @@ argument_list|)
 control|)
 block|{
 name|long
-name|otid
+name|owid
 init|=
-name|originalTransactionVector
+name|originalWriteIdVector
 operator|!=
 literal|null
 condition|?
-name|originalTransactionVector
+name|originalWriteIdVector
 index|[
 name|setBitIndex
 index|]
 else|:
-name|repeatedOriginalTransaction
+name|repeatedOriginalWriteId
 decl_stmt|;
 name|int
 name|bucketProperty
@@ -6245,7 +6245,7 @@ if|if
 condition|(
 name|isDeleted
 argument_list|(
-name|otid
+name|owid
 argument_list|,
 name|bucketProperty
 argument_list|,

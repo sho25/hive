@@ -2096,7 +2096,7 @@ name|getMinOpenWriteId
 argument_list|()
 argument_list|)
 operator|+
-literal|".  Compaction cannot compact above this txnid"
+literal|".  Compaction cannot compact above this writeId"
 expr_stmt|;
 block|}
 name|LOG

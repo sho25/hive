@@ -205,7 +205,7 @@ enum|enum
 name|Field
 block|{
 comment|//note the enum names match field names in the struct
-name|transactionId
+name|writeId
 parameter_list|(
 name|TypeInfoFactory
 operator|.
@@ -468,7 +468,7 @@ name|struct
 index|[
 name|Field
 operator|.
-name|transactionId
+name|writeId
 operator|.
 name|ordinal
 argument_list|()
@@ -516,7 +516,7 @@ end_class
 begin_decl_stmt
 specifier|private
 name|long
-name|transactionId
+name|writeId
 decl_stmt|;
 end_decl_stmt
 
@@ -557,7 +557,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|transactionId
+name|writeId
 operator|=
 name|writeId
 expr_stmt|;
@@ -597,7 +597,7 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|transactionId
+name|writeId
 operator|=
 name|writeId
 expr_stmt|;
@@ -631,11 +631,11 @@ parameter_list|)
 block|{
 name|this
 operator|.
-name|transactionId
+name|writeId
 operator|=
 name|other
 operator|.
-name|transactionId
+name|writeId
 expr_stmt|;
 name|this
 operator|.
@@ -685,7 +685,7 @@ name|getWriteId
 parameter_list|()
 block|{
 return|return
-name|transactionId
+name|writeId
 return|;
 block|}
 end_function
@@ -745,19 +745,19 @@ return|;
 block|}
 if|if
 condition|(
-name|transactionId
+name|writeId
 operator|!=
 name|other
 operator|.
-name|transactionId
+name|writeId
 condition|)
 block|{
 return|return
-name|transactionId
+name|writeId
 operator|<
 name|other
 operator|.
-name|transactionId
+name|writeId
 condition|?
 operator|-
 literal|1
@@ -874,7 +874,7 @@ name|dataOutput
 operator|.
 name|writeLong
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 expr_stmt|;
 name|dataOutput
@@ -907,7 +907,7 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|transactionId
+name|writeId
 operator|=
 name|dataInput
 operator|.
@@ -983,9 +983,9 @@ decl_stmt|;
 return|return
 name|oth
 operator|.
-name|transactionId
+name|writeId
 operator|==
-name|transactionId
+name|writeId
 operator|&&
 name|oth
 operator|.
@@ -1025,10 +1025,10 @@ call|(
 name|int
 call|)
 argument_list|(
-name|transactionId
+name|writeId
 operator|^
 operator|(
-name|transactionId
+name|writeId
 operator|>>>
 literal|32
 operator|)
@@ -1118,7 +1118,7 @@ decl_stmt|;
 return|return
 literal|"{originalWriteId: "
 operator|+
-name|transactionId
+name|writeId
 operator|+
 literal|", "
 operator|+

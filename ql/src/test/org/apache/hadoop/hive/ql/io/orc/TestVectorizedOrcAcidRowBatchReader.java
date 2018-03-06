@@ -490,7 +490,7 @@ specifier|private
 specifier|static
 specifier|final
 name|long
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 init|=
 literal|15000L
 decl_stmt|;
@@ -498,7 +498,7 @@ specifier|private
 specifier|static
 specifier|final
 name|long
-name|NUM_OTID
+name|NUM_OWID
 init|=
 literal|10L
 decl_stmt|;
@@ -895,7 +895,7 @@ argument_list|)
 operator|.
 name|maximumWriteId
 argument_list|(
-name|NUM_OTID
+name|NUM_OWID
 argument_list|)
 operator|.
 name|inspector
@@ -941,7 +941,7 @@ literal|1
 init|;
 name|i
 operator|<=
-name|NUM_OTID
+name|NUM_OWID
 condition|;
 operator|++
 name|i
@@ -956,7 +956,7 @@ literal|0
 init|;
 name|j
 operator|<
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 condition|;
 operator|++
 name|j
@@ -971,7 +971,7 @@ operator|-
 literal|1
 operator|)
 operator|*
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 operator|+
 name|j
 decl_stmt|;
@@ -1012,7 +1012,7 @@ comment|// a delete delta file with 50,000 delete events.
 name|long
 name|currTxnId
 init|=
-name|NUM_OTID
+name|NUM_OWID
 operator|+
 literal|1
 decl_stmt|;
@@ -1047,7 +1047,7 @@ literal|1
 init|;
 name|i
 operator|<=
-name|NUM_OTID
+name|NUM_OWID
 condition|;
 operator|++
 name|i
@@ -1062,7 +1062,7 @@ literal|0
 init|;
 name|j
 operator|<
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 condition|;
 name|j
 operator|+=
@@ -1118,7 +1118,7 @@ comment|// Now, create a delete delta that has rowIds divisible by 3 but not by 
 comment|// a delete delta file with 25,000 delete events.
 name|currTxnId
 operator|=
-name|NUM_OTID
+name|NUM_OWID
 operator|+
 literal|2
 expr_stmt|;
@@ -1153,7 +1153,7 @@ literal|1
 init|;
 name|i
 operator|<=
-name|NUM_OTID
+name|NUM_OWID
 condition|;
 operator|++
 name|i
@@ -1168,7 +1168,7 @@ literal|0
 init|;
 name|j
 operator|<
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 condition|;
 name|j
 operator|+=
@@ -1224,7 +1224,7 @@ comment|// Now, create a delete delta that has rowIds divisible by both 3 and 2.
 comment|// a delete delta file with 25,000 delete events.
 name|currTxnId
 operator|=
-name|NUM_OTID
+name|NUM_OWID
 operator|+
 literal|3
 expr_stmt|;
@@ -1259,7 +1259,7 @@ literal|1
 init|;
 name|i
 operator|<=
-name|NUM_OTID
+name|NUM_OWID
 condition|;
 operator|++
 name|i
@@ -1274,7 +1274,7 @@ literal|0
 init|;
 name|j
 operator|<
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 condition|;
 name|j
 operator|+=
@@ -1840,12 +1840,12 @@ name|idx
 index|]
 decl_stmt|;
 name|long
-name|otid
+name|owid
 init|=
 operator|(
 name|payload
 operator|/
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 operator|)
 operator|+
 literal|1
@@ -1855,7 +1855,7 @@ name|rowId
 init|=
 name|payload
 operator|%
-name|NUM_ROWID_PER_OTID
+name|NUM_ROWID_PER_OWID
 decl_stmt|;
 name|assertFalse
 argument_list|(
@@ -1874,12 +1874,12 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-name|otid
+name|owid
 operator|!=
 literal|5
 argument_list|)
 expr_stmt|;
-comment|// Check that txn#5 has been excluded.
+comment|// Check that writeid#5 has been excluded.
 name|assertTrue
 argument_list|(
 name|payload

@@ -10986,7 +10986,7 @@ name|boolean
 name|isValidBase
 parameter_list|(
 name|long
-name|txnid
+name|writeid
 parameter_list|)
 block|{
 return|return
@@ -11000,7 +11000,7 @@ name|boolean
 name|isWriteIdAborted
 parameter_list|(
 name|long
-name|txnid
+name|writeid
 parameter_list|)
 block|{
 return|return

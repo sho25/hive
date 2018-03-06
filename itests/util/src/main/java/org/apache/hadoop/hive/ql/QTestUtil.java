@@ -10463,7 +10463,7 @@ decl_stmt|;
 end_decl_stmt
 
 begin_comment
-comment|/**    * Pattern to match and (partial) replacement text.    * For example, {"transaction":76,"bucketid":8249877}.  We just want to mask 76 but a regex that    * matches just 76 will match a lot of other things.    */
+comment|/**    * Pattern to match and (partial) replacement text.    * For example, {"writeid":76,"bucketid":8249877}.  We just want to mask 76 but a regex that    * matches just 76 will match a lot of other things.    */
 end_comment
 
 begin_class
@@ -10537,10 +10537,10 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"\\{\"transactionid\":[1-9][0-9]*,\"bucketid\":"
+literal|"\\{\"writeid\":[1-9][0-9]*,\"bucketid\":"
 argument_list|)
 argument_list|,
-literal|"{\"transactionid\":### Masked txnid ###,\"bucketid\":"
+literal|"{\"writeid\":### Masked writeid ###,\"bucketid\":"
 argument_list|)
 argument_list|)
 expr_stmt|;

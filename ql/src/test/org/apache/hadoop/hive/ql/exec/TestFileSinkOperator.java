@@ -1982,7 +1982,7 @@ name|boolean
 name|dynamic
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|)
 throws|throws
 name|IOException
@@ -2176,7 +2176,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|txnId
+name|writeId
 operator|>
 literal|0
 condition|)
@@ -2185,7 +2185,7 @@ name|desc
 operator|.
 name|setTableWriteId
 argument_list|(
-name|txnId
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}

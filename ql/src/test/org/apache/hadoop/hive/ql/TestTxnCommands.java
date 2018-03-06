@@ -747,7 +747,7 @@ name|Table
 name|table
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -794,9 +794,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -856,7 +856,7 @@ name|Table
 name|table
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -883,7 +883,7 @@ name|dumpBucketData
 argument_list|(
 name|table
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -6388,7 +6388,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":0,\"bucketid\":536870912,\"rowid\":0}\t0\t12"
+literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":0}\t0\t12"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6436,7 +6436,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":0}\t1\t2"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6484,7 +6484,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t5"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t5"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6532,7 +6532,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6651,7 +6651,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":0,\"bucketid\":536870912,\"rowid\":0}\t0\t12"
+literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":0}\t0\t12"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6699,7 +6699,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":0}\t1\t2"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6747,7 +6747,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t5"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t5"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6795,7 +6795,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"transactionid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 argument_list|)
 argument_list|)
 expr_stmt|;

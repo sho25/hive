@@ -9186,7 +9186,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Load Data commands for fullAcid tables write to base_x (if there is overwrite clause) or    * delta_x_x directory - same as any other Acid write.  This method modifies the destPath to add    * this path component.    * @param txnId - id of current transaction (in which this operation is running)    * @param stmtId - see {@link DbTxnManager#getStmtIdAndIncrement()}    * @return appropriately modified path    */
+comment|/**    * Load Data commands for fullAcid tables write to base_x (if there is overwrite clause) or    * delta_x_x directory - same as any other Acid write.  This method modifies the destPath to add    * this path component.    * @param writeId - write id of the operated table from current transaction (in which this operation is running)    * @param stmtId - see {@link DbTxnManager#getStmtIdAndIncrement()}    * @return appropriately modified path    */
 specifier|private
 name|Path
 name|fixFullAcidPathForLoadData
@@ -9198,7 +9198,7 @@ name|Path
 name|destPath
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -9228,7 +9228,7 @@ name|AcidUtils
 operator|.
 name|baseDir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9247,9 +9247,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -9393,7 +9393,7 @@ name|Path
 name|loadPath
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -9422,9 +9422,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -10322,7 +10322,7 @@ name|Path
 name|loadPath
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -10470,7 +10470,7 @@ name|numLB
 argument_list|,
 literal|null
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 operator|-
 literal|1

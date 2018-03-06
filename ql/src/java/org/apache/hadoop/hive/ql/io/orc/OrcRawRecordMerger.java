@@ -801,7 +801,7 @@ name|isDeleteEvent
 condition|)
 block|{
 comment|//this is to break a tie if insert + delete of a given row is done within the same
-comment|//txn (so that currentTransactionId is the same for both events) and we want the
+comment|//txn (so that currentWriteId is the same for both events) and we want the
 comment|//delete event to sort 1st since it needs to be sent up so that
 comment|// OrcInputFormat.getReader(InputSplit inputSplit, Options options) can skip it.
 return|return
@@ -1443,10 +1443,10 @@ specifier|final
 name|int
 name|bucketProperty
 decl_stmt|;
-comment|/**      * TransactionId to use when generating synthetic ROW_IDs      */
+comment|/**      * Write Id to use when generating synthetic ROW_IDs      */
 specifier|final
 name|long
-name|transactionId
+name|writeId
 decl_stmt|;
 comment|/**      * @param statementId - this should be from delta_x_y_stmtId file name.  Imagine 2 load data      *                    statements in 1 txn.  The stmtId will be embedded in      *                    {@link RecordIdentifier#bucketId} via {@link BucketCodec} below      */
 name|OriginalReaderPair
@@ -1501,11 +1501,11 @@ argument_list|,
 name|statementId
 argument_list|)
 expr_stmt|;
-name|transactionId
+name|writeId
 operator|=
 name|mergeOptions
 operator|.
-name|getTransactionId
+name|getWriteId
 argument_list|()
 expr_stmt|;
 block|}
@@ -1649,7 +1649,7 @@ argument_list|,
 operator|new
 name|LongWritable
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1665,7 +1665,7 @@ argument_list|,
 operator|new
 name|LongWritable
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1763,7 +1763,7 @@ operator|)
 operator|.
 name|set
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 expr_stmt|;
 operator|(
@@ -1801,7 +1801,7 @@ operator|)
 operator|.
 name|set
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 expr_stmt|;
 operator|(
@@ -1851,13 +1851,13 @@ name|key
 operator|.
 name|setValues
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|bucketProperty
 argument_list|,
 name|nextRowId
 argument_list|,
-name|transactionId
+name|writeId
 argument_list|,
 literal|false
 argument_list|)
@@ -2293,7 +2293,7 @@ operator|=
 operator|new
 name|RecordIdentifier
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|bucketProperty
 argument_list|,
@@ -2341,7 +2341,7 @@ operator|=
 operator|new
 name|RecordIdentifier
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|,
 name|bucketProperty
 argument_list|,
@@ -3634,7 +3634,7 @@ literal|false
 decl_stmt|;
 specifier|private
 name|long
-name|transactionId
+name|writeId
 init|=
 literal|0
 decl_stmt|;
@@ -3758,17 +3758,17 @@ name|this
 return|;
 block|}
 name|Options
-name|transactionId
+name|writeId
 parameter_list|(
 name|long
-name|transactionId
+name|writeId
 parameter_list|)
 block|{
 name|this
 operator|.
-name|transactionId
+name|writeId
 operator|=
-name|transactionId
+name|writeId
 expr_stmt|;
 return|return
 name|this
@@ -3857,13 +3857,13 @@ return|return
 name|isDeleteReader
 return|;
 block|}
-comment|/**      * for reading "original" files - i.e. not native acid schema.  Default value of 0 is      * appropriate for files that existed in a table before it was made transactional.  0 is the      * primordial transaction.  For non-native files resulting from Load Data command, they      * are located and base_x or delta_x_x and then transactionId == x.      */
+comment|/**      * for reading "original" files - i.e. not native acid schema.  Default value of 0 is      * appropriate for files that existed in a table before it was made transactional.  0 is the      * primordial transaction.  For non-native files resulting from Load Data command, they      * are located and base_x or delta_x_x and then writeId == x.      */
 name|long
-name|getTransactionId
+name|getWriteId
 parameter_list|()
 block|{
 return|return
-name|transactionId
+name|writeId
 return|;
 block|}
 comment|/**      * In case of isMajorCompaction() this is the base dir from the Compactor, i.e. either a base_x      * or {@link #rootPath} if it's the 1st major compaction after non-acid2acid conversion      */
@@ -5163,7 +5163,7 @@ specifier|final
 name|long
 name|syntheticWriteId
 decl_stmt|;
-comment|/**      * folder which determines the transaction id to use in synthetic ROW_IDs      */
+comment|/**      * folder which determines the write id to use in synthetic ROW_IDs      */
 specifier|final
 name|Path
 name|folder
@@ -5257,7 +5257,7 @@ argument_list|)
 condition|)
 block|{
 comment|//the 'isOriginal' file is at the root of the partition (or table) thus it is
-comment|//from a pre-acid conversion write and belongs to primordial txnid:0.
+comment|//from a pre-acid conversion write and belongs to primordial writeid:0.
 return|return
 operator|new
 name|TransactionMetaData
@@ -5420,7 +5420,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Cannot determine transaction id for original file "
+literal|"Cannot determine write id for original file "
 operator|+
 name|splitPath
 operator|+
@@ -5452,7 +5452,7 @@ name|Options
 name|baseOptions
 parameter_list|,
 name|long
-name|transactionId
+name|writeId
 parameter_list|,
 name|Path
 name|rootPath
@@ -5464,9 +5464,9 @@ operator|.
 name|clone
 argument_list|()
 operator|.
-name|transactionId
+name|writeId
 argument_list|(
-name|transactionId
+name|writeId
 argument_list|)
 operator|.
 name|rootPath

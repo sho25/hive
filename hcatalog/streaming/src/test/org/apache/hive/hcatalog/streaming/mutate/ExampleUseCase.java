@@ -332,7 +332,7 @@ comment|// --------------------------------------------------------------
 comment|// DATA SHOULD GET SORTED BY YOUR ETL/MERGE PROCESS HERE
 comment|//
 comment|// Group the data by (partitionValues, ROW__ID.bucketId)
-comment|// Order the groups by (ROW__ID.lastTransactionId, ROW__ID.rowId)
+comment|// Order the groups by (ROW__ID.writeId, ROW__ID.rowId)
 comment|// --------------------------------------------------------------
 comment|// One of these runs at the output of each reducer
 comment|//

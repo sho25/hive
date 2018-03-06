@@ -790,10 +790,10 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|assertMinTransactionId
+name|assertMinWriteId
 parameter_list|(
 name|long
-name|expectedMinTransactionId
+name|expectedMinWriteId
 parameter_list|)
 block|{
 if|if
@@ -814,7 +814,7 @@ throw|;
 block|}
 name|assertEquals
 argument_list|(
-name|expectedMinTransactionId
+name|expectedMinWriteId
 argument_list|,
 name|min
 argument_list|)
@@ -822,10 +822,10 @@ expr_stmt|;
 block|}
 specifier|public
 name|void
-name|assertMaxTransactionId
+name|assertMaxWriteId
 parameter_list|(
 name|long
-name|expectedMaxTransactionId
+name|expectedMaxWriteId
 parameter_list|)
 block|{
 if|if
@@ -846,7 +846,7 @@ throw|;
 block|}
 name|assertEquals
 argument_list|(
-name|expectedMaxTransactionId
+name|expectedMaxWriteId
 argument_list|,
 name|max
 argument_list|)

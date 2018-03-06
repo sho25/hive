@@ -9942,7 +9942,7 @@ name|Configuration
 name|hconf
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -10109,9 +10109,9 @@ name|baseOrDeltaSubdir
 argument_list|(
 name|isBaseDir
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -10268,7 +10268,7 @@ name|mmDir
 init|=
 name|extractNonDpMmDir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -10397,7 +10397,7 @@ name|mmDir
 init|=
 name|extractNonDpMmDir
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -10465,7 +10465,7 @@ name|Path
 name|extractNonDpMmDir
 parameter_list|(
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -10531,9 +10531,9 @@ name|baseOrDeltaSubdir
 argument_list|(
 name|isBaseDir
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -22599,7 +22599,7 @@ name|PathFilter
 name|filter
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -22634,7 +22634,7 @@ name|JavaUtils
 operator|.
 name|IdPathFilter
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -22722,7 +22722,7 @@ name|skipLevels
 argument_list|,
 name|filter
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -23249,7 +23249,7 @@ name|PathFilter
 name|filter
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -23313,7 +23313,7 @@ literal|0
 condition|)
 block|{
 comment|// Note: this does not work.
-comment|// sb.append(Path.SEPARATOR).append(AcidUtils.deltaSubdir(txnId, txnId)).append("_*");
+comment|// sb.append(Path.SEPARATOR).append(AcidUtils.deltaSubdir(writeId, writeId)).append("_*");
 throw|throw
 operator|new
 name|AssertionError
@@ -23341,9 +23341,9 @@ name|baseOrDeltaSubdir
 argument_list|(
 name|isBaseDir
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -23404,7 +23404,7 @@ name|IdPathFilter
 name|filter
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -23431,7 +23431,7 @@ name|lbLevels
 argument_list|,
 name|filter
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -23517,7 +23517,7 @@ name|String
 name|taskId
 parameter_list|,
 name|Long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -23549,7 +23549,7 @@ name|getManifestDir
 argument_list|(
 name|specPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -23674,7 +23674,7 @@ name|Path
 name|specPath
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -23702,9 +23702,9 @@ name|baseOrDeltaSubdir
 argument_list|(
 name|isInsertOverwrite
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
@@ -23809,7 +23809,7 @@ name|MissingBucketsContext
 name|mbc
 parameter_list|,
 name|long
-name|txnId
+name|writeId
 parameter_list|,
 name|int
 name|stmtId
@@ -23848,7 +23848,7 @@ name|getManifestDir
 argument_list|(
 name|specPath
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -23873,7 +23873,7 @@ name|JavaUtils
 operator|.
 name|IdPathFilter
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -23894,7 +23894,7 @@ name|lbLevels
 argument_list|,
 name|filter
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -23913,7 +23913,7 @@ literal|"Looking for manifests in: {} ({})"
 argument_list|,
 name|manifestDir
 argument_list|,
-name|txnId
+name|writeId
 argument_list|)
 expr_stmt|;
 name|List
@@ -24043,7 +24043,7 @@ name|JavaUtils
 operator|.
 name|IdPathFilter
 argument_list|(
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -24104,7 +24104,7 @@ name|lbLevels
 argument_list|,
 name|filter
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
@@ -24471,7 +24471,7 @@ name|numBuckets
 argument_list|,
 name|hconf
 argument_list|,
-name|txnId
+name|writeId
 argument_list|,
 name|stmtId
 argument_list|,

@@ -735,7 +735,7 @@ name|VirtualColumn
 index|[]
 name|neededVirtualColumns
 decl_stmt|;
-comment|/**    * A record ID column is a virtual column, so it should be separated from normal data column    * processes. A recordIdColumnVector contains RecordIdentifier information in a    * StructColumnVector. It has three LongColumnVectors as its fields; original transaction IDs,    * bucket IDs, and row IDs.    */
+comment|/**    * A record ID column is a virtual column, so it should be separated from normal data column    * processes. A recordIdColumnVector contains RecordIdentifier information in a    * StructColumnVector. It has three LongColumnVectors as its fields; original write IDs,    * bucket IDs, and row IDs.    */
 specifier|private
 name|StructColumnVector
 name|recordIdColumnVector

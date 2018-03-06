@@ -4644,7 +4644,7 @@ name|getColumnTypesProperty
 parameter_list|()
 block|{
 return|return
-literal|"string:struct<transactionId:bigint,bucketId:int,rowId:bigint>"
+literal|"string:struct<writeId:bigint,bucketId:int,rowId:bigint>"
 return|;
 block|}
 block|}
@@ -9110,7 +9110,7 @@ name|getColumnTypesProperty
 parameter_list|()
 block|{
 return|return
-literal|"int:bigint:string:float:double:struct<transactionId:bigint,bucketId:int,rowId:bigint>"
+literal|"int:bigint:string:float:double:struct<writeId:bigint,bucketId:int,rowId:bigint>"
 return|;
 block|}
 block|}

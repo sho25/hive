@@ -850,7 +850,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cannot extract transaction ID for a MM table: "
+literal|"Cannot extract write ID for a MM table: "
 operator|+
 name|file
 operator|+
@@ -901,7 +901,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cannot extract transaction ID for a MM table: "
+literal|"Cannot extract write ID for a MM table: "
 operator|+
 name|file
 operator|+

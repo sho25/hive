@@ -4546,7 +4546,7 @@ block|}
 name|currentTxnIndex
 operator|--
 expr_stmt|;
-comment|//since the loop left it == txnId.size()
+comment|//since the loop left it == txnToWriteIds.size()
 block|}
 else|else
 block|{

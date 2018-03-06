@@ -1718,7 +1718,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A MapReduce/Hive input format for ORC files.  *<p>  * This class implements both the classic InputFormat, which stores the rows  * directly, and AcidInputFormat, which stores a series of events with the  * following schema:  *<pre>  *   class AcidEvent&lt;ROW&gt; {  *     enum ACTION {INSERT, UPDATE, DELETE}  *     ACTION operation;  *     long originalTransaction;  *     int bucket;  *     long rowId;  *     long currentTransaction;  *     ROW row;  *   }  *</pre>  * Each AcidEvent object corresponds to an update event. The  * originalTransaction, bucket, and rowId are the unique identifier for the row.  * The operation and currentTransaction are the operation and the transaction  * that added this event. Insert and update events include the entire row, while  * delete events have null for row.  */
+comment|/**  * A MapReduce/Hive input format for ORC files.  *<p>  * This class implements both the classic InputFormat, which stores the rows  * directly, and AcidInputFormat, which stores a series of events with the  * following schema:  *<pre>  *   class AcidEvent&lt;ROW&gt; {  *     enum ACTION {INSERT, UPDATE, DELETE}  *     ACTION operation;  *     long originalTransaction;  *     int bucket;  *     long rowId;  *     long currentTransaction;  *     ROW row;  *   }  *</pre>  * Each AcidEvent object corresponds to an update event. The  * originalWriteId, bucket, and rowId are the unique identifier for the row.  * The operation and currentWriteId are the operation and the table write id within current txn  * that added this event. Insert and update events include the entire row, while  * delete events have null for row.  */
 end_comment
 
 begin_class
