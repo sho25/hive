@@ -857,6 +857,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into T values (1,2)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -962,6 +964,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"alter table T SET TBLPROPERTIES ('transactional'='true')"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1146,6 +1150,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from S where a in (select a from T where b = 1)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1236,6 +1242,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update S set a = 7 where a in (select a from T where b = 1)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1322,6 +1330,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into R select * from S where a in (select a from T where b = 1)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1448,6 +1458,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"create table if not exists T (a int, b int)"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|checkCmdOnDriver
@@ -1589,6 +1601,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert overwrite table T3 select a from T2"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -1775,6 +1789,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"INSERT OVERWRITE TABLE T4 PARTITION (age) SELECT name, age, gpa FROM T5"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -1947,6 +1963,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from T6"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -2005,6 +2023,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"drop table if exists T6"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -2262,6 +2282,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update temp.T7 set a = 5 where b = 6"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|//gets SS lock on T7
@@ -2309,6 +2331,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"drop database if exists temp"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2507,6 +2531,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from T8 where b = 89"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -2564,6 +2590,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from T8"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|//gets S lock on T8
@@ -2593,6 +2621,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update T8 set a = 1 where b = 1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2902,6 +2932,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from T9"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -2990,6 +3022,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"drop table T9"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -3125,6 +3159,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from TAB_BLOCKED"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -3213,6 +3249,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"drop table TAB_BLOCKED"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -3418,6 +3456,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from T10"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3464,6 +3504,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into table T10 values (1, 2)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3510,6 +3552,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update T10 set a=0 where b=1"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3556,6 +3600,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from T10"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5113,6 +5159,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into nonAcidPart partition(p) values(1,2,3)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -5218,6 +5266,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into nonAcidPart partition(p=1) values(5,6)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -5317,6 +5367,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into acidPart partition(p) values(1,2,3)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -5416,6 +5468,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into acidPart partition(p=1) values(5,6)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -5515,6 +5569,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update acidPart set b = 17 where a = 1"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -5595,6 +5651,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update acidPart set b = 17 where p = 1"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -5752,6 +5810,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from tab_acid inner join tab_not_acid on a = na"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5937,6 +5997,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into tab_not_acid partition(np='doh') values(5,6)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6181,6 +6243,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into tab_not_acid partition(np='blah') values(7,8)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6806,6 +6870,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into table db1.t14 partition (ds='today') values (1, 2)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -6852,6 +6918,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into table db1.t14 partition (ds='tomorrow') values (3, 4)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -6898,6 +6966,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from db2.t15"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -6944,6 +7014,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from db2.t16"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -6990,6 +7062,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from db2.t14"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -7601,6 +7675,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from TAB_PART"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7648,6 +7724,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7658,6 +7736,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7795,6 +7875,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7878,6 +7960,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB2 set b = 9 where p = 'doh'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7955,6 +8039,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8049,6 +8135,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8401,6 +8489,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from  TAB_PART where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8494,6 +8584,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB2 set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8724,6 +8816,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB2 set b = 7 where p = 'two'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8994,6 +9088,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB2 set b = 17 where a = 1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9261,6 +9357,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9329,6 +9427,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9609,6 +9709,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from TAB2 where a = 113"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9695,6 +9797,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update TAB2 set b = 17 where a = 101"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9982,6 +10086,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab2 set b = 7 where p='two'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10064,6 +10170,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab2 set b = 7 where p='one'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10438,6 +10546,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab1 set b = 7 where b=1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10535,6 +10645,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab1 set b = 7 where b = 2"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11020,6 +11132,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab1 set b = 7 where b=1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11121,6 +11235,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab1 set b = 7 where p='two'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11567,6 +11683,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab1 set b = 7 where b=1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11668,6 +11786,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from tab1 where p='two' and b=2"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12212,6 +12332,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update tab1 set b = 7 where b=2"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12305,6 +12427,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from tab1 where p='two' and b=2"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12763,6 +12887,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from tab1 where b=2"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12876,6 +13002,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select * from tab1 where b=1 and p='one'"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12915,6 +13043,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"delete from tab1 where p='two' and b=2"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -13945,6 +14075,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from XYZ where b = 8"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14176,6 +14308,8 @@ literal|"when matched and t.a in (3,7) then delete "
 operator|+
 comment|//deletes from p=1/q=2, p=2/q=2
 literal|"when not matched and t.a>= 8 then insert values(s.a, s.b, s.p, s.q)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14367,6 +14501,8 @@ literal|"when matched and t.a in (3,7) then delete "
 operator|+
 comment|//deletes from p=1/q=2, p=2/q=2
 literal|"when not matched and t.a>= 8 then insert values(s.a, s.b, s.p, s.q)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -15814,6 +15950,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update target set b = 2 where a=1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -15827,6 +15965,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into target values(9,10),(11,12)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -16032,6 +16172,8 @@ operator|+
 literal|"when matched then delete "
 operator|+
 literal|"when not matched then insert values(s.a,s.b)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -16568,6 +16710,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into target partition(p=1,q) values (1,2,2), (3,4,2), (5,6,3), (7,8,2)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -16848,6 +16992,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into target partition(p=1,q) values (10,2,2), (30,4,2), (50,6,3), (70,8,2)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17116,6 +17262,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"update target set b = 2 where p=1"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17237,6 +17385,8 @@ operator|+
 literal|"when matched then update set b = 11 "
 operator|+
 literal|"when not matched then insert values(a1,b1,p1,q1)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18160,6 +18310,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into T values(1,3)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18275,6 +18427,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"show tables"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18438,6 +18592,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"insert into T2 partition(p=1) values(1,3)"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18548,6 +18704,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"show tables"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18727,6 +18885,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from T6"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -18774,6 +18934,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"drop table if exists T6"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -18894,6 +19056,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from T6"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -19055,6 +19219,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from T7 "
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -19102,6 +19268,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"alter table T7 drop partition (p=1)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver
@@ -19259,6 +19427,8 @@ operator|.
 name|compileAndRespond
 argument_list|(
 literal|"select a from T7"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|checkCmdOnDriver

@@ -2778,6 +2778,11 @@ operator|!=
 literal|null
 condition|)
 block|{
+assert|assert
+name|validTxnString
+operator|!=
+literal|null
+assert|;
 name|jc
 operator|.
 name|set

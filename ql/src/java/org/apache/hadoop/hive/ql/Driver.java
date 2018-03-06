@@ -2119,6 +2119,12 @@ specifier|private
 name|RuntimeStatsSource
 name|runtimeStatsSource
 decl_stmt|;
+comment|// Boolean to store information about whether valid txn list was generated
+comment|// for current query.
+specifier|private
+name|boolean
+name|validTxnListsGenerated
+decl_stmt|;
 specifier|private
 name|CacheUsage
 name|cacheUsage
@@ -3884,6 +3890,11 @@ expr_stmt|;
 name|openTransaction
 argument_list|()
 expr_stmt|;
+comment|// TODO: Lock acquisition should be moved before this method call
+comment|// when we want to implement lock-based concurrency control
+name|generateValidTxnList
+argument_list|()
+expr_stmt|;
 name|sem
 operator|.
 name|analyze
@@ -3927,6 +3938,11 @@ name|tree
 argument_list|)
 expr_stmt|;
 name|openTransaction
+argument_list|()
+expr_stmt|;
+comment|// TODO: Lock acquisition should be moved before this method call
+comment|// when we want to implement lock-based concurrency control
+name|generateValidTxnList
 argument_list|()
 expr_stmt|;
 name|sem
@@ -4761,6 +4777,85 @@ argument_list|,
 name|userFromUGI
 argument_list|)
 decl_stmt|;
+block|}
+block|}
+block|}
+specifier|private
+name|void
+name|generateValidTxnList
+parameter_list|()
+throws|throws
+name|LockException
+block|{
+comment|// Record current valid txn list that will be used throughout the query
+comment|// compilation and processing. We only do this if 1) a transaction
+comment|// was already opened and 2) the list has not been recorded yet,
+comment|// e.g., by an explicit open transaction command.
+name|validTxnListsGenerated
+operator|=
+literal|false
+expr_stmt|;
+name|String
+name|currentTxnString
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|ValidTxnList
+operator|.
+name|VALID_TXNS_KEY
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|queryTxnMgr
+operator|.
+name|isTxnOpen
+argument_list|()
+operator|&&
+operator|(
+name|currentTxnString
+operator|==
+literal|null
+operator|||
+name|currentTxnString
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
+try|try
+block|{
+name|recordValidTxns
+argument_list|(
+name|queryTxnMgr
+argument_list|)
+expr_stmt|;
+name|validTxnListsGenerated
+operator|=
+literal|true
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|LockException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Exception while acquiring valid txn list"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+name|e
+throw|;
 block|}
 block|}
 block|}
@@ -8129,6 +8224,7 @@ argument_list|,
 name|lDrvState
 argument_list|)
 expr_stmt|;
+comment|// This check is for controlling the correctness of the current state
 if|if
 condition|(
 name|queryTxnMgr
@@ -8137,13 +8233,28 @@ name|recordSnapshot
 argument_list|(
 name|plan
 argument_list|)
+operator|&&
+operator|!
+name|validTxnListsGenerated
 condition|)
 block|{
-name|recordValidTxns
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"calling recordValidTxn() more than once in the same "
+operator|+
+name|JavaUtils
+operator|.
+name|txnIdToString
 argument_list|(
 name|queryTxnMgr
+operator|.
+name|getCurrentTxnId
+argument_list|()
 argument_list|)
-expr_stmt|;
+argument_list|)
+throw|;
 block|}
 if|if
 condition|(
@@ -8852,6 +8963,26 @@ name|String
 name|command
 parameter_list|)
 block|{
+return|return
+name|compileAndRespond
+argument_list|(
+name|command
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+specifier|public
+name|CommandProcessorResponse
+name|compileAndRespond
+parameter_list|(
+name|String
+name|command
+parameter_list|,
+name|boolean
+name|cleanupTxnList
+parameter_list|)
+block|{
 try|try
 block|{
 name|compileInternal
@@ -8877,6 +9008,26 @@ block|{
 return|return
 name|e
 return|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+name|cleanupTxnList
+condition|)
+block|{
+comment|// Valid txn list might be generated for a query compiled using this
+comment|// command, thus we need to reset it
+name|conf
+operator|.
+name|unset
+argument_list|(
+name|ValidTxnList
+operator|.
+name|VALID_TXNS_KEY
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 specifier|public
