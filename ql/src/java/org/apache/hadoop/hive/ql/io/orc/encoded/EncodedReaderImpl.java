@@ -10363,9 +10363,7 @@ name|NoopPoolFactory
 implements|implements
 name|PoolFactory
 block|{
-annotation|@
-name|Override
-specifier|public
+specifier|private
 parameter_list|<
 name|T
 parameter_list|>

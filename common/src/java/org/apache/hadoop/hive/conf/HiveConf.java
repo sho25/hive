@@ -13320,6 +13320,15 @@ operator|+
 literal|"slower than the IO (used when determining the size from base size)."
 argument_list|)
 block|,
+name|LLAP_IO_SHARE_OBJECT_POOLS
+argument_list|(
+literal|"hive.llap.io.share.object.pools"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to used shared object pools in LLAP IO. A safety flag."
+argument_list|)
+block|,
 name|LLAP_AUTO_ALLOW_UBER
 argument_list|(
 literal|"hive.llap.auto.allow.uber"
