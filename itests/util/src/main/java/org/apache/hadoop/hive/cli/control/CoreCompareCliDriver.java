@@ -729,11 +729,17 @@ name|qt
 operator|.
 name|cliInit
 argument_list|(
+operator|new
+name|File
+argument_list|(
+name|queryDirectory
+argument_list|,
 name|tname
 operator|+
 literal|"."
 operator|+
 name|versionStr
+argument_list|)
 argument_list|,
 literal|false
 argument_list|)

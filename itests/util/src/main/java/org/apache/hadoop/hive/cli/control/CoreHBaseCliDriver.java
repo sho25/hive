@@ -65,6 +65,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -570,7 +580,11 @@ name|qt
 operator|.
 name|cliInit
 argument_list|(
-name|fname
+operator|new
+name|File
+argument_list|(
+name|fpath
+argument_list|)
 argument_list|,
 literal|false
 argument_list|)

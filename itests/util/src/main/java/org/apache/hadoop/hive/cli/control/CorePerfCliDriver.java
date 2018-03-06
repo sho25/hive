@@ -45,6 +45,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -249,6 +259,8 @@ argument_list|,
 name|cleanupScript
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 comment|// do a one time initialization
@@ -520,7 +532,11 @@ name|qt
 operator|.
 name|cliInit
 argument_list|(
-name|fname
+operator|new
+name|File
+argument_list|(
+name|fpath
+argument_list|)
 argument_list|,
 literal|false
 argument_list|)

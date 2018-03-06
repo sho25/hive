@@ -203,8 +203,8 @@ return|return
 name|ret
 return|;
 block|}
-specifier|abstract
 specifier|public
+specifier|abstract
 name|void
 name|beforeClass
 parameter_list|()
@@ -212,30 +212,30 @@ throws|throws
 name|Exception
 function_decl|;
 comment|// HIVE-14444 pending rename: before
-specifier|abstract
 specifier|public
+specifier|abstract
 name|void
 name|setUp
 parameter_list|()
 function_decl|;
 comment|// HIVE-14444 pending rename: after
-specifier|abstract
 specifier|public
+specifier|abstract
 name|void
 name|tearDown
 parameter_list|()
 function_decl|;
 comment|// HIVE-14444 pending rename: afterClass
-specifier|abstract
 specifier|public
+specifier|abstract
 name|void
 name|shutdown
 parameter_list|()
 throws|throws
 name|Exception
 function_decl|;
-specifier|abstract
 specifier|public
+specifier|abstract
 name|void
 name|runTest
 parameter_list|(
@@ -243,7 +243,7 @@ name|String
 name|name
 parameter_list|,
 name|String
-name|name2
+name|fileName
 parameter_list|,
 name|String
 name|absolutePath
