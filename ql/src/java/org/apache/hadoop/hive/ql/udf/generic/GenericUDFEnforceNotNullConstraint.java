@@ -87,6 +87,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|errors
+operator|.
+name|DataConstraintViolationError
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -297,7 +317,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|UDFArgumentLengthException
+name|DataConstraintViolationError
 argument_list|(
 literal|"NOT NULL constraint violated!"
 argument_list|)
