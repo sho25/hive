@@ -5468,9 +5468,15 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// Username is added to the request header
+comment|// Username and password are added to the http request header.
+comment|// We will test the reconfiguration of the header size by changing the password length.
 name|String
 name|userName
+init|=
+literal|"userName"
+decl_stmt|;
+name|String
+name|password
 init|=
 name|StringUtils
 operator|.
@@ -5502,7 +5508,7 @@ argument_list|)
 argument_list|,
 name|userName
 argument_list|,
-literal|"password"
+name|password
 argument_list|)
 expr_stmt|;
 block|}
@@ -5538,7 +5544,7 @@ block|}
 block|}
 comment|// This should fail with given HTTP response code 413 in error message, since header is more
 comment|// than the configured the header size
-name|userName
+name|password
 operator|=
 name|StringUtils
 operator|.
@@ -5573,7 +5579,7 @@ argument_list|)
 argument_list|,
 name|userName
 argument_list|,
-literal|"password"
+name|password
 argument_list|)
 expr_stmt|;
 block|}
@@ -5688,7 +5694,7 @@ argument_list|)
 argument_list|,
 name|userName
 argument_list|,
-literal|"password"
+name|password
 argument_list|)
 expr_stmt|;
 block|}
