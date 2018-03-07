@@ -32,8 +32,6 @@ name|EXTERNAL_TABLE
 block|,
 name|VIRTUAL_VIEW
 block|,
-name|INDEX_TABLE
-block|,
 name|MATERIALIZED_VIEW
 block|}
 end_enum

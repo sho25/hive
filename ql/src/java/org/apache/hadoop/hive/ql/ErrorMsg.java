@@ -1268,13 +1268,6 @@ argument_list|,
 literal|"Invalid expression for JDO filter"
 argument_list|)
 block|,
-name|SHOW_CREATETABLE_INDEX
-argument_list|(
-literal|10144
-argument_list|,
-literal|"SHOW CREATE TABLE does not support tables of type INDEX_TABLE."
-argument_list|)
-block|,
 name|ALTER_BUCKETNUM_NONBUCKETIZED_TBL
 argument_list|(
 literal|10145

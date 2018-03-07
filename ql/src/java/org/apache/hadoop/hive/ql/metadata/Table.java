@@ -325,24 +325,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|BasicTxnInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|CreationMetadata
 import|;
 end_import
@@ -2381,7 +2363,9 @@ operator|.
 name|size
 argument_list|()
 condition|)
+block|{
 break|break;
+block|}
 block|}
 if|if
 condition|(
@@ -4531,24 +4515,6 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * @return whether this table is actually an index table    */
-specifier|public
-name|boolean
-name|isIndexTable
-parameter_list|()
-block|{
-return|return
-name|TableType
-operator|.
-name|INDEX_TABLE
-operator|.
-name|equals
-argument_list|(
-name|getTableType
-argument_list|()
-argument_list|)
-return|;
-block|}
 comment|/**    * Creates a partition name -> value spec map object    *    * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
 specifier|public
 name|LinkedHashMap
@@ -5129,9 +5095,11 @@ argument_list|,
 name|serdeLib
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 if|if
 condition|(
 name|HiveConf
@@ -5145,9 +5113,11 @@ operator|.
 name|HIVE_LEGACY_SCHEMA_FOR_ALL_SERDES
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 comment|// Table may or may not be using metastore. Only the SerDe can tell us.
 name|AbstractSerDe
 name|deserializer
@@ -5181,10 +5151,12 @@ argument_list|(
 name|clazz
 argument_list|)
 condition|)
+block|{
 return|return
 literal|true
 return|;
 comment|// The default.
+block|}
 name|deserializer
 operator|=
 name|ReflectionUtil

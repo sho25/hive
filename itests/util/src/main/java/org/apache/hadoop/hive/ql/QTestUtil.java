@@ -6475,18 +6475,6 @@ argument_list|)
 expr_stmt|;
 continue|continue;
 block|}
-comment|// dropping index table can not be dropped directly. Dropping the base
-comment|// table will automatically drop all its index table
-if|if
-condition|(
-name|tblObj
-operator|.
-name|isIndexTable
-argument_list|()
-condition|)
-block|{
-continue|continue;
-block|}
 name|db
 operator|.
 name|dropTable

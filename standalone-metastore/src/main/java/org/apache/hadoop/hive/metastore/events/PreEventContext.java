@@ -109,12 +109,6 @@ name|READ_TABLE
 block|,
 name|READ_DATABASE
 block|,
-name|ADD_INDEX
-block|,
-name|ALTER_INDEX
-block|,
-name|DROP_INDEX
-block|,
 name|ALTER_DATABASE
 block|}
 specifier|private

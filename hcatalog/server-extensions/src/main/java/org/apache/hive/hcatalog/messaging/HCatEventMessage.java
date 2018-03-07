@@ -161,27 +161,6 @@ name|HCatConstants
 operator|.
 name|HCAT_DROP_FUNCTION_EVENT
 argument_list|)
-operator|,
-name|CREATE_INDEX
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_CREATE_INDEX_EVENT
-argument_list|)
-operator|,
-name|DROP_INDEX
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_DROP_INDEX_EVENT
-argument_list|)
-operator|,
-name|ALTER_INDEX
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_ALTER_INDEX_EVENT
-argument_list|)
 expr_stmt|;
 end_class
 
@@ -328,6 +307,7 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -335,6 +315,7 @@ argument_list|(
 literal|"Server-URL/Service-Principal shouldn't be null."
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|getEventType
@@ -342,6 +323,7 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalStateException
@@ -349,6 +331,7 @@ argument_list|(
 literal|"Event-type unset."
 argument_list|)
 throw|;
+block|}
 if|if
 condition|(
 name|getDB
@@ -356,6 +339,7 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|IllegalArgumentException
@@ -363,6 +347,7 @@ argument_list|(
 literal|"DB-name unset."
 argument_list|)
 throw|;
+block|}
 return|return
 name|this
 return|;
