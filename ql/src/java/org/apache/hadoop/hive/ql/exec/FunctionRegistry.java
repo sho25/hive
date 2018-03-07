@@ -5540,6 +5540,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"assert_true_oom"
+argument_list|,
+name|GenericUDFAssertTrueOOM
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"map"
 argument_list|,
 name|GenericUDFMap

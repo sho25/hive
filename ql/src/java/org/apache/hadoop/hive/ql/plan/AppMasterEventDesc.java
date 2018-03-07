@@ -35,17 +35,27 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Objects
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Objects
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
 import|;
 end_import
 
@@ -141,6 +151,8 @@ name|displayName
 operator|=
 literal|"Target Vertex"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getVertexName
@@ -157,6 +169,8 @@ name|displayName
 operator|=
 literal|"Target Input"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getInputName
@@ -196,6 +210,8 @@ operator|=
 name|vertexName
 expr_stmt|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|TableDesc
 name|getTable

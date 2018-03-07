@@ -163,6 +163,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|QBJoinTree
@@ -1289,6 +1309,8 @@ name|displayName
 operator|=
 literal|"keys"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|Map
 argument_list|<
@@ -1502,6 +1524,8 @@ name|displayName
 operator|=
 literal|"filter predicates"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|Map
 argument_list|<
@@ -1899,6 +1923,8 @@ name|displayName
 operator|=
 literal|"outputColumnNames"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|List
 argument_list|<
@@ -2004,6 +2030,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|List
 argument_list|<
@@ -2238,6 +2266,8 @@ name|displayOnlyOnTrue
 operator|=
 literal|true
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|boolean
 name|getHandleSkewJoin
@@ -2471,6 +2501,8 @@ name|displayName
 operator|=
 literal|"nullSafes"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getNullSafeString

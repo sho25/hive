@@ -1745,6 +1745,22 @@ name|hook
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|void
+name|addSemanticAnalyzerHook
+parameter_list|(
+name|HiveSemanticAnalyzerHook
+name|hook
+parameter_list|)
+block|{
+name|saHooks
+operator|.
+name|add
+argument_list|(
+name|hook
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

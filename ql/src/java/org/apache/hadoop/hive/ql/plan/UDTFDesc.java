@@ -41,6 +41,36 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Objects
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -56,16 +86,6 @@ operator|.
 name|Explain
 operator|.
 name|Level
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Objects
 import|;
 end_import
 
@@ -195,6 +215,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getUDTFName
@@ -238,6 +260,8 @@ name|displayName
 operator|=
 literal|"outer lateral view"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|isOuterLateralView

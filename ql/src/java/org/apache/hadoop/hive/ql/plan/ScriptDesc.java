@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Objects
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -67,21 +77,31 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|optimizer
 operator|.
-name|Explain
+name|signature
 operator|.
-name|Level
+name|Signature
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Objects
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+operator|.
+name|Level
 import|;
 end_import
 
@@ -267,6 +287,8 @@ name|scriptErrInfo
 expr_stmt|;
 block|}
 annotation|@
+name|Signature
+annotation|@
 name|Explain
 argument_list|(
 name|displayName
@@ -314,6 +336,8 @@ operator|=
 name|scriptCmd
 expr_stmt|;
 block|}
+annotation|@
+name|Signature
 annotation|@
 name|Explain
 argument_list|(

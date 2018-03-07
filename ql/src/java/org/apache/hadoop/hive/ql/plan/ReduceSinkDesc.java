@@ -117,6 +117,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|Explain
@@ -1024,6 +1044,8 @@ name|keyCols
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|java
 operator|.
@@ -1110,6 +1132,8 @@ name|valueCols
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|java
 operator|.
@@ -1201,6 +1225,8 @@ literal|true
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|java
 operator|.
@@ -1267,6 +1293,8 @@ literal|false
 return|;
 block|}
 annotation|@
+name|Signature
+annotation|@
 name|Explain
 argument_list|(
 name|displayName
@@ -1305,6 +1333,8 @@ operator|=
 name|tag
 expr_stmt|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|int
 name|getTopN
@@ -1531,6 +1561,8 @@ name|valueSerializeInfo
 expr_stmt|;
 block|}
 comment|/**    * Returns the sort order of the key columns.    *    * @return null, which means ascending order for all key columns, or a String    *         of the same length as key columns, that consists of only "+"    *         (ascending order) and "-" (descending order).    */
+annotation|@
+name|Signature
 annotation|@
 name|Explain
 argument_list|(
@@ -1887,6 +1919,8 @@ return|return
 name|forwarding
 return|;
 block|}
+annotation|@
+name|Signature
 annotation|@
 name|Explain
 argument_list|(

@@ -10923,7 +10923,7 @@ name|Pattern
 operator|.
 name|compile
 argument_list|(
-literal|"attempt_[0-9]+"
+literal|"attempt_[0-9_]+"
 argument_list|)
 argument_list|,
 literal|"attempt_#ID#"

@@ -100,7 +100,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Join conditions Descriptor implementation.  *   */
+comment|/**  * Join conditions Descriptor implementation.  *  */
 end_comment
 
 begin_class
@@ -576,6 +576,7 @@ name|JSONObject
 argument_list|(
 operator|new
 name|LinkedHashMap
+argument_list|<>
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -807,6 +808,7 @@ return|return
 literal|true
 return|;
 block|}
+comment|// XXX: is hashCode missing here?
 block|}
 end_class
 

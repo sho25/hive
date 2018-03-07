@@ -105,6 +105,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|Explain
@@ -1180,6 +1200,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|Map
 argument_list|<
@@ -1238,6 +1260,8 @@ name|retainList
 expr_stmt|;
 block|}
 comment|/**    * @return the keys in string form    */
+annotation|@
+name|Override
 annotation|@
 name|Explain
 argument_list|(
@@ -1319,6 +1343,8 @@ return|return
 name|keyMap
 return|;
 block|}
+annotation|@
+name|Override
 annotation|@
 name|Explain
 argument_list|(

@@ -4017,6 +4017,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -4366,6 +4368,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -4457,8 +4461,13 @@ name|sortedOps
 return|;
 end_return
 
+begin_comment
+unit|}
+comment|// FIXME: probably this should also be integrated with isSame() logics
+end_comment
+
 begin_function
-unit|}    private
+unit|private
 specifier|static
 name|boolean
 name|areMergeable

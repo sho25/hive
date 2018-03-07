@@ -83,6 +83,26 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|DataOutputBuffer
@@ -241,6 +261,8 @@ operator|+
 literal|")"
 return|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getTargetColumnName
@@ -265,6 +287,8 @@ operator|=
 name|columnName
 expr_stmt|;
 block|}
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getTargetColumnType
@@ -338,6 +362,8 @@ name|displayName
 operator|=
 literal|"Partition key expr"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getPartKeyString

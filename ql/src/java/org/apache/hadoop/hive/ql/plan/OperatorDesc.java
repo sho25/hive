@@ -160,6 +160,18 @@ argument_list|>
 name|colExprMap
 parameter_list|)
 function_decl|;
+name|void
+name|fillSignature
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|Object
+argument_list|>
+name|ret
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

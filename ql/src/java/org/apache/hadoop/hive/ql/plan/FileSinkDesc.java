@@ -111,6 +111,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|optimizer
+operator|.
+name|signature
+operator|.
+name|Signature
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|Explain
@@ -832,6 +852,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|Path
 name|getDirName
@@ -940,6 +962,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|TableDesc
 name|getTableInfo
@@ -972,6 +996,8 @@ name|displayName
 operator|=
 literal|"compressed"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|boolean
 name|getCompressed
@@ -1011,6 +1037,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|int
 name|getDestTableId
@@ -1095,6 +1123,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|boolean
 name|isMultiFileSpray
@@ -1251,6 +1281,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|int
 name|getTotalFiles
@@ -1324,6 +1356,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|int
 name|getNumFiles
@@ -1405,6 +1439,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getStaticSpec
@@ -1446,6 +1482,8 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|boolean
 name|isGatherStats
@@ -1473,6 +1511,10 @@ operator|.
 name|EXTENDED
 block|}
 argument_list|)
+comment|// FIXME: including this in the signature will almost certenly differ even if the operator is doing the same
+comment|// there might be conflicting usages of logicalCompare?
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getStatsAggPrefix
