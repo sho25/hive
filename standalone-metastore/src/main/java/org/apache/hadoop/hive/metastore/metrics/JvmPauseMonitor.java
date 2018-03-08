@@ -829,8 +829,9 @@ block|{
 name|Stopwatch
 name|sw
 init|=
-operator|new
 name|Stopwatch
+operator|.
+name|createUnstarted
 argument_list|()
 decl_stmt|;
 name|Map
