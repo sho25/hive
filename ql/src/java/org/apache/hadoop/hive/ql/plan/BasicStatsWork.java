@@ -508,15 +508,20 @@ literal|true
 return|;
 block|}
 comment|// INSERT OVERWRITE
-if|if
-condition|(
+name|LoadTableDesc
+name|ltd
+init|=
 name|getLoadTableDesc
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|ltd
 operator|!=
 literal|null
 operator|&&
-name|getLoadTableDesc
-argument_list|()
+operator|(
+name|ltd
 operator|.
 name|getLoadFileType
 argument_list|()
@@ -524,6 +529,12 @@ operator|==
 name|LoadFileType
 operator|.
 name|REPLACE_ALL
+operator|||
+name|ltd
+operator|.
+name|isInsertOverwrite
+argument_list|()
+operator|)
 condition|)
 block|{
 return|return

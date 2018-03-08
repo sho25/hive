@@ -8254,6 +8254,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Note: the stats for ACID tables do not have any coordination with either Hive ACID logic
+comment|//       like txn commits, time outs, etc.; nor the lower level sync in metastore pertaining
+comment|//       to ACID updates. So the are not themselves ACID.
 comment|// Note: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
@@ -8372,6 +8375,7 @@ name|isMmTableWrite
 condition|)
 block|{
 comment|// We will load into MM directory, and delete from the parent if needed.
+comment|// TODO: this looks invalid after ACID integration. What about base dirs?
 name|destPath
 operator|=
 operator|new
@@ -8391,6 +8395,7 @@ name|stmtId
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// TODO: loadFileType for MM table will no longer be REPLACE_ALL
 name|filter
 operator|=
 operator|(
@@ -8512,6 +8517,7 @@ literal|"auto.purge"
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO: this should never run for MM tables anymore. Remove the flag, and maybe the filter?
 name|replaceFiles
 argument_list|(
 name|tbl
@@ -8888,10 +8894,45 @@ name|TRUE
 argument_list|)
 expr_stmt|;
 block|}
-name|MetaStoreUtils
+comment|// Note: we are creating a brand new the partition, so this is going to be valid for ACID.
+name|List
+argument_list|<
+name|FileStatus
+argument_list|>
+name|filesForStats
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|isFullAcidTable
+operator|||
+name|isMmTableWrite
+condition|)
+block|{
+name|filesForStats
+operator|=
+name|AcidUtils
 operator|.
-name|populateQuickStats
+name|getAcidFilesForStats
 argument_list|(
+name|newTPart
+operator|.
+name|getTable
+argument_list|()
+argument_list|,
+name|newPartPath
+argument_list|,
+name|conf
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|filesForStats
+operator|=
 name|HiveStatsUtils
 operator|.
 name|getFileStatusRecurse
@@ -8908,6 +8949,20 @@ argument_list|(
 name|conf
 argument_list|)
 argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|filesForStats
+operator|!=
+literal|null
+condition|)
+block|{
+name|MetaStoreUtils
+operator|.
+name|populateQuickStats
+argument_list|(
+name|filesForStats
 argument_list|,
 name|newTPart
 operator|.
@@ -8915,6 +8970,21 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// The ACID state is probably absent. Warning is logged in the get method.
+name|MetaStoreUtils
+operator|.
+name|clearQuickStats
+argument_list|(
+name|newTPart
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 try|try
 block|{
 name|LOG
@@ -10367,8 +10437,10 @@ operator|!
 name|isMmTable
 condition|)
 block|{
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|leafStatus
 init|=
 name|HiveStatsUtils
@@ -11657,6 +11729,16 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
@@ -11673,8 +11755,11 @@ name|tbl
 operator|.
 name|getPath
 argument_list|()
+operator|+
+literal|" (MM)"
 argument_list|)
 expr_stmt|;
+block|}
 name|newFiles
 operator|=
 name|listFilesCreatedByQuery
@@ -11720,6 +11805,7 @@ operator|!
 name|isAcidIUDoperation
 assert|;
 comment|// We will load into MM directory, and delete from the parent if needed.
+comment|// TODO: this looks invalid after ACID integration. What about base dirs?
 name|destPath
 operator|=
 operator|new
@@ -11739,6 +11825,7 @@ name|stmtId
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// TODO: loadFileType for MM table will no longer be REPLACE_ALL
 name|filter
 operator|=
 name|loadFileType
@@ -11839,6 +11926,7 @@ literal|"auto.purge"
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO: this should never run for MM tables anymore. Remove the flag, and maybe the filter?
 name|replaceFiles
 argument_list|(
 name|tblPath

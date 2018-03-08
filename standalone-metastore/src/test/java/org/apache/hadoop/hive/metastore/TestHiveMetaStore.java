@@ -3815,9 +3815,17 @@ name|updatePartitionStatsFast
 argument_list|(
 name|part4
 argument_list|,
+name|tbl
+argument_list|,
 name|warehouse
 argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 return|return

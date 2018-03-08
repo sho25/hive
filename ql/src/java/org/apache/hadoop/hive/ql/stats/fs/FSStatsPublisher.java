@@ -734,28 +734,17 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"About to create stats file for this task : "
-operator|+
+literal|"About to create stats file for this task : {}"
+argument_list|,
 name|statsFile
 argument_list|)
 expr_stmt|;
-block|}
 name|Output
 name|output
 init|=

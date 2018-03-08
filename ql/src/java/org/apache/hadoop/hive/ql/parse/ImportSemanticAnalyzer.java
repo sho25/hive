@@ -3767,6 +3767,8 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Note: this sets LoadFileType incorrectly for ACID; is that relevant for import?
+comment|//       See setLoadFileType and setIsAcidIow calls elsewhere for an example.
 name|LoadTableDesc
 name|loadTableWork
 init|=

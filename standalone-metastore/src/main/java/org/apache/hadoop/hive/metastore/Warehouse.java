@@ -3047,8 +3047,10 @@ return|;
 block|}
 comment|/**    * @param desc    * @return array of FileStatus objects corresponding to the files    * making up the passed storage description    */
 specifier|public
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|getFileStatusesForSD
 parameter_list|(
 name|StorageDescriptor
@@ -3069,8 +3071,10 @@ return|;
 block|}
 comment|/**    * @param location    * @return array of FileStatus objects corresponding to the files    * making up the passed storage description    */
 specifier|public
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|getFileStatusesForLocation
 parameter_list|(
 name|String
@@ -3134,8 +3138,10 @@ return|;
 block|}
 comment|/**    * @param db database    * @param table table    * @return array of FileStatus objects corresponding to the files making up the passed    * unpartitioned table    */
 specifier|public
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|getFileStatusesForUnpartitionedTable
 parameter_list|(
 name|Database

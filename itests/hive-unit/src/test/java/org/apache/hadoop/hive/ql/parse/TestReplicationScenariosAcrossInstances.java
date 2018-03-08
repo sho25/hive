@@ -570,6 +570,19 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|put
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST_REPL
+operator|.
+name|varname
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 decl_stmt|;
@@ -2460,6 +2473,9 @@ literal|"use "
 operator|+
 name|dbOne
 argument_list|)
+comment|// TODO: this is wrong; this test sets up dummy txn manager and so it cannot create ACID tables.
+comment|//       This used to work by accident, now this works due a test flag. The test needs to be fixed.
+comment|//       Also applies for a couple more tests.
 operator|.
 name|run
 argument_list|(

@@ -2275,11 +2275,11 @@ name|getStmtIdAndIncrement
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Note: this sets LoadFileType incorrectly for ACID; is that relevant for load?
+comment|//       See setLoadFileType and setIsAcidIow calls elsewhere for an example.
 name|LoadTableDesc
 name|loadTableWork
-decl_stmt|;
-name|loadTableWork
-operator|=
+init|=
 operator|new
 name|LoadTableDesc
 argument_list|(
@@ -2312,7 +2312,7 @@ name|KEEP_EXISTING
 argument_list|,
 name|writeId
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|loadTableWork
 operator|.
 name|setStmtId

@@ -204,8 +204,10 @@ decl_stmt|;
 comment|/**    * Get all file status from a root path and recursively go deep into certain levels.    *    * @param path    *          the root path    * @param level    *          the depth of directory to explore    * @param fs    *          the file system    * @return array of FileStatus    * @throws IOException    */
 specifier|public
 specifier|static
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|getFileStatusRecurse
 parameter_list|(
 name|Path
@@ -239,8 +241,10 @@ return|;
 block|}
 specifier|public
 specifier|static
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|getFileStatusRecurse
 parameter_list|(
 name|Path
@@ -275,8 +279,10 @@ return|;
 block|}
 specifier|public
 specifier|static
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|getFileStatusRecurse
 parameter_list|(
 name|Path
@@ -356,26 +362,15 @@ comment|// similar behavior we will return empty array on exception. For externa
 comment|// tables, the path of the table will not exists during table creation
 return|return
 operator|new
-name|FileStatus
-index|[
+name|ArrayList
+argument_list|<>
+argument_list|(
 literal|0
-index|]
+argument_list|)
 return|;
 block|}
 return|return
 name|result
-operator|.
-name|toArray
-argument_list|(
-operator|new
-name|FileStatus
-index|[
-name|result
-operator|.
-name|size
-argument_list|()
-index|]
-argument_list|)
 return|;
 block|}
 comment|// construct a path pattern (e.g., /*/*) to find all dynamically generated paths
@@ -445,6 +440,10 @@ name|allLevelsBelow
 condition|)
 block|{
 return|return
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
 name|fs
 operator|.
 name|globStatus
@@ -452,6 +451,7 @@ argument_list|(
 name|pathPattern
 argument_list|,
 name|filter
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -604,18 +604,6 @@ block|}
 block|}
 return|return
 name|results
-operator|.
-name|toArray
-argument_list|(
-operator|new
-name|FileStatus
-index|[
-name|results
-operator|.
-name|size
-argument_list|()
-index|]
-argument_list|)
 return|;
 block|}
 specifier|public

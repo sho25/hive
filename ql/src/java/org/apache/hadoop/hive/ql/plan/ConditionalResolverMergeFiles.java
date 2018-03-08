@@ -1039,9 +1039,11 @@ name|getDPCtx
 argument_list|()
 decl_stmt|;
 comment|// get list of dynamic partitions
+name|List
+argument_list|<
 name|FileStatus
-index|[]
-name|status
+argument_list|>
+name|statusList
 init|=
 name|HiveStatsUtils
 operator|.
@@ -1052,6 +1054,24 @@ argument_list|,
 name|dpLbLevel
 argument_list|,
 name|inpFs
+argument_list|)
+decl_stmt|;
+name|FileStatus
+index|[]
+name|status
+init|=
+name|statusList
+operator|.
+name|toArray
+argument_list|(
+operator|new
+name|FileStatus
+index|[
+name|statusList
+operator|.
+name|size
+argument_list|()
+index|]
 argument_list|)
 decl_stmt|;
 comment|// cleanup pathToPartitionInfo

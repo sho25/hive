@@ -368,28 +368,17 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|Utilities
-operator|.
-name|FILE_OP_LOGGER
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
 name|trace
 argument_list|(
-literal|"About to read stats from : "
-operator|+
+literal|"About to read stats from {}"
+argument_list|,
 name|statsDir
 argument_list|)
 expr_stmt|;
-block|}
 name|statsMap
 operator|=
 operator|new
@@ -488,6 +477,20 @@ range|:
 name|status
 control|)
 block|{
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
+argument_list|(
+literal|"About to read stats file {} "
+argument_list|,
+name|file
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|Input
 name|in
 init|=
@@ -540,6 +543,17 @@ name|kryo
 argument_list|)
 expr_stmt|;
 block|}
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
+operator|.
+name|trace
+argument_list|(
+literal|"Read : {}"
+argument_list|,
+name|statsMap
+argument_list|)
+expr_stmt|;
 name|statsList
 operator|.
 name|add
@@ -597,7 +611,9 @@ name|counter
 init|=
 literal|0
 decl_stmt|;
-name|LOG
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
 operator|.
 name|debug
 argument_list|(
@@ -683,7 +699,9 @@ name|statVal
 argument_list|)
 expr_stmt|;
 block|}
-name|LOG
+name|Utilities
+operator|.
+name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(

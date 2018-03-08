@@ -283,6 +283,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|MetaException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|NoSuchObjectException
 import|;
 end_import
@@ -1389,6 +1407,21 @@ operator|.
 name|varname
 argument_list|,
 literal|""
+argument_list|)
+expr_stmt|;
+name|hconf
+operator|.
+name|set
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST_REPL
+operator|.
+name|varname
+argument_list|,
+literal|"true"
 argument_list|)
 expr_stmt|;
 name|hconf
@@ -22240,7 +22273,7 @@ name|void
 name|testIncrementalRepeatEventOnMissingObject
 parameter_list|()
 throws|throws
-name|IOException
+name|Exception
 block|{
 name|String
 name|testName
@@ -25656,7 +25689,7 @@ name|void
 name|testSkipTables
 parameter_list|()
 throws|throws
-name|IOException
+name|Exception
 block|{
 name|String
 name|testName
@@ -25673,6 +25706,9 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+comment|// TODO: this is wrong; this test sets up dummy txn manager and so it cannot create ACID tables.
+comment|//       If I change it to use proper txn manager, the setup for some tests hangs.
+comment|//       This used to work by accident, now this works due a test flag. The test needs to be fixed.
 comment|// Create table
 name|run
 argument_list|(
@@ -28721,13 +28757,8 @@ parameter_list|,
 name|HiveMetaStoreClient
 name|myClient
 parameter_list|)
-block|{
+throws|throws
 name|Exception
-name|e
-init|=
-literal|null
-decl_stmt|;
-try|try
 block|{
 name|Table
 name|tbl
@@ -28746,19 +28777,6 @@ argument_list|(
 name|tbl
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|TException
-name|te
-parameter_list|)
-block|{
-assert|assert
-operator|(
-literal|false
-operator|)
-assert|;
-block|}
 block|}
 specifier|private
 name|void

@@ -615,6 +615,26 @@ name|TMemoryBuffer
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * QueryPlan can be serialized to disk so that we can restart/resume the  * progress of it in the future, either within or outside of the current  * jvm.  */
 end_comment
@@ -1099,6 +1119,21 @@ name|getAcidFileSinks
 argument_list|()
 expr_stmt|;
 block|}
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|QueryPlan
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 comment|/**    * @return true if any acid resources are read/written    */
 specifier|public
 name|boolean

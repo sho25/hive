@@ -1769,6 +1769,8 @@ name|Path
 name|tmpPath
 parameter_list|)
 block|{
+comment|// Note: this sets LoadFileType incorrectly for ACID; is that relevant for load?
+comment|//       See setLoadFileType and setIsAcidIow calls elsewhere for an example.
 name|LoadTableDesc
 name|loadTableWork
 init|=

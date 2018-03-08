@@ -3388,6 +3388,18 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|// TODO: this needs to be removed; see TestReplicationScenarios* comments.
+name|HIVE_IN_TEST_REPL
+argument_list|(
+literal|"hive.in.repl.test"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal usage only, true in replication test mode"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_IN_TEST_IDE
 argument_list|(
 literal|"hive.in.ide.test"

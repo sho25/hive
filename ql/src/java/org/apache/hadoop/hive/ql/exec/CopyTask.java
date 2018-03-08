@@ -402,8 +402,7 @@ name|Utilities
 operator|.
 name|FILE_OP_LOGGER
 operator|.
-comment|/**/
-name|debug
+name|trace
 argument_list|(
 literal|"Copying data from {} to {} "
 operator|+

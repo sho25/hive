@@ -42322,11 +42322,9 @@ argument_list|)
 expr_stmt|;
 comment|// For Acid table, Insert Overwrite shouldn't replace the table content. We keep the old
 comment|// deltas and base and leave them up to the cleaner to clean up
-name|LoadFileType
-name|loadType
+name|boolean
+name|isInsertInto
 init|=
-operator|(
-operator|!
 name|qb
 operator|.
 name|getParseInfo
@@ -42344,6 +42342,13 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|LoadFileType
+name|loadType
+init|=
+operator|(
+operator|!
+name|isInsertInto
 operator|&&
 operator|!
 name|destTableIsTransactional
@@ -42362,6 +42367,14 @@ operator|.
 name|setLoadFileType
 argument_list|(
 name|loadType
+argument_list|)
+expr_stmt|;
+name|ltd
+operator|.
+name|setInsertOverwrite
+argument_list|(
+operator|!
+name|isInsertInto
 argument_list|)
 expr_stmt|;
 name|ltd
@@ -42880,11 +42893,9 @@ argument_list|)
 expr_stmt|;
 comment|// For Acid table, Insert Overwrite shouldn't replace the table content. We keep the old
 comment|// deltas and base and leave them up to the cleaner to clean up
-name|LoadFileType
-name|loadType
+name|boolean
+name|isInsertInto
 init|=
-operator|(
-operator|!
 name|qb
 operator|.
 name|getParseInfo
@@ -42902,11 +42913,17 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+decl_stmt|;
+name|LoadFileType
+name|loadType
+init|=
+operator|(
+operator|!
+name|isInsertInto
 operator|&&
 operator|!
 name|destTableIsTransactional
 operator|)
-comment|// // Both Full-acid and MM tables are excluded.
 condition|?
 name|LoadFileType
 operator|.
@@ -42921,6 +42938,14 @@ operator|.
 name|setLoadFileType
 argument_list|(
 name|loadType
+argument_list|)
+expr_stmt|;
+name|ltd
+operator|.
+name|setInsertOverwrite
+argument_list|(
+operator|!
+name|isInsertInto
 argument_list|)
 expr_stmt|;
 name|ltd
@@ -78006,15 +78031,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|addDbAndTabToOutputs
-argument_list|(
-name|qualifiedTabName
-argument_list|,
-name|TableType
-operator|.
-name|MANAGED_TABLE
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|isTemporary
@@ -78111,6 +78127,7 @@ block|}
 block|}
 block|}
 comment|// Handle different types of CREATE TABLE command
+comment|// Note: each branch must call addDbAndTabToOutputs after finalizing table properties.
 switch|switch
 condition|(
 name|command_type
@@ -78135,6 +78152,17 @@ argument_list|,
 name|sortCols
 argument_list|,
 name|isMaterialization
+argument_list|)
+expr_stmt|;
+name|addDbAndTabToOutputs
+argument_list|(
+name|qualifiedTabName
+argument_list|,
+name|TableType
+operator|.
+name|MANAGED_TABLE
+argument_list|,
+name|tblProps
 argument_list|)
 expr_stmt|;
 name|CreateTableDesc
@@ -78296,6 +78324,17 @@ argument_list|,
 name|sortCols
 argument_list|,
 name|isMaterialization
+argument_list|)
+expr_stmt|;
+name|addDbAndTabToOutputs
+argument_list|(
+name|qualifiedTabName
+argument_list|,
+name|TableType
+operator|.
+name|MANAGED_TABLE
+argument_list|,
+name|tblProps
 argument_list|)
 expr_stmt|;
 if|if
@@ -78801,6 +78840,17 @@ argument_list|,
 name|isMaterialization
 argument_list|)
 expr_stmt|;
+name|addDbAndTabToOutputs
+argument_list|(
+name|qualifiedTabName
+argument_list|,
+name|TableType
+operator|.
+name|MANAGED_TABLE
+argument_list|,
+name|tblProps
+argument_list|)
+expr_stmt|;
 name|tableDesc
 operator|=
 operator|new
@@ -78943,6 +78993,7 @@ return|return
 literal|null
 return|;
 block|}
+comment|/** Adds entities for create table/create view. */
 specifier|private
 name|void
 name|addDbAndTabToOutputs
@@ -78953,6 +79004,14 @@ name|qualifiedTabName
 parameter_list|,
 name|TableType
 name|type
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|tblProps
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -79002,6 +79061,13 @@ literal|1
 index|]
 argument_list|)
 decl_stmt|;
+name|t
+operator|.
+name|setParameters
+argument_list|(
+name|tblProps
+argument_list|)
+expr_stmt|;
 name|t
 operator|.
 name|setTableType
@@ -79637,6 +79703,8 @@ argument_list|,
 name|TableType
 operator|.
 name|MATERIALIZED_VIEW
+argument_list|,
+name|tblProps
 argument_list|)
 expr_stmt|;
 name|queryState
@@ -79719,6 +79787,8 @@ argument_list|,
 name|TableType
 operator|.
 name|VIRTUAL_VIEW
+argument_list|,
+name|tblProps
 argument_list|)
 expr_stmt|;
 name|queryState
@@ -85685,6 +85755,18 @@ argument_list|()
 operator|.
 name|supportsAcid
 argument_list|()
+operator|&&
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST_REPL
+argument_list|)
 condition|)
 block|{
 throw|throw

@@ -4666,6 +4666,11 @@ operator|==
 name|LoadFileType
 operator|.
 name|REPLACE_ALL
+operator|||
+name|tbd
+operator|.
+name|isInsertOverwrite
+argument_list|()
 condition|)
 block|{
 return|return
@@ -4806,8 +4811,10 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|List
+argument_list|<
 name|FileStatus
-index|[]
+argument_list|>
 name|fileStatus
 init|=
 name|HiveStatsUtils
@@ -4832,7 +4839,8 @@ if|if
 condition|(
 name|fileStatus
 operator|.
-name|length
+name|size
+argument_list|()
 operator|==
 name|numBuckets
 condition|)
