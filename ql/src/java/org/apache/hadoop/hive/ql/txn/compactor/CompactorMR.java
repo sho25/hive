@@ -2541,6 +2541,7 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
+operator|(
 name|compactionType
 operator|==
 name|CompactionType
@@ -2550,6 +2551,7 @@ condition|?
 literal|"Major"
 else|:
 literal|"Minor"
+operator|)
 operator|+
 literal|" compactor job failed for "
 operator|+
