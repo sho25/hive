@@ -834,10 +834,7 @@ operator|.
 name|sc
 argument_list|()
 operator|.
-name|listenerBus
-argument_list|()
-operator|.
-name|addListener
+name|addSparkListener
 argument_list|(
 name|jobMetricsListener
 argument_list|)
