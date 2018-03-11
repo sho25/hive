@@ -15011,7 +15011,9 @@ literal|"hikari.,"
 operator|+
 literal|"hadoop.bin.path,"
 operator|+
-literal|"yarn.bin.path"
+literal|"yarn.bin.path,"
+operator|+
+literal|"spark.home"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)

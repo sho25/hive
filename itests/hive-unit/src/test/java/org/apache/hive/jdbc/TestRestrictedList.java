@@ -645,6 +645,11 @@ argument_list|(
 literal|"hive.spark.client.rpc.server.address"
 argument_list|)
 expr_stmt|;
+name|addToExpectedRestrictedMap
+argument_list|(
+literal|"spark.home"
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|AfterClass
