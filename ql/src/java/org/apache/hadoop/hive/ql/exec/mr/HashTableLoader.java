@@ -107,6 +107,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|collections
+operator|.
+name|CollectionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|conf
@@ -459,9 +473,6 @@ argument_list|(
 name|MapJoinOperator
 operator|.
 name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -559,8 +570,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"******* Load from HashTable for input file: "
-operator|+
+literal|"Load from HashTable for input file: {}"
+argument_list|,
 name|currentInputPath
 argument_list|)
 expr_stmt|;
@@ -681,8 +692,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"\tLoad back 1 hashtable file from tmp file uri:"
-operator|+
+literal|"Load back 1 hashtable file from tmp file uri: {}"
+argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
@@ -706,8 +717,6 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|)
-argument_list|,
-literal|4096
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -832,32 +841,14 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|int
-name|j
-init|=
-literal|0
-init|;
-name|j
-operator|<
-name|localArchives
-operator|.
-name|length
-condition|;
-name|j
-operator|++
-control|)
-block|{
 name|Path
 name|archive
-init|=
+range|:
 name|localArchives
-index|[
-name|j
-index|]
-decl_stmt|;
+control|)
+block|{
 if|if
 condition|(
-operator|!
 name|archive
 operator|.
 name|getName
@@ -869,8 +860,6 @@ name|suffix
 argument_list|)
 condition|)
 block|{
-continue|continue;
-block|}
 return|return
 name|archive
 operator|.
@@ -879,6 +868,7 @@ argument_list|(
 name|localFs
 argument_list|)
 return|;
+block|}
 block|}
 block|}
 return|return
@@ -928,14 +918,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|directWorks
-operator|==
-literal|null
-operator|||
-name|directWorks
+name|CollectionUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|directWorks
+argument_list|)
 condition|)
 block|{
 return|return;
