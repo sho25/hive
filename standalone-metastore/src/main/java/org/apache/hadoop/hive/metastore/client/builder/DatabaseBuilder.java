@@ -334,7 +334,7 @@ name|Database
 name|build
 parameter_list|()
 throws|throws
-name|TException
+name|MetaException
 block|{
 if|if
 condition|(
