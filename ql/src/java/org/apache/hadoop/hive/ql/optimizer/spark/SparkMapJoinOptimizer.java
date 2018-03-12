@@ -2517,10 +2517,7 @@ name|getConf
 argument_list|()
 operator|)
 operator|.
-name|getTableScan
-argument_list|()
-operator|.
-name|getName
+name|getTableScanNames
 argument_list|()
 operator|+
 literal|". Need to be removed together with reduce sink"

@@ -325,10 +325,7 @@ literal|"Disabling dynamic partition pruning based on: "
 operator|+
 name|desc
 operator|.
-name|getTableScan
-argument_list|()
-operator|.
-name|getName
+name|getTableScanNames
 argument_list|()
 operator|+
 literal|". This is not part of a map join."
@@ -371,10 +368,7 @@ literal|"Disabling dynamic partition pruning based on: "
 operator|+
 name|desc
 operator|.
-name|getTableScan
-argument_list|()
-operator|.
-name|getName
+name|getTableScanNames
 argument_list|()
 operator|+
 literal|". Expected data size is too big: "

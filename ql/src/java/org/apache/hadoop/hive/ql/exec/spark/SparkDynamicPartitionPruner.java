@@ -57,16 +57,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Collections
 import|;
 end_import
@@ -1076,11 +1066,6 @@ operator|.
 name|readInt
 argument_list|()
 decl_stmt|;
-name|SourceInfo
-name|info
-init|=
-literal|null
-decl_stmt|;
 name|Set
 argument_list|<
 name|String
@@ -1118,6 +1103,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// make sure the dpp sink has output for all the corresponding part columns
 for|for
 control|(
 name|SourceInfo
@@ -1131,8 +1117,10 @@ name|name
 argument_list|)
 control|)
 block|{
-if|if
-condition|(
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
 name|columnNames
 operator|.
 name|contains
@@ -1141,37 +1129,16 @@ name|si
 operator|.
 name|columnName
 argument_list|)
-condition|)
-block|{
-name|info
-operator|=
-name|si
-expr_stmt|;
-break|break;
-block|}
-block|}
-name|Preconditions
-operator|.
-name|checkArgument
-argument_list|(
-name|info
-operator|!=
-literal|null
 argument_list|,
-literal|"AssertionError: no source info for the column: "
+literal|"AssertionError: no output for column "
 operator|+
-name|Arrays
+name|si
 operator|.
-name|toString
-argument_list|(
-name|columnNames
-operator|.
-name|toArray
-argument_list|()
-argument_list|)
+name|columnName
 argument_list|)
 expr_stmt|;
-comment|// Read fields
+block|}
+comment|// Read dpp outputs
 while|while
 condition|(
 name|in
@@ -1189,6 +1156,19 @@ argument_list|(
 name|in
 argument_list|)
 expr_stmt|;
+for|for
+control|(
+name|SourceInfo
+name|info
+range|:
+name|sourceInfoMap
+operator|.
+name|get
+argument_list|(
+name|name
+argument_list|)
+control|)
+block|{
 name|Object
 name|row
 init|=
@@ -1239,6 +1219,7 @@ argument_list|(
 name|value
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
