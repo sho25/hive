@@ -506,6 +506,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 class|class
 name|WarehouseInstance
 implements|implements
@@ -683,6 +684,7 @@ name|overridesForHiveConf
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
 name|WarehouseInstance
 parameter_list|(
 name|Logger
@@ -1288,6 +1290,7 @@ name|colNum
 index|]
 return|;
 block|}
+specifier|public
 name|WarehouseInstance
 name|run
 parameter_list|(
@@ -1898,6 +1901,7 @@ return|return
 name|this
 return|;
 block|}
+specifier|public
 name|List
 argument_list|<
 name|String

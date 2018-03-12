@@ -836,7 +836,8 @@ return|;
 block|}
 block|}
 decl_stmt|;
-comment|/***    * Move a path into cmroot. If the path is a directory (of a partition, or table if nonpartitioned),    *   recursively move files inside directory to cmroot. Note the table must be managed table    * @param path a single file or directory    * @param type if the files to be copied or moved to cmpath.    *             Copy is costly but preserve the source file    * @param ifPurge if the file should skip Trash when move/delete source file.    *                This is referred only if type is MOVE.    * @return int    * @throws MetaException    */
+comment|/***    * Move a path into cmroot. If the path is a directory (of a partition, or table if nonpartitioned),    *   recursively move files inside directory to cmroot. Note the table must be managed table    * @param path a single file or directory    * @param type if the files to be copied or moved to cmpath.    *             Copy is costly but preserve the source file    * @param ifPurge if the file should skip Trash when move/delete source file.    *                This is referred only if type is MOVE.    * @return int    * @throws IOException    */
+specifier|public
 name|int
 name|recycle
 parameter_list|(
@@ -850,7 +851,7 @@ name|boolean
 name|ifPurge
 parameter_list|)
 throws|throws
-name|MetaException
+name|IOException
 block|{
 if|if
 condition|(
@@ -862,8 +863,6 @@ return|return
 literal|0
 return|;
 block|}
-try|try
-block|{
 name|int
 name|count
 init|=
@@ -1278,26 +1277,6 @@ return|return
 name|count
 return|;
 block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-throw|;
-block|}
-block|}
 comment|// Get checksum of a file
 specifier|static
 specifier|public
@@ -1391,10 +1370,6 @@ parameter_list|,
 name|String
 name|checkSum
 parameter_list|)
-throws|throws
-name|IOException
-throws|,
-name|MetaException
 block|{
 name|String
 name|newFileName

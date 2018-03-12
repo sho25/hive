@@ -32,16 +32,6 @@ name|TestCleaner2
 extends|extends
 name|TestCleaner
 block|{
-specifier|public
-name|TestCleaner2
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-name|super
-argument_list|()
-expr_stmt|;
-block|}
 annotation|@
 name|Override
 name|boolean

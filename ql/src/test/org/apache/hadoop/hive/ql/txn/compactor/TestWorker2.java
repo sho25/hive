@@ -32,16 +32,6 @@ name|TestWorker2
 extends|extends
 name|TestWorker
 block|{
-specifier|public
-name|TestWorker2
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-name|super
-argument_list|()
-expr_stmt|;
-block|}
 annotation|@
 name|Override
 name|boolean

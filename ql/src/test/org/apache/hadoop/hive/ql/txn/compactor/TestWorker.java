@@ -514,16 +514,6 @@ argument_list|(
 name|CLASS_NAME
 argument_list|)
 decl_stmt|;
-specifier|public
-name|TestWorker
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-name|super
-argument_list|()
-expr_stmt|;
-block|}
 annotation|@
 name|Test
 specifier|public
