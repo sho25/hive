@@ -441,7 +441,7 @@ literal|" HL_LOCK_EXT_ID bigint NOT NULL,"
 operator|+
 literal|" HL_LOCK_INT_ID bigint NOT NULL,"
 operator|+
-literal|" HL_TXNID bigint,"
+literal|" HL_TXNID bigint NOT NULL,"
 operator|+
 literal|" HL_DB varchar(128) NOT NULL,"
 operator|+
