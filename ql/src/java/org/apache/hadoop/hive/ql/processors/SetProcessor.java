@@ -413,6 +413,10 @@ argument_list|,
 literal|"hive.enforce.bucketing"
 argument_list|,
 literal|"hive.outerjoin.supports.filters"
+argument_list|,
+literal|"hive.llap.zk.sm.principal"
+argument_list|,
+literal|"hive.llap.zk.sm.keytab.file"
 argument_list|)
 decl_stmt|;
 comment|// Allow the user to set the ORC properties without getting an error.

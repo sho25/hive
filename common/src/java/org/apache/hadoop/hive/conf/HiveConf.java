@@ -2303,28 +2303,6 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
-name|LLAP_ZKSM_KERBEROS_PRINCIPAL
-operator|.
-name|varname
-argument_list|)
-expr_stmt|;
-name|llapDaemonVarsSetLocal
-operator|.
-name|add
-argument_list|(
-name|ConfVars
-operator|.
-name|LLAP_ZKSM_KERBEROS_KEYTAB_FILE
-operator|.
-name|varname
-argument_list|)
-expr_stmt|;
-name|llapDaemonVarsSetLocal
-operator|.
-name|add
-argument_list|(
-name|ConfVars
-operator|.
 name|LLAP_ZKSM_ZK_CONNECTION_STRING
 operator|.
 name|varname
@@ -13499,26 +13477,6 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"The path to the Kerberos Keytab file containing the LLAP daemon's service principal."
-argument_list|)
-block|,
-name|LLAP_ZKSM_KERBEROS_PRINCIPAL
-argument_list|(
-literal|"hive.llap.zk.sm.principal"
-argument_list|,
-literal|""
-argument_list|,
-literal|"The name of the principal to use to talk to ZooKeeper for ZooKeeper SecretManager."
-argument_list|)
-block|,
-name|LLAP_ZKSM_KERBEROS_KEYTAB_FILE
-argument_list|(
-literal|"hive.llap.zk.sm.keytab.file"
-argument_list|,
-literal|""
-argument_list|,
-literal|"The path to the Kerberos Keytab file containing the principal to use to talk to\n"
-operator|+
-literal|"ZooKeeper for ZooKeeper SecretManager."
 argument_list|)
 block|,
 name|LLAP_WEBUI_SPNEGO_KEYTAB_FILE
