@@ -551,9 +551,9 @@ name|URISyntaxException
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"converting to local {}"
+literal|"Converting to local {}"
 argument_list|,
 name|srcUri
 argument_list|)
