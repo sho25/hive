@@ -5228,7 +5228,9 @@ decl_stmt|;
 try|try
 block|{
 comment|// Need to initialize to 0 to make sure if nobody modified this table, then current txn
-comment|// shouldn't read any data
+comment|// shouldn't read any data.
+comment|// If there is a conversion from non-acid to acid table, then by default 0 would be assigned as
+comment|// writeId for data from non-acid table and so writeIdHwm=0 would ensure those data are readable by any txns.
 name|long
 name|writeIdHwm
 init|=
@@ -5246,6 +5248,20 @@ argument_list|<>
 argument_list|()
 decl_stmt|;
 name|long
+name|minOpenWriteId
+init|=
+name|Long
+operator|.
+name|MAX_VALUE
+decl_stmt|;
+name|BitSet
+name|abortedBits
+init|=
+operator|new
+name|BitSet
+argument_list|()
+decl_stmt|;
+name|long
 name|txnHwm
 init|=
 name|validTxnList
@@ -5253,14 +5269,12 @@ operator|.
 name|getHighWatermark
 argument_list|()
 decl_stmt|;
-comment|// The output includes all the txns which are under the high water mark. It includes
-comment|// the committed transactions as well. The results should be sorted in ascending order based
-comment|// on write id. The sorting is needed as exceptions list in ValidWriteIdList would be looked-up
-comment|// using binary search.
+comment|// Find the writeId high water mark based upon txnId high water mark. If found, then, need to
+comment|// traverse through all write Ids less than writeId HWM to make exceptions list.
 name|String
 name|s
 init|=
-literal|"select t2w_txnid, t2w_writeid from TXN_TO_WRITE_ID where t2w_txnid<= "
+literal|"select max(t2w_writeid) from TXN_TO_WRITE_ID where t2w_txnid<= "
 operator|+
 name|txnHwm
 operator|+
@@ -5283,8 +5297,6 @@ index|[
 literal|1
 index|]
 argument_list|)
-operator|+
-literal|" order by t2w_writeid asc"
 decl_stmt|;
 name|LOG
 operator|.
@@ -5306,20 +5318,77 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
-name|long
-name|minOpenWriteId
-init|=
-name|Long
+if|if
+condition|(
+name|rs
 operator|.
-name|MAX_VALUE
-decl_stmt|;
-name|BitSet
-name|abortedBits
-init|=
-operator|new
-name|BitSet
+name|next
 argument_list|()
-decl_stmt|;
+condition|)
+block|{
+name|writeIdHwm
+operator|=
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|1
+argument_list|)
+expr_stmt|;
+comment|// As writeIdHwm is known, query all writeIds under the writeId HWM.
+comment|// If any writeId under HWM is allocated by txn> txnId HWM, then will be added to invalid list.
+comment|// The output of this query includes all the txns which are under the high water mark. It includes
+comment|// the committed transactions as well. The results should be sorted in ascending order based
+comment|// on write id. The sorting is needed as exceptions list in ValidWriteIdList would be looked-up
+comment|// using binary search.
+name|s
+operator|=
+literal|"select t2w_txnid, t2w_writeid from TXN_TO_WRITE_ID where t2w_writeid<= "
+operator|+
+name|writeIdHwm
+operator|+
+literal|" and t2w_database = "
+operator|+
+name|quoteString
+argument_list|(
+name|names
+index|[
+literal|0
+index|]
+argument_list|)
+operator|+
+literal|" and t2w_table = "
+operator|+
+name|quoteString
+argument_list|(
+name|names
+index|[
+literal|1
+index|]
+argument_list|)
+operator|+
+literal|" order by t2w_writeid asc"
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
 while|while
 condition|(
 name|rs
@@ -5348,17 +5417,6 @@ argument_list|(
 literal|2
 argument_list|)
 decl_stmt|;
-name|writeIdHwm
-operator|=
-name|Math
-operator|.
-name|max
-argument_list|(
-name|writeIdHwm
-argument_list|,
-name|writeId
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|validTxnList
@@ -5374,6 +5432,13 @@ continue|continue;
 block|}
 comment|// The current txn is either in open or aborted state.
 comment|// Mark the write ids state as per the txn state.
+name|invalidWriteIdList
+operator|.
+name|add
+argument_list|(
+name|writeId
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|validTxnList
@@ -5384,13 +5449,6 @@ name|txnId
 argument_list|)
 condition|)
 block|{
-name|invalidWriteIdList
-operator|.
-name|add
-argument_list|(
-name|writeId
-argument_list|)
-expr_stmt|;
 name|abortedBits
 operator|.
 name|set
@@ -5406,13 +5464,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|invalidWriteIdList
-operator|.
-name|add
-argument_list|(
-name|writeId
-argument_list|)
-expr_stmt|;
 name|minOpenWriteId
 operator|=
 name|Math
@@ -5424,6 +5475,7 @@ argument_list|,
 name|writeId
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|ByteBuffer
