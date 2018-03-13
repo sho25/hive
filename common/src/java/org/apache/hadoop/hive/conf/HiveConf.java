@@ -5992,6 +5992,36 @@ operator|+
 literal|"outdated to be used automatically in query rewriting."
 argument_list|)
 block|,
+name|HIVE_MATERIALIZED_VIEW_REWRITING_INCREMENTAL
+argument_list|(
+literal|"hive.materializedview.rewriting.incremental"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to try to execute incremental rewritings based on outdated materializations and\n"
+operator|+
+literal|"current content of tables. Default value of true effectively amounts to enabling incremental\n"
+operator|+
+literal|"rebuild for the materializations too."
+argument_list|)
+block|,
+name|HIVE_MATERIALIZED_VIEW_REBUILD_INCREMENTAL
+argument_list|(
+literal|"hive.materializedview.rebuild.incremental"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to try to execute incremental rebuild for the materialized views. Incremental rebuild\n"
+operator|+
+literal|"tries to modify the original materialization contents to reflect the latest changes to the\n"
+operator|+
+literal|"materialized view source tables, instead of rebuilding the contents fully. Incremental rebuild\n"
+operator|+
+literal|"is based on the materialized view algebraic incremental rewriting. Hence, this requires\n"
+operator|+
+literal|"hive.materializedview.rewriting.incremental to be true."
+argument_list|)
+block|,
 name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
 argument_list|(
 literal|"hive.materializedview.fileformat"

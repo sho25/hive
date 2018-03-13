@@ -356,6 +356,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|1
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|int
@@ -389,6 +391,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Create tbl2 (nothing to do)
@@ -422,6 +426,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Cleanup (current = 4, duration = 4) -> Does nothing
@@ -569,6 +575,7 @@ name|getValidTxnList
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Format<txnId>$<table_name>:<hwm>:<minOpenWriteId>:<open_writeids>:<abort_writeids>$<table_name>
 name|Map
 argument_list|<
 name|String
@@ -634,6 +641,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|id
@@ -666,6 +675,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Cleanup (current = 12, duration = 4) -> Removes txn1, txn2, txn3
@@ -900,6 +911,8 @@ argument_list|,
 literal|11
 argument_list|,
 literal|11
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -916,6 +929,8 @@ argument_list|,
 literal|18
 argument_list|,
 literal|18
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -932,6 +947,8 @@ argument_list|,
 literal|14
 argument_list|,
 literal|14
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -948,6 +965,8 @@ argument_list|,
 literal|17
 argument_list|,
 literal|17
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -964,6 +983,8 @@ argument_list|,
 literal|16
 argument_list|,
 literal|16
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Cleanup (current = 20, duration = 4) -> Removes txn10, txn11
@@ -1033,6 +1054,8 @@ argument_list|,
 literal|12
 argument_list|,
 literal|12
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -1049,6 +1072,8 @@ argument_list|,
 literal|15
 argument_list|,
 literal|15
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -1065,6 +1090,8 @@ argument_list|,
 literal|7
 argument_list|,
 literal|7
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|invalidationInfos
@@ -1263,6 +1290,8 @@ argument_list|,
 literal|1
 argument_list|,
 literal|1
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|int
@@ -1296,6 +1325,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Create tbl2 (nothing to do)
@@ -1329,6 +1360,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Cleanup (current = 4, duration = 4) -> Does nothing
@@ -1426,7 +1459,31 @@ name|mockCM1
 operator|.
 name|setValidTxnList
 argument_list|(
-literal|"3:"
+literal|"3$"
+operator|+
+name|DB_NAME
+operator|+
+literal|"."
+operator|+
+name|TBL_NAME_1
+operator|+
+literal|":3:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|"::"
+operator|+
+literal|"$"
+operator|+
+name|DB_NAME
+operator|+
+literal|"."
+operator|+
+name|TBL_NAME_2
+operator|+
+literal|":3:"
 operator|+
 name|Long
 operator|.
@@ -1548,6 +1605,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|id
@@ -1580,6 +1639,8 @@ argument_list|,
 name|id
 argument_list|,
 name|id
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Cleanup (current = 12, duration = 4) -> Removes txn1, txn2, txn3
@@ -1712,7 +1773,31 @@ name|mockCM2
 operator|.
 name|setValidTxnList
 argument_list|(
-literal|"10:"
+literal|"10$"
+operator|+
+name|DB_NAME
+operator|+
+literal|"."
+operator|+
+name|TBL_NAME_1
+operator|+
+literal|":10:"
+operator|+
+name|Long
+operator|.
+name|MAX_VALUE
+operator|+
+literal|"::"
+operator|+
+literal|"$"
+operator|+
+name|DB_NAME
+operator|+
+literal|"."
+operator|+
+name|TBL_NAME_2
+operator|+
+literal|":10:"
 operator|+
 name|Long
 operator|.
@@ -1845,6 +1930,8 @@ argument_list|,
 literal|11
 argument_list|,
 literal|11
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -1861,6 +1948,8 @@ argument_list|,
 literal|18
 argument_list|,
 literal|18
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -1877,6 +1966,8 @@ argument_list|,
 literal|14
 argument_list|,
 literal|14
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -1893,6 +1984,8 @@ argument_list|,
 literal|17
 argument_list|,
 literal|17
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -1909,6 +2002,8 @@ argument_list|,
 literal|16
 argument_list|,
 literal|16
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Cleanup (current = 20, duration = 4) -> Removes txn10, txn11
@@ -2002,6 +2097,8 @@ argument_list|,
 literal|12
 argument_list|,
 literal|12
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -2018,6 +2115,8 @@ argument_list|,
 literal|15
 argument_list|,
 literal|15
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|MaterializationsInvalidationCache
@@ -2034,6 +2133,8 @@ argument_list|,
 literal|7
 argument_list|,
 literal|7
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|invalidationInfos

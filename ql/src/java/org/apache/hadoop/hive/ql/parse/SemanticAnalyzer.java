@@ -4633,11 +4633,23 @@ name|noscan
 decl_stmt|;
 comment|// whether this is a mv rebuild rewritten expression
 specifier|protected
-name|boolean
-name|rewrittenRebuild
+name|MaterializationRebuildMode
+name|mvRebuildMode
 init|=
-literal|false
+name|MaterializationRebuildMode
+operator|.
+name|NONE
 decl_stmt|;
+specifier|protected
+name|String
+name|mvRebuildDbName
+decl_stmt|;
+comment|// Db name for materialization to rebuild
+specifier|protected
+name|String
+name|mvRebuildName
+decl_stmt|;
+comment|// Name for materialization to rebuild
 specifier|protected
 specifier|volatile
 name|boolean
@@ -15917,8 +15929,11 @@ name|isView
 argument_list|()
 operator|||
 operator|(
-operator|!
-name|rewrittenRebuild
+name|mvRebuildMode
+operator|==
+name|MaterializationRebuildMode
+operator|.
+name|NONE
 operator|&&
 name|ts
 operator|.
@@ -89299,6 +89314,18 @@ operator|==
 literal|null
 operator|)
 return|;
+block|}
+specifier|protected
+enum|enum
+name|MaterializationRebuildMode
+block|{
+name|NONE
+block|,
+name|INSERT_OVERWRITE_REBUILD
+block|,
+name|AGGREGATE_REBUILD
+block|,
+name|NO_AGGREGATE_REBUILD
 block|}
 block|}
 end_class

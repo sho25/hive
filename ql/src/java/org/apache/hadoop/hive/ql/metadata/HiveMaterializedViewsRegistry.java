@@ -1307,6 +1307,20 @@ name|isRewriteEnabled
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Materialized view "
+operator|+
+name|materializedViewTable
+operator|.
+name|getCompleteName
+argument_list|()
+operator|+
+literal|" ignored; it is not rewrite enabled"
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;

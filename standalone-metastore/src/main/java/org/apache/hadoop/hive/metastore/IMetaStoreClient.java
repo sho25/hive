@@ -7781,6 +7781,38 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Acquire the materialization rebuild lock for a given view. We need to specify the fully    * qualified name of the materialized view and the open transaction ID so we can identify    * uniquely the lock.    * @param dbName db name for the materialized view    * @param tableName table name for the materialized view    * @param txnId transaction id for the rebuild    * @return the response from the metastore, where the lock id is equal to the txn id and    * the status can be either ACQUIRED or NOT ACQUIRED    */
+name|LockResponse
+name|lockMaterializationRebuild
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|long
+name|txnId
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Method to refresh the acquisition of a given materialization rebuild lock.    * @param dbName db name for the materialized view    * @param tableName table name for the materialized view    * @param txnId transaction id for the rebuild    * @return true if the lock could be renewed, false otherwise    */
+name|boolean
+name|heartbeatLockMaterializationRebuild
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|long
+name|txnId
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 block|}
 end_interface
 
