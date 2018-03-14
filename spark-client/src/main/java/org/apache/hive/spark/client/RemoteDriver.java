@@ -2935,6 +2935,11 @@ name|taskEnd
 operator|.
 name|taskMetrics
 argument_list|()
+argument_list|,
+name|taskEnd
+operator|.
+name|taskInfo
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|Integer

@@ -35,6 +35,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|spark
 operator|.
 name|executor
@@ -49,15 +67,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|spark
 operator|.
-name|hive
+name|scheduler
 operator|.
-name|common
-operator|.
-name|classification
-operator|.
-name|InterfaceAudience
+name|TaskInfo
 import|;
 end_import
 
@@ -118,6 +132,12 @@ specifier|final
 name|long
 name|diskBytesSpilled
 decl_stmt|;
+comment|/** Amount of time spent executing tasks. */
+specifier|public
+specifier|final
+name|long
+name|taskDurationTime
+decl_stmt|;
 comment|/** If tasks read from a HadoopRDD or from persisted data, metrics on how much data was read. */
 specifier|public
 specifier|final
@@ -143,6 +163,8 @@ block|{
 comment|// For Serialization only.
 name|this
 argument_list|(
+literal|0L
+argument_list|,
 literal|0L
 argument_list|,
 literal|0L
@@ -189,6 +211,9 @@ parameter_list|,
 name|long
 name|diskBytesSpilled
 parameter_list|,
+name|long
+name|taskDurationTime
+parameter_list|,
 name|InputMetrics
 name|inputMetrics
 parameter_list|,
@@ -243,6 +268,12 @@ name|diskBytesSpilled
 expr_stmt|;
 name|this
 operator|.
+name|taskDurationTime
+operator|=
+name|taskDurationTime
+expr_stmt|;
+name|this
+operator|.
 name|inputMetrics
 operator|=
 name|inputMetrics
@@ -265,6 +296,9 @@ name|Metrics
 parameter_list|(
 name|TaskMetrics
 name|metrics
+parameter_list|,
+name|TaskInfo
+name|taskInfo
 parameter_list|)
 block|{
 name|this
@@ -302,6 +336,11 @@ argument_list|,
 name|metrics
 operator|.
 name|diskBytesSpilled
+argument_list|()
+argument_list|,
+name|taskInfo
+operator|.
+name|duration
 argument_list|()
 argument_list|,
 name|optionalInputMetric

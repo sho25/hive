@@ -77,7 +77,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -135,15 +135,8 @@ block|{
 name|statisticMap
 operator|=
 operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|List
-argument_list|<
-name|SparkStatistic
-argument_list|>
-argument_list|>
+name|LinkedHashMap
+argument_list|<>
 argument_list|()
 expr_stmt|;
 block|}
@@ -198,7 +191,7 @@ name|List
 argument_list|<
 name|SparkStatistic
 argument_list|>
-name|statisitcList
+name|statisticList
 init|=
 name|entry
 operator|.
@@ -214,7 +207,7 @@ name|SparkStatisticGroup
 argument_list|(
 name|groupName
 argument_list|,
-name|statisitcList
+name|statisticList
 argument_list|)
 argument_list|)
 expr_stmt|;

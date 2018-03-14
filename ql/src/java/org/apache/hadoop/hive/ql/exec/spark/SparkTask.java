@@ -111,6 +111,20 @@ name|common
 operator|.
 name|base
 operator|.
+name|Strings
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
 name|Throwables
 import|;
 end_import
@@ -152,6 +166,28 @@ operator|.
 name|common
 operator|.
 name|MetricsConstant
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|spark
+operator|.
+name|Statistic
+operator|.
+name|SparkStatisticsNames
 import|;
 end_import
 
@@ -917,10 +953,17 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+comment|// The id of the actual Spark job
 specifier|private
 specifier|transient
 name|int
 name|sparkJobID
+decl_stmt|;
+comment|// The id of the JobHandle used to track the actual Spark job
+specifier|private
+specifier|transient
+name|String
+name|sparkJobHandleId
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -1088,6 +1131,7 @@ name|getOperatorCounters
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Submit the Spark job
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -1132,6 +1176,7 @@ operator|.
 name|SPARK_SUBMIT_JOB
 argument_list|)
 expr_stmt|;
+comment|// If the driver context has been shutdown (due to query cancellation) kill the Spark job
 if|if
 condition|(
 name|driverContext
@@ -1158,13 +1203,37 @@ literal|"Operation is cancelled."
 argument_list|)
 throw|;
 block|}
+comment|// Get the Job Handle id associated with the Spark job
+name|sparkJobHandleId
+operator|=
+name|jobRef
+operator|.
+name|getJobId
+argument_list|()
+expr_stmt|;
+comment|// Add Spark job handle id to the Hive History
 name|addToHistory
 argument_list|(
+name|Keys
+operator|.
+name|SPARK_JOB_HANDLE_ID
+argument_list|,
 name|jobRef
+operator|.
+name|getJobId
+argument_list|()
 argument_list|)
 expr_stmt|;
-name|this
+name|LOG
 operator|.
+name|debug
+argument_list|(
+literal|"Starting Spark job with job handle id "
+operator|+
+name|sparkJobHandleId
+argument_list|)
+expr_stmt|;
+comment|// Get the application id of the Spark app
 name|jobID
 operator|=
 name|jobRef
@@ -1175,6 +1244,8 @@ operator|.
 name|getAppID
 argument_list|()
 expr_stmt|;
+comment|// Start monitoring the Spark job, returns when the Spark job has completed / failed, or if
+comment|// a timeout occurs
 name|rc
 operator|=
 name|jobRef
@@ -1182,6 +1253,33 @@ operator|.
 name|monitorJob
 argument_list|()
 expr_stmt|;
+comment|// Get the id the Spark job that was launched, returns -1 if no Spark job was launched
+name|sparkJobID
+operator|=
+name|jobRef
+operator|.
+name|getSparkJobStatus
+argument_list|()
+operator|.
+name|getJobId
+argument_list|()
+expr_stmt|;
+comment|// Add Spark job id to the Hive History
+name|addToHistory
+argument_list|(
+name|Keys
+operator|.
+name|SPARK_JOB_ID
+argument_list|,
+name|Integer
+operator|.
+name|toString
+argument_list|(
+name|sparkJobID
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Get the final state of the Spark job and parses its job info
 name|SparkJobStatus
 name|sparkJobStatus
 init|=
@@ -1190,13 +1288,6 @@ operator|.
 name|getSparkJobStatus
 argument_list|()
 decl_stmt|;
-name|sparkJobID
-operator|=
-name|sparkJobStatus
-operator|.
-name|getJobId
-argument_list|()
-expr_stmt|;
 name|getSparkJobInfo
 argument_list|(
 name|sparkJobStatus
@@ -1216,6 +1307,9 @@ operator|=
 name|sparkJobStatus
 operator|.
 name|getSparkStatistics
+argument_list|()
+expr_stmt|;
+name|printExcessiveGCWarning
 argument_list|()
 expr_stmt|;
 if|if
@@ -1254,11 +1348,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Successfully completed Spark Job "
+literal|"Successfully completed Spark job["
 operator|+
 name|sparkJobID
 operator|+
-literal|" with application ID "
+literal|"] with application ID "
 operator|+
 name|jobID
 operator|+
@@ -1283,11 +1377,31 @@ comment|// ideally also cancel the app request here. But w/o facilities from Spa
 comment|// it's difficult to do it on hive side alone. See HIVE-12650.
 name|LOG
 operator|.
+name|debug
+argument_list|(
+literal|"Failed to submit Spark job with job handle id "
+operator|+
+name|sparkJobHandleId
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
 name|info
 argument_list|(
-literal|"Failed to submit Spark job "
+literal|"Failed to submit Spark job for application id "
 operator|+
-name|sparkJobID
+operator|(
+name|Strings
+operator|.
+name|isNullOrEmpty
+argument_list|(
+name|jobID
+argument_list|)
+condition|?
+literal|"UNKNOWN"
+else|:
+name|jobID
+operator|)
 argument_list|)
 expr_stmt|;
 name|killJob
@@ -1537,26 +1651,144 @@ return|return
 name|rc
 return|;
 block|}
+comment|/**    * Use the Spark metrics and calculate how much task executione time was spent performing GC    * operations. If more than a defined threshold of time is spent, print out a warning on the    * console.    */
 specifier|private
 name|void
-name|addToHistory
-parameter_list|(
-name|SparkJobRef
-name|jobRef
-parameter_list|)
+name|printExcessiveGCWarning
+parameter_list|()
 block|{
+name|SparkStatisticGroup
+name|sparkStatisticGroup
+init|=
+name|sparkStatistics
+operator|.
+name|getStatisticGroup
+argument_list|(
+name|SparkStatisticsNames
+operator|.
+name|SPARK_GROUP_NAME
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|sparkStatisticGroup
+operator|!=
+literal|null
+condition|)
+block|{
+name|long
+name|taskDurationTime
+init|=
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|sparkStatisticGroup
+operator|.
+name|getSparkStatistic
+argument_list|(
+name|SparkStatisticsNames
+operator|.
+name|TASK_DURATION_TIME
+argument_list|)
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|long
+name|jvmGCTime
+init|=
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|sparkStatisticGroup
+operator|.
+name|getSparkStatistic
+argument_list|(
+name|SparkStatisticsNames
+operator|.
+name|JVM_GC_TIME
+argument_list|)
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+decl_stmt|;
+comment|// Threshold percentage to trigger the GC warning
+name|double
+name|threshold
+init|=
+literal|0.1
+decl_stmt|;
+if|if
+condition|(
+name|jvmGCTime
+operator|>
+name|taskDurationTime
+operator|*
+name|threshold
+condition|)
+block|{
+name|long
+name|percentGcTime
+init|=
+name|Math
+operator|.
+name|round
+argument_list|(
+operator|(
+name|double
+operator|)
+name|jvmGCTime
+operator|/
+name|taskDurationTime
+operator|*
+literal|100
+argument_list|)
+decl_stmt|;
+name|String
+name|gcWarning
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"WARNING: Spark Job[%s] Spent %s%% (%s ms / %s ms) of "
+operator|+
+literal|"task time in GC"
+argument_list|,
+name|sparkJobID
+argument_list|,
+name|percentGcTime
+argument_list|,
+name|jvmGCTime
+argument_list|,
+name|taskDurationTime
+argument_list|)
+decl_stmt|;
 name|console
 operator|.
 name|printInfo
 argument_list|(
-literal|"Starting Spark Job = "
-operator|+
-name|jobRef
-operator|.
-name|getJobId
-argument_list|()
+name|gcWarning
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+block|}
+specifier|private
+name|void
+name|addToHistory
+parameter_list|(
+name|Keys
+name|key
+parameter_list|,
+name|String
+name|value
+parameter_list|)
+block|{
 if|if
 condition|(
 name|SessionState
@@ -1582,22 +1814,9 @@ operator|.
 name|getQueryId
 argument_list|()
 argument_list|,
-name|Keys
-operator|.
-name|SPARK_JOB_ID
+name|key
 argument_list|,
-name|Integer
-operator|.
-name|toString
-argument_list|(
-name|jobRef
-operator|.
-name|getSparkJobStatus
-argument_list|()
-operator|.
-name|getJobId
-argument_list|()
-argument_list|)
+name|value
 argument_list|)
 expr_stmt|;
 block|}
@@ -2113,6 +2332,15 @@ name|void
 name|killJob
 parameter_list|()
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Killing Spark job with job handle id "
+operator|+
+name|sparkJobHandleId
+argument_list|)
+expr_stmt|;
 name|boolean
 name|needToKillJob
 init|=

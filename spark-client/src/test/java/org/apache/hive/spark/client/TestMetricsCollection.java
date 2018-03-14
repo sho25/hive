@@ -462,6 +462,8 @@ name|value
 argument_list|,
 name|value
 argument_list|,
+name|value
+argument_list|,
 literal|null
 argument_list|,
 literal|null
@@ -648,6 +650,8 @@ name|value
 argument_list|,
 name|value
 argument_list|,
+name|value
+argument_list|,
 operator|new
 name|InputMetrics
 argument_list|(
@@ -665,6 +669,8 @@ init|=
 operator|new
 name|Metrics
 argument_list|(
+name|value
+argument_list|,
 name|value
 argument_list|,
 name|value
@@ -763,6 +769,8 @@ return|return
 operator|new
 name|Metrics
 argument_list|(
+name|value
+argument_list|,
 name|value
 argument_list|,
 name|value
@@ -1060,6 +1068,15 @@ argument_list|,
 name|metrics
 operator|.
 name|diskBytesSpilled
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|expected
+argument_list|,
+name|metrics
+operator|.
+name|taskDurationTime
 argument_list|)
 expr_stmt|;
 name|assertEquals

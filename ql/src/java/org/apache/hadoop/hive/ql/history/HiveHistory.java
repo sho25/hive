@@ -175,6 +175,8 @@ name|TASK_NUM_REDUCERS
 block|,
 name|ROWS_INSERTED
 block|,
+name|SPARK_JOB_HANDLE_ID
+block|,
 name|SPARK_JOB_ID
 block|}
 empty_stmt|;
