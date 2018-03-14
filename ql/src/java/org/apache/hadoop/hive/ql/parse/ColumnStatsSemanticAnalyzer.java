@@ -45,16 +45,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -66,26 +56,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
 import|;
 end_import
 
@@ -399,6 +369,26 @@ name|TypeInfoUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * ColumnStatsSemanticAnalyzer.  * Handles semantic analysis and rewrite for gathering column statistics both at the level of a  * partition and a table. Note that table statistics are implemented in SemanticAnalyzer.  *  */
 end_comment
@@ -425,11 +415,11 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
-specifier|private
 name|LogHelper
-name|console
+name|CONSOLE
 init|=
 operator|new
 name|LogHelper
@@ -672,11 +662,13 @@ argument_list|>
 name|colName
 init|=
 operator|new
-name|LinkedList
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
-argument_list|()
+argument_list|(
+name|numCols
+argument_list|)
 decl_stmt|;
 for|for
 control|(
@@ -697,11 +689,6 @@ name|colName
 operator|.
 name|add
 argument_list|(
-name|i
-argument_list|,
-operator|new
-name|String
-argument_list|(
 name|getUnescapedName
 argument_list|(
 operator|(
@@ -717,7 +704,6 @@ operator|.
 name|getChild
 argument_list|(
 name|i
-argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1121,7 +1107,7 @@ name|groupByClause
 operator|.
 name|append
 argument_list|(
-literal|","
+literal|','
 argument_list|)
 expr_stmt|;
 block|}
@@ -1479,15 +1465,10 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<>
-argument_list|()
-decl_stmt|;
-name|copyColNames
-operator|.
-name|addAll
 argument_list|(
 name|colNames
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -1636,9 +1617,6 @@ argument_list|(
 literal|"select "
 argument_list|)
 decl_stmt|;
-name|String
-name|rewrittenQuery
-decl_stmt|;
 for|for
 control|(
 name|int
@@ -1726,11 +1704,11 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|func
+literal|"fm"
 operator|.
 name|equals
 argument_list|(
-literal|"fm"
+name|func
 argument_list|)
 condition|)
 block|{
@@ -1782,7 +1760,7 @@ name|rewrittenQueryBuilder
 operator|.
 name|append
 argument_list|(
-literal|")"
+literal|')'
 argument_list|)
 expr_stmt|;
 block|}
@@ -1878,13 +1856,14 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|String
 name|rewrittenQuery
-operator|=
+init|=
 name|rewrittenQueryBuilder
 operator|.
 name|toString
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 name|rewrittenQuery
 operator|=
 operator|new
@@ -1940,9 +1919,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ASTNode
-name|rewrittenTree
-decl_stmt|;
 comment|// Parse the rewritten query string
 try|try
 block|{
@@ -1983,8 +1959,7 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|rewrittenTree
-operator|=
+return|return
 name|ParseUtils
 operator|.
 name|parse
@@ -1993,7 +1968,7 @@ name|rewrittenQuery
 argument_list|,
 name|ctx
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 catch|catch
 parameter_list|(
@@ -2014,9 +1989,6 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
-return|return
-name|rewrittenTree
-return|;
 block|}
 comment|// fail early if the columns specified for column statistics are not valid
 specifier|private
@@ -2201,7 +2173,7 @@ literal|"WARNING: "
 operator|+
 name|warning
 expr_stmt|;
-name|console
+name|CONSOLE
 operator|.
 name|printInfo
 argument_list|(
