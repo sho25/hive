@@ -7295,13 +7295,13 @@ if|if
 condition|(
 name|lc
 operator|.
-name|isSetIsAcid
+name|isSetIsTransactional
 argument_list|()
 operator|&&
 operator|!
 name|lc
 operator|.
-name|isIsAcid
+name|isIsTransactional
 argument_list|()
 condition|)
 block|{
@@ -7728,7 +7728,8 @@ condition|)
 block|{
 comment|//old version of thrift client should have (lc.isSetOperationType() == false) but they do not
 comment|//If you add a default value to a variable, isSet() for that variable is true regardless of the where the
-comment|//message was created (for object variables.  It works correctly for boolean vars, e.g. LockComponent.isAcid).
+comment|//message was created (for object variables.
+comment|// It works correctly for boolean vars, e.g. LockComponent.isTransactional).
 comment|//in test mode, upgrades are not tested, so client version and server version of thrift always matches so
 comment|//we see UNSET here it means something didn't set the appropriate value.
 throw|throw

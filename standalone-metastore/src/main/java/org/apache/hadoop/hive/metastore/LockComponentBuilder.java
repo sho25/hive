@@ -225,7 +225,7 @@ return|;
 block|}
 specifier|public
 name|LockComponentBuilder
-name|setIsFullAcid
+name|setIsTransactional
 parameter_list|(
 name|boolean
 name|t
@@ -233,7 +233,7 @@ parameter_list|)
 block|{
 name|component
 operator|.
-name|setIsAcid
+name|setIsTransactional
 argument_list|(
 name|t
 argument_list|)

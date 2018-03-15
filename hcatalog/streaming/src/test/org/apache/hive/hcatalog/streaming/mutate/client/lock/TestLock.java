@@ -1392,7 +1392,7 @@ argument_list|)
 expr_stmt|;
 name|expected1
 operator|.
-name|setIsAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)
@@ -1442,7 +1442,7 @@ argument_list|)
 expr_stmt|;
 name|expected2
 operator|.
-name|setIsAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)
@@ -1587,7 +1587,7 @@ argument_list|)
 expr_stmt|;
 name|expected1
 operator|.
-name|setIsAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)
@@ -1637,7 +1637,7 @@ argument_list|)
 expr_stmt|;
 name|expected2
 operator|.
-name|setIsAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)
@@ -1687,7 +1687,7 @@ argument_list|)
 expr_stmt|;
 name|expected3
 operator|.
-name|setIsAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)

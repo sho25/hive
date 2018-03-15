@@ -4378,6 +4378,645 @@ name|rs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testOperationsOnCompletedTxnComponentsForMmTable
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// Insert two rows into the table.
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|"(a,b) values(1,2)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|"(a,b) values(3,4)"
+argument_list|)
+expr_stmt|;
+comment|// There should be 2 delta directories
+name|verifyDirAndResult
+argument_list|(
+literal|2
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+argument_list|,
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXNS"
+argument_list|)
+argument_list|,
+literal|0
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXNS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Initiate a minor compaction request on the table.
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" compact 'MAJOR'"
+argument_list|)
+expr_stmt|;
+comment|// Run worker.
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+comment|// Run Cleaner.
+name|runCleaner
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+argument_list|,
+literal|0
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXNS"
+argument_list|)
+argument_list|,
+literal|0
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXNS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testSnapshotIsolationWithAbortedTxnOnMmTable
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// Insert two rows into the table.
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|"(a,b) values(1,2)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|"(a,b) values(3,4)"
+argument_list|)
+expr_stmt|;
+comment|// There should be 2 delta directories
+name|verifyDirAndResult
+argument_list|(
+literal|2
+argument_list|)
+expr_stmt|;
+comment|// Initiate a minor compaction request on the table.
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" compact 'MINOR'"
+argument_list|)
+expr_stmt|;
+comment|// Run Compaction Worker to do compaction.
+comment|// But we do not compact a MM table but only transit the compaction request to
+comment|// "ready for cleaning" state in this case.
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|verifyDirAndResult
+argument_list|(
+literal|2
+argument_list|)
+expr_stmt|;
+comment|// Start an INSERT statement transaction and roll back this transaction.
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVETESTMODEROLLBACKTXN
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" values (5, 6)"
+argument_list|)
+expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVETESTMODEROLLBACKTXN
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+comment|// There should be 3 delta directories. The new one is the aborted one.
+name|verifyDirAndResult
+argument_list|(
+literal|3
+argument_list|)
+expr_stmt|;
+comment|// Execute SELECT statement and verify the result set (should be two rows).
+name|int
+index|[]
+index|[]
+name|expected
+init|=
+operator|new
+name|int
+index|[]
+index|[]
+block|{
+block|{
+literal|1
+block|,
+literal|2
+block|}
+block|,
+block|{
+literal|3
+block|,
+literal|4
+block|}
+block|}
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|expected
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+comment|// Run Cleaner.
+comment|// This run doesn't do anything for the above aborted transaction since
+comment|// the current compaction request entry in the compaction queue is updated
+comment|// to have highest_write_id when the worker is run before the aborted
+comment|// transaction. Specifically the id is 2 for the entry but the aborted
+comment|// transaction has 3 as writeId. This run does transition the entry
+comment|// "successful".
+name|runCleaner
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|verifyDirAndResult
+argument_list|(
+literal|3
+argument_list|)
+expr_stmt|;
+comment|// Execute SELECT and verify that aborted operation is not counted for MM table.
+name|rs
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|expected
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+comment|// Run initiator to execute CompactionTxnHandler.cleanEmptyAbortedTxns()
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXNS"
+argument_list|)
+argument_list|,
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXNS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Initiator
+name|i
+init|=
+operator|new
+name|Initiator
+argument_list|()
+decl_stmt|;
+name|i
+operator|.
+name|setThreadId
+argument_list|(
+operator|(
+name|int
+operator|)
+name|i
+operator|.
+name|getId
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|i
+operator|.
+name|setConf
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|AtomicBoolean
+name|stop
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|true
+argument_list|)
+decl_stmt|;
+name|i
+operator|.
+name|init
+argument_list|(
+name|stop
+argument_list|,
+operator|new
+name|AtomicBoolean
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|i
+operator|.
+name|run
+argument_list|()
+expr_stmt|;
+comment|// This run of Initiator doesn't add any compaction_queue entry
+comment|// since we only have one MM table with data - we don't compact MM tables.
+name|verifyDirAndResult
+argument_list|(
+literal|3
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXNS"
+argument_list|)
+argument_list|,
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXNS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Execute SELECT statement and verify that aborted INSERT statement is not counted.
+name|rs
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select a,b from "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" order by a,b"
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|stringifyValues
+argument_list|(
+name|expected
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+comment|// Initiate a minor compaction request on the table.
+name|runStatementOnDriver
+argument_list|(
+literal|"alter table "
+operator|+
+name|TableExtended
+operator|.
+name|MMTBL
+operator|+
+literal|" compact 'MINOR'"
+argument_list|)
+expr_stmt|;
+comment|// Run worker to delete aborted transaction's delta directory.
+name|runWorker
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXNS"
+argument_list|)
+argument_list|,
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXNS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXN_COMPONENTS"
+argument_list|)
+argument_list|,
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXN_COMPONENTS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|verifyDirAndResult
+argument_list|(
+literal|2
+argument_list|)
+expr_stmt|;
+comment|// Run Cleaner to delete rows for the aborted transaction
+comment|// from TXN_COMPONENTS.
+name|runCleaner
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+comment|// Run initiator to clean the row fro the aborted transaction from TXNS.
+name|i
+operator|.
+name|run
+argument_list|()
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXNS"
+argument_list|)
+argument_list|,
+literal|0
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXNS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select * from TXN_COMPONENTS"
+argument_list|)
+argument_list|,
+literal|0
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXN_COMPONENTS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|void
 name|verifyDirAndResult
@@ -4429,7 +5068,7 @@ argument_list|)
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|int
@@ -4496,7 +5135,7 @@ argument_list|()
 argument_list|,
 name|FileUtils
 operator|.
-name|STAGING_DIR_PATH_FILTER
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
 name|Assert

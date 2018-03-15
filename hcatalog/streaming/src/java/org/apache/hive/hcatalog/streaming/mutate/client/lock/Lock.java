@@ -1087,7 +1087,7 @@ operator|.
 name|UPDATE
 argument_list|)
 operator|.
-name|setIsFullAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)
@@ -1107,7 +1107,7 @@ operator|.
 name|INSERT
 argument_list|)
 operator|.
-name|setIsFullAcid
+name|setIsTransactional
 argument_list|(
 literal|true
 argument_list|)

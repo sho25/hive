@@ -1945,11 +1945,11 @@ condition|)
 block|{
 name|compBuilder
 operator|.
-name|setIsFullAcid
+name|setIsTransactional
 argument_list|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isTransactionalTable
 argument_list|(
 name|t
 argument_list|)
@@ -2404,11 +2404,11 @@ condition|)
 block|{
 name|compBuilder
 operator|.
-name|setIsFullAcid
+name|setIsTransactional
 argument_list|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isTransactionalTable
 argument_list|(
 name|t
 argument_list|)
