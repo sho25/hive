@@ -6667,7 +6667,7 @@ name|HIVE_ORC_CODEC_POOL
 argument_list|(
 literal|"hive.use.orc.codec.pool"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether to use codec pool in ORC. Disable if there are bugs with codec reuse."
 argument_list|)
