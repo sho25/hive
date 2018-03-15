@@ -10517,7 +10517,81 @@ expr_stmt|;
 block|}
 specifier|private
 name|void
-name|checkCacheUsage
+name|preExecutionCacheActions
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+if|if
+condition|(
+name|cacheUsage
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|cacheUsage
+operator|.
+name|getStatus
+argument_list|()
+operator|==
+name|CacheUsage
+operator|.
+name|CacheStatus
+operator|.
+name|CAN_CACHE_QUERY_RESULTS
+operator|&&
+name|plan
+operator|.
+name|getFetchTask
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// The results of this query execution might be cacheable.
+comment|// Add a placeholder entry in the cache so other queries know this result is pending.
+name|CacheEntry
+name|pendingCacheEntry
+init|=
+name|QueryResultsCache
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|addToCache
+argument_list|(
+name|cacheUsage
+operator|.
+name|getQueryInfo
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|pendingCacheEntry
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Update cacheUsage to reference the pending entry.
+name|this
+operator|.
+name|cacheUsage
+operator|.
+name|setCacheEntry
+argument_list|(
+name|pendingCacheEntry
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+block|}
+specifier|private
+name|void
+name|postExecutionCacheActions
 parameter_list|()
 throws|throws
 name|Exception
@@ -10554,6 +10628,8 @@ argument_list|()
 decl_stmt|;
 comment|// Reader count already incremented during cache lookup.
 comment|// Save to usedCacheEntry to ensure reader is released after query.
+name|this
+operator|.
 name|usedCacheEntry
 operator|=
 name|cacheEntry
@@ -10573,6 +10649,13 @@ name|CacheStatus
 operator|.
 name|CAN_CACHE_QUERY_RESULTS
 operator|&&
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
+operator|!=
+literal|null
+operator|&&
 name|plan
 operator|.
 name|getFetchTask
@@ -10581,8 +10664,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// The query could not be resolved using the cache, but the query results
-comment|// can be added to the cache for future queries to use.
+comment|// Save results to the cache for future queries to use.
 name|PerfLogger
 name|perfLogger
 init|=
@@ -10602,19 +10684,19 @@ operator|.
 name|SAVE_TO_RESULTS_CACHE
 argument_list|)
 expr_stmt|;
-name|CacheEntry
-name|savedCacheEntry
+name|boolean
+name|savedToCache
 init|=
 name|QueryResultsCache
 operator|.
 name|getInstance
 argument_list|()
 operator|.
-name|addToCache
+name|setEntryValid
 argument_list|(
 name|cacheUsage
 operator|.
-name|getQueryInfo
+name|getCacheEntry
 argument_list|()
 argument_list|,
 name|plan
@@ -10626,22 +10708,37 @@ name|getWork
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"savedToCache: {}"
+argument_list|,
+name|savedToCache
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
-name|savedCacheEntry
-operator|!=
-literal|null
+name|savedToCache
 condition|)
 block|{
 name|useFetchFromCache
 argument_list|(
-name|savedCacheEntry
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// addToCache() already increments the reader count. Set usedCacheEntry so it gets released.
+comment|// setEntryValid() already increments the reader count. Set usedCacheEntry so it gets released.
+name|this
+operator|.
 name|usedCacheEntry
 operator|=
-name|savedCacheEntry
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
 expr_stmt|;
 block|}
 name|perfLogger
@@ -11310,6 +11407,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|preExecutionCacheActions
+argument_list|()
+expr_stmt|;
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -11845,7 +11945,7 @@ operator|.
 name|RUN_TASKS
 argument_list|)
 expr_stmt|;
-name|checkCacheUsage
+name|postExecutionCacheActions
 argument_list|()
 expr_stmt|;
 comment|// in case we decided to run everything in local mode, restore the
@@ -13929,6 +14029,39 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
+name|boolean
+name|hasBadCacheAttempt
+parameter_list|()
+block|{
+comment|// Check if the query results were cacheable, and created a pending cache entry.
+comment|// If we successfully saved the results, the usage would have changed to QUERY_USING_CACHE.
+return|return
+operator|(
+name|cacheUsage
+operator|!=
+literal|null
+operator|&&
+name|cacheUsage
+operator|.
+name|getStatus
+argument_list|()
+operator|==
+name|CacheUsage
+operator|.
+name|CacheStatus
+operator|.
+name|CAN_CACHE_QUERY_RESULTS
+operator|&&
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
+operator|!=
+literal|null
+operator|)
+return|;
+block|}
+specifier|private
 name|void
 name|releaseCachedResult
 parameter_list|()
@@ -13952,6 +14085,58 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|hasBadCacheAttempt
+argument_list|()
+condition|)
+block|{
+comment|// This query create a pending cache entry but it was never saved with real results, cleanup.
+comment|// This step is required, as there may be queries waiting on this pending cache entry.
+comment|// Removing/invalidating this entry will notify the waiters that this entry cannot be used.
+try|try
+block|{
+name|QueryResultsCache
+operator|.
+name|getInstance
+argument_list|()
+operator|.
+name|removeEntry
+argument_list|(
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|err
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error removing failed cache entry "
+operator|+
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
+argument_list|,
+name|err
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|cacheUsage
+operator|=
+literal|null
+expr_stmt|;
 block|}
 comment|// Close and release resources within a running query process. Since it runs under
 comment|// driver state COMPILING, EXECUTING or INTERRUPT, it would not have race condition

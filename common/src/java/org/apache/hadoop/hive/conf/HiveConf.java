@@ -15131,6 +15131,17 @@ operator|+
 literal|"to be reused if the same query is executed again."
 argument_list|)
 block|,
+name|HIVE_QUERY_RESULTS_CACHE_WAIT_FOR_PENDING_RESULTS
+argument_list|(
+literal|"hive.query.results.cache.wait.for.pending.results"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Should a query wait for the pending results of an already running query, "
+operator|+
+literal|"in order to use the cached result when it becomes ready"
+argument_list|)
+block|,
 name|HIVE_QUERY_RESULTS_CACHE_DIRECTORY
 argument_list|(
 literal|"hive.query.results.cache.directory"
