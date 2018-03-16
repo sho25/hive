@@ -11420,7 +11420,9 @@ name|get
 argument_list|()
 operator|.
 name|getValidMaterializedViews
-argument_list|()
+argument_list|(
+name|rewrittenRebuild
+argument_list|)
 expr_stmt|;
 comment|// We need to use the current cluster for the scan operator on views,
 comment|// otherwise the planner will throw an Exception (different planners)

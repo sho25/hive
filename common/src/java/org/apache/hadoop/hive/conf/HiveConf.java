@@ -17320,7 +17320,7 @@ name|var
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|TimeUnit
 name|getDefaultTimeUnit

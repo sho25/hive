@@ -208,6 +208,14 @@ name|HADOOP_CREDENTIAL_PROVIDER_PATH_CONFIG
 init|=
 literal|"hadoop.security.credential.provider.path"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|MATERIALIZED_VIEW_REWRITING_TIME_WINDOW
+init|=
+literal|"rewriting.time.window"
+decl_stmt|;
 block|}
 end_class
 
