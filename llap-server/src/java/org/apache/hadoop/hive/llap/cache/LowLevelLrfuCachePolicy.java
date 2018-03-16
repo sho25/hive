@@ -765,7 +765,7 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
-comment|// Now insert the buffer in its place and restore heap property.
+comment|// Now insert the new buffer in its place and restore heap property.
 name|buffer
 operator|.
 name|indexInHeap

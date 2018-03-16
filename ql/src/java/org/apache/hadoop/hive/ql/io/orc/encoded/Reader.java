@@ -249,6 +249,9 @@ name|trace
 parameter_list|,
 name|boolean
 name|useCodecPool
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 throws|throws
 name|IOException

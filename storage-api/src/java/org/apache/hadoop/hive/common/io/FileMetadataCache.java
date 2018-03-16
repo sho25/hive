@@ -82,7 +82,8 @@ name|Object
 name|fileKey
 parameter_list|)
 function_decl|;
-comment|/**    * Puts the metadata for a given file (e.g. a footer buffer into cache).    * @param fileKey The file key.    * @param length The footer length.    * @param is The stream to read the footer from.    * @return The buffer or buffers representing the cached footer.    *         The caller must decref this buffer when done.    */
+annotation|@
+name|Deprecated
 name|MemoryBufferOrBuffers
 name|putFileMetadata
 parameter_list|(
@@ -98,6 +99,8 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+annotation|@
+name|Deprecated
 name|MemoryBufferOrBuffers
 name|putFileMetadata
 parameter_list|(
@@ -114,6 +117,38 @@ name|decRefBuffer
 parameter_list|(
 name|MemoryBufferOrBuffers
 name|buffer
+parameter_list|)
+function_decl|;
+comment|/**    * Puts the metadata for a given file (e.g. a footer buffer into cache).    * @param fileKey The file key.    * @param length The footer length.    * @param is The stream to read the footer from.    * @return The buffer or buffers representing the cached footer.    *         The caller must decref this buffer when done.    */
+name|MemoryBufferOrBuffers
+name|putFileMetadata
+parameter_list|(
+name|Object
+name|fileKey
+parameter_list|,
+name|int
+name|length
+parameter_list|,
+name|InputStream
+name|is
+parameter_list|,
+name|String
+name|tag
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+name|MemoryBufferOrBuffers
+name|putFileMetadata
+parameter_list|(
+name|Object
+name|fileKey
+parameter_list|,
+name|ByteBuffer
+name|tailBuffer
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 function_decl|;
 block|}

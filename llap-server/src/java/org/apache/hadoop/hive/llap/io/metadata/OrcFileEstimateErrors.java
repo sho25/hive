@@ -686,6 +686,18 @@ return|return
 literal|false
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getTag
+parameter_list|()
+block|{
+comment|// We don't care about these.
+return|return
+literal|"OrcEstimates"
+return|;
+block|}
 block|}
 end_class
 

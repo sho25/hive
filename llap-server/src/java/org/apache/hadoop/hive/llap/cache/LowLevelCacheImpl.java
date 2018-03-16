@@ -1701,6 +1701,9 @@ name|priority
 parameter_list|,
 name|LowLevelCacheCounters
 name|qfCounters
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 block|{
 name|long
@@ -1838,6 +1841,13 @@ index|]
 operator|.
 name|getLength
 argument_list|()
+expr_stmt|;
+name|buffer
+operator|.
+name|setTag
+argument_list|(
+name|tag
+argument_list|)
 expr_stmt|;
 while|while
 condition|(

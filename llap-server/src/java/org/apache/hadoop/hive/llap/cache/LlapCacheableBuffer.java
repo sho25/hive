@@ -183,6 +183,12 @@ operator|+
 literal|"]"
 return|;
 block|}
+specifier|public
+specifier|abstract
+name|String
+name|getTag
+parameter_list|()
+function_decl|;
 specifier|protected
 specifier|abstract
 name|boolean

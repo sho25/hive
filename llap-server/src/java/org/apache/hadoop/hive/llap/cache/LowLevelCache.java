@@ -177,6 +177,9 @@ name|priority
 parameter_list|,
 name|LowLevelCacheCounters
 name|qfCounters
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 function_decl|;
 comment|/** Notifies the cache that a particular buffer should be removed due to eviction. */

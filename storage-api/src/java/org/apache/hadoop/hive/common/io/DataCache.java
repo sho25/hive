@@ -98,7 +98,8 @@ name|BooleanRef
 name|gotAllData
 parameter_list|)
 function_decl|;
-comment|/**    * Puts file data into cache, or gets older data in case of collisions.    *    * The memory buffers provided MUST be allocated via an allocator returned by getAllocator    * method, to allow cache implementations that evict and then de-allocate the buffer.    *    * It is assumed that the caller will use the data immediately, therefore any buffers provided    * to putFileData (or returned due to cache collision) are locked in cache to prevent eviction,    * and must therefore be released back to cache via a corresponding call (releaseBuffer) when the    * caller is done with it. Buffers rejected due to conflict will neither be locked, nor    * automatically deallocated. The caller must take care to discard these buffers.    *    * @param fileKey Unique ID of the target file on the file system.    * @param ranges The ranges for which the data is being cached. These objects will not be stored.    * @param data The data for the corresponding ranges.    * @param baseOffset base offset for the ranges (stripe/stream offset in case of ORC).    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
+annotation|@
+name|Deprecated
 name|long
 index|[]
 name|putFileData
@@ -145,6 +146,29 @@ operator|.
 name|BufferObjectFactory
 name|getDataBufferFactory
 parameter_list|()
+function_decl|;
+comment|/**    * Puts file data into cache, or gets older data in case of collisions.    *    * The memory buffers provided MUST be allocated via an allocator returned by getAllocator    * method, to allow cache implementations that evict and then de-allocate the buffer.    *    * It is assumed that the caller will use the data immediately, therefore any buffers provided    * to putFileData (or returned due to cache collision) are locked in cache to prevent eviction,    * and must therefore be released back to cache via a corresponding call (releaseBuffer) when the    * caller is done with it. Buffers rejected due to conflict will neither be locked, nor    * automatically deallocated. The caller must take care to discard these buffers.    *    * @param fileKey Unique ID of the target file on the file system.    * @param ranges The ranges for which the data is being cached. These objects will not be stored.    * @param data The data for the corresponding ranges.    * @param baseOffset base offset for the ranges (stripe/stream offset in case of ORC).    * @return null if all data was put; bitmask indicating which chunks were not put otherwise;    *         the replacement chunks from cache are updated directly in the array.    */
+name|long
+index|[]
+name|putFileData
+parameter_list|(
+name|Object
+name|fileKey
+parameter_list|,
+name|DiskRange
+index|[]
+name|ranges
+parameter_list|,
+name|MemoryBuffer
+index|[]
+name|data
+parameter_list|,
+name|long
+name|baseOffset
+parameter_list|,
+name|String
+name|tag
+parameter_list|)
 function_decl|;
 block|}
 end_interface

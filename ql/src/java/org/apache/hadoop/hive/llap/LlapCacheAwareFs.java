@@ -496,6 +496,9 @@ name|index
 parameter_list|,
 name|Configuration
 name|conf
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 throws|throws
 name|IOException
@@ -526,6 +529,8 @@ name|fileKey
 argument_list|,
 operator|-
 literal|1
+argument_list|,
+name|tag
 argument_list|)
 decl_stmt|;
 if|if
@@ -1160,6 +1165,11 @@ name|fileKey
 decl_stmt|;
 specifier|private
 specifier|final
+name|String
+name|tag
+decl_stmt|;
+specifier|private
+specifier|final
 name|Configuration
 name|conf
 decl_stmt|;
@@ -1204,6 +1214,9 @@ name|fileKey
 parameter_list|,
 name|int
 name|bufferSize
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 block|{
 name|this
@@ -1241,6 +1254,12 @@ operator|.
 name|bufferSize
 operator|=
 name|bufferSize
+expr_stmt|;
+name|this
+operator|.
+name|tag
+operator|=
+name|tag
 expr_stmt|;
 block|}
 specifier|public
@@ -1268,6 +1287,8 @@ argument_list|,
 name|fileKey
 argument_list|,
 name|bufferSize
+argument_list|,
+name|tag
 argument_list|)
 return|;
 block|}
@@ -2150,6 +2171,8 @@ argument_list|,
 name|newCacheData
 argument_list|,
 literal|0
+argument_list|,
+name|tag
 argument_list|)
 expr_stmt|;
 block|}

@@ -459,6 +459,9 @@ name|priority
 parameter_list|,
 name|LowLevelCacheCounters
 name|qfCounters
+parameter_list|,
+name|String
+name|tag
 parameter_list|)
 block|{
 for|for

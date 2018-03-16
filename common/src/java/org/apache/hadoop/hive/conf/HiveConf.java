@@ -13154,6 +13154,17 @@ operator|+
 literal|"The allocator would further cap it to a fraction of total memory."
 argument_list|)
 block|,
+name|LLAP_TRACK_CACHE_USAGE
+argument_list|(
+literal|"hive.llap.io.track.cache.usage"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to tag LLAP cache contents, mapping them to Hive entities (paths for\n"
+operator|+
+literal|"partitions and tables) for reporting."
+argument_list|)
+block|,
 name|LLAP_USE_LRFU
 argument_list|(
 literal|"hive.llap.io.use.lrfu"
@@ -13167,11 +13178,17 @@ name|LLAP_LRFU_LAMBDA
 argument_list|(
 literal|"hive.llap.io.lrfu.lambda"
 argument_list|,
-literal|0.01f
+literal|0.000001f
 argument_list|,
 literal|"Lambda for ORC low-level cache LRFU cache policy. Must be in [0, 1]. 0 makes LRFU\n"
 operator|+
-literal|"behave like LFU, 1 makes it behave like LRU, values in between balance accordingly."
+literal|"behave like LFU, 1 makes it behave like LRU, values in between balance accordingly.\n"
+operator|+
+literal|"The meaning of this parameter is the inverse of the number of time ticks (cache\n"
+operator|+
+literal|" operations, currently) that cause the combined recency-frequency of a block in cache\n"
+operator|+
+literal|" to be halved."
 argument_list|)
 block|,
 name|LLAP_CACHE_ALLOW_SYNTHETIC_FILEID
