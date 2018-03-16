@@ -9094,6 +9094,15 @@ argument_list|,
 literal|"Address of the Druid coordinator. It is used to check the load status of newly created segments"
 argument_list|)
 block|,
+name|HIVE_DRUID_OVERLORD_DEFAULT_ADDRESS
+argument_list|(
+literal|"hive.druid.overlord.address.default"
+argument_list|,
+literal|"localhost:8090"
+argument_list|,
+literal|"Address of the Druid overlord. It is used to submit indexing tasks to druid."
+argument_list|)
+block|,
 name|HIVE_DRUID_SELECT_THRESHOLD
 argument_list|(
 literal|"hive.druid.select.threshold"
