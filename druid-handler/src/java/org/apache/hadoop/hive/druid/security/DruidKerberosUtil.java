@@ -409,7 +409,7 @@ expr_stmt|;
 comment|// Base64 encoded and stringified token for server
 name|log
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Got valid challenge for host {}"
 argument_list|,
@@ -511,15 +511,35 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|HttpCookie
-name|c
-range|:
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
 name|cookies
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
 control|)
 block|{
 comment|// If this is a secured cookie and the current connection is non-secured,
 comment|// then, skip this cookie. We need to skip this cookie because, the cookie
 comment|// replay will not be transmitted to the server.
+name|HttpCookie
+name|c
+init|=
+name|cookies
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|c
