@@ -122,7 +122,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Returns 200 if this HS2 instance is leader.  */
+comment|/**  * Returns "true" if this HS2 instance is leader else "false".  */
 end_comment
 
 begin_class

@@ -1580,6 +1580,27 @@ operator|.
 name|HIVE_ZOOKEEPER_CONNECTION_MAX_RETRIES
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Creating curator client with connectString: {} sessionTimeoutMs: {} connectionTimeoutMs: {}"
+operator|+
+literal|" namespace: {} exponentialBackoff - sleepTime: {} maxRetries: {}"
+argument_list|,
+name|zkEnsemble
+argument_list|,
+name|sessionTimeout
+argument_list|,
+name|connectionTimeout
+argument_list|,
+name|namespace
+argument_list|,
+name|baseSleepTime
+argument_list|,
+name|maxRetries
+argument_list|)
+expr_stmt|;
 comment|// Create a CuratorFramework instance to be used as the ZooKeeper client
 comment|// Use the zooKeeperAclProvider to create appropriate ACLs
 return|return
@@ -1831,6 +1852,33 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+return|return
+name|registerServiceRecord
+argument_list|(
+name|srv
+argument_list|,
+name|UNIQUE_ID
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+return|;
+block|}
+specifier|protected
+specifier|final
+name|String
+name|registerServiceRecord
+parameter_list|(
+name|ServiceRecord
+name|srv
+parameter_list|,
+specifier|final
+name|String
+name|uniqueId
+parameter_list|)
+throws|throws
+name|IOException
+block|{
 comment|// restart sensitive instance id
 name|srv
 operator|.
@@ -1838,10 +1886,7 @@ name|set
 argument_list|(
 name|UNIQUE_IDENTIFIER
 argument_list|,
-name|UNIQUE_ID
-operator|.
-name|toString
-argument_list|()
+name|uniqueId
 argument_list|)
 expr_stmt|;
 comment|// Create a znode under the rootNamespace parent for this instance of the server
@@ -2017,10 +2062,7 @@ argument_list|)
 throw|;
 block|}
 return|return
-name|UNIQUE_ID
-operator|.
-name|toString
-argument_list|()
+name|uniqueId
 return|;
 block|}
 specifier|protected

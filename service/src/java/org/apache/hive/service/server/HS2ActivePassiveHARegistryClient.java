@@ -287,14 +287,23 @@ argument_list|,
 name|registry
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Added registry client to cache with namespace: {}"
+argument_list|,
+name|nsKey
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
-literal|"Returning cached registry client for nsKey: {}"
+literal|"Returning cached registry client for namespace: {}"
 argument_list|,
 name|nsKey
 argument_list|)
