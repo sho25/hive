@@ -15743,6 +15743,167 @@ return|return
 name|unusedGuaranteed
 return|;
 block|}
+comment|/**    * A direct call from communicator to scheduler to propagate data that cannot be passed via Tez.    */
+specifier|public
+name|void
+name|taskInfoUpdated
+parameter_list|(
+name|TezTaskAttemptID
+name|attemptId
+parameter_list|,
+name|boolean
+name|isGuaranteed
+parameter_list|)
+block|{
+name|TaskInfo
+name|ti
+init|=
+literal|null
+decl_stmt|;
+name|writeLock
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|ti
+operator|=
+name|tasksById
+operator|.
+name|get
+argument_list|(
+name|attemptId
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|ti
+operator|==
+literal|null
+condition|)
+block|{
+name|WM_LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unknown task from heartbeat "
+operator|+
+name|attemptId
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+block|}
+finally|finally
+block|{
+name|writeLock
+operator|.
+name|unlock
+argument_list|()
+expr_stmt|;
+block|}
+name|boolean
+name|newState
+init|=
+literal|false
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|ti
+init|)
+block|{
+if|if
+condition|(
+name|ti
+operator|.
+name|isPendingUpdate
+condition|)
+return|return;
+comment|// A pending update is not done.
+if|if
+condition|(
+name|ti
+operator|.
+name|isGuaranteed
+operator|==
+literal|null
+condition|)
+return|return;
+comment|// The task has terminated, out of date heartbeat.
+if|if
+condition|(
+name|ti
+operator|.
+name|lastSetGuaranteed
+operator|!=
+literal|null
+operator|&&
+name|ti
+operator|.
+name|lastSetGuaranteed
+operator|==
+name|isGuaranteed
+condition|)
+block|{
+return|return;
+comment|// The heartbeat is consistent with what we have.
+block|}
+name|ti
+operator|.
+name|lastSetGuaranteed
+operator|=
+name|isGuaranteed
+expr_stmt|;
+if|if
+condition|(
+name|isGuaranteed
+operator|==
+name|ti
+operator|.
+name|isGuaranteed
+condition|)
+return|return;
+comment|// Already consistent. Can happen w/null lSG.
+comment|// There could be races here, e.g. heartbeat delivered us the old value just after we have
+comment|// received a successful confirmation from the API, so we are about to overwrite the latter.
+comment|// We could solve this by adding a version or smth like that; or by ignoring discrepancies
+comment|// unless we have previously received an update error for this task; however, the only effect
+comment|// right now are a few cheap redundant update calls; let's just do the simple thing.
+name|newState
+operator|=
+name|ti
+operator|.
+name|isGuaranteed
+expr_stmt|;
+name|setUpdateStartedUnderTiLock
+argument_list|(
+name|ti
+argument_list|)
+expr_stmt|;
+block|}
+comment|// End of synchronized (ti)
+name|WM_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending an update based on inconsistent state from heartbeat for "
+operator|+
+name|attemptId
+operator|+
+literal|", "
+operator|+
+name|newState
+argument_list|)
+expr_stmt|;
+name|sendUpdateMessageAsync
+argument_list|(
+name|ti
+argument_list|,
+name|newState
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

@@ -2870,6 +2870,9 @@ name|port
 parameter_list|,
 name|TezAttemptArray
 name|aw
+parameter_list|,
+name|BooleanArray
+name|guaranteed
 parameter_list|)
 throws|throws
 name|IOException
@@ -2900,6 +2903,7 @@ name|uniqueId
 argument_list|)
 expr_stmt|;
 block|}
+comment|// External client currently cannot use guaranteed.
 name|updateHeartbeatInfo
 argument_list|(
 name|hostname

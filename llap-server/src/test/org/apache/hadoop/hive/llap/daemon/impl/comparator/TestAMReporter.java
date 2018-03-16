@@ -546,6 +546,8 @@ name|TezTaskAttemptID
 operator|.
 name|class
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|amReporter
@@ -568,6 +570,8 @@ name|TezTaskAttemptID
 operator|.
 name|class
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 name|Thread
@@ -748,6 +752,15 @@ argument_list|(
 name|LlapTaskUmbilicalProtocol
 operator|.
 name|TezAttemptArray
+operator|.
+name|class
+argument_list|)
+argument_list|,
+name|any
+argument_list|(
+name|LlapTaskUmbilicalProtocol
+operator|.
+name|BooleanArray
 operator|.
 name|class
 argument_list|)
