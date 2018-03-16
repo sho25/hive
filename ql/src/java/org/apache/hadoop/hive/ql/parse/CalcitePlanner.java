@@ -2555,6 +2555,28 @@ name|calcite
 operator|.
 name|rules
 operator|.
+name|HiveAggregateReduceFunctionsRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
 name|HiveAggregateReduceRule
 import|;
 end_import
@@ -13261,6 +13283,15 @@ name|rules
 operator|.
 name|add
 argument_list|(
+name|HiveAggregateReduceFunctionsRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+name|rules
+operator|.
+name|add
+argument_list|(
 name|HiveAggregateReduceRule
 operator|.
 name|INSTANCE
@@ -13446,7 +13477,6 @@ argument_list|,
 literal|"Calcite: Prejoin ordering transformation, PPD, not null predicates, transitive inference, constant folding"
 argument_list|)
 expr_stmt|;
-comment|// it is happening at 1762
 comment|// 4. Push down limit through outer join
 comment|// NOTE: We run this after PPD to support old style join syntax.
 comment|// Ex: select * from R1 left outer join R2 where ((R1.x=R2.x) and R1.y<10) or
