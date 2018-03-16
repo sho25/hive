@@ -93,8 +93,8 @@ name|long
 name|readLong
 parameter_list|()
 function_decl|;
-comment|/**    * @return the next Integer from the page    */
-name|int
+comment|/**    * @return the next Integer from the page    * Though the function is looking for an integer, it will return the value through long.    * The type of data saved as long can be changed to be int or smallint or tinyint.  In that case    * the value returned to the user will depend on the data.  If the data value is within the valid    * range accommodated by the read type, the data will be returned as is.  When data is not within    * the valid range, a NULL will be returned.  A long value saved in parquet files will be    * returned asis to facilitate the validity check.  Also, the vectorized representation uses    * a LongColumnVector to store integer values.    */
+name|long
 name|readInteger
 parameter_list|()
 function_decl|;
@@ -148,6 +148,14 @@ name|Timestamp
 name|readTimestamp
 parameter_list|()
 function_decl|;
+comment|/**    * @param value data to be checked for validity    * @return is data valid for the type    * The type of the data in Parquet files need not match the type in HMS.  In that case    * the value returned to the user will depend on the data.  If the data value is within the valid    * range accommodated by the HMS type, the data will be returned as is.  When data is not within    * the valid range, a NULL will be returned.  This function will do the appropriate check.    */
+name|boolean
+name|isValid
+parameter_list|(
+name|long
+name|value
+parameter_list|)
+function_decl|;
 comment|/**    * @return the underlying dictionary if current reader is dictionary encoded    */
 name|Dictionary
 name|getDictionary
@@ -178,8 +186,8 @@ name|int
 name|id
 parameter_list|)
 function_decl|;
-comment|/**    * @param id in dictionary    * @return the Integer from the dictionary by id    */
-name|int
+comment|/**    * @param id in dictionary    * @return the Integer from the dictionary by id    * Though the function is looking for an integer, it will return the value through long.    * The type of data saved as long can be changed to be int or smallint or tinyint.  In that case    * the value returned to the user will depend on the data.  If the data value is within the valid    * range accommodated by the read type, the data will be returned as is.  When data is not within    * the valid range, a NULL will be returned.  A long value saved in parquet files will be    * returned asis to facilitate the validity check.  Also, the vectorized representation uses    * a LongColumnVector to store integer values.    */
+name|long
 name|readInteger
 parameter_list|(
 name|int
