@@ -114,6 +114,10 @@ name|int
 name|httpPort
 decl_stmt|;
 specifier|private
+name|int
+name|webPort
+decl_stmt|;
+specifier|private
 name|boolean
 name|startedHiveService
 init|=
@@ -147,6 +151,9 @@ name|binaryPort
 parameter_list|,
 name|int
 name|httpPort
+parameter_list|,
+name|int
+name|webPort
 parameter_list|)
 block|{
 name|this
@@ -172,6 +179,12 @@ operator|.
 name|httpPort
 operator|=
 name|httpPort
+expr_stmt|;
+name|this
+operator|.
+name|webPort
+operator|=
+name|webPort
 expr_stmt|;
 block|}
 comment|/**    * Get Hive conf    * @return    */
@@ -396,6 +409,15 @@ parameter_list|()
 block|{
 return|return
 name|httpPort
+return|;
+block|}
+specifier|public
+name|int
+name|getWebPort
+parameter_list|()
+block|{
+return|return
+name|webPort
 return|;
 block|}
 specifier|public

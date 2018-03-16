@@ -29,7 +29,19 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
 import|;
 end_import
 
@@ -40,6 +52,16 @@ operator|.
 name|util
 operator|.
 name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|HashSet
 import|;
 end_import
 
@@ -442,7 +464,11 @@ expr_stmt|;
 name|poolManager
 operator|.
 name|startPool
-argument_list|()
+argument_list|(
+name|conf
+argument_list|,
+literal|null
+argument_list|)
 expr_stmt|;
 comment|// this is now a LIFO operation
 comment|// draw 1 and replace
@@ -829,7 +855,11 @@ expr_stmt|;
 name|poolManager
 operator|.
 name|startPool
-argument_list|()
+argument_list|(
+name|conf
+argument_list|,
+literal|null
+argument_list|)
 expr_stmt|;
 name|TezSessionState
 index|[]
@@ -1397,7 +1427,11 @@ expr_stmt|;
 name|poolManager
 operator|.
 name|startPool
-argument_list|()
+argument_list|(
+name|conf
+argument_list|,
+literal|null
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -1726,7 +1760,11 @@ expr_stmt|;
 name|poolManager
 operator|.
 name|startPool
-argument_list|()
+argument_list|(
+name|conf
+argument_list|,
+literal|null
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch

@@ -578,6 +578,9 @@ name|LlapServiceInstance
 argument_list|>
 implements|implements
 name|ServiceRegistry
+argument_list|<
+name|LlapServiceInstance
+argument_list|>
 block|{
 specifier|private
 specifier|static
@@ -644,22 +647,6 @@ init|=
 literal|"llap-"
 decl_stmt|;
 specifier|private
-specifier|final
-specifier|static
-name|String
-name|USER_SCOPE_PATH_PREFIX
-init|=
-literal|"user-"
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|WORKER_PREFIX
-init|=
-literal|"worker-"
-decl_stmt|;
-specifier|private
 specifier|static
 specifier|final
 name|String
@@ -716,6 +703,8 @@ argument_list|,
 name|USER_SCOPE_PATH_PREFIX
 argument_list|,
 name|WORKER_PREFIX
+argument_list|,
+name|WORKER_GROUP
 argument_list|,
 name|LlapProxy
 operator|.
@@ -1604,11 +1593,13 @@ argument_list|()
 operator|+
 literal|", host="
 operator|+
-name|host
+name|getHost
+argument_list|()
 operator|+
 literal|":"
 operator|+
-name|rpcPort
+name|getRpcPort
+argument_list|()
 operator|+
 literal|" with resources="
 operator|+
@@ -2094,13 +2085,10 @@ name|WORKER_PREFIX
 argument_list|)
 condition|)
 block|{
-name|Set
-argument_list|<
 name|LlapServiceInstance
-argument_list|>
 name|instances
 init|=
-name|getInstancesByPath
+name|getInstanceByPath
 argument_list|(
 name|childData
 operator|.
@@ -2117,7 +2105,7 @@ condition|)
 block|{
 name|unsorted
 operator|.
-name|addAll
+name|add
 argument_list|(
 name|instances
 argument_list|)

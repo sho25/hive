@@ -8454,6 +8454,25 @@ operator|+
 literal|"if a heartbeat is not sent in the timeout."
 argument_list|)
 block|,
+name|HIVE_ZOOKEEPER_CONNECTION_TIMEOUT
+argument_list|(
+literal|"hive.zookeeper.connection.timeout"
+argument_list|,
+literal|"15s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper client's connection timeout in seconds. Connection timeout * hive.zookeeper.connection.max.retries\n"
+operator|+
+literal|"with exponential backoff is when curator client deems connection is lost to zookeeper."
+argument_list|)
+block|,
 name|HIVE_ZOOKEEPER_NAMESPACE
 argument_list|(
 literal|"hive.zookeeper.namespace"
@@ -10388,6 +10407,28 @@ literal|"If true, the HiveServer2 WebUI will be secured with PAM."
 argument_list|)
 block|,
 comment|// Tez session settings
+name|HIVE_SERVER2_ACTIVE_PASSIVE_HA_ENABLE
+argument_list|(
+literal|"hive.server2.active.passive.ha.enable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether HiveServer2 Active/Passive High Availability be enabled when Hive Interactive sessions are enabled."
+operator|+
+literal|"This will also require hive.server2.support.dynamic.service.discovery to be enabled."
+argument_list|)
+block|,
+name|HIVE_SERVER2_ACTIVE_PASSIVE_HA_REGISTRY_NAMESPACE
+argument_list|(
+literal|"hive.server2.active.passive.ha.registry.namespace"
+argument_list|,
+literal|"hs2ActivePassiveHA"
+argument_list|,
+literal|"When HiveServer2 Active/Passive High Availability is enabled, uses this namespace for registering HS2\n"
+operator|+
+literal|"instances with zookeeper"
+argument_list|)
+block|,
 name|HIVE_SERVER2_TEZ_INTERACTIVE_QUEUE
 argument_list|(
 literal|"hive.server2.tez.interactive.queue"

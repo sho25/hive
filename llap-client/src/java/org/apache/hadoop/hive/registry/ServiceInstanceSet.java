@@ -51,7 +51,7 @@ extends|extends
 name|ServiceInstance
 parameter_list|>
 block|{
-comment|/**    * Get an instance mapping which map worker identity to each instance.    *     * The worker identity does not collide between restarts, so each restart will have a unique id,    * while having the same host/ip pair.    *     * @return    */
+comment|/**    * Get an instance mapping which map worker identity to each instance.    *     * The worker identity does not collide between restarts, so each restart will have a unique id,    * while having the same host/ip pair.    *     * @return instance list    */
 name|Collection
 argument_list|<
 name|InstanceType
@@ -59,7 +59,7 @@ argument_list|>
 name|getAll
 parameter_list|()
 function_decl|;
-comment|/**    * Get an instance by worker identity.    *     * @param name    * @return    */
+comment|/**    * Get an instance by worker identity.    *     * @param name worker id    * @return instance    */
 name|InstanceType
 name|getInstance
 parameter_list|(
@@ -67,7 +67,7 @@ name|String
 name|name
 parameter_list|)
 function_decl|;
-comment|/**    * Get a list of service instances for a given host.    *     * The list could include dead and alive instances.    *     * @param host    * @return    */
+comment|/**    * Get a list of service instances for a given host.    *     * The list could include dead and alive instances.    *     * @param host hostname    * @return instance list    */
 name|Set
 argument_list|<
 name|InstanceType
@@ -78,7 +78,7 @@ name|String
 name|host
 parameter_list|)
 function_decl|;
-comment|/**    * Get number of instances in the currently availabe.    *    * @return - number of instances    */
+comment|/**    * Get number of instances in the currently available.    *    * @return - number of instances    */
 name|int
 name|size
 parameter_list|()

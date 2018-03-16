@@ -309,6 +309,22 @@ name|hive
 operator|.
 name|registry
 operator|.
+name|ServiceInstance
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|registry
+operator|.
 name|ServiceInstanceStateChangeListener
 import|;
 end_import
@@ -1426,11 +1442,10 @@ name|registerStateChangeListener
 parameter_list|(
 specifier|final
 name|ServiceInstanceStateChangeListener
-argument_list|<
-name|LlapServiceInstance
-argument_list|>
 name|listener
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 comment|// nothing to set
 name|LOG

@@ -221,6 +221,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|registry
+operator|.
+name|ServiceInstanceSet
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -638,7 +654,10 @@ return|;
 comment|// Don't fail; this is best-effort.
 block|}
 block|}
-name|LlapServiceInstanceSet
+name|ServiceInstanceSet
+argument_list|<
+name|LlapServiceInstance
+argument_list|>
 name|instances
 decl_stmt|;
 try|try

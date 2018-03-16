@@ -33,28 +33,21 @@ interface|interface
 name|ServiceInstance
 block|{
 comment|/**    * Worker identity is a UUID (unique across restarts), to identify a node which died&amp; was brought    * back on the same host/port    */
-specifier|public
-specifier|abstract
 name|String
 name|getWorkerIdentity
 parameter_list|()
 function_decl|;
-comment|/**    * Hostname of the service instance    *     * @return    */
-specifier|public
-specifier|abstract
+comment|/**    * Hostname of the service instance    *     * @return service hostname    */
 name|String
 name|getHost
 parameter_list|()
 function_decl|;
-comment|/**    * RPC Endpoint for service instance    *     * @return    */
-specifier|public
+comment|/**    * RPC Endpoint for service instance    *    * @return rpc port    */
 name|int
 name|getRpcPort
 parameter_list|()
 function_decl|;
-comment|/**    * Config properties of the Service Instance (llap.daemon.*)    *     * @return    */
-specifier|public
-specifier|abstract
+comment|/**    * Config properties of the Service Instance (llap.daemon.*)    *    * @return properties    */
 name|Map
 argument_list|<
 name|String
