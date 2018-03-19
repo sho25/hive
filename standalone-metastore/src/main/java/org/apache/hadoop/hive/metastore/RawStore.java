@@ -2971,21 +2971,6 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get column stats for all partitions of all tables in the database    *    * @param dbName    * @return List of column stats objects for all partitions of all tables in the database    * @throws MetaException    * @throws NoSuchObjectException    */
-name|List
-argument_list|<
-name|ColStatsObjWithSourceInfo
-argument_list|>
-name|getPartitionColStatsForDatabase
-parameter_list|(
-name|String
-name|dbName
-parameter_list|)
-throws|throws
-name|MetaException
-throws|,
-name|NoSuchObjectException
-function_decl|;
 comment|/**    * Get the next notification event.    * @param rqst Request containing information on the last processed notification.    * @return list of notifications, sorted by eventId    */
 name|NotificationEventResponse
 name|getNextNotification
