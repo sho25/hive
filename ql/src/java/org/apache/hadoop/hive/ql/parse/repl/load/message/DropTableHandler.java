@@ -284,10 +284,6 @@ name|writeEntitySet
 argument_list|,
 name|dropTableDesc
 argument_list|)
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|context

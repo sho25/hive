@@ -1752,8 +1752,6 @@ operator|.
 name|get
 argument_list|(
 name|fetch
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1872,8 +1870,6 @@ literal|null
 argument_list|,
 literal|false
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|mvTask
@@ -1964,8 +1960,6 @@ name|lfd
 argument_list|,
 literal|false
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2508,8 +2502,6 @@ name|outputs
 argument_list|,
 name|crtTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|patchUpAfterCTASorMaterializedView
@@ -2564,8 +2556,6 @@ name|outputs
 argument_list|,
 name|viewDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|patchUpAfterCTASorMaterializedView
@@ -3035,11 +3025,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|parseContext
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 return|;
 block|}
@@ -3102,11 +3087,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|parseContext
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 return|;
 block|}

@@ -1235,14 +1235,6 @@ operator|.
 name|get
 argument_list|(
 name|newWork
-argument_list|,
-name|physicalContext
-operator|.
-name|getParseContext
-argument_list|()
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// generate the map join operator; already checked the map join
@@ -1505,15 +1497,6 @@ operator|.
 name|CONVERTED_SORTMERGEJOIN
 argument_list|)
 expr_stmt|;
-comment|// get parseCtx for this Join Operator
-name|ParseContext
-name|parseCtx
-init|=
-name|physicalContext
-operator|.
-name|getParseContext
-argument_list|()
-decl_stmt|;
 comment|// Convert the work containing to sort-merge join into a work, as if it had a regular join.
 comment|// Note that the operator tree is not changed - is still contains the SMB join, but the
 comment|// plan is changed (aliasToWork etc.) to contain all the paths as if it was a regular join.
@@ -2105,11 +2088,6 @@ operator|.
 name|get
 argument_list|(
 name|cndWork
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|cndTsk

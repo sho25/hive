@@ -504,10 +504,6 @@ name|writeEntitySet
 argument_list|,
 name|addConstraintsDesc
 argument_list|)
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|tasks

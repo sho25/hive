@@ -554,10 +554,6 @@ name|FunctionWork
 argument_list|(
 name|descToLoad
 argument_list|)
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|context
@@ -680,10 +676,6 @@ argument_list|(
 operator|new
 name|DependencyCollectionWork
 argument_list|()
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|builder

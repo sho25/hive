@@ -794,11 +794,6 @@ operator|.
 name|get
 argument_list|(
 name|statWork
-argument_list|,
-name|parseContext
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|snjTask
@@ -908,11 +903,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|parseContext
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|context

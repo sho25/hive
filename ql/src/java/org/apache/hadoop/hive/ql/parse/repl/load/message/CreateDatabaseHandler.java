@@ -504,10 +504,6 @@ argument_list|()
 argument_list|,
 name|createDatabaseDesc
 argument_list|)
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 if|if
@@ -566,10 +562,6 @@ argument_list|()
 argument_list|,
 name|alterDbDesc
 argument_list|)
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|createDBTask
@@ -646,10 +638,6 @@ argument_list|()
 argument_list|,
 name|alterDbOwner
 argument_list|)
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|createDBTask

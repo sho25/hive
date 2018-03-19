@@ -1530,8 +1530,6 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -2083,8 +2081,6 @@ argument_list|(
 name|replLoadWork
 argument_list|,
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2305,8 +2301,6 @@ argument_list|(
 name|replLoadWork
 argument_list|,
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2345,8 +2339,6 @@ argument_list|(
 operator|new
 name|DependencyCollectionWork
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|Task
@@ -2551,8 +2543,6 @@ operator|.
 name|get
 argument_list|(
 name|replStateLogWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 for|for
@@ -2709,8 +2699,6 @@ operator|.
 name|get
 argument_list|(
 name|replStateLogWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|taskChainTail
@@ -3078,8 +3066,6 @@ name|alterTblDesc
 argument_list|)
 argument_list|,
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 comment|// Link the update repl state task with dependency collection task
@@ -3224,8 +3210,6 @@ name|alterDbDesc
 argument_list|)
 argument_list|,
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 comment|// Link the update repl state task with dependency collection task
@@ -3377,8 +3361,6 @@ argument_list|(
 operator|new
 name|DependencyCollectionWork
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 comment|// Link import tasks to the barrier task which will in-turn linked with repl state update tasks

@@ -40857,8 +40857,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -46310,8 +46308,6 @@ argument_list|()
 argument_list|,
 name|preInsertTableDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -78311,8 +78307,6 @@ argument_list|()
 argument_list|,
 name|crtTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -78454,8 +78448,6 @@ argument_list|()
 argument_list|,
 name|crtTblLikeDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -79787,8 +79779,6 @@ argument_list|()
 argument_list|,
 name|createVwDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -86538,8 +86528,6 @@ name|cacheEntry
 operator|.
 name|getFetchWork
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|setFetchTask

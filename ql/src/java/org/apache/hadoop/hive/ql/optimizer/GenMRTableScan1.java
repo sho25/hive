@@ -570,11 +570,6 @@ operator|.
 name|get
 argument_list|(
 name|currWork
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|ctx
@@ -797,11 +792,6 @@ operator|.
 name|get
 argument_list|(
 name|statWork
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|ctx
@@ -905,11 +895,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|currTask

@@ -874,14 +874,6 @@ operator|.
 name|get
 argument_list|(
 name|localwork
-argument_list|,
-name|physicalContext
-operator|.
-name|getParseContext
-argument_list|()
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// set the backup task from curr task

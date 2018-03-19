@@ -1524,11 +1524,6 @@ operator|.
 name|get
 argument_list|(
 name|fetchWork
-argument_list|,
-name|pctx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|fetchWork

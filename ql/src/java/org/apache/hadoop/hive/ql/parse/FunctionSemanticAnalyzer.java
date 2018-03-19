@@ -528,8 +528,6 @@ operator|new
 name|ReloadFunctionDesc
 argument_list|()
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -682,8 +680,6 @@ name|FunctionWork
 argument_list|(
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -868,8 +864,6 @@ name|FunctionWork
 argument_list|(
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;

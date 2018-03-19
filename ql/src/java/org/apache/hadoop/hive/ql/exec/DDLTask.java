@@ -28276,8 +28276,6 @@ operator|.
 name|get
 argument_list|(
 name|mw
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|,
 name|ic
@@ -28287,8 +28285,6 @@ operator|.
 name|get
 argument_list|(
 name|icw
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|mv

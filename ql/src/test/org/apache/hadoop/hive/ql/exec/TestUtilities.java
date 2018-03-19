@@ -6005,10 +6005,6 @@ argument_list|(
 operator|new
 name|DependencyCollectionWork
 argument_list|()
-argument_list|,
-operator|new
-name|HiveConf
-argument_list|()
 argument_list|)
 return|;
 block|}
@@ -6526,10 +6522,6 @@ argument_list|(
 name|MapredWork
 operator|.
 name|class
-argument_list|,
-operator|new
-name|HiveConf
-argument_list|()
 argument_list|)
 return|;
 block|}

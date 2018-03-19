@@ -1643,10 +1643,6 @@ operator|.
 name|get
 argument_list|(
 name|sparkWork
-argument_list|,
-name|physicalContext
-operator|.
-name|conf
 argument_list|)
 decl_stmt|;
 if|if

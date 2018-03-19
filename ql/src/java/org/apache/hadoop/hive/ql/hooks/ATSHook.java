@@ -1813,8 +1813,6 @@ operator|.
 name|get
 argument_list|(
 name|work
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|explain

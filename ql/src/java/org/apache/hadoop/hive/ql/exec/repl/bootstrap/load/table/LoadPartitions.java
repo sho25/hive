@@ -1138,8 +1138,6 @@ argument_list|,
 name|context
 operator|.
 name|hiveConf
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 if|if
@@ -1712,8 +1710,6 @@ argument_list|,
 name|context
 operator|.
 name|hiveConf
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|Task
@@ -1859,8 +1855,6 @@ argument_list|,
 name|context
 operator|.
 name|hiveConf
-argument_list|,
-literal|true
 argument_list|)
 return|;
 block|}
@@ -2078,8 +2072,6 @@ argument_list|,
 name|context
 operator|.
 name|hiveConf
-argument_list|,
-literal|true
 argument_list|)
 return|;
 block|}

@@ -12475,8 +12475,6 @@ operator|.
 name|get
 argument_list|(
 name|fetch
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}

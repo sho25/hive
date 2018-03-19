@@ -5393,11 +5393,6 @@ operator|.
 name|get
 argument_list|(
 name|fWork
-argument_list|,
-name|pctx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|pctx

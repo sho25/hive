@@ -1431,11 +1431,6 @@ operator|.
 name|get
 argument_list|(
 name|newWork
-argument_list|,
-name|parseContext
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|List

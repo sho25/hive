@@ -2066,8 +2066,6 @@ operator|.
 name|get
 argument_list|(
 name|sparkWork
-argument_list|,
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|skewJoinMapJoinTask
@@ -3005,11 +3003,6 @@ operator|.
 name|get
 argument_list|(
 name|cndWork
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|cndTsk

@@ -2365,8 +2365,6 @@ literal|true
 argument_list|,
 name|isLocal
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 if|if
@@ -2471,8 +2469,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}

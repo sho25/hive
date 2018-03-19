@@ -534,8 +534,6 @@ operator|.
 name|get
 argument_list|(
 name|exportWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|rootTasks

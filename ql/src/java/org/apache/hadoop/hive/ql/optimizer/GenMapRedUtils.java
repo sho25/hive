@@ -3361,11 +3361,6 @@ operator|.
 name|get
 argument_list|(
 name|childPlan
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|Operator
@@ -9324,8 +9319,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|hconf
 argument_list|)
 decl_stmt|;
 comment|// subscribe feeds from the MoveTask so that MoveTask can forward the list
@@ -10486,8 +10479,6 @@ operator|.
 name|get
 argument_list|(
 name|mergeWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|Task
@@ -10503,8 +10494,6 @@ operator|.
 name|get
 argument_list|(
 name|workForMoveOnlyTask
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|Task
@@ -10520,8 +10509,6 @@ operator|.
 name|get
 argument_list|(
 name|mergeWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|Task
@@ -10537,8 +10524,6 @@ operator|.
 name|get
 argument_list|(
 name|moveWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 comment|// NOTE! It is necessary merge task is the parent of the move task, and not
@@ -10642,8 +10627,6 @@ operator|.
 name|get
 argument_list|(
 name|cndWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|cndTsk

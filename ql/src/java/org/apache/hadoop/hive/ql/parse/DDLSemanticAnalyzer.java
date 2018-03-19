@@ -5652,8 +5652,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -5877,8 +5875,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsUpdateWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -6719,8 +6715,6 @@ argument_list|()
 argument_list|,
 name|alterDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7207,8 +7201,6 @@ argument_list|()
 argument_list|,
 name|alterTableExchangePartition
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7547,8 +7539,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7648,8 +7638,6 @@ argument_list|()
 argument_list|,
 name|showResourcePlanDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7788,8 +7776,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8416,8 +8402,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8514,8 +8498,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8668,8 +8650,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9081,8 +9061,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9180,8 +9158,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9495,8 +9471,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9747,8 +9721,6 @@ argument_list|,
 name|isUnmanagedPool
 argument_list|)
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9956,8 +9928,6 @@ argument_list|,
 literal|true
 argument_list|)
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10053,8 +10023,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10248,8 +10216,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10368,8 +10334,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10634,8 +10598,6 @@ argument_list|()
 argument_list|,
 name|createDatabaseDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10888,8 +10850,6 @@ argument_list|()
 argument_list|,
 name|dropDatabaseDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -10979,8 +10939,6 @@ argument_list|()
 argument_list|,
 name|switchDatabaseDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11157,8 +11115,6 @@ argument_list|()
 argument_list|,
 name|dropTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -11549,8 +11505,6 @@ operator|.
 name|get
 argument_list|(
 name|ddlWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 comment|// Is this a truncate column command
@@ -12248,8 +12202,6 @@ literal|null
 argument_list|,
 literal|false
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|truncateTask
@@ -12363,8 +12315,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|moveTsk
@@ -13206,8 +13156,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -13321,8 +13269,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -13470,8 +13416,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -13602,8 +13546,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14408,8 +14350,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -15008,8 +14948,6 @@ operator|.
 name|get
 argument_list|(
 name|ddlWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|TableDesc
@@ -15092,8 +15030,6 @@ literal|null
 argument_list|,
 literal|false
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|mergeTask
@@ -15204,8 +15140,6 @@ operator|.
 name|get
 argument_list|(
 name|columnStatsWork
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|moveTsk
@@ -15530,8 +15464,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -15766,8 +15698,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -15836,8 +15766,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -16073,8 +16001,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17235,8 +17161,6 @@ argument_list|()
 argument_list|,
 name|descTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -17409,8 +17333,6 @@ argument_list|()
 argument_list|,
 name|descDbDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17777,8 +17699,6 @@ argument_list|()
 argument_list|,
 name|showPartsDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17875,8 +17795,6 @@ argument_list|()
 argument_list|,
 name|showCreateDbDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -17975,8 +17893,6 @@ argument_list|()
 argument_list|,
 name|showCreateTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18078,8 +17994,6 @@ argument_list|()
 argument_list|,
 name|showDatabasesDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18372,8 +18286,6 @@ argument_list|()
 argument_list|,
 name|showTblsDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18690,8 +18602,6 @@ argument_list|()
 argument_list|,
 name|showColumnsDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -18965,8 +18875,6 @@ argument_list|()
 argument_list|,
 name|showTblStatusDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -19095,8 +19003,6 @@ argument_list|()
 argument_list|,
 name|showTblPropertiesDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -19259,8 +19165,6 @@ argument_list|()
 argument_list|,
 name|showFuncsDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -19524,8 +19428,6 @@ argument_list|()
 argument_list|,
 name|showLocksDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -19665,8 +19567,6 @@ argument_list|()
 argument_list|,
 name|showLocksDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -19749,8 +19649,6 @@ argument_list|()
 argument_list|,
 name|showConfDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20050,8 +19948,6 @@ argument_list|()
 argument_list|,
 name|showViewsDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20351,8 +20247,6 @@ argument_list|()
 argument_list|,
 name|showMaterializedViewsDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20534,8 +20428,6 @@ argument_list|()
 argument_list|,
 name|lockTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20590,8 +20482,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20649,8 +20539,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20762,8 +20650,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -20865,8 +20751,6 @@ argument_list|()
 argument_list|,
 name|desc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -21080,8 +20964,6 @@ argument_list|()
 argument_list|,
 name|unlockTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -21230,8 +21112,6 @@ operator|.
 name|get
 argument_list|(
 name|work
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -21338,8 +21218,6 @@ operator|.
 name|get
 argument_list|(
 name|work
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -21475,8 +21353,6 @@ argument_list|()
 argument_list|,
 name|descFuncDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -21585,8 +21461,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -22309,8 +22183,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -22504,8 +22376,6 @@ argument_list|()
 argument_list|,
 name|renamePartitionDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -22642,8 +22512,6 @@ argument_list|()
 argument_list|,
 name|alterBucketNum
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -22769,8 +22637,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23049,8 +22915,6 @@ argument_list|()
 argument_list|,
 name|dropTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23307,8 +23171,6 @@ argument_list|()
 argument_list|,
 name|alterTblAlterPartDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23743,8 +23605,6 @@ argument_list|()
 argument_list|,
 name|addPartitionDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -23910,8 +23770,6 @@ name|entry
 operator|.
 name|getKey
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -24171,8 +24029,6 @@ argument_list|()
 argument_list|,
 name|touchDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -24244,8 +24100,6 @@ argument_list|()
 argument_list|,
 name|touchDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -24503,8 +24357,6 @@ argument_list|()
 argument_list|,
 name|archiveDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -24686,8 +24538,6 @@ argument_list|()
 argument_list|,
 name|checkDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -26407,8 +26257,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -26599,8 +26447,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -26748,8 +26594,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -27373,8 +27217,6 @@ argument_list|()
 argument_list|,
 name|alterTblDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -27952,8 +27794,6 @@ argument_list|()
 argument_list|,
 name|alterMVDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;

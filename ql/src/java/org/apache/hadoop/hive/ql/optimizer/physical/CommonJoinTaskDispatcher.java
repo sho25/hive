@@ -915,14 +915,6 @@ operator|.
 name|get
 argument_list|(
 name|newWork
-argument_list|,
-name|physicalContext
-operator|.
-name|getParseContext
-argument_list|()
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|JoinOperator
@@ -2068,15 +2060,6 @@ operator|.
 name|getAliasToWork
 argument_list|()
 decl_stmt|;
-comment|// get parseCtx for this Join Operator
-name|ParseContext
-name|parseCtx
-init|=
-name|physicalContext
-operator|.
-name|getParseContext
-argument_list|()
-decl_stmt|;
 comment|// start to generate multiple map join tasks
 name|JoinDesc
 name|joinDesc
@@ -2774,11 +2757,6 @@ operator|.
 name|get
 argument_list|(
 name|cndWork
-argument_list|,
-name|parseCtx
-operator|.
-name|getConf
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|cndTsk

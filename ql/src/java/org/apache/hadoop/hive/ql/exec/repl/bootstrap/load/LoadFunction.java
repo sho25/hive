@@ -525,10 +525,6 @@ operator|.
 name|get
 argument_list|(
 name|replLogWork
-argument_list|,
-name|context
-operator|.
-name|hiveConf
 argument_list|)
 decl_stmt|;
 name|DAGTraversal

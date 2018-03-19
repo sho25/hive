@@ -1238,8 +1238,6 @@ argument_list|(
 operator|new
 name|DependencyCollectionWork
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 else|:
 literal|null

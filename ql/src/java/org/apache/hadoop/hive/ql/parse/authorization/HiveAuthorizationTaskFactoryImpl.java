@@ -634,22 +634,12 @@ comment|/**  * Default implementation of HiveAuthorizationTaskFactory  */
 end_comment
 
 begin_class
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unchecked"
-argument_list|)
 specifier|public
 class|class
 name|HiveAuthorizationTaskFactoryImpl
 implements|implements
 name|HiveAuthorizationTaskFactory
 block|{
-specifier|private
-specifier|final
-name|HiveConf
-name|conf
-decl_stmt|;
 comment|// Assumes one instance of this + single-threaded compilation for each query.
 specifier|private
 specifier|final
@@ -666,12 +656,6 @@ name|Hive
 name|db
 parameter_list|)
 block|{
-name|this
-operator|.
-name|conf
-operator|=
-name|conf
-expr_stmt|;
 name|this
 operator|.
 name|db
@@ -759,8 +743,6 @@ name|outputs
 argument_list|,
 name|roleDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -844,8 +826,6 @@ name|outputs
 argument_list|,
 name|roleDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -1005,8 +985,6 @@ name|outputs
 argument_list|,
 name|roleDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -1215,8 +1193,6 @@ name|outputs
 argument_list|,
 name|grantDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -1380,8 +1356,6 @@ name|outputs
 argument_list|,
 name|revokeDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -1603,8 +1577,6 @@ name|outputs
 argument_list|,
 name|showGrant
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -1863,8 +1835,6 @@ name|outputs
 argument_list|,
 name|grantRevokeRoleDDL
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -2686,8 +2656,6 @@ argument_list|,
 literal|null
 argument_list|)
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -2759,8 +2727,6 @@ name|outputs
 argument_list|,
 name|ddlDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -2876,8 +2842,6 @@ name|outputs
 argument_list|,
 name|roleDDLDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
@@ -2956,8 +2920,6 @@ name|outputs
 argument_list|,
 name|showRolesDesc
 argument_list|)
-argument_list|,
-name|conf
 argument_list|)
 return|;
 block|}
