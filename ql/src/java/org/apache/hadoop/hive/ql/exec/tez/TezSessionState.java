@@ -4028,7 +4028,8 @@ try|try
 block|{
 if|if
 condition|(
-name|session
+name|getSession
+argument_list|()
 operator|!=
 literal|null
 condition|)
