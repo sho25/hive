@@ -3095,9 +3095,6 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO: In this case we get an exception, because the insert statement fails due to duplicated
-comment|// primary key. Maybe this use case could be handled better by checking if the partition already
-comment|// exists.
 block|}
 annotation|@
 name|Test
@@ -7356,9 +7353,6 @@ name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// TODO: In this case we get an exception, because the insert statement fails due to duplicated
-comment|// primary key. Maybe this use case could be handled better by checking if the partition already
-comment|// exists.
 block|}
 annotation|@
 name|Test
