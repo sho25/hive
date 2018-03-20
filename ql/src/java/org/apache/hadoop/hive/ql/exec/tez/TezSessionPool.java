@@ -1886,23 +1886,85 @@ name|void
 name|onUpdate
 parameter_list|(
 name|TezAmInstance
-name|serviceInstance
+name|si
 parameter_list|,
 name|int
 name|ephSeqVersion
 parameter_list|)
 block|{
-comment|// We currently never update the znode once registered.
-comment|// AM recovery will create a new node when it calls register.
+name|String
+name|sessionId
+init|=
+name|si
+operator|.
+name|getSessionId
+argument_list|()
+decl_stmt|;
+name|SessionType
+name|session
+init|=
+name|bySessionId
+operator|.
+name|get
+argument_list|(
+name|sessionId
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|session
+operator|!=
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"AM for "
+operator|+
+name|sessionId
+operator|+
+literal|", v."
+operator|+
+name|ephSeqVersion
+operator|+
+literal|" has updated; updating ["
+operator|+
+name|session
+operator|+
+literal|"] with an endpoint at "
+operator|+
+name|si
+operator|.
+name|getPluginPort
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|session
+operator|.
+name|updateFromRegistry
+argument_list|(
+name|si
+argument_list|,
+name|ephSeqVersion
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Received an unexpected update for instance={}. Ignoring"
-argument_list|,
-name|serviceInstance
+literal|"AM for an unknown "
+operator|+
+name|sessionId
+operator|+
+literal|" has updated; ignoring"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

@@ -2255,6 +2255,34 @@ name|unusedGuaranteed
 init|=
 literal|0
 decl_stmt|;
+comment|/**    * An internal version to make sure we don't race and overwrite a newer totalGuaranteed count in    * ZK with an older one, without requiring us to make ZK updates under the main writeLock.    * This is updated under writeLock, together with totalGuaranteed.    */
+specifier|private
+name|long
+name|totalGuaranteedVersion
+init|=
+name|Long
+operator|.
+name|MIN_VALUE
+decl_stmt|;
+specifier|private
+specifier|final
+name|Object
+name|registryUpdateLock
+init|=
+operator|new
+name|Object
+argument_list|()
+decl_stmt|;
+comment|// The lock for ZK updates.
+comment|/** The last totalGuaranteedVersion sent to ZK. Updated under registryUpdateLock. */
+specifier|private
+name|long
+name|tgVersionSent
+init|=
+name|Long
+operator|.
+name|MIN_VALUE
+decl_stmt|;
 specifier|private
 name|LlapTaskCommunicator
 name|communicator
@@ -3776,6 +3804,9 @@ name|toUpdate
 init|=
 literal|null
 decl_stmt|;
+name|long
+name|tgVersionForZk
+decl_stmt|;
 name|writeLock
 operator|.
 name|lock
@@ -3797,6 +3828,11 @@ name|newTotalGuaranteed
 operator|-
 name|totalGuaranteed
 decl_stmt|;
+name|tgVersionForZk
+operator|=
+operator|++
+name|totalGuaranteedVersion
+expr_stmt|;
 name|WM_LOG
 operator|.
 name|info
@@ -3805,7 +3841,11 @@ literal|"Received guaranteed tasks "
 operator|+
 name|newTotalGuaranteed
 operator|+
-literal|"; the delta to adjust by is "
+literal|" (internal version "
+operator|+
+name|tgVersionForZk
+operator|+
+literal|"); the delta to adjust by is "
 operator|+
 name|delta
 argument_list|)
@@ -4064,6 +4104,13 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+name|updateGuaranteedInRegistry
+argument_list|(
+name|tgVersionForZk
+argument_list|,
+name|newTotalGuaranteed
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|toUpdate
@@ -4983,6 +5030,8 @@ argument_list|,
 name|serializedToken
 argument_list|,
 name|jobIdForToken
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -5949,6 +5998,9 @@ name|incrCompletedDagCount
 argument_list|()
 expr_stmt|;
 block|}
+name|long
+name|tgVersionForZk
+decl_stmt|;
 name|writeLock
 operator|.
 name|lock
@@ -6164,6 +6216,11 @@ name|unusedGuaranteed
 operator|=
 literal|0
 expr_stmt|;
+name|tgVersionForZk
+operator|=
+operator|++
+name|totalGuaranteedVersion
+expr_stmt|;
 if|if
 condition|(
 name|metrics
@@ -6210,7 +6267,79 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+name|updateGuaranteedInRegistry
+argument_list|(
+name|tgVersionForZk
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
 comment|// TODO Cleanup pending tasks etc, so that the next dag is not affected.
+block|}
+specifier|private
+name|void
+name|updateGuaranteedInRegistry
+parameter_list|(
+name|long
+name|tgVersionForZk
+parameter_list|,
+name|int
+name|newTotalGuaranteed
+parameter_list|)
+block|{
+if|if
+condition|(
+name|amRegistry
+operator|==
+literal|null
+condition|)
+return|return;
+synchronized|synchronized
+init|(
+name|registryUpdateLock
+init|)
+block|{
+comment|// Make sure the updates are not sent to ZK out of order compared to how we apply them in AM.
+if|if
+condition|(
+name|tgVersionForZk
+operator|<=
+name|tgVersionSent
+condition|)
+return|return;
+try|try
+block|{
+name|amRegistry
+operator|.
+name|updateGuaranteed
+argument_list|(
+name|newTotalGuaranteed
+argument_list|)
+expr_stmt|;
+name|tgVersionSent
+operator|=
+name|tgVersionForZk
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|ex
+parameter_list|)
+block|{
+comment|// Ignore for now. HS2 will probably try to send us the count we already have again.
+comment|// We are assuming here that if we can't talk to ZK we will eventually fail.
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to update guaranteed count in registry; ignoring"
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 annotation|@
 name|Override

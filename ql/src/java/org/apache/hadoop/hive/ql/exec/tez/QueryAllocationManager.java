@@ -47,7 +47,7 @@ name|void
 name|stop
 parameter_list|()
 function_decl|;
-comment|/**    * Updates the session allocations asynchoronously.    * @param totalMaxAlloc The total maximum fraction of the cluster to allocate. Used to    *                      avoid various artifacts, esp. with small numbers and double weirdness.    *                      Null means the total is unknown.    * @param sessions Sessions to update based on their allocation fraction.    */
+comment|/**    * Updates the session allocations asynchronously.    * @param totalMaxAlloc The total maximum fraction of the cluster to allocate. Used to    *                      avoid various artifacts, esp. with small numbers and double weirdness.    *                      Null means the total is unknown.    * @param sessions Sessions to update based on their allocation fraction.    */
 name|void
 name|updateSessionsAsync
 parameter_list|(
@@ -67,6 +67,14 @@ name|setClusterChangedCallback
 parameter_list|(
 name|Runnable
 name|clusterChangedCallback
+parameter_list|)
+function_decl|;
+comment|/**    * Updates the session asynchronously with the existing allocation.    */
+name|void
+name|updateSessionAsync
+parameter_list|(
+name|WmTezSession
+name|session
 parameter_list|)
 function_decl|;
 block|}

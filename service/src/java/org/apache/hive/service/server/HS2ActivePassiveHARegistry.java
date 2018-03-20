@@ -1029,6 +1029,10 @@ expr_stmt|;
 name|updateServiceRecord
 argument_list|(
 name|srv
+argument_list|,
+name|doCheckAcls
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

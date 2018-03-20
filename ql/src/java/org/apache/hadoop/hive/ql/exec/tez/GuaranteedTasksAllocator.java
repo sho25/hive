@@ -765,6 +765,25 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|updateSessionAsync
+parameter_list|(
+name|WmTezSession
+name|session
+parameter_list|)
+block|{
+name|updateSessionAsync
+argument_list|(
+name|session
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+comment|// Resend existing value if necessary.
+block|}
 specifier|private
 name|void
 name|updateSessionAsync
@@ -774,12 +793,12 @@ name|WmTezSession
 name|session
 parameter_list|,
 specifier|final
-name|int
+name|Integer
 name|intAlloc
 parameter_list|)
 block|{
-name|boolean
-name|needsUpdate
+name|Integer
+name|valueToSend
 init|=
 name|session
 operator|.
@@ -790,8 +809,9 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|needsUpdate
+name|valueToSend
+operator|==
+literal|null
 condition|)
 return|return;
 comment|// Note: this assumes that the pattern where the same session object is reset with a different
@@ -807,7 +827,10 @@ argument_list|()
 operator|.
 name|setGuaranteedTaskCount
 argument_list|(
-name|intAlloc
+name|valueToSend
+operator|.
+name|intValue
+argument_list|()
 argument_list|)
 operator|.
 name|build

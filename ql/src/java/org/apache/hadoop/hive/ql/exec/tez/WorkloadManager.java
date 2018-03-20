@@ -4122,7 +4122,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 14. Notify tests and global async ops.
+comment|// 14. Give our final state to UI/API requests if any.
 if|if
 condition|(
 name|e
@@ -4191,6 +4191,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+comment|// 15. Notify tests and global async ops.
 if|if
 condition|(
 name|e
@@ -8278,6 +8279,25 @@ name|unlock
 argument_list|()
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|void
+name|notifyOfInconsistentAllocation
+parameter_list|(
+name|WmTezSession
+name|session
+parameter_list|)
+block|{
+comment|// We just act as a pass-thru between the session and allocation manager. We don't change the
+comment|// allocation target (only WM thread can do that); therefore we can do this directly and
+comment|// actualState-based sync will take care of multiple potential message senders.
+name|allocationManager
+operator|.
+name|updateSessionAsync
+argument_list|(
+name|session
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|void

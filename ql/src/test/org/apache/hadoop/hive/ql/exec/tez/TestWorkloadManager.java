@@ -757,6 +757,16 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|updateSessionAsync
+parameter_list|(
+name|WmTezSession
+name|session
+parameter_list|)
+block|{     }
 name|void
 name|assertWasCalledAndReset
 parameter_list|()
