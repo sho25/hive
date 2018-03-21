@@ -51,7 +51,7 @@ name|long
 name|writeId
 parameter_list|)
 function_decl|;
-comment|/**    * Returns {@code true} if such base file can be used to materialize the snapshot represented by    * this {@code ValidWriteIdList}.    * @param writeId highest write ID in a given base_xxxx file    */
+comment|/**    * Returns {@code true} if such base file can be used to materialize the snapshot represented by    * this {@code ValidWriteIdList}.    * @param writeId highest write ID in a given base_xxxx file    * @return true if the base file can be used    */
 name|boolean
 name|isValidBase
 parameter_list|(
@@ -70,7 +70,7 @@ name|long
 name|maxWriteId
 parameter_list|)
 function_decl|;
-comment|/**    * Write this ValidWriteIdList into a string. This should produce a string that    * can be used by {@link #readFromString(String)} to populate a ValidWriteIdList.    */
+comment|/**    * Write this ValidWriteIdList into a string. This should produce a string that    * can be used by {@link #readFromString(String)} to populate a ValidWriteIdList.    * @return the list as a string    */
 name|String
 name|writeToString
 parameter_list|()
@@ -83,7 +83,7 @@ name|String
 name|src
 parameter_list|)
 function_decl|;
-comment|/**    * Get the table for which the ValidWriteIdList is formed    * @return table name (<db_name>.<table_name>) associated with ValidWriteIdList.    */
+comment|/**    * Get the table for which the ValidWriteIdList is formed    * @return table name (&lt;db_name&gt;.&lt;table_name&gt;) associated with ValidWriteIdList.    */
 name|String
 name|getTableName
 parameter_list|()
@@ -118,7 +118,7 @@ name|long
 name|maxWriteId
 parameter_list|)
 function_decl|;
-comment|/**    * Returns smallest Open write Id in this set, {@code null} if there is none.    */
+comment|/**    * The smallest open write id.    * @return smallest Open write Id in this set, {@code null} if there is none.    */
 name|Long
 name|getMinOpenWriteId
 parameter_list|()
