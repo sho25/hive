@@ -13195,7 +13195,7 @@ name|LLAP_CACHE_ALLOW_SYNTHETIC_FILEID
 argument_list|(
 literal|"hive.llap.cache.allow.synthetic.fileid"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether LLAP cache should use synthetic file ID if real one is not available. Systems\n"
 operator|+
