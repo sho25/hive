@@ -506,7 +506,7 @@ name|msPort
 operator|=
 name|MetaStoreTestUtils
 operator|.
-name|startMetaStore
+name|startMetaStoreWithRetry
 argument_list|(
 name|metastoreConf
 argument_list|)

@@ -257,29 +257,11 @@ literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHi
 argument_list|)
 expr_stmt|;
 comment|//Increments one HMS connection
-name|int
-name|port
-init|=
 name|MetaStoreTestUtils
 operator|.
 name|startMetaStoreWithRetry
 argument_list|(
 name|hiveConf
-argument_list|)
-decl_stmt|;
-name|hiveConf
-operator|.
-name|setVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREURIS
-argument_list|,
-literal|"thrift://localhost:"
-operator|+
-name|port
 argument_list|)
 expr_stmt|;
 comment|//Increments one HMS connection (Hive.get())
