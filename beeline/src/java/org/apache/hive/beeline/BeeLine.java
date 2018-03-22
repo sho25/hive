@@ -4523,6 +4523,14 @@ literal|'e'
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|opts
+operator|.
+name|setAllowMultiLineCommand
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+comment|//When using -e, command is always a single line
 block|}
 if|if
 condition|(

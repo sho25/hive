@@ -5731,7 +5731,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|//When using -e, console reader is not initialized and command is always a single line
 name|int
 index|[]
 name|startQuote

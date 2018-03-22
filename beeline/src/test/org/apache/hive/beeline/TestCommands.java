@@ -55,6 +55,16 @@ name|assertEquals
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -230,6 +240,70 @@ literal|"'\"show --comments tables\"' --comments"
 argument_list|,
 name|escape
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Test the commands directly call from beeline.    * @throws IOException    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testBeelineCommands
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+comment|// avoid System.exit() call in beeline which causes JVM to exit and fails the test
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|BeeLineOpts
+operator|.
+name|PROPERTY_NAME_EXIT
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+comment|// Verify the command without ';' at the end also works fine
+name|BeeLine
+operator|.
+name|mainWithInputRedirection
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"-u"
+block|,
+literal|"jdbc:hive2://"
+block|,
+literal|"-e"
+block|,
+literal|"select 3"
+block|}
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+name|BeeLine
+operator|.
+name|mainWithInputRedirection
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"-u"
+block|,
+literal|"jdbc:hive2://"
+block|,
+literal|"-e"
+block|,
+literal|"create table t1(x int); show tables"
+block|}
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
