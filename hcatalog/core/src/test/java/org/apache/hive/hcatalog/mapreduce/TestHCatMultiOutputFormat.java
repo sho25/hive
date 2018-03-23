@@ -307,24 +307,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|conf
-operator|.
-name|MetastoreConf
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|CompilationOpContext
@@ -1503,30 +1485,9 @@ name|msPort
 operator|=
 name|MetaStoreTestUtils
 operator|.
-name|startMetaStoreWithRetry
+name|startMetaStore
 argument_list|(
 name|metastoreConf
-argument_list|)
-expr_stmt|;
-comment|// Read the warehouse dir, which can be changed so multiple MetaStore tests could be run on
-comment|// the same server
-name|warehousedir
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|MetastoreConf
-operator|.
-name|getVar
-argument_list|(
-name|metastoreConf
-argument_list|,
-name|MetastoreConf
-operator|.
-name|ConfVars
-operator|.
-name|WAREHOUSE
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// LocalJobRunner does not work with mapreduce OutputCommitter. So need

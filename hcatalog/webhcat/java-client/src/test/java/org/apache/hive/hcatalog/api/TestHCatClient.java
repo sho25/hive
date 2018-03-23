@@ -1115,7 +1115,7 @@ name|msPort
 operator|=
 name|MetaStoreTestUtils
 operator|.
-name|startMetaStoreWithRetry
+name|startMetaStore
 argument_list|()
 expr_stmt|;
 name|securityManager
@@ -1567,10 +1567,6 @@ literal|"pfile:///"
 argument_list|,
 literal|"pfile:/"
 argument_list|)
-operator|+
-literal|"/"
-operator|+
-name|msPort
 decl_stmt|;
 name|assertEquals
 argument_list|(
@@ -6666,7 +6662,7 @@ name|replicationTargetHCatPort
 operator|=
 name|MetaStoreTestUtils
 operator|.
-name|startMetaStoreWithRetry
+name|startMetaStore
 argument_list|(
 name|conf
 argument_list|)
