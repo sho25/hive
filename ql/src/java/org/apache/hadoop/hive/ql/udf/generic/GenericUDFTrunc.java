@@ -1677,7 +1677,7 @@ name|UDFArgumentTypeException
 argument_list|(
 literal|1
 argument_list|,
-literal|"trunk() only takes STRING/CHAR/VARCHAR types as second argument, got "
+literal|"trunc() only takes STRING/CHAR/VARCHAR types as second argument, got "
 operator|+
 name|inputType2
 argument_list|)
