@@ -176,6 +176,10 @@ operator|.
 name|HIVE_BUILDER
 argument_list|,
 literal|true
+argument_list|,
+literal|null
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -192,6 +196,10 @@ operator|.
 name|HIVE_BUILDER
 argument_list|,
 literal|true
+argument_list|,
+literal|null
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -208,6 +216,10 @@ operator|.
 name|HIVE_BUILDER
 argument_list|,
 literal|true
+argument_list|,
+literal|null
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -224,6 +236,10 @@ operator|.
 name|HIVE_BUILDER
 argument_list|,
 literal|true
+argument_list|,
+literal|null
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -240,6 +256,8 @@ operator|.
 name|HIVE_BUILDER
 argument_list|,
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -256,6 +274,8 @@ operator|.
 name|HIVE_BUILDER
 argument_list|,
 literal|true
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 block|}

@@ -287,9 +287,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|DruidStorageHandlerUtils
-operator|.
-name|DEFAULT_TIMESTAMP_COLUMN
+literal|"timestamp"
 argument_list|,
 name|current
 operator|.
@@ -355,9 +353,7 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-name|DruidStorageHandlerUtils
-operator|.
-name|DEFAULT_TIMESTAMP_COLUMN
+literal|"timestamp"
 argument_list|,
 name|current
 operator|.

@@ -586,10 +586,10 @@ operator|.
 name|findBestExp
 argument_list|()
 expr_stmt|;
-comment|// Matches 3 times: 2 times the original node, 1 time the new node created by the rule
+comment|// Matches 2 times: one time the original node, one time the new node created by the rule
 name|assertEquals
 argument_list|(
-literal|3
+literal|2
 argument_list|,
 name|DummyRule
 operator|.

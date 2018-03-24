@@ -1068,6 +1068,7 @@ literal|"Druid data source cannot be empty or null"
 argument_list|)
 throw|;
 block|}
+comment|//@FIXME https://issues.apache.org/jira/browse/HIVE-19023 use scan instead of Select
 name|druidQuery
 operator|=
 name|createSelectStarQuery

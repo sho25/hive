@@ -831,6 +831,8 @@ operator|new
 name|RuntimeException
 argument_list|(
 literal|"Invalid time zone displacement value"
+argument_list|,
+name|e1
 argument_list|)
 throw|;
 block|}
