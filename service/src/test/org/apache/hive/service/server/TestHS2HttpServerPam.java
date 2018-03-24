@@ -1103,6 +1103,7 @@ name|HashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
+specifier|public
 name|TestPamAuthenticator
 parameter_list|(
 name|HiveConf
