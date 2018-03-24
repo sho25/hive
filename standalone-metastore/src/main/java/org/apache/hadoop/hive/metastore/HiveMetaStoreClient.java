@@ -5834,6 +5834,47 @@ condition|(
 name|cascade
 condition|)
 block|{
+comment|// Note that this logic may drop some of the tables of the database
+comment|// even if the drop database fail for any reason
+comment|// TODO: Fix this
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|materializedViews
+init|=
+name|getTables
+argument_list|(
+name|dbName
+argument_list|,
+literal|".*"
+argument_list|,
+name|TableType
+operator|.
+name|MATERIALIZED_VIEW
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|String
+name|table
+range|:
+name|materializedViews
+control|)
+block|{
+comment|// First we delete the materialized views
+name|dropTable
+argument_list|(
+name|dbName
+argument_list|,
+name|table
+argument_list|,
+name|deleteData
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -5853,6 +5894,7 @@ range|:
 name|tableList
 control|)
 block|{
+comment|// Now we delete the rest of tables
 try|try
 block|{
 comment|// Subclasses can override this step (for example, for temporary tables)
