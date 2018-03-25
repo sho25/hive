@@ -781,7 +781,9 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-literal|"timestamp"
+name|DruidStorageHandlerUtils
+operator|.
+name|EVENT_TIMESTAMP_COLUMN
 argument_list|,
 name|currentRow
 operator|.
@@ -843,7 +845,9 @@ argument_list|()
 operator|.
 name|put
 argument_list|(
-literal|"timestamp"
+name|DruidStorageHandlerUtils
+operator|.
+name|EVENT_TIMESTAMP_COLUMN
 argument_list|,
 name|currentRow
 operator|.

@@ -33,16 +33,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|InputStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Collections
@@ -61,16 +51,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|fasterxml
@@ -80,20 +60,6 @@ operator|.
 name|databind
 operator|.
 name|JavaType
-import|;
-end_import
-
-begin_import
-import|import
-name|io
-operator|.
-name|druid
-operator|.
-name|query
-operator|.
-name|select
-operator|.
-name|SelectQueryQueryToolChest
 import|;
 end_import
 
@@ -140,20 +106,6 @@ operator|.
 name|type
 operator|.
 name|TypeReference
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Iterators
 import|;
 end_import
 

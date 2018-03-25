@@ -1355,6 +1355,7 @@ name|SMILE_CONTENT_TYPE
 init|=
 literal|"application/x-jackson-smile"
 decl_stmt|;
+comment|//Druid storage timestamp column name
 specifier|public
 specifier|static
 specifier|final
@@ -1362,6 +1363,15 @@ name|String
 name|DEFAULT_TIMESTAMP_COLUMN
 init|=
 literal|"__time"
+decl_stmt|;
+comment|//Druid Json timestamp column name
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|EVENT_TIMESTAMP_COLUMN
+init|=
+literal|"timestamp"
 decl_stmt|;
 specifier|public
 specifier|static
