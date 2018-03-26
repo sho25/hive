@@ -2133,6 +2133,8 @@ argument_list|,
 name|initialEvent
 argument_list|,
 name|requestId
+argument_list|,
+name|wmCounters
 argument_list|)
 expr_stmt|;
 name|String

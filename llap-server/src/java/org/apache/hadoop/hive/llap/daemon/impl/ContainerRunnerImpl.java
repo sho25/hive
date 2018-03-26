@@ -2395,19 +2395,13 @@ operator|.
 name|getIsGuaranteed
 argument_list|()
 decl_stmt|;
+comment|// TODO: ideally we'd register TezCounters here, but it seems impossible before registerTask.
 name|WmFragmentCounters
 name|wmCounters
 init|=
 operator|new
 name|WmFragmentCounters
-argument_list|(
-name|FragmentCountersMap
-operator|.
-name|getCountersForFragment
-argument_list|(
-name|fragmentId
-argument_list|)
-argument_list|)
+argument_list|()
 decl_stmt|;
 name|TaskRunnerCallable
 name|callable
