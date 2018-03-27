@@ -1322,6 +1322,29 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+comment|// Try with 0 row file.
+name|createTestAcidFile
+argument_list|(
+name|testFilePath
+argument_list|,
+literal|0
+argument_list|,
+operator|new
+name|GoodKeyIndexBuilder
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|checkValidKeyIndex
+argument_list|(
+name|testFilePath
+argument_list|)
+expr_stmt|;
+comment|// Attempting to fix a valid - should not result in a new file.
+name|fixValidIndex
+argument_list|(
+name|testFilePath
+argument_list|)
+expr_stmt|;
 comment|// Try single stripe
 name|createTestAcidFile
 argument_list|(

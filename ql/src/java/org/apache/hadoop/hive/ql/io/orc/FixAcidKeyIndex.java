@@ -761,6 +761,20 @@ name|Reader
 name|reader
 parameter_list|)
 block|{
+if|if
+condition|(
+name|reader
+operator|.
+name|getNumberOfRows
+argument_list|()
+operator|==
+literal|0
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 comment|// The number of stripes should match the key index count
 name|List
 argument_list|<
