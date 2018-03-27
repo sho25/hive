@@ -483,6 +483,15 @@ block|{
 if|if
 condition|(
 name|vectorMode
+operator|&&
+operator|!
+operator|(
+name|getIsTestForcedVectorizationEnable
+argument_list|()
+operator|&&
+name|getIsTestVectorizationSuppressExplainExecutionMode
+argument_list|()
+operator|)
 condition|)
 block|{
 if|if

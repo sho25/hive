@@ -12361,6 +12361,19 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_TEST_VECTORIZATION_SUPPRESS_EXPLAIN_EXECUTION_MODE
+argument_list|(
+literal|"hive.test.vectorization.suppress.explain.execution.mode"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal use only, used to suppress \"Execution mode: vectorized\" EXPLAIN display.\n"
+operator|+
+literal|"The default is false, of course"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"
