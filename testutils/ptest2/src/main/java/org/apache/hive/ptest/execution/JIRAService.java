@@ -433,23 +433,21 @@ begin_import
 import|import
 name|org
 operator|.
-name|codehaus
+name|slf4j
 operator|.
-name|jackson
-operator|.
-name|map
-operator|.
-name|ObjectMapper
+name|Logger
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|codehaus
+name|fasterxml
 operator|.
 name|jackson
+operator|.
+name|core
 operator|.
 name|JsonFactory
 import|;
@@ -457,11 +455,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|codehaus
+name|fasterxml
 operator|.
 name|jackson
+operator|.
+name|core
 operator|.
 name|JsonParser
 import|;
@@ -469,11 +469,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|codehaus
+name|fasterxml
 operator|.
 name|jackson
+operator|.
+name|core
 operator|.
 name|JsonToken
 import|;
@@ -481,11 +483,15 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|slf4j
+name|fasterxml
 operator|.
-name|Logger
+name|jackson
+operator|.
+name|databind
+operator|.
+name|ObjectMapper
 import|;
 end_import
 

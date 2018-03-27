@@ -1988,6 +1988,9 @@ name|JSON_MAPPER
 operator|.
 name|readValue
 argument_list|(
+operator|(
+name|InputStream
+operator|)
 name|fs
 operator|.
 name|open
