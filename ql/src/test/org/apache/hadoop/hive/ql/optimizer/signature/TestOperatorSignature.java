@@ -652,7 +652,8 @@ name|t2
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|void
 name|checkEquals
 parameter_list|(
@@ -739,7 +740,8 @@ name|s2
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|void
 name|checkNotEquals
 parameter_list|(
@@ -822,7 +824,8 @@ name|s2
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|void
 name|checkTreeEquals
 parameter_list|(
@@ -880,7 +883,8 @@ name|ts2
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|void
 name|checkTreeNotEquals
 parameter_list|(
@@ -932,6 +936,13 @@ name|ts2
 operator|.
 name|hashCode
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|ts1
+operator|.
+name|equals
+argument_list|(
+name|ts2
 argument_list|)
 expr_stmt|;
 name|assertNotEquals

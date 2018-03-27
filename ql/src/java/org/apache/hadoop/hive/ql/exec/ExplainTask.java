@@ -2781,6 +2781,8 @@ operator|.
 name|AuthorizationExceptionHandler
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|void
 name|exception
@@ -7111,6 +7113,7 @@ literal|"EXPLAIN"
 return|;
 block|}
 specifier|public
+specifier|static
 name|List
 argument_list|<
 name|FieldSchema

@@ -79,9 +79,15 @@ name|Target
 argument_list|(
 name|value
 operator|=
+block|{
 name|ElementType
 operator|.
 name|METHOD
+block|,
+name|ElementType
+operator|.
+name|TYPE
+block|}
 argument_list|)
 annotation|@
 name|Retention
@@ -93,7 +99,7 @@ argument_list|)
 specifier|public
 annotation_defn|@interface
 name|Signature
-block|{   }
+block|{ }
 end_annotation_defn
 
 end_unit

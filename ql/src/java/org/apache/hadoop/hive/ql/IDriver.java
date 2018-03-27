@@ -276,6 +276,10 @@ name|Context
 name|getContext
 parameter_list|()
 function_decl|;
+name|boolean
+name|hasResultSet
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

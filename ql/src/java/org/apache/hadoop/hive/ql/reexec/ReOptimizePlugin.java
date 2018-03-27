@@ -514,7 +514,7 @@ argument_list|()
 decl_stmt|;
 name|coreDriver
 operator|.
-name|setRuntimeStatsSource
+name|setStatsSource
 argument_list|(
 operator|new
 name|SimpleRuntimeStatsSource

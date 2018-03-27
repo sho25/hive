@@ -1030,6 +1030,8 @@ name|displayName
 operator|=
 literal|"key expressions"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getKeyColString
@@ -1044,8 +1046,6 @@ name|keyCols
 argument_list|)
 return|;
 block|}
-annotation|@
-name|Signature
 specifier|public
 name|java
 operator|.
@@ -1118,6 +1118,8 @@ name|displayName
 operator|=
 literal|"value expressions"
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getValueColsString
@@ -1132,8 +1134,6 @@ name|valueCols
 argument_list|)
 return|;
 block|}
-annotation|@
-name|Signature
 specifier|public
 name|java
 operator|.
@@ -1209,6 +1209,8 @@ operator|.
 name|USER
 block|}
 argument_list|)
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getUserLevelExplainParitionColsString
@@ -1225,8 +1227,6 @@ literal|true
 argument_list|)
 return|;
 block|}
-annotation|@
-name|Signature
 specifier|public
 name|java
 operator|.
@@ -1919,8 +1919,6 @@ return|return
 name|forwarding
 return|;
 block|}
-annotation|@
-name|Signature
 annotation|@
 name|Explain
 argument_list|(

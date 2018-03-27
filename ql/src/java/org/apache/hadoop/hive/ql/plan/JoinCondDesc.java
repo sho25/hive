@@ -99,6 +99,20 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Objects
+import|;
+end_import
+
 begin_comment
 comment|/**  * Join conditions Descriptor implementation.  *  */
 end_comment
@@ -808,7 +822,28 @@ return|return
 literal|true
 return|;
 block|}
-comment|// XXX: is hashCode missing here?
+annotation|@
+name|Override
+specifier|public
+name|int
+name|hashCode
+parameter_list|()
+block|{
+return|return
+name|Objects
+operator|.
+name|hashCode
+argument_list|(
+name|type
+argument_list|,
+name|left
+argument_list|,
+name|right
+argument_list|,
+name|preserved
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

@@ -39,7 +39,7 @@ name|mapper
 operator|.
 name|PlanMapper
 operator|.
-name|LinkGroup
+name|EquivGroup
 import|;
 end_import
 
@@ -51,7 +51,7 @@ block|{
 name|void
 name|map
 parameter_list|(
-name|LinkGroup
+name|EquivGroup
 name|group
 parameter_list|)
 function_decl|;

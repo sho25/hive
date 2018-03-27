@@ -215,7 +215,7 @@ name|mapper
 operator|.
 name|PlanMapper
 operator|.
-name|LinkGroup
+name|EquivGroup
 import|;
 end_import
 
@@ -637,7 +637,7 @@ argument_list|)
 decl_stmt|;
 name|Iterator
 argument_list|<
-name|LinkGroup
+name|EquivGroup
 argument_list|>
 name|itG
 init|=
@@ -659,7 +659,7 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
-name|LinkGroup
+name|EquivGroup
 name|g
 init|=
 name|itG
