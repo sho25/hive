@@ -1175,9 +1175,25 @@ name|service
 operator|.
 name|cli
 operator|.
+name|HiveSQLException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|cli
+operator|.
 name|session
 operator|.
-name|SessionManager
+name|HiveSession
 import|;
 end_import
 
@@ -3953,6 +3969,27 @@ name|get
 argument_list|()
 return|;
 block|}
+specifier|public
+name|int
+name|getOpenSessionsCount
+parameter_list|()
+block|{
+return|return
+name|cliService
+operator|!=
+literal|null
+condition|?
+name|cliService
+operator|.
+name|getSessionManager
+argument_list|()
+operator|.
+name|getOpenSessionCount
+argument_list|()
+else|:
+literal|0
+return|;
+block|}
 interface|interface
 name|FailoverHandler
 block|{
@@ -4577,9 +4614,11 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// TODO: should we explicitly close client connections with appropriate error msg? SessionManager.closeSession()
-comment|// will shut itself down upon explicit --deregister after all connections are closed. Something similar but for
-comment|// failover.
+name|hiveServer2
+operator|.
+name|closeHiveSessions
+argument_list|()
+expr_stmt|;
 name|hiveServer2
 operator|.
 name|stopOrDisconnectTezSessions
@@ -4882,6 +4921,91 @@ block|}
 block|}
 specifier|private
 name|void
+name|closeHiveSessions
+parameter_list|()
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closing all open hive sessions."
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|cliService
+operator|!=
+literal|null
+operator|&&
+name|cliService
+operator|.
+name|getSessionManager
+argument_list|()
+operator|.
+name|getOpenSessionCount
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+try|try
+block|{
+for|for
+control|(
+name|HiveSession
+name|session
+range|:
+name|cliService
+operator|.
+name|getSessionManager
+argument_list|()
+operator|.
+name|getSessions
+argument_list|()
+control|)
+block|{
+name|cliService
+operator|.
+name|getSessionManager
+argument_list|()
+operator|.
+name|closeSession
+argument_list|(
+name|session
+operator|.
+name|getSessionHandle
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closed all open hive sessions"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveSQLException
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Unable to close all open sessions."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+specifier|private
+name|void
 name|stopOrDisconnectTezSessions
 parameter_list|()
 block|{
@@ -4889,7 +5013,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Stoppping/Disconnecting tez sessions."
+literal|"Stopping/Disconnecting tez sessions."
 argument_list|)
 expr_stmt|;
 comment|// There should already be an instance of the session pool manager.
@@ -4926,9 +5050,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Tez session pool manager stop had an error during stop of HiveServer2. "
-operator|+
-literal|"Shutting down HiveServer2 anyway."
+literal|"Error while stopping tez session pool manager."
 argument_list|,
 name|e
 argument_list|)
@@ -4967,9 +5089,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Workload manager stop had an error during stop of HiveServer2. "
-operator|+
-literal|"Shutting down HiveServer2 anyway."
+literal|"Error while stopping workload manager."
 argument_list|,
 name|e
 argument_list|)
