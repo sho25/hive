@@ -1144,15 +1144,6 @@ name|msg
 expr_stmt|;
 comment|// Has to use full name to make sure it does not conflict with
 comment|// org.apache.commons.lang.StringUtils
-name|LOG
-operator|.
-name|error
-argument_list|(
-name|msg
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
 name|console
 operator|.
 name|printError
