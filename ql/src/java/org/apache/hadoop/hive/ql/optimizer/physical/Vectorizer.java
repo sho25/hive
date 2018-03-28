@@ -25714,6 +25714,28 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+comment|// Check additional constraint.
+if|if
+condition|(
+name|smbJoinSinkDesc
+operator|.
+name|getFilterMap
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|setOperatorIssue
+argument_list|(
+literal|"FilterMaps not supported for Vector Pass-Thru SMB MapJoin"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|VectorizerCannotVectorizeException
+argument_list|()
+throw|;
+block|}
 name|VectorSMBJoinDesc
 name|vectorSMBJoinDesc
 init|=
