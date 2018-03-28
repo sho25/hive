@@ -10464,6 +10464,15 @@ operator|+
 literal|"multiple group mappings); if true, the user can specify any existing pool."
 argument_list|)
 block|,
+name|HIVE_SERVER2_WM_POOL_METRICS
+argument_list|(
+literal|"hive.server2.wm.pool.metrics"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether per-pool WM metrics should be enabled."
+argument_list|)
+block|,
 name|HIVE_SERVER2_TEZ_WM_AM_REGISTRY_TIMEOUT
 argument_list|(
 literal|"hive.server2.tez.wm.am.registry.timeout"

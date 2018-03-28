@@ -739,7 +739,7 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|void
+name|int
 name|updateSessionsAsync
 parameter_list|(
 name|Double
@@ -756,6 +756,9 @@ name|isCalled
 operator|=
 literal|true
 expr_stmt|;
+return|return
+literal|0
+return|;
 block|}
 annotation|@
 name|Override
@@ -791,6 +794,20 @@ name|Runnable
 name|clusterChangedCallback
 parameter_list|)
 block|{     }
+annotation|@
+name|Override
+specifier|public
+name|int
+name|translateAllocationToCpus
+parameter_list|(
+name|double
+name|allocation
+parameter_list|)
+block|{
+return|return
+literal|0
+return|;
+block|}
 block|}
 specifier|public
 specifier|static

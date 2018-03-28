@@ -127,7 +127,19 @@ name|name
 parameter_list|,
 specifier|final
 name|MetricsVariable
+argument_list|<
+name|?
+argument_list|>
 name|variable
+parameter_list|)
+function_decl|;
+comment|/**    * Removed the gauge added by addGauge.    * @param name name of gauge    */
+specifier|public
+name|void
+name|removeGauge
+parameter_list|(
+name|String
+name|name
 parameter_list|)
 function_decl|;
 comment|/**    * Add a ratio metric to track the correlation between two variables    * @param name name of the ratio gauge    * @param numerator numerator of the ratio    * @param denominator denominator of the ratio    */

@@ -941,6 +941,18 @@ annotation|@
 name|Override
 specifier|public
 name|void
+name|removeGauge
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+comment|//This implementation completely and exhaustively reverses the addGauge method above.
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
 name|addRatio
 parameter_list|(
 name|String
