@@ -2984,6 +2984,11 @@ operator|.
 name|get
 argument_list|(
 name|mv
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|copyTask
@@ -3307,6 +3312,11 @@ argument_list|()
 argument_list|,
 name|addPartitionDesc
 argument_list|)
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -3442,6 +3452,11 @@ argument_list|()
 argument_list|,
 name|addPartitionDesc
 argument_list|)
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 decl_stmt|;
 return|return
@@ -3735,6 +3750,11 @@ argument_list|()
 argument_list|,
 name|addPartitionDesc
 argument_list|)
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Note: this sets LoadFileType incorrectly for ACID; is that relevant for import?
@@ -3818,6 +3838,11 @@ literal|null
 argument_list|,
 literal|false
 argument_list|)
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|copyTask
@@ -5423,6 +5448,11 @@ name|ict
 init|=
 name|createImportCommitTask
 argument_list|(
+name|x
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|table
 operator|.
 name|getDbName
@@ -5778,6 +5808,11 @@ name|ict
 init|=
 name|createImportCommitTask
 argument_list|(
+name|x
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|tblDesc
 operator|.
 name|getDatabaseName
@@ -6082,6 +6117,9 @@ name|?
 argument_list|>
 name|createImportCommitTask
 parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -6127,6 +6165,8 @@ name|writeId
 argument_list|,
 name|stmtId
 argument_list|)
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 return|return
@@ -6560,6 +6600,11 @@ name|ict
 init|=
 name|createImportCommitTask
 argument_list|(
+name|x
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|tblDesc
 operator|.
 name|getDatabaseName
@@ -6802,6 +6847,11 @@ literal|null
 else|:
 name|createImportCommitTask
 argument_list|(
+name|x
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|tblDesc
 operator|.
 name|getDatabaseName
