@@ -864,9 +864,10 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI Cluster %: 80.00"
+literal|"Event: GET Pool: BI"
 argument_list|)
 expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
 name|errCaptureExpect
 operator|.
 name|add
@@ -1137,9 +1138,10 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI Cluster %: 80.00"
+literal|"Event: GET Pool: BI"
 argument_list|)
 expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
 name|errCaptureExpect
 operator|.
 name|add
@@ -1417,9 +1419,10 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI Cluster %: 80.00"
+literal|"Event: GET Pool: BI"
 argument_list|)
 expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
 name|errCaptureExpect
 operator|.
 name|add
@@ -1759,9 +1762,10 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI Cluster %: 80.00"
+literal|"Event: GET Pool: BI"
 argument_list|)
 expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
 name|errCaptureExpect
 operator|.
 name|add
