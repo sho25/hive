@@ -16817,6 +16817,21 @@ name|AlreadyExistsException
 throws|,
 name|MetaException
 block|{
+if|if
+condition|(
+name|part_vals
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"The partition values must not be null."
+argument_list|)
+throw|;
+block|}
 name|startPartitionFunction
 argument_list|(
 literal|"append_partition"
