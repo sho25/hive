@@ -599,6 +599,8 @@ argument_list|(
 name|ADDPROPS
 argument_list|,
 name|DROPPROPS
+argument_list|,
+name|ADDCOLS
 argument_list|)
 decl_stmt|;
 block|}
