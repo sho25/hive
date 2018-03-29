@@ -235,7 +235,7 @@ argument_list|(
 literal|"clusterFraction"
 argument_list|)
 specifier|private
-name|double
+name|Double
 name|clusterFraction
 decl_stmt|;
 comment|/**    * The reason to kill an AM. Note that this is for the entire session, not just for a query.    * Once set, this can never be unset because you can only kill the session once.    */
@@ -859,8 +859,21 @@ name|this
 operator|.
 name|clusterFraction
 operator|=
-literal|0f
+literal|null
 expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|hasClusterFraction
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|clusterFraction
+operator|!=
+literal|null
+return|;
 block|}
 specifier|public
 name|double

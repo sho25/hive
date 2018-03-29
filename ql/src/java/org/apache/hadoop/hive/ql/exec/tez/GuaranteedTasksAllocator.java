@@ -709,6 +709,12 @@ comment|// This ensures we don't create skew, e.g. with 8 ducks and 5 queries wi
 comment|// we'd produce 2-2-2-2-0 as we round 1.6; whereas adding the last delta to the next query
 comment|// we'd round 1.6-1.2-1.8-1.4-2.0 and thus give out 2-1-2-1-2, as intended.
 comment|// Note that fractions don't have to all be the same like in this example.
+assert|assert
+name|session
+operator|.
+name|hasClusterFraction
+argument_list|()
+assert|;
 name|double
 name|fraction
 init|=

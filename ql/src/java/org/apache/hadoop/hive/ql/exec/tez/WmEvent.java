@@ -121,6 +121,9 @@ block|{
 name|GET
 block|,
 comment|// get session
+name|UPDATE
+block|,
+comment|// update session allocation
 name|KILL
 block|,
 comment|// kill query
@@ -204,10 +207,17 @@ name|clusterPercent
 operator|=
 name|wmTezSession
 operator|.
+name|hasClusterFraction
+argument_list|()
+condition|?
+name|wmTezSession
+operator|.
 name|getClusterFraction
 argument_list|()
 operator|*
 literal|100.0
+else|:
+literal|0
 expr_stmt|;
 block|}
 specifier|public
