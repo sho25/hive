@@ -2338,6 +2338,15 @@ argument_list|,
 literal|"Rebuild command only valid for materialized views"
 argument_list|)
 block|,
+name|LOAD_DATA_ACID_FILE
+argument_list|(
+literal|10413
+argument_list|,
+literal|"\"{0}\" was created created by Acid write - it cannot be loaded into anther Acid table"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
