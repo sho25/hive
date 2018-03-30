@@ -16622,7 +16622,26 @@ return|return
 literal|false
 return|;
 block|}
-comment|/*     // The planner seems to pull this one out.     if (aggDesc.getDistinct()) {       setExpressionIssue("Aggregation Function", "DISTINCT not supported");       return new Pair<Boolean,Boolean>(false, false);     }     */
+comment|// The planner seems to pull this one out.
+if|if
+condition|(
+name|aggDesc
+operator|.
+name|getDistinct
+argument_list|()
+condition|)
+block|{
+name|setExpressionIssue
+argument_list|(
+literal|"Aggregation Function"
+argument_list|,
+literal|"DISTINCT not supported"
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 name|ArrayList
 argument_list|<
 name|ExprNodeDesc
