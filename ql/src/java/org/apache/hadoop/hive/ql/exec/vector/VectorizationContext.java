@@ -18700,6 +18700,32 @@ name|ExprNodeConstantDesc
 condition|)
 block|{
 comment|// this is a constant (or null)
+if|if
+condition|(
+name|child
+operator|.
+name|getTypeInfo
+argument_list|()
+operator|.
+name|getCategory
+argument_list|()
+operator|!=
+name|Category
+operator|.
+name|PRIMITIVE
+condition|)
+block|{
+comment|// Complex type constants currently not supported by VectorUDFArgDesc.prepareConstant.
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to vectorize custom UDF. Complex type constants not supported: "
+operator|+
+name|child
+argument_list|)
+throw|;
+block|}
 name|argDescs
 index|[
 name|i
