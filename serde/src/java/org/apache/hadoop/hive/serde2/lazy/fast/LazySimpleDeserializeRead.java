@@ -2453,6 +2453,22 @@ name|int
 name|level
 parameter_list|)
 block|{
+if|if
+condition|(
+name|start
+operator|==
+name|end
+operator|+
+literal|1
+condition|)
+block|{
+comment|// Data prematurely ended. Return start - 1 so we don't move our field position.
+return|return
+name|start
+operator|-
+literal|1
+return|;
+block|}
 specifier|final
 name|byte
 name|separator
@@ -4915,6 +4931,7 @@ name|listHelper
 operator|.
 name|complexFieldEnd
 decl_stmt|;
+comment|// When data is prematurely ended the fieldPosition will be 1 more than the end.
 name|Preconditions
 operator|.
 name|checkState
@@ -4922,6 +4939,8 @@ argument_list|(
 name|fieldPosition
 operator|<=
 name|complexFieldEnd
+operator|+
+literal|1
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -4994,6 +5013,7 @@ name|mapHelper
 operator|.
 name|complexFieldEnd
 decl_stmt|;
+comment|// When data is prematurely ended the fieldPosition will be 1 more than the end.
 name|Preconditions
 operator|.
 name|checkState
@@ -5001,6 +5021,8 @@ argument_list|(
 name|fieldPosition
 operator|<=
 name|complexFieldEnd
+operator|+
+literal|1
 argument_list|)
 expr_stmt|;
 name|currentFieldStart
@@ -5182,6 +5204,7 @@ name|structHelper
 operator|.
 name|complexFieldEnd
 decl_stmt|;
+comment|// When data is prematurely ended the fieldPosition will be 1 more than the end.
 name|Preconditions
 operator|.
 name|checkState
@@ -5189,6 +5212,8 @@ argument_list|(
 name|fieldPosition
 operator|<=
 name|complexFieldEnd
+operator|+
+literal|1
 argument_list|)
 expr_stmt|;
 name|currentFieldStart
@@ -5247,7 +5272,7 @@ name|fieldEnd
 operator|+
 literal|1
 expr_stmt|;
-comment|// Move past key separator.
+comment|// Move past parent field separator.
 name|currentFieldLength
 operator|=
 name|fieldEnd
@@ -5378,6 +5403,7 @@ name|unionHelper
 operator|.
 name|complexFieldEnd
 decl_stmt|;
+comment|// When data is prematurely ended the fieldPosition will be 1 more than the end.
 name|Preconditions
 operator|.
 name|checkState
@@ -5385,6 +5411,8 @@ argument_list|(
 name|fieldPosition
 operator|<=
 name|complexFieldEnd
+operator|+
+literal|1
 argument_list|)
 expr_stmt|;
 name|currentFieldStart

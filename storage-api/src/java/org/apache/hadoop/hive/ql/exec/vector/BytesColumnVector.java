@@ -429,6 +429,13 @@ name|length
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|length
+operator|>
+literal|0
+condition|)
+block|{
 name|System
 operator|.
 name|arraycopy
@@ -444,6 +451,7 @@ argument_list|,
 name|length
 argument_list|)
 expr_stmt|;
+block|}
 name|vector
 index|[
 name|elementNum
