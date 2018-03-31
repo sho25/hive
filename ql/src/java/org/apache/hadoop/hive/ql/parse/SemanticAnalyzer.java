@@ -68371,15 +68371,6 @@ name|partitions
 control|)
 block|{
 comment|// inputs.add(new ReadEntity(partn)); // is this needed at all?
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"XXX: adding part: "
-operator|+
-name|partn
-argument_list|)
-expr_stmt|;
 name|outputs
 operator|.
 name|add
@@ -78260,6 +78251,8 @@ argument_list|,
 name|defaultConstraints
 argument_list|,
 name|checkConstraints
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 break|break;
@@ -78313,6 +78306,8 @@ argument_list|,
 name|defaultConstraints
 argument_list|,
 name|checkConstraints
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 if|if

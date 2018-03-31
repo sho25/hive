@@ -186,6 +186,20 @@ name|MessageFactory
 operator|.
 name|DROP_SCHEMA_VERSION_EVENT
 argument_list|)
+operator|,
+name|CREATE_CATALOG
+argument_list|(
+name|MessageFactory
+operator|.
+name|CREATE_CATALOG_EVENT
+argument_list|)
+operator|,
+name|DROP_CATALOG
+argument_list|(
+name|MessageFactory
+operator|.
+name|DROP_CATALOG_EVENT
+argument_list|)
 expr_stmt|;
 end_class
 

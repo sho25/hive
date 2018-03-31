@@ -45,7 +45,41 @@ name|lang
 operator|.
 name|StringUtils
 operator|.
+name|normalizeSpace
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
 name|repeat
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
 import|;
 end_import
 
@@ -2259,6 +2293,9 @@ name|Database
 name|getDatabase
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 throws|throws
@@ -2283,6 +2320,13 @@ operator|.
 name|toLowerCase
 argument_list|()
 expr_stmt|;
+name|catName
+operator|=
+name|catName
+operator|.
+name|toLowerCase
+argument_list|()
+expr_stmt|;
 name|String
 name|queryTextDbSelector
 init|=
@@ -2290,13 +2334,13 @@ literal|"select "
 operator|+
 literal|"\"DB_ID\", \"NAME\", \"DB_LOCATION_URI\", \"DESC\", "
 operator|+
-literal|"\"OWNER_NAME\", \"OWNER_TYPE\" "
+literal|"\"OWNER_NAME\", \"OWNER_TYPE\", \"CTLG_NAME\" "
 operator|+
 literal|"FROM "
 operator|+
 name|DBS
 operator|+
-literal|" where \"NAME\" = ? "
+literal|" where \"NAME\" = ? and \"CTLG_NAME\" = ? "
 decl_stmt|;
 name|Object
 index|[]
@@ -2307,6 +2351,8 @@ name|Object
 index|[]
 block|{
 name|dbName
+block|,
+name|catName
 block|}
 decl_stmt|;
 name|queryDbSelector
@@ -2666,6 +2712,19 @@ argument_list|)
 expr_stmt|;
 name|db
 operator|.
+name|setCatalogName
+argument_list|(
+name|extractSqlString
+argument_list|(
+name|dbline
+index|[
+literal|6
+index|]
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|db
+operator|.
 name|setParameters
 argument_list|(
 name|MetaStoreUtils
@@ -2763,7 +2822,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Get table names by using direct SQL queries.    *    * @param dbName Metastore database namme    * @param tableType Table type, or null if we want to get all tables    * @return list of table names    */
+comment|/**    * Get table names by using direct SQL queries.    * @param catName catalog name    * @param dbName Metastore database namme    * @param tableType Table type, or null if we want to get all tables    * @return list of table names    */
 specifier|public
 name|List
 argument_list|<
@@ -2771,6 +2830,9 @@ name|String
 argument_list|>
 name|getTables
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2813,7 +2875,11 @@ literal|" WHERE "
 operator|+
 name|DBS
 operator|+
-literal|".\"NAME\" = ? "
+literal|".\"NAME\" = ? AND "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? "
 operator|+
 operator|(
 name|tableType
@@ -2837,9 +2903,7 @@ name|pms
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|pms
@@ -2847,6 +2911,13 @@ operator|.
 name|add
 argument_list|(
 name|dbName
+argument_list|)
+expr_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 if|if
@@ -3010,7 +3081,7 @@ name|queryText
 argument_list|)
 return|;
 block|}
-comment|/**    * Gets partitions by using direct SQL queries.    * Note that batching is not needed for this method - list of names implies the batch size;    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param partNames Partition names to get.    * @return List of partitions.    */
+comment|/**    * Gets partitions by using direct SQL queries.    * Note that batching is not needed for this method - list of names implies the batch size;    * @param catName Metastore catalog name.    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param partNames Partition names to get.    * @return List of partitions.    */
 specifier|public
 name|List
 argument_list|<
@@ -3018,6 +3089,10 @@ name|Partition
 argument_list|>
 name|getPartitionsViaSqlFilter
 parameter_list|(
+specifier|final
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|dbName
@@ -3104,6 +3179,8 @@ decl_stmt|;
 return|return
 name|getPartitionsViaSqlFilterInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -3157,9 +3234,30 @@ operator|.
 name|table
 argument_list|)
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|filter
+operator|.
+name|table
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|filter
+operator|.
+name|table
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|DEFAULT_CATALOG_NAME
+decl_stmt|;
 return|return
 name|getPartitionsViaSqlFilterInternal
 argument_list|(
+name|catName
+argument_list|,
 name|filter
 operator|.
 name|table
@@ -3207,9 +3305,7 @@ name|params
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|Object
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -3222,9 +3318,7 @@ name|joins
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -3306,7 +3400,7 @@ operator|!=
 literal|null
 return|;
 block|}
-comment|/**    * Gets all partitions of a table by using direct SQL queries.    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param max The maximum number of partitions to return.    * @return List of partitions.    */
+comment|/**    * Gets all partitions of a table by using direct SQL queries.    * @param catName Metastore catalog name.    * @param dbName Metastore db name.    * @param tblName Metastore table name.    * @param max The maximum number of partitions to return.    * @return List of partitions.    */
 specifier|public
 name|List
 argument_list|<
@@ -3314,6 +3408,9 @@ name|Partition
 argument_list|>
 name|getPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -3329,6 +3426,8 @@ block|{
 return|return
 name|getPartitionsViaSqlFilterInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -3395,6 +3494,9 @@ name|boolean
 name|isViewTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -3441,7 +3543,11 @@ literal|".\"TBL_NAME\" = ? and "
 operator|+
 name|DBS
 operator|+
-literal|".\"NAME\" = ?"
+literal|".\"NAME\" = ? and "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ?"
 decl_stmt|;
 name|Object
 index|[]
@@ -3454,6 +3560,8 @@ block|{
 name|tblName
 block|,
 name|dbName
+block|,
+name|catName
 block|}
 decl_stmt|;
 name|query
@@ -3535,6 +3643,9 @@ argument_list|>
 name|getPartitionsViaSqlFilterInternal
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -3590,6 +3701,15 @@ name|tblName
 operator|.
 name|toLowerCase
 argument_list|()
+decl_stmt|;
+specifier|final
+name|String
+name|catNameLcase
+init|=
+name|normalizeSpace
+argument_list|(
+name|catName
+argument_list|)
 decl_stmt|;
 comment|// We have to be mindful of order during filtering if we are not returning all partitions.
 name|String
@@ -3673,6 +3793,12 @@ argument_list|,
 literal|' '
 argument_list|)
 operator|+
+literal|" where "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? "
+operator|+
 operator|(
 name|StringUtils
 operator|.
@@ -3684,7 +3810,7 @@ condition|?
 literal|""
 else|:
 operator|(
-literal|" where "
+literal|" and "
 operator|+
 name|sqlFilter
 operator|)
@@ -3704,7 +3830,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|2
+literal|3
 index|]
 decl_stmt|;
 name|params
@@ -3720,6 +3846,13 @@ literal|1
 index|]
 operator|=
 name|dbNameLcase
+expr_stmt|;
+name|params
+index|[
+literal|2
+index|]
+operator|=
+name|catNameLcase
 expr_stmt|;
 for|for
 control|(
@@ -3743,7 +3876,7 @@ name|params
 index|[
 name|i
 operator|+
-literal|2
+literal|3
 index|]
 operator|=
 name|paramsForFilter
@@ -3893,6 +4026,8 @@ block|{
 return|return
 name|getPartitionsFromPartitionIds
 argument_list|(
+name|catNameLcase
+argument_list|,
 name|dbNameLcase
 argument_list|,
 name|tblNameLcase
@@ -3923,6 +4058,9 @@ name|Partition
 argument_list|>
 name|getPartitionsFromPartitionIds
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -4329,6 +4467,13 @@ operator|.
 name|toLowerCase
 argument_list|()
 expr_stmt|;
+name|catName
+operator|=
+name|catName
+operator|.
+name|toLowerCase
+argument_list|()
+expr_stmt|;
 for|for
 control|(
 name|Object
@@ -4406,6 +4551,8 @@ name|isView
 operator|=
 name|isViewTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -4480,11 +4627,7 @@ name|setParameters
 argument_list|(
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4498,6 +4641,13 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|part
+operator|.
+name|setCatName
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|part
@@ -6331,6 +6481,19 @@ name|isDebugEnabled
 argument_list|()
 decl_stmt|;
 name|String
+name|catName
+init|=
+name|filter
+operator|.
+name|table
+operator|.
+name|getCatName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+decl_stmt|;
+name|String
 name|dbName
 init|=
 name|filter
@@ -6419,6 +6582,12 @@ argument_list|,
 literal|' '
 argument_list|)
 operator|+
+literal|" where "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? "
+operator|+
 operator|(
 name|filter
 operator|.
@@ -6439,7 +6608,7 @@ condition|?
 literal|""
 else|:
 operator|(
-literal|" where "
+literal|" and "
 operator|+
 name|filter
 operator|.
@@ -6461,7 +6630,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|2
+literal|3
 index|]
 decl_stmt|;
 name|params
@@ -6477,6 +6646,13 @@ literal|1
 index|]
 operator|=
 name|dbName
+expr_stmt|;
+name|params
+index|[
+literal|2
+index|]
+operator|=
+name|catName
 expr_stmt|;
 for|for
 control|(
@@ -6502,7 +6678,7 @@ name|params
 index|[
 name|i
 operator|+
-literal|2
+literal|3
 index|]
 operator|=
 name|filter
@@ -8517,6 +8693,10 @@ name|DBS
 operator|+
 literal|".\"NAME\" = ? and "
 operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? and "
+operator|+
 literal|"\"FILTER"
 operator|+
 name|partColIndex
@@ -8556,6 +8736,19 @@ argument_list|(
 name|table
 operator|.
 name|getDbName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+name|table
+operator|.
+name|getCatName
 argument_list|()
 operator|.
 name|toLowerCase
@@ -8629,11 +8822,15 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Retrieve the column statistics for the specified columns of the table. NULL    * is returned if the columns are not provided.    * @param dbName      the database name of the table    * @param tableName   the table name    * @param colNames    the list of the column names    * @return            the column statistics for the specified columns    * @throws MetaException    */
+comment|/**    * Retrieve the column statistics for the specified columns of the table. NULL    * is returned if the columns are not provided.    * @param catName     the catalog name of the table    * @param dbName      the database name of the table    * @param tableName   the table name    * @param colNames    the list of the column names    * @return            the column statistics for the specified columns    * @throws MetaException    */
 specifier|public
 name|ColumnStatistics
 name|getTableStats
 parameter_list|(
+specifier|final
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|dbName
@@ -8694,9 +8891,7 @@ literal|" from "
 operator|+
 name|TAB_COL_STATS
 operator|+
-literal|" "
-operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\" in ("
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\" in ("
 decl_stmt|;
 name|Batchable
 argument_list|<
@@ -8763,7 +8958,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|2
+literal|3
 index|]
 decl_stmt|;
 name|params
@@ -8771,11 +8966,18 @@ index|[
 literal|0
 index|]
 operator|=
-name|dbName
+name|catName
 expr_stmt|;
 name|params
 index|[
 literal|1
+index|]
+operator|=
+name|dbName
+expr_stmt|;
+name|params
+index|[
+literal|2
 index|]
 operator|=
 name|tableName
@@ -8802,7 +9004,7 @@ name|params
 index|[
 name|i
 operator|+
-literal|2
+literal|3
 index|]
 operator|=
 name|input
@@ -8940,6 +9142,13 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
+name|csd
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|ColumnStatistics
 name|result
 init|=
@@ -8965,6 +9174,9 @@ specifier|public
 name|AggrStats
 name|aggrColStatsForPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -9128,6 +9340,8 @@ name|aggrStatsCache
 operator|.
 name|get
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9173,6 +9387,8 @@ name|partsFound
 operator|=
 name|partsFoundForPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9195,9 +9411,7 @@ name|colNamesForDB
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|colNamesForDB
@@ -9212,6 +9426,8 @@ name|colStatsAggrFromDB
 operator|=
 name|columnStatisticsObjForPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9260,6 +9476,8 @@ name|aggrStatsCache
 operator|.
 name|add
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9283,6 +9501,8 @@ name|partsFound
 operator|=
 name|partsFoundForPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9296,6 +9516,8 @@ name|colStatsList
 operator|=
 name|columnStatisticsObjForPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9406,6 +9628,10 @@ name|partsFoundForPartitions
 parameter_list|(
 specifier|final
 name|String
+name|catName
+parameter_list|,
+specifier|final
+name|String
 name|dbName
 parameter_list|,
 specifier|final
@@ -9460,7 +9686,7 @@ name|PART_COL_STATS
 operator|+
 literal|""
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
 literal|" and \"COLUMN_NAME\" in (%1$s) and \"PARTITION_NAME\" in (%2$s)"
 operator|+
@@ -9602,6 +9828,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9750,6 +9978,10 @@ name|columnStatisticsObjForPartitions
 parameter_list|(
 specifier|final
 name|String
+name|catName
+parameter_list|,
+specifier|final
+name|String
 name|dbName
 parameter_list|,
 specifier|final
@@ -9868,6 +10100,8 @@ block|{
 return|return
 name|columnStatisticsObjForPartitionsBatch
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -9902,6 +10136,9 @@ argument_list|>
 name|getColStatsForAllTablePartitions
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|boolean
@@ -9926,7 +10163,7 @@ literal|" "
 operator|+
 name|PART_COL_STATS
 operator|+
-literal|" where \"DB_NAME\" = ?"
+literal|" where \"DB_NAME\" = ? and \"CAT_NAME\" = ?"
 decl_stmt|;
 name|long
 name|start
@@ -10004,6 +10241,8 @@ name|Object
 index|[]
 block|{
 name|dbName
+block|,
+name|catName
 block|}
 argument_list|,
 name|queryText
@@ -10109,6 +10348,8 @@ name|ColStatsObjWithSourceInfo
 argument_list|(
 name|colStatObj
 argument_list|,
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -10144,6 +10385,9 @@ name|ColumnStatisticsObj
 argument_list|>
 name|columnStatisticsObjForPartitionsBatch
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -10185,6 +10429,8 @@ block|{
 return|return
 name|aggrStatsUseJava
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -10206,6 +10452,8 @@ block|{
 return|return
 name|aggrStatsUseDB
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -10230,6 +10478,9 @@ name|ColumnStatisticsObj
 argument_list|>
 name|aggrStatsUseJava
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -10269,6 +10520,8 @@ name|partStats
 init|=
 name|getPartitionStats
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -10287,6 +10540,8 @@ operator|.
 name|aggrPartitionStats
 argument_list|(
 name|partStats
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -10311,6 +10566,9 @@ name|ColumnStatisticsObj
 argument_list|>
 name|aggrStatsUseDB
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -10383,7 +10641,7 @@ name|PART_COL_STATS
 operator|+
 literal|""
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 decl_stmt|;
 name|String
 name|queryText
@@ -10493,6 +10751,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -10647,7 +10907,7 @@ literal|" from "
 operator|+
 name|PART_COL_STATS
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
 literal|" and \"COLUMN_NAME\" in ("
 operator|+
@@ -10705,6 +10965,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -10976,6 +11238,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -11171,7 +11435,7 @@ literal|" from "
 operator|+
 name|PART_COL_STATS
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
 literal|" and \"COLUMN_NAME\" in ("
 operator|+
@@ -11248,6 +11512,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -11733,7 +11999,7 @@ literal|"\",\"PARTITION_NAME\" from "
 operator|+
 name|PART_COL_STATS
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
 literal|" and \"COLUMN_NAME\" = ?"
 operator|+
@@ -11768,7 +12034,7 @@ literal|"\",\"PARTITION_NAME\" from "
 operator|+
 name|PART_COL_STATS
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
 literal|" and \"COLUMN_NAME\" = ?"
 operator|+
@@ -11821,6 +12087,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -12003,7 +12271,7 @@ name|PART_COL_STATS
 operator|+
 literal|""
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ?"
 operator|+
 literal|" and \"COLUMN_NAME\" = ?"
 operator|+
@@ -12051,6 +12319,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -12623,6 +12893,9 @@ index|[]
 name|prepareParams
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -12660,7 +12933,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|2
+literal|3
 index|]
 decl_stmt|;
 name|int
@@ -12668,6 +12941,14 @@ name|paramI
 init|=
 literal|0
 decl_stmt|;
+name|params
+index|[
+name|paramI
+operator|++
+index|]
+operator|=
+name|catName
+expr_stmt|;
 name|params
 index|[
 name|paramI
@@ -12729,6 +13010,10 @@ name|ColumnStatistics
 argument_list|>
 name|getPartitionStats
 parameter_list|(
+specifier|final
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|dbName
@@ -12802,7 +13087,9 @@ literal|" "
 operator|+
 name|PART_COL_STATS
 operator|+
-literal|" where \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\""
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and "
+operator|+
+literal|"\"COLUMN_NAME\""
 operator|+
 literal|"  in (%1$s) AND \"PARTITION_NAME\" in (%2$s) order by \"PARTITION_NAME\""
 decl_stmt|;
@@ -12942,6 +13229,8 @@ name|query
 argument_list|,
 name|prepareParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -13165,6 +13454,13 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
+name|csd
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|csd
 operator|.
 name|setPartName
@@ -13986,6 +14282,9 @@ argument_list|>
 name|getForeignKeys
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|parent_db_name
 parameter_list|,
 name|String
@@ -14008,9 +14307,7 @@ name|ret
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLForeignKey
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|String
@@ -14242,6 +14539,12 @@ name|PRIMARY_KEY_CONSTRAINT
 operator|+
 literal|" AND"
 operator|+
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? AND"
+operator|+
 operator|(
 name|foreign_db_name
 operator|==
@@ -14337,6 +14640,13 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|foreign_db_name
@@ -14594,6 +14904,13 @@ argument_list|,
 name|rely
 argument_list|)
 decl_stmt|;
+name|currKey
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|ret
 operator|.
 name|add
@@ -14615,6 +14932,9 @@ argument_list|>
 name|getPrimaryKeys
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -14631,9 +14951,7 @@ name|ret
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLPrimaryKey
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|String
@@ -14669,15 +14987,17 @@ name|KEY_CONSTRAINTS
 operator|+
 literal|".\"POSITION\", "
 operator|+
-literal|""
-operator|+
 name|KEY_CONSTRAINTS
 operator|+
 literal|".\"CONSTRAINT_NAME\", "
 operator|+
 name|KEY_CONSTRAINTS
 operator|+
-literal|".\"ENABLE_VALIDATE_RELY\" "
+literal|".\"ENABLE_VALIDATE_RELY\", "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\""
 operator|+
 literal|" from "
 operator|+
@@ -14773,6 +15093,12 @@ name|PRIMARY_KEY_CONSTRAINT
 operator|+
 literal|" AND"
 operator|+
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? AND"
+operator|+
 operator|(
 name|db_name
 operator|==
@@ -14843,11 +15169,16 @@ name|pms
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|db_name
@@ -15027,6 +15358,19 @@ argument_list|,
 name|rely
 argument_list|)
 decl_stmt|;
+name|currKey
+operator|.
+name|setCatName
+argument_list|(
+name|extractSqlString
+argument_list|(
+name|line
+index|[
+literal|6
+index|]
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|ret
 operator|.
 name|add
@@ -15047,6 +15391,9 @@ name|SQLUniqueConstraint
 argument_list|>
 name|getUniqueConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -15204,6 +15551,12 @@ name|UNIQUE_CONSTRAINT
 operator|+
 literal|" AND"
 operator|+
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? AND"
+operator|+
 operator|(
 name|db_name
 operator|==
@@ -15279,6 +15632,13 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|db_name
@@ -15405,12 +15765,15 @@ operator|)
 operator|!=
 literal|0
 decl_stmt|;
-name|SQLUniqueConstraint
-name|currConstraint
-init|=
+name|ret
+operator|.
+name|add
+argument_list|(
 operator|new
 name|SQLUniqueConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|extractSqlString
 argument_list|(
 name|line
@@ -15457,12 +15820,6 @@ name|validate
 argument_list|,
 name|rely
 argument_list|)
-decl_stmt|;
-name|ret
-operator|.
-name|add
-argument_list|(
-name|currConstraint
 argument_list|)
 expr_stmt|;
 block|}
@@ -15478,6 +15835,9 @@ name|SQLNotNullConstraint
 argument_list|>
 name|getNotNullConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -15495,9 +15855,7 @@ name|ret
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLNotNullConstraint
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|String
@@ -15633,6 +15991,12 @@ name|NOT_NULL_CONSTRAINT
 operator|+
 literal|" AND"
 operator|+
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? AND"
+operator|+
 operator|(
 name|db_name
 operator|==
@@ -15703,11 +16067,16 @@ name|pms
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|db_name
@@ -15834,12 +16203,15 @@ operator|)
 operator|!=
 literal|0
 decl_stmt|;
-name|SQLNotNullConstraint
-name|currConstraint
-init|=
+name|ret
+operator|.
+name|add
+argument_list|(
 operator|new
 name|SQLNotNullConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|extractSqlString
 argument_list|(
 name|line
@@ -15878,12 +16250,6 @@ name|validate
 argument_list|,
 name|rely
 argument_list|)
-decl_stmt|;
-name|ret
-operator|.
-name|add
-argument_list|(
-name|currConstraint
 argument_list|)
 expr_stmt|;
 block|}
@@ -15899,6 +16265,9 @@ name|SQLDefaultConstraint
 argument_list|>
 name|getDefaultConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -16060,6 +16429,12 @@ name|DEFAULT_CONSTRAINT
 operator|+
 literal|" AND"
 operator|+
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? AND"
+operator|+
 operator|(
 name|db_name
 operator|==
@@ -16148,11 +16523,16 @@ name|pms
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|db_name
@@ -16285,6 +16665,8 @@ init|=
 operator|new
 name|SQLDefaultConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|extractSqlString
 argument_list|(
 name|line
@@ -16352,6 +16734,9 @@ name|SQLCheckConstraint
 argument_list|>
 name|getCheckConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -16513,6 +16898,12 @@ name|CHECK_CONSTRAINT
 operator|+
 literal|" AND"
 operator|+
+literal|" "
+operator|+
+name|DBS
+operator|+
+literal|".\"CTLG_NAME\" = ? AND"
+operator|+
 operator|(
 name|db_name
 operator|==
@@ -16601,11 +16992,16 @@ name|pms
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
+name|pms
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|db_name
@@ -16738,6 +17134,8 @@ init|=
 operator|new
 name|SQLCheckConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|extractSqlString
 argument_list|(
 name|line

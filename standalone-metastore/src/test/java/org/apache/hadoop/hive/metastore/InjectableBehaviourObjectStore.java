@@ -486,6 +486,9 @@ name|Table
 name|getTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -503,6 +506,8 @@ name|super
 operator|.
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -519,6 +524,9 @@ name|String
 argument_list|>
 name|listPartitionNames
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -540,6 +548,8 @@ name|super
 operator|.
 name|listPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName

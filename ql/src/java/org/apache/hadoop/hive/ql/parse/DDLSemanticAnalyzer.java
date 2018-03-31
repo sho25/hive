@@ -3532,6 +3532,18 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO CAT - for now always use the default catalog.  Eventually will want to see if
+comment|// the user specified a catalog
+name|String
+name|catName
+init|=
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|String
 name|tableName
 init|=
@@ -3771,6 +3783,8 @@ condition|)
 block|{
 name|analyzeAlterTableRenameCol
 argument_list|(
+name|catName
+argument_list|,
 name|qualified
 argument_list|,
 name|ast
@@ -15846,6 +15860,18 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO CAT - for now always use the default catalog.  Eventually will want to see if
+comment|// the user specified a catalog
+name|String
+name|catName
+init|=
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|ASTNode
 name|child
 init|=
@@ -15912,6 +15938,8 @@ name|BaseSemanticAnalyzer
 operator|.
 name|processUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualifiedTabName
 index|[
 literal|0
@@ -21505,6 +21533,9 @@ name|void
 name|analyzeAlterTableRenameCol
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 index|[]
 name|qualified
 parameter_list|,
@@ -21791,6 +21822,8 @@ argument_list|()
 expr_stmt|;
 name|processCheckConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualified
 index|[
 literal|0
@@ -21845,6 +21878,8 @@ argument_list|()
 expr_stmt|;
 name|processDefaultConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualified
 index|[
 literal|0
@@ -21892,6 +21927,8 @@ argument_list|()
 expr_stmt|;
 name|processNotNullConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualified
 index|[
 literal|0
@@ -21929,6 +21966,8 @@ argument_list|()
 expr_stmt|;
 name|processUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualified
 index|[
 literal|0

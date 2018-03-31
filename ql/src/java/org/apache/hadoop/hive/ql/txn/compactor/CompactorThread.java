@@ -413,6 +413,26 @@ name|AtomicBoolean
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+import|;
+end_import
+
 begin_comment
 comment|/**  * Superclass for all threads in the compactor.  */
 end_comment
@@ -635,6 +655,11 @@ name|rs
 operator|.
 name|getTable
 argument_list|(
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+argument_list|,
 name|ci
 operator|.
 name|dbname
@@ -709,6 +734,11 @@ name|rs
 operator|.
 name|getPartitionsByNames
 argument_list|(
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+argument_list|,
 name|ci
 operator|.
 name|dbname

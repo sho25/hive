@@ -806,11 +806,14 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Return aggregate stats for a column from the cache or null.    * While reading from the nodelist for a key, we wait maxReaderWaitTime to acquire the lock,    * failing which we return a cache miss (i.e. null)    *    * @param dbName    * @param tblName    * @param colName    * @param partNames    * @return    */
+comment|/**    * Return aggregate stats for a column from the cache or null.    * While reading from the nodelist for a key, we wait maxReaderWaitTime to acquire the lock,    * failing which we return a cache miss (i.e. null)    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param colName column name    * @param partNames list of partition names    * @return aggregated col stats    */
 specifier|public
 name|AggrColStats
 name|get
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -834,6 +837,8 @@ init|=
 operator|new
 name|Key
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -1307,12 +1312,15 @@ return|return
 name|bestMatch
 return|;
 block|}
-comment|/**    * Add a new node to the cache; may trigger the cleaner thread if the cache is near full capacity.    * We'll however add the node even if we temporaily exceed maxCacheNodes, because the cleaner    * will eventually create space from expired nodes or by removing LRU nodes.    *    * @param dbName    * @param tblName    * @param colName    * @param numPartsCached    * @param colStats    * @param bloomFilter    */
+comment|/**    * Add a new node to the cache; may trigger the cleaner thread if the cache is near full capacity.    * We'll however add the node even if we temporaily exceed maxCacheNodes, because the cleaner    * will eventually create space from expired nodes or by removing LRU nodes.    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param colName column name    * @param numPartsCached    * @param colStats    * @param bloomFilter    */
 comment|// TODO: make add asynchronous: add shouldn't block the higher level calls
 specifier|public
 name|void
 name|add
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1354,6 +1362,8 @@ init|=
 operator|new
 name|Key
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -2223,6 +2233,11 @@ block|{
 specifier|private
 specifier|final
 name|String
+name|catName
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
 name|dbName
 decl_stmt|;
 specifier|private
@@ -2238,6 +2253,9 @@ decl_stmt|;
 name|Key
 parameter_list|(
 name|String
+name|cat
+parameter_list|,
+name|String
 name|db
 parameter_list|,
 name|String
@@ -2250,6 +2268,10 @@ block|{
 comment|// Don't construct an illegal cache key
 if|if
 condition|(
+name|cat
+operator|==
+literal|null
+operator|||
 operator|(
 name|db
 operator|==
@@ -2273,10 +2295,14 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"dbName, tblName, colName can't be null"
+literal|"catName, dbName, tblName, colName can't be null"
 argument_list|)
 throw|;
 block|}
+name|catName
+operator|=
+name|cat
+expr_stmt|;
 name|dbName
 operator|=
 name|db
@@ -2329,6 +2355,15 @@ operator|)
 name|other
 decl_stmt|;
 return|return
+name|catName
+operator|.
+name|equals
+argument_list|(
+name|that
+operator|.
+name|catName
+argument_list|)
+operator|&&
 name|dbName
 operator|.
 name|equals
@@ -2365,6 +2400,13 @@ name|hashCode
 parameter_list|()
 block|{
 return|return
+name|catName
+operator|.
+name|hashCode
+argument_list|()
+operator|*
+literal|31
+operator|+
 name|dbName
 operator|.
 name|hashCode
@@ -2393,7 +2435,11 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"database:"
+literal|"catalog: "
+operator|+
+name|catName
+operator|+
+literal|", database:"
 operator|+
 name|dbName
 operator|+

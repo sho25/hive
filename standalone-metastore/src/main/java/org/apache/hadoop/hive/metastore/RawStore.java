@@ -263,7 +263,43 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|Catalog
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|ColumnStatistics
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|CreationMetadata
 import|;
 end_import
 
@@ -390,6 +426,24 @@ operator|.
 name|api
 operator|.
 name|ISchema
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|ISchemaName
 import|;
 end_import
 
@@ -713,96 +767,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|WMNullablePool
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|WMNullableResourcePlan
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|WMResourcePlan
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|WMTrigger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|WMValidateResourcePlanResponse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|Role
 import|;
 end_import
@@ -840,6 +804,24 @@ operator|.
 name|api
 operator|.
 name|SQLCheckConstraint
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|SchemaVersionDescriptor
 import|;
 end_import
 
@@ -1091,6 +1073,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|WMFullResourcePlan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|WMMapping
 import|;
 end_import
@@ -1109,7 +1109,97 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|WMNullablePool
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|WMNullableResourcePlan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|WMPool
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|WMResourcePlan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|WMTrigger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|WMValidateResourcePlanResponse
 import|;
 end_import
 
@@ -1221,6 +1311,66 @@ name|void
 name|rollbackTransaction
 parameter_list|()
 function_decl|;
+comment|/**    * Create a new catalog.    * @param cat Catalog to create.    * @throws MetaException if something goes wrong, usually in storing it to the database.    */
+name|void
+name|createCatalog
+parameter_list|(
+name|Catalog
+name|cat
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+comment|/**    * Alter an existing catalog.  Only description and location can be changed, and the change of    * location is for internal use only.    * @param catName name of the catalog to alter.    * @param cat new version of the catalog.    * @throws MetaException something went wrong, usually in the database.    * @throws InvalidOperationException attempt to change something about the catalog that is not    * changeable, like the name.    */
+name|void
+name|alterCatalog
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|Catalog
+name|cat
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|InvalidOperationException
+function_decl|;
+comment|/**    * Get a catalog.    * @param catalogName name of the catalog.    * @return The catalog.    * @throws NoSuchObjectException no catalog of this name exists.    * @throws MetaException if something goes wrong, usually in reading it from the database.    */
+name|Catalog
+name|getCatalog
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+function_decl|;
+comment|/**    * Get all the catalogs.    * @return list of names of all catalogs in the system    * @throws MetaException if something goes wrong, usually in reading from the database.    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getCatalogs
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
+comment|/**    * Drop a catalog.  The catalog must be empty.    * @param catalogName name of the catalog to drop.    * @throws NoSuchObjectException no catalog of this name exists.    * @throws MetaException could mean the catalog isn't empty, could mean general database error.    */
+name|void
+name|dropCatalog
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+function_decl|;
+comment|/**    * Create a database.    * @param db database to create.    * @throws InvalidObjectException not sure it actually ever throws this.    * @throws MetaException if something goes wrong, usually in writing it to the database.    */
 name|void
 name|createDatabase
 parameter_list|(
@@ -1232,18 +1382,26 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get a database.    * @param catalogName catalog the database is in.    * @param name name of the database.    * @return the database.    * @throws NoSuchObjectException if no such database exists.    */
 name|Database
 name|getDatabase
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|name
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Drop a database.    * @param catalogName catalog the database is in.    * @param dbname name of the database.    * @return true if the database was dropped, pretty much always returns this if it returns.    * @throws NoSuchObjectException no database in this catalog of this name to drop    * @throws MetaException something went wrong, usually with the database.    */
 name|boolean
 name|dropDatabase
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|)
@@ -1252,9 +1410,13 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Alter a database.    * @param catalogName name of the catalog the database is in.    * @param dbname name of the database to alter    * @param db new version of the database.  This should be complete as it will fully replace the    *          existing db object.    * @return true if the change succeeds, could fail due to db constraint violations.    * @throws NoSuchObjectException no database of this name exists to alter.    * @throws MetaException something went wrong, usually with the database.    */
 name|boolean
 name|alterDatabase
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|,
@@ -1266,6 +1428,7 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get all database in a catalog having names that match a pattern.    * @param catalogName name of the catalog to search for databases in    * @param pattern pattern names should match    * @return list of matching database names.    * @throws MetaException something went wrong, usually with the database.    */
 name|List
 argument_list|<
 name|String
@@ -1273,17 +1436,24 @@ argument_list|>
 name|getDatabases
 parameter_list|(
 name|String
+name|catalogName
+parameter_list|,
+name|String
 name|pattern
 parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get names of all the databases in a catalog.    * @param catalogName name of the catalog to search for databases in    * @return list of names of all databases in the catalog    * @throws MetaException something went wrong, usually with the database.    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|getAllDatabases
-parameter_list|()
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
@@ -1319,9 +1489,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Drop a table.    * @param catalogName catalog the table is in    * @param dbName database the table is in    * @param tableName table name    * @return true if the table was dropped    * @throws MetaException something went wrong, usually in the RDBMS or storage    * @throws NoSuchObjectException No table of this name    * @throws InvalidObjectException Don't think this is ever actually thrown    * @throws InvalidInputException Don't think this is ever actually thrown    */
 name|boolean
 name|dropTable
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1337,9 +1511,13 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
+comment|/**    * Get a table object.    * @param catalogName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @return table object, or null if no such table exists (wow it would be nice if we either    * consistently returned null or consistently threw NoSuchObjectException).    * @throws MetaException something went wrong in the RDBMS    */
 name|Table
 name|getTable
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1349,6 +1527,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Add a partition.    * @param part partition to add    * @return true if the partition was successfully added.    * @throws InvalidObjectException the provided partition object is not valid.    * @throws MetaException error writing to the RDBMS.    */
 name|boolean
 name|addPartition
 parameter_list|(
@@ -1360,9 +1539,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add a list of partitions to a table.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param parts list of partitions to be added.    * @return true if the operation succeeded.    * @throws InvalidObjectException never throws this AFAICT    * @throws MetaException the partitions don't belong to the indicated table or error writing to    * the RDBMS.    */
 name|boolean
 name|addPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1380,9 +1563,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add a list of partitions to a table.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partitionSpec specification for the partition    * @param ifNotExists whether it is in an error if the partition already exists.  If true, then    *                   it is not an error if the partition exists, if false, it is.    * @return whether the partition was created.    * @throws InvalidObjectException The passed in partition spec or table specification is invalid.    * @throws MetaException error writing to RDBMS.    */
 name|boolean
 name|addPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1400,10 +1587,14 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param part_vals partition values for this table.    * @return the partition.    * @throws MetaException error reading from RDBMS.    * @throws NoSuchObjectException no partition matching this specification exists.    */
 name|Partition
 name|getPartition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -1420,10 +1611,14 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Check whether a partition exists.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param part_vals list of partition values.    * @return true if the partition exists, false otherwise.    * @throws MetaException failure reading RDBMS    * @throws NoSuchObjectException this is never thrown.    */
 name|boolean
 name|doesPartitionExist
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -1440,9 +1635,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Drop a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param part_vals list of partition values.    * @return true if the partition was dropped.    * @throws MetaException Error accessing the RDBMS.    * @throws NoSuchObjectException no partition matching this description exists    * @throws InvalidObjectException error dropping the statistics for the partition    * @throws InvalidInputException error dropping the statistics for the partition    */
 name|boolean
 name|dropPartition
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1464,12 +1663,16 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
+comment|/**    * Get some or all partitions for a table.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name    * @param max maximum number of partitions, or -1 to get all partitions.    * @return list of partitions    * @throws MetaException error access the RDBMS.    * @throws NoSuchObjectException no such table exists    */
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|getPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1484,9 +1687,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Alter a table.    * @param catName catalog the table is in.    * @param dbname database the table is in.    * @param name name of the table.    * @param newTable New table object.  Which parts of the table can be altered are    *                 implementation specific.    * @throws InvalidObjectException The new table object is invalid.    * @throws MetaException something went wrong, usually in the RDBMS or storage.    */
 name|void
 name|alterTable
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|,
@@ -1501,9 +1708,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Update creation metadata for a materialized view.    * @param catName catalog name.    * @param dbname database name.    * @param tablename table name.    * @param cm new creation metadata    * @throws MetaException error accessing the RDBMS.    */
 name|void
 name|updateCreationMetadata
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|,
@@ -1516,12 +1727,16 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get table names that match a pattern.    * @param catName catalog to search in    * @param dbName database to search in    * @param pattern pattern to match    * @return list of table names, if any    * @throws MetaException failure in querying the RDBMS    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|getTables
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1531,12 +1746,16 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get table names that match a pattern.    * @param catName catalog to search in    * @param dbName database to search in    * @param pattern pattern to match    * @param tableType type of table to look for    * @return list of table names, if any    * @throws MetaException failure in querying the RDBMS    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|getTables
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1549,12 +1768,16 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get list of materialized views in a database.    * @param catName catalog name    * @param dbName database name    * @return names of all materialized views in the database    * @throws MetaException error querying the RDBMS    * @throws NoSuchObjectException no such database    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|getMaterializedViewsForRewriting
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|)
@@ -1563,12 +1786,16 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**     * @param catName catalog name to search in. Search must be confined to one catalog.    * @param dbNames databases to search in.    * @param tableNames names of tables to select.    * @param tableTypes types of tables to look for.    * @return list of matching table meta information.    * @throws MetaException failure in querying the RDBMS.    */
 name|List
 argument_list|<
 name|TableMeta
 argument_list|>
 name|getTableMeta
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbNames
 parameter_list|,
@@ -1584,13 +1811,16 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * @param dbname    *        The name of the database from which to retrieve the tables    * @param tableNames    *        The names of the tables to retrieve.    * @return A list of the tables retrievable from the database    *          whose names are in the list tableNames.    *         If there are duplicate names, only one instance of the table will be returned    * @throws MetaException    */
+comment|/**    * @param catName catalog name    * @param dbname    *        The name of the database from which to retrieve the tables    * @param tableNames    *        The names of the tables to retrieve.    * @return A list of the tables retrievable from the database    *          whose names are in the list tableNames.    *         If there are duplicate names, only one instance of the table will be returned    * @throws MetaException failure in querying the RDBMS.    */
 name|List
 argument_list|<
 name|Table
 argument_list|>
 name|getTableObjectsByName
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|,
@@ -1605,6 +1835,7 @@ name|MetaException
 throws|,
 name|UnknownDBException
 function_decl|;
+comment|/**    * Get all tables in a database.    * @param catName catalog name.    * @param dbName database name.    * @return list of table names    * @throws MetaException failure in querying the RDBMS.    */
 name|List
 argument_list|<
 name|String
@@ -1612,18 +1843,24 @@ argument_list|>
 name|getAllTables
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Gets a list of tables based on a filter string and filter type.    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param max_tables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    * @throws MetaException    * @throws UnknownDBException    */
+comment|/**    * Gets a list of tables based on a filter string and filter type.    * @param catName catalog name    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param max_tables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    * @throws MetaException    * @throws UnknownDBException    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|listTableNamesByFilter
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1638,12 +1875,16 @@ name|MetaException
 throws|,
 name|UnknownDBException
 function_decl|;
+comment|/**    * Get a partial or complete list of names for partitions of a table.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param max_parts maximum number of partitions to retrieve, -1 for all.    * @return list of partition names.    * @throws MetaException there was an error accessing the RDBMS    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|listPartitionNames
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -1656,9 +1897,13 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get a list of partition values as one big struct.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param cols partition key columns    * @param applyDistinct whether to apply distinct to the list    * @param filter filter to apply to the partition names    * @param ascending whether to put in ascending order    * @param order whether to order    * @param maxParts maximum number of parts to return, or -1 for all    * @return struct with all of the partition value information    * @throws MetaException error access the RDBMS    */
 name|PartitionValuesResponse
 name|listPartitionValues
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -1692,30 +1937,13 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|listPartitionNamesByFilter
-parameter_list|(
-name|String
-name|db_name
-parameter_list|,
-name|String
-name|tbl_name
-parameter_list|,
-name|String
-name|filter
-parameter_list|,
-name|short
-name|max_parts
-parameter_list|)
-throws|throws
-name|MetaException
-function_decl|;
+comment|/**    * Alter a partition.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partition values that describe the partition.    * @param new_part new partition object.  This should be a complete copy of the old with    *                 changes values, not just the parts to update.    * @throws InvalidObjectException No such partition.    * @throws MetaException error accessing the RDBMS.    */
 name|void
 name|alterPartition
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -1736,9 +1964,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
 name|void
 name|alterPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -1765,12 +1997,16 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get partitions with a filter.  This is a portion of the SQL where clause.    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param filter SQL where clause filter    * @param maxParts maximum number of partitions to return, or -1 for all.    * @return list of partition objects matching the criteria    * @throws MetaException Error accessing the RDBMS or processing the filter.    * @throws NoSuchObjectException no such table.    */
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|getPartitionsByFilter
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1788,9 +2024,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Get partitions using an already parsed expression.    * @param catName catalog name.    * @param dbName database name    * @param tblName table name    * @param expr an already parsed Hive expression    * @param defaultPartitionName default name of a partition    * @param maxParts maximum number of partitions to return, or -1 for all    * @param result list to place resulting partitions in    * @return true if the result contains unknown partitions.    * @throws TException error executing the expression    */
 name|boolean
 name|getPartitionsByExpr
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1816,9 +2056,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Get the number of partitions that match a provided SQL filter.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param filter filter from Hive's SQL where clause    * @return number of matching partitions.    * @throws MetaException error accessing the RDBMS or executing the filter    * @throws NoSuchObjectException no such table    */
 name|int
 name|getNumPartitionsByFilter
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1833,9 +2077,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Get the number of partitions that match an already parsed expression.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param expr an already parsed Hive expression    * @return number of matching partitions.    * @throws MetaException error accessing the RDBMS or working with the expression.    * @throws NoSuchObjectException no such table.    */
 name|int
 name|getNumPartitionsByExpr
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1851,12 +2099,16 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Get partitions by name.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names not values, so they will include    *                  both the key and the value.    * @return list of matching partitions    * @throws MetaException error accessing the RDBMS.    * @throws NoSuchObjectException No such table.    */
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|getPartitionsByNames
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1877,6 +2129,9 @@ function_decl|;
 name|Table
 name|markPartitionForEvent
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -1906,6 +2161,9 @@ function_decl|;
 name|boolean
 name|isPartitionMarkedForEvent
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2024,9 +2282,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get privileges for a database for a user.    * @param catName catalog name    * @param dbName database name    * @param userName user name    * @param groupNames list of groups the user is in    * @return privileges for that user on indicated database    * @throws InvalidObjectException no such database    * @throws MetaException error accessing the RDBMS    */
 name|PrincipalPrivilegeSet
 name|getDBPrivilegeSet
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2044,9 +2306,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get privileges for a table for a user.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param userName user name    * @param groupNames list of groups the user is in    * @return privileges for that user on indicated table    * @throws InvalidObjectException no such table    * @throws MetaException error accessing the RDBMS    */
 name|PrincipalPrivilegeSet
 name|getTablePrivilegeSet
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2067,9 +2333,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get privileges for a partition for a user.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partition partition name    * @param userName user name    * @param groupNames list of groups the user is in    * @return privileges for that user on indicated partition    * @throws InvalidObjectException no such partition    * @throws MetaException error accessing the RDBMS    */
 name|PrincipalPrivilegeSet
 name|getPartitionPrivilegeSet
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2093,9 +2363,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Get privileges for a column in a table or partition for a user.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partitionName partition name, or null for table level column permissions    * @param columnName column name    * @param userName user name    * @param groupNames list of groups the user is in    * @return privileges for that user on indicated column in the table or partition    * @throws InvalidObjectException no such table, partition, or column    * @throws MetaException error accessing the RDBMS    */
 name|PrincipalPrivilegeSet
 name|getColumnPrivilegeSet
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2135,6 +2409,7 @@ name|PrincipalType
 name|principalType
 parameter_list|)
 function_decl|;
+comment|/**    * For a given principal name and type, list the DB Grants    * @param principalName principal name    * @param principalType type    * @param catName catalog name    * @param dbName database name    * @return list of privileges for that principal on the specified database.    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2148,9 +2423,13 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 function_decl|;
+comment|/**    * For a given principal name and type, list the Table Grants    * @param principalName principal name    * @param principalType type    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @return list of privileges for that principal on the specified database.    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2164,12 +2443,16 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
 name|tableName
 parameter_list|)
 function_decl|;
+comment|/**    * For a given principal name and type, list the Table Grants    * @param principalName principal name    * @param principalType type    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partName partition name (not value)    * @return list of privileges for that principal on the specified database.    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2181,6 +2464,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -2198,6 +2484,7 @@ name|String
 name|partName
 parameter_list|)
 function_decl|;
+comment|/**    * For a given principal name and type, list the Table Grants    * @param principalName principal name    * @param principalType type    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param columnName column name    * @return list of privileges for that principal on the specified database.    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2211,6 +2498,9 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -2220,6 +2510,7 @@ name|String
 name|columnName
 parameter_list|)
 function_decl|;
+comment|/**    * For a given principal name and type, list the Table Grants    * @param principalName principal name    * @param principalType type    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partName partition name (not value)    * @param columnName column name    * @return list of privileges for that principal on the specified database.    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2231,6 +2522,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -2345,9 +2639,13 @@ name|String
 name|roleName
 parameter_list|)
 function_decl|;
+comment|/**    * Fetch a partition along with privilege information for a particular user.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partVals partition values    * @param user_name user to get privilege information for.    * @param group_names groups to get privilege information for.    * @return a partition    * @throws MetaException error accessing the RDBMS.    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error fetching privilege information    */
 name|Partition
 name|getPartitionWithAuth
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2376,12 +2674,16 @@ name|NoSuchObjectException
 throws|,
 name|InvalidObjectException
 function_decl|;
+comment|/**    * Fetch some or all partitions for a table, along with privilege information for a particular    * user.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param maxParts maximum number of partitions to fetch, -1 for all partitions.    * @param userName user to get privilege information for.    * @param groupNames groups to get privilege information for.    * @return list of partitions.    * @throws MetaException error access the RDBMS.    * @throws NoSuchObjectException no such table exists    * @throws InvalidObjectException error fetching privilege information.    */
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|getPartitionsWithAuth
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2407,13 +2709,16 @@ name|NoSuchObjectException
 throws|,
 name|InvalidObjectException
 function_decl|;
-comment|/**    * Lists partition names that match a given partial specification    * @param db_name    *          The name of the database which has the partitions    * @param tbl_name    *          The name of the table which has the partitions    * @param part_vals    *          A partial list of values for partitions in order of the table's partition keys.    *          Entries can be empty if you only want to specify latter partitions.    * @param max_parts    *          The maximum number of partitions to return    * @return A list of partition names that match the partial spec.    * @throws MetaException    * @throws NoSuchObjectException    */
+comment|/**    * Lists partition names that match a given partial specification    * @param catName catalog name.    * @param db_name    *          The name of the database which has the partitions    * @param tbl_name    *          The name of the table which has the partitions    * @param part_vals    *          A partial list of values for partitions in order of the table's partition keys.    *          Entries can be empty if you only want to specify latter partitions.    * @param max_parts    *          The maximum number of partitions to return    * @return A list of partition names that match the partial spec.    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException No such table exists    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|listPartitionNamesPs
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -2434,13 +2739,16 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Lists partitions that match a given partial specification and sets their auth privileges.    *   If userName and groupNames null, then no auth privileges are set.    * @param db_name    *          The name of the database which has the partitions    * @param tbl_name    *          The name of the table which has the partitions    * @param part_vals    *          A partial list of values for partitions in order of the table's partition keys    *          Entries can be empty if you need to specify latter partitions.    * @param max_parts    *          The maximum number of partitions to return    * @param userName    *          The user name for the partition for authentication privileges    * @param groupNames    *          The groupNames for the partition for authentication privileges    * @return A list of partitions that match the partial spec.    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    */
+comment|/**    * Lists partitions that match a given partial specification and sets their auth privileges.    *   If userName and groupNames null, then no auth privileges are set.    * @param catName catalog name.    * @param db_name    *          The name of the database which has the partitions    * @param tbl_name    *          The name of the table which has the partitions    * @param part_vals    *          A partial list of values for partitions in order of the table's partition keys    *          Entries can be empty if you need to specify latter partitions.    * @param max_parts    *          The maximum number of partitions to return    * @param userName    *          The user name for the partition for authentication privileges    * @param groupNames    *          The groupNames for the partition for authentication privileges    * @return A list of partitions that match the partial spec.    * @throws MetaException error access RDBMS    * @throws NoSuchObjectException No such table exists    * @throws InvalidObjectException error access privilege information    */
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|listPartitionsPsWithAuth
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -2472,7 +2780,7 @@ name|InvalidObjectException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/** Persists the given column statistics object to the metastore    * @param colStats object to persist    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/** Persists the given column statistics object to the metastore    * @param colStats object to persist    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    */
 name|boolean
 name|updateTableColumnStatistics
 parameter_list|(
@@ -2488,7 +2796,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/** Persists the given column statistics object to the metastore    * @param partVals    *    * @param statsObj object to persist    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/** Persists the given column statistics object to the metastore    * @param statsObj object to persist    * @param partVals partition values to persist the stats for    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    */
 name|boolean
 name|updatePartitionColumnStatistics
 parameter_list|(
@@ -2510,10 +2818,13 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    *    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException    * @throws MetaException    *    */
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
 name|ColumnStatistics
 name|getTableColumnStatistics
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2531,13 +2842,16 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for given columns in given partitions in a given    * table in a given database if such statistics exist.    */
+comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
 name|List
 argument_list|<
 name|ColumnStatistics
 argument_list|>
 name|getPartitionColumnStatistics
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2561,10 +2875,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Deletes column statistics if present associated with a given db, table, partition and col. If    * null is passed instead of a colName, stats when present for all columns associated    * with a given db, table and partition are deleted.    *    * @param dbName    * @param tableName    * @param partName    * @param partVals    * @param colName    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/**    * Deletes column statistics if present associated with a given db, table, partition and col. If    * null is passed instead of a colName, stats when present for all columns associated    * with a given db, table and partition are deleted.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param partVals partition values.    * @param colName column name.    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException no such partition    * @throws MetaException error access the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws InvalidInputException bad input, such as null table or database name.    */
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2592,10 +2909,13 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Deletes column statistics if present associated with a given db, table and col. If    * null is passed instead of a colName, stats when present for all columns associated    * with a given db and table are deleted.    *    * @param dbName    * @param tableName    * @param colName    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/**    * Delete statistics for a single column or all columns in a table.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name.  Null to delete stats for all columns in the table.    * @return true if the statistics were deleted.    * @throws NoSuchObjectException no such table or column.    * @throws MetaException error access the RDBMS.    * @throws InvalidObjectException error dropping the stats    * @throws InvalidInputException bad inputs, such as null table name.    */
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2709,9 +3029,13 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Drop a list of partitions.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name    * @param partNames list of partition names.    * @throws MetaException error access RDBMS or storage.    * @throws NoSuchObjectException One or more of the partitions does not exist.    */
 name|void
 name|dropPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2729,6 +3053,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * List all DB grants for a given principal.    * @param principalName principal name    * @param principalType type    * @return all DB grants for this principal    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2742,6 +3067,7 @@ name|PrincipalType
 name|principalType
 parameter_list|)
 function_decl|;
+comment|/**    * List all Table grants for a given principal    * @param principalName principal name    * @param principalType type    * @return all Table grants for this principal    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2755,6 +3081,7 @@ name|PrincipalType
 name|principalType
 parameter_list|)
 function_decl|;
+comment|/**    * List all Partition grants for a given principal    * @param principalName principal name    * @param principalType type    * @return all Partition grants for this principal    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2768,6 +3095,7 @@ name|PrincipalType
 name|principalType
 parameter_list|)
 function_decl|;
+comment|/**    * List all Table column grants for a given principal    * @param principalName principal name    * @param principalType type    * @return all Table column grants for this principal    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2781,6 +3109,7 @@ name|PrincipalType
 name|principalType
 parameter_list|)
 function_decl|;
+comment|/**    * List all Partition column grants for a given principal    * @param principalName principal name    * @param principalType type    * @return all Partition column grants for this principal    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2801,6 +3130,7 @@ argument_list|>
 name|listGlobalGrantsAll
 parameter_list|()
 function_decl|;
+comment|/**    * Find all the privileges for a given database.    * @param catName catalog name    * @param dbName database name    * @return list of all privileges.    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2808,9 +3138,13 @@ argument_list|>
 name|listDBGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 function_decl|;
+comment|/**    * Find all of the privileges for a given column in a given partition.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partitionName partition name (not value)    * @param columnName column name    * @return all privileges on this column in this partition    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2818,6 +3152,9 @@ argument_list|>
 name|listPartitionColumnGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -2830,6 +3167,7 @@ name|String
 name|columnName
 parameter_list|)
 function_decl|;
+comment|/**    * Find all of the privileges for a given table    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @return all privileges on this table    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
@@ -2837,18 +3175,25 @@ argument_list|>
 name|listTableGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
 name|tableName
 parameter_list|)
 function_decl|;
+comment|/**    * Find all of the privileges for a given partition.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partitionName partition name (not value)    * @return all privileges on this partition    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
 argument_list|>
 name|listPartitionGrantsAll
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2859,12 +3204,16 @@ name|String
 name|partitionName
 parameter_list|)
 function_decl|;
+comment|/**    * Find all of the privileges for a given column in a given table.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param columnName column name    * @return all privileges on this column in this table    */
 name|List
 argument_list|<
 name|HiveObjectPrivilege
 argument_list|>
 name|listTableColumnGrantsAll
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2875,7 +3224,7 @@ name|String
 name|columnName
 parameter_list|)
 function_decl|;
-comment|/**    * Register a user-defined function based on the function specification passed in.    * @param func    * @throws InvalidObjectException    * @throws MetaException    */
+comment|/**    * Register a user-defined function based on the function specification passed in.    * @param func function to create    * @throws InvalidObjectException incorrectly specified function    * @throws MetaException error accessing the RDBMS    */
 name|void
 name|createFunction
 parameter_list|(
@@ -2887,10 +3236,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Alter function based on new function specs.    * @param dbName    * @param funcName    * @param newFunction    * @throws InvalidObjectException    * @throws MetaException    */
+comment|/**    * Alter function based on new function specs.    * @param dbName database name    * @param funcName function name    * @param newFunction new function specification    * @throws InvalidObjectException no such function, or incorrectly specified new function    * @throws MetaException incorrectly specified function    */
 name|void
 name|alterFunction
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2905,10 +3257,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Drop a function definition.    * @param dbName    * @param funcName    * @throws MetaException    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws InvalidInputException    */
+comment|/**    * Drop a function definition.    * @param dbName database name    * @param funcName function name    * @throws MetaException incorrectly specified function    * @throws NoSuchObjectException no such function    * @throws InvalidObjectException not sure when this is thrown    * @throws InvalidInputException not sure when this is thrown    */
 name|void
 name|dropFunction
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2924,10 +3279,13 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Retrieve function by name.    * @param dbName    * @param funcName    * @return    * @throws MetaException    */
+comment|/**    * Retrieve function by name.    * @param dbName database name    * @param funcName function name    * @return the function    * @throws MetaException incorrectly specified function    */
 name|Function
 name|getFunction
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2937,23 +3295,29 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Retrieve all functions.    * @return    * @throws MetaException    */
+comment|/**    * Retrieve all functions.    * @return all functions in a catalog    * @throws MetaException incorrectly specified function    */
 name|List
 argument_list|<
 name|Function
 argument_list|>
 name|getAllFunctions
-parameter_list|()
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Retrieve list of function names based on name pattern.    * @param dbName    * @param pattern    * @return    * @throws MetaException    */
+comment|/**    * Retrieve list of function names based on name pattern.    * @param dbName database name    * @param pattern pattern to match    * @return functions that match the pattern    * @throws MetaException incorrectly specified function    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|getFunctions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2963,9 +3327,13 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
 name|AggrStats
 name|get_aggr_stats_for
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2989,7 +3357,25 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get the next notification event.    * @param rqst Request containing information on the last processed notification.    * @return list of notifications, sorted by eventId    */
+comment|/**<<<<<<< HEAD =======    * Get column stats for all partitions of all tables in the database    * @param catName catalog name    * @param dbName database name    * @return List of column stats objects for all partitions of all tables in the database    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such database    */
+name|List
+argument_list|<
+name|ColStatsObjWithSourceInfo
+argument_list|>
+name|getPartitionColStatsForDatabase
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**>>>>>>> e6d9605492... HIVE-18755 Modifications to the metastore for catalogs    * Get the next notification event.    * @param rqst Request containing information on the last processed notification.    * @return list of notifications, sorted by eventId    */
 name|NotificationEventResponse
 name|getNextNotification
 parameter_list|(
@@ -3019,7 +3405,6 @@ name|getCurrentNotificationEventId
 parameter_list|()
 function_decl|;
 comment|/**    * Get the number of events corresponding to given database with fromEventId.    * This is intended for use by the repl commands to track the progress of incremental dump.    * @return    */
-specifier|public
 name|NotificationEventsCountResponse
 name|getNotificationEventsCount
 parameter_list|(
@@ -3146,12 +3531,16 @@ parameter_list|()
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get the primary associated with a table.  Strangely enough each SQLPrimaryKey is actually a    * column in they key, not the key itself.  Thus the list.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name    * @return list of primary key columns or an empty list if the table does not have a primary key    * @throws MetaException error accessing the RDBMS    */
 name|List
 argument_list|<
 name|SQLPrimaryKey
 argument_list|>
 name|getPrimaryKeys
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -3161,13 +3550,16 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Get the foreign keys for a table.  All foreign keys for a particular table can be fetched by    * passing null for the last two arguments.    * @param parent_db_name Database the table referred to is in.  This can be null to match all    *                       databases.    * @param parent_tbl_name Table that is referred to.  This can be null to match all tables.    * @param foreign_db_name Database the table with the foreign key is in.    * @param foreign_tbl_name Table with the foreign key.    * @return List of all matching foreign key columns.  Note that if more than one foreign key    * matches the arguments the results here will be all mixed together into a single list.    * @throws MetaException if something goes wrong.    */
+comment|/**    * Get the foreign keys for a table.  All foreign keys for a particular table can be fetched by    * passing null for the last two arguments.    * @param catName catalog name.    * @param parent_db_name Database the table referred to is in.  This can be null to match all    *                       databases.    * @param parent_tbl_name Table that is referred to.  This can be null to match all tables.    * @param foreign_db_name Database the table with the foreign key is in.    * @param foreign_tbl_name Table with the foreign key.    * @return List of all matching foreign key columns.  Note that if more than one foreign key    * matches the arguments the results here will be all mixed together into a single list.    * @throws MetaException error access the RDBMS.    */
 name|List
 argument_list|<
 name|SQLForeignKey
 argument_list|>
 name|getForeignKeys
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|parent_db_name
 parameter_list|,
@@ -3183,6 +3575,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get unique constraints associated with a table.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @return list of unique constraints    * @throws MetaException error access the RDBMS.    */
 name|List
 argument_list|<
 name|SQLUniqueConstraint
@@ -3190,6 +3583,9 @@ argument_list|>
 name|getUniqueConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -3198,6 +3594,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get not null constraints on a table.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @return list of not null constraints    * @throws MetaException error accessing the RDBMS.    */
 name|List
 argument_list|<
 name|SQLNotNullConstraint
@@ -3205,6 +3602,9 @@ argument_list|>
 name|getNotNullConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -3213,6 +3613,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get default values for columns in a table.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name    * @return list of default values defined on the table.    * @throws MetaException error accessing the RDBMS    */
 name|List
 argument_list|<
 name|SQLDefaultConstraint
@@ -3220,6 +3621,9 @@ argument_list|>
 name|getDefaultConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -3228,6 +3632,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Get check constraints for columns in a table.    * @param catName catalog name.    * @param db_name database name    * @param tbl_name table name    * @return ccheck constraints for this table    * @throws MetaException error accessing the RDBMS    */
 name|List
 argument_list|<
 name|SQLCheckConstraint
@@ -3235,6 +3640,9 @@ argument_list|>
 name|getCheckConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -3243,6 +3651,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Create a table with constraints    * @param tbl table definition    * @param primaryKeys primary key definition, or null    * @param foreignKeys foreign key definition, or null    * @param uniqueConstraints unique constraints definition, or null    * @param notNullConstraints not null constraints definition, or null    * @param defaultConstraints default values definition, or null    * @return list of constraint names    * @throws InvalidObjectException one of the provided objects is malformed.    * @throws MetaException error accessing the RDBMS    */
 name|List
 argument_list|<
 name|String
@@ -3293,9 +3702,14 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Drop a constraint, any constraint.  I have no idea why add and get each have separate    * methods for each constraint type but drop has only one.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param constraintName name of the constraint    * @throws NoSuchObjectException no constraint of this name exists    */
+specifier|default
 name|void
 name|dropConstraint
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -3307,7 +3721,44 @@ name|constraintName
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
+block|{
+name|dropConstraint
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|constraintName
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drop a constraint, any constraint.  I have no idea why add and get each have separate    * methods for each constraint type but drop has only one.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param constraintName name of the constraint    * @param missingOk if true, it is not an error if there is no constraint of this name.  If    *                  false and there is no constraint of this name an exception will be thrown.    * @throws NoSuchObjectException no constraint of this name exists and missingOk = false    */
+name|void
+name|dropConstraint
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|constraintName
+parameter_list|,
+name|boolean
+name|missingOk
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
 function_decl|;
+comment|/**    * Add a primary key to a table.    * @param pks Columns in the primary key.    * @return the name of the constraint, as a list of strings.    * @throws InvalidObjectException The SQLPrimaryKeys list is malformed    * @throws MetaException error accessing the RDMBS    */
 name|List
 argument_list|<
 name|String
@@ -3325,6 +3776,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add a foreign key to a table.    * @param fks foreign key specification    * @return foreign key name.    * @throws InvalidObjectException the specification is malformed.    * @throws MetaException error accessing the RDBMS.    */
 name|List
 argument_list|<
 name|String
@@ -3342,6 +3794,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add unique constraints to a table.    * @param uks unique constraints specification    * @return unique constraint names.    * @throws InvalidObjectException the specification is malformed.    * @throws MetaException error accessing the RDBMS.    */
 name|List
 argument_list|<
 name|String
@@ -3359,6 +3812,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add not null constraints to a table.    * @param nns not null constraint specifications    * @return constraint names.    * @throws InvalidObjectException the specification is malformed.    * @throws MetaException error accessing the RDBMS.    */
 name|List
 argument_list|<
 name|String
@@ -3376,6 +3830,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add default values to a table definition    * @param dv list of default values    * @return constraint names    * @throws InvalidObjectException the specification is malformed.    * @throws MetaException error accessing the RDBMS.    */
 name|List
 argument_list|<
 name|String
@@ -3386,13 +3841,14 @@ name|List
 argument_list|<
 name|SQLDefaultConstraint
 argument_list|>
-name|nns
+name|dv
 parameter_list|)
 throws|throws
 name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Add check constraints to a table    * @param cc check constraints to add    * @return list of constraint names    * @throws InvalidObjectException the specification is malformed    * @throws MetaException error accessing the RDBMS    */
 name|List
 argument_list|<
 name|String
@@ -3403,7 +3859,7 @@ name|List
 argument_list|<
 name|SQLCheckConstraint
 argument_list|>
-name|nns
+name|cc
 parameter_list|)
 throws|throws
 name|InvalidObjectException

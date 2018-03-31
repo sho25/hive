@@ -1144,6 +1144,11 @@ name|get_table_core
 argument_list|(
 name|tbl
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,

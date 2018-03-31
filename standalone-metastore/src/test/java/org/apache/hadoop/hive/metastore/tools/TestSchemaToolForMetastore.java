@@ -640,7 +640,9 @@ index|[]
 block|{
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100);"
 block|,
-literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test');"
+literal|"insert into CTLGS values(37, 'mycat', 'my description', 'hdfs://tmp');"
+block|,
+literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'mycat');"
 block|}
 decl_stmt|;
 name|File
@@ -690,7 +692,7 @@ literal|"delete from DBS;"
 block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100);"
 block|,
-literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test');"
+literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'mycat');"
 block|}
 expr_stmt|;
 name|scriptFile
@@ -1122,6 +1124,13 @@ argument_list|,
 literal|"derby"
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Starting testSchemaInit"
+argument_list|)
+expr_stmt|;
 name|schemaTool
 operator|.
 name|doInit
@@ -1438,6 +1447,13 @@ name|outPrintStream
 argument_list|)
 expr_stmt|;
 comment|// Upgrade schema from 0.7.0 to latest
+name|Exception
+name|caught
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
 name|schemaTool
 operator|.
 name|doUpgrade
@@ -1445,6 +1461,18 @@ argument_list|(
 literal|"1.2.0"
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|caught
+operator|=
+name|e
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|info
@@ -1466,6 +1494,22 @@ operator|+
 name|stderr
 operator|.
 name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|caught
+operator|!=
+literal|null
+condition|)
+name|Assert
+operator|.
+name|fail
+argument_list|(
+name|caught
+operator|.
+name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1654,9 +1698,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role');"
+literal|"insert into CTLGS values (1, 'mycat', 'mydescription', 'hdfs://myhost.com:8020/user/hive/warehouse');"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role');"
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat');"
+block|,
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role', 'mycat');"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
@@ -1762,13 +1808,13 @@ literal|"delete from SDS;"
 block|,
 literal|"delete from DBS;"
 block|,
-literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role');"
+literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat');"
 block|,
-literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role');"
+literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role', 'mycat');"
 block|,
-literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role');"
+literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role', 'mycat');"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role');"
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role', 'mycat');"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://yourhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
@@ -2228,7 +2274,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role');"
+literal|"insert into CTLGS values (1, 'mycat', 'my description', 'hdfs://myhost.com:8020/user/hive/warehouse');"
+block|,
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat');"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,

@@ -1184,7 +1184,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default.simptbl table not found"
+literal|"hive.default.simptbl table not found"
 argument_list|,
 name|e
 operator|.
@@ -1288,7 +1288,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"default.simptbl table not found"
+literal|"hive.default.simptbl table not found"
 argument_list|,
 name|e
 operator|.

@@ -1399,6 +1399,44 @@ name|ImmutableList
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+import|;
+end_import
+
 begin_comment
 comment|/**  * BaseSemanticAnalyzer.  *  */
 end_comment
@@ -4238,6 +4276,8 @@ argument_list|(
 name|ast
 argument_list|,
 literal|true
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}
@@ -4255,6 +4295,9 @@ name|ast
 parameter_list|,
 name|boolean
 name|lowerCase
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -4270,45 +4313,35 @@ literal|null
 argument_list|,
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLPrimaryKey
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|,
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLForeignKey
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|,
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLUniqueConstraint
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|,
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLNotNullConstraint
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|,
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLDefaultConstraint
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|,
 operator|new
 name|ArrayList
-argument_list|<
-name|SQLCheckConstraint
-argument_list|>
+argument_list|<>
 argument_list|()
+argument_list|,
+name|conf
 argument_list|)
 return|;
 block|}
@@ -4660,6 +4693,9 @@ name|void
 name|processUniqueConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|databaseName
 parameter_list|,
 name|String
@@ -4699,6 +4735,8 @@ argument_list|)
 expr_stmt|;
 name|constraintInfosToUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -4715,6 +4753,9 @@ name|void
 name|processUniqueConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|databaseName
 parameter_list|,
 name|String
@@ -4766,6 +4807,8 @@ argument_list|)
 expr_stmt|;
 name|constraintInfosToUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -4781,6 +4824,9 @@ specifier|static
 name|void
 name|constraintInfosToUniqueConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -4820,6 +4866,8 @@ argument_list|(
 operator|new
 name|SQLUniqueConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -4856,6 +4904,9 @@ specifier|static
 name|void
 name|processCheckConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -4916,6 +4967,8 @@ argument_list|)
 expr_stmt|;
 name|constraintInfosToCheckConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -4931,6 +4984,9 @@ specifier|static
 name|void
 name|constraintInfosToCheckConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -4965,6 +5021,8 @@ argument_list|(
 operator|new
 name|SQLCheckConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -5002,6 +5060,9 @@ specifier|static
 name|void
 name|processDefaultConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -5058,6 +5119,8 @@ argument_list|)
 expr_stmt|;
 name|constraintInfosToDefaultConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -5073,6 +5136,9 @@ specifier|static
 name|void
 name|constraintInfosToDefaultConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -5107,6 +5173,8 @@ argument_list|(
 operator|new
 name|SQLDefaultConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -5144,6 +5212,9 @@ specifier|static
 name|void
 name|processNotNullConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -5196,6 +5267,8 @@ argument_list|)
 expr_stmt|;
 name|constraintInfosToNotNullConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -5211,6 +5284,9 @@ specifier|static
 name|void
 name|constraintInfosToNotNullConstraints
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|databaseName
 parameter_list|,
@@ -5245,6 +5321,8 @@ argument_list|(
 operator|new
 name|SQLNotNullConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|databaseName
 argument_list|,
 name|tableName
@@ -7435,6 +7513,9 @@ argument_list|<
 name|SQLCheckConstraint
 argument_list|>
 name|checkConstraints
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -7532,8 +7613,22 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO CAT - for now always use the default catalog.  Eventually will want to see if
+comment|// the user specified a catalog
+name|String
+name|catName
+init|=
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|processUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualifiedTabName
 index|[
 literal|0
@@ -7888,6 +7983,18 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// TODO CAT - for now always use the default catalog.  Eventually will want to see if
+comment|// the user specified a catalog
+name|String
+name|catName
+init|=
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 comment|// Process column constraint
 switch|switch
 condition|(
@@ -7907,6 +8014,8 @@ name|TOK_CHECK_CONSTRAINT
 case|:
 name|processCheckConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualifiedTabName
 index|[
 literal|0
@@ -7944,6 +8053,8 @@ name|TOK_DEFAULT_VALUE
 case|:
 name|processDefaultConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualifiedTabName
 index|[
 literal|0
@@ -7979,6 +8090,8 @@ name|TOK_NOT_NULL
 case|:
 name|processNotNullConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualifiedTabName
 index|[
 literal|0
@@ -8012,6 +8125,8 @@ name|TOK_UNIQUE
 case|:
 name|processUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|qualifiedTabName
 index|[
 literal|0

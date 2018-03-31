@@ -2224,6 +2224,14 @@ argument_list|()
 operator|.
 name|getDatabase
 argument_list|(
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
+argument_list|,
 name|table
 operator|.
 name|getDbName

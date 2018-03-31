@@ -187,6 +187,26 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|client
+operator|.
+name|builder
+operator|.
+name|DatabaseBuilder
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|conf
 operator|.
 name|MetastoreConf
@@ -862,24 +882,20 @@ literal|true
 comment|// Cascade.
 argument_list|)
 expr_stmt|;
-name|hmsc
-operator|.
-name|createDatabase
-argument_list|(
 operator|new
-name|Database
+name|DatabaseBuilder
+argument_list|()
+operator|.
+name|setName
 argument_list|(
 name|dbName
-argument_list|,
-literal|""
-argument_list|,
-comment|// Description.
-literal|null
-argument_list|,
-comment|// Location.
-literal|null
-comment|// Parameters.
 argument_list|)
+operator|.
+name|create
+argument_list|(
+name|hmsc
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}

@@ -69,6 +69,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|Catalog
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|Database
 import|;
 end_import
@@ -160,6 +178,24 @@ operator|.
 name|api
 operator|.
 name|Table
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|TableMeta
 import|;
 end_import
 
@@ -187,8 +223,43 @@ specifier|public
 interface|interface
 name|MetaStoreFilterHook
 block|{
+comment|/**    * Filter a catalog object.  Default implementation returns the passed in catalog.    * @param catalog catalog to filter    * @return filtered catalog    * @throws MetaException something bad happened    */
+specifier|default
+name|Catalog
+name|filterCatalog
+parameter_list|(
+name|Catalog
+name|catalog
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+return|return
+name|catalog
+return|;
+block|}
+comment|/**    * Filter a list of catalog names.  Default implementation returns the passed in list.    * @param catalogs list of catalog names.    * @return filtered list of catalog names.    * @throws MetaException something bad happened.    */
+specifier|default
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|filterCatalogs
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|catalogs
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+return|return
+name|catalogs
+return|;
+block|}
 comment|/**    * Filter given list of databases    * @param dbList    * @return List of filtered Db names    */
-specifier|public
 name|List
 argument_list|<
 name|String
@@ -205,7 +276,6 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**    * filter to given database object if applicable    * @param dataBase    * @return the same database if it's not filtered out    * @throws NoSuchObjectException    */
-specifier|public
 name|Database
 name|filterDatabase
 parameter_list|(
@@ -217,14 +287,16 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Filter given list of tables    * @param dbName    * @param tableList    * @return List of filtered table names    */
-specifier|public
+comment|/**    * Filter given list of tables    * @param catName catalog name    * @param dbName database name    * @param tableList list of table returned by the metastore    * @return List of filtered table names    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|filterTableNames
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -237,8 +309,25 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|// Previously this was handled by filterTableNames.  But it can't be anymore because we can no
+comment|// longer depend on a 1-1 mapping between table name and entry in the list.
+comment|/**    * Filter a list of TableMeta objects.    * @param tableMetas list of TableMetas to filter    * @return filtered table metas    * @throws MetaException something went wrong    */
+name|List
+argument_list|<
+name|TableMeta
+argument_list|>
+name|filterTableMetas
+parameter_list|(
+name|List
+argument_list|<
+name|TableMeta
+argument_list|>
+name|tableMetas
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * filter to given table object if applicable    * @param table    * @return the same table if it's not filtered out    * @throws NoSuchObjectException    */
-specifier|public
 name|Table
 name|filterTable
 parameter_list|(
@@ -251,7 +340,6 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Filter given list of tables    * @param tableList    * @return List of filtered table names    */
-specifier|public
 name|List
 argument_list|<
 name|Table
@@ -268,7 +356,6 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**    * Filter given list of partitions    * @param partitionList    * @return    */
-specifier|public
 name|List
 argument_list|<
 name|Partition
@@ -285,7 +372,6 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**    * Filter given list of partition specs    * @param partitionSpecList    * @return    */
-specifier|public
 name|List
 argument_list|<
 name|PartitionSpec
@@ -302,7 +388,6 @@ throws|throws
 name|MetaException
 function_decl|;
 comment|/**    * filter to given partition object if applicable    * @param partition    * @return the same partition object if it's not filtered out    * @throws NoSuchObjectException    */
-specifier|public
 name|Partition
 name|filterPartition
 parameter_list|(
@@ -314,14 +399,16 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Filter given list of partition names    * @param dbName    * @param tblName    * @param partitionNames    * @return    */
-specifier|public
+comment|/**    * Filter given list of partition names    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partitionNames list of partition names.    * @return list of filtered partition names.    */
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|filterPartitionNames
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,

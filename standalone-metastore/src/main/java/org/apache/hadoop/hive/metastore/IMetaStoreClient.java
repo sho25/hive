@@ -107,6 +107,20 @@ name|hadoop
 operator|.
 name|conf
 operator|.
+name|Configurable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|conf
+operator|.
 name|Configuration
 import|;
 end_import
@@ -264,6 +278,24 @@ operator|.
 name|api
 operator|.
 name|CheckConstraintsRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Catalog
 import|;
 end_import
 
@@ -1867,6 +1899,24 @@ name|metastore
 operator|.
 name|utils
 operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
 name|ObjectPair
 import|;
 end_import
@@ -1962,7 +2012,65 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get the names of all databases in the MetaStore that match the given pattern.    * @param databasePattern    * @return List of database names.    * @throws MetaException    * @throws TException    */
+comment|/**    * Create a new catalog.    * @param catalog catalog object to create.    * @throws AlreadyExistsException A catalog of this name already exists.    * @throws InvalidObjectException There is something wrong with the passed in catalog object.    * @throws MetaException something went wrong, usually either in the database or trying to    * create the directory for the catalog.    * @throws TException general thrift exception.    */
+name|void
+name|createCatalog
+parameter_list|(
+name|Catalog
+name|catalog
+parameter_list|)
+throws|throws
+name|AlreadyExistsException
+throws|,
+name|InvalidObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a catalog object.    * @param catName Name of the catalog to fetch.    * @return The catalog.    * @throws NoSuchObjectException no catalog of this name exists.    * @throws MetaException something went wrong, usually in the database.    * @throws TException general thrift exception.    */
+name|Catalog
+name|getCatalog
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a list of all catalogs known to the system.    * @return list of catalog names    * @throws MetaException something went wrong, usually in the database.    * @throws TException general thrift exception.    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getCatalogs
+parameter_list|()
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a catalog.  Catalogs must be empty to be dropped, there is no cascade for dropping a    * catalog.    * @param catName name of the catalog to drop    * @throws NoSuchObjectException no catalog of this name exists.    * @throws InvalidOperationException The catalog is not empty and cannot be dropped.    * @throws MetaException something went wrong, usually in the database.    * @throws TException general thrift exception.    */
+name|void
+name|dropCatalog
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get the names of all databases in the default catalog that match the given pattern.    * @param databasePattern pattern for the database name to patch    * @return List of database names.    * @throws MetaException error accessing RDBMS.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|String
@@ -1977,7 +2085,25 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get the names of all databases in the MetaStore.    * @return List of database names.    * @throws MetaException    * @throws TException    */
+comment|/**    * Get all databases in a catalog whose names match a pattern.    * @param catName  catalog name.  Can be null, in which case the default catalog is assumed.    * @param databasePattern pattern for the database name to match    * @return list of database names    * @throws MetaException error accessing RDBMS.    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getDatabases
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|databasePattern
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get the names of all databases in the MetaStore.    * @return List of database names in the default catalog.    * @throws MetaException error accessing RDBMS.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|String
@@ -1989,7 +2115,22 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern.    * @param dbName    * @param tablePattern    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
+comment|/**    * Get all databases in a catalog.    * @param catName catalog name.  Can be null, in which case the default catalog is assumed.    * @return list of all database names    * @throws MetaException error accessing RDBMS.    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getAllDatabases
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern.    * @param dbName database name.    * @param tablePattern pattern for table name to conform to    * @return List of table names.    * @throws MetaException error fetching information from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException indicated database to search in does not exist.    */
 name|List
 argument_list|<
 name|String
@@ -2009,7 +2150,30 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern and table type (MANAGED_TABLE || EXTERNAL_TABLE || VIRTUAL_VIEW)    * @param dbName Name of the database to fetch tables in.    * @param tablePattern pattern to match for table names.    * @param tableType Type of the table in the HMS store. VIRTUAL_VIEW is for views.    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
+comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern.    * @param catName catalog name.    * @param dbName database name.    * @param tablePattern pattern for table name to conform to    * @return List of table names.    * @throws MetaException error fetching information from the RDBMS    * @throws TException general thrift error    * @throws UnknownDBException indicated database to search in does not exist.    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getTables
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tablePattern
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern and table type (MANAGED_TABLE || EXTERNAL_TABLE || VIRTUAL_VIEW)    * @param dbName Name of the database to fetch tables in.    * @param tablePattern pattern to match for table names.    * @param tableType Type of the table in the HMS store. VIRTUAL_VIEW is for views.    * @return List of table names.    * @throws MetaException error fetching information from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException indicated database does not exist.    */
 name|List
 argument_list|<
 name|String
@@ -2032,7 +2196,33 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get materialized views that have rewriting enabled.    * @param dbName Name of the database to fetch materialized views from.    * @return List of materialized view names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
+comment|/**    * Get the names of all tables in the specified database that satisfy the supplied    * table name pattern and table type (MANAGED_TABLE || EXTERNAL_TABLE || VIRTUAL_VIEW)    * @param catName catalog name.    * @param dbName Name of the database to fetch tables in.    * @param tablePattern pattern to match for table names.    * @param tableType Type of the table in the HMS store. VIRTUAL_VIEW is for views.    * @return List of table names.    * @throws MetaException error fetching information from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException indicated database does not exist.    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getTables
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tablePattern
+parameter_list|,
+name|TableType
+name|tableType
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get materialized views that have rewriting enabled.  This will use the default catalog.    * @param dbName Name of the database to fetch materialized views from.    * @return List of materialized view names.    * @throws MetaException error fetching from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException no such database    */
 name|List
 argument_list|<
 name|String
@@ -2049,7 +2239,27 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * For quick GetTablesOperation    */
+comment|/**    * Get materialized views that have rewriting enabled.    * @param catName catalog name.    * @param dbName Name of the database to fetch materialized views from.    * @return List of materialized view names.    * @throws MetaException error fetching from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException no such database    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getMaterializedViewsForRewriting
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Fetches just table name and comments.  Useful when you need full table name    * (catalog.database.table) but don't need extra information like partition columns that    * require additional fetches from the database.    * @param dbPatterns database pattern to match, or null for all databases    * @param tablePatterns table pattern to match.    * @param tableTypes list of table types to fetch.    * @return list of TableMeta objects with information on matching tables    * @throws MetaException something went wrong with the fetch from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException No databases match the provided pattern.    */
 name|List
 argument_list|<
 name|TableMeta
@@ -2075,7 +2285,36 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get the names of all tables in the specified database.    * @param dbName    * @return List of table names.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    */
+comment|/**    * Fetches just table name and comments.  Useful when you need full table name    * (catalog.database.table) but don't need extra information like partition columns that    * require additional fetches from the database.    * @param catName catalog to search in.  Search cannot cross catalogs.    * @param dbPatterns database pattern to match, or null for all databases    * @param tablePatterns table pattern to match.    * @param tableTypes list of table types to fetch.    * @return list of TableMeta objects with information on matching tables    * @throws MetaException something went wrong with the fetch from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException No databases match the provided pattern.    */
+name|List
+argument_list|<
+name|TableMeta
+argument_list|>
+name|getTableMeta
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbPatterns
+parameter_list|,
+name|String
+name|tablePatterns
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|tableTypes
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get the names of all tables in the specified database.    * @param dbName database name    * @return List of table names.    * @throws MetaException something went wrong with the fetch from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException No databases match the provided pattern.    */
 name|List
 argument_list|<
 name|String
@@ -2092,7 +2331,27 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,&lt;,&lt;=,&gt;,&gt;=, =,&lt;&gt;    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and&lt;&gt;.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and&lt;&gt; only work for keys that exist in the tables.    *   E.g., filtering on tables where key1&lt;&gt; value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param maxTables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    */
+comment|/**    * Get the names of all tables in the specified database.    * @param catName catalog name    * @param dbName database name    * @return List of table names.    * @throws MetaException something went wrong with the fetch from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException No databases match the provided pattern.    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getAllTables
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,&lt;,&lt;=,&gt;,&gt;=, =,&lt;&gt;    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and&lt;&gt;.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and&lt;&gt; only work for keys that exist in the tables.    *   E.g., filtering on tables where key1&lt;&gt; value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param maxTables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    * @throws InvalidOperationException invalid filter    * @throws UnknownDBException no such database    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|String
@@ -2109,15 +2368,39 @@ name|short
 name|maxTables
 parameter_list|)
 throws|throws
-name|MetaException
-throws|,
 name|TException
 throws|,
 name|InvalidOperationException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @param ignoreUnknownTab    *          don't throw if the requested table doesn't exist    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
+comment|/**    * Get a list of table names that match a filter.    * The filter operators are LIKE,&lt;,&lt;=,&gt;,&gt;=, =,&lt;&gt;    *    * In the filter statement, values interpreted as strings must be enclosed in quotes,    * while values interpreted as integers should not be.  Strings and integers are the only    * supported value types.    *    * The currently supported key names in the filter are:    * Constants.HIVE_FILTER_FIELD_OWNER, which filters on the tables' owner's name    *   and supports all filter operators    * Constants.HIVE_FILTER_FIELD_LAST_ACCESS, which filters on the last access times    *   and supports all filter operators except LIKE    * Constants.HIVE_FILTER_FIELD_PARAMS, which filters on the tables' parameter keys and values    *   and only supports the filter operators = and&lt;&gt;.    *   Append the parameter key name to HIVE_FILTER_FIELD_PARAMS in the filter statement.    *   For example, to filter on parameter keys called "retention", the key name in the filter    *   statement should be Constants.HIVE_FILTER_FIELD_PARAMS + "retention"    *   Also, = and&lt;&gt; only work for keys that exist in the tables.    *   E.g., filtering on tables where key1&lt;&gt; value will only    *   return tables that have a value for the parameter key1.    * Some example filter statements include:    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " like \".*test.*\" and " +    *   Constants.HIVE_FILTER_FIELD_LAST_ACCESS + " = 0";    * filter = Constants.HIVE_FILTER_FIELD_OWNER + " = \"test_user\" and (" +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"30\" or " +    *   Constants.HIVE_FILTER_FIELD_PARAMS + "retention = \"90\")"    *    * @param catName catalog name    * @param dbName    *          The name of the database from which you will retrieve the table names    * @param filter    *          The filter string    * @param maxTables    *          The maximum number of tables returned    * @return  A list of table names that match the desired filter    * @throws InvalidOperationException invalid filter    * @throws UnknownDBException no such database    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listTableNamesByFilter
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|filter
+parameter_list|,
+name|int
+name|maxTables
+parameter_list|)
+throws|throws
+name|TException
+throws|,
+name|InvalidOperationException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @param ignoreUnknownTab    *          don't throw if the requested table doesn't exist    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    *    */
 name|void
 name|dropTable
 parameter_list|(
@@ -2140,8 +2423,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * @param ifPurge    *          completely purge the table (skipping trash) while removing data from warehouse    * @see #dropTable(String, String, boolean, boolean)    */
-specifier|public
+comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @param ignoreUnknownTab    *          don't throw if the requested table doesn't exist    * @param ifPurge    *          completely purge the table (skipping trash) while removing data from warehouse    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
 name|void
 name|dropTable
 parameter_list|(
@@ -2167,28 +2449,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Drop the table in the DEFAULT database.    *    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @throws MetaException    *           Could not drop table properly.    * @throws UnknownTableException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           The table wasn't found.    *    * @deprecated As of release 0.6.0 replaced by {@link #dropTable(String, String, boolean, boolean)}.    *             This method will be removed in release 0.7.0.    */
-annotation|@
-name|Deprecated
-name|void
-name|dropTable
-parameter_list|(
-name|String
-name|tableName
-parameter_list|,
-name|boolean
-name|deleteData
-parameter_list|)
-throws|throws
-name|MetaException
-throws|,
-name|UnknownTableException
-throws|,
-name|TException
-throws|,
-name|NoSuchObjectException
-function_decl|;
-comment|/**    * @see #dropTable(String, String, boolean, boolean)    */
+comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
 name|void
 name|dropTable
 parameter_list|(
@@ -2205,10 +2466,143 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Truncate the table/partitions in the DEFAULT database.    * @param dbName    *          The db to which the table to be truncate belongs to    * @param tableName    *          The table to truncate    * @param partNames    *          List of partitions to truncate. NULL will truncate the whole table/all partitions    * @throws MetaException    * @throws TException    *           Could not truncate table properly.    */
+comment|/**    * Drop a table.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @param deleteData whether associated data should be deleted.    * @param ignoreUnknownTable whether a non-existent table name should be ignored    * @param ifPurge whether dropped data should be immediately removed rather than placed in HDFS    *               trash.    * @throws MetaException something went wrong, usually in the RDBMS or storage.    * @throws NoSuchObjectException No table of this name exists, only thrown if    * ignoreUnknownTable is false.    * @throws TException general thrift error.    */
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownTable
+parameter_list|,
+name|boolean
+name|ifPurge
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a table.  Equivalent to    * {@link #dropTable(String, String, String, boolean, boolean, boolean)} with ifPurge set to    * false.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @param deleteData whether associated data should be deleted.    * @param ignoreUnknownTable whether a non-existent table name should be ignored    * @throws MetaException something went wrong, usually in the RDBMS or storage.    * @throws NoSuchObjectException No table of this name exists, only thrown if    * ignoreUnknownTable is false.    * @throws TException general thrift error.    */
+specifier|default
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownTable
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+block|{
+name|dropTable
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|deleteData
+argument_list|,
+name|ignoreUnknownTable
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drop a table.  Equivalent to    * {@link #dropTable(String, String, String, boolean, boolean, boolean)} with deleteData    * set and ignoreUnknownTable set to true and ifPurge set to false.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @throws MetaException something went wrong, usually in the RDBMS or storage.    * @throws NoSuchObjectException No table of this name exists, only thrown if    * ignoreUnknownTable is false.    * @throws TException general thrift error.    */
+specifier|default
+name|void
+name|dropTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+block|{
+name|dropTable
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+literal|true
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Truncate the table/partitions in the DEFAULT database.    * @param dbName    *          The db to which the table to be truncate belongs to    * @param tableName    *          The table to truncate    * @param partNames    *          List of partitions to truncate. NULL will truncate the whole table/all partitions    * @throws MetaException Failure in the RDBMS or storage    * @throws TException Thrift transport exception    */
 name|void
 name|truncateTable
 parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Truncate the table/partitions in the DEFAULT database.    * @param catName catalog name    * @param dbName    *          The db to which the table to be truncate belongs to    * @param tableName    *          The table to truncate    * @param partNames    *          List of partitions to truncate. NULL will truncate the whole table/all partitions    * @throws MetaException Failure in the RDBMS or storage    * @throws TException Thrift transport exception    */
+name|void
+name|truncateTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2238,6 +2632,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Check whether a table exists in the default catalog.    * @param databaseName database name    * @param tableName table name    * @return true if the indicated table exists, false if not    * @throws MetaException error fetching form the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException the indicated database does not exist.    */
 name|boolean
 name|tableExists
 parameter_list|(
@@ -2254,12 +2649,16 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Check to see if the specified table exists in the DEFAULT database.    * @param tableName    * @return TRUE if DEFAULT.tableName exists, FALSE otherwise.    * @throws MetaException    * @throws TException    * @throws UnknownDBException    * @deprecated As of release 0.6.0 replaced by {@link #tableExists(String, String)}.    *             This method will be removed in release 0.7.0.    */
-annotation|@
-name|Deprecated
+comment|/**    * Check whether a table exists.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @return true if the indicated table exists, false if not    * @throws MetaException error fetching form the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException the indicated database does not exist.    */
 name|boolean
 name|tableExists
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
 name|String
 name|tableName
 parameter_list|)
@@ -2270,23 +2669,7 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * Get a table object from the DEFAULT database.    *    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    * @deprecated As of release 0.6.0 replaced by {@link #getTable(String, String)}.    *             This method will be removed in release 0.7.0.    */
-annotation|@
-name|Deprecated
-name|Table
-name|getTable
-parameter_list|(
-name|String
-name|tableName
-parameter_list|)
-throws|throws
-name|MetaException
-throws|,
-name|TException
-throws|,
-name|NoSuchObjectException
-function_decl|;
-comment|/**    * Get a Database Object    * @param databaseName  name of the database to fetch    * @return the database    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
+comment|/**    * Get a Database Object in the default catalog    * @param databaseName  name of the database to fetch    * @return the database    * @throws NoSuchObjectException The database does not exist    * @throws MetaException Could not fetch the database    * @throws TException A thrift communication error occurred    */
 name|Database
 name|getDatabase
 parameter_list|(
@@ -2300,7 +2683,24 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get a table object.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
+comment|/**    * Get a database.    * @param catalogName catalog name.  Can be null, in which case    * {@link Warehouse#DEFAULT_CATALOG_NAME} will be assumed.    * @param databaseName database name    * @return the database object    * @throws NoSuchObjectException No database with this name exists in the specified catalog    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift error    */
+name|Database
+name|getDatabase
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
+name|String
+name|databaseName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a table object in the default catalog.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 name|Table
 name|getTable
 parameter_list|(
@@ -2317,13 +2717,59 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    *    * @param dbName    *          The database the tables are located in.    * @param tableNames    *          The names of the tables to fetch    * @return A list of objects representing the tables.    *          Only the tables that can be retrieved from the database are returned.  For example,    *          if none of the requested tables could be retrieved, an empty list is returned.    *          There is no guarantee of ordering of the returned tables.    * @throws InvalidOperationException    *          The input to this operation is invalid (e.g., the list of tables names is null)    * @throws UnknownDBException    *          The requested database could not be fetched.    * @throws TException    *          A thrift communication error occurred    * @throws MetaException    *          Any other errors    */
+comment|/**    * Get a table object.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @return table object.    * @throws MetaException Something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
+name|Table
+name|getTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get tables as objects (rather than just fetching their names).  This is more expensive and    * should only be used if you actually need all the information about the tables.    * @param dbName    *          The database the tables are located in.    * @param tableNames    *          The names of the tables to fetch    * @return A list of objects representing the tables.    *          Only the tables that can be retrieved from the database are returned.  For example,    *          if none of the requested tables could be retrieved, an empty list is returned.    *          There is no guarantee of ordering of the returned tables.    * @throws InvalidOperationException    *          The input to this operation is invalid (e.g., the list of tables names is null)    * @throws UnknownDBException    *          The requested database could not be fetched.    * @throws TException    *          A thrift communication error occurred    * @throws MetaException    *          Any other errors    */
 name|List
 argument_list|<
 name|Table
 argument_list|>
 name|getTableObjectsByName
 parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|tableNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|InvalidOperationException
+throws|,
+name|UnknownDBException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get tables as objects (rather than just fetching their names).  This is more expensive and    * should only be used if you actually need all the information about the tables.    * @param catName catalog name    * @param dbName    *          The database the tables are located in.    * @param tableNames    *          The names of the tables to fetch    * @return A list of objects representing the tables.    *          Only the tables that can be retrieved from the database are returned.  For example,    *          if none of the requested tables could be retrieved, an empty list is returned.    *          There is no guarantee of ordering of the returned tables.    * @throws InvalidOperationException    *          The input to this operation is invalid (e.g., the list of tables names is null)    * @throws UnknownDBException    *          The requested database could not be fetched.    * @throws TException    *          A thrift communication error occurred    * @throws MetaException    *          Any other errors    */
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|getTableObjectsByName
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -2387,15 +2833,36 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tableName    * @param dbName    * @param partVals    * @return the partition object    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#append_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+comment|/**    * Updates the creation metadata for the materialized view.    */
+name|void
+name|updateCreationMetadata
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|CreationMetadata
+name|cm
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**   /**    * Add a partition to a table and get back the resulting Partition object.  This creates an    * empty default partition with just the partition values set.    * @param dbName database name    * @param tableName table name    * @param partVals partition values    * @return the partition object    * @throws InvalidObjectException no such table    * @throws AlreadyExistsException a partition with these values already exists    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|Partition
 name|appendPartition
 parameter_list|(
 name|String
-name|tableName
+name|dbName
 parameter_list|,
 name|String
-name|dbName
+name|tableName
 parameter_list|,
 name|List
 argument_list|<
@@ -2412,14 +2879,68 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Add a partition to a table and get back the resulting Partition object.  This creates an    * empty default partition with just the partition values set.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partVals partition values    * @return the partition object    * @throws InvalidObjectException no such table    * @throws AlreadyExistsException a partition with these values already exists    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|Partition
 name|appendPartition
 parameter_list|(
 name|String
-name|tableName
+name|catName
 parameter_list|,
 name|String
 name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partVals
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|AlreadyExistsException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Add a partition to a table and get back the resulting Partition object.  This creates an    * empty default partition with just the partition value set.    * @param dbName database name.    * @param tableName table name.    * @param name name of the partition, should be in the form partkey=partval.    * @return new partition object.    * @throws InvalidObjectException No such table.    * @throws AlreadyExistsException Partition of this name already exists.    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|Partition
+name|appendPartition
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|AlreadyExistsException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Add a partition to a table and get back the resulting Partition object.  This creates an    * empty default partition with just the partition value set.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param name name of the partition, should be in the form partkey=partval.    * @return new partition object.    * @throws InvalidObjectException No such table.    * @throws AlreadyExistsException Partition of this name already exists.    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|Partition
+name|appendPartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
 parameter_list|,
 name|String
 name|name
@@ -2468,6 +2989,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Add a partitions using a spec proxy.    * @param partitionSpec partition spec proxy    * @return number of partitions that were added    * @throws InvalidObjectException the partitionSpec is malformed.    * @throws AlreadyExistsException one or more of the partitions already exist.    * @throws MetaException error accessing the RDBMS or storage.    * @throws TException thrift transport error    */
 name|int
 name|add_partitions_pspec
 parameter_list|(
@@ -2511,7 +3033,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tblName    * @param partVals    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+comment|/**    * Get a partition.    * @param dbName database name    * @param tblName table name    * @param partVals partition values for this partition, must be in the same order as the    *                 partition keys of the table.    * @return the partition object    * @throws NoSuchObjectException no such partition    * @throws MetaException error access the RDBMS.    * @throws TException thrift transport error    */
 name|Partition
 name|getPartition
 parameter_list|(
@@ -2534,7 +3056,33 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param partitionSpecs    * @param sourceDb    * @param sourceTable    * @param destdb    * @param destTableName    * @return partition object    */
+comment|/**    * Get a partition.    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param partVals partition values for this partition, must be in the same order as the    *                 partition keys of the table.    * @return the partition object    * @throws NoSuchObjectException no such partition    * @throws MetaException error access the RDBMS.    * @throws TException thrift transport error    */
+name|Partition
+name|getPartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partVals
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Move a partition from one table to another    * @param partitionSpecs key value pairs that describe the partition to be moved.    * @param sourceDb database of the source table    * @param sourceTable name of the source table    * @param destdb database of the destination table    * @param destTableName name of the destination table    * @return partition object    * @throws MetaException error accessing the RDBMS or storage    * @throws NoSuchObjectException no such table, for either source or destination table    * @throws InvalidObjectException error in partition specifications    * @throws TException thrift transport error    */
 name|Partition
 name|exchange_partition
 parameter_list|(
@@ -2567,7 +3115,46 @@ name|InvalidObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * With the one partitionSpecs to exchange, multiple partitions could be exchanged.    * e.g., year=2015/month/day, exchanging partition year=2015 results to all the partitions    * belonging to it exchanged. This function returns the list of affected partitions.    * @param partitionSpecs    * @param sourceDb    * @param sourceTable    * @param destdb    * @param destTableName    * @return the list of the new partitions    */
+comment|/**    * Move a partition from one table to another    * @param partitionSpecs key value pairs that describe the partition to be moved.    * @param sourceCat catalog of the source table    * @param sourceDb database of the source table    * @param sourceTable name of the source table    * @param destCat catalog of the destination table, for now must the same as sourceCat    * @param destdb database of the destination table    * @param destTableName name of the destination table    * @return partition object    * @throws MetaException error accessing the RDBMS or storage    * @throws NoSuchObjectException no such table, for either source or destination table    * @throws InvalidObjectException error in partition specifications    * @throws TException thrift transport error    */
+name|Partition
+name|exchange_partition
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partitionSpecs
+parameter_list|,
+name|String
+name|sourceCat
+parameter_list|,
+name|String
+name|sourceDb
+parameter_list|,
+name|String
+name|sourceTable
+parameter_list|,
+name|String
+name|destCat
+parameter_list|,
+name|String
+name|destdb
+parameter_list|,
+name|String
+name|destTableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|InvalidObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * With the one partitionSpecs to exchange, multiple partitions could be exchanged.    * e.g., year=2015/month/day, exchanging partition year=2015 results to all the partitions    * belonging to it exchanged. This function returns the list of affected partitions.    * @param partitionSpecs key value pairs that describe the partition(s) to be moved.    * @param sourceDb database of the source table    * @param sourceTable name of the source table    * @param destdb database of the destination table    * @param destTableName name of the destination table    * @throws MetaException error accessing the RDBMS or storage    * @throws NoSuchObjectException no such table, for either source or destination table    * @throws InvalidObjectException error in partition specifications    * @throws TException thrift transport error    * @return the list of the new partitions    */
 name|List
 argument_list|<
 name|Partition
@@ -2603,7 +3190,49 @@ name|InvalidObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tblName    * @param name - partition name i.e. 'ds=2010-02-03/ts=2010-02-03 18%3A16%3A01'    * @return the partition object    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_partition(java.lang.String,    *      java.lang.String, java.util.List)    */
+comment|/**    * With the one partitionSpecs to exchange, multiple partitions could be exchanged.    * e.g., year=2015/month/day, exchanging partition year=2015 results to all the partitions    * belonging to it exchanged. This function returns the list of affected partitions.    * @param partitionSpecs key value pairs that describe the partition(s) to be moved.    * @param sourceCat catalog of the source table    * @param sourceDb database of the source table    * @param sourceTable name of the source table    * @param destCat catalog of the destination table, for now must the same as sourceCat    * @param destdb database of the destination table    * @param destTableName name of the destination table    * @throws MetaException error accessing the RDBMS or storage    * @throws NoSuchObjectException no such table, for either source or destination table    * @throws InvalidObjectException error in partition specifications    * @throws TException thrift transport error    * @return the list of the new partitions    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|exchange_partitions
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partitionSpecs
+parameter_list|,
+name|String
+name|sourceCat
+parameter_list|,
+name|String
+name|sourceDb
+parameter_list|,
+name|String
+name|sourceTable
+parameter_list|,
+name|String
+name|destCat
+parameter_list|,
+name|String
+name|destdb
+parameter_list|,
+name|String
+name|destTableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|InvalidObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a Partition by name.    * @param dbName database name.    * @param tblName table name.    * @param name - partition name i.e. 'ds=2010-02-03/ts=2010-02-03 18%3A16%3A01'    * @return the partition object    * @throws MetaException error access the RDBMS.    * @throws TException thrift transport error    */
 name|Partition
 name|getPartition
 parameter_list|(
@@ -2625,7 +3254,32 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param pvals    * @param userName    * @param groupNames    * @return the partition    * @throws MetaException    * @throws UnknownTableException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    * Get a Partition by name.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param name - partition name i.e. 'ds=2010-02-03/ts=2010-02-03 18%3A16%3A01'    * @return the partition object    * @throws MetaException error access the RDBMS.    * @throws TException thrift transport error    */
+name|Partition
+name|getPartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|UnknownTableException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a Partition along with authorization information.    * @param dbName database name    * @param tableName table name    * @param pvals partition values, must be in the same order as the tables partition keys    * @param userName name of the calling user    * @param groupNames groups the call    * @return the partition    * @throws MetaException error accessing the RDBMS    * @throws UnknownTableException no such table    * @throws NoSuchObjectException no such partition    * @throws TException thrift transport error    */
 name|Partition
 name|getPartitionWithAuthInfo
 parameter_list|(
@@ -2659,7 +3313,44 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param tbl_name    * @param db_name    * @param max_parts    * @return the list of partitions    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+comment|/**    * Get a Partition along with authorization information.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param pvals partition values, must be in the same order as the tables partition keys    * @param userName name of the calling user    * @param groupNames groups the call    * @return the partition    * @throws MetaException error accessing the RDBMS    * @throws UnknownTableException no such table    * @throws NoSuchObjectException no such partition    * @throws TException thrift transport error    */
+name|Partition
+name|getPartitionWithAuthInfo
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|pvals
+parameter_list|,
+name|String
+name|userName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|groupNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|UnknownTableException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a list of partittions for a table.    * @param db_name database name    * @param tbl_name table name    * @param max_parts maximum number of parts to return, -1 for all    * @return the list of partitions    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing RDBMS.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|Partition
@@ -2682,7 +3373,33 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
+comment|/**    * Get a list of partittions for a table.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name    * @param max_parts maximum number of parts to return, -1 for all    * @return the list of partitions    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing RDBMS.    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|listPartitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a list of partitions from a table, returned in the form of PartitionSpecProxy    * @param dbName database name.    * @param tableName table name.    * @param maxParts maximum number of partitions to return, or -1 for all    * @return a PartitionSpecProxy    * @throws TException thrift transport error    */
 name|PartitionSpecProxy
 name|listPartitionSpecs
 parameter_list|(
@@ -2698,6 +3415,26 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Get a list of partitions from a table, returned in the form of PartitionSpecProxy    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param maxParts maximum number of partitions to return, or -1 for all    * @return a PartitionSpecProxy    * @throws TException thrift transport error    */
+name|PartitionSpecProxy
+name|listPartitionSpecs
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|int
+name|maxParts
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Get a list of partitions based on a (possibly partial) list of partition values.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partition values, in order of the table partition keys.  These can be    *                  partial, or .* to match all values for a particular key.    * @param max_parts maximum number of partitions to return, or -1 for all.    * @return list of partitions    * @throws NoSuchObjectException no such table.    * @throws MetaException error accessing the database or processing the partition values.    * @throws TException thrift transport error.    */
 name|List
 argument_list|<
 name|Partition
@@ -2726,6 +3463,39 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get a list of partitions based on a (possibly partial) list of partition values.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partition values, in order of the table partition keys.  These can be    *                  partial, or .* to match all values for a particular key.    * @param max_parts maximum number of partitions to return, or -1 for all.    * @return list of partitions    * @throws NoSuchObjectException no such table.    * @throws MetaException error accessing the database or processing the partition values.    * @throws TException thrift transport error.    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|listPartitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * List Names of partitions in a table.    * @param db_name database name.    * @param tbl_name table name.    * @param max_parts maximum number of parts of fetch, or -1 to fetch them all.    * @return list of partition names.    * @throws NoSuchObjectException No such table.    * @throws MetaException Error accessing the RDBMS.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|String
@@ -2748,6 +3518,33 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * List Names of partitions in a table.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param max_parts maximum number of parts of fetch, or -1 to fetch them all.    * @return list of partition names.    * @throws NoSuchObjectException No such table.    * @throws MetaException Error accessing the RDBMS.    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listPartitionNames
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a list of partition names matching a partial specification of the partition values.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partial list of partition values.  These must be given in the order of the    *                  partition keys.  If you wish to accept any value for a particular key you    *                  can pass ".*" for that value in this list.    * @param max_parts maximum number of partition names to return, or -1 to return all that are    *                  found.    * @return list of matching partition names.    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error.    * @throws NoSuchObjectException no such table.    */
 name|List
 argument_list|<
 name|String
@@ -2776,7 +3573,39 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-specifier|public
+comment|/**    * Get a list of partition names matching a partial specification of the partition values.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partial list of partition values.  These must be given in the order of the    *                  partition keys.  If you wish to accept any value for a particular key you    *                  can pass ".*" for that value in this list.    * @param max_parts maximum number of partition names to return, or -1 to return all that are    *                  found.    * @return list of matching partition names.    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error.    * @throws NoSuchObjectException no such table.    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|listPartitionNames
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**    * Get a list of partition values    * @param request request    * @return reponse    * @throws MetaException error accessing RDBMS    * @throws TException thrift transport error    * @throws NoSuchObjectException no such table    */
 name|PartitionValuesResponse
 name|listPartitionValues
 parameter_list|(
@@ -2790,8 +3619,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get number of partitions matching specified filter    * @param dbName the database name    * @param tableName the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
-specifier|public
+comment|/**    * Get number of partitions matching specified filter    * @param dbName the database name    * @param tableName the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException error accessing RDBMS or processing the filter    * @throws NoSuchObjectException no such table    * @throws TException thrift transport error    */
 name|int
 name|getNumPartitionsByFilter
 parameter_list|(
@@ -2811,7 +3639,30 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    */
+comment|/**    * Get number of partitions matching specified filter    * @param catName catalog name    * @param dbName the database name    * @param tableName the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return number of partitions    * @throws MetaException error accessing RDBMS or processing the filter    * @throws NoSuchObjectException no such table    * @throws TException thrift transport error    */
+name|int
+name|getNumPartitionsByFilter
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|filter
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get list of partitions matching specified filter    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException Error accessing the RDBMS or processing the filter.    * @throws NoSuchObjectException No such table.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|Partition
@@ -2837,6 +3688,36 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get list of partitions matching specified filter    * @param catName catalog name.    * @param db_name the database name    * @param tbl_name the table name    * @param filter the filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @return list of partitions    * @throws MetaException Error accessing the RDBMS or processing the filter.    * @throws NoSuchObjectException No such table.    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|listPartitionsByFilter
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|String
+name|filter
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a list of partitions in a PartitionSpec, using a filter to select which partitions to    * fetch.    * @param db_name database name    * @param tbl_name table name    * @param filter SQL where clause filter    * @param max_parts maximum number of partitions to fetch, or -1 for all    * @return PartitionSpec    * @throws MetaException error accessing RDBMS or processing the filter    * @throws NoSuchObjectException No table matches the request    * @throws TException thrift transport error    */
 name|PartitionSpecProxy
 name|listPartitionSpecsByFilter
 parameter_list|(
@@ -2859,7 +3740,33 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get list of partitions matching specified serialized expression    * @param db_name the database name    * @param tbl_name the table name    * @param expr expression, serialized from ExprNodeDesc    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @param default_partition_name Default partition name from configuration. If blank, the    *    metastore server-side configuration is used.    * @param result the resulting list of partitions    * @return whether the resulting list contains partitions which may or may not match the expr    */
+comment|/**    * Get a list of partitions in a PartitionSpec, using a filter to select which partitions to    * fetch.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name    * @param filter SQL where clause filter    * @param max_parts maximum number of partitions to fetch, or -1 for all    * @return PartitionSpec    * @throws MetaException error accessing RDBMS or processing the filter    * @throws NoSuchObjectException No table matches the request    * @throws TException thrift transport error    */
+name|PartitionSpecProxy
+name|listPartitionSpecsByFilter
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|String
+name|filter
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get list of partitions matching specified serialized expression    * @param db_name the database name    * @param tbl_name the table name    * @param expr expression, serialized from ExprNodeDesc    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @param default_partition_name Default partition name from configuration. If blank, the    *    metastore server-side configuration is used.    * @param result the resulting list of partitions    * @return whether the resulting list contains partitions which may or may not match the expr    * @throws TException thrift transport error or error executing the filter.    */
 name|boolean
 name|listPartitionsByExpr
 parameter_list|(
@@ -2888,7 +3795,39 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param s    * @param userName    * @param groupNames    * @return the list of partitions    * @throws NoSuchObjectException    */
+comment|/**    * Get list of partitions matching specified serialized expression    * @param catName catalog name    * @param db_name the database name    * @param tbl_name the table name    * @param expr expression, serialized from ExprNodeDesc    * @param max_parts the maximum number of partitions to return,    *    all partitions are returned if -1 is passed    * @param default_partition_name Default partition name from configuration. If blank, the    *    metastore server-side configuration is used.    * @param result the resulting list of partitions    * @return whether the resulting list contains partitions which may or may not match the expr    * @throws TException thrift transport error or error executing the filter.    */
+name|boolean
+name|listPartitionsByExpr
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|byte
+index|[]
+name|expr
+parameter_list|,
+name|String
+name|default_partition_name
+parameter_list|,
+name|int
+name|max_parts
+parameter_list|,
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|result
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * List partitions, fetching the authorization information along with the partitions.    * @param dbName database name    * @param tableName table name    * @param maxParts maximum number of partitions to fetch, or -1 for all    * @param userName user to fetch privileges for    * @param groupNames groups to fetch privileges for    * @return the list of partitions    * @throws NoSuchObjectException no partitions matching the criteria were found    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|Partition
@@ -2902,7 +3841,7 @@ name|String
 name|tableName
 parameter_list|,
 name|short
-name|s
+name|maxParts
 parameter_list|,
 name|String
 name|userName
@@ -2920,7 +3859,42 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get partitions by a list of partition names.    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @return list of Partition objects    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    */
+comment|/**    * List partitions, fetching the authorization information along with the partitions.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param maxParts maximum number of partitions to fetch, or -1 for all    * @param userName user to fetch privileges for    * @param groupNames groups to fetch privileges for    * @return the list of partitions    * @throws NoSuchObjectException no partitions matching the criteria were found    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|listPartitionsWithAuthInfo
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|int
+name|maxParts
+parameter_list|,
+name|String
+name|userName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|groupNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**    * Get partitions by a list of partition names.    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @return list of Partition objects    * @throws NoSuchObjectException No such partitions    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|Partition
@@ -2946,7 +3920,36 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param dbName    * @param tableName    * @param partialPvals    * @param s    * @param userName    * @param groupNames    * @return the list of paritions    * @throws NoSuchObjectException    */
+comment|/**    * Get partitions by a list of partition names.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @return list of Partition objects    * @throws NoSuchObjectException No such partitions    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|getPartitionsByNames
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_names
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * List partitions along with privilege information for a user or groups    * @param dbName database name    * @param tableName table name    * @param partialPvals partition values, can be partial    * @param maxParts maximum number of partitions to fetch, or -1 for all    * @param userName user to fetch privilege information for    * @param groupNames group to fetch privilege information for    * @return the list of partitions    * @throws NoSuchObjectException no partitions matching the criteria were found    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|Partition
@@ -2966,7 +3969,7 @@ argument_list|>
 name|partialPvals
 parameter_list|,
 name|short
-name|s
+name|maxParts
 parameter_list|,
 name|String
 name|userName
@@ -2984,7 +3987,48 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * @param db_name    * @param tbl_name    * @param partKVs    * @param eventType    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws UnknownTableException    * @throws UnknownDBException    * @throws UnknownPartitionException    * @throws InvalidPartitionException    */
+comment|/**    * List partitions along with privilege information for a user or groups    * @param dbName database name    * @param tableName table name    * @param partialPvals partition values, can be partial    * @param maxParts maximum number of partitions to fetch, or -1 for all    * @param userName user to fetch privilege information for    * @param groupNames group to fetch privilege information for    * @return the list of partitions    * @throws NoSuchObjectException no partitions matching the criteria were found    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|listPartitionsWithAuthInfo
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partialPvals
+parameter_list|,
+name|int
+name|maxParts
+parameter_list|,
+name|String
+name|userName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|groupNames
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**    * Mark an event as having occurred on a partition.    * @param db_name database name    * @param tbl_name table name    * @param partKVs key value pairs that describe the partition    * @param eventType type of the event    * @throws MetaException error access the RDBMS    * @throws NoSuchObjectException never throws this AFAICT    * @throws TException thrift transport error    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws UnknownPartitionException no such partition    * @throws InvalidPartitionException partition partKVs is invalid    */
 name|void
 name|markPartitionForEvent
 parameter_list|(
@@ -3020,10 +4064,88 @@ name|UnknownPartitionException
 throws|,
 name|InvalidPartitionException
 function_decl|;
-comment|/**    * @param db_name    * @param tbl_name    * @param partKVs    * @param eventType    * @throws MetaException    * @throws NoSuchObjectException    * @throws TException    * @throws UnknownTableException    * @throws UnknownDBException    * @throws UnknownPartitionException    * @throws InvalidPartitionException    */
+comment|/**    * Mark an event as having occurred on a partition.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name    * @param partKVs key value pairs that describe the partition    * @param eventType type of the event    * @throws MetaException error access the RDBMS    * @throws NoSuchObjectException never throws this AFAICT    * @throws TException thrift transport error    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws UnknownPartitionException no such partition    * @throws InvalidPartitionException partition partKVs is invalid    */
+name|void
+name|markPartitionForEvent
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partKVs
+parameter_list|,
+name|PartitionEventType
+name|eventType
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+throws|,
+name|UnknownTableException
+throws|,
+name|UnknownDBException
+throws|,
+name|UnknownPartitionException
+throws|,
+name|InvalidPartitionException
+function_decl|;
+comment|/**    * Determine whether a partition has been marked with a particular event type.    * @param db_name database name    * @param tbl_name table name.    * @param partKVs key value pairs that describe the partition.    * @param eventType event type    * @throws MetaException error access the RDBMS    * @throws NoSuchObjectException never throws this AFAICT    * @throws TException thrift transport error    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws UnknownPartitionException no such partition    * @throws InvalidPartitionException partition partKVs is invalid    */
 name|boolean
 name|isPartitionMarkedForEvent
 parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|partKVs
+parameter_list|,
+name|PartitionEventType
+name|eventType
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+throws|,
+name|UnknownTableException
+throws|,
+name|UnknownDBException
+throws|,
+name|UnknownPartitionException
+throws|,
+name|InvalidPartitionException
+function_decl|;
+comment|/**    * Determine whether a partition has been marked with a particular event type.    * @param catName catalog name    * @param db_name database name    * @param tbl_name table name.    * @param partKVs key value pairs that describe the partition.    * @param eventType event type    * @throws MetaException error access the RDBMS    * @throws NoSuchObjectException never throws this AFAICT    * @throws TException thrift transport error    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws UnknownPartitionException no such partition    * @throws InvalidPartitionException partition partKVs is invalid    */
+name|boolean
+name|isPartitionMarkedForEvent
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -3089,11 +4211,12 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Alter a table    * @param databaseName database name    * @param tblName table name    * @param table new table object, should be complete representation of the table, not just the    *             things you want to change.    * @throws InvalidOperationException something is wrong with the new table object or an    * operation was attempted that is not allowed (such as changing partition columns).    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift exception    */
 name|void
 name|alter_table
 parameter_list|(
 name|String
-name|defaultDatabaseName
+name|databaseName
 parameter_list|,
 name|String
 name|tblName
@@ -3108,7 +4231,71 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Use alter_table_with_environmentContext instead of alter_table with cascade option    * passed in EnvironmentContext using {@code StatsSetupConst.CASCADE}    */
+comment|/**    * Alter a table. Equivalent to    * {@link #alter_table(String, String, String, Table, EnvironmentContext)} with    * EnvironmentContext set to null.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param newTable new table object, should be complete representation of the table, not just the    *                 things you want to change.    * @throws InvalidOperationException something is wrong with the new table object or an    * operation was attempted that is not allowed (such as changing partition columns).    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift exception    */
+specifier|default
+name|void
+name|alter_table
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Table
+name|newTable
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+name|alter_table
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|newTable
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Alter a table.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param newTable new table object, should be complete representation of the table, not just the    *                 things you want to change.    * @param envContext options for the alter.    * @throws InvalidOperationException something is wrong with the new table object or an    * operation was attempted that is not allowed (such as changing partition columns).    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift exception    */
+name|void
+name|alter_table
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Table
+name|newTable
+parameter_list|,
+name|EnvironmentContext
+name|envContext
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * @deprecated Use alter_table_with_environmentContext instead of alter_table with cascade option    * passed in EnvironmentContext using {@code StatsSetupConst.CASCADE}    */
 annotation|@
 name|Deprecated
 name|void
@@ -3133,12 +4320,12 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|//wrapper of alter_table_with_cascade
+comment|/**    * Alter a table.    * @param databaseName database name    * @param tblName table name    * @param table new table object, should be complete representation of the table, not just the    *              things you want to change.    * @param environmentContext options for the alter.    * @throws InvalidOperationException something is wrong with the new table object or an    * operation was attempted that is not allowed (such as changing partition columns).    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift exception    */
 name|void
 name|alter_table_with_environmentContext
 parameter_list|(
 name|String
-name|defaultDatabaseName
+name|databaseName
 parameter_list|,
 name|String
 name|tblName
@@ -3156,6 +4343,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Create a new database.    * @param db database object.  If the catalog name is null it will be assumed to be    *           {@link Warehouse#DEFAULT_CATALOG_NAME}.    * @throws InvalidObjectException There is something wrong with the database object.    * @throws AlreadyExistsException There is already a database of this name in the specified    * catalog.    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift error    */
 name|void
 name|createDatabase
 parameter_list|(
@@ -3171,6 +4359,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop a database.    * @param name name of the database to drop.    * @throws NoSuchObjectException No such database exists.    * @throws InvalidOperationException The database cannot be dropped because it is not empty.    * @throws MetaException something went wrong, usually either in the RDMBS or in storage.    * @throws TException general thrift error.    */
 name|void
 name|dropDatabase
 parameter_list|(
@@ -3186,6 +4375,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    *    * Drop a database.    * @param name name of the database to drop.    * @param deleteData whether to drop the underlying HDFS directory.    * @param ignoreUnknownDb whether to ignore an attempt to drop a non-existant database    * @throws NoSuchObjectException No database of this name exists in the specified catalog and    * ignoreUnknownDb is false.    * @throws InvalidOperationException The database cannot be dropped because it is not empty.    * @throws MetaException something went wrong, usually either in the RDMBS or in storage.    * @throws TException general thrift error.    */
 name|void
 name|dropDatabase
 parameter_list|(
@@ -3207,6 +4397,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    *    * Drop a database.    * @param name database name.    * @param deleteData whether to drop the underlying HDFS directory.    * @param ignoreUnknownDb whether to ignore an attempt to drop a non-existant database    * @param cascade whether to drop contained tables, etc.  If this is false and there are    *                objects still in the database the drop will fail.    * @throws NoSuchObjectException No database of this name exists in the specified catalog and    * ignoreUnknownDb is false.    * @throws InvalidOperationException The database contains objects and cascade is false.    * @throws MetaException something went wrong, usually either in the RDBMS or storage.    * @throws TException general thrift error.    */
 name|void
 name|dropDatabase
 parameter_list|(
@@ -3231,6 +4422,109 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop a database.    * @param catName Catalog name.  This can be null, in which case    *                {@link Warehouse#DEFAULT_CATALOG_NAME} will be assumed.    * @param dbName database name.    * @param deleteData whether to drop the underlying HDFS directory.    * @param ignoreUnknownDb whether to ignore an attempt to drop a non-existant database    * @param cascade whether to drop contained tables, etc.  If this is false and there are    *                objects still in the database the drop will fail.    * @throws NoSuchObjectException No database of this name exists in the specified catalog and    * ignoreUnknownDb is false.    * @throws InvalidOperationException The database contains objects and cascade is false.    * @throws MetaException something went wrong, usually either in the RDBMS or storage.    * @throws TException general thrift error.    */
+name|void
+name|dropDatabase
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownDb
+parameter_list|,
+name|boolean
+name|cascade
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a database.  Equivalent to    * {@link #dropDatabase(String, String, boolean, boolean, boolean)} with cascade = false.    * @param catName Catalog name.  This can be null, in which case    *                {@link Warehouse#DEFAULT_CATALOG_NAME} will be assumed.    * @param dbName database name.    * @param deleteData whether to drop the underlying HDFS directory.    * @param ignoreUnknownDb whether to ignore an attempt to drop a non-existant database    * @throws NoSuchObjectException No database of this name exists in the specified catalog and    * ignoreUnknownDb is false.    * @throws InvalidOperationException The database contains objects and cascade is false.    * @throws MetaException something went wrong, usually either in the RDBMS or storage.    * @throws TException general thrift error.    */
+specifier|default
+name|void
+name|dropDatabase
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ignoreUnknownDb
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+name|dropDatabase
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|deleteData
+argument_list|,
+name|ignoreUnknownDb
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Drop a database.  Equivalent to    * {@link #dropDatabase(String, String, boolean, boolean, boolean)} with deleteData =    * true, ignoreUnknownDb = false, cascade = false.    * @param catName Catalog name.  This can be null, in which case    *                {@link Warehouse#DEFAULT_CATALOG_NAME} will be assumed.    * @param dbName database name.    * @throws NoSuchObjectException No database of this name exists in the specified catalog and    * ignoreUnknownDb is false.    * @throws InvalidOperationException The database contains objects and cascade is false.    * @throws MetaException something went wrong, usually either in the RDBMS or storage.    * @throws TException general thrift error.    */
+specifier|default
+name|void
+name|dropDatabase
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+name|dropDatabase
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Alter a database.    * @param name database name.    * @param db new database object.    * @throws NoSuchObjectException No database of this name exists in the specified catalog.    * @throws MetaException something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
 name|void
 name|alterDatabase
 parameter_list|(
@@ -3247,7 +4541,27 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param db_name    * @param tbl_name    * @param part_vals    * @param deleteData    *          delete the underlying data or just delete the table in metadata    * @return true or false    * @throws NoSuchObjectException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#drop_partition(java.lang.String,    *      java.lang.String, java.util.List, boolean)    */
+comment|/**    * Alter a database.    * @param catName Catalog name.  This can be null, in which case    *                {@link Warehouse#DEFAULT_CATALOG_NAME} will be assumed.    * @param dbName database name.    * @param newDb new database object.    * @throws NoSuchObjectException No database of this name exists in the specified catalog.    * @throws MetaException something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
+name|void
+name|alterDatabase
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|Database
+name|newDb
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a partition.    * @param db_name database name    * @param tbl_name table name    * @param part_vals partition values, in the same order as the partition keys    * @param deleteData    *          delete the underlying data or just delete the partition in metadata    * @return true or false    * @throws NoSuchObjectException partition does not exist    * @throws MetaException error accessing the RDBMS or the storage.    * @throws TException thrift transport error    */
 name|boolean
 name|dropPartition
 parameter_list|(
@@ -3273,7 +4587,36 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Method to dropPartitions() with the option to purge the partition data directly,    * rather than to move data to trash.    * @param db_name Name of the database.    * @param tbl_name Name of the table.    * @param part_vals Specification of the partitions being dropped.    * @param options PartitionDropOptions for the operation.    * @return True (if partitions are dropped), else false.    * @throws TException    */
+comment|/**    * Drop a partition.    * @param catName catalog name.    * @param db_name database name    * @param tbl_name table name    * @param part_vals partition values, in the same order as the partition keys    * @param deleteData    *          delete the underlying data or just delete the partition in metadata    * @return true or false    * @throws NoSuchObjectException partition does not exist    * @throws MetaException error accessing the RDBMS or the storage.    * @throws TException thrift transport error    */
+name|boolean
+name|dropPartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a partition with the option to purge the partition data directly,    * rather than to move data to trash.    * @param db_name Name of the database.    * @param tbl_name Name of the table.    * @param part_vals Specification of the partitions being dropped.    * @param options PartitionDropOptions for the operation.    * @return True (if partitions are dropped), else false.    * @throws NoSuchObjectException partition does not exist    * @throws MetaException error accessing the RDBMS or the storage.    * @throws TException thrift transport error.    */
 name|boolean
 name|dropPartition
 parameter_list|(
@@ -3293,8 +4636,42 @@ name|PartitionDropOptions
 name|options
 parameter_list|)
 throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop a partition with the option to purge the partition data directly,    * rather than to move data to trash.    * @param catName catalog name.    * @param db_name Name of the database.    * @param tbl_name Name of the table.    * @param part_vals Specification of the partitions being dropped.    * @param options PartitionDropOptions for the operation.    * @return True (if partitions are dropped), else false.    * @throws NoSuchObjectException partition does not exist    * @throws MetaException error accessing the RDBMS or the storage.    * @throws TException thrift transport error.    */
+name|boolean
+name|dropPartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+name|PartitionDropOptions
+name|options
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop partitions based on an expression.    * @param dbName database name.    * @param tblName table name.    * @param partExprs I don't understand this fully, so can't completely explain it.  The second    *                  half of the object pair is an expression used to determine which partitions    *                  to drop.  The first half has something to do with archive level, but I    *                  don't understand what.  I'm also not sure what happens if you pass multiple    *                  expressions.    * @param deleteData whether to delete the data as well as the metadata.    * @param ifExists if true, it is not an error if no partitions match the expression(s).    * @return list of deleted partitions.    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException Thrift transport error.    */
 name|List
 argument_list|<
 name|Partition
@@ -3332,6 +4709,77 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop partitions based on an expression.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partExprs I don't understand this fully, so can't completely explain it.  The second    *                  half of the object pair is an expression used to determine which partitions    *                  to drop.  The first half has something to do with archive level, but I    *                  don't understand what.  I'm also not sure what happens if you pass multiple    *                  expressions.    * @param deleteData whether to delete the data as well as the metadata.    * @param ifExists if true, it is not an error if no partitions match the expression(s).    * @return list of deleted partitions.    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException Thrift transport error.    */
+specifier|default
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|dropPartitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|ObjectPair
+argument_list|<
+name|Integer
+argument_list|,
+name|byte
+index|[]
+argument_list|>
+argument_list|>
+name|partExprs
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ifExists
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+return|return
+name|dropPartitions
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|partExprs
+argument_list|,
+name|PartitionDropOptions
+operator|.
+name|instance
+argument_list|()
+operator|.
+name|deleteData
+argument_list|(
+name|deleteData
+argument_list|)
+operator|.
+name|ifExists
+argument_list|(
+name|ifExists
+argument_list|)
+argument_list|)
+return|;
+block|}
+comment|/**    * Drop partitions based on an expression.    * @param dbName database name.    * @param tblName table name.    * @param partExprs I don't understand this fully, so can't completely explain it.  The second    *                  half of the object pair is an expression used to determine which partitions    *                  to drop.  The first half has something to do with archive level, but I    *                  don't understand what.  I'm also not sure what happens if you pass multiple    *                  expressions.    * @param deleteData whether to delete the data as well as the metadata.    * @param ifExists if true, it is not an error if no partitions match the expression(s).    * @param needResults if true, the list of deleted partitions will be returned, if not, null    *                    will be returned.    * @return list of deleted partitions.    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException Thrift transport error.    * @deprecated Use {@link #dropPartitions(String, String, String, List, boolean, boolean, boolean)}    */
 name|List
 argument_list|<
 name|Partition
@@ -3372,7 +4820,85 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Generalization of dropPartitions(),    * @param dbName Name of the database    * @param tblName Name of the table    * @param partExprs Partition-specification    * @param options Boolean options for dropping partitions    * @return List of Partitions dropped    * @throws TException On failure    */
+comment|/**    * Drop partitions based on an expression.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partExprs I don't understand this fully, so can't completely explain it.  The second    *                  half of the object pair is an expression used to determine which partitions    *                  to drop.  The first half has something to do with archive level, but I    *                  don't understand what.  I'm also not sure what happens if you pass multiple    *                  expressions.    * @param deleteData whether to delete the data as well as the metadata.    * @param ifExists if true, it is not an error if no partitions match the expression(s).    * @param needResults if true, the list of deleted partitions will be returned, if not, null    *                    will be returned.    * @return list of deleted partitions, if needResults is true    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException Thrift transport error.    */
+specifier|default
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|dropPartitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|ObjectPair
+argument_list|<
+name|Integer
+argument_list|,
+name|byte
+index|[]
+argument_list|>
+argument_list|>
+name|partExprs
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|,
+name|boolean
+name|ifExists
+parameter_list|,
+name|boolean
+name|needResults
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+return|return
+name|dropPartitions
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|partExprs
+argument_list|,
+name|PartitionDropOptions
+operator|.
+name|instance
+argument_list|()
+operator|.
+name|deleteData
+argument_list|(
+name|deleteData
+argument_list|)
+operator|.
+name|ifExists
+argument_list|(
+name|ifExists
+argument_list|)
+operator|.
+name|returnResults
+argument_list|(
+name|needResults
+argument_list|)
+argument_list|)
+return|;
+block|}
+comment|/**    * Generalization of dropPartitions(),    * @param dbName Name of the database    * @param tblName Name of the table    * @param partExprs Partition-specification    * @param options Boolean options for dropping partitions    * @return List of Partitions dropped    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException On failure    */
 name|List
 argument_list|<
 name|Partition
@@ -3401,11 +4927,80 @@ name|PartitionDropOptions
 name|options
 parameter_list|)
 throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
 name|TException
 function_decl|;
+comment|/**    * Generalization of dropPartitions(),    * @param catName catalog name    * @param dbName Name of the database    * @param tblName Name of the table    * @param partExprs Partition-specification    * @param options Boolean options for dropping partitions    * @return List of Partitions dropped    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException On failure    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|dropPartitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|ObjectPair
+argument_list|<
+name|Integer
+argument_list|,
+name|byte
+index|[]
+argument_list|>
+argument_list|>
+name|partExprs
+parameter_list|,
+name|PartitionDropOptions
+name|options
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a partition.    * @param db_name database name.    * @param tbl_name table name.    * @param name partition name.    * @param deleteData whether to delete the data or just the metadata.    * @return true if the partition was dropped.    * @throws NoSuchObjectException no such partition.    * @throws MetaException error accessing the RDBMS or storage    * @throws TException thrift transport error    */
 name|boolean
 name|dropPartition
 parameter_list|(
+name|String
+name|db_name
+parameter_list|,
+name|String
+name|tbl_name
+parameter_list|,
+name|String
+name|name
+parameter_list|,
+name|boolean
+name|deleteData
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a partition.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param name partition name.    * @param deleteData whether to delete the data or just the metadata.    * @return true if the partition was dropped.    * @throws NoSuchObjectException no such partition.    * @throws MetaException error accessing the RDBMS or storage    * @throws TException thrift transport error    */
+name|boolean
+name|dropPartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -3445,10 +5040,74 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * updates a partition to new partition    * @param catName catalog name    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+specifier|default
+name|void
+name|alter_partition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+name|alter_partition
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|newPart
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * updates a partition to new partition    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
 name|void
 name|alter_partition
 parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * updates a partition to new partition    * @param catName catalog name.    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+name|void
+name|alter_partition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -3491,7 +5150,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * updates a list of partitions    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @param environmentContext    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+comment|/**    * updates a list of partitions    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @param environmentContext key value pairs to pass to alter function.    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
 name|void
 name|alter_partitions
 parameter_list|(
@@ -3517,7 +5176,77 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param name    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
+comment|/**    * updates a list of partitions    * @param catName catalog name.    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+specifier|default
+name|void
+name|alter_partitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|newParts
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+block|{
+name|alter_partitions
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|newParts
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * updates a list of partitions    * @param catName catalog name.    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @param environmentContext key value pairs to pass to alter function.    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+name|void
+name|alter_partitions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|newParts
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param tableName    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
 name|void
 name|renamePartition
 parameter_list|(
@@ -3527,7 +5256,7 @@ name|dbname
 parameter_list|,
 specifier|final
 name|String
-name|name
+name|tableName
 parameter_list|,
 specifier|final
 name|List
@@ -3547,7 +5276,36 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_fields(java.lang.String,    *      java.lang.String)    */
+comment|/**    * rename a partition to a new partition    * @param catName catalog name.    * @param dbname    *          database of the old partition    * @param tableName    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
+name|void
+name|renamePartition
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbname
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|part_vals
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get schema for a table, excluding the partition columns.    * @param db database name    * @param tableName table name    * @return  list of field schemas describing the table's schema    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|FieldSchema
@@ -3569,13 +5327,63 @@ name|UnknownTableException
 throws|,
 name|UnknownDBException
 function_decl|;
-comment|/**    * @param db    * @param tableName    * @throws UnknownTableException    * @throws UnknownDBException    * @throws MetaException    * @throws TException    * @see org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.Iface#get_schema(java.lang.String,    *      java.lang.String)    */
+comment|/**    * Get schema for a table, excluding the partition columns.    * @param catName catalog name    * @param db database name    * @param tableName table name    * @return  list of field schemas describing the table's schema    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|getFields
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|db
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownTableException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get schema for a table, including the partition columns.    * @param db database name    * @param tableName table name    * @return  list of field schemas describing the table's schema    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
 name|getSchema
 parameter_list|(
+name|String
+name|db
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownTableException
+throws|,
+name|UnknownDBException
+function_decl|;
+comment|/**    * Get schema for a table, including the partition columns.    * @param catName catalog name    * @param db database name    * @param tableName table name    * @return  list of field schemas describing the table's schema    * @throws UnknownTableException no such table    * @throws UnknownDBException no such database    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|getSchema
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db
 parameter_list|,
@@ -3674,7 +5482,7 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Get table column statistics given dbName, tableName and multiple colName-s    * @return ColumnStatistics struct for a given db, table and columns    */
+comment|/**    * Get the column statistics for a set of columns in a table.  This should only be used for    * non-partitioned tables.  For partitioned tables use    * {@link #getPartitionColumnStatistics(String, String, List, List)}.    * @param dbName database name    * @param tableName table name    * @param colNames list of column names    * @return list of column statistics objects, one per column    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|ColumnStatisticsObj
@@ -3700,7 +5508,36 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get partitions column statistics given dbName, tableName, multiple partitions and colName-s    * @return ColumnStatistics struct for a given db, table and columns    */
+comment|/**    * Get the column statistics for a set of columns in a table.  This should only be used for    * non-partitioned tables.  For partitioned tables use    * {@link #getPartitionColumnStatistics(String, String, String, List, List)}.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colNames list of column names    * @return list of column statistics objects, one per column    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|getTableColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get the column statistics for a set of columns in a partition.    * @param dbName database name    * @param tableName table name    * @param partNames partition names.  Since these are names they should be of the form    *                  "key1=value1[/key2=value2...]"    * @param colNames list of column names    * @return map of columns to statistics    * @throws NoSuchObjectException no such partition    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|Map
 argument_list|<
 name|String
@@ -3737,7 +5574,47 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName    * @param dbName    * @param tableName    * @param partName    * @param colName    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException    * @throws InvalidObjectException    * @throws MetaException    * @throws TException    * @throws InvalidInputException    */
+comment|/**    * Get the column statistics for a set of columns in a partition.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partNames partition names.  Since these are names they should be of the form    *                  "key1=value1[/key2=value2...]"    * @param colNames list of column names    * @return map of columns to statistics    * @throws NoSuchObjectException no such partition    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|>
+name|getPartitionColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName, or    * all columns in a partition.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param colName column name, or null for all columns    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error dropping the stats data    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    * @throws InvalidInputException input is invalid or null.    */
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
@@ -3764,10 +5641,67 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Delete table level column statistics given dbName, tableName and colName    * @param dbName    * @param tableName    * @param colName    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException    * @throws MetaException    * @throws InvalidObjectException    * @throws TException    * @throws InvalidInputException    */
+comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName, or    * all columns in a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param colName column name, or null for all columns    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error dropping the stats data    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    * @throws InvalidInputException input is invalid or null.    */
+name|boolean
+name|deletePartitionColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|partName
+parameter_list|,
+name|String
+name|colName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|InvalidObjectException
+throws|,
+name|TException
+throws|,
+name|InvalidInputException
+function_decl|;
+comment|/**    * Delete table level column statistics given dbName, tableName and colName, or all columns in    * a table.  This should be used for non-partitioned tables.    * @param dbName database name    * @param tableName table name    * @param colName column name, or null to drop stats for all columns    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws TException thrift transport error    * @throws InvalidInputException bad input, like a null table name.    */
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|colName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|InvalidObjectException
+throws|,
+name|TException
+throws|,
+name|InvalidInputException
+function_decl|;
+comment|/**    * Delete table level column statistics given dbName, tableName and colName, or all columns in    * a table.  This should be used for non-partitioned tables.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name, or null to drop stats for all columns    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws TException thrift transport error    * @throws InvalidInputException bad input, like a null table name.    */
+name|boolean
+name|deleteTableColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -4086,6 +6020,7 @@ parameter_list|()
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Create a new function.    * @param func function specification    * @throws InvalidObjectException the function object is invalid    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|void
 name|createFunction
 parameter_list|(
@@ -4099,6 +6034,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Alter a function.    * @param dbName database name.    * @param funcName function name.    * @param newFunction new function specification.  This should be complete, not just the changes.    * @throws InvalidObjectException the function object is invalid    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|void
 name|alterFunction
 parameter_list|(
@@ -4118,6 +6054,30 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Alter a function.    * @param catName catalog name.    * @param dbName database name.    * @param funcName function name.    * @param newFunction new function specification.  This should be complete, not just the changes.    * @throws InvalidObjectException the function object is invalid    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|void
+name|alterFunction
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|funcName
+parameter_list|,
+name|Function
+name|newFunction
+parameter_list|)
+throws|throws
+name|InvalidObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Drop a function.    * @param dbName database name.    * @param funcName function name.    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such function    * @throws InvalidObjectException not sure when this is thrown    * @throws InvalidInputException not sure when this is thrown    * @throws TException thrift transport error    */
 name|void
 name|dropFunction
 parameter_list|(
@@ -4138,6 +6098,31 @@ name|InvalidInputException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop a function.    * @param catName catalog name.    * @param dbName database name.    * @param funcName function name.    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such function    * @throws InvalidObjectException not sure when this is thrown    * @throws InvalidInputException not sure when this is thrown    * @throws TException thrift transport error    */
+name|void
+name|dropFunction
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|funcName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|InvalidObjectException
+throws|,
+name|InvalidInputException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get a function.    * @param dbName database name.    * @param funcName function name.    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|Function
 name|getFunction
 parameter_list|(
@@ -4152,6 +6137,25 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get a function.    * @param catName catalog name.    * @param dbName database name.    * @param funcName function name.    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|Function
+name|getFunction
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|funcName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get all functions matching a pattern    * @param dbName database name.    * @param pattern to match.  This is a java regex pattern.    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|String
@@ -4169,6 +6173,28 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get all functions matching a pattern    * @param catName catalog name.    * @param dbName database name.    * @param pattern to match.  This is a java regex pattern.    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getFunctions
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|pattern
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Get all functions in the default catalog.    * @return list of functions    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|GetAllFunctionsResponse
 name|getAllFunctions
 parameter_list|()
@@ -4723,7 +6749,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-specifier|public
+comment|/**    * Get aggregated column stats for a set of partitions.    * @param dbName database name    * @param tblName table name    * @param colNames list of column names    * @param partName list of partition names (not values).    * @return aggregated stats for requested partitions    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport exception    */
 name|AggrStats
 name|getAggrColStatsFor
 parameter_list|(
@@ -4752,6 +6778,39 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get aggregated column stats for a set of partitions.    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param colNames list of column names    * @param partNames list of partition names (not values).    * @return aggregated stats for requested partitions    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport exception    */
+name|AggrStats
+name|getAggrColStatsFor
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Set table or partition column statistics.    * @param request request object, contains all the table, partition, and statistics information    * @return true if the set was successful.    * @throws NoSuchObjectException the table, partition, or columns specified do not exist.    * @throws InvalidObjectException the stats object is not valid.    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error.    * @throws InvalidInputException the input is invalid (eg, a null table name)    */
 name|boolean
 name|setPartitionColumnStatistics
 parameter_list|(
@@ -4878,6 +6937,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Get a primary key for a table.    * @param request Request info    * @return List of primary key columns    * @throws MetaException error reading the RDBMS    * @throws NoSuchObjectException no primary key exists on this table, or maybe no such table    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|SQLPrimaryKey
@@ -4894,6 +6954,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get a foreign key for a table.    * @param request Request info    * @return List of foreign key columns    * @throws MetaException error reading the RDBMS    * @throws NoSuchObjectException no foreign key exists on this table, or maybe no such table    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|SQLForeignKey
@@ -4910,6 +6971,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get a unique constraint for a table.    * @param request Request info    * @return List of unique constraint columns    * @throws MetaException error reading the RDBMS    * @throws NoSuchObjectException no unique constraint on this table, or maybe no such table    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|SQLUniqueConstraint
@@ -4926,6 +6988,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get a not null constraint for a table.    * @param request Request info    * @return List of not null constraint columns    * @throws MetaException error reading the RDBMS    * @throws NoSuchObjectException no not null constraint on this table, or maybe no such table    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|SQLNotNullConstraint
@@ -5039,6 +7102,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop a constraint.  This can be used for primary keys, foreign keys, unique constraints, or    * not null constraints.    * @param dbName database name    * @param tableName table name    * @param constraintName name of the constraint    * @throws MetaException RDBMS access error    * @throws NoSuchObjectException no such constraint exists    * @throws TException thrift transport error    */
 name|void
 name|dropConstraint
 parameter_list|(
@@ -5058,6 +7122,30 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Drop a constraint.  This can be used for primary keys, foreign keys, unique constraints, or    * not null constraints.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param constraintName name of the constraint    * @throws MetaException RDBMS access error    * @throws NoSuchObjectException no such constraint exists    * @throws TException thrift transport error    */
+name|void
+name|dropConstraint
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|constraintName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Add a primary key.    * @param primaryKeyCols Primary key columns.    * @throws MetaException error reading or writing to the RDBMS or a primary key already exists    * @throws NoSuchObjectException no such table exists    * @throws TException thrift transport error    */
 name|void
 name|addPrimaryKey
 parameter_list|(
@@ -5074,6 +7162,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Add a foreign key    * @param foreignKeyCols Foreign key definition    * @throws MetaException error reading or writing to the RDBMS or foreign key already exists    * @throws NoSuchObjectException one of the tables in the foreign key does not exist.    * @throws TException thrift transport error    */
 name|void
 name|addForeignKey
 parameter_list|(
@@ -5090,6 +7179,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Add a unique constraint    * @param uniqueConstraintCols Unique constraint definition    * @throws MetaException error reading or writing to the RDBMS or unique constraint already exists    * @throws NoSuchObjectException no such table    * @throws TException thrift transport error    */
 name|void
 name|addUniqueConstraint
 parameter_list|(
@@ -5106,6 +7196,7 @@ name|NoSuchObjectException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Add a not null constraint    * @param notNullConstraintCols Notnull constraint definition    * @throws MetaException error reading or writing to the RDBMS or not null constraint already    * exists    * @throws NoSuchObjectException no such table    * @throws TException thrift transport error    */
 name|void
 name|addNotNullConstraint
 parameter_list|(
@@ -5357,8 +7448,6 @@ name|NoSuchObjectException
 throws|,
 name|InvalidObjectException
 throws|,
-name|MetaException
-throws|,
 name|TException
 function_decl|;
 name|void
@@ -5371,10 +7460,6 @@ name|String
 name|poolPath
 parameter_list|)
 throws|throws
-name|NoSuchObjectException
-throws|,
-name|MetaException
-throws|,
 name|TException
 function_decl|;
 name|void
@@ -5387,12 +7472,6 @@ name|boolean
 name|isUpdate
 parameter_list|)
 throws|throws
-name|NoSuchObjectException
-throws|,
-name|InvalidObjectException
-throws|,
-name|MetaException
-throws|,
 name|TException
 function_decl|;
 name|void
@@ -5402,10 +7481,6 @@ name|WMMapping
 name|mapping
 parameter_list|)
 throws|throws
-name|NoSuchObjectException
-throws|,
-name|MetaException
-throws|,
 name|TException
 function_decl|;
 name|void
@@ -5444,10 +7519,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Alter an existing schema.    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param newSchema altered schema object    * @throws NoSuchObjectException no schema with this name could be found    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Alter an existing schema.    * @param catName catalog name    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param newSchema altered schema object    * @throws NoSuchObjectException no schema with this name could be found    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|void
 name|alterISchema
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -5460,10 +7538,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Fetch a schema.    * @param dbName database the schema is in    * @param name name of the schema    * @return the schema or null if no such schema    * @throws NoSuchObjectException no schema matching this name exists    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Fetch a schema.    * @param catName catalog name    * @param dbName database the schema is in    * @param name name of the schema    * @return the schema or null if no such schema    * @throws NoSuchObjectException no schema matching this name exists    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|ISchema
 name|getISchema
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -5473,10 +7554,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Drop an existing schema.  If there are schema versions of this, this call will fail.    * @param dbName database the schema is in    * @param name name of the schema to drop    * @throws NoSuchObjectException no schema with this name could be found    * @throws InvalidOperationException attempt to drop a schema that has versions    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Drop an existing schema.  If there are schema versions of this, this call will fail.    * @param catName catalog name    * @param dbName database the schema is in    * @param name name of the schema to drop    * @throws NoSuchObjectException no schema with this name could be found    * @throws InvalidOperationException attempt to drop a schema that has versions    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|void
 name|dropISchema
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -5501,6 +7585,9 @@ name|SchemaVersion
 name|getSchemaVersion
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -5512,10 +7599,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get the latest version of a schema.    * @param dbName database the schema is in    * @param schemaName name of the schema    * @return latest version of the schema or null if the schema does not exist or there are no    * version of the schema.    * @throws NoSuchObjectException no versions of schema matching this name exist    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Get the latest version of a schema.    * @param catName catalog name    * @param dbName database the schema is in    * @param schemaName name of the schema    * @return latest version of the schema or null if the schema does not exist or there are no    * version of the schema.    * @throws NoSuchObjectException no versions of schema matching this name exist    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|SchemaVersion
 name|getSchemaLatestVersion
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -5525,7 +7615,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get all the extant versions of a schema.    * @param dbName database the schema is in    * @param schemaName name of the schema.    * @return list of all the schema versions or null if this schema does not exist or has no    * versions.    * @throws NoSuchObjectException no versions of schema matching this name exist    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Get all the extant versions of a schema.    * @param catName catalog name    * @param dbName database the schema is in    * @param schemaName name of the schema.    * @return list of all the schema versions or null if this schema does not exist or has no    * versions.    * @throws NoSuchObjectException no versions of schema matching this name exist    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|List
 argument_list|<
 name|SchemaVersion
@@ -5533,6 +7623,9 @@ argument_list|>
 name|getSchemaAllVersions
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -5541,10 +7634,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Drop a version of a schema.  Given that versions are supposed to be immutable you should    * think really hard before you call this method.  It should only be used for schema versions    * that were added in error and never referenced any data.    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param version version of the schema    * @throws NoSuchObjectException no matching version of the schema could be found    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Drop a version of a schema.  Given that versions are supposed to be immutable you should    * think really hard before you call this method.  It should only be used for schema versions    * that were added in error and never referenced any data.    * @param catName catalog name    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param version version of the schema    * @throws NoSuchObjectException no matching version of the schema could be found    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|void
 name|dropSchemaVersion
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -5567,10 +7663,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Map a schema version to a serde.  This mapping is one-to-one, thus this will destroy any    * previous mappings for this schema version.    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param version version of the schema    * @param serdeName name of the serde    * @throws NoSuchObjectException no matching version of the schema could be found or no serde    * of the provided name could be found    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Map a schema version to a serde.  This mapping is one-to-one, thus this will destroy any    * previous mappings for this schema version.    * @param catName catalog name    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param version version of the schema    * @param serdeName name of the serde    * @throws NoSuchObjectException no matching version of the schema could be found or no serde    * of the provided name could be found    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|void
 name|mapSchemaVersionToSerde
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -5586,10 +7685,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Set the state of a schema version.    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param version version of the schema    * @param state state to set the schema too    * @throws NoSuchObjectException no matching version of the schema could be found    * @throws InvalidOperationException attempt to make a state change that is not valid    * @throws MetaException general metastore error    * @throws TException general thrift error    */
+comment|/**    * Set the state of a schema version.    * @param catName catalog name    * @param dbName database the schema is in    * @param schemaName name of the schema    * @param version version of the schema    * @param state state to set the schema too    * @throws NoSuchObjectException no matching version of the schema could be found    * @throws InvalidOperationException attempt to make a state change that is not valid    * @throws MetaException general metastore error    * @throws TException general thrift error    */
 name|void
 name|setSchemaVersionState
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,

@@ -582,7 +582,9 @@ argument_list|()
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|client
 operator|.
@@ -662,7 +664,9 @@ argument_list|()
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|client
 operator|.
@@ -742,7 +746,9 @@ argument_list|()
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|client
 operator|.
@@ -845,7 +851,9 @@ name|bucketCols
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|client
 operator|.
@@ -938,7 +946,9 @@ literal|"org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat"
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|client
 operator|.
@@ -1090,7 +1100,9 @@ literal|"org.apache.hadoop.mapred.FileInputFormat"
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|client
 operator|.
@@ -1204,7 +1216,9 @@ literal|"org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat"
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|client
 operator|.

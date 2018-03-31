@@ -1454,6 +1454,32 @@ argument_list|,
 literal|"Whether to check client capabilities for potentially breaking API usage."
 argument_list|)
 block|,
+name|CATALOG_DEFAULT
+argument_list|(
+literal|"metastore.catalog.default"
+argument_list|,
+literal|"metastore.catalog.default"
+argument_list|,
+literal|"hive"
+argument_list|,
+literal|"The default catalog to use when a catalog is not specified.  Default is 'hive' (the "
+operator|+
+literal|"default catalog)."
+argument_list|)
+block|,
+name|CATALOGS_TO_CACHE
+argument_list|(
+literal|"metastore.cached.rawstore.catalogs"
+argument_list|,
+literal|"metastore.cached.rawstore.catalogs"
+argument_list|,
+literal|"hive"
+argument_list|,
+literal|"Comma separated list of catalogs to cache in the CachedStore. Default is 'hive' "
+operator|+
+literal|"(the default catalog).  Empty string means all catalogs will be cached."
+argument_list|)
+block|,
 name|CLIENT_CONNECT_RETRY_DELAY
 argument_list|(
 literal|"metastore.client.connect.retry.delay"

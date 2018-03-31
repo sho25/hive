@@ -326,6 +326,9 @@ specifier|public
 name|InsertEvent
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db
 parameter_list|,
 name|String
@@ -369,6 +372,13 @@ argument_list|,
 name|table
 argument_list|)
 decl_stmt|;
+name|req
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 comment|// TODO MS-SPLIT Switch this back once HiveMetaStoreClient is moved.
 comment|//req.setCapabilities(HiveMetaStoreClient.TEST_VERSION);
 name|req
@@ -420,7 +430,14 @@ name|handler
 operator|.
 name|get_partition
 argument_list|(
+name|MetaStoreUtils
+operator|.
+name|prependNotNullCatToDbName
+argument_list|(
+name|catName
+argument_list|,
 name|db
+argument_list|)
 argument_list|,
 name|table
 argument_list|,

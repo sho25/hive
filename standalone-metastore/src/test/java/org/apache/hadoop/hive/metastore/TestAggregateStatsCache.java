@@ -299,6 +299,24 @@ name|Category
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
 begin_class
 annotation|@
 name|Category
@@ -709,6 +727,8 @@ init|=
 operator|new
 name|Key
 argument_list|(
+literal|"cat"
+argument_list|,
 literal|"db"
 argument_list|,
 literal|"tbl1"
@@ -722,6 +742,8 @@ init|=
 operator|new
 name|Key
 argument_list|(
+literal|"cat"
+argument_list|,
 literal|"db"
 argument_list|,
 literal|"tbl1"
@@ -745,6 +767,8 @@ init|=
 operator|new
 name|Key
 argument_list|(
+literal|"cat"
+argument_list|,
 literal|"db"
 argument_list|,
 literal|"tbl2"
@@ -862,6 +886,8 @@ name|cache
 operator|.
 name|add
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -883,6 +909,8 @@ name|cache
 operator|.
 name|get
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -923,6 +951,8 @@ name|cache
 operator|.
 name|get
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 literal|"dbNotThere"
 argument_list|,
 name|tblName
@@ -1039,6 +1069,8 @@ name|cache
 operator|.
 name|add
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -1077,6 +1109,8 @@ name|cache
 operator|.
 name|get
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -1117,6 +1151,8 @@ name|cache
 operator|.
 name|get
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -1158,6 +1194,8 @@ name|cache
 operator|.
 name|get
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -1292,6 +1330,8 @@ name|cache
 operator|.
 name|add
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName
@@ -1321,6 +1361,8 @@ name|cache
 operator|.
 name|get
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|DB_NAME
 argument_list|,
 name|tblName

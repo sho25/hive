@@ -759,6 +759,24 @@ name|TException
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -846,6 +864,9 @@ return|return
 name|wh
 return|;
 block|}
+comment|// TODO CAT - a number of these need to be updated.  Don't bother with deprecated methods as
+comment|// this is just an internal class.  Wait until we're ready to move all the catalog stuff up
+comment|// into ql.
 annotation|@
 name|Override
 specifier|protected
@@ -916,6 +937,9 @@ name|void
 name|drop_table_with_environment_context
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbname
 parameter_list|,
 name|String
@@ -937,6 +961,9 @@ throws|,
 name|UnsupportedOperationException
 block|{
 comment|// First try temp table
+comment|// TODO CAT - I think the right thing here is to always put temp tables in the current
+comment|// catalog.  But we don't yet have a notion of current catalog, so we'll have to hold on
+comment|// until we do.
 name|org
 operator|.
 name|apache
@@ -1009,6 +1036,8 @@ name|super
 operator|.
 name|drop_table_with_environment_context
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|name
@@ -1167,11 +1196,81 @@ name|super
 operator|.
 name|getTable
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|dbname
 argument_list|,
 name|name
 argument_list|)
 return|;
+block|}
+comment|// Need to override this one too or dropTable breaks because it doesn't find the table when checks
+comment|// before the drop.
+annotation|@
+name|Override
+specifier|public
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+name|getTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|TException
+block|{
+if|if
+condition|(
+operator|!
+name|DEFAULT_CATALOG_NAME
+operator|.
+name|equals
+argument_list|(
+name|catName
+argument_list|)
+condition|)
+block|{
+return|return
+name|super
+operator|.
+name|getTable
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tableName
+argument_list|)
+return|;
+block|}
+else|else
+block|{
+return|return
+name|getTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|)
+return|;
+block|}
 block|}
 annotation|@
 name|Override

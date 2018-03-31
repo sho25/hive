@@ -319,7 +319,7 @@ argument_list|()
 operator|.
 name|get
 argument_list|(
-literal|"api_get_all_databases"
+literal|"api_get_databases"
 argument_list|)
 operator|.
 name|getCount

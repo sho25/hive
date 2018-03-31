@@ -163,6 +163,24 @@ name|TxnStore
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * An interface wrapper for HMSHandler.  This interface contains methods that need to be  * called by internal classes but that are not part of the thrift interface.  */
 end_comment
@@ -210,10 +228,14 @@ name|Warehouse
 name|getWh
 parameter_list|()
 function_decl|;
-comment|/**    * Equivalent to get_database, but does not write to audit logs, or fire pre-event listeners.    * Meant to be used for internal hive classes that don't use the thrift interface.    * @param name database name    * @return database object    * @throws NoSuchObjectException If the database does not exist.    * @throws MetaException If another error occurs.    */
+comment|/**    * Equivalent to get_database, but does not write to audit logs, or fire pre-event listeners.    * Meant to be used for internal hive classes that don't use the thrift interface.    * @param catName catalog name    * @param name database name    * @return database object    * @throws NoSuchObjectException If the database does not exist.    * @throws MetaException If another error occurs.    */
 name|Database
 name|get_database_core
 parameter_list|(
+specifier|final
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|name
@@ -223,10 +245,14 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Equivalent of get_table, but does not log audits and fire pre-event listener.    * Meant to be used for calls made by other hive classes, that are not using the    * thrift interface.    * @param dbname database name    * @param name table name    * @return Table object    * @throws NoSuchObjectException If the table does not exist.    * @throws MetaException  If another error occurs.    */
+comment|/**    * Equivalent of get_table, but does not log audits and fire pre-event listener.    * Meant to be used for calls made by other hive classes, that are not using the    * thrift interface.    * @param catName catalog name    * @param dbname database name    * @param name table name    * @return Table object    * @throws NoSuchObjectException If the table does not exist.    * @throws MetaException  If another error occurs.    */
 name|Table
 name|get_table_core
 parameter_list|(
+specifier|final
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|dbname
@@ -240,6 +266,41 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Equivalent of get_table, but does not log audits and fire pre-event listener.    * Meant to be used for calls made by other hive classes, that are not using the    * thrift interface.  Uses the configured catalog.    * @param dbName database name    * @param name table name    * @return Table object    * @throws NoSuchObjectException If the table does not exist.    * @throws MetaException  If another error occurs.    */
+specifier|default
+name|Table
+name|get_table_core
+parameter_list|(
+specifier|final
+name|String
+name|dbName
+parameter_list|,
+specifier|final
+name|String
+name|name
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+block|{
+return|return
+name|get_table_core
+argument_list|(
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
+argument_list|,
+name|dbName
+argument_list|,
+name|name
+argument_list|)
+return|;
+block|}
 comment|/**    * Get a list of all transactional listeners.    * @return list of listeners.    */
 name|List
 argument_list|<

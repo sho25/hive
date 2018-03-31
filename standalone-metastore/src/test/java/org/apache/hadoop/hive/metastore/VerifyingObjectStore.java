@@ -34,6 +34,24 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -328,6 +346,9 @@ argument_list|>
 name|getPartitionsByFilter
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -352,6 +373,8 @@ name|sqlResults
 init|=
 name|getPartitionsByFilterInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -373,6 +396,8 @@ name|ormResults
 init|=
 name|getPartitionsByFilterInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -411,6 +436,9 @@ argument_list|>
 name|getPartitionsByNames
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -435,6 +463,8 @@ name|sqlResults
 init|=
 name|getPartitionsByNamesInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -454,6 +484,8 @@ name|ormResults
 init|=
 name|getPartitionsByNamesInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -486,6 +518,9 @@ specifier|public
 name|boolean
 name|getPartitionsByExpr
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -527,6 +562,8 @@ name|sqlResult
 init|=
 name|getPartitionsByExprInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -549,6 +586,8 @@ name|ormResult
 init|=
 name|getPartitionsByExprInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -624,6 +663,9 @@ argument_list|>
 name|getPartitions
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -645,6 +687,8 @@ name|sqlResults
 init|=
 name|getPartitionsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -664,6 +708,8 @@ name|ormResults
 init|=
 name|getPartitionsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -697,6 +743,9 @@ name|ColumnStatistics
 name|getTableColumnStatistics
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -718,6 +767,8 @@ name|sqlResult
 init|=
 name|getTableColumnStatisticsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -734,6 +785,8 @@ name|jdoResult
 init|=
 name|getTableColumnStatisticsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -770,6 +823,9 @@ argument_list|>
 name|getPartitionColumnStatistics
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -800,6 +856,8 @@ name|sqlResult
 init|=
 name|getPartitionColumnStatisticsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -821,6 +879,8 @@ name|jdoResult
 init|=
 name|getPartitionColumnStatisticsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName

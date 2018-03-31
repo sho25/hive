@@ -439,6 +439,24 @@ begin_import
 import|import static
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
 name|Assert
@@ -647,6 +665,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|db
+operator|.
+name|setCatalogName
+argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|)
+expr_stmt|;
 name|table
 operator|=
 operator|new
@@ -692,7 +717,9 @@ literal|"string"
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|partition
 operator|=
@@ -700,7 +727,7 @@ operator|new
 name|PartitionBuilder
 argument_list|()
 operator|.
-name|fromTable
+name|inTable
 argument_list|(
 name|table
 argument_list|)
@@ -711,7 +738,9 @@ literal|"2011"
 argument_list|)
 operator|.
 name|build
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|DummyListener
 operator|.
@@ -1249,6 +1278,8 @@ name|msc
 operator|.
 name|dropTable
 argument_list|(
+name|DEFAULT_CATALOG_NAME
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName

@@ -45,6 +45,62 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|Warehouse
+operator|.
+name|getCatalogQualifiedDbName
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|getCatalogQualifiedTableName
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|utils
 operator|.
 name|StringUtils
@@ -559,6 +615,20 @@ name|commons
 operator|.
 name|lang
 operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
 name|exception
 operator|.
 name|ExceptionUtils
@@ -702,6 +772,42 @@ operator|.
 name|api
 operator|.
 name|AlreadyExistsException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|BasicTxnInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Catalog
 import|;
 end_import
 
@@ -2107,6 +2213,24 @@ name|metastore
 operator|.
 name|model
 operator|.
+name|MCatalog
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|model
+operator|.
 name|MColumnDescriptor
 import|;
 end_import
@@ -2944,6 +3068,18 @@ operator|.
 name|utils
 operator|.
 name|ObjectPair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|TDeserializer
 import|;
 end_import
 
@@ -5721,6 +5857,674 @@ annotation|@
 name|Override
 specifier|public
 name|void
+name|createCatalog
+parameter_list|(
+name|Catalog
+name|cat
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Creating catalog "
+operator|+
+name|cat
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|boolean
+name|committed
+init|=
+literal|false
+decl_stmt|;
+name|MCatalog
+name|mCat
+init|=
+name|catToMCat
+argument_list|(
+name|cat
+argument_list|)
+decl_stmt|;
+try|try
+block|{
+name|openTransaction
+argument_list|()
+expr_stmt|;
+name|pm
+operator|.
+name|makePersistent
+argument_list|(
+name|mCat
+argument_list|)
+expr_stmt|;
+name|committed
+operator|=
+name|commitTransaction
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|!
+name|committed
+condition|)
+name|rollbackTransaction
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|alterCatalog
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|Catalog
+name|cat
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|InvalidOperationException
+block|{
+if|if
+condition|(
+operator|!
+name|cat
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|catName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"You cannot change a catalog's name"
+argument_list|)
+throw|;
+block|}
+name|boolean
+name|committed
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|MCatalog
+name|mCat
+init|=
+name|getMCatalog
+argument_list|(
+name|catName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|isNotBlank
+argument_list|(
+name|cat
+operator|.
+name|getLocationUri
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|mCat
+operator|.
+name|setLocationUri
+argument_list|(
+name|cat
+operator|.
+name|getLocationUri
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|isNotBlank
+argument_list|(
+name|cat
+operator|.
+name|getDescription
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|mCat
+operator|.
+name|setDescription
+argument_list|(
+name|cat
+operator|.
+name|getDescription
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|openTransaction
+argument_list|()
+expr_stmt|;
+name|pm
+operator|.
+name|makePersistent
+argument_list|(
+name|mCat
+argument_list|)
+expr_stmt|;
+name|committed
+operator|=
+name|commitTransaction
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|!
+name|committed
+condition|)
+name|rollbackTransaction
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|Catalog
+name|getCatalog
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Fetching catalog "
+operator|+
+name|catalogName
+argument_list|)
+expr_stmt|;
+name|MCatalog
+name|mCat
+init|=
+name|getMCatalog
+argument_list|(
+name|catalogName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|mCat
+operator|==
+literal|null
+condition|)
+throw|throw
+operator|new
+name|NoSuchObjectException
+argument_list|(
+literal|"No catalog "
+operator|+
+name|catalogName
+argument_list|)
+throw|;
+return|return
+name|mCatToCat
+argument_list|(
+name|mCat
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getCatalogs
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Fetching all catalog names"
+argument_list|)
+expr_stmt|;
+name|boolean
+name|commited
+init|=
+literal|false
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|catalogs
+init|=
+literal|null
+decl_stmt|;
+name|String
+name|queryStr
+init|=
+literal|"select name from org.apache.hadoop.hive.metastore.model.MCatalog"
+decl_stmt|;
+name|Query
+name|query
+init|=
+literal|null
+decl_stmt|;
+name|openTransaction
+argument_list|()
+expr_stmt|;
+try|try
+block|{
+name|query
+operator|=
+name|pm
+operator|.
+name|newQuery
+argument_list|(
+name|queryStr
+argument_list|)
+expr_stmt|;
+name|query
+operator|.
+name|setResult
+argument_list|(
+literal|"name"
+argument_list|)
+expr_stmt|;
+name|catalogs
+operator|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
+operator|(
+name|Collection
+argument_list|<
+name|String
+argument_list|>
+operator|)
+name|query
+operator|.
+name|execute
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|commited
+operator|=
+name|commitTransaction
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+name|rollbackAndCleanup
+argument_list|(
+name|commited
+argument_list|,
+name|query
+argument_list|)
+expr_stmt|;
+block|}
+name|Collections
+operator|.
+name|sort
+argument_list|(
+name|catalogs
+argument_list|)
+expr_stmt|;
+return|return
+name|catalogs
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|dropCatalog
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Dropping catalog "
+operator|+
+name|catalogName
+argument_list|)
+expr_stmt|;
+name|boolean
+name|committed
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
+name|openTransaction
+argument_list|()
+expr_stmt|;
+name|MCatalog
+name|mCat
+init|=
+name|getMCatalog
+argument_list|(
+name|catalogName
+argument_list|)
+decl_stmt|;
+name|pm
+operator|.
+name|retrieve
+argument_list|(
+name|mCat
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|mCat
+operator|==
+literal|null
+condition|)
+throw|throw
+operator|new
+name|NoSuchObjectException
+argument_list|(
+literal|"No catalog "
+operator|+
+name|catalogName
+argument_list|)
+throw|;
+name|pm
+operator|.
+name|deletePersistent
+argument_list|(
+name|mCat
+argument_list|)
+expr_stmt|;
+name|committed
+operator|=
+name|commitTransaction
+argument_list|()
+expr_stmt|;
+block|}
+finally|finally
+block|{
+if|if
+condition|(
+operator|!
+name|committed
+condition|)
+name|rollbackTransaction
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+specifier|private
+name|MCatalog
+name|getMCatalog
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+name|boolean
+name|committed
+init|=
+literal|false
+decl_stmt|;
+name|Query
+name|query
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|openTransaction
+argument_list|()
+expr_stmt|;
+name|catalogName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catalogName
+argument_list|)
+expr_stmt|;
+name|query
+operator|=
+name|pm
+operator|.
+name|newQuery
+argument_list|(
+name|MCatalog
+operator|.
+name|class
+argument_list|,
+literal|"name == catname"
+argument_list|)
+expr_stmt|;
+name|query
+operator|.
+name|declareParameters
+argument_list|(
+literal|"java.lang.String catname"
+argument_list|)
+expr_stmt|;
+name|query
+operator|.
+name|setUnique
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|MCatalog
+name|mCat
+init|=
+operator|(
+name|MCatalog
+operator|)
+name|query
+operator|.
+name|execute
+argument_list|(
+name|catalogName
+argument_list|)
+decl_stmt|;
+name|pm
+operator|.
+name|retrieve
+argument_list|(
+name|mCat
+argument_list|)
+expr_stmt|;
+name|committed
+operator|=
+name|commitTransaction
+argument_list|()
+expr_stmt|;
+return|return
+name|mCat
+return|;
+block|}
+finally|finally
+block|{
+name|rollbackAndCleanup
+argument_list|(
+name|committed
+argument_list|,
+name|query
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+specifier|private
+name|MCatalog
+name|catToMCat
+parameter_list|(
+name|Catalog
+name|cat
+parameter_list|)
+block|{
+name|MCatalog
+name|mCat
+init|=
+operator|new
+name|MCatalog
+argument_list|()
+decl_stmt|;
+name|mCat
+operator|.
+name|setName
+argument_list|(
+name|normalizeIdentifier
+argument_list|(
+name|cat
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|cat
+operator|.
+name|isSetDescription
+argument_list|()
+condition|)
+name|mCat
+operator|.
+name|setDescription
+argument_list|(
+name|cat
+operator|.
+name|getDescription
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|mCat
+operator|.
+name|setLocationUri
+argument_list|(
+name|cat
+operator|.
+name|getLocationUri
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|mCat
+return|;
+block|}
+specifier|private
+name|Catalog
+name|mCatToCat
+parameter_list|(
+name|MCatalog
+name|mCat
+parameter_list|)
+block|{
+name|Catalog
+name|cat
+init|=
+operator|new
+name|Catalog
+argument_list|(
+name|mCat
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|mCat
+operator|.
+name|getLocationUri
+argument_list|()
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|mCat
+operator|.
+name|getDescription
+argument_list|()
+operator|!=
+literal|null
+condition|)
+name|cat
+operator|.
+name|setDescription
+argument_list|(
+name|mCat
+operator|.
+name|getDescription
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|cat
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
 name|createDatabase
 parameter_list|(
 name|Database
@@ -5743,6 +6547,35 @@ operator|new
 name|MDatabase
 argument_list|()
 decl_stmt|;
+assert|assert
+name|db
+operator|.
+name|getCatalogName
+argument_list|()
+operator|!=
+literal|null
+assert|;
+name|mdb
+operator|.
+name|setCatalogName
+argument_list|(
+name|normalizeIdentifier
+argument_list|(
+name|db
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+assert|assert
+name|mdb
+operator|.
+name|getCatalogName
+argument_list|()
+operator|!=
+literal|null
+assert|;
 name|mdb
 operator|.
 name|setName
@@ -5869,6 +6702,9 @@ name|MDatabase
 name|getMDatabase
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|name
 parameter_list|)
 throws|throws
@@ -5901,6 +6737,13 @@ argument_list|(
 name|name
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|query
 operator|=
 name|pm
@@ -5911,14 +6754,14 @@ name|MDatabase
 operator|.
 name|class
 argument_list|,
-literal|"name == dbname"
+literal|"name == dbname&& catalogName == catname"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String dbname"
+literal|"java.lang.String dbname, java.lang.String catname"
 argument_list|)
 expr_stmt|;
 name|query
@@ -5938,6 +6781,8 @@ operator|.
 name|execute
 argument_list|(
 name|name
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|pm
@@ -5974,7 +6819,11 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-literal|"There is no database named "
+literal|"There is no database "
+operator|+
+name|catName
+operator|+
+literal|"."
 operator|+
 name|name
 argument_list|)
@@ -5990,6 +6839,9 @@ specifier|public
 name|Database
 name|getDatabase
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|name
 parameter_list|)
@@ -6012,6 +6864,8 @@ name|db
 operator|=
 name|getDatabaseInternal
 argument_list|(
+name|catalogName
+argument_list|,
 name|name
 argument_list|)
 expr_stmt|;
@@ -6042,7 +6896,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to get database {}, returning NoSuchObjectException"
+literal|"Failed to get database {}.{}, returning NoSuchObjectException"
+argument_list|,
+name|catalogName
 argument_list|,
 name|name
 argument_list|,
@@ -6083,6 +6939,9 @@ name|Database
 name|getDatabaseInternal
 parameter_list|(
 name|String
+name|catalogName
+parameter_list|,
+name|String
 name|name
 parameter_list|)
 throws|throws
@@ -6094,6 +6953,8 @@ return|return
 operator|new
 name|GetDbHelper
 argument_list|(
+name|catalogName
+argument_list|,
 name|name
 argument_list|,
 literal|true
@@ -6121,6 +6982,8 @@ name|directSql
 operator|.
 name|getDatabase
 argument_list|(
+name|catalogName
+argument_list|,
 name|dbName
 argument_list|)
 return|;
@@ -6145,6 +7008,8 @@ block|{
 return|return
 name|getJDODatabase
 argument_list|(
+name|catalogName
+argument_list|,
 name|dbName
 argument_list|)
 return|;
@@ -6161,6 +7026,9 @@ specifier|public
 name|Database
 name|getJDODatabase
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|name
 parameter_list|)
@@ -6186,6 +7054,8 @@ name|mdb
 operator|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|name
 argument_list|)
 expr_stmt|;
@@ -6316,6 +7186,13 @@ argument_list|(
 name|principalType
 argument_list|)
 expr_stmt|;
+name|db
+operator|.
+name|setCatalogName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 return|return
 name|db
 return|;
@@ -6327,6 +7204,9 @@ specifier|public
 name|boolean
 name|alterDatabase
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -6354,6 +7234,8 @@ name|mdb
 operator|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|)
 expr_stmt|;
@@ -6508,6 +7390,9 @@ name|boolean
 name|dropDatabase
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbname
 parameter_list|)
 throws|throws
@@ -6524,7 +7409,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Dropping database {} along with all tables"
+literal|"Dropping database {}.{} along with all tables"
+argument_list|,
+name|catName
 argument_list|,
 name|dbname
 argument_list|)
@@ -6534,6 +7421,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|dbname
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|QueryWrapper
@@ -6554,6 +7448,8 @@ name|db
 init|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|)
 decl_stmt|;
@@ -6581,6 +7477,8 @@ name|this
 operator|.
 name|listDatabaseGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|queryWrapper
@@ -6642,6 +7540,9 @@ argument_list|>
 name|getDatabases
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|pattern
 parameter_list|)
 throws|throws
@@ -6663,7 +7564,9 @@ condition|)
 block|{
 return|return
 name|getAllDatabases
-argument_list|()
+argument_list|(
+name|catName
+argument_list|)
 return|;
 block|}
 name|boolean
@@ -6727,6 +7630,22 @@ operator|.
 name|length
 argument_list|)
 decl_stmt|;
+name|appendSimpleCondition
+argument_list|(
+name|filterBuilder
+argument_list|,
+literal|"catalogName"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+name|catName
+block|}
+argument_list|,
+name|parameterVals
+argument_list|)
+expr_stmt|;
 name|appendPatternCondition
 argument_list|(
 name|filterBuilder
@@ -6833,7 +7752,10 @@ argument_list|<
 name|String
 argument_list|>
 name|getAllDatabases
-parameter_list|()
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -6850,16 +7772,18 @@ name|databases
 init|=
 literal|null
 decl_stmt|;
-name|String
-name|queryStr
-init|=
-literal|"select name from org.apache.hadoop.hive.metastore.model.MDatabase"
-decl_stmt|;
 name|Query
 name|query
 init|=
 literal|null
 decl_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|openTransaction
 argument_list|()
 expr_stmt|;
@@ -6871,7 +7795,16 @@ name|pm
 operator|.
 name|newQuery
 argument_list|(
-name|queryStr
+literal|"select name from org.apache.hadoop.hive.metastore.model.MDatabase "
+operator|+
+literal|"where catalogName == catname"
+argument_list|)
+expr_stmt|;
+name|query
+operator|.
+name|declareParameters
+argument_list|(
+literal|"java.lang.String catname"
 argument_list|)
 expr_stmt|;
 name|query
@@ -6896,7 +7829,9 @@ operator|)
 name|query
 operator|.
 name|execute
-argument_list|()
+argument_list|(
+name|catName
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|commited
@@ -7521,6 +8456,22 @@ name|String
 argument_list|>
 name|constraintNames
 init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|foreignKeys
+operator|!=
+literal|null
+condition|)
+block|{
+name|constraintNames
+operator|.
+name|addAll
+argument_list|(
 name|addForeignKeys
 argument_list|(
 name|foreignKeys
@@ -7531,7 +8482,16 @@ name|primaryKeys
 argument_list|,
 name|uniqueConstraints
 argument_list|)
-decl_stmt|;
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|primaryKeys
+operator|!=
+literal|null
+condition|)
+block|{
 name|constraintNames
 operator|.
 name|addAll
@@ -7544,6 +8504,14 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|uniqueConstraints
+operator|!=
+literal|null
+condition|)
+block|{
 name|constraintNames
 operator|.
 name|addAll
@@ -7556,6 +8524,14 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|notNullConstraints
+operator|!=
+literal|null
+condition|)
+block|{
 name|constraintNames
 operator|.
 name|addAll
@@ -7568,6 +8544,14 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|defaultConstraints
+operator|!=
+literal|null
+condition|)
+block|{
 name|constraintNames
 operator|.
 name|addAll
@@ -7580,6 +8564,14 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|checkConstraints
+operator|!=
+literal|null
+condition|)
+block|{
 name|constraintNames
 operator|.
 name|addAll
@@ -7592,6 +8584,7 @@ literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|success
 operator|=
 name|commitTransaction
@@ -8069,6 +9062,9 @@ name|boolean
 name|dropTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -8103,6 +9099,8 @@ name|tbl
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8148,6 +9146,8 @@ name|tabGrants
 init|=
 name|listAllTableGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8179,6 +9179,8 @@ name|tblColGrants
 init|=
 name|listTableAllColumnGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8212,6 +9214,8 @@ name|this
 operator|.
 name|listTableAllPartitionGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8243,6 +9247,8 @@ name|partColGrants
 init|=
 name|listTableAllPartitionColumnGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8271,6 +9277,8 @@ try|try
 block|{
 name|deleteTableColumnStatistics
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8289,13 +9297,16 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Found no table level column statistics associated with db {}"
-operator|+
-literal|" table {} record to delete"
+literal|"Found no table level column statistics associated with {} to delete"
+argument_list|,
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
 name|tableName
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -8307,6 +9318,8 @@ name|tabConstraints
 init|=
 name|listAllTableConstraintsWithOptionalConstraintName
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8347,6 +9360,14 @@ condition|)
 block|{
 name|dropCreationMetadata
 argument_list|(
+name|tbl
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
 name|tbl
 operator|.
 name|getDatabase
@@ -8420,6 +9441,9 @@ name|boolean
 name|dropCreationMetadata
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -8463,6 +9487,8 @@ name|mcm
 init|=
 name|getCreationMetadata
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8521,6 +9547,9 @@ argument_list|>
 name|listAllTableConstraintsWithOptionalConstraintName
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -8530,6 +9559,13 @@ name|String
 name|constraintname
 parameter_list|)
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -8591,11 +9627,13 @@ name|newQuery
 argument_list|(
 literal|"select constraintName from org.apache.hadoop.hive.metastore.model.MConstraint  where "
 operator|+
-literal|"((parentTable.tableName == ptblname&& parentTable.database.name == pdbname) || "
+literal|"((parentTable.tableName == ptblname&& parentTable.database.name == pdbname&& "
 operator|+
-literal|"(childTable != null&& childTable.tableName == ctblname&& "
+literal|"parentTable.database.catalogName == pcatname) || "
 operator|+
-literal|"childTable.database.name == cdbname)) "
+literal|"(childTable != null&& childTable.tableName == ctblname&&"
+operator|+
+literal|"childTable.database.name == cdbname&& childTable.database.catalogName == ccatname)) "
 operator|+
 operator|(
 name|constraintname
@@ -8614,7 +9652,9 @@ name|declareParameters
 argument_list|(
 literal|"java.lang.String ptblname, java.lang.String pdbname,"
 operator|+
-literal|"java.lang.String ctblname, java.lang.String cdbname"
+literal|"java.lang.String pcatname, java.lang.String ctblname, java.lang.String cdbname,"
+operator|+
+literal|"java.lang.String ccatname"
 operator|+
 operator|(
 name|constraintname
@@ -8652,9 +9692,13 @@ name|tableName
 argument_list|,
 name|dbName
 argument_list|,
+name|catName
+argument_list|,
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|constraintname
 argument_list|)
@@ -8675,9 +9719,13 @@ name|tableName
 argument_list|,
 name|dbName
 argument_list|,
+name|catName
+argument_list|,
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 operator|)
 decl_stmt|;
@@ -8838,6 +9886,9 @@ name|Table
 name|getTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -8867,6 +9918,8 @@ name|convertToTable
 argument_list|(
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8904,6 +9957,8 @@ name|convertToCreationMetadata
 argument_list|(
 name|getCreationMetadata
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -8945,6 +10000,9 @@ argument_list|>
 name|getTables
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -8956,6 +10014,8 @@ block|{
 return|return
 name|getTables
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|pattern
@@ -8973,6 +10033,9 @@ name|String
 argument_list|>
 name|getTables
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -8992,6 +10055,8 @@ comment|// might be different than the one used by the metastore backends
 return|return
 name|getTablesInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|pattern
@@ -9043,6 +10108,9 @@ argument_list|>
 name|getTablesInternal
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -9071,6 +10139,15 @@ argument_list|(
 name|dbName
 argument_list|)
 decl_stmt|;
+specifier|final
+name|String
+name|cat_name
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+decl_stmt|;
 return|return
 operator|new
 name|GetListHelper
@@ -9078,6 +10155,8 @@ argument_list|<
 name|String
 argument_list|>
 argument_list|(
+name|cat_name
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -9113,6 +10192,8 @@ name|directSql
 operator|.
 name|getTables
 argument_list|(
+name|cat_name
+argument_list|,
 name|db_name
 argument_list|,
 name|tableType
@@ -9145,6 +10226,8 @@ block|{
 return|return
 name|getTablesInternalViaJdo
 argument_list|(
+name|cat_name
+argument_list|,
 name|db_name
 argument_list|,
 name|pattern
@@ -9168,6 +10251,9 @@ name|String
 argument_list|>
 name|getTablesInternalViaJdo
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -9242,6 +10328,22 @@ name|String
 index|[]
 block|{
 name|dbName
+block|}
+argument_list|,
+name|parameterVals
+argument_list|)
+expr_stmt|;
+name|appendSimpleCondition
+argument_list|(
+name|filterBuilder
+argument_list|,
+literal|"database.catalogName"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+name|catName
 block|}
 argument_list|,
 name|parameterVals
@@ -9390,6 +10492,9 @@ argument_list|>
 name|getMaterializedViewsForRewriting
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 throws|throws
@@ -9406,6 +10511,13 @@ argument_list|(
 name|dbName
 argument_list|)
 decl_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|boolean
 name|commited
 init|=
@@ -9449,16 +10561,14 @@ name|MTable
 operator|.
 name|class
 argument_list|,
-literal|"database.name == db&& tableType == tt"
-operator|+
-literal|"&& rewriteEnabled == re"
+literal|"database.name == db&& database.catalogName == cat&& tableType == tt&& rewriteEnabled == re"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String db, java.lang.String tt, boolean re"
+literal|"java.lang.String db, java.lang.String cat, java.lang.String tt, boolean re"
 argument_list|)
 expr_stmt|;
 name|query
@@ -9482,9 +10592,11 @@ argument_list|>
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
 name|db_name
+argument_list|,
+name|catName
 argument_list|,
 name|TableType
 operator|.
@@ -9688,6 +10800,9 @@ argument_list|>
 name|getTableMeta
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbNames
 parameter_list|,
 name|String
@@ -9748,6 +10863,22 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+name|appendSimpleCondition
+argument_list|(
+name|filterBuilder
+argument_list|,
+literal|"database.catalogName"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+name|catName
+block|}
+argument_list|,
+name|parameterVals
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|dbNames
@@ -9833,6 +10964,38 @@ index|]
 argument_list|)
 argument_list|,
 name|parameterVals
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"getTableMeta with filter "
+operator|+
+name|filterBuilder
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" params: "
+operator|+
+name|StringUtils
+operator|.
+name|join
+argument_list|(
+name|parameterVals
+argument_list|,
+literal|", "
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -10270,6 +11433,9 @@ argument_list|>
 name|getAllTables
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 throws|throws
@@ -10278,6 +11444,8 @@ block|{
 return|return
 name|getTables
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|".*"
@@ -10326,6 +11494,9 @@ name|AttachedMTableInfo
 name|getMTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db
 parameter_list|,
 name|String
@@ -10362,6 +11533,13 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|db
 operator|=
 name|normalizeIdentifier
@@ -10386,14 +11564,14 @@ name|MTable
 operator|.
 name|class
 argument_list|,
-literal|"tableName == table&& database.name == db"
+literal|"tableName == table&& database.name == db&& database.catalogName == catname"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String table, java.lang.String db"
+literal|"java.lang.String table, java.lang.String db, java.lang.String catname"
 argument_list|)
 expr_stmt|;
 name|query
@@ -10401,6 +11579,22 @@ operator|.
 name|setUnique
 argument_list|(
 literal|true
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Executing getMTable for "
+operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
+name|db
+argument_list|,
+name|table
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|mtbl
@@ -10415,6 +11609,8 @@ argument_list|(
 name|table
 argument_list|,
 name|db
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|pm
@@ -10501,6 +11697,9 @@ name|MCreationMetadata
 name|getCreationMetadata
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -10537,14 +11736,14 @@ name|MCreationMetadata
 operator|.
 name|class
 argument_list|,
-literal|"tblName == table&& dbName == db"
+literal|"tblName == table&& dbName == db&& catalogName == cat"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String table, java.lang.String db"
+literal|"java.lang.String table, java.lang.String db, java.lang.String cat"
 argument_list|)
 expr_stmt|;
 name|query
@@ -10566,6 +11765,8 @@ argument_list|(
 name|tblName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|pm
@@ -10600,6 +11801,9 @@ name|MTable
 name|getMTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db
 parameter_list|,
 name|String
@@ -10611,6 +11815,8 @@ name|nmtbl
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|db
 argument_list|,
 name|table
@@ -10633,6 +11839,9 @@ name|Table
 argument_list|>
 name|getTableObjectsByName
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db
 parameter_list|,
@@ -10685,81 +11894,13 @@ argument_list|(
 name|db
 argument_list|)
 expr_stmt|;
-name|dbExistsQuery
+name|catName
 operator|=
-name|pm
-operator|.
-name|newQuery
+name|normalizeIdentifier
 argument_list|(
-name|MDatabase
-operator|.
-name|class
-argument_list|,
-literal|"name == db"
+name|catName
 argument_list|)
 expr_stmt|;
-name|dbExistsQuery
-operator|.
-name|declareParameters
-argument_list|(
-literal|"java.lang.String db"
-argument_list|)
-expr_stmt|;
-name|dbExistsQuery
-operator|.
-name|setUnique
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-name|dbExistsQuery
-operator|.
-name|setResult
-argument_list|(
-literal|"name"
-argument_list|)
-expr_stmt|;
-name|String
-name|dbNameIfExists
-init|=
-operator|(
-name|String
-operator|)
-name|dbExistsQuery
-operator|.
-name|execute
-argument_list|(
-name|db
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang
-operator|.
-name|StringUtils
-operator|.
-name|isEmpty
-argument_list|(
-name|dbNameIfExists
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|UnknownDBException
-argument_list|(
-literal|"Could not find database "
-operator|+
-name|db
-argument_list|)
-throw|;
-block|}
 name|List
 argument_list|<
 name|String
@@ -10810,14 +11951,14 @@ name|query
 operator|.
 name|setFilter
 argument_list|(
-literal|"database.name == db&& tbl_names.contains(tableName)"
+literal|"database.name == db&& database.catalogName == cat&& tbl_names.contains(tableName)"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String db, java.util.Collection tbl_names"
+literal|"java.lang.String db, java.lang.String cat, java.util.Collection tbl_names"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -10832,9 +11973,109 @@ name|execute
 argument_list|(
 name|db
 argument_list|,
+name|catName
+argument_list|,
 name|lowered_tbl_names
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|mtables
+operator|==
+literal|null
+operator|||
+name|mtables
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// Need to differentiate between an unmatched pattern and a non-existent database
+name|dbExistsQuery
+operator|=
+name|pm
+operator|.
+name|newQuery
+argument_list|(
+name|MDatabase
+operator|.
+name|class
+argument_list|,
+literal|"name == db&& catalogName == cat"
+argument_list|)
+expr_stmt|;
+name|dbExistsQuery
+operator|.
+name|declareParameters
+argument_list|(
+literal|"java.lang.String db, java.lang.String cat"
+argument_list|)
+expr_stmt|;
+name|dbExistsQuery
+operator|.
+name|setUnique
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|dbExistsQuery
+operator|.
+name|setResult
+argument_list|(
+literal|"name"
+argument_list|)
+expr_stmt|;
+name|String
+name|dbNameIfExists
+init|=
+operator|(
+name|String
+operator|)
+name|dbExistsQuery
+operator|.
+name|execute
+argument_list|(
+name|db
+argument_list|,
+name|catName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|dbNameIfExists
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|UnknownDBException
+argument_list|(
+literal|"Could not find database "
+operator|+
+name|getCatalogQualifiedDbName
+argument_list|(
+name|catName
+argument_list|,
+name|db
+argument_list|)
+argument_list|)
+throw|;
+block|}
+block|}
+else|else
+block|{
 for|for
 control|(
 name|Iterator
@@ -10868,6 +12109,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|committed
 operator|=
@@ -11163,6 +12405,19 @@ name|isRewriteEnabled
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|t
+operator|.
+name|setCatName
+argument_list|(
+name|mtbl
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|t
 return|;
@@ -11195,12 +12450,32 @@ name|mdb
 init|=
 literal|null
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|tbl
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|tbl
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 name|mdb
 operator|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|tbl
 operator|.
 name|getDbName
@@ -11229,10 +12504,15 @@ name|InvalidObjectException
 argument_list|(
 literal|"Database "
 operator|+
+name|getCatalogQualifiedDbName
+argument_list|(
+name|catName
+argument_list|,
 name|tbl
 operator|.
 name|getDbName
 argument_list|()
+argument_list|)
 operator|+
 literal|" doesn't exist."
 argument_list|)
@@ -12755,6 +14035,11 @@ name|add
 argument_list|(
 name|getMTable
 argument_list|(
+name|m
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|names
 index|[
 literal|0
@@ -12776,6 +14061,11 @@ return|return
 operator|new
 name|MCreationMetadata
 argument_list|(
+name|m
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|m
 operator|.
 name|getDbName
@@ -12870,6 +14160,11 @@ name|CreationMetadata
 argument_list|(
 name|s
 operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|s
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -12912,6 +14207,9 @@ specifier|public
 name|boolean
 name|addPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -12962,6 +14260,8 @@ name|this
 operator|.
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -12991,6 +14291,8 @@ name|this
 operator|.
 name|listAllTableGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -13002,6 +14304,8 @@ name|this
 operator|.
 name|listTableAllColumnGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -13306,6 +14610,11 @@ name|doesPartitionExist
 argument_list|(
 name|part
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|part
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -13349,6 +14658,9 @@ specifier|public
 name|boolean
 name|addPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -13399,6 +14711,8 @@ name|this
 operator|.
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -13428,6 +14742,8 @@ name|this
 operator|.
 name|listAllTableGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -13439,6 +14755,8 @@ name|this
 operator|.
 name|listTableAllColumnGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -13732,6 +15050,24 @@ literal|false
 decl_stmt|;
 try|try
 block|{
+name|String
+name|catName
+init|=
+name|part
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|part
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|MTable
 name|table
 init|=
@@ -13739,6 +15075,8 @@ name|this
 operator|.
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|part
 operator|.
 name|getDbName
@@ -13790,6 +15128,8 @@ name|this
 operator|.
 name|listAllTableGrants
 argument_list|(
+name|catName
+argument_list|,
 name|part
 operator|.
 name|getDbName
@@ -13807,6 +15147,8 @@ name|this
 operator|.
 name|listTableAllColumnGrants
 argument_list|(
+name|catName
+argument_list|,
 name|part
 operator|.
 name|getDbName
@@ -14052,6 +15394,9 @@ name|Partition
 name|getPartition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -14078,6 +15423,8 @@ name|convertToPart
 argument_list|(
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -14125,6 +15472,9 @@ name|MPartition
 name|getMPartition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -14167,6 +15517,13 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -14186,6 +15543,8 @@ name|mtbl
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -14237,14 +15596,18 @@ name|MPartition
 operator|.
 name|class
 argument_list|,
-literal|"table.tableName == t1&& table.database.name == t2&& partitionName == t3"
+literal|"table.tableName == t1&& table.database.name == t2&& partitionName == t3 "
+operator|+
+literal|"&& table.database.catalogName == t4"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, "
+operator|+
+literal|"java.lang.String t4"
 argument_list|)
 expr_stmt|;
 name|mparts
@@ -14257,13 +15620,15 @@ argument_list|>
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
 name|tableName
 argument_list|,
 name|dbName
 argument_list|,
 name|name
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|pm
@@ -14409,6 +15774,11 @@ name|mt
 init|=
 name|getMTable
 argument_list|(
+name|part
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|part
 operator|.
 name|getDbName
@@ -14609,7 +15979,9 @@ return|return
 literal|null
 return|;
 block|}
-return|return
+name|Partition
+name|p
+init|=
 operator|new
 name|Partition
 argument_list|(
@@ -14666,12 +16038,34 @@ name|getParameters
 argument_list|()
 argument_list|)
 argument_list|)
+decl_stmt|;
+name|p
+operator|.
+name|setCatName
+argument_list|(
+name|mpart
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
+return|return
+name|p
 return|;
 block|}
 specifier|private
 name|Partition
 name|convertToPart
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -14695,7 +16089,9 @@ return|return
 literal|null
 return|;
 block|}
-return|return
+name|Partition
+name|p
+init|=
 operator|new
 name|Partition
 argument_list|(
@@ -14739,6 +16135,16 @@ name|getParameters
 argument_list|()
 argument_list|)
 argument_list|)
+decl_stmt|;
+name|p
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+return|return
+name|p
 return|;
 block|}
 annotation|@
@@ -14747,6 +16153,9 @@ specifier|public
 name|boolean
 name|dropPartition
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -14783,6 +16192,8 @@ name|part
 init|=
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -14825,6 +16236,9 @@ name|void
 name|dropPartitions
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -14866,6 +16280,8 @@ block|{
 comment|// Delete all things.
 name|dropPartitionGrantsNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -14875,6 +16291,8 @@ argument_list|)
 expr_stmt|;
 name|dropPartitionAllColumnGrantsNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -14884,6 +16302,8 @@ argument_list|)
 expr_stmt|;
 name|dropPartitionColumnStatisticsNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -14899,6 +16319,8 @@ name|mcd
 range|:
 name|detachCdsFromSdsNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -14915,6 +16337,8 @@ expr_stmt|;
 block|}
 name|dropPartitionsNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -14957,7 +16381,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Drop an MPartition and cascade deletes (e.g., delete partition privilege grants,    *   drop the storage descriptor cleanly, etc.)    * @param part - the MPartition to drop    * @return whether the transaction committed successfully    * @throws InvalidInputException    * @throws InvalidObjectException    * @throws MetaException    * @throws NoSuchObjectException    */
+comment|/**    * Drop an MPartition and cascade deletes (e.g., delete partition privilege grants,    *   drop the storage descriptor cleanly, etc.)    */
 specifier|private
 name|boolean
 name|dropPartitionCommon
@@ -15066,6 +16490,17 @@ operator|.
 name|getDatabase
 argument_list|()
 operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
 name|getName
 argument_list|()
 argument_list|,
@@ -15119,6 +16554,17 @@ operator|.
 name|getDatabase
 argument_list|()
 operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
 name|getName
 argument_list|()
 argument_list|,
@@ -15157,6 +16603,20 @@ argument_list|)
 expr_stmt|;
 block|}
 name|String
+name|catName
+init|=
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+decl_stmt|;
+name|String
 name|dbName
 init|=
 name|part
@@ -15186,6 +16646,8 @@ try|try
 block|{
 name|deletePartitionColumnStatistics
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -15264,6 +16726,9 @@ argument_list|>
 name|getPartitions
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -15280,6 +16745,8 @@ block|{
 return|return
 name|getPartitionsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -15299,6 +16766,9 @@ name|Partition
 argument_list|>
 name|getPartitionsInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -15327,6 +16797,8 @@ argument_list|<
 name|Partition
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15375,6 +16847,8 @@ name|directSql
 operator|.
 name|getPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15418,6 +16892,8 @@ name|convertToParts
 argument_list|(
 name|listMPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15455,6 +16931,9 @@ name|Partition
 argument_list|>
 name|getPartitionsWithAuth
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -15503,6 +16982,8 @@ name|mparts
 init|=
 name|listMPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15617,6 +17098,8 @@ name|this
 operator|.
 name|getPartitionPrivilegeSet
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15665,6 +17148,9 @@ name|Partition
 name|getPartitionWithAuth
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -15707,6 +17193,8 @@ name|mpart
 init|=
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15802,6 +17290,8 @@ name|this
 operator|.
 name|getPartitionPrivilegeSet
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -15958,6 +17448,9 @@ argument_list|>
 name|convertToParts
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -16002,6 +17495,8 @@ name|add
 argument_list|(
 name|convertToPart
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -16030,6 +17525,9 @@ name|String
 argument_list|>
 name|listPartitionNames
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -16071,6 +17569,8 @@ name|pns
 operator|=
 name|getPartitionNamesNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -16428,6 +17928,9 @@ name|PartitionValuesResponse
 name|listPartitionValues
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -16460,6 +17963,13 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|dbName
@@ -16499,6 +18009,8 @@ name|response
 init|=
 name|getDistinctValuesForPartitionsNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -16506,8 +18018,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|applyDistinct
-argument_list|,
-name|ascending
 argument_list|,
 name|maxParts
 argument_list|)
@@ -16538,6 +18048,8 @@ name|response
 init|=
 name|extractPartitionNamesByFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -16547,8 +18059,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|ascending
-argument_list|,
-name|applyDistinct
 argument_list|,
 name|maxParts
 argument_list|)
@@ -16613,13 +18123,14 @@ name|t
 argument_list|)
 throw|;
 block|}
-finally|finally
-block|{     }
 block|}
 specifier|private
 name|PartitionValuesResponse
 name|extractPartitionNamesByFilter
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -16638,9 +18149,6 @@ parameter_list|,
 name|boolean
 name|ascending
 parameter_list|,
-name|boolean
-name|applyDistinct
-parameter_list|,
 name|long
 name|maxParts
 parameter_list|)
@@ -16653,11 +18161,16 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Database: {} Table: {} filter: \"{}\" cols: {}"
+literal|"Table: {} filter: \"{}\" cols: {}"
+argument_list|,
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
 name|tableName
+argument_list|)
 argument_list|,
 name|filter
 argument_list|,
@@ -16685,6 +18198,8 @@ name|tbl
 init|=
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -16697,6 +18212,8 @@ name|partitionNames
 operator|=
 name|getPartitionNamesByFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -16736,6 +18253,8 @@ name|partitions
 operator|=
 name|getPartitionsByFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -16760,9 +18279,7 @@ name|partitionNames
 operator|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|(
 name|partitions
 operator|.
@@ -16840,11 +18357,14 @@ name|filter
 operator|+
 literal|"\" for "
 operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
 name|dbName
-operator|+
-literal|":"
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -16881,9 +18401,7 @@ name|setPartitionValues
 argument_list|(
 operator|new
 name|ArrayList
-argument_list|<
-name|PartitionValuesRow
-argument_list|>
+argument_list|<>
 argument_list|(
 name|partitionNames
 operator|.
@@ -16992,6 +18510,9 @@ argument_list|>
 name|getPartitionNamesByFilter
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -17022,9 +18543,7 @@ name|partNames
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 try|try
@@ -17037,6 +18556,13 @@ operator|.
 name|debug
 argument_list|(
 literal|"Executing getPartitionNamesByFilter"
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|dbName
@@ -17058,6 +18584,8 @@ name|mtable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -17086,11 +18614,7 @@ name|params
 init|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|Object
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|String
@@ -17098,6 +18622,8 @@ name|queryFilterString
 init|=
 name|makeQueryFilterString
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|mtable
@@ -17286,6 +18812,9 @@ name|PartitionValuesResponse
 name|getDistinctValuesForPartitionsNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -17299,9 +18828,6 @@ name|cols
 parameter_list|,
 name|boolean
 name|applyDistinct
-parameter_list|,
-name|boolean
-name|ascending
 parameter_list|,
 name|long
 name|maxParts
@@ -17323,14 +18849,16 @@ name|newQuery
 argument_list|(
 literal|"select partitionName from org.apache.hadoop.hive.metastore.model.MPartition "
 operator|+
-literal|"where table.database.name == t1&& table.tableName == t2 "
+literal|"where table.database.name == t1&& table.database.catalogName == t2&& "
+operator|+
+literal|"table.tableName == t3 "
 argument_list|)
 decl_stmt|;
 name|q
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 comment|// TODO: Ordering seems to affect the distinctness, needs checking, disabling.
@@ -17382,6 +18910,8 @@ name|partitionKeys
 init|=
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -17460,9 +18990,7 @@ name|setPartitionValues
 argument_list|(
 operator|new
 name|ArrayList
-argument_list|<
-name|PartitionValuesRow
-argument_list|>
+argument_list|<>
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -17495,6 +19023,8 @@ operator|.
 name|execute
 argument_list|(
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|tableName
 argument_list|)
@@ -17563,6 +19093,8 @@ name|execute
 argument_list|(
 name|dbName
 argument_list|,
+name|catName
+argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
@@ -17624,6 +19156,9 @@ argument_list|>
 name|getPartitionNamesNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -17655,6 +19190,13 @@ return|return
 name|pns
 return|;
 block|}
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -17678,7 +19220,7 @@ name|newQuery
 argument_list|(
 literal|"select partitionName from org.apache.hadoop.hive.metastore.model.MPartition "
 operator|+
-literal|"where table.database.name == t1&& table.tableName == t2 "
+literal|"where table.database.name == t1&& table.tableName == t2&& table.database.catalogName == t3 "
 operator|+
 literal|"order by partitionName asc"
 argument_list|)
@@ -17687,7 +19229,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|query
@@ -17733,6 +19275,8 @@ argument_list|(
 name|dbName
 argument_list|,
 name|tableName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pns
@@ -17765,6 +19309,9 @@ name|Collection
 name|getPartitionPsQueryResults
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -17790,6 +19337,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -17809,6 +19363,8 @@ name|table
 init|=
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -17825,11 +19381,14 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 operator|+
 literal|" table not found"
 argument_list|)
@@ -17961,6 +19520,13 @@ name|queryFilter
 operator|.
 name|append
 argument_list|(
+literal|"&& table.database.catalogName == catName"
+argument_list|)
+expr_stmt|;
+name|queryFilter
+operator|.
+name|append
+argument_list|(
 literal|"&& table.tableName == tableName"
 argument_list|)
 expr_stmt|;
@@ -17985,7 +19551,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String dbName, "
+literal|"java.lang.String dbName, java.lang.String catName, "
 operator|+
 literal|"java.lang.String tableName, java.lang.String partialRegex"
 argument_list|)
@@ -18035,9 +19601,11 @@ name|Collection
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|tableName
 argument_list|,
@@ -18054,6 +19622,9 @@ name|Partition
 argument_list|>
 name|listPartitionsPsWithAuth
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -18125,6 +19696,8 @@ name|parts
 init|=
 name|getPartitionPsQueryResults
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -18143,6 +19716,8 @@ name|mtbl
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -18222,6 +19797,8 @@ name|partAuth
 init|=
 name|getPartitionPrivilegeSet
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -18278,6 +19855,9 @@ name|String
 argument_list|>
 name|listPartitionNamesPs
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -18341,6 +19921,8 @@ name|names
 init|=
 name|getPartitionPsQueryResults
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -18389,6 +19971,9 @@ name|MPartition
 argument_list|>
 name|listMPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -18456,14 +20041,14 @@ name|MPartition
 operator|.
 name|class
 argument_list|,
-literal|"table.tableName == t1&& table.database.name == t2"
+literal|"table.tableName == t1&& table.database.name == t2&& table.database.catalogName == t3"
 argument_list|)
 decl_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|query
@@ -18505,6 +20090,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -18563,6 +20150,9 @@ argument_list|>
 name|getPartitionsByNames
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -18582,6 +20172,8 @@ block|{
 return|return
 name|getPartitionsByNamesInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -18601,6 +20193,9 @@ name|Partition
 argument_list|>
 name|getPartitionsByNamesInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -18632,6 +20227,8 @@ argument_list|<
 name|Partition
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -18667,6 +20264,8 @@ name|directSql
 operator|.
 name|getPartitionsViaSqlFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -18701,6 +20300,8 @@ block|{
 return|return
 name|getPartitionsViaOrmFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -18723,6 +20324,9 @@ specifier|public
 name|boolean
 name|getPartitionsByExpr
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -18751,6 +20355,8 @@ block|{
 return|return
 name|getPartitionsByExprInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -18773,6 +20379,9 @@ specifier|protected
 name|boolean
 name|getPartitionsByExprInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -18845,6 +20454,8 @@ argument_list|<
 name|Partition
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -18965,6 +20576,8 @@ name|directSql
 operator|.
 name|getPartitionsViaSqlFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -19073,6 +20686,8 @@ name|result
 operator|=
 name|getPartitionsViaOrmFilter
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -19133,6 +20748,11 @@ name|addAll
 argument_list|(
 name|getPartitionNamesNoTxn
 argument_list|(
+name|table
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|table
 operator|.
 name|getDbName
@@ -19233,6 +20853,11 @@ name|jdoFilter
 init|=
 name|makeQueryFilterString
 argument_list|(
+name|table
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|table
 operator|.
 name|getDbName
@@ -19418,6 +21043,11 @@ name|makeQueryFilterString
 argument_list|(
 name|table
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -19511,6 +21141,9 @@ argument_list|>
 name|getPartitionsViaOrmFilter
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -19555,6 +21188,8 @@ name|queryWithParams
 init|=
 name|getPartQueryWithParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -19630,6 +21265,8 @@ name|partitions
 init|=
 name|convertToParts
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -19659,6 +21296,9 @@ name|void
 name|dropPartitionsNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -19686,6 +21326,8 @@ name|queryWithParams
 init|=
 name|getPartQueryWithParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -19747,6 +21389,9 @@ argument_list|>
 name|detachCdsFromSdsNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -19774,6 +21419,8 @@ name|queryWithParams
 init|=
 name|getPartQueryWithParams
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -19916,6 +21563,9 @@ argument_list|>
 name|getPartQueryWithParams
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -19934,7 +21584,9 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"table.tableName == t1&& table.database.name == t2&& ("
+literal|"table.tableName == t1&& table.database.name == t2&&"
+operator|+
+literal|" table.database.catalogName == t3&& ("
 argument_list|)
 decl_stmt|;
 name|int
@@ -20093,6 +21745,18 @@ name|dbName
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|params
+operator|.
+name|put
+argument_list|(
+literal|"t3"
+argument_list|,
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|query
 operator|.
 name|declareParameters
@@ -20124,6 +21788,9 @@ argument_list|>
 name|getPartitionsByFilter
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -20143,6 +21810,8 @@ block|{
 return|return
 name|getPartitionsByFilterInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -20192,6 +21861,8 @@ decl_stmt|;
 specifier|protected
 specifier|final
 name|String
+name|catName
+decl_stmt|,
 name|dbName
 decl_stmt|,
 name|tblName
@@ -20211,6 +21882,9 @@ decl_stmt|;
 specifier|public
 name|GetHelper
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -20236,6 +21910,15 @@ operator|.
 name|allowJdo
 operator|=
 name|allowJdo
+expr_stmt|;
+name|this
+operator|.
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catalogName
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -20622,6 +22305,8 @@ name|table
 operator|=
 name|ensureGetTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -20834,6 +22519,8 @@ name|table
 operator|=
 name|ensureGetTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -21205,6 +22892,9 @@ specifier|public
 name|GetListHelper
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -21221,6 +22911,8 @@ name|MetaException
 block|{
 name|super
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -21265,6 +22957,9 @@ specifier|public
 name|GetDbHelper
 parameter_list|(
 name|String
+name|catalogName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|boolean
@@ -21278,6 +22973,8 @@ name|MetaException
 block|{
 name|super
 argument_list|(
+name|catalogName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -21319,6 +23016,9 @@ specifier|public
 name|GetStatHelper
 parameter_list|(
 name|String
+name|catalogName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -21335,6 +23035,8 @@ name|MetaException
 block|{
 name|super
 argument_list|(
+name|catalogName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -21378,6 +23080,9 @@ specifier|public
 name|int
 name|getNumPartitionsByFilter
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -21431,6 +23136,8 @@ argument_list|<
 name|Integer
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -21561,6 +23268,9 @@ name|int
 name|getNumPartitionsByExpr
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -21603,6 +23313,8 @@ argument_list|<
 name|Integer
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -21813,6 +23525,9 @@ argument_list|>
 name|getPartitionsByFilterInternal
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -21872,6 +23587,8 @@ argument_list|<
 name|Partition
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -22020,6 +23737,9 @@ name|MTable
 name|ensureGetMTable
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -22035,6 +23755,8 @@ name|mtable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -22051,13 +23773,16 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-literal|"Specified database/table does not exist : "
+literal|"Specified catalog.database.table does not exist : "
 operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tblName
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -22069,6 +23794,9 @@ specifier|private
 name|Table
 name|ensureGetTable
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -22085,6 +23813,8 @@ name|convertToTable
 argument_list|(
 name|ensureGetMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -22097,6 +23827,9 @@ specifier|private
 name|String
 name|makeQueryFilterString
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -22148,6 +23881,8 @@ decl_stmt|;
 return|return
 name|makeQueryFilterString
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|convertToTable
@@ -22168,6 +23903,9 @@ specifier|private
 name|String
 name|makeQueryFilterString
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -22216,7 +23954,7 @@ name|queryBuilder
 operator|.
 name|append
 argument_list|(
-literal|"table.tableName == t1&& table.database.name == t2"
+literal|"table.tableName == t1&& table.database.name == t2&& table.database.catalogName == t3"
 argument_list|)
 expr_stmt|;
 name|params
@@ -22243,6 +23981,18 @@ name|getDbName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|params
+operator|.
+name|put
+argument_list|(
+literal|"t3"
+argument_list|,
+name|table
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
@@ -22250,7 +24000,7 @@ name|queryBuilder
 operator|.
 name|append
 argument_list|(
-literal|"database.name == dbName"
+literal|"database.name == dbName&& database.catalogName == catName"
 argument_list|)
 expr_stmt|;
 name|params
@@ -22260,6 +24010,15 @@ argument_list|(
 literal|"dbName"
 argument_list|,
 name|dbName
+argument_list|)
+expr_stmt|;
+name|params
+operator|.
+name|put
+argument_list|(
+literal|"catName"
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 block|}
@@ -22363,7 +24122,10 @@ operator|.
 name|append
 argument_list|(
 literal|", java.lang.String "
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|key
 argument_list|)
 expr_stmt|;
@@ -22470,6 +24232,9 @@ argument_list|>
 name|listTableNamesByFilter
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -22514,6 +24279,13 @@ argument_list|(
 literal|"Executing listTableNamesByFilter"
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -22539,6 +24311,8 @@ name|queryFilterString
 init|=
 name|makeQueryFilterString
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -22761,272 +24535,12 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|listPartitionNamesByFilter
-parameter_list|(
-name|String
-name|dbName
-parameter_list|,
-name|String
-name|tableName
-parameter_list|,
-name|String
-name|filter
-parameter_list|,
-name|short
-name|maxParts
-parameter_list|)
-throws|throws
-name|MetaException
-block|{
-name|boolean
-name|success
-init|=
-literal|false
-decl_stmt|;
-name|Query
-name|query
-init|=
-literal|null
-decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|partNames
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-decl_stmt|;
-try|try
-block|{
-name|openTransaction
-argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Executing listMPartitionNamesByFilter"
-argument_list|)
-expr_stmt|;
-name|dbName
-operator|=
-name|normalizeIdentifier
-argument_list|(
-name|dbName
-argument_list|)
-expr_stmt|;
-name|tableName
-operator|=
-name|normalizeIdentifier
-argument_list|(
-name|tableName
-argument_list|)
-expr_stmt|;
-name|MTable
-name|mtable
-init|=
-name|getMTable
-argument_list|(
-name|dbName
-argument_list|,
-name|tableName
-argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|mtable
-operator|==
-literal|null
-condition|)
-block|{
-comment|// To be consistent with the behavior of listPartitionNames, if the
-comment|// table or db does not exist, we return an empty list
-return|return
-name|partNames
-return|;
-block|}
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|Object
-argument_list|>
-name|params
-init|=
-operator|new
-name|HashMap
-argument_list|<>
-argument_list|()
-decl_stmt|;
-name|String
-name|queryFilterString
-init|=
-name|makeQueryFilterString
-argument_list|(
-name|dbName
-argument_list|,
-name|mtable
-argument_list|,
-name|filter
-argument_list|,
-name|params
-argument_list|)
-decl_stmt|;
-name|query
-operator|=
-name|pm
-operator|.
-name|newQuery
-argument_list|(
-literal|"select partitionName from org.apache.hadoop.hive.metastore.model.MPartition "
-operator|+
-literal|"where "
-operator|+
-name|queryFilterString
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|maxParts
-operator|>=
-literal|0
-condition|)
-block|{
-comment|// User specified a row limit, set it on the Query
-name|query
-operator|.
-name|setRange
-argument_list|(
-literal|0
-argument_list|,
-name|maxParts
-argument_list|)
-expr_stmt|;
-block|}
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Filter specified is {}, JDOQL filter is {}"
-argument_list|,
-name|filter
-argument_list|,
-name|queryFilterString
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Parms is {}"
-argument_list|,
-name|params
-argument_list|)
-expr_stmt|;
-name|String
-name|parameterDeclaration
-init|=
-name|makeParameterDeclarationStringObj
-argument_list|(
-name|params
-argument_list|)
-decl_stmt|;
-name|query
-operator|.
-name|declareParameters
-argument_list|(
-name|parameterDeclaration
-argument_list|)
-expr_stmt|;
-name|query
-operator|.
-name|setOrdering
-argument_list|(
-literal|"partitionName ascending"
-argument_list|)
-expr_stmt|;
-name|query
-operator|.
-name|setResult
-argument_list|(
-literal|"partitionName"
-argument_list|)
-expr_stmt|;
-name|Collection
-argument_list|<
-name|String
-argument_list|>
-name|names
-init|=
-operator|(
-name|Collection
-argument_list|<
-name|String
-argument_list|>
-operator|)
-name|query
-operator|.
-name|executeWithMap
-argument_list|(
-name|params
-argument_list|)
-decl_stmt|;
-name|partNames
-operator|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|names
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Done executing query for listMPartitionNamesByFilter"
-argument_list|)
-expr_stmt|;
-name|success
-operator|=
-name|commitTransaction
-argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Done retrieving all objects for listMPartitionNamesByFilter"
-argument_list|)
-expr_stmt|;
-block|}
-finally|finally
-block|{
-name|rollbackAndCleanup
-argument_list|(
-name|success
-argument_list|,
-name|query
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|partNames
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|void
 name|alterTable
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|,
@@ -23070,6 +24584,13 @@ argument_list|(
 name|dbname
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|MTable
 name|newt
 init|=
@@ -23098,6 +24619,8 @@ name|oldt
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|name
@@ -23316,6 +24839,9 @@ name|void
 name|updateCreationMetadata
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbname
 parameter_list|,
 name|String
@@ -23336,6 +24862,13 @@ try|try
 block|{
 name|openTransaction
 argument_list|()
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
 expr_stmt|;
 name|dbname
 operator|=
@@ -23365,6 +24898,8 @@ name|mcm
 init|=
 name|getCreationMetadata
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|tablename
@@ -23443,6 +24978,9 @@ name|MColumnDescriptor
 name|alterPartitionNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbname
 parameter_list|,
 name|String
@@ -23462,6 +25000,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|name
 operator|=
 name|normalizeIdentifier
@@ -23481,6 +25026,8 @@ name|oldp
 init|=
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|name
@@ -23670,6 +25217,9 @@ name|void
 name|alterPartition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbname
 parameter_list|,
 name|String
@@ -23709,6 +25259,8 @@ name|oldCd
 init|=
 name|alterPartitionNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|name
@@ -23788,6 +25340,9 @@ specifier|public
 name|void
 name|alterPartitions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbname
 parameter_list|,
@@ -23878,6 +25433,8 @@ name|oldCd
 init|=
 name|alterPartitionNoTxn
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|name
@@ -25276,6 +26833,11 @@ name|currentConstraintName
 init|=
 literal|null
 decl_stmt|;
+name|String
+name|catName
+init|=
+literal|null
+decl_stmt|;
 comment|// We start iterating through the foreign keys. This list might contain more than a single
 comment|// foreign key, and each foreign key might contain multiple columns. The outer loop retrieves
 comment|// the information that is common for a single key (table information) while the inner loop
@@ -25298,6 +26860,97 @@ name|i
 operator|++
 control|)
 block|{
+if|if
+condition|(
+name|catName
+operator|==
+literal|null
+condition|)
+block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|foreignKeys
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|foreignKeys
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|String
+name|tmpCatName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|foreignKeys
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|foreignKeys
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|catName
+operator|.
+name|equals
+argument_list|(
+name|tmpCatName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidObjectException
+argument_list|(
+literal|"Foreign keys cannot span catalogs"
+argument_list|)
+throw|;
+block|}
+block|}
 specifier|final
 name|String
 name|fkTableDB
@@ -25340,6 +26993,8 @@ name|nChildTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|fkTableDB
 argument_list|,
 name|fkTableName
@@ -25566,6 +27221,8 @@ name|nParentTable
 operator|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|pkTableDB
 argument_list|,
 name|pkTableName
@@ -25655,6 +27312,8 @@ name|existingTablePrimaryKeys
 operator|=
 name|getPrimaryKeys
 argument_list|(
+name|catName
+argument_list|,
 name|pkTableDB
 argument_list|,
 name|pkTableName
@@ -25664,6 +27323,8 @@ name|existingTableUniqueConstraints
 operator|=
 name|getUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|pkTableDB
 argument_list|,
 name|pkTableName
@@ -26755,6 +28416,23 @@ control|)
 block|{
 specifier|final
 name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|pks
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableDB
 init|=
 name|normalizeIdentifier
@@ -26811,6 +28489,8 @@ name|nParentTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|tableDB
 argument_list|,
 name|tableName
@@ -26941,6 +28621,14 @@ operator|.
 name|getDatabase
 argument_list|()
 operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|parentTable
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
 name|getName
 argument_list|()
 argument_list|,
@@ -26959,25 +28647,14 @@ name|MetaException
 argument_list|(
 literal|" Primary key already exists for: "
 operator|+
-name|parentTable
-operator|.
-name|getDatabase
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|pks
-operator|.
-name|get
+name|getCatalogQualifiedTableName
 argument_list|(
-name|i
+name|catName
+argument_list|,
+name|tableDB
+argument_list|,
+name|tableName
 argument_list|)
-operator|.
-name|getTable_name
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -27277,6 +28954,23 @@ control|)
 block|{
 specifier|final
 name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|uks
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableDB
 init|=
 name|normalizeIdentifier
@@ -27333,6 +29027,8 @@ name|nParentTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|tableDB
 argument_list|,
 name|tableName
@@ -27751,7 +29447,7 @@ name|List
 argument_list|<
 name|SQLCheckConstraint
 argument_list|>
-name|nns
+name|cc
 parameter_list|,
 name|boolean
 name|retrieveCD
@@ -27797,7 +29493,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|nns
+name|cc
 operator|.
 name|size
 argument_list|()
@@ -27808,11 +29504,28 @@ control|)
 block|{
 specifier|final
 name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|cc
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableDB
 init|=
 name|normalizeIdentifier
 argument_list|(
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27829,7 +29542,7 @@ name|tableName
 init|=
 name|normalizeIdentifier
 argument_list|(
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27846,7 +29559,7 @@ name|columnName
 init|=
 name|normalizeIdentifier
 argument_list|(
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27861,7 +29574,7 @@ specifier|final
 name|String
 name|ccName
 init|=
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27874,7 +29587,7 @@ decl_stmt|;
 name|boolean
 name|isEnable
 init|=
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27887,7 +29600,7 @@ decl_stmt|;
 name|boolean
 name|isValidate
 init|=
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27900,7 +29613,7 @@ decl_stmt|;
 name|boolean
 name|isRely
 init|=
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27913,7 +29626,7 @@ decl_stmt|;
 name|String
 name|constraintValue
 init|=
-name|nns
+name|cc
 operator|.
 name|get
 argument_list|(
@@ -27925,6 +29638,8 @@ argument_list|()
 decl_stmt|;
 name|addConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|tableDB
 argument_list|,
 name|tableName
@@ -27968,6 +29683,9 @@ specifier|private
 name|void
 name|addConstraint
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|tableDB
 parameter_list|,
@@ -28027,6 +29745,8 @@ name|nParentTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|tableDB
 argument_list|,
 name|tableName
@@ -28341,6 +30061,23 @@ control|)
 block|{
 specifier|final
 name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|nns
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableDB
 init|=
 name|normalizeIdentifier
@@ -28458,6 +30195,8 @@ argument_list|()
 decl_stmt|;
 name|addConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|tableDB
 argument_list|,
 name|tableName
@@ -28565,6 +30304,23 @@ control|)
 block|{
 specifier|final
 name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|nns
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableDB
 init|=
 name|normalizeIdentifier
@@ -28621,6 +30377,8 @@ name|nParentTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|tableDB
 argument_list|,
 name|tableName
@@ -31323,13 +33081,16 @@ return|return
 name|ret
 return|;
 block|}
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|PrivilegeGrantInfo
 argument_list|>
 name|getDBPrivilege
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -31344,6 +33105,13 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -31371,6 +33139,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|)
@@ -31488,6 +33258,9 @@ name|PrincipalPrivilegeSet
 name|getDBPrivilegeSet
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -31509,6 +33282,13 @@ name|commited
 init|=
 literal|false
 decl_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|dbName
 operator|=
 name|normalizeIdentifier
@@ -31559,6 +33339,8 @@ name|userName
 argument_list|,
 name|getDBPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|userName
@@ -31619,6 +33401,8 @@ name|groupName
 argument_list|,
 name|getDBPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|groupName
@@ -31693,6 +33477,8 @@ name|roleName
 argument_list|,
 name|getDBPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|roleName
@@ -31742,6 +33528,9 @@ name|PrincipalPrivilegeSet
 name|getPartitionPrivilegeSet
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -31790,6 +33579,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|openTransaction
@@ -31826,6 +33622,8 @@ name|userName
 argument_list|,
 name|getPartitionPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -31890,6 +33688,8 @@ name|groupName
 argument_list|,
 name|getPartitionPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -31968,6 +33768,8 @@ name|roleName
 argument_list|,
 name|getPartitionPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32021,6 +33823,9 @@ name|PrincipalPrivilegeSet
 name|getTablePrivilegeSet
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -32057,6 +33862,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|tableName
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|dbName
@@ -32102,6 +33914,8 @@ name|userName
 argument_list|,
 name|getTablePrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32164,6 +33978,8 @@ name|groupName
 argument_list|,
 name|getTablePrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32240,6 +34056,8 @@ name|roleName
 argument_list|,
 name|getTablePrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32291,6 +34109,9 @@ name|PrincipalPrivilegeSet
 name|getColumnPrivilegeSet
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -32335,6 +34156,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|columnName
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -32385,6 +34213,8 @@ name|userName
 argument_list|,
 name|getColumnPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32451,6 +34281,8 @@ name|groupName
 argument_list|,
 name|getColumnPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32531,6 +34363,8 @@ name|roleName
 argument_list|,
 name|getColumnPrivilege
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -32587,6 +34421,9 @@ argument_list|>
 name|getPartitionPrivilege
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -32616,6 +34453,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|principalName
@@ -32636,6 +34480,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -32781,6 +34627,9 @@ argument_list|>
 name|getTablePrivilege
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -32807,6 +34656,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|principalName
@@ -32827,6 +34683,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -32947,6 +34805,9 @@ argument_list|>
 name|getColumnPrivilege
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -32986,6 +34847,13 @@ argument_list|(
 name|columnName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|partitionName
@@ -33006,6 +34874,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -33126,6 +34996,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -33455,6 +35327,24 @@ name|userName
 argument_list|)
 expr_stmt|;
 block|}
+name|String
+name|catName
+init|=
+name|hiveObject
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|hiveObject
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|hiveObject
@@ -33604,6 +35494,8 @@ name|dbObj
 init|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -33630,6 +35522,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -33769,6 +35663,8 @@ name|tblObj
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -33800,6 +35696,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -33960,6 +35858,8 @@ name|this
 operator|.
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -34008,6 +35908,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -34168,6 +36070,8 @@ name|tblObj
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -34215,6 +36119,8 @@ name|this
 operator|.
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -34249,6 +36155,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -34429,6 +36337,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -34776,6 +36686,24 @@ operator|.
 name|getPrincipalType
 argument_list|()
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|hiveObject
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|hiveObject
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|hiveObject
@@ -34938,6 +36866,8 @@ name|dbObj
 init|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -34977,6 +36907,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|db
 argument_list|)
@@ -35121,6 +37053,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -35278,6 +37212,8 @@ name|this
 operator|.
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -35335,6 +37271,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -35493,6 +37431,8 @@ name|this
 operator|.
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|hiveObject
 operator|.
 name|getDbName
@@ -35555,6 +37495,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -35731,6 +37673,8 @@ argument_list|(
 name|userName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|hiveObject
 operator|.
@@ -36212,7 +38156,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MGlobalPrivilege
@@ -36734,7 +38678,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MDBPrivilege
@@ -36746,6 +38690,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -36801,14 +38748,14 @@ name|MDBPrivilege
 operator|.
 name|class
 argument_list|,
-literal|"principalName == t1&& principalType == t2&& database.name == t3"
+literal|"principalName == t1&& principalType == t2&& database.name == t3&& database.catalogName == t4"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, java.lang.String t4"
 argument_list|)
 expr_stmt|;
 name|List
@@ -36835,6 +38782,8 @@ name|toString
 argument_list|()
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -36894,6 +38843,9 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 block|{
@@ -36908,6 +38860,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|)
@@ -36985,6 +38939,13 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|HiveObjectPrivilege
 name|secObj
 init|=
@@ -37105,6 +39066,9 @@ argument_list|>
 name|listDBGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|)
 block|{
@@ -37122,6 +39086,8 @@ name|convertDB
 argument_list|(
 name|listDatabaseGrants
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|queryWrapper
@@ -37222,6 +39188,19 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|priv
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|PrivilegeGrantInfo
 name|grantor
 init|=
@@ -37462,13 +39441,16 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MTablePrivilege
 argument_list|>
 name|listAllTableGrants
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -37486,20 +39468,6 @@ name|query
 init|=
 literal|null
 decl_stmt|;
-name|tableName
-operator|=
-name|normalizeIdentifier
-argument_list|(
-name|tableName
-argument_list|)
-expr_stmt|;
-name|dbName
-operator|=
-name|normalizeIdentifier
-argument_list|(
-name|dbName
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|MTablePrivilege
@@ -37525,6 +39493,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|LOG
@@ -37541,6 +39516,8 @@ name|String
 name|queryStr
 init|=
 literal|"table.tableName == t1&& table.database.name == t2"
+operator|+
+literal|"&& table.database.catalogName == t3"
 decl_stmt|;
 name|query
 operator|=
@@ -37559,7 +39536,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|List
@@ -37581,6 +39558,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -37636,13 +39615,16 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MPartitionPrivilege
 argument_list|>
 name|listTableAllPartitionGrants
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -37662,6 +39644,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|dbName
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -37700,7 +39689,9 @@ expr_stmt|;
 name|String
 name|queryStr
 init|=
-literal|"partition.table.tableName == t1&& partition.table.database.name == t2"
+literal|"partition.table.tableName == t1&& partition.table.database.name == t2 "
+operator|+
+literal|"&& partition.table.database.catalogName == t3"
 decl_stmt|;
 name|query
 operator|=
@@ -37719,7 +39710,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|List
@@ -37741,6 +39732,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -37789,13 +39782,16 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MTableColumnPrivilege
 argument_list|>
 name|listTableAllColumnGrants
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -37838,6 +39834,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|LOG
@@ -37853,7 +39856,9 @@ expr_stmt|;
 name|String
 name|queryStr
 init|=
-literal|"table.tableName == t1&& table.database.name == t2"
+literal|"table.tableName == t1&& table.database.name == t2&&"
+operator|+
+literal|"table.database.catalogName == t3"
 decl_stmt|;
 name|query
 operator|=
@@ -37872,7 +39877,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|List
@@ -37894,6 +39899,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -37942,13 +39949,16 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MPartitionColumnPrivilege
 argument_list|>
 name|listTableAllPartitionColumnGrants
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -37980,6 +39990,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|MPartitionColumnPrivilege
@@ -38006,7 +40023,9 @@ expr_stmt|;
 name|String
 name|queryStr
 init|=
-literal|"partition.table.tableName == t1&& partition.table.database.name == t2"
+literal|"partition.table.tableName == t1&& partition.table.database.name == t2 "
+operator|+
+literal|"&& partition.table.database.catalogName == t3"
 decl_stmt|;
 name|query
 operator|=
@@ -38025,7 +40044,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|List
@@ -38047,6 +40066,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -38095,13 +40116,16 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MPartitionColumnPrivilege
 argument_list|>
 name|listPartitionAllColumnGrants
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -38134,6 +40158,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|MPartitionColumnPrivilege
@@ -38158,6 +40189,8 @@ name|mSecurityColList
 operator|=
 name|queryByPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -38173,6 +40206,8 @@ argument_list|,
 literal|"partition.table.database.name"
 argument_list|,
 literal|"partition.partitionName"
+argument_list|,
+literal|"partition.table.database.catalogName"
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -38219,10 +40254,13 @@ return|return
 name|mSecurityColList
 return|;
 block|}
-specifier|public
+specifier|private
 name|void
 name|dropPartitionAllColumnGrantsNoTxn
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -38247,6 +40285,8 @@ name|queryWithParams
 init|=
 name|makeQueryByPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -38262,6 +40302,8 @@ argument_list|,
 literal|"partition.table.database.name"
 argument_list|,
 literal|"partition.partitionName"
+argument_list|,
+literal|"partition.table.database.catalogName"
 argument_list|)
 decl_stmt|;
 name|queryWithParams
@@ -38291,6 +40333,9 @@ argument_list|>
 name|listDatabaseGrants
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|QueryWrapper
@@ -38302,6 +40347,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|dbName
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -38336,14 +40388,14 @@ name|MDBPrivilege
 operator|.
 name|class
 argument_list|,
-literal|"database.name == t1"
+literal|"database.name == t1&& database.catalogName == t2"
 argument_list|)
 decl_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1"
+literal|"java.lang.String t1, java.lang.String t2"
 argument_list|)
 expr_stmt|;
 name|List
@@ -38363,6 +40415,8 @@ operator|.
 name|executeWithArray
 argument_list|(
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -38414,6 +40468,9 @@ name|MPartitionPrivilege
 argument_list|>
 name|listPartitionGrants
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -38470,6 +40527,8 @@ name|mSecurityTabPartList
 operator|=
 name|queryByPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -38485,6 +40544,8 @@ argument_list|,
 literal|"partition.table.database.name"
 argument_list|,
 literal|"partition.partitionName"
+argument_list|,
+literal|"partition.table.database.catalogName"
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -38536,6 +40597,9 @@ name|void
 name|dropPartitionGrantsNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -38559,6 +40623,8 @@ name|queryWithParams
 init|=
 name|makeQueryByPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -38574,6 +40640,8 @@ argument_list|,
 literal|"partition.table.database.name"
 argument_list|,
 literal|"partition.partitionName"
+argument_list|,
+literal|"partition.table.database.catalogName"
 argument_list|)
 decl_stmt|;
 name|queryWithParams
@@ -38606,6 +40674,9 @@ argument_list|>
 name|queryByPartitionNames
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -38631,6 +40702,9 @@ name|dbCol
 parameter_list|,
 name|String
 name|partCol
+parameter_list|,
+name|String
+name|catCol
 parameter_list|)
 block|{
 name|ObjectPair
@@ -38644,6 +40718,8 @@ name|queryAndParams
 init|=
 name|makeQueryByPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -38657,6 +40733,8 @@ argument_list|,
 name|dbCol
 argument_list|,
 name|partCol
+argument_list|,
+name|catCol
 argument_list|)
 decl_stmt|;
 return|return
@@ -38691,6 +40769,9 @@ argument_list|>
 name|makeQueryByPartitionNames
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -38716,6 +40797,9 @@ name|dbCol
 parameter_list|,
 name|String
 name|partCol
+parameter_list|,
+name|String
+name|catCol
 parameter_list|)
 block|{
 name|String
@@ -38727,12 +40811,16 @@ literal|" == t1&& "
 operator|+
 name|dbCol
 operator|+
-literal|" == t2"
+literal|" == t2&& "
+operator|+
+name|catCol
+operator|+
+literal|" == t3"
 decl_stmt|;
 name|String
 name|paramStr
 init|=
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 decl_stmt|;
 name|Object
 index|[]
@@ -38741,7 +40829,7 @@ init|=
 operator|new
 name|Object
 index|[
-literal|2
+literal|3
 operator|+
 name|partNames
 operator|.
@@ -38769,6 +40857,16 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|params
+index|[
+literal|2
+index|]
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|int
 name|index
 init|=
@@ -38786,7 +40884,7 @@ name|params
 index|[
 name|index
 operator|+
-literal|2
+literal|3
 index|]
 operator|=
 name|partName
@@ -38860,7 +40958,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MTablePrivilege
@@ -38872,6 +40970,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -38892,6 +40993,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|dbName
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -38937,14 +41045,18 @@ name|MTablePrivilege
 operator|.
 name|class
 argument_list|,
-literal|"principalName == t1&& principalType == t2&& table.tableName == t3&& table.database.name == t4"
+literal|"principalName == t1&& principalType == t2&& table.tableName == t3&&"
+operator|+
+literal|"table.database.name == t4&& table.database.catalogName == t5"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, java.lang.String t4"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3,"
+operator|+
+literal|"java.lang.String t4, java.lang.String t5"
 argument_list|)
 expr_stmt|;
 name|List
@@ -38973,6 +41085,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -39032,6 +41146,9 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -39049,6 +41166,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -39128,6 +41247,13 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|HiveObjectPrivilege
 name|secObj
 init|=
@@ -39195,7 +41321,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MPartitionPrivilege
@@ -39207,6 +41333,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -39240,6 +41369,13 @@ operator|=
 name|normalizeIdentifier
 argument_list|(
 name|dbName
+argument_list|)
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 expr_stmt|;
 name|List
@@ -39277,7 +41413,9 @@ name|class
 argument_list|,
 literal|"principalName == t1&& principalType == t2&& partition.table.tableName == t3 "
 operator|+
-literal|"&& partition.table.database.name == t4&& partition.partitionName == t5"
+literal|"&& partition.table.database.name == t4&& partition.table.database.catalogName == t5"
+operator|+
+literal|"&& partition.partitionName == t6"
 argument_list|)
 expr_stmt|;
 name|query
@@ -39286,7 +41424,7 @@ name|declareParameters
 argument_list|(
 literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, java.lang.String t4, "
 operator|+
-literal|"java.lang.String t5"
+literal|"java.lang.String t5, java.lang.String t6"
 argument_list|)
 expr_stmt|;
 name|List
@@ -39315,6 +41453,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|partName
 argument_list|)
@@ -39376,6 +41516,9 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -39402,6 +41545,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -39483,6 +41628,13 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|HiveObjectPrivilege
 name|secObj
 init|=
@@ -39550,7 +41702,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MTableColumnPrivilege
@@ -39562,6 +41714,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -39632,7 +41787,9 @@ name|queryStr
 init|=
 literal|"principalName == t1&& principalType == t2&& "
 operator|+
-literal|"table.tableName == t3&& table.database.name == t4&&  columnName == t5 "
+literal|"table.tableName == t3&& table.database.name == t4&&  "
+operator|+
+literal|"table.database.catalogName == t5&& columnName == t6 "
 decl_stmt|;
 name|query
 operator|=
@@ -39653,7 +41810,7 @@ name|declareParameters
 argument_list|(
 literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, "
 operator|+
-literal|"java.lang.String t4, java.lang.String t5"
+literal|"java.lang.String t4, java.lang.String t5, java.lang.String t6"
 argument_list|)
 expr_stmt|;
 name|List
@@ -39682,6 +41839,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|columnName
 argument_list|)
@@ -39743,6 +41902,9 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -39763,6 +41925,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -39847,6 +42011,13 @@ name|getColumnName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|HiveObjectPrivilege
 name|secObj
 init|=
@@ -39914,7 +42085,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
-specifier|public
+specifier|private
 name|List
 argument_list|<
 name|MPartitionColumnPrivilege
@@ -39926,6 +42097,9 @@ name|principalName
 parameter_list|,
 name|PrincipalType
 name|principalType
+parameter_list|,
+name|String
+name|catName
 parameter_list|,
 name|String
 name|dbName
@@ -39971,6 +42145,13 @@ argument_list|(
 name|columnName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|MPartitionColumnPrivilege
@@ -40006,7 +42187,9 @@ name|class
 argument_list|,
 literal|"principalName == t1&& principalType == t2&& partition.table.tableName == t3 "
 operator|+
-literal|"&& partition.table.database.name == t4&& partition.partitionName == t5&& columnName == t6"
+literal|"&& partition.table.database.name == t4&& partition.table.database.catalogName == t5"
+operator|+
+literal|"&& partition.partitionName == t6&& columnName == t7"
 argument_list|)
 expr_stmt|;
 name|query
@@ -40015,7 +42198,7 @@ name|declareParameters
 argument_list|(
 literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, "
 operator|+
-literal|"java.lang.String t4, java.lang.String t5, java.lang.String t6"
+literal|"java.lang.String t4, java.lang.String t5, java.lang.String t6, java.lang.String t7"
 argument_list|)
 expr_stmt|;
 name|List
@@ -40044,6 +42227,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|partitionName
 argument_list|,
@@ -40107,6 +42292,9 @@ name|PrincipalType
 name|principalType
 parameter_list|,
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -40136,6 +42324,8 @@ argument_list|(
 name|principalName
 argument_list|,
 name|principalType
+argument_list|,
+name|catName
 argument_list|,
 name|dbName
 argument_list|,
@@ -40222,6 +42412,13 @@ name|getColumnName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|HiveObjectPrivilege
 name|secObj
 init|=
@@ -40469,6 +42666,9 @@ argument_list|>
 name|listPartitionColumnGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -40515,14 +42715,18 @@ name|class
 argument_list|,
 literal|"partition.table.tableName == t3&& partition.table.database.name == t4&& "
 operator|+
-literal|"partition.partitionName == t5&& columnName == t6"
+literal|"partition.table.database.name == t5&& "
+operator|+
+literal|"partition.partitionName == t6&& columnName == t7"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5, java.lang.String t6"
+literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5,"
+operator|+
+literal|"java.lang.String t6, java.lang.String t7"
 argument_list|)
 expr_stmt|;
 name|List
@@ -40544,6 +42748,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|partitionName
 argument_list|,
@@ -40711,6 +42917,16 @@ name|getColumnName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|mdatabase
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|PrivilegeGrantInfo
 name|grantor
 init|=
@@ -41084,6 +43300,9 @@ argument_list|>
 name|listTableGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -41136,14 +43355,14 @@ name|MTablePrivilege
 operator|.
 name|class
 argument_list|,
-literal|"table.tableName == t1&& table.database.name == t2"
+literal|"table.tableName == t1&& table.database.name == t2&& table.database.catalogName == t3"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 argument_list|)
 expr_stmt|;
 name|List
@@ -41165,6 +43384,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -41317,6 +43538,22 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|priv
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|PrivilegeGrantInfo
 name|grantor
 init|=
@@ -41690,6 +43927,9 @@ argument_list|>
 name|listPartitionGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -41733,14 +43973,16 @@ name|class
 argument_list|,
 literal|"partition.table.tableName == t3&& partition.table.database.name == t4&& "
 operator|+
-literal|"partition.partitionName == t5"
+literal|"partition.table.database.catalogName == t5&& partition.partitionName == t6"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5"
+literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5, "
+operator|+
+literal|"java.lang.String t6"
 argument_list|)
 expr_stmt|;
 name|List
@@ -41762,6 +44004,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|partitionName
 argument_list|)
@@ -41924,6 +44168,16 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|mdatabase
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|PrivilegeGrantInfo
 name|grantor
 init|=
@@ -42297,6 +44551,9 @@ argument_list|>
 name|listTableColumnGrantsAll
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -42352,14 +44609,18 @@ name|MTableColumnPrivilege
 operator|.
 name|class
 argument_list|,
-literal|"table.tableName == t3&& table.database.name == t4&&  columnName == t5"
+literal|"table.tableName == t3&& table.database.name == t4&& "
+operator|+
+literal|"table.database.catalogName == t5&& columnName == t6"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5"
+literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5, "
+operator|+
+literal|"java.lang.String t6"
 argument_list|)
 expr_stmt|;
 name|List
@@ -42381,6 +44642,8 @@ argument_list|(
 name|tableName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|columnName
 argument_list|)
@@ -42535,6 +44798,16 @@ name|getColumnName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|objectRef
+operator|.
+name|setCatName
+argument_list|(
+name|mdatabase
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|PrivilegeGrantInfo
 name|grantor
 init|=
@@ -42730,6 +45003,9 @@ name|boolean
 name|isPartitionMarkedForEvent
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -42787,14 +45063,16 @@ name|MPartitionEvent
 operator|.
 name|class
 argument_list|,
-literal|"dbName == t1&& tblName == t2&& partName == t3&& eventType == t4"
+literal|"dbName == t1&& tblName == t2&& partName == t3&& eventType == t4&& catalogName == t5"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, int t4"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, int t4,"
+operator|+
+literal|"java.lang.String t5"
 argument_list|)
 expr_stmt|;
 name|Table
@@ -42802,6 +45080,8 @@ name|tbl
 init|=
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -42858,6 +45138,8 @@ name|evtType
 operator|.
 name|getValue
 argument_list|()
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -42915,6 +45197,9 @@ name|Table
 name|markPartitionForEvent
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -42966,6 +45251,8 @@ name|tbl
 operator|=
 name|getTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -42998,6 +45285,8 @@ argument_list|(
 operator|new
 name|MPartitionEvent
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -45457,22 +47746,6 @@ throws|,
 name|InvalidInputException
 block|{
 name|String
-name|dbName
-init|=
-name|mStatsObj
-operator|.
-name|getDbName
-argument_list|()
-decl_stmt|;
-name|String
-name|tableName
-init|=
-name|mStatsObj
-operator|.
-name|getTableName
-argument_list|()
-decl_stmt|;
-name|String
 name|colName
 init|=
 name|mStatsObj
@@ -45493,13 +47766,14 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updating table level column statistics for db={} tableName={}"
+literal|"Updating table level column statistics for table={}"
 operator|+
 literal|" colName={}"
 argument_list|,
-name|tableName
-argument_list|,
-name|dbName
+name|getCatalogQualifiedTableName
+argument_list|(
+name|table
+argument_list|)
 argument_list|,
 name|colName
 argument_list|)
@@ -45618,6 +47892,14 @@ throws|,
 name|InvalidInputException
 block|{
 name|String
+name|catName
+init|=
+name|mStatsObj
+operator|.
+name|getCatName
+argument_list|()
+decl_stmt|;
+name|String
 name|dbName
 init|=
 name|mStatsObj
@@ -45653,13 +47935,16 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updating partition level column statistics for db="
+literal|"Updating partition level column statistics for table="
 operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
 name|dbName
-operator|+
-literal|" tableName="
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 operator|+
 literal|" partName="
 operator|+
@@ -45967,11 +48252,31 @@ argument_list|()
 decl_stmt|;
 comment|// DataNucleus objects get detached all over the place for no (real) reason.
 comment|// So let's not use them anywhere unless absolutely necessary.
+name|String
+name|catName
+init|=
+name|statsDesc
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|statsDesc
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|Table
 name|table
 init|=
 name|ensureGetTable
 argument_list|(
+name|catName
+argument_list|,
 name|statsDesc
 operator|.
 name|getDbName
@@ -46046,6 +48351,8 @@ name|convertToMTableColumnStatistics
 argument_list|(
 name|ensureGetMTable
 argument_list|(
+name|catName
+argument_list|,
 name|statsDesc
 operator|.
 name|getDbName
@@ -46104,6 +48411,8 @@ name|oldt
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbname
 argument_list|,
 name|name
@@ -46319,11 +48628,31 @@ operator|.
 name|getStatsDesc
 argument_list|()
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|statsDesc
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|statsDesc
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|Table
 name|table
 init|=
 name|ensureGetTable
 argument_list|(
+name|catName
+argument_list|,
 name|statsDesc
 operator|.
 name|getDbName
@@ -46342,6 +48671,8 @@ name|convertToPart
 argument_list|(
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|statsDesc
 operator|.
 name|getDbName
@@ -46411,6 +48742,8 @@ name|mPartition
 init|=
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|statsDesc
 operator|.
 name|getDbName
@@ -46618,12 +48951,12 @@ decl_stmt|;
 name|String
 name|filter
 init|=
-literal|"tableName == t1&& dbName == t2&& ("
+literal|"tableName == t1&& dbName == t2&& catName == t3&& ("
 decl_stmt|;
 name|String
 name|paramStr
 init|=
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 decl_stmt|;
 name|Object
 index|[]
@@ -46637,7 +48970,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|2
+literal|3
 index|]
 decl_stmt|;
 name|params
@@ -46658,6 +48991,16 @@ operator|=
 name|table
 operator|.
 name|getDbName
+argument_list|()
+expr_stmt|;
+name|params
+index|[
+literal|2
+index|]
+operator|=
+name|table
+operator|.
+name|getCatName
 argument_list|()
 expr_stmt|;
 for|for
@@ -46706,7 +49049,7 @@ name|params
 index|[
 name|i
 operator|+
-literal|2
+literal|3
 index|]
 operator|=
 name|colNames
@@ -46967,6 +49310,9 @@ name|ColumnStatistics
 name|getTableColumnStatistics
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -46986,6 +49332,8 @@ block|{
 return|return
 name|getTableColumnStatisticsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -47002,6 +49350,9 @@ specifier|protected
 name|ColumnStatistics
 name|getTableColumnStatisticsInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -47048,6 +49399,11 @@ name|GetStatHelper
 argument_list|(
 name|normalizeIdentifier
 argument_list|(
+name|catName
+argument_list|)
+argument_list|,
+name|normalizeIdentifier
+argument_list|(
 name|dbName
 argument_list|)
 argument_list|,
@@ -47081,6 +49437,8 @@ name|directSql
 operator|.
 name|getTableStats
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -47265,6 +49623,9 @@ argument_list|>
 name|getPartitionColumnStatistics
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -47290,6 +49651,8 @@ block|{
 return|return
 name|getPartitionColumnStatisticsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -47311,6 +49674,9 @@ name|ColumnStatistics
 argument_list|>
 name|getPartitionColumnStatisticsInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -47365,6 +49731,8 @@ argument_list|<
 name|ColumnStatistics
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -47400,6 +49768,8 @@ name|directSql
 operator|.
 name|getPartitionStats
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -47675,6 +50045,9 @@ name|AggrStats
 name|get_aggr_stats_for
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -47754,6 +50127,8 @@ argument_list|<
 name|AggrStats
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -47783,6 +50158,8 @@ name|directSql
 operator|.
 name|aggrColStatsForPartitions
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -47824,6 +50201,162 @@ operator|new
 name|MetaException
 argument_list|(
 literal|"Jdo path is not implemented for stats aggr."
+argument_list|)
+throw|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|String
+name|describeResult
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
+block|}
+operator|.
+name|run
+argument_list|(
+literal|true
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|MetaStoreUtils
+operator|.
+name|ColStatsObjWithSourceInfo
+argument_list|>
+name|getPartitionColStatsForDatabase
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+block|{
+specifier|final
+name|boolean
+name|enableBitVector
+init|=
+name|MetastoreConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|,
+name|ConfVars
+operator|.
+name|STATS_FETCH_BITVECTOR
+argument_list|)
+decl_stmt|;
+return|return
+operator|new
+name|GetHelper
+argument_list|<
+name|List
+argument_list|<
+name|MetaStoreUtils
+operator|.
+name|ColStatsObjWithSourceInfo
+argument_list|>
+argument_list|>
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+literal|null
+argument_list|,
+literal|true
+argument_list|,
+literal|false
+argument_list|)
+block|{
+annotation|@
+name|Override
+specifier|protected
+name|List
+argument_list|<
+name|MetaStoreUtils
+operator|.
+name|ColStatsObjWithSourceInfo
+argument_list|>
+name|getSqlResult
+parameter_list|(
+name|GetHelper
+argument_list|<
+name|List
+argument_list|<
+name|MetaStoreUtils
+operator|.
+name|ColStatsObjWithSourceInfo
+argument_list|>
+argument_list|>
+name|ctx
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+return|return
+name|directSql
+operator|.
+name|getColStatsForAllTablePartitions
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|enableBitVector
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|List
+argument_list|<
+name|MetaStoreUtils
+operator|.
+name|ColStatsObjWithSourceInfo
+argument_list|>
+name|getJdoResult
+parameter_list|(
+name|GetHelper
+argument_list|<
+name|List
+argument_list|<
+name|MetaStoreUtils
+operator|.
+name|ColStatsObjWithSourceInfo
+argument_list|>
+argument_list|>
+name|ctx
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+block|{
+comment|// This is fast path for query optimizations, if we can find this info
+comment|// quickly using directSql, do it. No point in failing back to slow path
+comment|// here.
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Jdo path is not implemented for getPartitionColStatsForDatabase."
 argument_list|)
 throw|;
 block|}
@@ -47940,12 +50473,12 @@ decl_stmt|;
 name|String
 name|paramStr
 init|=
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 decl_stmt|;
 name|String
 name|filter
 init|=
-literal|"tableName == t1&& dbName == t2&& ("
+literal|"tableName == t1&& dbName == t2&& catName == t3&& ("
 decl_stmt|;
 name|Object
 index|[]
@@ -47964,7 +50497,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|2
+literal|3
 index|]
 decl_stmt|;
 name|int
@@ -47993,6 +50526,27 @@ name|table
 operator|.
 name|getDbName
 argument_list|()
+expr_stmt|;
+name|params
+index|[
+name|i
+operator|++
+index|]
+operator|=
+name|table
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|table
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|int
 name|firstI
@@ -48219,6 +50773,9 @@ name|void
 name|dropPartitionColumnStatisticsNoTxn
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -48244,6 +50801,8 @@ name|queryWithParams
 init|=
 name|makeQueryByPartitionNames
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -48259,6 +50818,8 @@ argument_list|,
 literal|"dbName"
 argument_list|,
 literal|"partition.partitionName"
+argument_list|,
+literal|"catName"
 argument_list|)
 decl_stmt|;
 name|queryWithParams
@@ -48281,6 +50842,9 @@ specifier|public
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -48339,6 +50903,13 @@ operator|.
 name|DEFAULT_DATABASE_NAME
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|tableName
@@ -48364,6 +50935,8 @@ name|mTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -48402,6 +50975,8 @@ name|mPartition
 init|=
 name|getMPartition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -48456,24 +51031,24 @@ name|filter
 operator|=
 literal|"partition.partitionName == t1&& dbName == t2&& tableName == t3&& "
 operator|+
-literal|"colName == t4"
+literal|"colName == t4&& catName == t5"
 expr_stmt|;
 name|parameters
 operator|=
 literal|"java.lang.String t1, java.lang.String t2, "
 operator|+
-literal|"java.lang.String t3, java.lang.String t4"
+literal|"java.lang.String t3, java.lang.String t4, java.lang.String t5"
 expr_stmt|;
 block|}
 else|else
 block|{
 name|filter
 operator|=
-literal|"partition.partitionName == t1&& dbName == t2&& tableName == t3"
+literal|"partition.partitionName == t1&& dbName == t2&& tableName == t3&& catName == t4"
 expr_stmt|;
 name|parameters
 operator|=
-literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, java.lang.String t4"
 expr_stmt|;
 block|}
 name|query
@@ -48532,6 +51107,11 @@ name|normalizeIdentifier
 argument_list|(
 name|colName
 argument_list|)
+argument_list|,
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|pm
@@ -48562,13 +51142,16 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-literal|"Column stats doesn't exist for db="
+literal|"Column stats doesn't exist for table="
 operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
 name|dbName
-operator|+
-literal|" table="
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 operator|+
 literal|" partition="
 operator|+
@@ -48593,7 +51176,7 @@ argument_list|>
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
 name|partName
 operator|.
@@ -48608,6 +51191,11 @@ argument_list|,
 name|normalizeIdentifier
 argument_list|(
 name|tableName
+argument_list|)
+argument_list|,
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -48639,13 +51227,16 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-literal|"Column stats doesn't exist for db="
+literal|"Column stats don't exist for table="
 operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
 name|dbName
-operator|+
-literal|" table="
-operator|+
+argument_list|,
 name|tableName
+argument_list|)
 operator|+
 literal|" partition"
 operator|+
@@ -48693,6 +51284,9 @@ specifier|public
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -48767,6 +51361,8 @@ name|mTable
 init|=
 name|getMTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -48794,7 +51390,14 @@ name|NoSuchObjectException
 argument_list|(
 literal|"Table "
 operator|+
+name|getCatalogQualifiedTableName
+argument_list|(
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
 name|tableName
+argument_list|)
 operator|+
 literal|"  for which stats deletion is requested doesn't exist"
 argument_list|)
@@ -48826,22 +51429,22 @@ condition|)
 block|{
 name|filter
 operator|=
-literal|"table.tableName == t1&& dbName == t2&& colName == t3"
+literal|"table.tableName == t1&& dbName == t2&& catName == t3&& colName == t4"
 expr_stmt|;
 name|parameters
 operator|=
-literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3, java.lang.String t4"
 expr_stmt|;
 block|}
 else|else
 block|{
 name|filter
 operator|=
-literal|"table.tableName == t1&& dbName == t2"
+literal|"table.tableName == t1&& dbName == t2&& catName == t3"
 expr_stmt|;
 name|parameters
 operator|=
-literal|"java.lang.String t1, java.lang.String t2"
+literal|"java.lang.String t1, java.lang.String t2, java.lang.String t3"
 expr_stmt|;
 block|}
 name|query
@@ -48879,7 +51482,7 @@ name|MTableColumnStatistics
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
 name|normalizeIdentifier
 argument_list|(
@@ -48889,6 +51492,11 @@ argument_list|,
 name|normalizeIdentifier
 argument_list|(
 name|dbName
+argument_list|)
+argument_list|,
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 argument_list|,
 name|normalizeIdentifier
@@ -48962,6 +51570,11 @@ argument_list|,
 name|normalizeIdentifier
 argument_list|(
 name|dbName
+argument_list|)
+argument_list|,
+name|normalizeIdentifier
+argument_list|(
+name|catName
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -50806,6 +53419,9 @@ name|boolean
 name|doesPartitionExist
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -50827,6 +53443,8 @@ name|this
 operator|.
 name|getPartition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -50884,7 +53502,7 @@ specifier|final
 name|int
 name|stackLimit
 init|=
-literal|5
+literal|3
 decl_stmt|;
 specifier|private
 name|String
@@ -50931,6 +53549,7 @@ argument_list|(
 literal|" at:"
 argument_list|)
 expr_stmt|;
+comment|// Offset by 4 because the first 4 frames are just calls to get down here.
 for|for
 control|(
 name|int
@@ -50941,6 +53560,8 @@ init|;
 name|i
 operator|<
 name|thislimit
+operator|+
+literal|4
 condition|;
 name|i
 operator|++
@@ -51056,6 +53677,19 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|func
+operator|.
+name|setCatName
+argument_list|(
+name|mfunc
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|)
+expr_stmt|;
 return|return
 name|func
 return|;
@@ -51145,12 +53779,32 @@ name|mdb
 init|=
 literal|null
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|func
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|func
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 name|mdb
 operator|=
 name|getMDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|func
 operator|.
 name|getDbName
@@ -51467,6 +54121,9 @@ name|void
 name|alterFunction
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -51487,8 +54144,52 @@ literal|false
 decl_stmt|;
 try|try
 block|{
+name|String
+name|newFuncCat
+init|=
+name|newFunction
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|newFunction
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|newFuncCat
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|catName
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidObjectException
+argument_list|(
+literal|"You cannot move a function between catalogs"
+argument_list|)
+throw|;
+block|}
 name|openTransaction
 argument_list|()
+expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
 expr_stmt|;
 name|funcName
 operator|=
@@ -51532,6 +54233,8 @@ name|oldf
 init|=
 name|getMFunction
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|funcName
@@ -51648,6 +54351,9 @@ name|void
 name|dropFunction
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -51677,6 +54383,8 @@ name|mfunc
 init|=
 name|getMFunction
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|funcName
@@ -51730,6 +54438,9 @@ name|MFunction
 name|getMFunction
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db
 parameter_list|,
 name|String
@@ -51780,14 +54491,14 @@ name|MFunction
 operator|.
 name|class
 argument_list|,
-literal|"functionName == function&& database.name == db"
+literal|"functionName == function&& database.name == db&& database.catalogName == catName"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String function, java.lang.String db"
+literal|"java.lang.String function, java.lang.String db, java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|query
@@ -51809,6 +54520,8 @@ argument_list|(
 name|function
 argument_list|,
 name|db
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|pm
@@ -51845,6 +54558,9 @@ name|Function
 name|getFunction
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -51879,6 +54595,8 @@ name|convertToFunction
 argument_list|(
 name|getMFunction
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|funcName
@@ -51913,7 +54631,10 @@ argument_list|<
 name|Function
 argument_list|>
 name|getAllFunctions
-parameter_list|()
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -51932,6 +54653,13 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|query
 operator|=
 name|pm
@@ -51941,6 +54669,15 @@ argument_list|(
 name|MFunction
 operator|.
 name|class
+argument_list|,
+literal|"database.catalogName == catName"
+argument_list|)
+expr_stmt|;
+name|query
+operator|.
+name|declareParameters
+argument_list|(
+literal|"java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|List
@@ -51958,7 +54695,9 @@ operator|)
 name|query
 operator|.
 name|execute
-argument_list|()
+argument_list|(
+name|catName
+argument_list|)
 decl_stmt|;
 name|pm
 operator|.
@@ -51999,6 +54738,9 @@ name|String
 argument_list|>
 name|getFunctions
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,
@@ -52069,6 +54811,22 @@ name|String
 index|[]
 block|{
 name|dbName
+block|}
+argument_list|,
+name|parameterVals
+argument_list|)
+expr_stmt|;
+name|appendSimpleCondition
+argument_list|(
+name|filterBuilder
+argument_list|,
+literal|"database.catalogName"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+name|catName
 block|}
 argument_list|,
 name|parameterVals
@@ -53245,6 +56003,24 @@ name|getDbName
 argument_list|()
 decl_stmt|;
 name|String
+name|catName
+init|=
+name|rqst
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|rqst
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|String
 name|queryStr
 init|=
 literal|"select count(eventId) from "
@@ -53256,7 +56032,7 @@ operator|.
 name|getName
 argument_list|()
 operator|+
-literal|" where eventId> fromEventId&& dbName == inputDbName"
+literal|" where eventId> fromEventId&& dbName == inputDbName&& catalogName == catName"
 decl_stmt|;
 name|query
 operator|=
@@ -53271,7 +56047,9 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.Long fromEventId, java.lang.String inputDbName"
+literal|"java.lang.Long fromEventId, java.lang.String inputDbName,"
+operator|+
+literal|" java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|result
@@ -53286,6 +56064,8 @@ argument_list|(
 name|fromEventId
 argument_list|,
 name|inputDbName
+argument_list|,
+name|catName
 argument_list|)
 expr_stmt|;
 name|commited
@@ -53358,6 +56138,26 @@ name|entry
 operator|.
 name|getEventType
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|dbEntry
+operator|.
+name|setCatalogName
+argument_list|(
+name|entry
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|entry
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|dbEntry
@@ -53446,6 +56246,16 @@ argument_list|(
 name|dbEvent
 operator|.
 name|getEventType
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|event
+operator|.
+name|setCatName
+argument_list|(
+name|dbEvent
+operator|.
+name|getCatalogName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -54451,6 +57261,9 @@ argument_list|>
 name|getPrimaryKeys
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -54464,13 +57277,11 @@ block|{
 return|return
 name|getPrimaryKeysInternal
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
-argument_list|,
-literal|true
-argument_list|,
-literal|true
 argument_list|)
 return|;
 block|}
@@ -54494,7 +57305,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|SQLPrimaryKey
@@ -54503,17 +57314,15 @@ name|getPrimaryKeysInternal
 parameter_list|(
 specifier|final
 name|String
+name|catName
+parameter_list|,
+specifier|final
+name|String
 name|db_name_input
 parameter_list|,
 specifier|final
 name|String
 name|tbl_name_input
-parameter_list|,
-name|boolean
-name|allowSql
-parameter_list|,
-name|boolean
-name|allowJdo
 parameter_list|)
 throws|throws
 name|MetaException
@@ -54545,13 +57354,15 @@ argument_list|<
 name|SQLPrimaryKey
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
 argument_list|,
-name|allowSql
+literal|true
 argument_list|,
-name|allowJdo
+literal|true
 argument_list|)
 block|{
 annotation|@
@@ -54580,6 +57391,8 @@ name|directSql
 operator|.
 name|getPrimaryKeys
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -54612,6 +57425,8 @@ block|{
 return|return
 name|getPrimaryKeysViaJdo
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -54633,6 +57448,9 @@ name|SQLPrimaryKey
 argument_list|>
 name|getPrimaryKeysViaJdo
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -54677,6 +57495,8 @@ name|class
 argument_list|,
 literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&&"
 operator|+
+literal|" parentTable.database.catalogName == cat_name&&"
+operator|+
 literal|" constraintType == MConstraint.PRIMARY_KEY_CONSTRAINT"
 argument_list|)
 expr_stmt|;
@@ -54684,7 +57504,9 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String tbl_name, java.lang.String db_name"
+literal|"java.lang.String tbl_name, java.lang.String db_name, "
+operator|+
+literal|"java.lang.String cat_name"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -54706,6 +57528,8 @@ argument_list|(
 name|tbl_name
 argument_list|,
 name|db_name
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -54823,10 +57647,9 @@ operator|)
 operator|!=
 literal|0
 decl_stmt|;
-name|primaryKeys
-operator|.
-name|add
-argument_list|(
+name|SQLPrimaryKey
+name|keyCol
+init|=
 operator|new
 name|SQLPrimaryKey
 argument_list|(
@@ -54863,6 +57686,19 @@ name|validate
 argument_list|,
 name|rely
 argument_list|)
+decl_stmt|;
+name|keyCol
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+name|primaryKeys
+operator|.
+name|add
+argument_list|(
+name|keyCol
 argument_list|)
 expr_stmt|;
 block|}
@@ -54890,6 +57726,9 @@ specifier|private
 name|String
 name|getPrimaryKeyConstraintName
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -54931,6 +57770,8 @@ name|class
 argument_list|,
 literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&&"
 operator|+
+literal|" parentTable.database.catalogName == catName&&"
+operator|+
 literal|" constraintType == MConstraint.PRIMARY_KEY_CONSTRAINT"
 argument_list|)
 expr_stmt|;
@@ -54938,7 +57779,9 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String tbl_name, java.lang.String db_name"
+literal|"java.lang.String tbl_name, java.lang.String db_name, "
+operator|+
+literal|"java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -54960,6 +57803,8 @@ argument_list|(
 name|tbl_name
 argument_list|,
 name|db_name
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -55039,6 +57884,9 @@ argument_list|>
 name|getForeignKeys
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|parent_db_name
 parameter_list|,
 name|String
@@ -55058,6 +57906,8 @@ block|{
 return|return
 name|getForeignKeysInternal
 argument_list|(
+name|catName
+argument_list|,
 name|parent_db_name
 argument_list|,
 name|parent_tbl_name
@@ -55092,13 +57942,17 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|SQLForeignKey
 argument_list|>
 name|getForeignKeysInternal
 parameter_list|(
+specifier|final
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|parent_db_name_input
@@ -55193,6 +58047,8 @@ argument_list|<
 name|SQLForeignKey
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -55228,6 +58084,8 @@ name|directSql
 operator|.
 name|getForeignKeys
 argument_list|(
+name|catName
+argument_list|,
 name|parent_db_name
 argument_list|,
 name|parent_tbl_name
@@ -55264,6 +58122,8 @@ block|{
 return|return
 name|getForeignKeysViaJdo
 argument_list|(
+name|catName
+argument_list|,
 name|parent_db_name
 argument_list|,
 name|parent_tbl_name
@@ -55289,6 +58149,9 @@ name|SQLForeignKey
 argument_list|>
 name|getForeignKeysViaJdo
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|parent_db_name
 parameter_list|,
@@ -55351,6 +58214,10 @@ expr_stmt|;
 name|String
 name|queryText
 init|=
+literal|" parentTable.database.catalogName == catName1&&"
+operator|+
+literal|"childTable.database.catalogName == catName2&& "
+operator|+
 operator|(
 name|parent_tbl_name
 operator|!=
@@ -55416,6 +58283,8 @@ expr_stmt|;
 name|String
 name|paramText
 init|=
+literal|"java.lang.String catName1, java.lang.String catName2"
+operator|+
 operator|(
 name|parent_tbl_name
 operator|==
@@ -55423,7 +58292,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"java.lang.String parent_tbl_name,"
+literal|", java.lang.String parent_tbl_name"
 operator|)
 operator|+
 operator|(
@@ -55433,7 +58302,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" java.lang.String parent_db_name, "
+literal|" , java.lang.String parent_db_name"
 operator|)
 operator|+
 operator|(
@@ -55443,7 +58312,7 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"java.lang.String foreign_tbl_name,"
+literal|", java.lang.String foreign_tbl_name"
 operator|)
 operator|+
 operator|(
@@ -55453,43 +58322,9 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|" java.lang.String foreign_db_name"
+literal|" , java.lang.String foreign_db_name"
 operator|)
 decl_stmt|;
-name|paramText
-operator|=
-name|paramText
-operator|.
-name|trim
-argument_list|()
-expr_stmt|;
-if|if
-condition|(
-name|paramText
-operator|.
-name|endsWith
-argument_list|(
-literal|","
-argument_list|)
-condition|)
-block|{
-name|paramText
-operator|=
-name|paramText
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-name|paramText
-operator|.
-name|length
-argument_list|()
-operator|-
-literal|1
-argument_list|)
-expr_stmt|;
-block|}
 name|query
 operator|.
 name|declareParameters
@@ -55508,6 +58343,21 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+name|params
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+comment|// This is not a mistake, catName is in the where clause twice
 if|if
 condition|(
 name|parent_tbl_name
@@ -55568,149 +58418,6 @@ name|foreign_db_name
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|params
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-name|constraints
-operator|=
-operator|(
-name|Collection
-argument_list|<
-name|?
-argument_list|>
-operator|)
-name|query
-operator|.
-name|execute
-argument_list|()
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|params
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|1
-condition|)
-block|{
-name|constraints
-operator|=
-operator|(
-name|Collection
-argument_list|<
-name|?
-argument_list|>
-operator|)
-name|query
-operator|.
-name|execute
-argument_list|(
-name|params
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|params
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|2
-condition|)
-block|{
-name|constraints
-operator|=
-operator|(
-name|Collection
-argument_list|<
-name|?
-argument_list|>
-operator|)
-name|query
-operator|.
-name|execute
-argument_list|(
-name|params
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|,
-name|params
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|params
-operator|.
-name|size
-argument_list|()
-operator|==
-literal|3
-condition|)
-block|{
-name|constraints
-operator|=
-operator|(
-name|Collection
-argument_list|<
-name|?
-argument_list|>
-operator|)
-name|query
-operator|.
-name|execute
-argument_list|(
-name|params
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|,
-name|params
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|,
-name|params
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
 name|constraints
 operator|=
 operator|(
@@ -55725,34 +58432,19 @@ name|executeWithArray
 argument_list|(
 name|params
 operator|.
-name|get
+name|toArray
 argument_list|(
-literal|0
-argument_list|)
-argument_list|,
+operator|new
+name|String
+index|[
 name|params
 operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|,
-name|params
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-argument_list|,
-name|params
-operator|.
-name|get
-argument_list|(
-literal|3
+name|size
+argument_list|()
+index|]
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 name|pm
 operator|.
 name|retrieveAll
@@ -55958,7 +58650,7 @@ operator|.
 name|getDatabase
 argument_list|()
 operator|.
-name|getName
+name|getCatalogName
 argument_list|()
 argument_list|,
 name|currPKFK
@@ -55970,6 +58662,14 @@ name|getDatabase
 argument_list|()
 operator|.
 name|getName
+argument_list|()
+argument_list|,
+name|currPKFK
+operator|.
+name|getParentTable
+argument_list|()
+operator|.
+name|getTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -55983,10 +58683,9 @@ name|pkName
 argument_list|)
 expr_stmt|;
 block|}
-name|foreignKeys
-operator|.
-name|add
-argument_list|(
+name|SQLForeignKey
+name|fk
+init|=
 operator|new
 name|SQLForeignKey
 argument_list|(
@@ -56006,10 +58705,7 @@ operator|.
 name|getParentTable
 argument_list|()
 operator|.
-name|getDatabase
-argument_list|()
-operator|.
-name|getName
+name|getTableName
 argument_list|()
 argument_list|,
 name|parentCols
@@ -56085,6 +58781,19 @@ name|validate
 argument_list|,
 name|rely
 argument_list|)
+decl_stmt|;
+name|fk
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+name|foreignKeys
+operator|.
+name|add
+argument_list|(
+name|fk
 argument_list|)
 expr_stmt|;
 block|}
@@ -56118,6 +58827,9 @@ argument_list|>
 name|getUniqueConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -56131,6 +58843,8 @@ block|{
 return|return
 name|getUniqueConstraintsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56161,13 +58875,16 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|SQLUniqueConstraint
 argument_list|>
 name|getUniqueConstraintsInternal
 parameter_list|(
+name|String
+name|catNameInput
+parameter_list|,
 specifier|final
 name|String
 name|db_name_input
@@ -56187,6 +58904,15 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
+specifier|final
+name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|catNameInput
+argument_list|)
+decl_stmt|;
 specifier|final
 name|String
 name|db_name
@@ -56212,6 +58938,8 @@ argument_list|<
 name|SQLUniqueConstraint
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56247,6 +58975,8 @@ name|directSql
 operator|.
 name|getUniqueConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56279,6 +59009,8 @@ block|{
 return|return
 name|getUniqueConstraintsViaJdo
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56300,6 +59032,9 @@ name|SQLUniqueConstraint
 argument_list|>
 name|getUniqueConstraintsViaJdo
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -56342,7 +59077,7 @@ name|MConstraint
 operator|.
 name|class
 argument_list|,
-literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&&"
+literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&& parentTable.database.catalogName == catName&&"
 operator|+
 literal|" constraintType == MConstraint.UNIQUE_CONSTRAINT"
 argument_list|)
@@ -56351,7 +59086,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String tbl_name, java.lang.String db_name"
+literal|"java.lang.String tbl_name, java.lang.String db_name, java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -56373,6 +59108,8 @@ argument_list|(
 name|tbl_name
 argument_list|,
 name|db_name
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -56497,6 +59234,8 @@ argument_list|(
 operator|new
 name|SQLUniqueConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56563,6 +59302,9 @@ argument_list|>
 name|getNotNullConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -56576,6 +59318,8 @@ block|{
 return|return
 name|getNotNullConstraintsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56616,6 +59360,9 @@ argument_list|>
 name|getDefaultConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -56629,6 +59376,8 @@ block|{
 return|return
 name|getDefaultConstraintsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56669,6 +59418,9 @@ argument_list|>
 name|getCheckConstraints
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -56682,6 +59434,8 @@ block|{
 return|return
 name|getCheckConstraintsInternal
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56712,13 +59466,16 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|SQLDefaultConstraint
 argument_list|>
 name|getDefaultConstraintsInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|db_name_input
@@ -56738,6 +59495,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 specifier|final
 name|String
 name|db_name
@@ -56763,6 +59527,8 @@ argument_list|<
 name|SQLDefaultConstraint
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56798,6 +59564,8 @@ name|directSql
 operator|.
 name|getDefaultConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56830,6 +59598,8 @@ block|{
 return|return
 name|getDefaultConstraintsViaJdo
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56851,6 +59621,9 @@ name|SQLCheckConstraint
 argument_list|>
 name|getCheckConstraintsInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|db_name_input
@@ -56895,6 +59668,11 @@ argument_list|<
 name|SQLCheckConstraint
 argument_list|>
 argument_list|(
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56930,6 +59708,8 @@ name|directSql
 operator|.
 name|getCheckConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56962,6 +59742,8 @@ block|{
 return|return
 name|getCheckConstraintsViaJdo
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -56983,6 +59765,9 @@ name|SQLCheckConstraint
 argument_list|>
 name|getCheckConstraintsViaJdo
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -57027,14 +59812,14 @@ name|class
 argument_list|,
 literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&&"
 operator|+
-literal|" constraintType == MConstraint.CHECK_CONSTRAINT"
+literal|" parentTable.database.catalogName == catName&& constraintType == MConstraint.CHECK_CONSTRAINT"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String tbl_name, java.lang.String db_name"
+literal|"java.lang.String tbl_name, java.lang.String db_name, java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -57056,6 +59841,8 @@ argument_list|(
 name|tbl_name
 argument_list|,
 name|db_name
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -57180,6 +59967,8 @@ argument_list|(
 operator|new
 name|SQLCheckConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -57260,6 +60049,9 @@ argument_list|>
 name|getDefaultConstraintsViaJdo
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|db_name
 parameter_list|,
 name|String
@@ -57302,6 +60094,8 @@ operator|.
 name|class
 argument_list|,
 literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&&"
+operator|+
+literal|" parentTable.database.catalogName == catName&&"
 operator|+
 literal|" constraintType == MConstraint.DEFAULT_CONSTRAINT"
 argument_list|)
@@ -57310,7 +60104,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String tbl_name, java.lang.String db_name"
+literal|"java.lang.String tbl_name, java.lang.String db_name, java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -57332,6 +60126,8 @@ argument_list|(
 name|tbl_name
 argument_list|,
 name|db_name
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -57456,6 +60252,8 @@ argument_list|(
 operator|new
 name|SQLDefaultConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -57535,6 +60333,9 @@ name|SQLNotNullConstraint
 argument_list|>
 name|getNotNullConstraintsInternal
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 specifier|final
 name|String
 name|db_name_input
@@ -57554,6 +60355,13 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 specifier|final
 name|String
 name|db_name
@@ -57579,6 +60387,8 @@ argument_list|<
 name|SQLNotNullConstraint
 argument_list|>
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -57614,6 +60424,8 @@ name|directSql
 operator|.
 name|getNotNullConstraints
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -57646,6 +60458,8 @@ block|{
 return|return
 name|getNotNullConstraintsViaJdo
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -57667,6 +60481,9 @@ name|SQLNotNullConstraint
 argument_list|>
 name|getNotNullConstraintsViaJdo
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|db_name
 parameter_list|,
@@ -57711,14 +60528,14 @@ name|class
 argument_list|,
 literal|"parentTable.tableName == tbl_name&& parentTable.database.name == db_name&&"
 operator|+
-literal|" constraintType == MConstraint.NOT_NULL_CONSTRAINT"
+literal|" parentTable.database.catalogName == catName&& constraintType == MConstraint.NOT_NULL_CONSTRAINT"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String tbl_name, java.lang.String db_name"
+literal|"java.lang.String tbl_name, java.lang.String db_name, java.lang.String catName"
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -57740,6 +60557,8 @@ argument_list|(
 name|tbl_name
 argument_list|,
 name|db_name
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -57864,6 +60683,8 @@ argument_list|(
 operator|new
 name|SQLNotNullConstraint
 argument_list|(
+name|catName
+argument_list|,
 name|db_name
 argument_list|,
 name|tbl_name
@@ -57922,6 +60743,9 @@ name|void
 name|dropConstraint
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -57929,6 +60753,9 @@ name|tableName
 parameter_list|,
 name|String
 name|constraintName
+parameter_list|,
+name|boolean
+name|missingOk
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -57951,6 +60778,8 @@ name|tabConstraints
 init|=
 name|listAllTableConstraintsWithOptionalConstraintName
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -57976,7 +60805,12 @@ name|tabConstraints
 argument_list|)
 expr_stmt|;
 block|}
-else|else
+elseif|else
+if|if
+condition|(
+operator|!
+name|missingOk
+condition|)
 block|{
 throw|throw
 operator|new
@@ -58054,6 +60888,11 @@ if|if
 condition|(
 name|getMISchema
 argument_list|(
+name|schema
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|schema
 operator|.
 name|getDbName
@@ -58147,6 +60986,11 @@ name|oldMSchema
 init|=
 name|getMISchema
 argument_list|(
+name|schemaName
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|schemaName
 operator|.
 name|getDbName
@@ -58297,6 +61141,11 @@ name|getMISchema
 argument_list|(
 name|schemaName
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|schemaName
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -58333,6 +61182,9 @@ name|MISchema
 name|getMISchema
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -58360,6 +61212,13 @@ argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|query
 operator|=
 name|pm
@@ -58370,14 +61229,14 @@ name|MISchema
 operator|.
 name|class
 argument_list|,
-literal|"name == schemaName&& db.name == dbname"
+literal|"name == schemaName&& db.name == dbname&& db.catalogName == cat"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String schemaName, java.lang.String dbname"
+literal|"java.lang.String schemaName, java.lang.String dbname, java.lang.String cat"
 argument_list|)
 expr_stmt|;
 name|query
@@ -58400,6 +61259,8 @@ argument_list|(
 name|name
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -58457,6 +61318,11 @@ name|mSchema
 init|=
 name|getMISchema
 argument_list|(
+name|schemaName
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|schemaName
 operator|.
 name|getDbName
@@ -58559,6 +61425,14 @@ operator|.
 name|getSchema
 argument_list|()
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|schemaVersion
+operator|.
+name|getSchema
+argument_list|()
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -58606,6 +61480,14 @@ if|if
 condition|(
 name|getMISchema
 argument_list|(
+name|schemaVersion
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|schemaVersion
 operator|.
 name|getSchema
@@ -58699,6 +61581,14 @@ name|oldMSchemaVersion
 init|=
 name|getMSchemaVersion
 argument_list|(
+name|version
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|version
 operator|.
 name|getSchema
@@ -58833,6 +61723,14 @@ operator|.
 name|getSchema
 argument_list|()
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|version
+operator|.
+name|getSchema
+argument_list|()
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -58878,6 +61776,9 @@ name|MSchemaVersion
 name|getMSchemaVersion
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -58918,14 +61819,18 @@ name|MSchemaVersion
 operator|.
 name|class
 argument_list|,
-literal|"iSchema.name == schemaName&& iSchema.db.name == dbName&& version == schemaVersion"
+literal|"iSchema.name == schemaName&& iSchema.db.name == dbName&&"
+operator|+
+literal|"iSchema.db.catalogName == cat&& version == schemaVersion"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String schemaName, java.lang.String dbName, java.lang.Integer schemaVersion"
+literal|"java.lang.String schemaName, java.lang.String dbName,"
+operator|+
+literal|"java.lang.String cat, java.lang.Integer schemaVersion"
 argument_list|)
 expr_stmt|;
 name|query
@@ -58943,11 +61848,13 @@ name|MSchemaVersion
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
 name|schemaName
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|,
 name|version
 argument_list|)
@@ -59064,6 +61971,17 @@ name|getDbName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|schemaName
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|query
 operator|=
 name|pm
@@ -59074,14 +61992,16 @@ name|MSchemaVersion
 operator|.
 name|class
 argument_list|,
-literal|"iSchema.name == schemaName&& iSchema.db.name == dbName"
+literal|"iSchema.name == schemaName&& iSchema.db.name == dbName&& iSchema.db.catalogName == cat"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String schemaName, java.lang.String dbName"
+literal|"java.lang.String schemaName, java.lang.String dbName, "
+operator|+
+literal|"java.lang.String cat"
 argument_list|)
 expr_stmt|;
 name|query
@@ -59120,6 +62040,8 @@ argument_list|(
 name|name
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 decl_stmt|;
 name|pm
@@ -59252,6 +62174,17 @@ name|getDbName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|String
+name|catName
+init|=
+name|normalizeIdentifier
+argument_list|(
+name|schemaName
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|query
 operator|=
 name|pm
@@ -59262,14 +62195,18 @@ name|MSchemaVersion
 operator|.
 name|class
 argument_list|,
-literal|"iSchema.name == schemaName&& iSchema.db.name == dbName"
+literal|"iSchema.name == schemaName&&"
+operator|+
+literal|"iSchema.db.name == dbName&& iSchema.db.catalogName == cat"
 argument_list|)
 expr_stmt|;
 name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.String schemaName, java.lang.String dbName"
+literal|"java.lang.String schemaName, java.lang.String dbName,"
+operator|+
+literal|" java.lang.String cat"
 argument_list|)
 expr_stmt|;
 name|query
@@ -59292,6 +62229,8 @@ argument_list|(
 name|name
 argument_list|,
 name|dbName
+argument_list|,
+name|catName
 argument_list|)
 operator|.
 name|executeList
@@ -59829,6 +62768,14 @@ operator|.
 name|getSchema
 argument_list|()
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|version
+operator|.
+name|getSchema
+argument_list|()
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -60174,6 +63121,11 @@ name|getMDatabase
 argument_list|(
 name|schema
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|schema
+operator|.
 name|getDbName
 argument_list|()
 argument_list|)
@@ -60268,6 +63220,14 @@ operator|.
 name|getDb
 argument_list|()
 operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|mSchema
+operator|.
+name|getDb
+argument_list|()
+operator|.
 name|getName
 argument_list|()
 argument_list|,
@@ -60355,6 +63315,17 @@ name|MSchemaVersion
 argument_list|(
 name|getMISchema
 argument_list|(
+name|normalizeIdentifier
+argument_list|(
+name|schemaVersion
+operator|.
+name|getSchema
+argument_list|()
+operator|.
+name|getCatName
+argument_list|()
+argument_list|)
+argument_list|,
 name|normalizeIdentifier
 argument_list|(
 name|schemaVersion
@@ -60507,6 +63478,17 @@ argument_list|(
 operator|new
 name|ISchemaName
 argument_list|(
+name|mSchemaVersion
+operator|.
+name|getiSchema
+argument_list|()
+operator|.
+name|getDb
+argument_list|()
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
 name|mSchemaVersion
 operator|.
 name|getiSchema

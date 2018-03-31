@@ -111,6 +111,42 @@ name|SchemaVersionState
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_DATABASE_NAME
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -126,6 +162,8 @@ name|String
 name|schemaName
 decl_stmt|,
 name|dbName
+decl_stmt|,
+name|catName
 decl_stmt|;
 comment|// required
 specifier|private
@@ -167,6 +205,14 @@ specifier|public
 name|SchemaVersionBuilder
 parameter_list|()
 block|{
+name|catName
+operator|=
+name|DEFAULT_CATALOG_NAME
+expr_stmt|;
+name|dbName
+operator|=
+name|DEFAULT_DATABASE_NAME
+expr_stmt|;
 name|createdAt
 operator|=
 name|System
@@ -233,6 +279,15 @@ name|ISchema
 name|schema
 parameter_list|)
 block|{
+name|this
+operator|.
+name|catName
+operator|=
+name|schema
+operator|.
+name|getCatName
+argument_list|()
+expr_stmt|;
 name|this
 operator|.
 name|dbName
@@ -394,10 +449,6 @@ name|schemaName
 operator|==
 literal|null
 operator|||
-name|dbName
-operator|==
-literal|null
-operator|||
 name|version
 operator|<
 literal|0
@@ -407,7 +458,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"You must provide the database name, schema name, and schema version"
+literal|"You must provide the schema name, and schema version"
 argument_list|)
 throw|;
 block|}
@@ -420,6 +471,8 @@ argument_list|(
 operator|new
 name|ISchemaName
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|schemaName

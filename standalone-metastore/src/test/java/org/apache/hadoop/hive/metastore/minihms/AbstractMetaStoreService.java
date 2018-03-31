@@ -590,6 +590,15 @@ name|void
 name|stop
 parameter_list|()
 block|{   }
+specifier|public
+name|Configuration
+name|getConf
+parameter_list|()
+block|{
+return|return
+name|configuration
+return|;
+block|}
 block|}
 end_class
 

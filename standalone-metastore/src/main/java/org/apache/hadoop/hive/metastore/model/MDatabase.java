@@ -71,6 +71,10 @@ specifier|private
 name|String
 name|ownerType
 decl_stmt|;
+specifier|private
+name|String
+name|catalogName
+decl_stmt|;
 comment|/**    * Default construction to keep jpox/jdo happy    */
 specifier|public
 name|MDatabase
@@ -80,6 +84,9 @@ comment|/**    * To create a database object    * @param name of the database   
 specifier|public
 name|MDatabase
 parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
 name|String
 name|name
 parameter_list|,
@@ -121,6 +128,12 @@ operator|.
 name|parameters
 operator|=
 name|parameters
+expr_stmt|;
+name|this
+operator|.
+name|catalogName
+operator|=
+name|catalogName
 expr_stmt|;
 block|}
 comment|/**    * @return the name    */
@@ -283,6 +296,30 @@ operator|.
 name|ownerType
 operator|=
 name|ownerType
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getCatalogName
+parameter_list|()
+block|{
+return|return
+name|catalogName
+return|;
+block|}
+specifier|public
+name|void
+name|setCatalogName
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|catalogName
+operator|=
+name|catalogName
 expr_stmt|;
 block|}
 block|}

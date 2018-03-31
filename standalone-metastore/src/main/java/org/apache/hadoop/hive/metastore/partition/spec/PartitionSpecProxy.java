@@ -112,6 +112,16 @@ name|int
 name|size
 parameter_list|()
 function_decl|;
+comment|/**    * Set catalog name.    * @param catName catalog name.    */
+specifier|public
+specifier|abstract
+name|void
+name|setCatName
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
+function_decl|;
 comment|/**    * Setter for name of the DB.    * @param dbName The name of the DB.    */
 specifier|public
 specifier|abstract
@@ -131,6 +141,13 @@ parameter_list|(
 name|String
 name|tableName
 parameter_list|)
+function_decl|;
+comment|/**    * Get catalog name.    * @return catalog name.    */
+specifier|public
+specifier|abstract
+name|String
+name|getCatName
+parameter_list|()
 function_decl|;
 comment|/**    * Getter for name of the DB.    * @return The name of the DB.    */
 specifier|public
@@ -287,6 +304,11 @@ name|Partition
 name|getCurrent
 parameter_list|()
 function_decl|;
+comment|/**      * Get the catalog name.      * @return catalog name.      */
+name|String
+name|getCatName
+parameter_list|()
+function_decl|;
 comment|/**      * Getter for the name of the DB.      * @return Name of the DB.      */
 name|String
 name|getDbName
@@ -381,6 +403,20 @@ parameter_list|()
 block|{
 return|return
 name|partition
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getCatName
+parameter_list|()
+block|{
+return|return
+name|partition
+operator|.
+name|getCatName
+argument_list|()
 return|;
 block|}
 annotation|@

@@ -126,6 +126,12 @@ block|,
 name|READ_ISCHEMA
 block|,
 name|READ_SCHEMA_VERSION
+block|,
+name|CREATE_CATALOG
+block|,
+name|DROP_CATALOG
+block|,
+name|READ_CATALOG
 block|}
 specifier|private
 specifier|final

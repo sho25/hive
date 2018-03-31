@@ -26,6 +26,10 @@ name|MPartitionEvent
 block|{
 specifier|private
 name|String
+name|catalogName
+decl_stmt|;
+specifier|private
+name|String
 name|dbName
 decl_stmt|;
 specifier|private
@@ -48,6 +52,9 @@ specifier|public
 name|MPartitionEvent
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -62,6 +69,12 @@ parameter_list|)
 block|{
 name|super
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|catalogName
+operator|=
+name|catName
 expr_stmt|;
 name|this
 operator|.
@@ -101,6 +114,21 @@ specifier|public
 name|MPartitionEvent
 parameter_list|()
 block|{}
+specifier|public
+name|void
+name|setCatalogName
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|catalogName
+operator|=
+name|catName
+expr_stmt|;
+block|}
 comment|/**    * @param dbName the dbName to set    */
 specifier|public
 name|void

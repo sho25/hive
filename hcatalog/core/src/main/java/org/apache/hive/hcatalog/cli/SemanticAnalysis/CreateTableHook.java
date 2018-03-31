@@ -680,6 +680,11 @@ argument_list|(
 name|child
 argument_list|,
 literal|false
+argument_list|,
+name|context
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 decl_stmt|;
 for|for
