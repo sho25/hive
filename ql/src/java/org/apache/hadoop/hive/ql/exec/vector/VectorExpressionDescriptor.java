@@ -272,6 +272,11 @@ argument_list|(
 literal|0x4000
 argument_list|)
 block|,
+name|VOID
+argument_list|(
+literal|0x8000
+argument_list|)
+block|,
 name|INT_DECIMAL_64_FAMILY
 argument_list|(
 name|INT_FAMILY
@@ -687,9 +692,8 @@ literal|"void"
 argument_list|)
 condition|)
 block|{
-comment|// The old code let void through...
 return|return
-name|INT_FAMILY
+name|VOID
 return|;
 block|}
 else|else

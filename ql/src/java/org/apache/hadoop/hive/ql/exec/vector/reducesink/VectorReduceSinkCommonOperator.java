@@ -883,13 +883,6 @@ argument_list|(
 name|ctx
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"VectorReduceSinkCommonOperator constructor"
-argument_list|)
-expr_stmt|;
 name|ReduceSinkDesc
 name|desc
 init|=

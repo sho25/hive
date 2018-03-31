@@ -12408,6 +12408,19 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_TEST_VECTORIZER_SUPPRESS_FATAL_EXCEPTIONS
+argument_list|(
+literal|"hive.test.vectorizer.suppress.fatal.exceptions"
+argument_list|,
+literal|true
+argument_list|,
+literal|"internal use only. When false, don't suppress fatal exceptions like\n"
+operator|+
+literal|"NullPointerException, etc so the query will fail and assure it will be noticed"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"

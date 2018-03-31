@@ -71,6 +71,8 @@ block|,
 name|MAP
 block|,
 name|UNION
+block|,
+name|VOID
 block|}
 specifier|public
 specifier|final

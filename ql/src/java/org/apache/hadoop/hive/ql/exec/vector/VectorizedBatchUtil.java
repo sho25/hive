@@ -1417,6 +1417,18 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+case|case
+name|VOID
+case|:
+return|return
+operator|new
+name|VoidColumnVector
+argument_list|(
+name|VectorizedRowBatch
+operator|.
+name|DEFAULT_SIZE
+argument_list|)
+return|;
 default|default:
 throw|throw
 operator|new
@@ -5114,7 +5126,21 @@ case|:
 case|case
 name|UNION
 case|:
-comment|// No complex type support for now.
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"No complex type support: "
+operator|+
+name|sourceColVector
+operator|.
+name|type
+argument_list|)
+throw|;
+case|case
+name|VOID
+case|:
+break|break;
 default|default:
 throw|throw
 operator|new
