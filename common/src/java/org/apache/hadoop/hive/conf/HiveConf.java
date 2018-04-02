@@ -5597,6 +5597,17 @@ argument_list|,
 literal|"ID for query being executed (might be multiple per a session)"
 argument_list|)
 block|,
+name|HIVESPARKJOBNAMELENGTH
+argument_list|(
+literal|"hive.spark.jobname.length"
+argument_list|,
+literal|100000
+argument_list|,
+literal|"max jobname length for Hive on "
+operator|+
+literal|"Spark queries"
+argument_list|)
+block|,
 name|HIVEJOBNAMELENGTH
 argument_list|(
 literal|"hive.jobname.length"

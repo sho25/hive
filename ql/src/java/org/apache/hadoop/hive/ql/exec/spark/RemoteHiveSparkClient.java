@@ -29,6 +29,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|base
 operator|.
 name|Splitter
@@ -2123,7 +2137,8 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|static
 class|class
 name|JobStatusJob
@@ -2446,6 +2461,9 @@ argument_list|(
 name|localSparkWork
 argument_list|)
 decl_stmt|;
+comment|// We get the query name for this SparkTask and set it to the description for the associated
+comment|// Spark job; query names are guaranteed to be unique for each Spark job because the task id
+comment|// is concatenated to the end of the query name
 name|jc
 operator|.
 name|sc

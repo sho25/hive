@@ -1119,6 +1119,9 @@ operator|.
 name|generateGraph
 argument_list|()
 decl_stmt|;
+comment|// We get the query name for this SparkTask and set it to the description for the associated
+comment|// Spark job; query names are guaranteed to be unique for each Spark job because the task id
+comment|// is concatenated to the end of the query name
 name|sc
 operator|.
 name|setJobGroup
