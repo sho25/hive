@@ -6259,6 +6259,28 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Initiate a transaction at the target cluster.    * @param replPolicy The replication policy to uniquely identify the source cluster.    * @param srcTxnIds The list of transaction ids at the source cluster    * @param user The user who has fired the repl load command.    * @return transaction identifiers    * @throws TException    */
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|replOpenTxn
+parameter_list|(
+name|String
+name|replPolicy
+parameter_list|,
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|srcTxnIds
+parameter_list|,
+name|String
+name|user
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 comment|/**    * Initiate a batch of transactions.  It is not guaranteed that the    * requested number of transactions will be instantiated.  The system has a    * maximum number instantiated per request, controlled by hive.txn.max    * .batch.open in hive-site.xml.  If the user requests more than this    * value, only the configured max will be returned.    *    *<p>Increasing the number of transactions requested in the batch will    * allow applications that stream data into Hive to place more commits in a    * single file, thus reducing load on the namenode and making reads of the    * data more efficient.  However, opening more transactions in a batch will    * also result in readers needing to keep a larger list of open    * transactions to ignore, potentially slowing their reads.  Users will    * need to test in their system to understand the optimal number of    * transactions to request in a batch.    *</p>    * @param user User who is opening this transaction.  This is the Hive user,    *             not necessarily the OS user.  It is assumed that this user has already been    *             authenticated and authorized at this point.    * @param numTxns number of requested transactions to open    * @return list of opened txn ids.  As noted above, this may be less than    * requested, so the user should check how many were returned rather than    * optimistically assuming that the result matches the request.    * @throws TException    */
 name|OpenTxnsResponse
 name|openTxns
@@ -6284,12 +6306,44 @@ name|NoSuchTxnException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Rollback a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be rolled back.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * Note that this can result from the transaction having timed out and been    * deleted.    * @throws TException    */
+name|void
+name|replRollbackTxn
+parameter_list|(
+name|long
+name|txnid
+parameter_list|,
+name|String
+name|replPolicy
+parameter_list|)
+throws|throws
+name|NoSuchTxnException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be committed.    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
 name|void
 name|commitTxn
 parameter_list|(
 name|long
 name|txnid
+parameter_list|)
+throws|throws
+name|NoSuchTxnException
+throws|,
+name|TxnAbortedException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be committed.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
+name|void
+name|replCommitTxn
+parameter_list|(
+name|long
+name|txnid
+parameter_list|,
+name|String
+name|replPolicy
 parameter_list|)
 throws|throws
 name|NoSuchTxnException

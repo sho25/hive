@@ -611,6 +611,212 @@ operator|+
 literal|" WS_OPERATION_TYPE char(1) NOT NULL)"
 argument_list|)
 expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE REPL_TXN_MAP ("
+operator|+
+literal|" RTM_REPL_POLICY varchar(256) NOT NULL, "
+operator|+
+literal|" RTM_SRC_TXN_ID bigint NOT NULL, "
+operator|+
+literal|" RTM_TARGET_TXN_ID bigint NOT NULL, "
+operator|+
+literal|" PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID))"
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE \"APP\".\"SEQUENCE_TABLE\" (\"SEQUENCE_NAME\" VARCHAR(256) NOT "
+operator|+
+literal|"NULL, \"NEXT_VAL\" BIGINT NOT NULL)"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"already exists"
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"SEQUENCE_TABLE table already exist, ignoring"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE \"APP\".\"NOTIFICATION_SEQUENCE\" (\"NNI_ID\" BIGINT NOT NULL, "
+operator|+
+literal|"\"NEXT_EVENT_ID\" BIGINT NOT NULL)"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"already exists"
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"NOTIFICATION_SEQUENCE table already exist, ignoring"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE \"APP\".\"NOTIFICATION_LOG\" (\"NL_ID\" BIGINT NOT NULL, "
+operator|+
+literal|"\"DB_NAME\" VARCHAR(128), \"EVENT_ID\" BIGINT NOT NULL, \"EVENT_TIME\" INTEGER NOT"
+operator|+
+literal|" NULL, \"EVENT_TYPE\" VARCHAR(32) NOT NULL, \"MESSAGE\" CLOB, \"TBL_NAME\" "
+operator|+
+literal|"VARCHAR"
+operator|+
+literal|"(256), \"MESSAGE_FORMAT\" VARCHAR(16))"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"already exists"
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"NOTIFICATION_LOG table already exist, ignoring"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"INSERT INTO \"APP\".\"SEQUENCE_TABLE\" (\"SEQUENCE_NAME\", \"NEXT_VAL\") "
+operator|+
+literal|"SELECT * FROM (VALUES ('org.apache.hadoop.hive.metastore.model.MNotificationLog', "
+operator|+
+literal|"1)) tmp_table WHERE NOT EXISTS ( SELECT \"NEXT_VAL\" FROM \"APP\""
+operator|+
+literal|".\"SEQUENCE_TABLE\" WHERE \"SEQUENCE_NAME\" = 'org.apache.hadoop.hive.metastore"
+operator|+
+literal|".model.MNotificationLog')"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"INSERT INTO \"APP\".\"NOTIFICATION_SEQUENCE\" (\"NNI_ID\", \"NEXT_EVENT_ID\")"
+operator|+
+literal|" SELECT * FROM (VALUES (1,1)) tmp_table WHERE NOT EXISTS ( SELECT "
+operator|+
+literal|"\"NEXT_EVENT_ID\" FROM \"APP\".\"NOTIFICATION_SEQUENCE\")"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1000,6 +1206,18 @@ argument_list|,
 name|retryCount
 argument_list|)
 expr_stmt|;
+name|success
+operator|&=
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"REPL_TXN_MAP"
+argument_list|,
+name|retryCount
+argument_list|)
+expr_stmt|;
+comment|/*          * Don't drop NOTIFICATION_LOG, SEQUENCE_TABLE and NOTIFICATION_SEQUENCE as its used by other          * table which are not txn related to generate primary key. So if these tables are dropped          *  and other tables are not dropped, then it will create key duplicate error while inserting          *  to other table.          */
 block|}
 finally|finally
 block|{

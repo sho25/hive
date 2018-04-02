@@ -501,6 +501,13 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|TxnDbUtil
+operator|.
+name|prepDb
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|ms
 operator|=
 operator|new

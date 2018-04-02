@@ -140,6 +140,11 @@ name|REPL_STATE_LOG
 argument_list|(
 literal|14
 argument_list|)
+block|,
+name|REPL_TXN
+argument_list|(
+literal|15
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -274,6 +279,12 @@ literal|14
 case|:
 return|return
 name|REPL_STATE_LOG
+return|;
+case|case
+literal|15
+case|:
+return|return
+name|REPL_TXN
 return|;
 default|default:
 return|return

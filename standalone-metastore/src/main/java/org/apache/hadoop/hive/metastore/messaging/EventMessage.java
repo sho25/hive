@@ -200,6 +200,27 @@ name|MessageFactory
 operator|.
 name|DROP_CATALOG_EVENT
 argument_list|)
+operator|,
+name|OPEN_TXN
+argument_list|(
+name|MessageFactory
+operator|.
+name|OPEN_TXN_EVENT
+argument_list|)
+operator|,
+name|COMMIT_TXN
+argument_list|(
+name|MessageFactory
+operator|.
+name|COMMIT_TXN_EVENT
+argument_list|)
+operator|,
+name|ABORT_TXN
+argument_list|(
+name|MessageFactory
+operator|.
+name|ABORT_TXN_EVENT
+argument_list|)
 expr_stmt|;
 end_class
 

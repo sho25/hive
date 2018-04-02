@@ -2848,25 +2848,6 @@ name|isInReplicationScope
 argument_list|()
 condition|)
 block|{
-if|if
-condition|(
-name|isSourceMm
-operator|||
-name|isAcid
-argument_list|(
-name|writeId
-argument_list|)
-condition|)
-block|{
-comment|// Note: this is replication gap, not MM gap... Repl V2 is not ready yet.
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Replicating MM and ACID tables is not supported"
-argument_list|)
-throw|;
-block|}
 name|copyTask
 operator|=
 name|ReplCopyTask
@@ -3647,25 +3628,6 @@ name|isInReplicationScope
 argument_list|()
 condition|)
 block|{
-if|if
-condition|(
-name|isSourceMm
-operator|||
-name|isAcid
-argument_list|(
-name|writeId
-argument_list|)
-condition|)
-block|{
-comment|// Note: this is replication gap, not MM gap... Repl V2 is not ready yet.
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Replicating MM and ACID tables is not supported"
-argument_list|)
-throw|;
-block|}
 name|copyTask
 operator|=
 name|ReplCopyTask

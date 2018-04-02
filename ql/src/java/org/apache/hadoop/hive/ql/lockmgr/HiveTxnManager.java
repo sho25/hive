@@ -241,6 +241,54 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
+comment|/**    * Open a new transaction in target cluster.    * @param replPolicy Replication policy to uniquely identify the source cluster.    * @param srcTxnIds The ids of the transaction at the source cluster    * @param user The user who has fired the repl load command    * @return The new transaction id.    * @throws LockException in case of failure to start the transaction.    */
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|replOpenTxn
+parameter_list|(
+name|String
+name|replPolicy
+parameter_list|,
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|srcTxnIds
+parameter_list|,
+name|String
+name|user
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
+comment|/**    * Commit the transaction in target cluster.    * @param replPolicy Replication policy to uniquely identify the source cluster.    * @param srcTxnId The id of the transaction at the source cluster    * @throws LockException in case of failure to commit the transaction.    */
+name|void
+name|replCommitTxn
+parameter_list|(
+name|String
+name|replPolicy
+parameter_list|,
+name|long
+name|srcTxnId
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
+comment|/**    * Abort the transaction in target cluster.    * @param replPolicy Replication policy to uniquely identify the source cluster.    * @param srcTxnId The id of the transaction at the source cluster    * @throws LockException in case of failure to abort the transaction.    */
+name|void
+name|replRollbackTxn
+parameter_list|(
+name|String
+name|replPolicy
+parameter_list|,
+name|long
+name|srcTxnId
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
 comment|/**    * Get the lock manager.  This must be used rather than instantiating an    * instance of the lock manager directly as the transaction manager will    * choose which lock manager to instantiate.    * @return the instance of the lock manager    * @throws LockException if there is an issue obtaining the lock manager.    */
 name|HiveLockManager
 name|getLockManager
