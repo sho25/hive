@@ -250,6 +250,12 @@ name|String
 name|alterOpType
 init|=
 name|context
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|context
 operator|.
 name|getProperties
 argument_list|()
