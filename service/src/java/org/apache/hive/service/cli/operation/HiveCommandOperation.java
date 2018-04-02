@@ -1043,12 +1043,12 @@ name|rowSet
 operator|.
 name|addRow
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|row
-operator|.
-name|split
-argument_list|(
-literal|"\\t"
-argument_list|)
+block|}
 argument_list|)
 expr_stmt|;
 block|}

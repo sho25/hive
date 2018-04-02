@@ -632,17 +632,6 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|long
-name|purge
-parameter_list|()
-block|{
-return|return
-literal|0
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|void
 name|debugDumpShort
 parameter_list|(

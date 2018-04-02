@@ -91,10 +91,6 @@ name|LlapOomDebugDump
 name|dumper
 parameter_list|)
 function_decl|;
-name|long
-name|purge
-parameter_list|()
-function_decl|;
 block|}
 end_interface
 

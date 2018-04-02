@@ -885,9 +885,6 @@ case|case
 name|COMMAND_PARAMS
 case|:
 case|case
-name|SERVICE_NAME
-case|:
-case|case
 name|FUNCTION
 case|:
 comment|// operations that have objects of type COMMAND_PARAMS, FUNCTION are authorized

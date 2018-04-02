@@ -325,10 +325,6 @@ name|ALTER_MAPPING
 block|,
 name|DROP_MAPPING
 block|,
-name|LLAP_CLUSTER
-block|,
-name|LLAP_CACHE
-block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,
