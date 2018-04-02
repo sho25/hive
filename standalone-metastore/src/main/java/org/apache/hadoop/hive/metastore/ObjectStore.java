@@ -66186,7 +66186,7 @@ comment|// Do not use datetime in tests to avoid result changes.
 return|return
 name|newName
 operator|+
-literal|"-old-"
+literal|"_old_"
 operator|+
 name|i
 return|;
@@ -66196,7 +66196,7 @@ block|{
 return|return
 name|newName
 operator|+
-literal|"-old-"
+literal|"_old_"
 operator|+
 name|LocalDateTime
 operator|.
@@ -66216,7 +66216,7 @@ condition|?
 literal|""
 else|:
 operator|(
-literal|"-"
+literal|"_"
 operator|+
 name|i
 operator|)
