@@ -157,18 +157,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|lang
-operator|.
-name|reflect
-operator|.
-name|Modifier
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|net
 operator|.
 name|JarURLConnection
@@ -567,30 +555,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|zip
-operator|.
-name|ZipEntry
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|zip
-operator|.
-name|ZipFile
-import|;
-end_import
-
-begin_import
-import|import
 name|jline
 operator|.
 name|console
@@ -819,7 +783,39 @@ name|beeline
 operator|.
 name|hs2connection
 operator|.
-name|BeelineHS2ConnectionFileParseException
+name|BeelineConfFileParseException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|beeline
+operator|.
+name|hs2connection
+operator|.
+name|BeelineSiteParseException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|beeline
+operator|.
+name|hs2connection
+operator|.
+name|BeelineSiteParser
 import|;
 end_import
 
@@ -912,6 +908,20 @@ operator|.
 name|annotations
 operator|.
 name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|jdbc
+operator|.
+name|JdbcUriParseException
 import|;
 end_import
 
@@ -2380,7 +2390,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the driver class to use"
+literal|"The driver class to use"
 argument_list|)
 operator|.
 name|create
@@ -2406,12 +2416,40 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the JDBC URL to connect to"
+literal|"The JDBC URL to connect to"
 argument_list|)
 operator|.
 name|create
 argument_list|(
 literal|'u'
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// -c<named url in the beeline-hs2-connection.xml>
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withArgName
+argument_list|(
+literal|"named JDBC URL in beeline-site.xml"
+argument_list|)
+operator|.
+name|withDescription
+argument_list|(
+literal|"The named JDBC URL to connect to, which should be present in "
+operator|+
+literal|"beeline-site.xml as the value of beeline.hs2.jdbc.url.<namedUrl>"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|'c'
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -2455,7 +2493,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the username to connect as"
+literal|"The username to connect as"
 argument_list|)
 operator|.
 name|create
@@ -2481,7 +2519,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the password to connect as"
+literal|"The password to connect as"
 argument_list|)
 operator|.
 name|hasOptionalArg
@@ -2510,7 +2548,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the password file to read password from"
+literal|"The password file to read password from"
 argument_list|)
 operator|.
 name|withLongOpt
@@ -2541,7 +2579,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the authentication type"
+literal|"The authentication type"
 argument_list|)
 operator|.
 name|create
@@ -2567,7 +2605,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"script file for initialization"
+literal|"The script file for initialization"
 argument_list|)
 operator|.
 name|create
@@ -2593,7 +2631,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"query that should be executed"
+literal|"The query that should be executed"
 argument_list|)
 operator|.
 name|create
@@ -2619,7 +2657,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"script file that should be executed"
+literal|"The script file that should be executed"
 argument_list|)
 operator|.
 name|create
@@ -2642,7 +2680,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"display this message"
+literal|"Display this message"
 argument_list|)
 operator|.
 name|create
@@ -2678,7 +2716,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"hive variable name and value"
+literal|"Hive variable name and value"
 argument_list|)
 operator|.
 name|create
@@ -2736,7 +2774,7 @@ argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"the file to read configuration properties from"
+literal|"The file to read configuration properties from"
 argument_list|)
 operator|.
 name|create
@@ -4489,7 +4527,9 @@ block|{
 name|connSuccessful
 operator|=
 name|defaultBeelineConnect
-argument_list|()
+argument_list|(
+name|cl
+argument_list|)
 expr_stmt|;
 block|}
 name|int
@@ -5889,7 +5929,10 @@ comment|/*    * Attempts to make a connection using default HS2 connection confi
 specifier|private
 name|boolean
 name|defaultBeelineConnect
-parameter_list|()
+parameter_list|(
+name|CommandLine
+name|cl
+parameter_list|)
 block|{
 name|String
 name|url
@@ -5899,7 +5942,9 @@ block|{
 name|url
 operator|=
 name|getDefaultConnectionUrl
-argument_list|()
+argument_list|(
+name|cl
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -5920,7 +5965,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|BeelineHS2ConnectionFileParseException
+name|BeelineConfFileParseException
 name|e
 parameter_list|)
 block|{
@@ -5945,14 +5990,42 @@ block|}
 specifier|private
 name|String
 name|getDefaultConnectionUrl
-parameter_list|()
+parameter_list|(
+name|CommandLine
+name|cl
+parameter_list|)
 throws|throws
-name|BeelineHS2ConnectionFileParseException
+name|BeelineConfFileParseException
 block|{
-name|HS2ConnectionFileParser
+name|Properties
+name|mergedConnectionProperties
+init|=
+operator|new
+name|Properties
+argument_list|()
+decl_stmt|;
+name|JdbcConnectionParams
+name|jdbcConnectionParams
+init|=
+literal|null
+decl_stmt|;
+name|BeelineSiteParser
+name|beelineSiteParser
+init|=
+name|getUserBeelineSiteParser
+argument_list|()
+decl_stmt|;
+name|UserHS2ConnectionFileParser
 name|userHS2ConnFileParser
 init|=
 name|getUserHS2ConnFileParser
+argument_list|()
+decl_stmt|;
+name|Properties
+name|userConnectionProperties
+init|=
+operator|new
+name|Properties
 argument_list|()
 decl_stmt|;
 if|if
@@ -5962,22 +6035,157 @@ name|userHS2ConnFileParser
 operator|.
 name|configExists
 argument_list|()
+operator|&&
+operator|!
+name|beelineSiteParser
+operator|.
+name|configExists
+argument_list|()
 condition|)
 block|{
 comment|// nothing to do if there is no user HS2 connection configuration file
+comment|// or beeline-site.xml in the path
 return|return
 literal|null
 return|;
 block|}
-comment|// get the connection properties from user specific config file
+if|if
+condition|(
+name|beelineSiteParser
+operator|.
+name|configExists
+argument_list|()
+condition|)
+block|{
+comment|// Get the named url from user specific config file if present
 name|Properties
-name|userConnectionProperties
+name|userNamedConnectionURLs
 init|=
-name|userHS2ConnFileParser
+name|beelineSiteParser
 operator|.
 name|getConnectionProperties
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|userNamedConnectionURLs
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|String
+name|urlName
+init|=
+name|cl
+operator|.
+name|getOptionValue
+argument_list|(
+literal|"c"
+argument_list|)
+decl_stmt|;
+name|String
+name|jdbcURL
+init|=
+name|HS2ConnectionFileUtils
+operator|.
+name|getNamedUrl
+argument_list|(
+name|userNamedConnectionURLs
+argument_list|,
+name|urlName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|jdbcURL
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|jdbcConnectionParams
+operator|=
+name|Utils
+operator|.
+name|extractURLComponents
+argument_list|(
+name|jdbcURL
+argument_list|,
+operator|new
+name|Properties
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|JdbcUriParseException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|BeelineSiteParseException
+argument_list|(
+literal|"Error in parsing jdbc url: "
+operator|+
+name|jdbcURL
+operator|+
+literal|" from beeline-site.xml"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+block|}
+block|}
+if|if
+condition|(
+name|userHS2ConnFileParser
+operator|.
+name|configExists
+argument_list|()
+condition|)
+block|{
+comment|// get the connection properties from user specific config file
+name|userConnectionProperties
+operator|=
+name|userHS2ConnFileParser
+operator|.
+name|getConnectionProperties
+argument_list|()
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|jdbcConnectionParams
+operator|!=
+literal|null
+condition|)
+block|{
+name|mergedConnectionProperties
+operator|=
+name|HS2ConnectionFileUtils
+operator|.
+name|mergeUserConnectionPropertiesAndBeelineSite
+argument_list|(
+name|userConnectionProperties
+argument_list|,
+name|jdbcConnectionParams
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|mergedConnectionProperties
+operator|=
+name|userConnectionProperties
+expr_stmt|;
+block|}
 comment|// load the HS2 connection url properties from hive-site.xml if it is present in the classpath
 name|HS2ConnectionFileParser
 name|hiveSiteParser
@@ -5999,7 +6207,7 @@ control|(
 name|String
 name|key
 range|:
-name|userConnectionProperties
+name|mergedConnectionProperties
 operator|.
 name|stringPropertyNames
 argument_list|()
@@ -6031,7 +6239,7 @@ name|setProperty
 argument_list|(
 name|key
 argument_list|,
-name|userConnectionProperties
+name|mergedConnectionProperties
 operator|.
 name|getProperty
 argument_list|(
@@ -6054,7 +6262,21 @@ comment|/*    * Increased visibility of this method is only for providing better
 annotation|@
 name|VisibleForTesting
 specifier|public
-name|HS2ConnectionFileParser
+name|BeelineSiteParser
+name|getUserBeelineSiteParser
+parameter_list|()
+block|{
+return|return
+operator|new
+name|BeelineSiteParser
+argument_list|()
+return|;
+block|}
+comment|/*    * Increased visibility of this method is only for providing better test coverage    */
+annotation|@
+name|VisibleForTesting
+specifier|public
+name|UserHS2ConnectionFileParser
 name|getUserHS2ConnFileParser
 parameter_list|()
 block|{

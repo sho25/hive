@@ -95,7 +95,7 @@ name|Properties
 name|getConnectionProperties
 parameter_list|()
 throws|throws
-name|BeelineHS2ConnectionFileParseException
+name|BeelineConfFileParseException
 function_decl|;
 comment|/**    *    * @return returns true if the configuration exists else returns false    */
 name|boolean

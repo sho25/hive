@@ -869,9 +869,7 @@ argument_list|(
 name|testLocations
 argument_list|)
 decl_stmt|;
-name|String
-name|url
-init|=
+return|return
 name|HS2ConnectionFileUtils
 operator|.
 name|getUrl
@@ -881,9 +879,6 @@ operator|.
 name|getConnectionProperties
 argument_list|()
 argument_list|)
-decl_stmt|;
-return|return
-name|url
 return|;
 block|}
 specifier|private

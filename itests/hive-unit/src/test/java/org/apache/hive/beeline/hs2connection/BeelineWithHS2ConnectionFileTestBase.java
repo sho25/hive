@@ -578,7 +578,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|HS2ConnectionFileParser
+name|UserHS2ConnectionFileParser
 name|getUserHS2ConnFileParser
 parameter_list|()
 block|{
