@@ -489,7 +489,10 @@ name|HiveConf
 name|hiveconf
 parameter_list|,
 name|String
-name|sessionId
+name|sparkSessionId
+parameter_list|,
+name|String
+name|hiveSessionId
 parameter_list|)
 throws|throws
 name|Exception
@@ -506,7 +509,7 @@ name|initiateSparkConf
 argument_list|(
 name|hiveconf
 argument_list|,
-name|sessionId
+name|hiveSessionId
 argument_list|)
 decl_stmt|;
 comment|// Submit spark job through local spark context while spark master is local mode, otherwise submit
@@ -563,7 +566,11 @@ name|hiveconf
 argument_list|,
 name|sparkConf
 argument_list|,
-name|sessionId
+name|hiveSessionId
+operator|+
+literal|"_"
+operator|+
+name|sparkSessionId
 argument_list|)
 return|;
 block|}
@@ -582,7 +589,7 @@ name|HiveConf
 name|hiveConf
 parameter_list|,
 name|String
-name|sessionId
+name|hiveSessionId
 parameter_list|)
 block|{
 name|Map
@@ -639,9 +646,9 @@ specifier|final
 name|String
 name|sessionIdString
 init|=
-literal|" (sessionId = "
+literal|" (hiveSessionId = "
 operator|+
-name|sessionId
+name|hiveSessionId
 operator|+
 literal|")"
 decl_stmt|;
@@ -654,7 +661,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|sessionId
+name|hiveSessionId
 operator|==
 literal|null
 condition|)
