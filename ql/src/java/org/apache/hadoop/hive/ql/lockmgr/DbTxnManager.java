@@ -2324,7 +2324,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isTransactionalTable
 argument_list|(
 name|t
 argument_list|)
