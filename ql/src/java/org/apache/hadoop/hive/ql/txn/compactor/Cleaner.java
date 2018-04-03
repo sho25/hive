@@ -1523,10 +1523,10 @@ operator|.
 name|getLocation
 argument_list|()
 decl_stmt|;
-comment|/**        * Each Compaction only compacts as far as the highest txn id such that all txns below it        * are resolved (i.e. not opened).  This is what "highestWriteId" tracks.  This is only tracked        * since Hive 1.3.0/2.0 - thus may be 0.  See ValidCompactorWriteIdList and uses for more info.        *        * We only want to clean up to the highestWriteId - otherwise we risk deleting deltas from        * under an active reader.        *        * Suppose we have deltas D2 D3 for table T, i.e. the last compaction created D3 so now there is a         * clean request for D2.          * Cleaner checks existing locks and finds none.        * Between that check and removeFiles() a query starts (it will be reading D3) and another compaction        * completes which creates D4.        * Now removeFiles() (more specifically AcidUtils.getAcidState()) will declare D3 to be obsolete        * unless ValidTxnList is "capped" at highestWriteId.        */
+comment|/**        * Each Compaction only compacts as far as the highest txn id such that all txns below it        * are resolved (i.e. not opened).  This is what "highestWriteId" tracks.  This is only tracked        * since Hive 1.3.0/2.0 - thus may be 0.  See ValidCompactorWriteIdList and uses for more info.        *        * We only want to clean up to the highestWriteId - otherwise we risk deleting deltas from        * under an active reader.        *        * Suppose we have deltas D2 D3 for table T, i.e. the last compaction created D3 so now there is a         * clean request for D2.          * Cleaner checks existing locks and finds none.        * Between that check and removeFiles() a query starts (it will be reading D3) and another compaction        * completes which creates D4.        * Now removeFiles() (more specifically AcidUtils.getAcidState()) will declare D3 to be obsolete        * unless ValidWriteIdList is "capped" at highestWriteId.        */
 specifier|final
 name|ValidWriteIdList
-name|txnList
+name|validWriteIdList
 init|=
 operator|(
 name|ci
@@ -1577,7 +1577,7 @@ name|removeFiles
 argument_list|(
 name|location
 argument_list|,
-name|txnList
+name|validWriteIdList
 argument_list|)
 expr_stmt|;
 block|}
@@ -1642,7 +1642,7 @@ name|removeFiles
 argument_list|(
 name|location
 argument_list|,
-name|txnList
+name|validWriteIdList
 argument_list|)
 expr_stmt|;
 return|return

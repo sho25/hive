@@ -3466,6 +3466,23 @@ operator|.
 name|getNum_txns
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|numTxns
+operator|<=
+literal|0
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Invalid input for number of txns: "
+operator|+
+name|numTxns
+argument_list|)
+throw|;
+block|}
 try|try
 block|{
 name|Connection
@@ -3908,6 +3925,162 @@ name|q
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Need to register minimum open txnid for current transactions into MIN_HISTORY table.
+name|s
+operator|=
+literal|"select min(txn_id) from TXNS where txn_state = "
+operator|+
+name|quoteChar
+argument_list|(
+name|TXN_OPEN
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Scalar query returned no rows?!?!!"
+argument_list|)
+throw|;
+block|}
+comment|// TXNS table should have atleast one entry because we just inserted the newly opened txns.
+comment|// So, min(txn_id) would be a non-zero txnid.
+name|long
+name|minOpenTxnId
+init|=
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
+assert|assert
+operator|(
+name|minOpenTxnId
+operator|>
+literal|0
+operator|)
+assert|;
+name|rows
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+for|for
+control|(
+name|long
+name|txnId
+init|=
+name|first
+init|;
+name|txnId
+operator|<
+name|first
+operator|+
+name|numTxns
+condition|;
+name|txnId
+operator|++
+control|)
+block|{
+name|rows
+operator|.
+name|add
+argument_list|(
+name|txnId
+operator|+
+literal|", "
+operator|+
+name|minOpenTxnId
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Insert transaction entries into MIN_HISTORY_LEVEL.
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|inserts
+init|=
+name|sqlGenerator
+operator|.
+name|createInsertValuesStmt
+argument_list|(
+literal|"MIN_HISTORY_LEVEL (mhl_txnid, mhl_min_open_txnid)"
+argument_list|,
+name|rows
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|String
+name|insert
+range|:
+name|inserts
+control|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute insert<"
+operator|+
+name|insert
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+name|insert
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Added entries to MIN_HISTORY_LEVEL for current txns: ("
+operator|+
+name|txnIds
+operator|+
+literal|") with min_open_txn: "
+operator|+
+name|minOpenTxnId
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|rqst
@@ -5684,17 +5857,42 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
+name|s
+operator|=
+literal|"delete from MIN_HISTORY_LEVEL where mhl_txnid = "
+operator|+
+name|txnid
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to commit"
+literal|"Going to execute update<"
+operator|+
+name|s
+operator|+
+literal|">"
 argument_list|)
 expr_stmt|;
-name|dbConn
+name|modCount
+operator|=
+name|stmt
 operator|.
-name|commit
-argument_list|()
+name|executeUpdate
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Removed committed transaction: ("
+operator|+
+name|txnid
+operator|+
+literal|") from MIN_HISTORY_LEVEL"
+argument_list|)
 expr_stmt|;
 comment|// Update registry with modifications
 name|s
@@ -5855,6 +6053,13 @@ block|}
 name|close
 argument_list|(
 name|rs
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to commit"
 argument_list|)
 expr_stmt|;
 name|dbConn
@@ -6246,6 +6451,7 @@ argument_list|()
 decl_stmt|;
 comment|// Find the writeId high water mark based upon txnId high water mark. If found, then, need to
 comment|// traverse through all write Ids less than writeId HWM to make exceptions list.
+comment|// The writeHWM = min(NEXT_WRITE_ID.nwi_next-1, max(TXN_TO_WRITE_ID.t2w_writeid under txnHwm))
 name|String
 name|s
 init|=
@@ -6310,10 +6516,109 @@ argument_list|(
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
+comment|// If no writeIds allocated by txns under txnHwm, then find writeHwm from NEXT_WRITE_ID.
+if|if
+condition|(
+name|writeIdHwm
+operator|<=
+literal|0
+condition|)
+block|{
+comment|// Need to subtract 1 as nwi_next would be the next write id to be allocated but we need highest
+comment|// allocated write id.
+name|s
+operator|=
+literal|"select nwi_next-1 from NEXT_WRITE_ID where nwi_database = "
+operator|+
+name|quoteString
+argument_list|(
+name|names
+index|[
+literal|0
+index|]
+argument_list|)
+operator|+
+literal|" and nwi_table = "
+operator|+
+name|quoteString
+argument_list|(
+name|names
+index|[
+literal|1
+index|]
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+name|long
+name|maxWriteId
+init|=
+name|rs
+operator|.
+name|getLong
+argument_list|(
+literal|1
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|maxWriteId
+operator|>
+literal|0
+condition|)
+block|{
+name|writeIdHwm
+operator|=
+operator|(
+name|writeIdHwm
+operator|>
+literal|0
+operator|)
+condition|?
+name|Math
+operator|.
+name|min
+argument_list|(
+name|maxWriteId
+argument_list|,
+name|writeIdHwm
+argument_list|)
+else|:
+name|maxWriteId
+expr_stmt|;
+block|}
+block|}
+block|}
 comment|// As writeIdHwm is known, query all writeIds under the writeId HWM.
-comment|// If any writeId under HWM is allocated by txn> txnId HWM, then will be added to invalid list.
-comment|// The output of this query includes all the txns which are under the high water mark. It includes
-comment|// the committed transactions as well. The results should be sorted in ascending order based
+comment|// If any writeId under HWM is allocated by txn> txnId HWM or belongs to open/aborted txns,
+comment|// then will be added to invalid list. The results should be sorted in ascending order based
 comment|// on write id. The sorting is needed as exceptions list in ValidWriteIdList would be looked-up
 comment|// using binary search.
 name|s
@@ -6450,7 +6755,6 @@ argument_list|,
 name|writeId
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 name|ByteBuffer
@@ -16247,6 +16551,116 @@ name|query
 argument_list|)
 expr_stmt|;
 block|}
+comment|// As current txn is aborted, this won't read any data from other txns. So, it is safe to unregister
+comment|// the min_open_txnid from MIN_HISTORY_LEVEL for the aborted txns. Even if the txns in the list are
+comment|// partially aborted, it is safe to delete from MIN_HISTORY_LEVEL as the remaining txns are either
+comment|// already committed or aborted.
+name|queries
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|prefix
+operator|.
+name|setLength
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+name|suffix
+operator|.
+name|setLength
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+name|prefix
+operator|.
+name|append
+argument_list|(
+literal|"delete from MIN_HISTORY_LEVEL where "
+argument_list|)
+expr_stmt|;
+name|suffix
+operator|.
+name|append
+argument_list|(
+literal|""
+argument_list|)
+expr_stmt|;
+name|TxnUtils
+operator|.
+name|buildQueryWithINClause
+argument_list|(
+name|conf
+argument_list|,
+name|queries
+argument_list|,
+name|prefix
+argument_list|,
+name|suffix
+argument_list|,
+name|txnids
+argument_list|,
+literal|"mhl_txnid"
+argument_list|,
+literal|false
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+for|for
+control|(
+name|String
+name|query
+range|:
+name|queries
+control|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute update<"
+operator|+
+name|query
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|int
+name|rc
+init|=
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|query
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Deleted "
+operator|+
+name|rc
+operator|+
+literal|" records from MIN_HISTORY_LEVEL"
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Removed aborted transactions: ("
+operator|+
+name|txnids
+operator|+
+literal|") from MIN_HISTORY_LEVEL"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|updateCnt

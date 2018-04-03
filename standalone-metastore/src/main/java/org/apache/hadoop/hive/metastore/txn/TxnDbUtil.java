@@ -435,6 +435,19 @@ name|stmt
 operator|.
 name|execute
 argument_list|(
+literal|"CREATE TABLE MIN_HISTORY_LEVEL ("
+operator|+
+literal|" MHL_TXNID bigint NOT NULL,"
+operator|+
+literal|" MHL_MIN_OPEN_TXNID bigint NOT NULL,"
+operator|+
+literal|" PRIMARY KEY(MHL_TXNID))"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
 literal|"CREATE TABLE HIVE_LOCKS ("
 operator|+
 literal|" HL_LOCK_EXT_ID bigint NOT NULL,"
@@ -1125,6 +1138,17 @@ argument_list|(
 name|stmt
 argument_list|,
 literal|"NEXT_WRITE_ID"
+argument_list|,
+name|retryCount
+argument_list|)
+expr_stmt|;
+name|success
+operator|&=
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"MIN_HISTORY_LEVEL"
 argument_list|,
 name|retryCount
 argument_list|)

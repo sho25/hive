@@ -680,6 +680,17 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Clean up entries from TXN_TO_WRITE_ID table less than min_uncommited_txnid as found by    * min(NEXT_TXN_ID.ntxn_next, min(MIN_HISTORY_LEVEL.mhl_min_open_txnid), min(Aborted TXNS.txn_id)).    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|SafeToRetry
+name|void
+name|cleanTxnToWriteIdTable
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * Clean up aborted transactions from txns that have no components in txn_components.  The reson such    * txns exist can be that now work was done in this txn (e.g. Streaming opened TransactionBatch and    * abandoned it w/o doing any work) or due to {@link #markCleaned(CompactionInfo)} being called.    */
 annotation|@
 name|RetrySemantics

@@ -1132,6 +1132,12 @@ operator|.
 name|cleanEmptyAbortedTxns
 argument_list|()
 expr_stmt|;
+comment|// Clean TXN_TO_WRITE_ID table for entries under min_uncommitted_txn referred by any open txns.
+name|txnHandler
+operator|.
+name|cleanTxnToWriteIdTable
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
