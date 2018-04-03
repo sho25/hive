@@ -1117,7 +1117,6 @@ name|IDriver
 name|createDriver
 parameter_list|()
 block|{
-comment|//    HiveConf conf = new HiveConf(Driver.class);
 name|HiveConf
 name|conf
 init|=

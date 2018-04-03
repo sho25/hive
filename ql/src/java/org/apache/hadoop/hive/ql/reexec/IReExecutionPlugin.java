@@ -154,6 +154,16 @@ name|PlanMapper
 name|newPlanMapper
 parameter_list|)
 function_decl|;
+name|void
+name|afterExecute
+parameter_list|(
+name|PlanMapper
+name|planMapper
+parameter_list|,
+name|boolean
+name|successfull
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

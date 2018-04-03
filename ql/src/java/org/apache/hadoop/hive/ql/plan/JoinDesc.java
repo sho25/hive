@@ -2625,6 +2625,13 @@ index|[]
 name|filterMap
 parameter_list|)
 block|{
+name|filterMap
+operator|=
+name|compactFilter
+argument_list|(
+name|filterMap
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|filterMap
@@ -2636,13 +2643,6 @@ return|return
 literal|null
 return|;
 block|}
-name|filterMap
-operator|=
-name|compactFilter
-argument_list|(
-name|filterMap
-argument_list|)
-expr_stmt|;
 name|Map
 argument_list|<
 name|Integer

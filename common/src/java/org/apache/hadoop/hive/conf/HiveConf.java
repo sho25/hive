@@ -15641,6 +15641,29 @@ operator|+
 literal|"  reoptimize: collects operator statistics during execution and recompile the query after a failure"
 argument_list|)
 block|,
+name|HIVE_QUERY_REEXECUTION_STATS_PERSISTENCE
+argument_list|(
+literal|"hive.query.reexecution.stats.persist.scope"
+argument_list|,
+literal|"query"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"query"
+argument_list|,
+literal|"hiveserver"
+argument_list|,
+literal|"metastore"
+argument_list|)
+argument_list|,
+literal|"Sets the persistence scope of runtime statistics\n"
+operator|+
+literal|"  query: runtime statistics are only used during re-execution\n"
+operator|+
+literal|"  hiveserver: runtime statistics are persisted in the hiveserver - all sessions share it"
+argument_list|)
+block|,
 name|HIVE_QUERY_MAX_REEXECUTION_COUNT
 argument_list|(
 literal|"hive.query.reexecution.max.count"
@@ -15656,7 +15679,16 @@ literal|"hive.query.reexecution.always.collect.operator.stats"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Used during testing"
+literal|"If sessionstats are enabled; this option can be used to collect statistics all the time"
+argument_list|)
+block|,
+name|HIVE_QUERY_REEXECUTION_STATS_CACHE_SIZE
+argument_list|(
+literal|"hive.query.reexecution.stats.cache.size"
+argument_list|,
+literal|100_000
+argument_list|,
+literal|"Size of the runtime statistics cache. Unit is: OperatorStat entry; a query plan consist ~100"
 argument_list|)
 block|,
 name|HIVE_QUERY_RESULTS_CACHE_ENABLED

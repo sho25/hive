@@ -15049,6 +15049,15 @@ operator|=
 name|runtimeStatsSource
 expr_stmt|;
 block|}
+specifier|public
+name|StatsSource
+name|getStatsSource
+parameter_list|()
+block|{
+return|return
+name|statsSource
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
