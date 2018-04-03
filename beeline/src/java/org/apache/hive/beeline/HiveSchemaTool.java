@@ -4383,12 +4383,9 @@ throw|throw
 operator|new
 name|HiveMetaException
 argument_list|(
-literal|"Failed to retrieve schema tables from Hive Metastore DB,"
-operator|+
+literal|"Failed to retrieve schema tables from Hive Metastore DB"
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}
