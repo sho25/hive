@@ -8071,7 +8071,7 @@ name|HIVEPOINTLOOKUPOPTIMIZERMIN
 argument_list|(
 literal|"hive.optimize.point.lookup.min"
 argument_list|,
-literal|31
+literal|2
 argument_list|,
 literal|"Minimum number of OR clauses needed to transform into IN clauses"
 argument_list|)

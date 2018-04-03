@@ -3266,16 +3266,9 @@ argument_list|(
 name|columnChild
 argument_list|)
 expr_stmt|;
-name|aspCtx
-operator|.
-name|addAffectedColumn
-argument_list|(
-operator|(
-name|ExprNodeColumnDesc
-operator|)
-name|columnChild
-argument_list|)
-expr_stmt|;
+comment|// not adding column as affected; since that would rescale ndv based on the other columns
+comment|// selectivity as well...which leads to underestimation
+comment|// aspCtx.addAffectedColumn((ExprNodeColumnDesc) columnChild);
 specifier|final
 name|String
 name|columnName
@@ -3731,6 +3724,23 @@ name|factor
 init|=
 literal|1d
 decl_stmt|;
+if|if
+condition|(
+name|multiColumn
+condition|)
+block|{
+comment|// distinct value array doesn not help that much here; think (1,1),(1,2),(2,1),(2,2) as values
+comment|// but that will look like (1,2) as column values...
+name|factor
+operator|*=
+name|children
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
+expr_stmt|;
+block|}
 for|for
 control|(
 name|int
@@ -3784,22 +3794,30 @@ condition|?
 literal|0.5d
 else|:
 operator|(
-operator|(
-name|double
-operator|)
-name|values
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-operator|.
-name|size
-argument_list|()
+literal|1.0d
 operator|/
 name|dvs
 operator|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|multiColumn
+condition|)
+block|{
+name|columnFactor
+operator|*=
+name|values
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|size
+argument_list|()
+expr_stmt|;
+block|}
 comment|// max can be 1, even when ndv is larger in IN clause than in column stats
 name|factor
 operator|*=
@@ -3812,6 +3830,18 @@ else|:
 name|columnFactor
 expr_stmt|;
 block|}
+comment|// Clamp at 1 to be sure that we don't get out of range.
+name|factor
+operator|=
+name|Double
+operator|.
+name|min
+argument_list|(
+name|factor
+argument_list|,
+literal|1.0d
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!

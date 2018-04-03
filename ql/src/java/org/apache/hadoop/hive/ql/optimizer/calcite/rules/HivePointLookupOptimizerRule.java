@@ -1261,7 +1261,12 @@ literal|null
 condition|)
 block|{
 return|return
+name|super
+operator|.
+name|visitCall
+argument_list|(
 name|call
+argument_list|)
 return|;
 block|}
 block|}
