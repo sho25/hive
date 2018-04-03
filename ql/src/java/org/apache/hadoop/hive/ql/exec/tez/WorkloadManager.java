@@ -1326,6 +1326,8 @@ operator|==
 literal|null
 assert|;
 comment|// We could derive the expected number of AMs to pass in.
+comment|// Note: we pass a null token here; the tokens to talk to plugin endpoints will only be
+comment|//       known once the AMs register, and they are different for every AM (unlike LLAP token).
 name|LlapPluginEndpointClientImpl
 name|amComm
 init|=
