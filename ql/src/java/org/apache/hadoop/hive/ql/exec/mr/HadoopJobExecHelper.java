@@ -2600,11 +2600,9 @@ name|getVar
 argument_list|(
 name|job
 argument_list|,
-name|HiveConf
-operator|.
 name|ConfVars
 operator|.
-name|HADOOPBIN
+name|MAPREDBIN
 argument_list|)
 operator|+
 literal|" job  -kill "
