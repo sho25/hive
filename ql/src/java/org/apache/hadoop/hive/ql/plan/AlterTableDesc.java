@@ -554,6 +554,11 @@ name|ADDCONSTRAINT
 argument_list|(
 literal|"add constraint"
 argument_list|)
+block|,
+name|UPDATECOLUMNS
+argument_list|(
+literal|"update columns"
+argument_list|)
 block|;     ;
 specifier|private
 specifier|final
@@ -3237,6 +3242,22 @@ block|{
 return|return
 name|isCascade
 return|;
+block|}
+comment|/**    * @param cascade the isCascade to set    */
+specifier|public
+name|void
+name|setIsCascade
+parameter_list|(
+name|boolean
+name|isCascade
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isCascade
+operator|=
+name|isCascade
+expr_stmt|;
 block|}
 specifier|public
 specifier|static
