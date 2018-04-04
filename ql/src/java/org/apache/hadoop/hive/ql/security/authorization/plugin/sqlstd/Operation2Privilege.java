@@ -2094,6 +2094,24 @@ operator|.
 name|DROP_MAPPING
 argument_list|)
 expr_stmt|;
+name|adminPrivOps
+operator|.
+name|add
+argument_list|(
+name|HiveOperationType
+operator|.
+name|CREATEFUNCTION
+argument_list|)
+expr_stmt|;
+name|adminPrivOps
+operator|.
+name|add
+argument_list|(
+name|HiveOperationType
+operator|.
+name|DROPFUNCTION
+argument_list|)
+expr_stmt|;
 comment|// operations require select priv
 name|op2Priv
 operator|.

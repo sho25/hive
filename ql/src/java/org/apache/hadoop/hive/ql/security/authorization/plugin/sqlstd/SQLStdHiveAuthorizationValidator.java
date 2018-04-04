@@ -884,10 +884,7 @@ continue|continue;
 case|case
 name|COMMAND_PARAMS
 case|:
-case|case
-name|FUNCTION
-case|:
-comment|// operations that have objects of type COMMAND_PARAMS, FUNCTION are authorized
+comment|// operations that have objects of type COMMAND_PARAMS are authorized
 comment|// solely on the type
 if|if
 condition|(
@@ -908,6 +905,13 @@ argument_list|)
 expr_stmt|;
 block|}
 break|break;
+case|case
+name|FUNCTION
+case|:
+comment|// create/drop functions are marked as ADMIN functions
+comment|// Usage of available functions in query are not restricted by sql
+comment|// standard authorization.
+continue|continue;
 default|default:
 name|availPrivs
 operator|=
