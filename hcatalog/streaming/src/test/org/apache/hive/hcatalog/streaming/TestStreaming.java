@@ -15519,7 +15519,7 @@ block|{     }
 block|}
 comment|///////// -------- UTILS ------- /////////
 comment|// returns Path of the partition created (if any) else Path of table
-specifier|public
+specifier|private
 specifier|static
 name|Path
 name|createDbAndTable
@@ -15913,9 +15913,15 @@ name|colNames
 index|[
 name|i
 index|]
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|" "
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|colTypes
 index|[
 name|i
@@ -16009,7 +16015,10 @@ name|partNames
 index|[
 name|i
 index|]
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|" string"
 argument_list|)
 expr_stmt|;
@@ -16090,16 +16099,25 @@ name|partNames
 index|[
 name|i
 index|]
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|" = '"
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|partVals
 operator|.
 name|get
 argument_list|(
 name|i
 argument_list|)
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|"'"
 argument_list|)
 expr_stmt|;
@@ -16324,7 +16342,7 @@ return|return
 literal|false
 return|;
 block|}
-specifier|public
+specifier|private
 specifier|static
 name|ArrayList
 argument_list|<
