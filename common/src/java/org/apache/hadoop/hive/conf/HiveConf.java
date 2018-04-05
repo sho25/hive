@@ -3642,6 +3642,9 @@ argument_list|,
 literal|"Type of database used by the metastore. Information schema& JDBCStorageHandler depend on it."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.WAREHOUSE      */
+annotation|@
+name|Deprecated
 name|METASTOREWAREHOUSE
 argument_list|(
 literal|"hive.metastore.warehouse.dir"
@@ -3651,6 +3654,9 @@ argument_list|,
 literal|"location of default database for the warehouse"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.THRIFT_URIS      */
+annotation|@
+name|Deprecated
 name|METASTOREURIS
 argument_list|(
 literal|"hive.metastore.uris"
@@ -3660,6 +3666,9 @@ argument_list|,
 literal|"Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.THRIFT_URI_SELECTION      */
+annotation|@
+name|Deprecated
 name|METASTORESELECTION
 argument_list|(
 literal|"hive.metastore.uri.selection"
@@ -3683,6 +3692,9 @@ operator|+
 literal|"will be picked randomly"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CAPABILITY_CHECK      */
+annotation|@
+name|Deprecated
 name|METASTORE_CAPABILITY_CHECK
 argument_list|(
 literal|"hive.metastore.client.capability.check"
@@ -3705,6 +3717,9 @@ operator|+
 literal|"undefined and most likely undesired behavior will result"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.FS_HANDLER_THREADS_COUNT      */
+annotation|@
+name|Deprecated
 name|METASTORE_FS_HANDLER_THREADS_COUNT
 argument_list|(
 literal|"hive.metastore.fshandler.threads"
@@ -3714,6 +3729,9 @@ argument_list|,
 literal|"Number of threads to be allocated for metastore handler for fs operations."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.FILE_METADATA_THREADS      */
+annotation|@
+name|Deprecated
 name|METASTORE_HBASE_FILE_METADATA_THREADS
 argument_list|(
 literal|"hive.metastore.hbase.file.metadata.threads"
@@ -3723,6 +3741,9 @@ argument_list|,
 literal|"Number of threads to use to read file metadata in background to cache it."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.URI_RESOLVER      */
+annotation|@
+name|Deprecated
 name|METASTORE_URI_RESOLVER
 argument_list|(
 literal|"hive.metastore.uri.resolver"
@@ -3732,6 +3753,9 @@ argument_list|,
 literal|"If set, fully qualified class name of resolver for hive metastore uri's"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.THRIFT_CONNECTION_RETRIES      */
+annotation|@
+name|Deprecated
 name|METASTORETHRIFTCONNECTIONRETRIES
 argument_list|(
 literal|"hive.metastore.connect.retries"
@@ -3741,6 +3765,9 @@ argument_list|,
 literal|"Number of retries while opening a connection to metastore"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.THRIFT_FAILURE_RETRIES      */
+annotation|@
+name|Deprecated
 name|METASTORETHRIFTFAILURERETRIES
 argument_list|(
 literal|"hive.metastore.failure.retries"
@@ -3750,6 +3777,9 @@ argument_list|,
 literal|"Number of retries upon failure of Thrift metastore calls"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SERVER_PORT      */
+annotation|@
+name|Deprecated
 name|METASTORE_SERVER_PORT
 argument_list|(
 literal|"hive.metastore.port"
@@ -3759,6 +3789,9 @@ argument_list|,
 literal|"Hive metastore listener port"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CLIENT_CONNECT_RETRY_DELAY      */
+annotation|@
+name|Deprecated
 name|METASTORE_CLIENT_CONNECT_RETRY_DELAY
 argument_list|(
 literal|"hive.metastore.client.connect.retry.delay"
@@ -3776,6 +3809,9 @@ argument_list|,
 literal|"Number of seconds for the client to wait between consecutive connection attempts"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CLIENT_SOCKET_TIMEOUT      */
+annotation|@
+name|Deprecated
 name|METASTORE_CLIENT_SOCKET_TIMEOUT
 argument_list|(
 literal|"hive.metastore.client.socket.timeout"
@@ -3793,6 +3829,9 @@ argument_list|,
 literal|"MetaStore Client socket timeout in seconds"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CLIENT_SOCKET_LIFETIME      */
+annotation|@
+name|Deprecated
 name|METASTORE_CLIENT_SOCKET_LIFETIME
 argument_list|(
 literal|"hive.metastore.client.socket.lifetime"
@@ -3814,6 +3853,9 @@ operator|+
 literal|"has an infinite lifetime."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.PWD      */
+annotation|@
+name|Deprecated
 name|METASTOREPWD
 argument_list|(
 literal|"javax.jdo.option.ConnectionPassword"
@@ -3823,6 +3865,9 @@ argument_list|,
 literal|"password to use against metastore database"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CONNECT_URL_HOOK      */
+annotation|@
+name|Deprecated
 name|METASTORECONNECTURLHOOK
 argument_list|(
 literal|"hive.metastore.ds.connection.url.hook"
@@ -3832,6 +3877,9 @@ argument_list|,
 literal|"Name of the hook to use for retrieving the JDO connection URL. If empty, the value in javax.jdo.option.ConnectionURL is used"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MULTITHREADED      */
+annotation|@
+name|Deprecated
 name|METASTOREMULTITHREADED
 argument_list|(
 literal|"javax.jdo.option.Multithreaded"
@@ -3841,6 +3889,9 @@ argument_list|,
 literal|"Set this to true if multiple threads access metastore through JDO concurrently."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CONNECT_URL_KEY      */
+annotation|@
+name|Deprecated
 name|METASTORECONNECTURLKEY
 argument_list|(
 literal|"javax.jdo.option.ConnectionURL"
@@ -3854,6 +3905,9 @@ operator|+
 literal|"For example, jdbc:postgresql://myhost/db?ssl=true for postgres database."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DBACCESS_SSL_PROPS      */
+annotation|@
+name|Deprecated
 name|METASTORE_DBACCESS_SSL_PROPS
 argument_list|(
 literal|"hive.metastore.dbaccess.ssl.properties"
@@ -3865,6 +3919,9 @@ operator|+
 literal|"enables SSL access. e.g. javax.net.ssl.trustStore=/tmp/truststore,javax.net.ssl.trustStorePassword=pwd."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.HMS_HANDLER_ATTEMPTS      */
+annotation|@
+name|Deprecated
 name|HMSHANDLERATTEMPTS
 argument_list|(
 literal|"hive.hmshandler.retry.attempts"
@@ -3874,6 +3931,9 @@ argument_list|,
 literal|"The number of times to retry a HMSHandler call if there were a connection error."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.HMS_HANDLER_INTERVAL      */
+annotation|@
+name|Deprecated
 name|HMSHANDLERINTERVAL
 argument_list|(
 literal|"hive.hmshandler.retry.interval"
@@ -3891,6 +3951,9 @@ argument_list|,
 literal|"The time between HMSHandler retry attempts on failure."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.HMS_HANDLER_FORCE_RELOAD_CONF      */
+annotation|@
+name|Deprecated
 name|HMSHANDLERFORCERELOADCONF
 argument_list|(
 literal|"hive.hmshandler.force.reload.conf"
@@ -3906,6 +3969,9 @@ operator|+
 literal|"testing only."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SERVER_MAX_MESSAGE_SIZE      */
+annotation|@
+name|Deprecated
 name|METASTORESERVERMAXMESSAGESIZE
 argument_list|(
 literal|"hive.metastore.server.max.message.size"
@@ -3919,6 +3985,9 @@ argument_list|,
 literal|"Maximum message size in bytes a HMS will accept."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SERVER_MIN_THREADS      */
+annotation|@
+name|Deprecated
 name|METASTORESERVERMINTHREADS
 argument_list|(
 literal|"hive.metastore.server.min.threads"
@@ -3928,6 +3997,9 @@ argument_list|,
 literal|"Minimum number of worker threads in the Thrift server's pool."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SERVER_MAX_THREADS      */
+annotation|@
+name|Deprecated
 name|METASTORESERVERMAXTHREADS
 argument_list|(
 literal|"hive.metastore.server.max.threads"
@@ -3937,6 +4009,9 @@ argument_list|,
 literal|"Maximum number of worker threads in the Thrift server's pool."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TCP_KEEP_ALIVE      */
+annotation|@
+name|Deprecated
 name|METASTORE_TCP_KEEP_ALIVE
 argument_list|(
 literal|"hive.metastore.server.tcp.keepalive"
@@ -3946,6 +4021,9 @@ argument_list|,
 literal|"Whether to enable TCP keepalive for the metastore server. Keepalive will prevent accumulation of half-open connections."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.WM_DEFAULT_POOL_SIZE      */
+annotation|@
+name|Deprecated
 name|METASTORE_WM_DEFAULT_POOL_SIZE
 argument_list|(
 literal|"hive.metastore.wm.default.pool.size"
@@ -3986,6 +4064,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.KERBEROS_KEYTAB_FILE      */
+annotation|@
+name|Deprecated
 name|METASTORE_KERBEROS_KEYTAB_FILE
 argument_list|(
 literal|"hive.metastore.kerberos.keytab.file"
@@ -3995,6 +4076,9 @@ argument_list|,
 literal|"The path to the Kerberos Keytab file containing the metastore Thrift server's service principal."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.KERBEROS_PRINCIPAL      */
+annotation|@
+name|Deprecated
 name|METASTORE_KERBEROS_PRINCIPAL
 argument_list|(
 literal|"hive.metastore.kerberos.principal"
@@ -4006,6 +4090,9 @@ operator|+
 literal|"The special string _HOST will be replaced automatically with the correct host name."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CLIENT_KERBEROS_PRINCIPAL      */
+annotation|@
+name|Deprecated
 name|METASTORE_CLIENT_KERBEROS_PRINCIPAL
 argument_list|(
 literal|"hive.metastore.client.kerberos.principal"
@@ -4016,6 +4103,9 @@ comment|// E.g. "hive-metastore/_HOST@EXAMPLE.COM".
 literal|"The Kerberos principal associated with the HA cluster of hcat_servers."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.USE_THRIFT_SASL      */
+annotation|@
+name|Deprecated
 name|METASTORE_USE_THRIFT_SASL
 argument_list|(
 literal|"hive.metastore.sasl.enabled"
@@ -4025,6 +4115,9 @@ argument_list|,
 literal|"If true, the metastore Thrift interface will be secured with SASL. Clients must authenticate with Kerberos."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.USE_THRIFT_FRAMED_TRANSPORT      */
+annotation|@
+name|Deprecated
 name|METASTORE_USE_THRIFT_FRAMED_TRANSPORT
 argument_list|(
 literal|"hive.metastore.thrift.framed.transport.enabled"
@@ -4034,6 +4127,9 @@ argument_list|,
 literal|"If true, the metastore Thrift interface will use TFramedTransport. When false (default) a standard TTransport is used."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.USE_THRIFT_COMPACT_PROTOCOL      */
+annotation|@
+name|Deprecated
 name|METASTORE_USE_THRIFT_COMPACT_PROTOCOL
 argument_list|(
 literal|"hive.metastore.thrift.compact.protocol.enabled"
@@ -4045,6 +4141,9 @@ operator|+
 literal|"Setting it to true will break compatibility with older clients running TBinaryProtocol."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TOKEN_SIGNATURE      */
+annotation|@
+name|Deprecated
 name|METASTORE_TOKEN_SIGNATURE
 argument_list|(
 literal|"hive.metastore.token.signature"
@@ -4054,6 +4153,9 @@ argument_list|,
 literal|"The delegation token service name to match when selecting a token from the current user's tokens."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DELEGATION_TOKEN_STORE_CLS      */
+annotation|@
+name|Deprecated
 name|METASTORE_CLUSTER_DELEGATION_TOKEN_STORE_CLS
 argument_list|(
 literal|"hive.cluster.delegation.token.store.class"
@@ -4102,6 +4204,9 @@ operator|+
 literal|"Defaults to all permissions for the hiveserver2/metastore process user."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CACHE_PINOBJTYPES      */
+annotation|@
+name|Deprecated
 name|METASTORE_CACHE_PINOBJTYPES
 argument_list|(
 literal|"hive.metastore.cache.pinobjtypes"
@@ -4111,6 +4216,9 @@ argument_list|,
 literal|"List of comma separated metastore object types that should be pinned in the cache"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CONNECTION_POOLING_TYPE      */
+annotation|@
+name|Deprecated
 name|METASTORE_CONNECTION_POOLING_TYPE
 argument_list|(
 literal|"datanucleus.connectionPoolingType"
@@ -4132,6 +4240,9 @@ argument_list|,
 literal|"Specify connection pool library for datanucleus"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CONNECTION_POOLING_MAX_CONNECTIONS      */
+annotation|@
+name|Deprecated
 name|METASTORE_CONNECTION_POOLING_MAX_CONNECTIONS
 argument_list|(
 literal|"datanucleus.connectionPool.maxPoolSize"
@@ -4153,6 +4264,9 @@ argument_list|)
 block|,
 comment|// Workaround for DN bug on Postgres:
 comment|// http://www.datanucleus.org/servlet/forum/viewthread_thread,7985_offset
+comment|/**      * @deprecated Use MetastoreConf.DATANUCLEUS_INIT_COL_INFO      */
+annotation|@
+name|Deprecated
 name|METASTORE_DATANUCLEUS_INIT_COL_INFO
 argument_list|(
 literal|"datanucleus.rdbms.initializeColumnInfo"
@@ -4162,6 +4276,9 @@ argument_list|,
 literal|"initializeColumnInfo setting for DataNucleus; set to NONE at least on Postgres."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.VALIDATE_TABLES      */
+annotation|@
+name|Deprecated
 name|METASTORE_VALIDATE_TABLES
 argument_list|(
 literal|"datanucleus.schema.validateTables"
@@ -4171,6 +4288,9 @@ argument_list|,
 literal|"validates existing schema against code. turn this on if you want to verify existing schema"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.VALIDATE_COLUMNS      */
+annotation|@
+name|Deprecated
 name|METASTORE_VALIDATE_COLUMNS
 argument_list|(
 literal|"datanucleus.schema.validateColumns"
@@ -4180,6 +4300,9 @@ argument_list|,
 literal|"validates existing schema against code. turn this on if you want to verify existing schema"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.VALIDATE_CONSTRAINTS      */
+annotation|@
+name|Deprecated
 name|METASTORE_VALIDATE_CONSTRAINTS
 argument_list|(
 literal|"datanucleus.schema.validateConstraints"
@@ -4189,6 +4312,9 @@ argument_list|,
 literal|"validates existing schema against code. turn this on if you want to verify existing schema"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.STORE_MANAGER_TYPE      */
+annotation|@
+name|Deprecated
 name|METASTORE_STORE_MANAGER_TYPE
 argument_list|(
 literal|"datanucleus.storeManagerType"
@@ -4198,6 +4324,9 @@ argument_list|,
 literal|"metadata store type"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AUTO_CREATE_ALL      */
+annotation|@
+name|Deprecated
 name|METASTORE_AUTO_CREATE_ALL
 argument_list|(
 literal|"datanucleus.schema.autoCreateAll"
@@ -4211,6 +4340,9 @@ operator|+
 literal|"recommended for production use cases, run schematool command instead."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SCHEMA_VERIFICATION      */
+annotation|@
+name|Deprecated
 name|METASTORE_SCHEMA_VERIFICATION
 argument_list|(
 literal|"hive.metastore.schema.verification"
@@ -4228,6 +4360,9 @@ operator|+
 literal|"False: Warn if the version information stored in metastore doesn't match with one from in Hive jars."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SCHEMA_VERIFICATION_RECORD_VERSION      */
+annotation|@
+name|Deprecated
 name|METASTORE_SCHEMA_VERIFICATION_RECORD_VERSION
 argument_list|(
 literal|"hive.metastore.schema.verification.record.version"
@@ -4239,6 +4374,9 @@ operator|+
 literal|" enabled the MS will be unusable."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SCHEMA_INFO_CLASS      */
+annotation|@
+name|Deprecated
 name|METASTORE_SCHEMA_INFO_CLASS
 argument_list|(
 literal|"hive.metastore.schema.info.class"
@@ -4252,6 +4390,9 @@ operator|+
 literal|" This class should implement the IMetaStoreSchemaInfo interface"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DATANUCLEUS_TRANSACTION_ISOLATION      */
+annotation|@
+name|Deprecated
 name|METASTORE_TRANSACTION_ISOLATION
 argument_list|(
 literal|"datanucleus.transactionIsolation"
@@ -4261,6 +4402,9 @@ argument_list|,
 literal|"Default transaction isolation level for identity generation."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DATANUCLEUS_CACHE_LEVEL2      */
+annotation|@
+name|Deprecated
 name|METASTORE_CACHE_LEVEL2
 argument_list|(
 literal|"datanucleus.cache.level2"
@@ -4279,6 +4423,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.IDENTIFIER_FACTORY      */
+annotation|@
+name|Deprecated
 name|METASTORE_IDENTIFIER_FACTORY
 argument_list|(
 literal|"datanucleus.identifierFactory"
@@ -4290,6 +4437,9 @@ operator|+
 literal|"'datanucleus1' is used for backward compatibility with DataNucleus v1"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DATANUCLEUS_USE_LEGACY_VALUE_STRATEGY      */
+annotation|@
+name|Deprecated
 name|METASTORE_USE_LEGACY_VALUE_STRATEGY
 argument_list|(
 literal|"datanucleus.rdbms.useLegacyNativeValueStrategy"
@@ -4299,6 +4449,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DATANUCLEUS_PLUGIN_REGISTRY_BUNDLE_CHECK      */
+annotation|@
+name|Deprecated
 name|METASTORE_PLUGIN_REGISTRY_BUNDLE_CHECK
 argument_list|(
 literal|"datanucleus.plugin.pluginRegistryBundleCheck"
@@ -4308,6 +4461,9 @@ argument_list|,
 literal|"Defines what happens when plugin bundles are found and are duplicated [EXCEPTION|LOG|NONE]"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.BATCH_RETRIEVE_MAX      */
+annotation|@
+name|Deprecated
 name|METASTORE_BATCH_RETRIEVE_MAX
 argument_list|(
 literal|"hive.metastore.batch.retrieve.max"
@@ -4321,6 +4477,9 @@ operator|+
 literal|"but it may also cause higher memory requirement at the client side."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.BATCH_RETRIEVE_OBJECTS_MAX      */
+annotation|@
+name|Deprecated
 name|METASTORE_BATCH_RETRIEVE_OBJECTS_MAX
 argument_list|(
 literal|"hive.metastore.batch.retrieve.table.partition.max"
@@ -4330,6 +4489,9 @@ argument_list|,
 literal|"Maximum number of objects that metastore internally retrieves in one batch."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.INIT_HOOKS      */
+annotation|@
+name|Deprecated
 name|METASTORE_INIT_HOOKS
 argument_list|(
 literal|"hive.metastore.init.hooks"
@@ -4341,6 +4503,9 @@ operator|+
 literal|"An init hook is specified as the name of Java class which extends org.apache.hadoop.hive.metastore.MetaStoreInitListener."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.PRE_EVENT_LISTENERS      */
+annotation|@
+name|Deprecated
 name|METASTORE_PRE_EVENT_LISTENERS
 argument_list|(
 literal|"hive.metastore.pre.event.listeners"
@@ -4350,6 +4515,9 @@ argument_list|,
 literal|"List of comma separated listeners for metastore events."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EVENT_LISTENERS      */
+annotation|@
+name|Deprecated
 name|METASTORE_EVENT_LISTENERS
 argument_list|(
 literal|"hive.metastore.event.listeners"
@@ -4363,6 +4531,9 @@ operator|+
 literal|"Alternatively, configure hive.metastore.transactional.event.listeners to ensure both are invoked in same JDO transaction."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TRANSACTIONAL_EVENT_LISTENERS      */
+annotation|@
+name|Deprecated
 name|METASTORE_TRANSACTIONAL_EVENT_LISTENERS
 argument_list|(
 literal|"hive.metastore.transactional.event.listeners"
@@ -4374,6 +4545,9 @@ operator|+
 literal|" interface. Both the metastore event and corresponding listener method will be invoked in the same JDO transaction."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES      */
+annotation|@
+name|Deprecated
 name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
 argument_list|(
 literal|"hive.notification.sequence.lock.max.retries"
@@ -4385,6 +4559,9 @@ operator|+
 literal|"in the NOTIFICATION_LOG table."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL      */
+annotation|@
+name|Deprecated
 name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
 argument_list|(
 literal|"hive.notification.sequence.lock.retry.sleep.interval"
@@ -4407,6 +4584,9 @@ name|name
 argument_list|()
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EVENT_DB_LISTENER_TTL      */
+annotation|@
+name|Deprecated
 name|METASTORE_EVENT_DB_LISTENER_TTL
 argument_list|(
 literal|"hive.metastore.event.db.listener.timetolive"
@@ -4424,6 +4604,9 @@ argument_list|,
 literal|"time after which events will be removed from the database listener queue"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EVENT_DB_NOTIFICATION_API_AUTH      */
+annotation|@
+name|Deprecated
 name|METASTORE_EVENT_DB_NOTIFICATION_API_AUTH
 argument_list|(
 literal|"hive.metastore.event.db.notification.api.auth"
@@ -4435,6 +4618,9 @@ operator|+
 literal|"If set to true, then only the superusers in proxy settings have the permission"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AUTHORIZATION_STORAGE_AUTH_CHECKS      */
+annotation|@
+name|Deprecated
 name|METASTORE_AUTHORIZATION_STORAGE_AUTH_CHECKS
 argument_list|(
 literal|"hive.metastore.authorization.storage.checks"
@@ -4465,6 +4651,9 @@ operator|+
 literal|"The flag is set to false by default to maintain backward compatibility."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EVENT_CLEAN_FREQ      */
+annotation|@
+name|Deprecated
 name|METASTORE_EVENT_CLEAN_FREQ
 argument_list|(
 literal|"hive.metastore.event.clean.freq"
@@ -4482,6 +4671,9 @@ argument_list|,
 literal|"Frequency at which timer task runs to purge expired events in metastore."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EVENT_EXPIRY_DURATION      */
+annotation|@
+name|Deprecated
 name|METASTORE_EVENT_EXPIRY_DURATION
 argument_list|(
 literal|"hive.metastore.event.expiry.duration"
@@ -4499,6 +4691,9 @@ argument_list|,
 literal|"Duration after which events expire from events table"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EVENT_MESSAGE_FACTORY      */
+annotation|@
+name|Deprecated
 name|METASTORE_EVENT_MESSAGE_FACTORY
 argument_list|(
 literal|"hive.metastore.event.message.factory"
@@ -4508,6 +4703,9 @@ argument_list|,
 literal|"Factory class for making encoding and decoding messages in the events generated."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EXECUTE_SET_UGI      */
+annotation|@
+name|Deprecated
 name|METASTORE_EXECUTE_SET_UGI
 argument_list|(
 literal|"hive.metastore.execute.setugi"
@@ -4523,6 +4721,9 @@ operator|+
 literal|"If client sets its to true and server sets it to false, client setting will be ignored."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.PARTITION_NAME_WHITELIST_PATTERN      */
+annotation|@
+name|Deprecated
 name|METASTORE_PARTITION_NAME_WHITELIST_PATTERN
 argument_list|(
 literal|"hive.metastore.partition.name.whitelist.pattern"
@@ -4532,6 +4733,9 @@ argument_list|,
 literal|"Partition names will be checked against this regex pattern and rejected if not matched."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.INTEGER_JDO_PUSHDOWN      */
+annotation|@
+name|Deprecated
 name|METASTORE_INTEGER_JDO_PUSHDOWN
 argument_list|(
 literal|"hive.metastore.integral.jdo.pushdown"
@@ -4549,6 +4753,9 @@ operator|+
 literal|"is also irrelevant."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TRY_DIRECT_SQL      */
+annotation|@
+name|Deprecated
 name|METASTORE_TRY_DIRECT_SQL
 argument_list|(
 literal|"hive.metastore.try.direct.sql"
@@ -4572,6 +4779,9 @@ operator|+
 literal|"try-and-fall-back cost."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DIRECT_SQL_PARTITION_BATCH_SIZE      */
+annotation|@
+name|Deprecated
 name|METASTORE_DIRECT_SQL_PARTITION_BATCH_SIZE
 argument_list|(
 literal|"hive.metastore.direct.sql.batch.size"
@@ -4587,6 +4797,9 @@ operator|+
 literal|"may impede performance. -1 means no batching, 0 means automatic batching."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TRY_DIRECT_SQL_DDL      */
+annotation|@
+name|Deprecated
 name|METASTORE_TRY_DIRECT_SQL_DDL
 argument_list|(
 literal|"hive.metastore.try.direct.sql.ddl"
@@ -4604,6 +4817,9 @@ operator|+
 literal|"should disable the usage of direct SQL inside transactions if that happens in your case."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DIRECT_SQL_MAX_QUERY_LENGTH      */
+annotation|@
+name|Deprecated
 name|METASTORE_DIRECT_SQL_MAX_QUERY_LENGTH
 argument_list|(
 literal|"hive.direct.sql.max.query.length"
@@ -4615,6 +4831,9 @@ operator|+
 literal|" size of a query string (in KB)."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DIRECT_SQL_MAX_ELEMENTS_IN_CLAUSE      */
+annotation|@
+name|Deprecated
 name|METASTORE_DIRECT_SQL_MAX_ELEMENTS_IN_CLAUSE
 argument_list|(
 literal|"hive.direct.sql.max.elements.in.clause"
@@ -4626,6 +4845,9 @@ operator|+
 literal|" multiple OR separated IN clauses."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DIRECT_SQL_MAX_ELEMENTS_VALUES_CLAUSE      */
+annotation|@
+name|Deprecated
 name|METASTORE_DIRECT_SQL_MAX_ELEMENTS_VALUES_CLAUSE
 argument_list|(
 literal|"hive.direct.sql.max.elements.values.clause"
@@ -4635,6 +4857,9 @@ argument_list|,
 literal|"The maximum number of values in a VALUES clause for INSERT statement."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS      */
+annotation|@
+name|Deprecated
 name|METASTORE_ORM_RETRIEVE_MAPNULLS_AS_EMPTY_STRINGS
 argument_list|(
 literal|"hive.metastore.orm.retrieveMapNullsAsEmptyStrings"
@@ -4650,6 +4875,9 @@ operator|+
 literal|"pruning is the correct behaviour"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES      */
+annotation|@
+name|Deprecated
 name|METASTORE_DISALLOW_INCOMPATIBLE_COL_TYPE_CHANGES
 argument_list|(
 literal|"hive.metastore.disallow.incompatible.col.type.changes"
@@ -4681,6 +4909,9 @@ operator|+
 literal|"See HIVE-4409 for more details."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.LIMIT_PARTITION_REQUEST      */
+annotation|@
+name|Deprecated
 name|METASTORE_LIMIT_PARTITION_REQUEST
 argument_list|(
 literal|"hive.metastore.limit.partition.request"
@@ -4711,6 +4942,9 @@ argument_list|,
 literal|"Table Properties to copy over when executing a Create Table Like."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.RAW_STORE_IMPL      */
+annotation|@
+name|Deprecated
 name|METASTORE_RAW_STORE_IMPL
 argument_list|(
 literal|"hive.metastore.rawstore.impl"
@@ -4722,64 +4956,9 @@ operator|+
 literal|"This class is used to store and retrieval of raw metadata objects such as table, database"
 argument_list|)
 block|,
-name|METASTORE_CACHED_RAW_STORE_IMPL
-argument_list|(
-literal|"hive.metastore.cached.rawstore.impl"
-argument_list|,
-literal|"org.apache.hadoop.hive.metastore.ObjectStore"
-argument_list|,
-literal|"Name of the wrapped RawStore class"
-argument_list|)
-block|,
-name|METASTORE_CACHED_RAW_STORE_CACHE_UPDATE_FREQUENCY
-argument_list|(
-literal|"hive.metastore.cached.rawstore.cache.update.frequency"
-argument_list|,
-literal|"60"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"The time after which metastore cache is updated from metastore DB."
-argument_list|)
-block|,
-name|METASTORE_CACHED_RAW_STORE_CACHED_OBJECTS_WHITELIST
-argument_list|(
-literal|"hive.metastore.cached.rawstore.cached.object.whitelist"
-argument_list|,
-literal|".*"
-argument_list|,
-literal|"Comma separated list of regular expressions \n "
-operator|+
-literal|"to select the tables (and its partitions, stats etc) that will be cached by CachedStore. \n"
-operator|+
-literal|"This can be used in conjunction with hive.metastore.cached.rawstore.cached.object.blacklist. \n"
-operator|+
-literal|"Example: .*, db1.*, db2\\.tbl.*. The last item can potentially override patterns specified before."
-argument_list|)
-block|,
-name|METASTORE_CACHED_RAW_STORE_CACHED_OBJECTS_BLACKLIST
-argument_list|(
-literal|"hive.metastore.cached.rawstore.cached.object.blacklist"
-argument_list|,
-literal|""
-argument_list|,
-literal|"Comma separated list of regular expressions \n "
-operator|+
-literal|"to filter out the tables (and its partitions, stats etc) that will be cached by CachedStore. \n"
-operator|+
-literal|"This can be used in conjunction with hive.metastore.cached.rawstore.cached.object.whitelist. \n"
-operator|+
-literal|"Example: db2.*, db3\\.tbl1, db3\\..*. The last item can potentially override patterns specified before. \n"
-operator|+
-literal|"The blacklist also overrides the whitelist."
-argument_list|)
-block|,
+comment|/**      * @deprecated Use MetastoreConf.TXN_STORE_IMPL      */
+annotation|@
+name|Deprecated
 name|METASTORE_TXN_STORE_IMPL
 argument_list|(
 literal|"hive.metastore.txn.store.impl"
@@ -4791,6 +4970,9 @@ operator|+
 literal|"class is used to store and retrieve transactions and locks"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CONNECTION_DRIVER      */
+annotation|@
+name|Deprecated
 name|METASTORE_CONNECTION_DRIVER
 argument_list|(
 literal|"javax.jdo.option.ConnectionDriverName"
@@ -4800,6 +4982,9 @@ argument_list|,
 literal|"Driver class name for a JDBC metastore"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MANAGER_FACTORY_CLASS      */
+annotation|@
+name|Deprecated
 name|METASTORE_MANAGER_FACTORY_CLASS
 argument_list|(
 literal|"javax.jdo.PersistenceManagerFactoryClass"
@@ -4809,6 +4994,9 @@ argument_list|,
 literal|"class implementing the jdo persistence"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.EXPRESSION_PROXY_CLASS      */
+annotation|@
+name|Deprecated
 name|METASTORE_EXPRESSION_PROXY_CLASS
 argument_list|(
 literal|"hive.metastore.expression.proxy"
@@ -4818,6 +5006,9 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.DETACH_ALL_ON_COMMIT      */
+annotation|@
+name|Deprecated
 name|METASTORE_DETACH_ALL_ON_COMMIT
 argument_list|(
 literal|"javax.jdo.option.DetachAllOnCommit"
@@ -4827,6 +5018,9 @@ argument_list|,
 literal|"Detaches all objects from session so that they can be used after transaction is committed"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.NON_TRANSACTIONAL_READ      */
+annotation|@
+name|Deprecated
 name|METASTORE_NON_TRANSACTIONAL_READ
 argument_list|(
 literal|"javax.jdo.option.NonTransactionalRead"
@@ -4836,6 +5030,9 @@ argument_list|,
 literal|"Reads outside of transactions"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.CONNECTION_USER_NAME      */
+annotation|@
+name|Deprecated
 name|METASTORE_CONNECTION_USER_NAME
 argument_list|(
 literal|"javax.jdo.option.ConnectionUserName"
@@ -4845,6 +5042,9 @@ argument_list|,
 literal|"Username to use against metastore database"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.END_FUNCTION_LISTENERS      */
+annotation|@
+name|Deprecated
 name|METASTORE_END_FUNCTION_LISTENERS
 argument_list|(
 literal|"hive.metastore.end.function.listeners"
@@ -4854,6 +5054,9 @@ argument_list|,
 literal|"List of comma separated listeners for the end of metastore functions."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.PART_INHERIT_TBL_PROPS      */
+annotation|@
+name|Deprecated
 name|METASTORE_PART_INHERIT_TBL_PROPS
 argument_list|(
 literal|"hive.metastore.partition.inherit.table.properties"
@@ -4865,6 +5068,9 @@ operator|+
 literal|"* implies all the keys will get inherited."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.FILTER_HOOK      */
+annotation|@
+name|Deprecated
 name|METASTORE_FILTER_HOOK
 argument_list|(
 literal|"hive.metastore.filter.hook"
@@ -4898,6 +5104,9 @@ operator|+
 literal|"or drops partitions iteratively"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_ENABLED      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_ENABLED
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.enabled"
@@ -4907,6 +5116,9 @@ argument_list|,
 literal|"Whether aggregate stats caching is enabled or not."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_SIZE      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_SIZE
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.size"
@@ -4916,6 +5128,9 @@ argument_list|,
 literal|"Maximum number of aggregate stats nodes that we will place in the metastore aggregate stats cache."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_MAX_PARTITIONS      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_MAX_PARTITIONS
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.max.partitions"
@@ -4925,6 +5140,9 @@ argument_list|,
 literal|"Maximum number of partitions that are aggregated per cache node."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_FPP      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_FPP
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.fpp"
@@ -4937,6 +5155,9 @@ argument_list|,
 literal|"Maximum false positive probability for the Bloom Filter used in each aggregate stats cache node (default 1%)."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_MAX_VARIANCE      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_MAX_VARIANCE
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.max.variance"
@@ -4949,6 +5170,9 @@ argument_list|,
 literal|"Maximum tolerable variance in number of partitions between a cached node and our request (default 1%)."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_TTL      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_TTL
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.ttl"
@@ -4966,6 +5190,9 @@ argument_list|,
 literal|"Number of seconds for a cached node to be active in the cache before they become stale."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_MAX_WRITER_WAIT      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_MAX_WRITER_WAIT
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.max.writer.wait"
@@ -4983,6 +5210,9 @@ argument_list|,
 literal|"Number of milliseconds a writer will wait to acquire the writelock before giving up."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_MAX_READER_WAIT      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_MAX_READER_WAIT
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.max.reader.wait"
@@ -5000,6 +5230,9 @@ argument_list|,
 literal|"Number of milliseconds a reader will wait to acquire the readlock before giving up."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_MAX_FULL      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_MAX_FULL
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.max.full"
@@ -5012,6 +5245,9 @@ argument_list|,
 literal|"Maximum cache full % after which the cache cleaner thread kicks in."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.AGGREGATE_STATS_CACHE_CLEAN_UNTIL      */
+annotation|@
+name|Deprecated
 name|METASTORE_AGGREGATE_STATS_CACHE_CLEAN_UNTIL
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.clean.until"
@@ -5024,6 +5260,9 @@ argument_list|,
 literal|"The cleaner thread cleans until cache reaches this % full size."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.METRICS_ENABLED      */
+annotation|@
+name|Deprecated
 name|METASTORE_METRICS
 argument_list|(
 literal|"hive.metastore.metrics.enabled"
@@ -5033,6 +5272,9 @@ argument_list|,
 literal|"Enable metrics on the metastore."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.INIT_METADATA_COUNT_ENABLED      */
+annotation|@
+name|Deprecated
 name|METASTORE_INIT_METADATA_COUNT_ENABLED
 argument_list|(
 literal|"hive.metastore.initial.metadata.count.enabled"
@@ -5043,6 +5285,9 @@ literal|"Enable a metadata count at metastore startup for metrics."
 argument_list|)
 block|,
 comment|// Metastore SSL settings
+comment|/**      * @deprecated Use MetastoreConf.USE_SSL      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_USE_SSL
 argument_list|(
 literal|"hive.metastore.use.SSL"
@@ -5052,6 +5297,9 @@ argument_list|,
 literal|"Set this to true for using SSL encryption in HMS server."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SSL_KEYSTORE_PATH      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_SSL_KEYSTORE_PATH
 argument_list|(
 literal|"hive.metastore.keystore.path"
@@ -5061,6 +5309,9 @@ argument_list|,
 literal|"Metastore SSL certificate keystore location."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SSL_KEYSTORE_PASSWORD      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_SSL_KEYSTORE_PASSWORD
 argument_list|(
 literal|"hive.metastore.keystore.password"
@@ -5070,6 +5321,9 @@ argument_list|,
 literal|"Metastore SSL certificate keystore password."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SSL_TRUSTSTORE_PATH      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_SSL_TRUSTSTORE_PATH
 argument_list|(
 literal|"hive.metastore.truststore.path"
@@ -5079,6 +5333,9 @@ argument_list|,
 literal|"Metastore SSL certificate truststore location."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SSL_TRUSTSTORE_PASSWORD      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_SSL_TRUSTSTORE_PASSWORD
 argument_list|(
 literal|"hive.metastore.truststore.password"
@@ -5090,6 +5347,9 @@ argument_list|)
 block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
+comment|/**      * @deprecated Use MetastoreConf.METADATA_EXPORT_LOCATION      */
+annotation|@
+name|Deprecated
 name|METADATA_EXPORT_LOCATION
 argument_list|(
 literal|"hive.metadata.export.location"
@@ -5103,6 +5363,9 @@ operator|+
 literal|"metadata being exported to the current user's home directory on HDFS."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MOVE_EXPORTED_METADATA_TO_TRASH      */
+annotation|@
+name|Deprecated
 name|MOVE_EXPORTED_METADATA_TO_TRASH
 argument_list|(
 literal|"hive.metadata.move.exported.metadata.to.trash"
@@ -5158,6 +5421,9 @@ operator|+
 literal|"If the value of this property is -1, then Hive will use the auto-detected terminal width."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.FS_HANDLER_CLS      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_FS_HANDLER_CLS
 argument_list|(
 literal|"hive.metastore.fs.handler.class"
@@ -6241,6 +6507,9 @@ argument_list|,
 literal|"The default SerDe Hive will use for storage formats that do not specify a SerDe."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SERDES_USING_METASTORE_FOR_SCHEMA      */
+annotation|@
+name|Deprecated
 name|SERDESUSINGMETASTOREFORSCHEMA
 argument_list|(
 literal|"hive.serdes.using.metastore.for.schema"
@@ -8033,6 +8302,9 @@ literal|"after the job has finished. Supported values are fs (filesystem) and cu
 argument_list|)
 block|,
 comment|// StatsSetupConst.StatDB
+comment|/**      * @deprecated Use MetastoreConf.STATS_DEFAULT_PUBLISHER      */
+annotation|@
+name|Deprecated
 name|HIVE_STATS_DEFAULT_PUBLISHER
 argument_list|(
 literal|"hive.stats.default.publisher"
@@ -8042,6 +8314,9 @@ argument_list|,
 literal|"The Java class (implementing the StatsPublisher interface) that is used by default if hive.stats.dbclass is custom type."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.STATS_DEFAULT_AGGRETATOR      */
+annotation|@
+name|Deprecated
 name|HIVE_STATS_DEFAULT_AGGREGATOR
 argument_list|(
 literal|"hive.stats.default.aggregator"
@@ -8139,6 +8414,9 @@ argument_list|,
 literal|"hll and fm stand for HyperLogLog and FM-sketch, respectively for computing ndv."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.STATS_FETCH_BITVECTOR      */
+annotation|@
+name|Deprecated
 name|HIVE_STATS_FETCH_BITVECTOR
 argument_list|(
 literal|"hive.stats.fetch.bitvector"
@@ -8164,6 +8442,9 @@ operator|+
 literal|"A lower value for error indicates higher accuracy and a higher compute cost."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.STATS_NDV_TUNER      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_STATS_NDV_TUNER
 argument_list|(
 literal|"hive.metastore.stats.ndv.tuner"
@@ -8180,6 +8461,9 @@ operator|+
 literal|"Its value should be between 0.0 (i.e., choose lower bound) and 1.0 (i.e., choose higher bound)"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.STATS_NDV_DENSITY_FUNCTION      */
+annotation|@
+name|Deprecated
 name|HIVE_METASTORE_STATS_NDV_DENSITY_FUNCTION
 argument_list|(
 literal|"hive.metastore.stats.ndv.densityfunction"
@@ -8593,6 +8877,9 @@ operator|+
 literal|"DROP TABLE etc. when the table is being written to"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TXN_TIMEOUT      */
+annotation|@
+name|Deprecated
 name|HIVE_TXN_TIMEOUT
 argument_list|(
 literal|"hive.txn.timeout"
@@ -8610,6 +8897,9 @@ argument_list|,
 literal|"time after which transactions are declared aborted if the client has not sent a heartbeat."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TXN_HEARTBEAT_THREADPOOL_SIZE      */
+annotation|@
+name|Deprecated
 name|HIVE_TXN_HEARTBEAT_THREADPOOL_SIZE
 argument_list|(
 literal|"hive.txn.heartbeat.threadpool.size"
@@ -8651,6 +8941,9 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MAX_OPEN_TXNS      */
+annotation|@
+name|Deprecated
 name|HIVE_MAX_OPEN_TXNS
 argument_list|(
 literal|"hive.max.open.txns"
@@ -8664,6 +8957,9 @@ operator|+
 literal|"rejected, until this number goes below the limit."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COUNT_OPEN_TXNS_INTERVAL      */
+annotation|@
+name|Deprecated
 name|HIVE_COUNT_OPEN_TXNS_INTERVAL
 argument_list|(
 literal|"hive.count.open.txns.interval"
@@ -8681,6 +8977,9 @@ argument_list|,
 literal|"Time in seconds between checks to count open transactions."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TXN_MAX_OPEN_BATCH      */
+annotation|@
+name|Deprecated
 name|HIVE_TXN_MAX_OPEN_BATCH
 argument_list|(
 literal|"hive.txn.max.open.batch"
@@ -8702,6 +9001,9 @@ operator|+
 literal|"read performance."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TXN_RETRYABLE_SQLEX_REGEX      */
+annotation|@
+name|Deprecated
 name|HIVE_TXN_RETRYABLE_SQLEX_REGEX
 argument_list|(
 literal|"hive.txn.retryable.sqlex.regex"
@@ -8721,6 +9023,9 @@ operator|+
 literal|"ex.getMessage() + \" (SQLState=\" + ex.getSQLState() + \", ErrorCode=\" + ex.getErrorCode() + \")\""
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_INITIATOR_ON      */
+annotation|@
+name|Deprecated
 name|HIVE_COMPACTOR_INITIATOR_ON
 argument_list|(
 literal|"hive.compactor.initiator.on"
@@ -8736,6 +9041,9 @@ operator|+
 literal|"transactions, see hive.txn.manager."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_WORKER_THREADS      */
+annotation|@
+name|Deprecated
 name|HIVE_COMPACTOR_WORKER_THREADS
 argument_list|(
 literal|"hive.compactor.worker.threads"
@@ -8855,6 +9163,9 @@ operator|+
 literal|"a major compaction."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_INITIATOR_FAILED_THRESHOLD      */
+annotation|@
+name|Deprecated
 name|COMPACTOR_INITIATOR_FAILED_THRESHOLD
 argument_list|(
 literal|"hive.compactor.initiator.failed.compacts.threshold"
@@ -8904,6 +9215,9 @@ operator|+
 literal|"Compaction jobs will be submitted.  Set to empty string to let Hadoop choose the queue."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_HISTORY_RETENTION_SUCCEEDED      */
+annotation|@
+name|Deprecated
 name|COMPACTOR_HISTORY_RETENTION_SUCCEEDED
 argument_list|(
 literal|"hive.compactor.history.retention.succeeded"
@@ -8923,6 +9237,9 @@ operator|+
 literal|"retained in compaction history for a given table/partition."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_HISTORY_RETENTION_FAILED      */
+annotation|@
+name|Deprecated
 name|COMPACTOR_HISTORY_RETENTION_FAILED
 argument_list|(
 literal|"hive.compactor.history.retention.failed"
@@ -8942,6 +9259,9 @@ operator|+
 literal|"retained in compaction history for a given table/partition."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_HISTORY_RETENTION_ATTEMPTED      */
+annotation|@
+name|Deprecated
 name|COMPACTOR_HISTORY_RETENTION_ATTEMPTED
 argument_list|(
 literal|"hive.compactor.history.retention.attempted"
@@ -8961,6 +9281,9 @@ operator|+
 literal|"retained in compaction history for a given table/partition."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_HISTORY_REAPER_INTERVAL      */
+annotation|@
+name|Deprecated
 name|COMPACTOR_HISTORY_REAPER_INTERVAL
 argument_list|(
 literal|"hive.compactor.history.reaper.interval"
@@ -8978,6 +9301,9 @@ argument_list|,
 literal|"Determines how often compaction history reaper runs"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TIMEDOUT_TXN_REAPER_START      */
+annotation|@
+name|Deprecated
 name|HIVE_TIMEDOUT_TXN_REAPER_START
 argument_list|(
 literal|"hive.timedout.txn.reaper.start"
@@ -8995,6 +9321,9 @@ argument_list|,
 literal|"Time delay of 1st reaper run after metastore start"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.TIMEDOUT_TXN_REAPER_INTERVAL      */
+annotation|@
+name|Deprecated
 name|HIVE_TIMEDOUT_TXN_REAPER_INTERVAL
 argument_list|(
 literal|"hive.timedout.txn.reaper.interval"
@@ -9012,6 +9341,9 @@ argument_list|,
 literal|"Time interval describing how often the reaper runs"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.WRITE_SET_REAPER_INTERVAL      */
+annotation|@
+name|Deprecated
 name|WRITE_SET_REAPER_INTERVAL
 argument_list|(
 literal|"hive.writeset.reaper.interval"
@@ -12588,6 +12920,9 @@ operator|+
 literal|"  column: implies column names can contain any character."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.SUPPORT_SPECIAL_CHARACTERS_IN_TABLE_NAMES      */
+annotation|@
+name|Deprecated
 name|HIVE_SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES
 argument_list|(
 literal|"hive.support.special.characters.tablename"
@@ -20047,6 +20382,41 @@ operator|.
 name|METASTOREURIS
 argument_list|)
 decl_stmt|;
+comment|// This is hackery, but having hive-common depend on standalone-metastore is really bad
+comment|// because it will pull all of the metastore code into every module.  We need to check that
+comment|// we aren't using the standalone metastore.  If we are, we should treat it the same as a
+comment|// remote metastore situation.
+if|if
+condition|(
+name|msUri
+operator|==
+literal|null
+operator|||
+name|msUri
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|msUri
+operator|=
+name|this
+operator|.
+name|get
+argument_list|(
+literal|"metastore.thrift.uris"
+argument_list|)
+expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Found metastore URI of "
+operator|+
+name|msUri
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|HiveConfUtil

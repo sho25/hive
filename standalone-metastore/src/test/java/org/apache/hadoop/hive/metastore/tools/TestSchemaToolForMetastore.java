@@ -425,7 +425,7 @@ name|setProperty
 argument_list|(
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 operator|.
 name|toString
 argument_list|()

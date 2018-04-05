@@ -2483,7 +2483,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERINTERVAL
+name|HMS_HANDLER_INTERVAL
 argument_list|,
 name|TimeUnit
 operator|.
@@ -2500,7 +2500,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERATTEMPTS
+name|HMS_HANDLER_ATTEMPTS
 argument_list|)
 expr_stmt|;
 name|deadlockRetryInterval
@@ -23511,7 +23511,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|)
 expr_stmt|;
 block|}

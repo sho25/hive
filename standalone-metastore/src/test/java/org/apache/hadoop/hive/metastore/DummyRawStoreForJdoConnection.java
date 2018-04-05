@@ -1114,8 +1114,6 @@ operator|.
 name|utils
 operator|.
 name|MetaStoreUtils
-operator|.
-name|ColStatsObjWithSourceInfo
 import|;
 end_import
 
@@ -1193,7 +1191,7 @@ name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -4951,6 +4949,8 @@ name|Override
 specifier|public
 name|List
 argument_list|<
+name|MetaStoreUtils
+operator|.
 name|ColStatsObjWithSourceInfo
 argument_list|>
 name|getPartitionColStatsForDatabase

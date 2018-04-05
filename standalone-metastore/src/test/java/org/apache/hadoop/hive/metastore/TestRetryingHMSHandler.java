@@ -312,7 +312,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERATTEMPTS
+name|HMS_HANDLER_ATTEMPTS
 argument_list|,
 literal|2
 argument_list|)
@@ -325,7 +325,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERINTERVAL
+name|HMS_HANDLER_INTERVAL
 argument_list|,
 literal|0
 argument_list|,
@@ -342,7 +342,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERFORCERELOADCONF
+name|HMS_HANDLER_FORCE_RELOAD_CONF
 argument_list|,
 literal|false
 argument_list|)

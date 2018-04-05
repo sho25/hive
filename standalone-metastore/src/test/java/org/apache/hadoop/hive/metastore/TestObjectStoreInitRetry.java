@@ -467,7 +467,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERATTEMPTS
+name|HMS_HANDLER_ATTEMPTS
 argument_list|,
 literal|4
 argument_list|)
@@ -480,7 +480,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERINTERVAL
+name|HMS_HANDLER_INTERVAL
 argument_list|,
 literal|1
 argument_list|,
@@ -531,7 +531,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|)
 decl_stmt|;
 name|jdbcUrl
@@ -553,7 +553,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|,
 name|jdbcUrl
 argument_list|)

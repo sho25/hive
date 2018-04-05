@@ -152,7 +152,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLHOOK
+name|CONNECT_URL_HOOK
 argument_list|,
 name|DummyJdoConnectionUrlHook
 operator|.
@@ -170,7 +170,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|,
 name|DummyJdoConnectionUrlHook
 operator|.

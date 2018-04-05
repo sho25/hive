@@ -771,7 +771,7 @@ name|origConf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERFORCERELOADCONF
+name|HMS_HANDLER_FORCE_RELOAD_CONF
 argument_list|)
 decl_stmt|;
 name|long
@@ -785,7 +785,7 @@ name|origConf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERINTERVAL
+name|HMS_HANDLER_INTERVAL
 argument_list|,
 name|TimeUnit
 operator|.
@@ -803,7 +803,7 @@ name|origConf
 argument_list|,
 name|ConfVars
 operator|.
-name|HMSHANDLERATTEMPTS
+name|HMS_HANDLER_ATTEMPTS
 argument_list|)
 decl_stmt|;
 name|long

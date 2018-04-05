@@ -326,7 +326,7 @@ name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 operator|.
 name|toString
 argument_list|()
@@ -343,7 +343,7 @@ name|activeConf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|,
 name|connectUrl
 argument_list|)
@@ -373,7 +373,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|,
 literal|""
 argument_list|)
@@ -406,7 +406,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|CONNECTURLHOOK
+name|CONNECT_URL_HOOK
 argument_list|,
 literal|""
 argument_list|)

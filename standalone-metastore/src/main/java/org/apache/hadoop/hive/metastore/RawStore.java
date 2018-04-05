@@ -3357,7 +3357,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**<<<<<<< HEAD =======    * Get column stats for all partitions of all tables in the database    * @param catName catalog name    * @param dbName database name    * @return List of column stats objects for all partitions of all tables in the database    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such database    */
+comment|/**    * Get column stats for all partitions of all tables in the database    * @param catName catalog name    * @param dbName database name    * @return List of column stats objects for all partitions of all tables in the database    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such database    */
 name|List
 argument_list|<
 name|ColStatsObjWithSourceInfo
@@ -3375,7 +3375,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**>>>>>>> e6d9605492... HIVE-18755 Modifications to the metastore for catalogs    * Get the next notification event.    * @param rqst Request containing information on the last processed notification.    * @return list of notifications, sorted by eventId    */
+comment|/**    * Get the next notification event.    * @param rqst Request containing information on the last processed notification.    * @return list of notifications, sorted by eventId    */
 name|NotificationEventResponse
 name|getNextNotification
 parameter_list|(

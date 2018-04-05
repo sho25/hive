@@ -381,7 +381,7 @@ name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|)
 argument_list|,
 name|same
@@ -490,7 +490,7 @@ name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|)
 argument_list|,
 name|same

@@ -27625,15 +27625,17 @@ name|ex
 argument_list|)
 expr_stmt|;
 comment|// Disable auth so the call should succeed
-name|hconf
+name|MetastoreConf
 operator|.
 name|setBoolVar
 argument_list|(
-name|HiveConf
+name|hconf
+argument_list|,
+name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_EVENT_DB_NOTIFICATION_API_AUTH
+name|EVENT_DB_NOTIFICATION_API_AUTH
 argument_list|,
 literal|false
 argument_list|)
@@ -27667,15 +27669,17 @@ block|}
 finally|finally
 block|{
 comment|// Restore the settings
-name|hconf
+name|MetastoreConf
 operator|.
 name|setBoolVar
 argument_list|(
-name|HiveConf
+name|hconf
+argument_list|,
+name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|METASTORE_EVENT_DB_NOTIFICATION_API_AUTH
+name|EVENT_DB_NOTIFICATION_API_AUTH
 argument_list|,
 literal|true
 argument_list|)

@@ -192,7 +192,7 @@ name|MetastoreConf
 operator|.
 name|ConfVars
 operator|.
-name|CONNECTURLKEY
+name|CONNECT_URL_KEY
 argument_list|,
 literal|"blah"
 argument_list|)
