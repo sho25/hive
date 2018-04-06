@@ -8137,6 +8137,21 @@ name|db
 init|=
 literal|null
 decl_stmt|;
+if|if
+condition|(
+name|name
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Database name cannot be null."
+argument_list|)
+throw|;
+block|}
 try|try
 block|{
 name|db
@@ -8576,6 +8591,21 @@ operator|.
 name|emptyMap
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|name
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Database name cannot be null."
+argument_list|)
+throw|;
+block|}
 try|try
 block|{
 name|ms

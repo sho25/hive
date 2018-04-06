@@ -411,20 +411,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|TTransportException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|junit
 operator|.
 name|After
@@ -1538,6 +1524,13 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testGetDatabaseNullName
@@ -1546,8 +1539,6 @@ throws|throws
 name|Exception
 block|{
 comment|// Missing database name in the query
-try|try
-block|{
 name|client
 operator|.
 name|getDatabase
@@ -1555,31 +1546,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side.
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected a NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
@@ -1607,6 +1573,13 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testDropDatabaseNullName
@@ -1615,8 +1588,6 @@ throws|throws
 name|Exception
 block|{
 comment|// Missing database in the query
-try|try
-block|{
 name|client
 operator|.
 name|dropDatabase
@@ -1624,34 +1595,16 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should be checked on server side
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testDropDatabaseDefaultDatabase
@@ -1660,8 +1613,6 @@ throws|throws
 name|Exception
 block|{
 comment|// Check if it is possible to drop default database
-try|try
-block|{
 name|client
 operator|.
 name|dropDatabase
@@ -1669,31 +1620,6 @@ argument_list|(
 name|DEFAULT_DATABASE
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should be checked on server side
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an MetaException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|MetaException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
