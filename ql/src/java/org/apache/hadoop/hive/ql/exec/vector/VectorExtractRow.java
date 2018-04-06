@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -2585,10 +2585,20 @@ index|]
 decl_stmt|;
 specifier|final
 name|Map
+argument_list|<
+name|Object
+argument_list|,
+name|Object
+argument_list|>
 name|map
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
+argument_list|<
+name|Object
+argument_list|,
+name|Object
+argument_list|>
 argument_list|()
 decl_stmt|;
 for|for
