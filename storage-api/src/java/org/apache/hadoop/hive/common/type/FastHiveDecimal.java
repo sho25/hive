@@ -1620,6 +1620,15 @@ name|void
 name|fastAbs
 parameter_list|()
 block|{
+if|if
+condition|(
+name|fastSignum
+operator|==
+literal|0
+condition|)
+block|{
+return|return;
+block|}
 name|fastSignum
 operator|=
 literal|1
