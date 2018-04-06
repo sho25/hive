@@ -1135,7 +1135,9 @@ specifier|private
 name|MessageFactory
 name|msgFactory
 decl_stmt|;
+comment|//cleaner is a static object, use static synchronized to make sure its thread-safe
 specifier|private
+specifier|static
 specifier|synchronized
 name|void
 name|init
@@ -1208,6 +1210,8 @@ name|conf
 operator|=
 name|config
 expr_stmt|;
+name|DbNotificationListener
+operator|.
 name|init
 argument_list|(
 name|conf
@@ -4725,7 +4729,7 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-literal|"CleanerThread"
+literal|"DB-Notification-Cleaner"
 argument_list|)
 expr_stmt|;
 name|this
@@ -4770,6 +4774,8 @@ condition|(
 literal|true
 condition|)
 block|{
+try|try
+block|{
 name|rs
 operator|.
 name|cleanNotificationEvents
@@ -4777,6 +4783,40 @@ argument_list|(
 name|ttl
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+comment|//catching exceptions here makes sure that the thread doesn't die in case of unexpected
+comment|//exceptions
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Exception received while cleaning notifications. More details can be found in debug mode"
+operator|+
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|ex
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|debug

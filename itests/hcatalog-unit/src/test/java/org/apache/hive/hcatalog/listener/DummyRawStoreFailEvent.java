@@ -5138,6 +5138,21 @@ name|int
 name|olderThan
 parameter_list|)
 block|{
+if|if
+condition|(
+operator|!
+name|shouldEventSucceed
+condition|)
+block|{
+comment|//throw exception to simulate an issue with cleaner thread
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Dummy exception while cleaning notifications"
+argument_list|)
+throw|;
+block|}
 name|objectStore
 operator|.
 name|cleanNotificationEvents
