@@ -621,9 +621,11 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"insert into CTLGS values(99, 'test_cat_1', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb')"
+block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100)"
 block|,
-literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test')"
+literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1')"
 block|}
 decl_stmt|;
 name|File
@@ -671,7 +673,7 @@ literal|"delete from DBS"
 block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100)"
 block|,
-literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test')"
+literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1')"
 block|}
 expr_stmt|;
 name|scriptFile
@@ -2895,9 +2897,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role')"
+literal|"insert into CTLGS values(3, 'test_cat_2', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb')"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role')"
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2')"
+block|,
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role', 'test_cat_2')"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
 block|,
@@ -2999,13 +3003,13 @@ literal|"delete from SDS"
 block|,
 literal|"delete from DBS"
 block|,
-literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role')"
+literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2')"
 block|,
-literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role')"
+literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role', 'test_cat_2')"
 block|,
-literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role')"
+literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role', 'test_cat_2')"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role')"
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role', 'test_cat_2')"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://yourhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
 block|,
@@ -3458,7 +3462,9 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role')"
+literal|"insert into CTLGS values(2, 'my_catalog', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb')"
+block|,
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8021/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'my_catalog')"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null)"
 block|,
