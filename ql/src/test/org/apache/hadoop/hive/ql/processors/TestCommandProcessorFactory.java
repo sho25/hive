@@ -298,19 +298,20 @@ control|)
 block|{
 name|String
 name|cmd
+index|[]
 init|=
 name|command
 operator|.
 name|name
 argument_list|()
-decl_stmt|;
-name|String
-name|cmdInLowerCase
-init|=
-name|cmd
 operator|.
 name|toLowerCase
 argument_list|()
+operator|.
+name|split
+argument_list|(
+literal|"_"
+argument_list|)
 decl_stmt|;
 name|Assert
 operator|.
@@ -319,6 +320,9 @@ argument_list|(
 literal|"Cmd "
 operator|+
 name|cmd
+index|[
+literal|0
+index|]
 operator|+
 literal|" not return null"
 argument_list|,
@@ -326,12 +330,7 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommandInternal
 argument_list|(
-operator|new
-name|String
-index|[]
-block|{
 name|cmd
-block|}
 argument_list|,
 name|conf
 argument_list|,
@@ -356,12 +355,7 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommandInternal
 argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|cmdInLowerCase
-block|}
+name|cmd
 argument_list|,
 name|conf
 argument_list|,
@@ -402,11 +396,20 @@ control|)
 block|{
 name|String
 name|cmd
+index|[]
 init|=
 name|command
 operator|.
 name|name
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+operator|.
+name|split
+argument_list|(
+literal|"_"
+argument_list|)
 decl_stmt|;
 try|try
 block|{
@@ -414,12 +417,7 @@ name|CommandProcessorFactory
 operator|.
 name|getForHiveCommandInternal
 argument_list|(
-operator|new
-name|String
-index|[]
-block|{
 name|cmd
-block|}
 argument_list|,
 name|conf
 argument_list|,
@@ -436,6 +434,9 @@ argument_list|(
 literal|"Expected SQLException for "
 operator|+
 name|cmd
+index|[
+literal|0
+index|]
 operator|+
 literal|" as available commands is empty"
 argument_list|)
@@ -454,6 +455,9 @@ argument_list|(
 literal|"Insufficient privileges to execute "
 operator|+
 name|cmd
+index|[
+literal|0
+index|]
 argument_list|,
 name|e
 operator|.

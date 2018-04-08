@@ -336,6 +336,17 @@ name|LlapOomDebugDump
 name|dumper
 parameter_list|)
 block|{     }
+annotation|@
+name|Override
+specifier|public
+name|long
+name|purge
+parameter_list|()
+block|{
+return|return
+literal|0
+return|;
+block|}
 specifier|public
 name|void
 name|verifyEquals

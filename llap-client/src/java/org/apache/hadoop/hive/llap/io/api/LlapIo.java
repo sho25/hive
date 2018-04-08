@@ -101,6 +101,11 @@ name|String
 name|getMemoryInfo
 parameter_list|()
 function_decl|;
+comment|/**    * purge is best effort and will just release the buffers that are unlocked (refCount == 0). This is typically    * called when the system is idle.    */
+name|long
+name|purge
+parameter_list|()
+function_decl|;
 name|void
 name|initCacheOnlyInputFormat
 parameter_list|(

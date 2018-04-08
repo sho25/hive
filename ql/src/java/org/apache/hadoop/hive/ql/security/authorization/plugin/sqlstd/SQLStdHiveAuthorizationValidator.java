@@ -884,7 +884,10 @@ continue|continue;
 case|case
 name|COMMAND_PARAMS
 case|:
-comment|// operations that have objects of type COMMAND_PARAMS are authorized
+case|case
+name|SERVICE_NAME
+case|:
+comment|// operations that have objects of type COMMAND_PARAMS, FUNCTION are authorized
 comment|// solely on the type
 if|if
 condition|(
