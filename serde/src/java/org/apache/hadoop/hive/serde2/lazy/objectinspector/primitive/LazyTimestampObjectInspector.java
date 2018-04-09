@@ -27,19 +27,27 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
+name|util
 operator|.
-name|Timestamp
+name|List
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|List
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -57,7 +65,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -140,7 +148,7 @@ name|LazyTimestampObjectInspector
 extends|extends
 name|AbstractPrimitiveLazyObjectInspector
 argument_list|<
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|>
 implements|implements
 name|TimestampObjectInspector

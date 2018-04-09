@@ -356,7 +356,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  *  * GenericUDFTimestamp  *  * Example usage:  * ... CAST(<Timestamp string> as TIMESTAMP) ...  *  * Creates a TimestampWritable object using PrimitiveObjectInspectorConverter  *  */
+comment|/**  *  * GenericUDFTimestamp  *  * Example usage:  * ... CAST(<Timestamp string> as TIMESTAMP) ...  *  * Creates a TimestampWritableV2 object using PrimitiveObjectInspectorConverter  *  */
 end_comment
 
 begin_class

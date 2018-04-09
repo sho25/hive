@@ -23,9 +23,17 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Date
 import|;
@@ -33,9 +41,17 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Timestamp
 import|;
@@ -117,7 +133,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -135,7 +151,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -2292,7 +2308,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2331,7 +2347,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2370,7 +2386,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2409,7 +2425,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2448,7 +2464,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2487,7 +2503,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2526,7 +2542,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2565,7 +2581,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2605,7 +2621,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2644,7 +2660,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2683,7 +2699,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2722,7 +2738,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2761,7 +2777,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2800,7 +2816,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2839,7 +2855,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2878,7 +2894,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -2977,7 +2993,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3016,7 +3032,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3055,7 +3071,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3094,7 +3110,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3133,7 +3149,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3172,7 +3188,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3211,7 +3227,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3250,7 +3266,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3289,7 +3305,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3328,7 +3344,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3367,7 +3383,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3407,7 +3423,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3446,7 +3462,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3485,7 +3501,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3524,7 +3540,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3563,7 +3579,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3602,7 +3618,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3641,7 +3657,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3680,7 +3696,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3719,7 +3735,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3758,7 +3774,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3797,7 +3813,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3896,7 +3912,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3935,7 +3951,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -3974,7 +3990,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4013,7 +4029,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4052,7 +4068,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4091,7 +4107,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4130,7 +4146,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4169,7 +4185,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4209,7 +4225,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4248,7 +4264,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4287,7 +4303,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4326,7 +4342,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4365,7 +4381,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4404,7 +4420,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4443,7 +4459,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4482,7 +4498,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -4581,7 +4597,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4620,7 +4636,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4659,7 +4675,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4698,7 +4714,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4737,7 +4753,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4776,7 +4792,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4815,7 +4831,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4854,7 +4870,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4953,7 +4969,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -4992,7 +5008,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5031,7 +5047,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5070,7 +5086,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5109,7 +5125,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5148,7 +5164,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5187,7 +5203,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5226,7 +5242,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5265,7 +5281,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5304,7 +5320,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5343,7 +5359,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5442,7 +5458,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5481,7 +5497,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5520,7 +5536,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5559,7 +5575,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5598,7 +5614,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5637,7 +5653,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5676,7 +5692,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -5715,7 +5731,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.

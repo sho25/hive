@@ -18,32 +18,14 @@ package|;
 end_package
 
 begin_import
-import|import
-name|java
+import|import static
+name|org
 operator|.
-name|sql
+name|junit
 operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|Assert
 operator|.
-name|util
-operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|List
+name|assertEquals
 import|;
 end_import
 
@@ -55,7 +37,25 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -270,6 +270,19 @@ argument_list|(
 literal|"1970-01-01 00:00:00"
 argument_list|)
 argument_list|)
+block|,
+operator|new
+name|ValidTimestampCase
+argument_list|(
+literal|"1945-12-31T23:59:59"
+argument_list|,
+name|Timestamp
+operator|.
+name|valueOf
+argument_list|(
+literal|"1945-12-31 23:59:59"
+argument_list|)
+argument_list|)
 block|,     }
 decl_stmt|;
 name|String
@@ -277,8 +290,6 @@ index|[]
 name|invalidCases
 init|=
 block|{
-literal|"1945-12-31T23:59:59"
-block|,
 literal|"12345"
 block|,     }
 decl_stmt|;
@@ -443,7 +454,20 @@ argument_list|(
 literal|"1945-12-31 23:59:59.1234"
 argument_list|)
 argument_list|)
-block|,     }
+block|,
+operator|new
+name|ValidTimestampCase
+argument_list|(
+literal|"1945-12-31T23:59:59.12345"
+argument_list|,
+name|Timestamp
+operator|.
+name|valueOf
+argument_list|(
+literal|"1945-12-31 23:59:59.12345"
+argument_list|)
+argument_list|)
+block|}
 decl_stmt|;
 name|String
 index|[]
@@ -452,9 +476,6 @@ init|=
 block|{
 literal|"1945-12-31-23:59:59"
 block|,
-literal|"1945-12-31T23:59:59.12345"
-block|,
-comment|// our pattern didn't specify 5 decimal places
 literal|"12345"
 block|,     }
 decl_stmt|;
@@ -510,8 +531,9 @@ name|ValidTimestampCase
 argument_list|(
 literal|"0"
 argument_list|,
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|0
 argument_list|)
@@ -522,8 +544,9 @@ name|ValidTimestampCase
 argument_list|(
 literal|"-1000000"
 argument_list|,
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 operator|-
 literal|1000000
@@ -535,8 +558,9 @@ name|ValidTimestampCase
 argument_list|(
 literal|"1420509274123"
 argument_list|,
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|1420509274123L
 argument_list|)
@@ -547,8 +571,9 @@ name|ValidTimestampCase
 argument_list|(
 literal|"1420509274123.456789"
 argument_list|,
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|1420509274123L
 argument_list|)
@@ -567,6 +592,19 @@ argument_list|(
 literal|"1945-12-31 23:59:59"
 argument_list|)
 argument_list|)
+block|,
+operator|new
+name|ValidTimestampCase
+argument_list|(
+literal|"1945-12-31T23:59:59.12345"
+argument_list|,
+name|Timestamp
+operator|.
+name|valueOf
+argument_list|(
+literal|"1945-12-31 23:59:59.12345"
+argument_list|)
+argument_list|)
 block|,     }
 decl_stmt|;
 name|String
@@ -576,9 +614,6 @@ init|=
 block|{
 literal|"1945-12-31-23:59:59"
 block|,
-literal|"1945-12-31T23:59:59.12345"
-block|,
-comment|// our pattern didn't specify 5 decimal places
 literal|"1420509274123-"
 block|,     }
 decl_stmt|;
@@ -654,6 +689,19 @@ argument_list|(
 literal|"1970-05-06 00:00:07"
 argument_list|)
 argument_list|)
+block|,
+operator|new
+name|ValidTimestampCase
+argument_list|(
+literal|"1945-12-31T23:59:59"
+argument_list|,
+name|Timestamp
+operator|.
+name|valueOf
+argument_list|(
+literal|"1945-12-31 23:59:59"
+argument_list|)
+argument_list|)
 block|,     }
 decl_stmt|;
 name|String
@@ -661,8 +709,6 @@ index|[]
 name|invalidCases
 init|=
 block|{
-literal|"1945-12-31T23:59:59"
-block|,
 literal|"1945:12:31-"
 block|,
 literal|"12345"

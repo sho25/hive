@@ -151,7 +151,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|final
 name|int
 name|inputColumn

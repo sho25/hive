@@ -27,19 +27,17 @@ begin_import
 import|import
 name|org
 operator|.
-name|slf4j
+name|apache
 operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
+name|hadoop
 operator|.
-name|slf4j
+name|hive
 operator|.
-name|LoggerFactory
+name|common
+operator|.
+name|type
+operator|.
+name|Date
 import|;
 end_import
 
@@ -58,6 +56,24 @@ operator|.
 name|type
 operator|.
 name|HiveDecimal
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -119,7 +135,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -623,21 +639,21 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|slf4j
 operator|.
-name|Date
+name|Logger
 import|;
 end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|slf4j
 operator|.
-name|Timestamp
+name|LoggerFactory
 import|;
 end_import
 
@@ -3058,7 +3074,7 @@ name|recordConsumer
 operator|.
 name|addInteger
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(

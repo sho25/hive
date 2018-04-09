@@ -164,7 +164,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Writable for TimestampTZ. Copied from TimestampWritable.  * After we replace {@link java.sql.Timestamp} with {@link java.time.LocalDateTime} for Timestamp,  * it'll need a new Writable.  * All timestamp with time zone will be serialized as UTC retaining the instant.  * E.g. "2017-04-14 18:00:00 Asia/Shanghai" will be converted to  * "2017-04-14 10:00:00.0 Z".  */
+comment|/**  * Writable for TimestampTZ. Copied from TimestampWritableV2.  * After we replace {@link java.sql.Timestamp} with {@link java.time.LocalDateTime} for Timestamp,  * it'll need a new Writable.  * All timestamp with time zone will be serialized as UTC retaining the instant.  * E.g. "2017-04-14 18:00:00 Asia/Shanghai" will be converted to  * "2017-04-14 10:00:00.0 Z".  */
 end_comment
 
 begin_class
@@ -215,7 +215,7 @@ operator|<<
 literal|48
 decl_stmt|;
 comment|// only need flip the MSB?
-comment|/**    * The maximum number of bytes required for a TimestampWritable    */
+comment|/**    * The maximum number of bytes required for a TimestampWritableV2    */
 specifier|public
 specifier|static
 specifier|final

@@ -1083,6 +1083,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|TimeZone
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|TreeMap
 import|;
 end_import
@@ -1227,6 +1237,18 @@ literal|false
 argument_list|)
 expr_stmt|;
 comment|// Without this, 2020-20-20 becomes 2021-08-20.
+name|val
+operator|.
+name|setTimeZone
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
+argument_list|)
+expr_stmt|;
 return|return
 name|val
 return|;

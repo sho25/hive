@@ -101,7 +101,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -263,7 +263,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -2345,7 +2345,7 @@ operator|new
 name|WritableConstantDateObjectInspector
 argument_list|(
 operator|(
-name|DateWritable
+name|DateWritableV2
 operator|)
 name|value
 argument_list|)
@@ -2358,7 +2358,7 @@ operator|new
 name|WritableConstantTimestampObjectInspector
 argument_list|(
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|value
 argument_list|)

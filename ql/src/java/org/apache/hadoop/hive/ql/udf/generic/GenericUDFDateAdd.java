@@ -23,9 +23,17 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Date
 import|;
@@ -33,9 +41,17 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Timestamp
 import|;
@@ -249,7 +265,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -285,7 +301,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -526,9 +542,7 @@ name|dateVal
 init|=
 operator|new
 name|Date
-argument_list|(
-literal|0
-argument_list|)
+argument_list|()
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -552,11 +566,11 @@ name|inputType2
 decl_stmt|;
 specifier|private
 specifier|final
-name|DateWritable
+name|DateWritableV2
 name|output
 init|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|()
 decl_stmt|;
 specifier|protected
@@ -1024,7 +1038,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|// Convert the first param into a DateWritable value
+comment|// Convert the first param into a DateWritableV2 value
 switch|switch
 condition|(
 name|inputType1
@@ -1087,7 +1101,7 @@ name|ts
 init|=
 operator|(
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|dateConverter
 operator|.
@@ -1110,13 +1124,13 @@ name|output
 operator|.
 name|set
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|millisToDays
 argument_list|(
 name|ts
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 argument_list|)
@@ -1125,11 +1139,11 @@ break|break;
 case|case
 name|DATE
 case|:
-name|DateWritable
+name|DateWritableV2
 name|dw
 init|=
 operator|(
-name|DateWritable
+name|DateWritableV2
 operator|)
 name|dateConverter
 operator|.

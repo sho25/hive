@@ -561,7 +561,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -2511,15 +2511,23 @@ block|{
 comment|// try either yyyy-mm-dd, or integer representing days since epoch
 try|try
 block|{
-name|DateWritable
+name|DateWritableV2
 name|writableVal
 init|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Date
 operator|.

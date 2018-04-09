@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -77,11 +67,29 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -118,7 +126,7 @@ name|TimestampObjectInspector
 extends|extends
 name|PrimitiveObjectInspector
 block|{
-name|TimestampWritable
+name|TimestampWritableV2
 name|getPrimitiveWritableObject
 parameter_list|(
 name|Object
