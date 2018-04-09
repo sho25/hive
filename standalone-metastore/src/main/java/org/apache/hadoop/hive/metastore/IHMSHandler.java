@@ -309,6 +309,14 @@ argument_list|>
 name|getTransactionalListeners
 parameter_list|()
 function_decl|;
+comment|/**    * Get a list of all non-transactional listeners.    * @return list of non-transactional listeners.    */
+name|List
+argument_list|<
+name|MetaStoreEventListener
+argument_list|>
+name|getListeners
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
