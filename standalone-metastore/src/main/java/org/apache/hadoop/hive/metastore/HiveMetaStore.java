@@ -18921,7 +18921,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"The partition values must not be null."
+literal|"The partition values must not be null or empty."
 argument_list|)
 throw|;
 block|}

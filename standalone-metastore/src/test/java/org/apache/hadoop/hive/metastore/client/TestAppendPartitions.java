@@ -1551,7 +1551,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|InvalidObjectException
+name|MetaException
 operator|.
 name|class
 argument_list|)
@@ -1590,14 +1590,19 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAppendPartitionNullPartValues
 parameter_list|()
 throws|throws
 name|Exception
-block|{
-try|try
 block|{
 name|Table
 name|table
@@ -1627,24 +1632,6 @@ operator|)
 literal|null
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-decl||
-name|InvalidObjectException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown
-block|}
 block|}
 annotation|@
 name|Test
