@@ -10909,6 +10909,17 @@ operator|+
 literal|"over Tez without the pool of sessions."
 argument_list|)
 block|,
+name|HIVE_SERVER2_TEZ_QUEUE_ACCESS_CHECK
+argument_list|(
+literal|"hive.server2.tez.queue.access.check"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to check user access to explicitly specified YARN queues. "
+operator|+
+literal|"yarn.resourcemanager.webapp.address must be configured to use this."
+argument_list|)
+block|,
 name|HIVE_SERVER2_TEZ_SESSION_LIFETIME
 argument_list|(
 literal|"hive.server2.tez.session.lifetime"

@@ -1192,6 +1192,7 @@ operator|.
 name|getUserName
 argument_list|()
 argument_list|,
+comment|// TODO: should this use getUserFromAuthenticator?
 name|PrincipalType
 operator|.
 name|USER

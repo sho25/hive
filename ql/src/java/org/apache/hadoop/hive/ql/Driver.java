@@ -11509,6 +11509,7 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
+comment|// TODO: should this use getUserFromAuthenticator?
 name|hookContext
 operator|=
 operator|new

@@ -274,6 +274,7 @@ operator|==
 literal|null
 condition|)
 block|{
+comment|// TODO: getUserFromAuthenticator?
 name|String
 name|loggedInUserName
 init|=
