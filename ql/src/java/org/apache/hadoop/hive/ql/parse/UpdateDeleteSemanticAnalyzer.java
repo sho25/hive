@@ -5906,6 +5906,17 @@ literal|1
 argument_list|)
 expr_stmt|;
 comment|//strip '(' and ')'
+name|valuesClause
+operator|=
+name|SemanticAnalyzer
+operator|.
+name|replaceDefaultKeywordForMerge
+argument_list|(
+name|valuesClause
+argument_list|,
+name|targetTable
+argument_list|)
+expr_stmt|;
 name|rewrittenQueryStr
 operator|.
 name|append
