@@ -15553,6 +15553,21 @@ name|TException
 block|{
 if|if
 condition|(
+name|func
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Function cannot be null."
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
 operator|!
 name|func
 operator|.

@@ -371,33 +371,7 @@ name|apache
 operator|.
 name|thrift
 operator|.
-name|TApplicationException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
 name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|TTransportException
 import|;
 end_import
 
@@ -1387,6 +1361,37 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
+specifier|public
+name|void
+name|testCreateFunctionNullFunction
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|client
+operator|.
+name|createFunction
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testCreateFunctionNullFunctionName
@@ -1409,8 +1414,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|createFunction
@@ -1418,35 +1421,16 @@ argument_list|(
 name|function
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testCreateFunctionNullDatabaseName
@@ -1469,8 +1453,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|createFunction
@@ -1478,35 +1460,16 @@ argument_list|(
 name|function
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testCreateFunctionNullOwnerType
@@ -1536,8 +1499,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|createFunction
@@ -1545,35 +1506,16 @@ argument_list|(
 name|function
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testCreateFunctionNullFunctionType
@@ -1603,8 +1545,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|createFunction
@@ -1612,32 +1552,6 @@ argument_list|(
 name|function
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
@@ -1904,14 +1818,19 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testGetFunctionNullDatabase
 parameter_list|()
 throws|throws
 name|Exception
-block|{
-try|try
 block|{
 name|client
 operator|.
@@ -1922,32 +1841,6 @@ argument_list|,
 name|OTHER_DATABASE
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws MetaException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or MetaException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|MetaException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
@@ -2079,14 +1972,19 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testDropFunctionNullDatabase
 parameter_list|()
 throws|throws
 name|Exception
-block|{
-try|try
 block|{
 name|client
 operator|.
@@ -2097,43 +1995,22 @@ argument_list|,
 literal|"no_such_function"
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testDropFunctionNullFunctionName
 parameter_list|()
 throws|throws
 name|Exception
-block|{
-try|try
 block|{
 name|client
 operator|.
@@ -2144,32 +2021,6 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
@@ -3447,6 +3298,13 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullDatabase
@@ -3460,8 +3318,6 @@ init|=
 name|getNewFunction
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3473,35 +3329,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullFunctionName
@@ -3515,8 +3352,6 @@ init|=
 name|getNewFunction
 argument_list|()
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3528,35 +3363,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullFunction
@@ -3572,8 +3388,6 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3588,35 +3402,16 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionInvalidNameInNew
@@ -3637,8 +3432,6 @@ argument_list|(
 literal|"test_function_2;"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3650,35 +3443,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// InvalidObjectException, remote throws TApplicationException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an InvalidObjectException or TApplicationException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InvalidObjectException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TApplicationException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionEmptyNameInNew
@@ -3699,8 +3473,6 @@ argument_list|(
 literal|""
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3712,35 +3484,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// InvalidObjectException, remote throws TApplicationException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an InvalidObjectException or TApplicationException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InvalidObjectException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TApplicationException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullClassInNew
@@ -3761,8 +3514,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3774,35 +3525,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// InvalidObjectException, remote throws TApplicationException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an InvalidObjectException or TApplicationException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InvalidObjectException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TApplicationException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullFunctionNameInNew
@@ -3823,8 +3555,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3836,35 +3566,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullDatabaseNameInNew
@@ -3885,8 +3596,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3898,35 +3607,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullOwnerTypeInNew
@@ -3947,8 +3637,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -3960,35 +3648,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNullFunctionTypeInNew
@@ -4009,8 +3678,6 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -4022,35 +3689,16 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// NullPointerException, remote throws TTransportException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an NullPointerException or TTransportException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-block|}
-catch|catch
-parameter_list|(
-name|TTransportException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAlterFunctionNoSuchDatabaseInNew
@@ -4071,8 +3719,6 @@ argument_list|(
 literal|"no_such_database"
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|alterFunction
@@ -4084,42 +3730,6 @@ argument_list|,
 name|newFunction
 argument_list|)
 expr_stmt|;
-comment|// TODO: Should have a check on the server side. Embedded metastore throws
-comment|// InvalidObjectException, remote throws TApplicationException
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Expected an InvalidObjectException or TApplicationException to be thrown"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|InvalidObjectException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Embedded MetaStore
-name|exception
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|TApplicationException
-name|exception
-parameter_list|)
-block|{
-comment|// Expected exception - Remote MetaStore
-name|exception
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Test
