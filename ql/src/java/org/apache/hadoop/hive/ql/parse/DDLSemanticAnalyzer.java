@@ -22056,6 +22056,13 @@ name|getChild
 argument_list|(
 literal|2
 argument_list|)
+argument_list|,
+name|this
+operator|.
+name|ctx
+operator|.
+name|getTokenRewriteStream
+argument_list|()
 argument_list|)
 expr_stmt|;
 break|break;
