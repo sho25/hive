@@ -89086,6 +89086,8 @@ operator|!=
 literal|null
 operator|)
 decl_stmt|;
+do|do
+block|{
 name|QueryResultsCache
 operator|.
 name|CacheEntry
@@ -89171,9 +89173,9 @@ argument_list|(
 literal|"Waiting on pending cacheEntry, but it failed to become valid"
 argument_list|)
 expr_stmt|;
-return|return
-literal|false
-return|;
+comment|// The pending query we were waiting on failed, but there might still be another
+comment|// pending or completed entry in the cache that can satisfy this query. Lookup again.
+continue|continue;
 block|}
 block|}
 else|else
@@ -89236,6 +89238,12 @@ literal|true
 return|;
 block|}
 block|}
+block|}
+do|while
+condition|(
+literal|false
+condition|)
+do|;
 return|return
 literal|false
 return|;
