@@ -2343,8 +2343,6 @@ name|FileStatus
 index|[]
 name|fss
 decl_stmt|;
-try|try
-block|{
 name|fss
 operator|=
 name|fs
@@ -2354,23 +2352,6 @@ argument_list|(
 name|taskDir
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|FileNotFoundException
-name|e
-parameter_list|)
-block|{
-comment|// This is a CREATE TABLE statement or query executed for CTAS/INSERT
-comment|// did not produce any result. We do not need to do anything, this is
-comment|// expected behavior.
-return|return
-name|publishedSegmentsBuilder
-operator|.
-name|build
-argument_list|()
-return|;
-block|}
 for|for
 control|(
 name|FileStatus

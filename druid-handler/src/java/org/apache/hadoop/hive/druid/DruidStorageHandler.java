@@ -153,20 +153,6 @@ name|common
 operator|.
 name|collect
 operator|.
-name|Lists
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
 name|Sets
 import|;
 end_import
@@ -1463,6 +1449,24 @@ name|Collectors
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|druid
+operator|.
+name|DruidStorageHandlerUtils
+operator|.
+name|JSON_MAPPER
+import|;
+end_import
+
 begin_comment
 comment|/**  * DruidStorageHandler provides a HiveStorageHandler implementation for Druid.  */
 end_comment
@@ -2525,8 +2529,6 @@ name|Object
 argument_list|>
 name|inputParser
 init|=
-name|DruidStorageHandlerUtils
-operator|.
 name|JSON_MAPPER
 operator|.
 name|convertValue
@@ -3106,8 +3108,6 @@ block|{
 name|String
 name|task
 init|=
-name|DruidStorageHandlerUtils
-operator|.
 name|JSON_MAPPER
 operator|.
 name|writeValueAsString
@@ -3166,8 +3166,6 @@ name|setContent
 argument_list|(
 literal|"application/json"
 argument_list|,
-name|DruidStorageHandlerUtils
-operator|.
 name|JSON_MAPPER
 operator|.
 name|writeValueAsBytes
@@ -3700,8 +3698,6 @@ argument_list|)
 condition|)
 block|{
 return|return
-name|DruidStorageHandlerUtils
-operator|.
 name|JSON_MAPPER
 operator|.
 name|readValue
@@ -3818,8 +3814,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|// at this point we have Druid segments from reducers but we need to atomically
-comment|// rename and commit to metadata
 specifier|final
 name|String
 name|dataSourceName
@@ -3837,42 +3831,56 @@ name|DRUID_DATA_SOURCE
 argument_list|)
 decl_stmt|;
 specifier|final
-name|List
-argument_list|<
-name|DataSegment
-argument_list|>
-name|segmentList
-init|=
-name|Lists
-operator|.
-name|newArrayList
-argument_list|()
-decl_stmt|;
-specifier|final
 name|Path
-name|tableDir
+name|segmentDescriptorDir
 init|=
 name|getSegmentDescriptorDir
 argument_list|()
 decl_stmt|;
-comment|// Read the created segments metadata from the table staging directory
 try|try
 block|{
-name|segmentList
+if|if
+condition|(
+operator|!
+name|segmentDescriptorDir
 operator|.
-name|addAll
+name|getFileSystem
 argument_list|(
-name|DruidStorageHandlerUtils
-operator|.
-name|getCreatedSegments
-argument_list|(
-name|tableDir
-argument_list|,
 name|getConf
 argument_list|()
 argument_list|)
+operator|.
+name|exists
+argument_list|(
+name|segmentDescriptorDir
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Directory {} does not exist, ignore this if it is create statement or inserts of 0 rows,"
+operator|+
+literal|" no Druid segments to move, cleaning working directory {}"
+argument_list|,
+name|segmentDescriptorDir
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|getStagingWorkingDir
+argument_list|()
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
+name|cleanWorkingDir
+argument_list|()
+expr_stmt|;
+return|return;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -3886,11 +3894,14 @@ name|error
 argument_list|(
 literal|"Failed to load segments descriptor from directory {}"
 argument_list|,
-name|tableDir
+name|segmentDescriptorDir
 operator|.
 name|toString
 argument_list|()
 argument_list|)
+expr_stmt|;
+name|cleanWorkingDir
+argument_list|()
 expr_stmt|;
 name|Throwables
 operator|.
@@ -3899,11 +3910,28 @@ argument_list|(
 name|e
 argument_list|)
 expr_stmt|;
-name|cleanWorkingDir
-argument_list|()
-expr_stmt|;
 block|}
+try|try
+block|{
+comment|// at this point we have Druid segments from reducers but we need to atomically
+comment|// rename and commit to metadata
 comment|// Moving Druid segments and committing to druid metadata as one transaction.
+name|List
+argument_list|<
+name|DataSegment
+argument_list|>
+name|segmentList
+init|=
+name|DruidStorageHandlerUtils
+operator|.
+name|getCreatedSegments
+argument_list|(
+name|segmentDescriptorDir
+argument_list|,
+name|getConf
+argument_list|()
+argument_list|)
+decl_stmt|;
 specifier|final
 name|HdfsDataSegmentPusherConfig
 name|hdfsSegmentPusherConfig
@@ -3917,11 +3945,6 @@ argument_list|<
 name|DataSegment
 argument_list|>
 name|publishedDataSegmentList
-init|=
-name|Lists
-operator|.
-name|newArrayList
-argument_list|()
 decl_stmt|;
 specifier|final
 name|String
@@ -3996,8 +4019,6 @@ argument_list|(
 name|segmentDirectory
 argument_list|)
 expr_stmt|;
-try|try
-block|{
 name|DataSegmentPusher
 name|dataSegmentPusher
 init|=
@@ -4009,8 +4030,6 @@ argument_list|,
 name|getConf
 argument_list|()
 argument_list|,
-name|DruidStorageHandlerUtils
-operator|.
 name|JSON_MAPPER
 argument_list|)
 decl_stmt|;
@@ -4036,6 +4055,11 @@ name|getConf
 argument_list|()
 argument_list|,
 name|dataSegmentPusher
+argument_list|)
+expr_stmt|;
+name|checkLoadStatus
+argument_list|(
+name|publishedDataSegmentList
 argument_list|)
 expr_stmt|;
 block|}
@@ -4086,11 +4110,6 @@ name|cleanWorkingDir
 argument_list|()
 expr_stmt|;
 block|}
-name|checkLoadStatus
-argument_list|(
-name|publishedDataSegmentList
-argument_list|)
-expr_stmt|;
 block|}
 comment|/**    * This function checks the load status of Druid segments by polling druid coordinator.    * @param segments List of druid segments to check for    *    * @return count of yet to load segments.    */
 specifier|private
