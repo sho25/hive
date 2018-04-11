@@ -758,7 +758,7 @@ name|PATCH
 init|=
 literal|"patch"
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -789,6 +789,14 @@ name|String
 name|CLEAR_LIBRARY_CACHE
 init|=
 literal|"clearLibraryCache"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|JENKINS_QUEUE_URL
+init|=
+literal|"jenkinsQueueUrl"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -1919,7 +1927,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 class|class
 name|PTestHttpRequestRetryHandler
@@ -2297,6 +2305,19 @@ argument_list|,
 literal|"URL to get the logs"
 argument_list|)
 expr_stmt|;
+name|options
+operator|.
+name|addOption
+argument_list|(
+literal|null
+argument_list|,
+name|JENKINS_QUEUE_URL
+argument_list|,
+literal|true
+argument_list|,
+literal|"URL for quering Jenkins job queue"
+argument_list|)
+expr_stmt|;
 name|CommandLine
 name|commandLine
 init|=
@@ -2433,6 +2454,51 @@ name|TEST_HANDLE
 block|}
 argument_list|)
 expr_stmt|;
+name|boolean
+name|jiraAlreadyInQueue
+init|=
+name|JenkinsQueueUtil
+operator|.
+name|isJiraAlreadyInQueue
+argument_list|(
+name|commandLine
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|jiraAlreadyInQueue
+condition|)
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"Skipping ptest execution, as "
+operator|+
+name|commandLine
+operator|.
+name|getOptionValue
+argument_list|(
+name|JIRA
+argument_list|)
+operator|+
+literal|" is scheduled in "
+operator|+
+literal|"queue in "
+operator|+
+literal|"the future too."
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|exit
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
 name|result
 operator|=
 name|client
