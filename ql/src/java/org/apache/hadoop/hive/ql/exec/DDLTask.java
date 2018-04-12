@@ -29289,6 +29289,16 @@ comment|// each partition one-by-one, and then decide on inspection whether or n
 comment|// for dropping. Thus, we need a way to push this filter (replicationSpec.allowEventReplacementInto)
 comment|// to the  metastore to allow it to do drop a partition or not, depending on a Predicate on the
 comment|// parameter key values.
+if|if
+condition|(
+name|tbl
+operator|==
+literal|null
+condition|)
+block|{
+comment|// If table is missing, then partitions are also would've been dropped. Just no-op.
+return|return;
+block|}
 for|for
 control|(
 name|DropTableDesc
@@ -29485,7 +29495,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-empty_stmt|;
 block|}
 specifier|private
 name|void

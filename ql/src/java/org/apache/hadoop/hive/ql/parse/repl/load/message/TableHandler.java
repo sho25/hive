@@ -205,6 +205,18 @@ operator|.
 name|nestedContext
 argument_list|)
 decl_stmt|;
+name|x
+operator|.
+name|setEventType
+argument_list|(
+name|context
+operator|.
+name|dmd
+operator|.
+name|getDumpType
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// REPL LOAD is not partition level. It is always DB or table level. So, passing null for partition specs.
 comment|// Also, REPL LOAD doesn't support external table and hence no location set as well.
 name|ImportSemanticAnalyzer
