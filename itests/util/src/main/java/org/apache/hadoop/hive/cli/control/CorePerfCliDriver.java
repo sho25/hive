@@ -121,6 +121,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|MetaStoreDumpUtility
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|After
@@ -276,7 +292,7 @@ argument_list|()
 expr_stmt|;
 comment|// Manually modify the underlying metastore db to reflect statistics corresponding to
 comment|// the 30TB TPCDS scale set. This way the optimizer will generate plans for a 30 TB set.
-name|QTestUtil
+name|MetaStoreDumpUtility
 operator|.
 name|setupMetaStoreTableColumnStatsFor30TBTPCDSWorkload
 argument_list|(
@@ -284,6 +300,15 @@ name|qt
 operator|.
 name|getConf
 argument_list|()
+argument_list|,
+name|System
+operator|.
+name|getProperty
+argument_list|(
+name|QTestUtil
+operator|.
+name|TEST_TMP_DIR_PROPERTY
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

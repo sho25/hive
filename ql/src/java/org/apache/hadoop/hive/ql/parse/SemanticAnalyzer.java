@@ -75617,15 +75617,6 @@ init|=
 operator|new
 name|QueryPlanPostProcessor
 argument_list|(
-operator|(
-name|List
-argument_list|<
-name|Task
-argument_list|<
-name|?
-argument_list|>
-argument_list|>
-operator|)
 name|rootTasks
 argument_list|,
 name|acidFileSinks
