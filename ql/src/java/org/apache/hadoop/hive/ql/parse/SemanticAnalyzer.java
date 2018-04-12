@@ -45008,29 +45008,24 @@ argument_list|,
 name|writeId
 argument_list|)
 expr_stmt|;
-comment|// For Acid table, Insert Overwrite shouldn't replace the table content. We keep the old
-comment|// deltas and base and leave them up to the cleaner to clean up
+comment|// For the current context for generating File Sink Operator, it is either INSERT INTO or INSERT OVERWRITE.
+comment|// So the next line works.
 name|boolean
 name|isInsertInto
 init|=
+operator|!
 name|qb
 operator|.
 name|getParseInfo
 argument_list|()
 operator|.
-name|isInsertIntoTable
+name|isDestToOpTypeInsertOverwrite
 argument_list|(
-name|dest_tab
-operator|.
-name|getDbName
-argument_list|()
-argument_list|,
-name|dest_tab
-operator|.
-name|getTableName
-argument_list|()
+name|dest
 argument_list|)
 decl_stmt|;
+comment|// For Acid table, Insert Overwrite shouldn't replace the table content. We keep the old
+comment|// deltas and base and leave them up to the cleaner to clean up
 name|LoadFileType
 name|loadType
 init|=
