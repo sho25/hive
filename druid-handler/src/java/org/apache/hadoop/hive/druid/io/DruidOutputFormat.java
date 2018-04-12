@@ -1023,6 +1023,8 @@ name|rhs
 argument_list|,
 name|granularitySpec
 argument_list|,
+literal|null
+argument_list|,
 name|DruidStorageHandlerUtils
 operator|.
 name|JSON_MAPPER
@@ -1161,6 +1163,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|0L
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|LOG

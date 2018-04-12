@@ -1144,6 +1144,8 @@ name|INTERVAL_FULL
 argument_list|)
 argument_list|)
 argument_list|,
+literal|null
+argument_list|,
 name|objectMapper
 argument_list|)
 decl_stmt|;
@@ -1204,6 +1206,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|0L
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|LocalFileSystem
@@ -1499,6 +1503,8 @@ argument_list|()
 argument_list|)
 argument_list|)
 argument_list|,
+literal|null
+argument_list|,
 name|ImmutableList
 operator|.
 name|of
@@ -1718,7 +1724,7 @@ argument_list|)
 argument_list|,
 name|actual
 operator|.
-name|getLongMetric
+name|getMetric
 argument_list|(
 literal|"visited_sum"
 argument_list|)
