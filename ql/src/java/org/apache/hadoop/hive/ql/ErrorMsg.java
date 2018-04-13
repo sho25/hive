@@ -2816,7 +2816,7 @@ name|SPARK_CREATE_CLIENT_ERROR
 argument_list|(
 literal|30041
 argument_list|,
-literal|"Failed to create Spark client for Spark session {0}"
+literal|"Failed to create Spark client for Spark session {0}: {1}"
 argument_list|,
 literal|true
 argument_list|)

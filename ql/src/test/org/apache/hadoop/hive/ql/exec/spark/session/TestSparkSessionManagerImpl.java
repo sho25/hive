@@ -914,7 +914,9 @@ name|e
 operator|=
 operator|new
 name|Exception
-argument_list|()
+argument_list|(
+literal|"Other exception"
+argument_list|)
 expr_stmt|;
 name|checkHiveException
 argument_list|(
@@ -925,6 +927,8 @@ argument_list|,
 name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_ERROR
+argument_list|,
+literal|"Other exception"
 argument_list|)
 expr_stmt|;
 block|}
@@ -998,14 +1002,17 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|assertEquals
+name|assertTrue
+argument_list|(
+name|he
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
 argument_list|(
 name|expectedMatchedStr
-argument_list|,
-name|ss
-operator|.
-name|getMatchedString
-argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
