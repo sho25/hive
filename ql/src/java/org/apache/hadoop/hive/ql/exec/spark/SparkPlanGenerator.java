@@ -948,6 +948,10 @@ name|SparkPlan
 argument_list|(
 name|this
 operator|.
+name|jobConf
+argument_list|,
+name|this
+operator|.
 name|sc
 operator|.
 name|sc
@@ -1241,6 +1245,8 @@ name|work
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+name|work
 argument_list|)
 expr_stmt|;
 name|sparkPlan
@@ -1680,6 +1686,8 @@ argument_list|,
 name|toCache
 argument_list|,
 name|rddName
+argument_list|,
+name|mapWork
 argument_list|)
 decl_stmt|;
 return|return
@@ -1701,6 +1709,9 @@ name|toCache
 parameter_list|,
 name|String
 name|name
+parameter_list|,
+name|BaseWork
+name|work
 parameter_list|)
 block|{
 name|Preconditions
@@ -1785,6 +1796,8 @@ argument_list|,
 name|name
 argument_list|,
 name|edge
+argument_list|,
+name|work
 argument_list|)
 return|;
 block|}
@@ -1948,6 +1961,8 @@ name|work
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+name|work
 argument_list|)
 decl_stmt|;
 name|HiveMapFunction
@@ -1992,6 +2007,8 @@ name|work
 operator|.
 name|getName
 argument_list|()
+argument_list|,
+name|work
 argument_list|)
 decl_stmt|;
 name|HiveReduceFunction

@@ -10211,7 +10211,22 @@ operator|+
 literal|"When enabled, will log EXPLAIN output for the query at user level. Spark only."
 argument_list|)
 block|,
-comment|// prefix used to auto generated column aliases (this should be started with '_')
+name|HIVE_SPARK_LOG_EXPLAIN_WEBUI
+argument_list|(
+literal|"hive.spark.log.explain.webui"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to show the "
+operator|+
+literal|"explain plan in the Spark Web UI. Only shows the regular EXPLAIN plan, and ignores "
+operator|+
+literal|"any extra EXPLAIN configuration (e.g. hive.spark.explain.user, etc.). The explain "
+operator|+
+literal|"plan for each stage is truncated at 100,000 characters."
+argument_list|)
+block|,
+comment|// prefix used to auto generated column aliases (this should be s,tarted with '_')
 name|HIVE_AUTOGEN_COLUMNALIAS_PREFIX_LABEL
 argument_list|(
 literal|"hive.autogen.columnalias.prefix.label"

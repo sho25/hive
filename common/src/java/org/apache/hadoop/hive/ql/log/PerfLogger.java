@@ -500,6 +500,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SPARK_CREATE_EXPLAIN_PLAN
+init|=
+literal|"SparkCreateExplainPlan."
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SPARK_SUBMIT_JOB
 init|=
 literal|"SparkSubmitJob"
