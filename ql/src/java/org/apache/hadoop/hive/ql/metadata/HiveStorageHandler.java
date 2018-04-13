@@ -25,6 +25,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -92,6 +102,42 @@ operator|.
 name|metastore
 operator|.
 name|HiveMetaHook
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|MetaException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
 import|;
 end_import
 
@@ -330,7 +376,7 @@ argument_list|>
 name|jobProperties
 parameter_list|)
 function_decl|;
-comment|/**    * Called just before submitting MapReduce job.    *    * @param tableDesc descriptor for the table being accessed    * @param JobConf jobConf for MapReduce job    */
+comment|/**    * Called just before submitting MapReduce job.    *    * @param tableDesc descriptor for the table being accessed    * @param jobConf jobConf for MapReduce job    */
 specifier|public
 name|void
 name|configureJobConf
@@ -342,6 +388,22 @@ name|JobConf
 name|jobConf
 parameter_list|)
 function_decl|;
+comment|/**    * Used to fetch runtime information about storage handler during DESCRIBE EXTENDED statement    *    * @param table table definition    * @return StorageHandlerInfo containing runtime information about storage handler    * OR `null` if the storage handler choose to not provide any runtime information.    */
+specifier|public
+specifier|default
+name|StorageHandlerInfo
+name|getStorageHandlerInfo
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_interface
 
