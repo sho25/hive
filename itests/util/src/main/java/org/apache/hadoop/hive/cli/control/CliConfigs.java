@@ -250,6 +250,13 @@ argument_list|,
 literal|"druid.query.files"
 argument_list|)
 expr_stmt|;
+name|excludesFrom
+argument_list|(
+name|testConfigProps
+argument_list|,
+literal|"druid.kafka.query.files"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive"
