@@ -264,33 +264,9 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// create and load the input data into the hbase table
-name|runCreateTableCmd
+name|initDataset
 argument_list|(
-literal|"CREATE TABLE "
-operator|+
 name|HBASE_SRC_NAME
-operator|+
-literal|"(key INT, value STRING)"
-operator|+
-literal|"  STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'"
-operator|+
-literal|"  WITH SERDEPROPERTIES ('hbase.columns.mapping' = ':key,cf:val')"
-operator|+
-literal|"  TBLPROPERTIES ('hbase.table.name' = '"
-operator|+
-name|HBASE_SRC_NAME
-operator|+
-literal|"')"
-argument_list|)
-expr_stmt|;
-name|runCmd
-argument_list|(
-literal|"INSERT OVERWRITE TABLE "
-operator|+
-name|HBASE_SRC_NAME
-operator|+
-literal|" SELECT * FROM src"
 argument_list|)
 expr_stmt|;
 comment|// create a snapshot
@@ -364,18 +340,6 @@ operator|.
 name|cleanUp
 argument_list|(
 name|tname
-argument_list|)
-expr_stmt|;
-comment|// drop in case leftover from unsuccessful run
-name|db
-operator|.
-name|dropTable
-argument_list|(
-name|Warehouse
-operator|.
-name|DEFAULT_DATABASE_NAME
-argument_list|,
-name|HBASE_SRC_NAME
 argument_list|)
 expr_stmt|;
 name|Admin

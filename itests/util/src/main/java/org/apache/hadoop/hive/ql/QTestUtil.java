@@ -1587,6 +1587,14 @@ name|TEST_SRC_TABLES_PROPERTY
 init|=
 literal|"test.src.tables"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TEST_HIVE_USER_PROPERTY
+init|=
+literal|"test.hive.user"
+decl_stmt|;
 specifier|private
 name|String
 name|testWarehouse
@@ -1968,15 +1976,6 @@ argument_list|()
 expr_stmt|;
 comment|// FIXME: moved default value to here...for now
 comment|// i think this features is never really used from the command line
-name|String
-name|defaultTestSrcTables
-init|=
-literal|"src,src1,srcbucket,srcbucket2,src_json,src_thrift,"
-operator|+
-literal|"src_sequencefile,srcpart,alltypesorc,src_hbase,cbo_t1,cbo_t2,cbo_t3,src_cbo,part,"
-operator|+
-literal|"lineitem,alltypesparquet"
-decl_stmt|;
 for|for
 control|(
 name|String
@@ -1988,7 +1987,7 @@ name|getProperty
 argument_list|(
 name|TEST_SRC_TABLES_PROPERTY
 argument_list|,
-name|defaultTestSrcTables
+literal|""
 argument_list|)
 operator|.
 name|trim
@@ -2024,22 +2023,6 @@ name|srcTable
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-if|if
-condition|(
-name|srcTables
-operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Source tables cannot be empty"
-argument_list|)
-throw|;
 block|}
 block|}
 specifier|private
@@ -6693,6 +6676,76 @@ end_function
 begin_function
 specifier|protected
 name|void
+name|clearSettingsCreatedInTests
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|getCliDriver
+argument_list|()
+operator|.
+name|processLine
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"set hive.security.authorization.enabled=false;"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|getCliDriver
+argument_list|()
+operator|.
+name|processLine
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"set user.name=%s;"
+argument_list|,
+name|System
+operator|.
+name|getProperty
+argument_list|(
+name|TEST_HIVE_USER_PROPERTY
+argument_list|,
+literal|"hive_test_user"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|getCliDriver
+argument_list|()
+operator|.
+name|processLine
+argument_list|(
+literal|"set hive.metastore.partition.name.whitelist.pattern=;"
+argument_list|)
+expr_stmt|;
+name|getCliDriver
+argument_list|()
+operator|.
+name|processLine
+argument_list|(
+literal|"set hive.test.mode=false;"
+argument_list|)
+expr_stmt|;
+name|getCliDriver
+argument_list|()
+operator|.
+name|processLine
+argument_list|(
+literal|"set hive.mapred.mode=nonstrict;"
+argument_list|)
+expr_stmt|;
+block|}
+end_function
+
+begin_function
+specifier|protected
+name|void
 name|initConfFromSetup
 parameter_list|()
 throws|throws
@@ -7344,7 +7397,8 @@ block|}
 end_function
 
 begin_function
-specifier|private
+specifier|protected
+specifier|synchronized
 name|void
 name|initDataset
 parameter_list|(
@@ -7708,6 +7762,9 @@ name|fileName
 argument_list|)
 expr_stmt|;
 block|}
+name|clearSettingsCreatedInTests
+argument_list|()
+expr_stmt|;
 name|initDataSetForTest
 argument_list|(
 name|file

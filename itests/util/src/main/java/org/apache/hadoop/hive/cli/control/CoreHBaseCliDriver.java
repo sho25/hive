@@ -23,26 +23,6 @@ begin_import
 import|import static
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|cli
-operator|.
-name|control
-operator|.
-name|AbstractCliConfig
-operator|.
-name|HIVE_ROOT
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
 name|junit
 operator|.
 name|Assert
