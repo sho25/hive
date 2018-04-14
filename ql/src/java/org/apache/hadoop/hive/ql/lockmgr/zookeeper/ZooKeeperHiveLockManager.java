@@ -2460,9 +2460,9 @@ operator|.
 name|getPath
 argument_list|()
 decl_stmt|;
-name|LOG
-operator|.
-name|error
+throw|throw
+operator|new
+name|LockException
 argument_list|(
 literal|"Node "
 operator|+
@@ -2473,12 +2473,7 @@ operator|+
 name|numRetriesForUnLock
 operator|+
 literal|" attempts."
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|LockException
-argument_list|(
+argument_list|,
 name|e
 argument_list|)
 throw|;
