@@ -43743,11 +43743,6 @@ decl_stmt|;
 name|HiveTxnManager
 name|txnMgr
 init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 decl_stmt|;

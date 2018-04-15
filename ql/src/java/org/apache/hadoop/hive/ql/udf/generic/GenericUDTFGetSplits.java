@@ -2333,7 +2333,7 @@ name|compileAndRespond
 argument_list|(
 name|query
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
@@ -3890,6 +3890,28 @@ operator|.
 name|getHosts
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|hosts
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"No hosts"
+argument_list|)
+expr_stmt|;
+return|return
+operator|new
+name|SplitLocationInfo
+index|[
+literal|0
+index|]
+return|;
+block|}
 if|if
 condition|(
 name|hosts

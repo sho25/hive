@@ -762,7 +762,9 @@ name|context
 operator|.
 name|hiveDb
 argument_list|,
-literal|null
+name|context
+operator|.
+name|nestedContext
 argument_list|,
 name|LOG
 argument_list|)
@@ -858,7 +860,9 @@ name|context
 operator|.
 name|hiveDb
 argument_list|,
-literal|null
+name|context
+operator|.
+name|nestedContext
 argument_list|,
 name|LOG
 argument_list|)
@@ -954,7 +958,9 @@ name|context
 operator|.
 name|hiveDb
 argument_list|,
-literal|null
+name|context
+operator|.
+name|nestedContext
 argument_list|,
 name|LOG
 argument_list|)
@@ -1050,7 +1056,9 @@ name|context
 operator|.
 name|hiveDb
 argument_list|,
-literal|null
+name|context
+operator|.
+name|nestedContext
 argument_list|,
 name|LOG
 argument_list|)

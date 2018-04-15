@@ -452,11 +452,6 @@ comment|// results if incremental maintenance is triggered.
 name|HiveTxnManager
 name|txnManager
 init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 decl_stmt|;

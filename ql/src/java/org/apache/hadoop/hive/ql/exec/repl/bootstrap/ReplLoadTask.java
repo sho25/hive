@@ -780,6 +780,11 @@ argument_list|,
 name|work
 operator|.
 name|currentTransactionId
+argument_list|,
+name|driverContext
+operator|.
+name|getCtx
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|TaskTracker
@@ -1061,6 +1066,9 @@ argument_list|,
 name|tableContext
 argument_list|,
 name|loadTaskTracker
+argument_list|,
+name|getTxnMgr
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|tableTracker
@@ -1128,6 +1136,9 @@ operator|.
 name|dbNameToLoadIn
 argument_list|,
 name|tableContext
+argument_list|,
+name|getTxnMgr
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|TaskTracker
@@ -1226,6 +1237,9 @@ argument_list|,
 name|event
 operator|.
 name|lastPartitionReplicated
+argument_list|()
+argument_list|,
+name|getTxnMgr
 argument_list|()
 argument_list|)
 decl_stmt|;

@@ -24384,11 +24384,6 @@ try|try
 block|{
 name|writeId
 operator|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 operator|.
@@ -24424,11 +24419,6 @@ throw|;
 block|}
 name|stmtId
 operator|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 operator|.

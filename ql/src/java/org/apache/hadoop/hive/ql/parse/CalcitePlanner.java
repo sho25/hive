@@ -14902,11 +14902,6 @@ condition|)
 block|{
 name|txnWriteIds
 operator|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 operator|.

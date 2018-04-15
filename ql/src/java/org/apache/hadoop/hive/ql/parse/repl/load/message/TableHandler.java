@@ -258,6 +258,11 @@ argument_list|,
 name|x
 argument_list|,
 name|updatedMetadata
+argument_list|,
+name|context
+operator|.
+name|getTxnMgr
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return

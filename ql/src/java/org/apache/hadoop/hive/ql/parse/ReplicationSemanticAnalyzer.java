@@ -2529,11 +2529,6 @@ operator|.
 name|getLineageState
 argument_list|()
 argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 operator|.
@@ -2749,11 +2744,6 @@ operator|.
 name|getLineageState
 argument_list|()
 argument_list|,
-name|SessionState
-operator|.
-name|get
-argument_list|()
-operator|.
 name|getTxnMgr
 argument_list|()
 operator|.
