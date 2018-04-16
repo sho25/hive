@@ -211,6 +211,13 @@ name|exception
 operator|.
 name|getMessage
 argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|exception
+operator|.
+name|getMessage
+argument_list|()
 operator|.
 name|contains
 argument_list|(

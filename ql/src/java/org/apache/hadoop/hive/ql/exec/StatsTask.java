@@ -793,6 +793,11 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 return|return
 literal|1
 return|;

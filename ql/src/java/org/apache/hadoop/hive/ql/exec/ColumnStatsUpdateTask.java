@@ -2457,6 +2457,11 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|info

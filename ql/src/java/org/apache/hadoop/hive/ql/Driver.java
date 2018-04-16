@@ -13551,6 +13551,16 @@ condition|)
 block|{
 comment|//here we assume that upstream code may have parametrized the msg from ErrorMsg
 comment|//so we want to keep it
+if|if
+condition|(
+name|downstreamError
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 name|errorMessage
 operator|+=
 literal|". "
@@ -13560,6 +13570,29 @@ operator|.
 name|getMessage
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+name|errorMessage
+operator|+=
+literal|". "
+operator|+
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|StringUtils
+operator|.
+name|stringifyException
+argument_list|(
+name|downstreamError
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
