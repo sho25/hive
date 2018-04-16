@@ -845,8 +845,6 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|hcatalog
-operator|.
 name|streaming
 operator|.
 name|DelimitedInputWriter
@@ -860,8 +858,6 @@ operator|.
 name|apache
 operator|.
 name|hive
-operator|.
-name|hcatalog
 operator|.
 name|streaming
 operator|.
@@ -877,8 +873,6 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|hcatalog
-operator|.
 name|streaming
 operator|.
 name|StreamingConnection
@@ -893,8 +887,6 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|hcatalog
-operator|.
 name|streaming
 operator|.
 name|StreamingException
@@ -908,8 +900,6 @@ operator|.
 name|apache
 operator|.
 name|hive
-operator|.
-name|hcatalog
 operator|.
 name|streaming
 operator|.
