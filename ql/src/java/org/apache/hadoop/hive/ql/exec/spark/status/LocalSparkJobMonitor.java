@@ -623,7 +623,7 @@ literal|true
 expr_stmt|;
 name|sparkJobStatus
 operator|.
-name|setError
+name|setMonitorError
 argument_list|(
 name|e
 argument_list|)

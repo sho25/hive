@@ -2588,6 +2588,7 @@ name|void
 name|shutdown
 parameter_list|()
 block|{   }
+specifier|public
 name|Throwable
 name|getException
 parameter_list|()

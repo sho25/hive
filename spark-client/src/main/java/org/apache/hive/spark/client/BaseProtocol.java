@@ -79,21 +79,8 @@ name|SparkCounters
 import|;
 end_import
 
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Throwables
-import|;
-end_import
-
 begin_class
+specifier|public
 specifier|abstract
 class|class
 name|BaseProtocol
@@ -332,7 +319,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|protected
+specifier|public
 specifier|static
 class|class
 name|JobResult
@@ -353,7 +340,7 @@ name|T
 name|result
 decl_stmt|;
 specifier|final
-name|String
+name|Throwable
 name|error
 decl_stmt|;
 specifier|final
@@ -392,17 +379,6 @@ operator|.
 name|error
 operator|=
 name|error
-operator|!=
-literal|null
-condition|?
-name|Throwables
-operator|.
-name|getStackTraceAsString
-argument_list|(
-name|error
-argument_list|)
-else|:
-literal|null
 expr_stmt|;
 name|this
 operator|.
@@ -425,6 +401,37 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"JobResult{"
+operator|+
+literal|"id='"
+operator|+
+name|id
+operator|+
+literal|'\''
+operator|+
+literal|", result="
+operator|+
+name|result
+operator|+
+literal|", error="
+operator|+
+name|error
+operator|+
+literal|", sparkCounters="
+operator|+
+name|sparkCounters
+operator|+
+literal|'}'
+return|;
 block|}
 block|}
 specifier|protected

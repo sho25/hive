@@ -2840,7 +2840,18 @@ name|SPARK_JOB_RUNTIME_ERROR
 argument_list|(
 literal|40001
 argument_list|,
-literal|"Spark job failed during runtime. Please check stacktrace for the root cause."
+literal|"Spark job failed due to: {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_TASK_RUNTIME_ERROR
+argument_list|(
+literal|40002
+argument_list|,
+literal|"Spark job failed due to task failures: {0}"
+argument_list|,
+literal|true
 argument_list|)
 block|;
 specifier|private
