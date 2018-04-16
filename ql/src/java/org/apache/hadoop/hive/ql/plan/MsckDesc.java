@@ -120,12 +120,20 @@ specifier|private
 name|boolean
 name|repairPartitions
 decl_stmt|;
+specifier|private
+name|boolean
+name|addPartitions
+decl_stmt|;
+specifier|private
+name|boolean
+name|dropPartitions
+decl_stmt|;
 comment|/**    * For serialization use only.    */
 specifier|public
 name|MsckDesc
 parameter_list|()
 block|{   }
-comment|/**    * Description of a msck command.    *    * @param tableName    *          Table to check, can be null.    * @param partSpecs    *          Partition specification, can be null.    * @param resFile    *          Where to save the output of the command    * @param repairPartitions    *          remove stale / add new partitions found during the check    */
+comment|/**      * Description of a msck command.      *      * @param tableName      *          Table to check, can be null.      * @param partSpecs      *          Partition specification, can be null.      * @param resFile      *          Where to save the output of the command      * @param repairPartitions      *          remove stale / add new partitions found during the check      * @param addPartitions      *          find partitions that are missing from metastore, and add them when repairPartitions      *          is set to true      * @param dropPartitions      *          find stale partitions in metastore, and drop them when repairPartitions      *          is set to true      */
 specifier|public
 name|MsckDesc
 parameter_list|(
@@ -150,6 +158,12 @@ name|resFile
 parameter_list|,
 name|boolean
 name|repairPartitions
+parameter_list|,
+name|boolean
+name|addPartitions
+parameter_list|,
+name|boolean
+name|dropPartitions
 parameter_list|)
 block|{
 name|super
@@ -224,6 +238,18 @@ operator|.
 name|repairPartitions
 operator|=
 name|repairPartitions
+expr_stmt|;
+name|this
+operator|.
+name|addPartitions
+operator|=
+name|addPartitions
+expr_stmt|;
+name|this
+operator|.
+name|dropPartitions
+operator|=
+name|dropPartitions
 expr_stmt|;
 block|}
 comment|/**    * @return the table to check    */
@@ -328,6 +354,26 @@ parameter_list|()
 block|{
 return|return
 name|repairPartitions
+return|;
+block|}
+comment|/**    * @return if missing partitions is to be found, and added with repair option    */
+specifier|public
+name|boolean
+name|isAddPartitions
+parameter_list|()
+block|{
+return|return
+name|addPartitions
+return|;
+block|}
+comment|/**    * @return if stale partitions is to be found, and removed with repair option    */
+specifier|public
+name|boolean
+name|isDropPartitions
+parameter_list|()
+block|{
+return|return
+name|dropPartitions
 return|;
 block|}
 comment|/**    * @param repairPartitions    *          stale / add new partitions found during the check    */
