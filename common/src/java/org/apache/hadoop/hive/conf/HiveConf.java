@@ -15661,6 +15661,17 @@ operator|+
 literal|"to be reused if the same query is executed again."
 argument_list|)
 block|,
+name|HIVE_QUERY_RESULTS_CACHE_NONTRANSACTIONAL_TABLES_ENABLED
+argument_list|(
+literal|"hive.query.results.cache.nontransactional.tables.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If the query results cache is enabled for queries involving non-transactional tables."
+operator|+
+literal|"Users who enable this setting should be willing to tolerate some amount of stale results in the cache."
+argument_list|)
+block|,
 name|HIVE_QUERY_RESULTS_CACHE_WAIT_FOR_PENDING_RESULTS
 argument_list|(
 literal|"hive.query.results.cache.wait.for.pending.results"
