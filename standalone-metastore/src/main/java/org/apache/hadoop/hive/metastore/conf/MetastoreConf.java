@@ -1428,6 +1428,25 @@ operator|+
 literal|"The blacklist also overrides the whitelist."
 argument_list|)
 block|,
+name|CACHED_RAW_STORE_MAX_CACHE_MEMORY
+argument_list|(
+literal|"metastore.cached.rawstore.max.cache.memory"
+argument_list|,
+literal|"hive.metastore.cached.rawstore.max.cache.memory"
+argument_list|,
+literal|"1Gb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"The maximum memory in bytes that the cached objects can use. "
+operator|+
+literal|"Memory used is calculated based on estimated size of tables and partitions in the cache. "
+operator|+
+literal|"Setting it to a negative value disables memory estimation."
+argument_list|)
+block|,
 name|CAPABILITY_CHECK
 argument_list|(
 literal|"metastore.client.capability.check"
@@ -6030,6 +6049,35 @@ argument_list|,
 name|val
 argument_list|)
 expr_stmt|;
+block|}
+end_function
+
+begin_function
+specifier|public
+specifier|static
+name|long
+name|getSizeVar
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|ConfVars
+name|var
+parameter_list|)
+block|{
+return|return
+name|SizeValidator
+operator|.
+name|toSizeBytes
+argument_list|(
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|var
+argument_list|)
+argument_list|)
+return|;
 block|}
 end_function
 

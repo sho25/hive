@@ -13,35 +13,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|ql
+operator|.
+name|util
 package|;
 end_package
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|protobuf
-operator|.
-name|UnknownFieldSet
-import|;
-end_import
 
 begin_import
 import|import
@@ -229,17 +205,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|IncrementalObjectSizeEstimator
-operator|.
-name|ObjectEstimator
+name|Logger
 import|;
 end_import
 
@@ -247,62 +215,14 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|slf4j
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|cache
-operator|.
-name|LlapCacheableBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|io
-operator|.
-name|api
-operator|.
-name|impl
-operator|.
-name|LlapIoImpl
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|util
-operator|.
-name|JavaDataModel
+name|LoggerFactory
 import|;
 end_import
 
 begin_comment
-comment|/**  * Creates size estimators for java objects. The estimators attempt to do most of the reflection  * work at initialization time, and also take some shortcuts, to minimize the amount of work done  * during the actual estimation. TODO: clean up  */
+comment|/**  * Creates size estimators for java objects. The estimators attempt to do most of the reflection  * work at initialization time, and also take some shortcuts, to minimize the amount of work done  * during the actual estimation.  * TODO: clean up  */
 end_comment
 
 begin_class
@@ -320,6 +240,24 @@ name|JavaDataModel
 operator|.
 name|get
 argument_list|()
+decl_stmt|;
+specifier|static
+specifier|final
+specifier|private
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|IncrementalObjectSizeEstimator
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
 decl_stmt|;
 specifier|private
 enum|enum
@@ -529,10 +467,6 @@ range|:
 name|getAllFields
 argument_list|(
 name|clazz
-argument_list|,
-name|LlapCacheableBuffer
-operator|.
-name|class
 argument_list|)
 control|)
 block|{
@@ -559,7 +493,9 @@ name|getModifiers
 argument_list|()
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|Class
@@ -571,7 +507,9 @@ argument_list|(
 name|fieldClass
 argument_list|)
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|fieldClass
@@ -1120,44 +1058,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Add a hack for UnknownFieldSet because we assume it will never have anything (TODO: clear?)
-name|ObjectEstimator
-name|ufsEstimator
-init|=
-operator|new
-name|ObjectEstimator
-argument_list|(
-literal|false
-argument_list|)
-decl_stmt|;
-name|ufsEstimator
-operator|.
-name|directSize
-operator|=
-name|memoryModel
-operator|.
-name|object
-argument_list|()
-operator|*
-literal|2
-operator|+
-name|memoryModel
-operator|.
-name|ref
-argument_list|()
-expr_stmt|;
-name|byType
-operator|.
-name|put
-argument_list|(
-name|UnknownFieldSet
-operator|.
-name|class
-argument_list|,
-name|ufsEstimator
-argument_list|)
-expr_stmt|;
-comment|// TODO: 1-field hack for UnmodifiableCollection for protobuf too
 block|}
 specifier|private
 specifier|static
@@ -1368,8 +1268,6 @@ name|fieldCol
 operator|=
 literal|null
 expr_stmt|;
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -1458,8 +1356,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// TODO: there was code here to create guess-estimate for collection wrt how usage changes
-comment|//       when removing elements. However it's too error-prone for anything involving
-comment|//       pre-allocated capacity, so it was discarded.
+comment|// when removing elements. However it's too error-prone for anything involving
+comment|// pre-allocated capacity, so it was discarded.
 comment|// We will estimate collection as an object (only if it's a field).
 name|addToProcessing
 argument_list|(
@@ -1552,8 +1450,6 @@ name|fieldCol
 operator|=
 literal|null
 expr_stmt|;
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -1822,8 +1718,6 @@ block|}
 else|else
 block|{
 comment|// TODO: we could try to get the declaring object and infer argument... stupid Java.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -1838,8 +1732,6 @@ block|}
 else|else
 block|{
 comment|// TODO: we could try to get superclass or generic interfaces.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -1921,8 +1813,6 @@ block|}
 else|else
 block|{
 comment|// TODO: we could try to get the declaring object and infer argument... stupid Java.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -1937,8 +1827,6 @@ block|}
 else|else
 block|{
 comment|// TODO: we could try to get superclass or generic interfaces.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -1999,8 +1887,6 @@ argument_list|(
 name|fieldObj
 argument_list|)
 decl_stmt|;
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -2306,12 +2192,6 @@ argument_list|<
 name|?
 argument_list|>
 name|clazz
-parameter_list|,
-name|Class
-argument_list|<
-name|?
-argument_list|>
-name|topClass
 parameter_list|)
 block|{
 name|List
@@ -2320,9 +2200,9 @@ name|Field
 argument_list|>
 name|fields
 init|=
-name|Lists
-operator|.
-name|newArrayListWithCapacity
+operator|new
+name|ArrayList
+argument_list|<>
 argument_list|(
 literal|8
 argument_list|)
@@ -2356,15 +2236,8 @@ operator|.
 name|getSuperclass
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|clazz
-operator|==
-name|topClass
-condition|)
-break|break;
 block|}
-comment|//all together so there is only one security check
+comment|// all together so there is only one security check
 name|AccessibleObject
 operator|.
 name|setAccessible
@@ -2660,9 +2533,11 @@ name|fields
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 name|directSize
 return|;
+block|}
 name|int
 name|referencedSize
 init|=
@@ -2782,8 +2657,6 @@ literal|null
 condition|)
 block|{
 comment|// We have no estimator for this type... assume low overhead and hope for the best.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -2894,8 +2767,6 @@ block|}
 else|else
 block|{
 comment|// We decided to treat this collection as regular object.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -2974,8 +2845,6 @@ literal|null
 condition|)
 block|{
 comment|// We have no estimator for this type... assume low overhead and hope for the best.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -3095,8 +2964,6 @@ block|}
 else|else
 block|{
 comment|// We decided to treat this map as regular object.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|trace
@@ -3293,7 +3160,36 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// TODO: use reflection?
+name|createEstimators
+argument_list|(
+name|fieldObj
+operator|.
+name|getClass
+argument_list|()
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+block|}
+name|fieldEstimator
+operator|=
+name|parent
+operator|.
+name|get
+argument_list|(
+name|fieldObj
+operator|.
+name|getClass
+argument_list|()
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|fieldEstimator
+operator|==
+literal|null
+condition|)
+block|{
 throw|throw
 operator|new
 name|AssertionError
@@ -3503,7 +3399,30 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// TODO: use reflection?
+name|createEstimators
+argument_list|(
+name|lastClass
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+block|}
+name|lastEstimator
+operator|=
+name|parent
+operator|.
+name|get
+argument_list|(
+name|lastClass
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|lastEstimator
+operator|==
+literal|null
+condition|)
+block|{
 throw|throw
 operator|new
 name|AssertionError
@@ -3662,7 +3581,30 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// TODO: use reflection?
+name|createEstimators
+argument_list|(
+name|lastClass
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+block|}
+name|lastEstimator
+operator|=
+name|parent
+operator|.
+name|get
+argument_list|(
+name|lastClass
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|lastEstimator
+operator|==
+literal|null
+condition|)
+block|{
 throw|throw
 operator|new
 name|AssertionError
@@ -3847,7 +3789,30 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// TODO: use reflection?
+name|createEstimators
+argument_list|(
+name|lastKeyClass
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+block|}
+name|keyEstimator
+operator|=
+name|parent
+operator|.
+name|get
+argument_list|(
+name|lastKeyClass
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|keyEstimator
+operator|==
+literal|null
+condition|)
+block|{
 throw|throw
 operator|new
 name|AssertionError
@@ -3872,7 +3837,7 @@ name|keyEstimator
 operator|.
 name|estimate
 argument_list|(
-name|element
+name|key
 argument_list|,
 name|parent
 argument_list|,
@@ -3940,7 +3905,30 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// TODO: use reflection?
+name|createEstimators
+argument_list|(
+name|lastValueClass
+argument_list|,
+name|parent
+argument_list|)
+expr_stmt|;
+block|}
+name|valueEstimator
+operator|=
+name|parent
+operator|.
+name|get
+argument_list|(
+name|lastValueClass
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|valueEstimator
+operator|==
+literal|null
+condition|)
+block|{
 throw|throw
 operator|new
 name|AssertionError
@@ -3965,7 +3953,7 @@ name|valueEstimator
 operator|.
 name|estimate
 argument_list|(
-name|element
+name|value
 argument_list|,
 name|parent
 argument_list|,
@@ -4215,6 +4203,12 @@ argument_list|,
 name|ObjectEstimator
 argument_list|>
 name|sizeEstimators
+parameter_list|,
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|topClass
 parameter_list|)
 block|{
 name|Class
@@ -4244,8 +4238,6 @@ name|e
 parameter_list|)
 block|{
 comment|// Ignore and hope for the best.
-name|LlapIoImpl
-operator|.
 name|LOG
 operator|.
 name|warn
