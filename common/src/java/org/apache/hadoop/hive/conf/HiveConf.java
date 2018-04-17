@@ -15745,6 +15745,36 @@ argument_list|,
 literal|"Maximum size in bytes that a single query result is allowed to use in the results cache directory"
 argument_list|)
 block|,
+name|HIVE_NOTFICATION_EVENT_POLL_INTERVAL
+argument_list|(
+literal|"hive.notification.event.poll.interval"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"How often the notification log is polled for new NotificationEvents from the metastore."
+operator|+
+literal|"A nonpositive value means the notification log is never polled."
+argument_list|)
+block|,
+name|HIVE_NOTFICATION_EVENT_CONSUMERS
+argument_list|(
+literal|"hive.notification.event.consumers"
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.cache.results.QueryResultsCache$InvalidationEventConsumer"
+argument_list|,
+literal|"Comma-separated list of class names extending EventConsumer,"
+operator|+
+literal|"to handle the NotificationEvents retreived by the notification event poll."
+argument_list|)
+block|,
 comment|/* BLOBSTORE section */
 name|HIVE_BLOBSTORE_SUPPORTED_SCHEMES
 argument_list|(
