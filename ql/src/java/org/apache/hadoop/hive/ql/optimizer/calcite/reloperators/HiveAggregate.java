@@ -504,9 +504,6 @@ operator|.
 name|distribution
 argument_list|(
 name|this
-operator|.
-name|getInput
-argument_list|()
 argument_list|)
 operator|.
 name|getKeys
