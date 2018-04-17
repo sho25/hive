@@ -99,24 +99,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|tools
-operator|.
-name|SQLGenerator
-import|;
-end_import
-
-begin_import
-import|import
 name|javax
 operator|.
 name|annotation
@@ -124,16 +106,6 @@ operator|.
 name|concurrent
 operator|.
 name|NotThreadSafe
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Connection
 import|;
 end_import
 
@@ -438,26 +410,6 @@ name|updateUnmodifiableParameters
 argument_list|()
 expr_stmt|;
 block|}
-block|}
-comment|/**    * Used by ACID/transaction related events for generating direct SQL in DBNotificationListener.    */
-specifier|public
-name|Connection
-name|getConnection
-parameter_list|()
-block|{
-return|return
-literal|null
-return|;
-block|}
-comment|/**    * Used by ACID/transaction related events for generating direct SQL in DBNotificationListener.    */
-specifier|public
-name|SQLGenerator
-name|getSqlGenerator
-parameter_list|()
-block|{
-return|return
-literal|null
-return|;
 block|}
 comment|/**    * Put a parameter to the listener event only if the parameter is absent.    *    * Overridden parameters is not allowed, and an exception may be thrown to avoid a mis-configuration    * between listeners setting the same parameters.    *    * @param name Name of the parameter.    * @param value Value of the parameter.    * @throws IllegalStateException if a parameter already exists.    */
 specifier|private

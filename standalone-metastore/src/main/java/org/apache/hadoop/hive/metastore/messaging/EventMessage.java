@@ -221,6 +221,13 @@ name|MessageFactory
 operator|.
 name|ABORT_TXN_EVENT
 argument_list|)
+operator|,
+name|ALLOC_WRITE_ID
+argument_list|(
+name|MessageFactory
+operator|.
+name|ALLOC_WRITE_ID_EVENT
+argument_list|)
 expr_stmt|;
 end_class
 

@@ -368,6 +368,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|register
+argument_list|(
+name|MessageFactory
+operator|.
+name|ALLOC_WRITE_ID_EVENT
+argument_list|,
+name|AllocWriteIdHandler
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 block|}
 specifier|static
 name|void

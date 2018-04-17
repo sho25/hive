@@ -638,6 +638,13 @@ name|primary
 operator|.
 name|run
 argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
 literal|"CREATE TABLE "
 operator|+
 name|tableName
@@ -722,20 +729,6 @@ name|incrementalDump
 operator|.
 name|lastReplicationId
 argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"SHOW TABLES LIKE '"
-operator|+
-name|tableName
-operator|+
-literal|"'"
-argument_list|)
-operator|.
-name|verifyResult
-argument_list|(
-name|tableName
-argument_list|)
 expr_stmt|;
 comment|// Test the idempotent behavior of Open and Commit Txn
 name|replica
@@ -761,20 +754,6 @@ argument_list|(
 name|incrementalDump
 operator|.
 name|lastReplicationId
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"SHOW TABLES LIKE '"
-operator|+
-name|tableName
-operator|+
-literal|"'"
-argument_list|)
-operator|.
-name|verifyResult
-argument_list|(
-name|tableName
 argument_list|)
 expr_stmt|;
 block|}
@@ -847,6 +826,13 @@ expr_stmt|;
 comment|// this should fail
 name|primary
 operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
 name|runFailure
 argument_list|(
 literal|"CREATE TABLE "
@@ -917,25 +903,6 @@ name|incrementalDump
 operator|.
 name|lastReplicationId
 argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"SHOW TABLES LIKE '"
-operator|+
-name|tableNameFail
-operator|+
-literal|"'"
-argument_list|)
-operator|.
-name|verifyFailure
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|tableNameFail
-block|}
-argument_list|)
 expr_stmt|;
 comment|// Test the idempotent behavior of Abort Txn
 name|replica
@@ -961,25 +928,6 @@ argument_list|(
 name|incrementalDump
 operator|.
 name|lastReplicationId
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"SHOW TABLES LIKE '"
-operator|+
-name|tableNameFail
-operator|+
-literal|"'"
-argument_list|)
-operator|.
-name|verifyFailure
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|tableNameFail
-block|}
 argument_list|)
 expr_stmt|;
 block|}
@@ -1040,6 +988,13 @@ name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
 operator|.
 name|run
 argument_list|(

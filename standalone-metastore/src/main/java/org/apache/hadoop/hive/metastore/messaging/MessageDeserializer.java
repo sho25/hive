@@ -445,6 +445,16 @@ name|String
 name|messageBody
 parameter_list|)
 function_decl|;
+comment|/*    * Method to de-serialize AllocWriteIdMessage instance.    */
+specifier|public
+specifier|abstract
+name|AllocWriteIdMessage
+name|getAllocWriteIdMessage
+parameter_list|(
+name|String
+name|messageBody
+parameter_list|)
+function_decl|;
 comment|// Protection against construction.
 specifier|protected
 name|MessageDeserializer
