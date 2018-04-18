@@ -1209,7 +1209,7 @@ specifier|final
 name|boolean
 name|VERIFY_SETUP_STEPS
 init|=
-literal|true
+literal|false
 decl_stmt|;
 comment|// if verifySetup is set to true, all the test setup we do will perform additional
 comment|// verifications as well, which is useful to verify that our setup occurred
@@ -1860,6 +1860,109 @@ return|;
 block|}
 specifier|private
 name|Tuple
+name|incrementalLoadAndVerify
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|fromReplId
+parameter_list|,
+name|String
+name|toReplId
+parameter_list|,
+name|String
+name|replDbName
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|Tuple
+name|dump
+init|=
+name|replDumpDb
+argument_list|(
+name|dbName
+argument_list|,
+name|fromReplId
+argument_list|,
+name|toReplId
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|loadAndVerify
+argument_list|(
+name|replDbName
+argument_list|,
+name|dump
+operator|.
+name|dumpLocation
+argument_list|,
+name|dump
+operator|.
+name|lastReplId
+argument_list|)
+expr_stmt|;
+return|return
+name|dump
+return|;
+block|}
+specifier|private
+name|Tuple
+name|incrementalLoadAndVerify
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|fromReplId
+parameter_list|,
+name|String
+name|toReplId
+parameter_list|,
+name|String
+name|limit
+parameter_list|,
+name|String
+name|replDbName
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+name|Tuple
+name|dump
+init|=
+name|replDumpDb
+argument_list|(
+name|dbName
+argument_list|,
+name|fromReplId
+argument_list|,
+name|toReplId
+argument_list|,
+name|limit
+argument_list|)
+decl_stmt|;
+name|loadAndVerify
+argument_list|(
+name|replDbName
+argument_list|,
+name|dump
+operator|.
+name|dumpLocation
+argument_list|,
+name|dump
+operator|.
+name|lastReplId
+argument_list|)
+expr_stmt|;
+return|return
+name|dump
+return|;
+block|}
+specifier|private
+name|Tuple
 name|dumpDbFromLastDump
 parameter_list|(
 name|String
@@ -2482,6 +2585,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -2690,7 +2800,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
@@ -2698,11 +2808,6 @@ name|dbName
 operator|+
 literal|".unptned"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|unptn_data
 argument_list|,
 name|driver
@@ -2723,7 +2828,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -2731,11 +2836,6 @@ name|dbName
 operator|+
 literal|".ptned WHERE b=1"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driver
@@ -2756,7 +2856,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -2764,17 +2864,12 @@ name|dbName
 operator|+
 literal|".ptned WHERE b=2"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_2
 argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -2782,17 +2877,12 @@ name|dbName
 operator|+
 literal|".ptned_empty"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|empty
 argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
@@ -2800,11 +2890,6 @@ name|dbName
 operator|+
 literal|".unptned_empty"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|empty
 argument_list|,
 name|driver
@@ -2878,9 +2963,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -2889,19 +2974,12 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"REPL STATUS "
 operator|+
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 operator|new
 name|String
 index|[]
@@ -2912,91 +2990,66 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned_empty"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned_empty"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|empty
 argument_list|,
 name|driverMirror
@@ -3017,33 +3070,16 @@ name|testName
 init|=
 literal|"bootstrapLoadOnExistingDb"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -3134,74 +3170,26 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL DUMP "
-operator|+
-name|dbName
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|replDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
 comment|// Load to an empty database
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL LOAD "
-operator|+
 name|dbName
-operator|+
-literal|"_empty FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-comment|// REPL STATUS should return same repl ID as dump
-name|verifyRun
-argument_list|(
-literal|"REPL STATUS "
-operator|+
 name|dbName
 operator|+
 literal|"_empty"
-argument_list|,
-name|replDumpId
-argument_list|,
-name|driverMirror
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDumpLocn
+init|=
+name|bootstrapDump
+operator|.
+name|dumpLocation
+decl_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
@@ -3374,6 +3362,13 @@ name|name
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|run
 argument_list|(
@@ -3752,9 +3747,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -3768,9 +3763,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -3781,18 +3776,18 @@ name|verifyFail
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe"
+literal|""
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -3809,15 +3804,6 @@ operator|+
 literal|".ptned"
 argument_list|,
 name|driver
-argument_list|)
-expr_stmt|;
-name|verifyIfTableNotExist
-argument_list|(
-name|dbName
-argument_list|,
-literal|"ptned"
-argument_list|,
-name|metaStoreClient
 argument_list|)
 expr_stmt|;
 name|advanceDumpDir
@@ -3881,9 +3867,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|postDropReplDumpLocn
 operator|+
@@ -3899,9 +3885,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -3910,9 +3896,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -3923,9 +3907,9 @@ name|verifyFail
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -3957,6 +3941,13 @@ name|name
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|run
 argument_list|(
@@ -4256,9 +4247,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -4272,9 +4263,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|empty
 argument_list|,
@@ -4285,9 +4276,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
 name|empty
 argument_list|,
@@ -4296,9 +4287,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -4319,9 +4308,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -4359,74 +4346,6 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned DROP PARTITION (b=2)"
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyIfPartitionNotExist
-argument_list|(
-name|dbName
-argument_list|,
-literal|"ptned"
-argument_list|,
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"1"
-argument_list|)
-argument_list|)
-argument_list|,
-name|metaStoreClient
-argument_list|)
-expr_stmt|;
-name|verifyIfPartitionNotExist
-argument_list|(
-name|dbName
-argument_list|,
-literal|"ptned"
-argument_list|,
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"2"
-argument_list|)
-argument_list|)
-argument_list|,
-name|metaStoreClient
-argument_list|)
-expr_stmt|;
-name|verifySetup
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".ptned WHERE b=1"
-argument_list|,
-name|empty
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifySetup
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".ptned WHERE b=2"
-argument_list|,
-name|empty
 argument_list|,
 name|driver
 argument_list|)
@@ -4492,9 +4411,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|postDropReplDumpLocn
 operator|+
@@ -4508,9 +4427,7 @@ operator|)
 assert|;
 name|verifyIfPartitionNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -4531,9 +4448,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfPartitionNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -4556,9 +4471,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|empty
 argument_list|,
@@ -4569,9 +4484,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
 name|empty
 argument_list|,
@@ -4955,9 +4870,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE (b=1) ORDER BY a"
+literal|".ptned WHERE (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data
 argument_list|,
@@ -5410,6 +5325,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -5454,70 +5376,16 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
-name|String
-name|replDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -5648,11 +5516,11 @@ argument_list|,
 name|ptn_data_2
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned_empty"
 argument_list|,
@@ -5661,11 +5529,11 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned_empty"
 argument_list|,
@@ -5856,95 +5724,15 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
+name|lastReplId
 argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|incrementalDumpId
-block|}
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// VERIFY tables and partitions on destination for equivalence.
@@ -5952,9 +5740,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_empty"
+literal|".unptned_empty"
 argument_list|,
 name|empty
 argument_list|,
@@ -5965,26 +5753,35 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_empty"
+literal|".ptned_empty"
 argument_list|,
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|//    verifyRun("SELECT * from " + dbName + "_dupe.unptned", unptn_data);
-comment|// TODO :this does not work because LOAD DATA LOCAL INPATH into an unptned table seems
-comment|// to use ALTER_TABLE only - it does not emit an INSERT or CREATE - re-enable after
-comment|// fixing that.
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_late"
+literal|".unptned"
+argument_list|,
+name|unptn_data
+argument_list|,
+name|driverMirror
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT * from "
+operator|+
+name|replDbName
+operator|+
+literal|".unptned_late"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -5995,9 +5792,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -6008,9 +5805,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -6021,9 +5818,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_late WHERE b=1"
+literal|".ptned_late WHERE b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -6034,9 +5831,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_late WHERE b=2"
+literal|".ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -6070,6 +5867,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -6092,70 +5896,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 comment|// CREATE_TABLE - TRUNCATE - INSERT - The result is just one record.
 comment|// Creating dummy table to control the event ID of TRUNCATE not to be 10 or 100 or 1000...
 name|String
@@ -6619,9 +6376,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|incrementalDumpLocn
 operator|+
@@ -6634,9 +6391,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -6670,6 +6427,13 @@ name|name
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|run
 argument_list|(
@@ -7043,162 +6807,101 @@ argument_list|)
 expr_stmt|;
 comment|// At this point, we've set up all the tables and ptns we're going to test drops across
 comment|// Replicate it first, and then we'll drop it on the source.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
-name|String
-name|replDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifySetup
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-operator|new
-name|String
-index|[]
-block|{
-name|replDumpId
-block|}
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='1'"
+literal|".ptned WHERE b='1'"
 argument_list|,
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='2'"
+literal|".ptned WHERE b='2'"
 argument_list|,
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 WHERE b='1'"
+literal|".ptned2 WHERE b='1'"
 argument_list|,
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 WHERE b='2'"
+literal|".ptned2 WHERE b='2'"
 argument_list|,
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned3 WHERE b=1"
+literal|".ptned3 WHERE b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned3 WHERE b=2"
+literal|".ptned3 WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -7303,74 +7006,15 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// replicate the incremental drops
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|postDropReplDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|postDropReplDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}->{}"
+name|lastReplId
 argument_list|,
-name|postDropReplDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|,
-name|postDropReplDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|postDropReplDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// verify that drops were replicated. This can either be from tables or ptns
@@ -7378,9 +7022,7 @@ comment|// not existing, and thus, throwing a NoSuchObjectException, or returnin
 comment|// or select * returning empty, depending on what we're testing.
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"unptned"
 argument_list|,
@@ -7391,9 +7033,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='2'"
+literal|".ptned WHERE b='2'"
 argument_list|,
 name|empty
 argument_list|,
@@ -7404,9 +7046,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned"
+literal|".ptned"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -7417,9 +7059,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned3 WHERE b=1"
+literal|".ptned3 WHERE b=1"
 argument_list|,
 name|empty
 argument_list|,
@@ -7430,9 +7072,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned3"
+literal|".ptned3"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -7441,9 +7083,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned2"
 argument_list|,
@@ -7474,6 +7114,13 @@ name|testName
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|run
 argument_list|(
@@ -7653,7 +7300,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT * from "
 operator|+
@@ -7661,11 +7308,6 @@ name|dbName
 operator|+
 literal|".unptned"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|unptn_data
 argument_list|,
 name|driver
@@ -7686,7 +7328,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -7694,11 +7336,6 @@ name|dbName
 operator|+
 literal|".ptned WHERE b='1'"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driver
@@ -7719,7 +7356,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -7727,11 +7364,6 @@ name|dbName
 operator|+
 literal|".ptned WHERE b='2'"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_2
 argument_list|,
 name|driver
@@ -7752,7 +7384,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -7760,11 +7392,6 @@ name|dbName
 operator|+
 literal|".ptned2 WHERE b='1'"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driver
@@ -7785,7 +7412,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -7793,177 +7420,88 @@ name|dbName
 operator|+
 literal|".ptned2 WHERE b='2'"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_2
 argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
+name|bootstrapDump
+operator|.
+name|lastReplId
 decl_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|replDumpId
-block|}
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='1'"
+literal|".ptned WHERE b='1'"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='2'"
+literal|".ptned WHERE b='2'"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 WHERE b='1'"
+literal|".ptned2 WHERE b='1'"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 WHERE b='2'"
+literal|".ptned2 WHERE b='2'"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_2
 argument_list|,
 name|driverMirror
@@ -8020,7 +7558,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -8028,17 +7566,12 @@ name|dbName
 operator|+
 literal|".unptned_copy"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|unptn_data
 argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -8046,11 +7579,6 @@ name|dbName
 operator|+
 literal|".ptned_copy"
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driver
@@ -8085,42 +7613,6 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2"
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".ptned WHERE b=2"
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-name|empty
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".ptned"
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-name|ptn_data_1
 argument_list|,
 name|driver
 argument_list|)
@@ -8208,9 +7700,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|postDropReplDumpLocn
 operator|+
@@ -8233,9 +7725,7 @@ name|metaStoreClientMirror
 operator|.
 name|getTable
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"unptned"
 argument_list|)
@@ -8274,37 +7764,27 @@ name|getClass
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned"
+literal|".ptned"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driverMirror
@@ -8312,46 +7792,34 @@ argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned2"
 argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_copy"
+literal|".unptned_copy"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_copy"
+literal|".ptned_copy"
 argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
 name|ptn_data_1
 argument_list|,
 name|driverMirror
@@ -8381,6 +7849,13 @@ name|testName
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|run
 argument_list|(
@@ -8725,154 +8200,88 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// base tables set up, let's replicate them over
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
-name|String
-name|replDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|replDumpId
-block|}
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned2"
+literal|".unptned2"
 argument_list|,
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='1'"
+literal|".ptned WHERE b='1'"
 argument_list|,
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b='2'"
+literal|".ptned WHERE b='2'"
 argument_list|,
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 WHERE b='1'"
+literal|".ptned2 WHERE b='1'"
 argument_list|,
 name|ptn_data_1
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|verifySetup
+name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 WHERE b='2'"
+literal|".ptned2 WHERE b='2'"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -9239,83 +8648,22 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// All alters done, now we replicate them over.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|postAlterReplDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|postAlterReplDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}->{}"
+name|lastReplId
 argument_list|,
-name|postAlterReplDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|,
-name|postAlterReplDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|postAlterReplDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// Replication done, we now do the following verifications:
 comment|// verify that unpartitioned table rename succeeded.
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"unptned"
 argument_list|,
@@ -9326,9 +8674,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_rn"
+literal|".unptned_rn"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -9345,9 +8693,7 @@ name|metaStoreClientMirror
 operator|.
 name|getTable
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"unptned2"
 argument_list|)
@@ -9397,9 +8743,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
 name|empty
 argument_list|,
@@ -9410,9 +8756,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=22"
+literal|".ptned WHERE b=22"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -9422,9 +8768,7 @@ expr_stmt|;
 comment|// verify that ptned table rename succeded.
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned2"
 argument_list|,
@@ -9435,9 +8779,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2_rn WHERE b=2"
+literal|".ptned2_rn WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -9454,9 +8798,7 @@ name|metaStoreClientMirror
 operator|.
 name|getTable
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|)
@@ -9532,9 +8874,7 @@ name|metaStoreClientMirror
 operator|.
 name|getPartition
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"ptned"
 argument_list|,
@@ -9947,6 +9287,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -9991,70 +9338,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -10282,87 +9582,31 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_late"
+literal|".unptned_late"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -10503,85 +9747,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_late WHERE b=1"
+literal|".ptned_late WHERE b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -10592,9 +9773,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_late WHERE b=2"
+literal|".ptned_late WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -10605,9 +9786,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=1"
+literal|".ptned WHERE b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -10618,9 +9799,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned WHERE b=2"
+literal|".ptned WHERE b=2"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -10652,6 +9833,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -10663,70 +9851,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -10832,116 +9973,34 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".unptned_late ORDER BY a"
-argument_list|,
-name|unptn_data
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.unptned ORDER BY a"
-argument_list|,
-name|unptn_data
-argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
@@ -10949,9 +10008,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_late ORDER BY a"
+literal|".unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -11046,85 +10105,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_late ORDER BY a"
+literal|".unptned_late ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
 argument_list|,
@@ -11135,9 +10131,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|data_after_ovwrite
 argument_list|,
@@ -11757,33 +10753,23 @@ name|testName
 init|=
 literal|"incrementalInsertToPartition"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -11795,70 +10781,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|ptn_data_1
@@ -12034,116 +10973,34 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".ptned where (b=2) ORDER BY a"
-argument_list|,
-name|ptn_data_2
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
-argument_list|,
-name|ptn_data_1
-argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
@@ -12151,9 +11008,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -12235,85 +11092,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2)"
+literal|".ptned where (b=2)"
 argument_list|,
 name|data_after_ovwrite
 argument_list|,
@@ -12324,9 +11118,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=3)"
+literal|".ptned where (b=3)"
 argument_list|,
 name|data_after_ovwrite
 argument_list|,
@@ -12348,33 +11142,23 @@ name|testName
 init|=
 literal|"insertToMultiKeyPartition"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -12592,77 +11376,30 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (year=1980) ORDER BY name"
+literal|".namelist where (year=1980) ORDER BY name"
 argument_list|,
 name|ptn_year_1980
 argument_list|,
@@ -12673,9 +11410,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (day=1) ORDER BY name"
+literal|".namelist where (day=1) ORDER BY name"
 argument_list|,
 name|ptn_day_1
 argument_list|,
@@ -12686,9 +11423,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (year=1984 and month=4 and day=1) ORDER BY name"
+literal|".namelist where (year=1984 and month=4 and day=1) ORDER BY name"
 argument_list|,
 name|ptn_year_1984_month_4_day_1_1
 argument_list|,
@@ -12699,9 +11436,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist ORDER BY name"
+literal|".namelist ORDER BY name"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -12712,9 +11449,9 @@ name|verifyRun
 argument_list|(
 literal|"SHOW PARTITIONS "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist"
+literal|".namelist"
 argument_list|,
 name|ptn_list_1
 argument_list|,
@@ -12725,9 +11462,7 @@ name|run
 argument_list|(
 literal|"USE "
 operator|+
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -12928,87 +11663,31 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (year=1980) ORDER BY name"
+literal|".namelist where (year=1980) ORDER BY name"
 argument_list|,
 name|ptn_year_1980
 argument_list|,
@@ -13019,9 +11698,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (day=1) ORDER BY name"
+literal|".namelist where (day=1) ORDER BY name"
 argument_list|,
 name|ptn_day_1_2
 argument_list|,
@@ -13032,9 +11711,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (year=1984 and month=4 and day=1) ORDER BY name"
+literal|".namelist where (year=1984 and month=4 and day=1) ORDER BY name"
 argument_list|,
 name|ptn_year_1984_month_4_day_1_2
 argument_list|,
@@ -13045,9 +11724,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist ORDER BY name"
+literal|".namelist ORDER BY name"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -13058,9 +11737,9 @@ name|verifyRun
 argument_list|(
 literal|"SHOW PARTITIONS "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist"
+literal|".namelist"
 argument_list|,
 name|ptn_list_2
 argument_list|,
@@ -13071,9 +11750,7 @@ name|run
 argument_list|(
 literal|"USE "
 operator|+
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -13173,85 +11850,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifySetup
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist where (year=1990 and month=5 and day=25)"
+literal|".namelist where (year=1990 and month=5 and day=25)"
 argument_list|,
 name|data_after_ovwrite
 argument_list|,
@@ -13262,9 +11876,9 @@ name|verifySetup
 argument_list|(
 literal|"SELECT name from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.namelist ORDER BY name"
+literal|".namelist ORDER BY name"
 argument_list|,
 name|ptn_data_3
 argument_list|,
@@ -13296,6 +11910,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -13307,70 +11928,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -13462,33 +12036,26 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Get the last repl ID corresponding to all insert/alter/create events except DROP.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|String
 name|lastDumpIdWithoutDrop
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 decl_stmt|;
 comment|// Drop all the tables
 name|run
@@ -13536,92 +12103,33 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Dump all the events except DROP
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|lastDumpIdWithoutDrop
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 comment|// Need to find the tables and data as drop is not part of this dump
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -13632,9 +12140,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_tmp ORDER BY a"
+literal|".unptned_tmp ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -13642,83 +12150,20 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump the drop events and check if tables are getting dropped in target as well
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyFail
 argument_list|(
 literal|"SELECT * FROM "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned"
 argument_list|,
@@ -13729,7 +12174,7 @@ name|verifyFail
 argument_list|(
 literal|"SELECT * FROM "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned_tmp"
 argument_list|,
@@ -13761,6 +12206,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -13772,70 +12224,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|ptn_data_1
@@ -14064,33 +12469,26 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Get the last repl ID corresponding to all insert/alter/create events except DROP.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|String
 name|lastDumpIdWithoutDrop
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 decl_stmt|;
 comment|// Drop all the tables
 name|run
@@ -14137,93 +12535,34 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// Dump all the events except DROP
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+comment|// Replicate all the events except DROP
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|lastDumpIdWithoutDrop
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 comment|// Need to find the tables and data as drop is not part of this dump
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -14234,9 +12573,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -14247,9 +12586,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_tmp where (b=1) ORDER BY a"
+literal|".ptned_tmp where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -14260,93 +12599,30 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_tmp where (b=2) ORDER BY a"
+literal|".ptned_tmp where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|// Dump the drop events and check if tables are getting dropped in target as well
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+comment|// Replicate the drop events and check if tables are getting dropped in target as well
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyFail
 argument_list|(
 literal|"SELECT * FROM "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned_tmp"
 argument_list|,
@@ -14357,7 +12633,7 @@ name|verifyFail
 argument_list|(
 literal|"SELECT * FROM "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned"
 argument_list|,
@@ -14379,33 +12655,23 @@ name|testName
 init|=
 literal|"insertOverwriteOnUnpartitionedTableWithCM"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -14417,70 +12683,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 comment|// After INSERT INTO operation, get the last Repl ID
 name|String
 index|[]
@@ -14511,32 +12730,26 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|String
 name|insertDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|false
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 decl_stmt|;
 comment|// Insert overwrite on unpartitioned table
 name|String
@@ -14568,176 +12781,58 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// Dump only one INSERT INTO operation on the table.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+comment|// Replicate only one INSERT INTO operation on the table.
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|insertDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 comment|// After Load from this dump, all target tables/partitions will have initial set of data but source will have latest data.
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|// Dump the remaining INSERT OVERWRITE operations on the table.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+comment|// Replicate the remaining INSERT OVERWRITE operations on the table.
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// After load, shall see the overwritten data.
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|data_after_ovwrite
 argument_list|,
@@ -14759,33 +12854,23 @@ name|testName
 init|=
 literal|"insertOverwriteOnPartitionedTableWithCM"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -14797,70 +12882,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 comment|// INSERT INTO 2 partitions and get the last repl ID
 name|String
 index|[]
@@ -14940,32 +12978,26 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|String
 name|insertDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|false
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 decl_stmt|;
 comment|// Insert overwrite on one partition with multiple files
 name|String
@@ -15010,93 +13042,34 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-comment|// Dump only 2 INSERT INTO operations.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+comment|// Replicate only 2 INSERT INTO operations.
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|insertDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 comment|// After Load from this dump, all target tables/partitions will have initial set of data.
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -15107,92 +13080,33 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|// Dump the remaining INSERT OVERWRITE operation on the table.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+comment|// Replicate the remaining INSERT OVERWRITE operation on the table.
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// After load, shall see the overwritten data.
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -15203,9 +13117,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|data_after_ovwrite
 argument_list|,
@@ -15647,33 +13561,23 @@ name|testName
 init|=
 literal|"renameTableWithCM"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -15696,70 +13600,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -15919,33 +13776,26 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Get the last repl ID corresponding to all insert events except RENAME.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|String
 name|lastDumpIdWithoutRename
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 decl_stmt|;
 name|run
 argument_list|(
@@ -15977,91 +13827,32 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|lastDumpIdWithoutRename
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -16072,9 +13863,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -16085,83 +13876,31 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
+name|verifyFail
 argument_list|(
-literal|"REPL LOAD "
+literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -16170,20 +13909,9 @@ name|verifyFail
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyFail
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -16192,9 +13920,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned_renamed ORDER BY a"
+literal|".unptned_renamed ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -16205,9 +13933,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_renamed where (b=1) ORDER BY a"
+literal|".ptned_renamed where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -16218,9 +13946,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_renamed where (b=2) ORDER BY a"
+literal|".ptned_renamed where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -16242,33 +13970,23 @@ name|testName
 init|=
 literal|"renamePartitionWithCM"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -16280,70 +13998,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|empty
@@ -16463,33 +14134,26 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Get the last repl ID corresponding to all insert events except RENAME.
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|String
 name|lastDumpIdWithoutRename
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 decl_stmt|;
 name|run
 argument_list|(
@@ -16502,91 +14166,32 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|lastDumpIdWithoutRename
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -16597,9 +14202,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -16610,94 +14215,31 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=10) ORDER BY a"
+literal|".ptned where (b=10) ORDER BY a"
 argument_list|,
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -16708,9 +14250,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=10) ORDER BY a"
+literal|".ptned where (b=10) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -16721,9 +14263,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where (b=2) ORDER BY a"
+literal|".ptned where (b=2) ORDER BY a"
 argument_list|,
 name|empty
 argument_list|,
@@ -17261,6 +14803,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -17568,85 +15117,38 @@ comment|// TODO: This does not work because materialized views need the creation
 comment|// to be updated in case tables used were replicated to a different database.
 comment|//run("CREATE MATERIALIZED VIEW " + dbName + ".mat_view AS SELECT a FROM " + dbName + ".ptned where b=1", driver);
 comment|//verifySetup("SELECT a from " + dbName + ".mat_view", ptn_data_1, driver);
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 comment|// view is referring to old database, so no data
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.virtual_view"
+literal|".virtual_view"
 argument_list|,
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|//verifyRun("SELECT a from " + dbName + "_dupe.mat_view", ptn_data_1, driverMirror);
+comment|//verifyRun("SELECT a from " + replDbName + ".mat_view", ptn_data_1, driverMirror);
 name|run
 argument_list|(
 literal|"CREATE VIEW "
@@ -17694,104 +15196,31 @@ expr_stmt|;
 comment|//run("CREATE MATERIALIZED VIEW " + dbName + ".mat_view2 AS SELECT * FROM " + dbName + ".unptned", driver);
 comment|//verifySetup("SELECT * from " + dbName + ".mat_view2", unptn_data, driver);
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|replDumpId
+operator|=
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyResults
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-name|incrementalDumpId
-block|}
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -17802,9 +15231,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where b=1"
+literal|".ptned where b=1"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -17816,31 +15245,31 @@ name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.virtual_view"
+literal|".virtual_view"
 argument_list|,
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|//verifyRun("SELECT a from " + dbName + "_dupe.mat_view", ptn_data_1, driverMirror);
+comment|//verifyRun("SELECT a from " + replDbName + ".mat_view", ptn_data_1, driverMirror);
 comment|// view is referring to old database, so no data
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.virtual_view2"
+literal|".virtual_view2"
 argument_list|,
 name|empty
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|//verifyRun("SELECT * from " + dbName + "_dupe.mat_view2", unptn_data, driverMirror);
+comment|//verifyRun("SELECT * from " + replDbName + ".mat_view2", unptn_data, driverMirror);
 comment|// Test "alter table" with rename
 name|run
 argument_list|(
@@ -17871,79 +15300,30 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|incrementalDumpId
 argument_list|,
-name|driver
+name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
-name|incrementalDumpLocn
+name|replDumpId
 operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT * from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.virtual_view_rename"
+literal|".virtual_view_rename"
 argument_list|,
 name|empty
 argument_list|,
@@ -17987,79 +15367,30 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|incrementalDumpId
 argument_list|,
-name|driver
+name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
-name|incrementalDumpLocn
+name|replDumpId
 operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SHOW COLUMNS FROM "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.virtual_view_rename"
+literal|".virtual_view_rename"
 argument_list|,
 operator|new
 name|String
@@ -18095,77 +15426,18 @@ name|metaStoreClient
 argument_list|)
 expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|incrementalDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
+name|replDumpId
 argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"virtual_view"
 argument_list|,
@@ -18200,6 +15472,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -18211,55 +15490,34 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
+literal|null
 argument_list|,
-literal|0
+literal|null
 argument_list|,
-name|driver
+literal|null
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
+name|lastReplId
+decl_stmt|;
+name|String
 name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
+init|=
+name|bootstrapDump
+operator|.
+name|dumpLocation
+decl_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -18439,9 +15697,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -18450,112 +15708,43 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" LIMIT "
-operator|+
+argument_list|,
+literal|null
+argument_list|,
 name|numOfEventsIns1
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+name|toString
+argument_list|()
 argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned ORDER BY a"
-argument_list|,
-name|unptn_data
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
 argument_list|,
 name|driverMirror
 argument_list|)
-expr_stmt|;
-name|advanceDumpDir
-argument_list|()
 expr_stmt|;
 name|Integer
 name|lastReplID
@@ -18581,175 +15770,59 @@ argument_list|(
 name|lastReplID
 argument_list|)
 decl_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|toReplID
-operator|+
-literal|" LIMIT "
-operator|+
+argument_list|,
 name|numOfEventsIns2
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+name|toString
+argument_list|()
 argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load2
 argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -18771,33 +15844,23 @@ name|testName
 init|=
 literal|"exchangePartition"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -19071,119 +16134,59 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned_src where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
-name|driver
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
-name|driver
+name|driverMirror
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.ptned_src where (b=1 and c=1) ORDER BY a"
-argument_list|,
-name|ptn_data_1
-argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
@@ -19191,35 +16194,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=2 and c=2) ORDER BY a"
-argument_list|,
-name|ptn_data_2
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.ptned_src where (b=2 and c=3) ORDER BY a"
-argument_list|,
-name|ptn_data_2
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.ptned_dest where (b=1 and c=1)"
+literal|".ptned_dest where (b=1 and c=1)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19230,9 +16207,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=2 and c=2)"
+literal|".ptned_dest where (b=2 and c=2)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19243,9 +16220,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=2 and c=3)"
+literal|".ptned_dest where (b=2 and c=3)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19346,87 +16323,31 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=1 and c=1)"
+literal|".ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19437,9 +16358,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=2 and c=2) ORDER BY a"
+literal|".ptned_src where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -19450,9 +16371,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=2 and c=3) ORDER BY a"
+literal|".ptned_src where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -19463,9 +16384,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=1 and c=1) ORDER BY a"
+literal|".ptned_dest where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -19476,9 +16397,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=2 and c=2)"
+literal|".ptned_dest where (b=2 and c=2)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19489,9 +16410,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=2 and c=3)"
+literal|".ptned_dest where (b=2 and c=3)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19592,85 +16513,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=1 and c=1)"
+literal|".ptned_src where (b=1 and c=1)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19681,9 +16539,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=2 and c=2)"
+literal|".ptned_src where (b=2 and c=2)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19694,9 +16552,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_src where (b=2 and c=3)"
+literal|".ptned_src where (b=2 and c=3)"
 argument_list|,
 name|empty
 argument_list|,
@@ -19707,9 +16565,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=1 and c=1) ORDER BY a"
+literal|".ptned_dest where (b=1 and c=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -19720,9 +16578,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=2 and c=2) ORDER BY a"
+literal|".ptned_dest where (b=2 and c=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -19733,9 +16591,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_dest where (b=2 and c=3) ORDER BY a"
+literal|".ptned_dest where (b=2 and c=3) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -19757,33 +16615,23 @@ name|testName
 init|=
 literal|"truncateTable"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -19795,70 +16643,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -19917,7 +16718,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|verifyRun
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -19930,100 +16731,31 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned ORDER BY a"
-argument_list|,
-name|unptn_data
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -20054,98 +16786,30 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 expr_stmt|;
-name|incrementalDumpLocn
+name|replDumpId
 operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned"
-argument_list|,
-name|empty
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.unptned"
 argument_list|,
 name|empty
 argument_list|,
@@ -20194,98 +16858,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
 literal|".unptned ORDER BY a"
-argument_list|,
-name|unptn_data_after_ins
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe.unptned ORDER BY a"
 argument_list|,
 name|unptn_data_after_ins
 argument_list|,
@@ -20307,33 +16895,23 @@ name|testName
 init|=
 literal|"truncatePartitionedTable"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -20611,7 +17189,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|verifyRun
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -20624,7 +17202,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|verifyRun
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -20637,7 +17215,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|verifyRun
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -20650,7 +17228,7 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|verifyRun
+name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
@@ -20663,77 +17241,30 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_1 where (b=1) ORDER BY a"
+literal|".ptned_1 where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -20744,9 +17275,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_1 where (b=2) ORDER BY a"
+literal|".ptned_1 where (b=2) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -20757,9 +17288,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_2 where (b=10) ORDER BY a"
+literal|".ptned_2 where (b=10) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -20770,9 +17301,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_2 where (b=20) ORDER BY a"
+literal|".ptned_2 where (b=20) ORDER BY a"
 argument_list|,
 name|ptn_data_2
 argument_list|,
@@ -20853,87 +17384,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_1 where (b=1) ORDER BY a"
+literal|".ptned_1 where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data_1
 argument_list|,
@@ -20944,9 +17410,9 @@ name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_1 where (b=2)"
+literal|".ptned_1 where (b=2)"
 argument_list|,
 name|empty
 argument_list|,
@@ -20957,9 +17423,9 @@ name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_2 where (b=10)"
+literal|".ptned_2 where (b=10)"
 argument_list|,
 name|empty
 argument_list|,
@@ -20970,9 +17436,9 @@ name|verifySetup
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned_2 where (b=20)"
+literal|".ptned_2 where (b=20)"
 argument_list|,
 name|empty
 argument_list|,
@@ -20994,33 +17460,23 @@ name|testName
 init|=
 literal|"truncateWithCM"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -21032,55 +17488,34 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|replDumpDb
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
+literal|null
 argument_list|,
-literal|0
+literal|null
 argument_list|,
-name|driver
+literal|null
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
+name|lastReplId
+decl_stmt|;
+name|String
 name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
+init|=
+name|bootstrapDump
+operator|.
+name|dumpLocation
+decl_stmt|;
 name|String
 index|[]
 name|empty
@@ -21338,9 +17773,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -21350,96 +17785,30 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load only first insert (1 record)
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" LIMIT "
-operator|+
+argument_list|,
+literal|null
+argument_list|,
 name|numOfEventsIns1
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+name|toString
+argument_list|()
 argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"SELECT a from "
-operator|+
-name|dbName
-operator|+
-literal|".unptned ORDER BY a"
-argument_list|,
-name|unptn_data_load1
-argument_list|,
-name|driver
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
@@ -21455,9 +17824,6 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load only second insert (2 records)
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
 name|Integer
 name|lastReplID
 init|=
@@ -21482,90 +17848,37 @@ argument_list|(
 name|lastReplID
 argument_list|)
 decl_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" TO "
-operator|+
+argument_list|,
 name|toReplID
-operator|+
-literal|" LIMIT "
-operator|+
+argument_list|,
 name|numOfEventsIns2
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+name|toString
+argument_list|()
 argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load2
 argument_list|,
@@ -21573,89 +17886,37 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load only truncate (0 records)
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
-operator|+
-literal|" LIMIT "
-operator|+
+argument_list|,
+literal|null
+argument_list|,
 name|numOfEventsTrunc3
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
+name|toString
+argument_list|()
 argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|,
-name|replDumpId
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|replDumpId
 operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|incrementalDump
+operator|.
+name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|empty
 argument_list|,
@@ -21663,85 +17924,22 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Dump and load insert after truncate (1 record)
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|replDumpId
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-Dump: Dumped to {} with id {} from {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
 argument_list|,
 name|replDumpId
-argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDumpId
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data_load1
 argument_list|,
@@ -23814,59 +20012,30 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL DUMP "
+name|String
+name|replDbName
+init|=
+name|dbName
 operator|+
+literal|"_dupe"
+decl_stmt|;
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
+argument_list|(
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|lastReplDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|lastReplDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
+name|bootstrapDump
+operator|.
+name|lastReplId
 decl_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|lastReplDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 comment|// Bootstrap done, now on to incremental. First, we test db-level REPL LOADs.
 comment|// Both db-level and table-level repl.last.id must be updated.
 name|lastReplDumpId
@@ -23884,6 +20053,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastReplDumpId
@@ -23901,6 +20072,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned ADD PARTITION (b=1)"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastReplDumpId
@@ -23918,6 +20091,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION (b=1) RENAME TO PARTITION (b=11)"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastReplDumpId
@@ -23935,6 +20110,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned SET TBLPROPERTIES ('blah'='foo')"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastReplDumpId
@@ -23956,6 +20133,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_rn"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastReplDumpId
@@ -23973,6 +20152,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_rn DROP PARTITION (b=11)"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastReplDumpId
@@ -23990,6 +20171,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_rn"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// DB-level REPL LOADs testing done, now moving on to table level repl loads.
@@ -24017,6 +20200,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2(a string) partitioned by (b int) STORED AS TEXTFILE"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastTblReplDumpId
@@ -24036,6 +20221,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 ADD PARTITION (b=1)"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastTblReplDumpId
@@ -24055,6 +20242,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 PARTITION (b=1) RENAME TO PARTITION (b=11)"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|lastTblReplDumpId
@@ -24074,6 +20263,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 SET TBLPROPERTIES ('blah'='foo')"
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// Note : Not testing table rename because table rename replication is not supported for table-level repl.
@@ -24095,6 +20286,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned2 DROP PARTITION (b=11)"
+argument_list|,
+name|replDbName
 argument_list|)
 decl_stmt|;
 comment|/*     Comparisons using Strings for event Ids is wrong. This should be numbers since lexical string comparison     and numeric comparision differ. This requires a broader change where we return the dump Id as long and not string     fixing this here for now as it was observed in one of the builds where "1001".compareTo("998") results     in failure of the assertion below.      */
@@ -24142,33 +20335,23 @@ name|testName
 init|=
 literal|"constraints"
 decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|testName
-argument_list|)
-expr_stmt|;
 name|String
 name|dbName
 init|=
-name|testName
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
+name|testName
 argument_list|,
 name|driver
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 name|run
 argument_list|(
 literal|"CREATE TABLE "
@@ -24206,70 +20389,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 try|try
 block|{
 name|List
@@ -24285,9 +20421,7 @@ argument_list|(
 operator|new
 name|PrimaryKeysRequest
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl1"
 argument_list|)
@@ -24318,9 +20452,7 @@ name|UniqueConstraintsRequest
 argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl3"
 argument_list|)
@@ -24353,9 +20485,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl2"
 argument_list|)
@@ -24386,9 +20516,7 @@ name|NotNullConstraintsRequest
 argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl3"
 argument_list|)
@@ -24454,73 +20582,23 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|replDumpId
+operator|=
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|String
 name|pkName
@@ -24557,9 +20635,7 @@ argument_list|(
 operator|new
 name|PrimaryKeysRequest
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl4"
 argument_list|)
@@ -24602,9 +20678,7 @@ name|UniqueConstraintsRequest
 argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl6"
 argument_list|)
@@ -24649,9 +20723,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl5"
 argument_list|)
@@ -24694,9 +20766,7 @@ name|NotNullConstraintsRequest
 argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl6"
 argument_list|)
@@ -24797,70 +20867,13 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|incrementalDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
+name|replDumpId
 argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 try|try
@@ -24878,9 +20891,7 @@ argument_list|(
 operator|new
 name|PrimaryKeysRequest
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl4"
 argument_list|)
@@ -24909,9 +20920,7 @@ name|UniqueConstraintsRequest
 argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl4"
 argument_list|)
@@ -24942,9 +20951,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl5"
 argument_list|)
@@ -24973,9 +20980,7 @@ name|NotNullConstraintsRequest
 argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|,
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"tbl6"
 argument_list|)
@@ -25029,6 +21034,13 @@ name|name
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|String
 index|[]
@@ -25345,77 +21357,30 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT count(*) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 operator|new
 name|String
@@ -25431,9 +21396,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT count(*) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned"
+literal|".ptned"
 argument_list|,
 operator|new
 name|String
@@ -25449,9 +21414,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT max(a) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 operator|new
 name|String
@@ -25467,9 +21432,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT max(a) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned where b=1"
+literal|".ptned where b=1"
 argument_list|,
 operator|new
 name|String
@@ -25577,81 +21542,22 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyRun
 argument_list|(
 literal|"SELECT count(*) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned2"
+literal|".unptned2"
 argument_list|,
 operator|new
 name|String
@@ -25667,9 +21573,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT count(*) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2"
+literal|".ptned2"
 argument_list|,
 operator|new
 name|String
@@ -25685,9 +21591,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT max(a) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned2"
+literal|".unptned2"
 argument_list|,
 operator|new
 name|String
@@ -25703,9 +21609,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT max(a) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.ptned2 where b=1"
+literal|".ptned2 where b=1"
 argument_list|,
 operator|new
 name|String
@@ -25718,6 +21624,7 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: This test should be removed once ACID tables replication is supported.
 annotation|@
 name|Test
 specifier|public
@@ -25741,6 +21648,13 @@ name|testName
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 comment|// TODO: this is wrong; this test sets up dummy txn manager and so it cannot create ACID tables.
 comment|//       If I change it to use proper txn manager, the setup for some tests hangs.
@@ -25793,75 +21707,26 @@ name|metaStoreClient
 argument_list|)
 expr_stmt|;
 comment|// Bootstrap test
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|Tuple
+name|bootstrapDump
+init|=
+name|bootstrapLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|replDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|bootstrapDump
 operator|.
-name|info
-argument_list|(
-literal|"Bootstrap-Dump: Dumped to {} with id {}"
-argument_list|,
-name|replDumpLocn
-argument_list|,
-name|replDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
+name|lastReplId
+decl_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"acid_table"
 argument_list|,
@@ -25870,9 +21735,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"mm_table"
 argument_list|,
@@ -25904,80 +21767,40 @@ argument_list|,
 name|metaStoreClient
 argument_list|)
 expr_stmt|;
-comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
+comment|// Dummy create table command to mark proper last repl ID after dump
 name|run
 argument_list|(
-literal|"REPL DUMP "
+literal|"CREATE TABLE "
 operator|+
 name|dbName
 operator|+
-literal|" FROM "
-operator|+
+literal|".dummy (a int)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+comment|// Perform REPL-DUMP/LOAD
+name|Tuple
+name|incrementalDump
+init|=
+name|incrementalLoadAndVerify
+argument_list|(
+name|dbName
+argument_list|,
 name|replDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|incrementalDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
+name|replDbName
 argument_list|)
 decl_stmt|;
-name|String
-name|incrementalDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|LOG
+name|replDumpId
+operator|=
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"acid_table_rename"
 argument_list|,
@@ -26031,98 +21854,39 @@ argument_list|,
 name|metaStoreClient
 argument_list|)
 expr_stmt|;
+comment|// Dummy insert into command to mark proper last repl ID after dump
+name|run
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|dbName
+operator|+
+literal|".dummy values(1)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalDump
+operator|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|incrementalDumpId
 argument_list|,
-name|driver
+name|replDumpId
+argument_list|,
+name|replDbName
 argument_list|)
 expr_stmt|;
-name|incrementalDumpLocn
+name|replDumpId
 operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
+name|incrementalDump
 operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
+name|lastReplId
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"acid_table_incremental"
 argument_list|,
@@ -26131,9 +21895,7 @@ argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"mm_table_incremental"
 argument_list|,
@@ -26196,98 +21958,31 @@ name|te
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Dummy insert into command to mark proper last repl ID after dump
+name|run
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|dbName
+operator|+
+literal|".dummy values(2)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
 comment|// Perform REPL-DUMP/LOAD
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
-name|incrementalDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpLocn
-operator|=
-name|getResult
-argument_list|(
-literal|0
+name|replDumpId
 argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|incrementalDumpId
-operator|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Incremental-dump: Dumped to {} with id {}"
-argument_list|,
-name|incrementalDumpLocn
-argument_list|,
-name|incrementalDumpId
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"EXPLAIN REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|printOutput
-argument_list|(
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
+name|replDbName
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 literal|"acid_table_incremental"
 argument_list|,
@@ -26318,6 +22013,13 @@ name|testName
 argument_list|,
 name|driver
 argument_list|)
+decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
 decl_stmt|;
 name|String
 name|tableName
@@ -26410,29 +22112,21 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Perform repl
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
-argument_list|(
-literal|"REPL DUMP "
-operator|+
-name|dbName
-argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
 name|String
 name|replDumpLocn
 init|=
-name|getResult
+name|replDumpDb
 argument_list|(
-literal|0
+name|dbName
 argument_list|,
-literal|0
+literal|null
 argument_list|,
-name|driver
+literal|null
+argument_list|,
+literal|null
 argument_list|)
+operator|.
+name|dumpLocation
 decl_stmt|;
 comment|// Reset the driver
 name|driverMirror
@@ -26444,9 +22138,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -26503,9 +22197,9 @@ name|Path
 argument_list|(
 name|warehouse
 argument_list|,
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.db"
+literal|".db"
 operator|+
 name|Path
 operator|.
@@ -26641,6 +22335,13 @@ argument_list|,
 name|driver
 argument_list|)
 decl_stmt|;
+name|String
+name|replDbName
+init|=
+name|dbName
+operator|+
+literal|"_dupe"
+decl_stmt|;
 comment|// Create table and insert two file of the same content
 name|run
 argument_list|(
@@ -26676,6 +22377,20 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Bootstrap test
+name|Tuple
+name|bootstrapDump
+init|=
+name|replDumpDb
+argument_list|(
+name|dbName
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -26691,28 +22406,16 @@ expr_stmt|;
 name|String
 name|replDumpLocn
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
+name|bootstrapDump
+operator|.
+name|dumpLocation
 decl_stmt|;
 name|String
 name|replDumpId
 init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
+name|bootstrapDump
+operator|.
+name|lastReplId
 decl_stmt|;
 comment|// Drop two files so they are moved to CM
 name|run
@@ -26741,9 +22444,9 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe FROM '"
+literal|" FROM '"
 operator|+
 name|replDumpLocn
 operator|+
@@ -26756,9 +22459,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT count(*) from "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe.unptned"
+literal|".unptned"
 argument_list|,
 operator|new
 name|String
@@ -26770,49 +22473,6 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-block|}
-specifier|private
-specifier|static
-name|String
-name|createDB
-parameter_list|(
-name|String
-name|name
-parameter_list|,
-name|IDriver
-name|myDriver
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Testing "
-operator|+
-name|name
-argument_list|)
-expr_stmt|;
-name|String
-name|dbName
-init|=
-name|name
-operator|+
-literal|"_"
-operator|+
-name|tid
-decl_stmt|;
-name|run
-argument_list|(
-literal|"CREATE DATABASE "
-operator|+
-name|dbName
-argument_list|,
-name|myDriver
-argument_list|)
-expr_stmt|;
-return|return
-name|dbName
-return|;
 block|}
 annotation|@
 name|Test
@@ -28057,6 +23717,49 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|private
+specifier|static
+name|String
+name|createDB
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|IDriver
+name|myDriver
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|name
+argument_list|)
+expr_stmt|;
+name|String
+name|dbName
+init|=
+name|name
+operator|+
+literal|"_"
+operator|+
+name|tid
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|dbName
+argument_list|,
+name|myDriver
+argument_list|)
+expr_stmt|;
+return|return
+name|dbName
+return|;
+block|}
+specifier|private
 name|NotificationEvent
 name|createDummyEvent
 parameter_list|(
@@ -28189,6 +23892,9 @@ name|prevReplDumpId
 parameter_list|,
 name|String
 name|cmd
+parameter_list|,
+name|String
+name|replDbName
 parameter_list|)
 throws|throws
 name|IOException
@@ -28200,76 +23906,20 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|String
+name|lastReplDumpId
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|prevReplDumpId
 argument_list|,
-name|driver
+name|replDbName
 argument_list|)
-expr_stmt|;
-name|String
-name|lastDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
+operator|.
+name|lastReplId
 decl_stmt|;
-name|String
-name|lastReplDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe FROM '"
-operator|+
-name|lastDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe"
-argument_list|,
-name|lastReplDumpId
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|tblName
@@ -28281,9 +23931,9 @@ name|verifyRun
 argument_list|(
 literal|"REPL STATUS "
 operator|+
-name|dbName
+name|replDbName
 operator|+
-literal|"_dupe."
+literal|"."
 operator|+
 name|tblName
 argument_list|,
@@ -28333,6 +23983,9 @@ name|prevReplDumpId
 parameter_list|,
 name|String
 name|cmd
+parameter_list|,
+name|String
+name|replDbName
 parameter_list|)
 throws|throws
 name|IOException
@@ -28344,95 +23997,35 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|advanceDumpDir
-argument_list|()
-expr_stmt|;
-name|run
+name|String
+name|lastReplDumpId
+init|=
+name|incrementalLoadAndVerify
 argument_list|(
-literal|"REPL DUMP "
-operator|+
 name|dbName
 operator|+
 literal|"."
 operator|+
 name|tblName
-operator|+
-literal|" FROM "
-operator|+
+argument_list|,
 name|prevReplDumpId
 argument_list|,
-name|driver
-argument_list|)
-expr_stmt|;
-name|String
-name|lastDumpLocn
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|0
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|String
-name|lastReplDumpId
-init|=
-name|getResult
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|,
-literal|true
-argument_list|,
-name|driver
-argument_list|)
-decl_stmt|;
-name|run
-argument_list|(
-literal|"REPL LOAD "
+name|replDbName
 operator|+
-name|dbName
-operator|+
-literal|"_dupe."
+literal|"."
 operator|+
 name|tblName
-operator|+
-literal|" FROM '"
-operator|+
-name|lastDumpLocn
-operator|+
-literal|"'"
-argument_list|,
-name|driverMirror
 argument_list|)
-expr_stmt|;
+operator|.
+name|lastReplId
+decl_stmt|;
 name|verifyRun
 argument_list|(
 literal|"REPL STATUS "
 operator|+
-name|dbName
-operator|+
-literal|"_dupe"
+name|replDbName
 argument_list|,
 name|lastDbReplDumpId
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-name|verifyRun
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName
-operator|+
-literal|"_dupe."
-operator|+
-name|tblName
-argument_list|,
-name|lastReplDumpId
 argument_list|,
 name|driverMirror
 argument_list|)
