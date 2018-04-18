@@ -12163,7 +12163,7 @@ argument_list|)
 return|;
 block|}
 comment|/**    * @param partition    * @return    */
-specifier|private
+specifier|protected
 name|Partition
 name|deepCopy
 parameter_list|(

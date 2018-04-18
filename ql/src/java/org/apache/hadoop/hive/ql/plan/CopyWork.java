@@ -486,7 +486,7 @@ return|return
 name|errorOnSrcEmpty
 return|;
 block|}
-comment|/** Whether the copy should ignore MM directories in the source, and copy their content to    * destination directly, rather than copying the directories themselves. */
+comment|/**    *  Whether the copy should ignore MM directories in the source, and copy their content to    * destination directly, rather than copying the directories themselves.    * */
 specifier|public
 name|void
 name|setSkipSourceMmDirs

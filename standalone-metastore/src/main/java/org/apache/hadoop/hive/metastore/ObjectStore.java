@@ -19446,103 +19446,18 @@ literal|" table not found"
 argument_list|)
 throw|;
 block|}
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|partCols
-init|=
-name|table
-operator|.
-name|getPartitionKeys
-argument_list|()
-decl_stmt|;
-name|int
-name|numPartKeys
-init|=
-name|partCols
-operator|.
-name|size
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|part_vals
-operator|.
-name|size
-argument_list|()
-operator|>
-name|numPartKeys
-condition|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Incorrect number of partition values."
-operator|+
-literal|" numPartKeys="
-operator|+
-name|numPartKeys
-operator|+
-literal|", part_val="
-operator|+
-name|part_vals
-operator|.
-name|size
-argument_list|()
-argument_list|)
-throw|;
-block|}
-name|partCols
-operator|=
-name|partCols
-operator|.
-name|subList
-argument_list|(
-literal|0
-argument_list|,
-name|part_vals
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// Construct a pattern of the form: partKey=partVal/partKey2=partVal2/...
-comment|// where partVal is either the escaped partition value given as input,
-comment|// or a regex of the form ".*"
-comment|// This works because the "=" and "/" separating key names and partition key/values
-comment|// are not escaped.
 name|String
 name|partNameMatcher
 init|=
-name|Warehouse
+name|MetaStoreUtils
 operator|.
-name|makePartName
+name|makePartNameMatcher
 argument_list|(
-name|partCols
+name|table
 argument_list|,
 name|part_vals
-argument_list|,
-literal|".*"
 argument_list|)
 decl_stmt|;
-comment|// add ".*" to the regex to match anything else afterwards the partial spec.
-if|if
-condition|(
-name|part_vals
-operator|.
-name|size
-argument_list|()
-operator|<
-name|numPartKeys
-condition|)
-block|{
-name|partNameMatcher
-operator|+=
-literal|".*"
-expr_stmt|;
-block|}
 name|Query
 name|query
 init|=

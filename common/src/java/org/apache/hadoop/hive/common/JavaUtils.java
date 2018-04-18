@@ -1209,6 +1209,7 @@ operator|.
 name|getName
 argument_list|()
 decl_stmt|;
+comment|//todo: what if this is a base?
 if|if
 condition|(
 operator|!
@@ -1257,6 +1258,7 @@ argument_list|(
 name|idStr
 argument_list|)
 expr_stmt|;
+comment|//what for? sanity check?
 block|}
 catch|catch
 parameter_list|(

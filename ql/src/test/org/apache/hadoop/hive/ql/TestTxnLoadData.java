@@ -2257,7 +2257,6 @@ literal|"load data inpath"
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
 name|void
 name|checkResult
 parameter_list|(

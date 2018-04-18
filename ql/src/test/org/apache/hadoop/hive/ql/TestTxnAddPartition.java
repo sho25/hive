@@ -267,7 +267,7 @@ name|File
 operator|.
 name|separator
 operator|+
-name|TestTxnLoadData
+name|TestTxnAddPartition
 operator|.
 name|class
 operator|.

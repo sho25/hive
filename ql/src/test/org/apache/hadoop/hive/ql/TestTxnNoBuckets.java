@@ -273,26 +273,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Before
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|Ignore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Rule
 import|;
 end_import
@@ -1635,6 +1615,7 @@ name|values
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|//todo: try this with acid default - it seem making table acid in listener is too late
 name|runStatementOnDriver
 argument_list|(
 literal|"create table myctas2 stored as ORC TBLPROPERTIES ('transactional"
@@ -1646,7 +1627,6 @@ operator|.
 name|ACIDTBL
 argument_list|)
 expr_stmt|;
-comment|//todo: try this with acid default - it seem makeing table acid in listener is too late
 name|rs
 operator|=
 name|runStatementOnDriver
@@ -1853,7 +1833,7 @@ literal|" from myctas order by ROW__ID"
 argument_list|)
 decl_stmt|;
 block|}
-comment|/**    * Insert into unbucketed acid table from union all query    * Union All is flattend so nested subdirs are created and acid move drops them since    * delta dirs have unique names    */
+comment|/**    * Insert into unbucketed acid table from union all query    * Union All is flattened so nested subdirs are created and acid move drops them since    * delta dirs have unique names    */
 annotation|@
 name|Test
 specifier|public
@@ -3550,6 +3530,72 @@ operator|.
 name|contains
 argument_list|(
 literal|"CREATE-TABLE-AS-SELECT does not support"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Currently CTAS doesn't support partitioned tables.  Correspondingly Acid only supports CTAS for    * un-partitioned tables.  This test is here to make sure that if CTAS is made to support    * un-partitioned tables, that it raises a red flag for Acid.    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testCtasPartitioned
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into "
+operator|+
+name|Table
+operator|.
+name|NONACIDNONBUCKET
+operator|+
+literal|"(a,b) values(1,2),(1,3)"
+argument_list|)
+expr_stmt|;
+name|CommandProcessorResponse
+name|cpr
+init|=
+name|runStatementOnDriverNegative
+argument_list|(
+literal|"create table myctas partitioned "
+operator|+
+literal|"by (b int) stored as "
+operator|+
+literal|"ORC TBLPROPERTIES ('transactional'='true') as select a, b from "
+operator|+
+name|Table
+operator|.
+name|NONACIDORCTBL
+argument_list|)
+decl_stmt|;
+name|int
+name|j
+init|=
+name|ErrorMsg
+operator|.
+name|CTAS_PARCOL_COEXISTENCE
+operator|.
+name|getErrorCode
+argument_list|()
+decl_stmt|;
+comment|//this code doesn't propagate
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|cpr
+operator|.
+name|getErrorMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"CREATE-TABLE-AS-SELECT does not support "
+operator|+
+literal|"partitioning in the target table"
 argument_list|)
 argument_list|)
 expr_stmt|;

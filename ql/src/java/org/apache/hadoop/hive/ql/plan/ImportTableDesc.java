@@ -413,10 +413,7 @@ argument_list|,
 literal|false
 argument_list|,
 comment|// isExternal: set to false here, can be overwritten by the IMPORT stmt
-name|table
-operator|.
-name|isTemporary
-argument_list|()
+literal|false
 argument_list|,
 name|table
 operator|.

@@ -9179,7 +9179,11 @@ comment|//       to ACID updates. So the are not themselves ACID.
 comment|// Note: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
+operator|(
 name|isMmTableWrite
+operator|||
+name|isFullAcidTable
+operator|)
 operator|&&
 name|loadPath
 operator|.
@@ -12625,7 +12629,11 @@ block|}
 comment|// Note: this assumes both paths are qualified; which they are, currently.
 if|if
 condition|(
+operator|(
 name|isMmTable
+operator|||
+name|isFullAcidTable
+operator|)
 operator|&&
 name|loadPath
 operator|.
@@ -12638,6 +12646,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+comment|/**        * some operations on Transactional tables (e.g. Import) write directly to the final location        * and avoid the 'move' operation.  Since MoveTask does other things, setting 'loadPath' to be        * the table/partition path indicates that the 'file move' part of MoveTask is not needed.        */
 if|if
 condition|(
 name|Utilities
