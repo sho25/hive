@@ -4532,6 +4532,15 @@ name|cl
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|exit
+condition|)
+block|{
+return|return
+literal|1
+return|;
+block|}
 name|int
 name|code
 init|=
@@ -6392,9 +6401,14 @@ block|}
 block|}
 finally|finally
 block|{
+comment|//exit beeline if there is initScript failure and --force is not set
 name|exit
 operator|=
-literal|false
+name|exitOnError
+operator|&&
+name|executionResult
+operator|!=
+name|ERRNO_OK
 expr_stmt|;
 block|}
 block|}

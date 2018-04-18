@@ -8683,11 +8683,41 @@ name|updateOptsForCli
 argument_list|()
 expr_stmt|;
 block|}
+name|int
+name|initScriptExecutionResult
+init|=
 name|beeLine
 operator|.
 name|runInit
 argument_list|()
-expr_stmt|;
+decl_stmt|;
+comment|//if execution of the init script(s) return anything other than ERRNO_OK from beeline
+comment|//exit beeline with error unless --force is set
+if|if
+condition|(
+name|initScriptExecutionResult
+operator|!=
+literal|0
+operator|&&
+operator|!
+name|beeLine
+operator|.
+name|getOpts
+argument_list|()
+operator|.
+name|getForce
+argument_list|()
+condition|)
+block|{
+return|return
+name|beeLine
+operator|.
+name|error
+argument_list|(
+literal|"init script execution failed."
+argument_list|)
+return|;
+block|}
 name|beeLine
 operator|.
 name|setCompletions
