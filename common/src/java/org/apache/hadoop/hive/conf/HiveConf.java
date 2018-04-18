@@ -10184,9 +10184,7 @@ literal|false
 argument_list|,
 literal|"Whether to log explain output for every query.\n"
 operator|+
-literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level\n"
-operator|+
-literal|"and in WebUI / Drilldown / Show Query."
+literal|"When enabled, will log EXPLAIN EXTENDED output for the query at INFO log4j log level."
 argument_list|)
 block|,
 name|HIVE_EXPLAIN_USER
@@ -10827,6 +10825,17 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"If true, the HiveServer2 WebUI will be secured with PAM."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_EXPLAIN_OUTPUT
+argument_list|(
+literal|"hive.server2.webui.explain.output"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When set to true, the EXPLAIN output for every query is displayed"
+operator|+
+literal|" in the HS2 WebUI / Drilldown / Query Plan tab.\n"
 argument_list|)
 block|,
 comment|// Tez session settings
