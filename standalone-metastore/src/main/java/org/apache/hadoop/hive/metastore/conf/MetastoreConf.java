@@ -3727,6 +3727,22 @@ operator|+
 literal|"If not positive, no default pool will be created."
 argument_list|)
 block|,
+name|RAWSTORE_PARTITION_BATCH_SIZE
+argument_list|(
+literal|"metastore.rawstore.batch.size"
+argument_list|,
+literal|"metastore.rawstore.batch.size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"Batch size for partition and other object retrieval from the underlying DB in JDO.\n"
+operator|+
+literal|"The JDO implementation such as DataNucleus may run into issues when the generated queries are\n"
+operator|+
+literal|"too large. Use this parameter to break the query into multiple batches. -1 means no batching."
+argument_list|)
+block|,
 comment|// Hive values we have copied and use as is
 comment|// These two are used to indicate that we are running tests
 name|HIVE_IN_TEST
