@@ -198,7 +198,7 @@ specifier|static
 class|class
 name|Factory
 block|{
-comment|/**      * Factory method. Construct PartitionSpecProxy from raw PartitionSpec.      * @param partSpec Raw PartitionSpec from the Thrift API.      * @return PartitionSpecProxy instance.      */
+comment|/**      * Factory method. Construct PartitionSpecProxy from raw PartitionSpec.      * @param partSpec Raw PartitionSpec from the Thrift API.      * @return PartitionSpecProxy instance.      * @throws MetaException      */
 specifier|public
 specifier|static
 name|PartitionSpecProxy
@@ -207,6 +207,8 @@ parameter_list|(
 name|PartitionSpec
 name|partSpec
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 if|if
 condition|(
@@ -262,7 +264,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * Factory method to construct CompositePartitionSpecProxy.      * @param partitionSpecs List of raw PartitionSpecs.      * @return A CompositePartitionSpecProxy instance.      */
+comment|/**      * Factory method to construct CompositePartitionSpecProxy.      * @param partitionSpecs List of raw PartitionSpecs.      * @return A CompositePartitionSpecProxy instance.      * @throws MetaException      */
 specifier|public
 specifier|static
 name|PartitionSpecProxy
@@ -274,6 +276,8 @@ name|PartitionSpec
 argument_list|>
 name|partitionSpecs
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 return|return
 operator|new

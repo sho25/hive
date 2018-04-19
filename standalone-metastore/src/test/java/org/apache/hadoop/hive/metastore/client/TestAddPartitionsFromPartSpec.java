@@ -139,24 +139,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|Database
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|FieldSchema
 import|;
 end_import
@@ -448,20 +430,6 @@ operator|.
 name|thrift
 operator|.
 name|TException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|thrift
-operator|.
-name|transport
-operator|.
-name|TTransportException
 import|;
 end_import
 
@@ -1337,7 +1305,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|NullPointerException
+name|MetaException
 operator|.
 name|class
 argument_list|)
@@ -1348,7 +1316,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// TODO: NPE should not be thrown.
 name|client
 operator|.
 name|add_partitions_pspec
@@ -1404,6 +1371,13 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecNullPartList
@@ -1436,8 +1410,6 @@ argument_list|,
 name|partitions
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -1445,27 +1417,16 @@ argument_list|(
 name|partitionSpec
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-decl||
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecNoDB
@@ -1507,8 +1468,6 @@ name|partition
 argument_list|)
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -1516,27 +1475,16 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-decl||
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecNoTable
@@ -1578,8 +1526,6 @@ name|partition
 argument_list|)
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -1587,27 +1533,16 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-decl||
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecNoDBAndTableInPartition
@@ -1663,8 +1598,6 @@ name|partition
 argument_list|)
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -1672,24 +1605,6 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-decl||
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
@@ -2271,6 +2186,13 @@ block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecNullPart
@@ -2337,8 +2259,6 @@ argument_list|,
 name|partitions
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -2346,15 +2266,6 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
@@ -3000,7 +2911,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|NullPointerException
+name|MetaException
 operator|.
 name|class
 argument_list|)
@@ -3079,7 +2990,6 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-comment|// TODO: NPE should not be thrown.
 block|}
 annotation|@
 name|Test
@@ -3971,6 +3881,13 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecWithSharedSDNullSd
@@ -4016,8 +3933,6 @@ argument_list|,
 name|sd
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -4025,24 +3940,6 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-decl||
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
@@ -4892,6 +4789,13 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
 name|testAddPartitionSpecWithSharedSDNoValue
@@ -4950,8 +4854,6 @@ name|location
 argument_list|)
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -4959,24 +4861,6 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|fail
-argument_list|(
-literal|"Exception should have been thrown."
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-decl||
-name|TTransportException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown.
-block|}
 block|}
 annotation|@
 name|Test
@@ -5068,9 +4952,16 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
 specifier|public
 name|void
-name|testAddPartitionSpecNullValue
+name|testAddPartitionSpecNullValues
 parameter_list|()
 throws|throws
 name|Exception
@@ -5090,6 +4981,13 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
+name|partition
+operator|.
+name|setValues
+argument_list|(
+literal|null
+argument_list|)
+expr_stmt|;
 name|PartitionSpecProxy
 name|partitionSpecProxy
 init|=
@@ -5109,8 +5007,6 @@ name|partition
 argument_list|)
 argument_list|)
 decl_stmt|;
-try|try
-block|{
 name|client
 operator|.
 name|add_partitions_pspec
@@ -5118,15 +5014,6 @@ argument_list|(
 name|partitionSpecProxy
 argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|NullPointerException
-name|e
-parameter_list|)
-block|{
-comment|// TODO: NPE should not be thrown
-block|}
 block|}
 annotation|@
 name|Test
@@ -6253,9 +6140,6 @@ parameter_list|)
 throws|throws
 name|TException
 block|{
-name|Database
-name|db
-init|=
 operator|new
 name|DatabaseBuilder
 argument_list|()
@@ -6274,7 +6158,7 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 block|}
 specifier|private
 name|Table
@@ -6326,9 +6210,6 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|Table
-name|table
-init|=
 operator|new
 name|TableBuilder
 argument_list|()
@@ -6411,7 +6292,7 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 return|return
 name|client
 operator|.
@@ -7227,6 +7108,8 @@ name|Partition
 argument_list|>
 name|partitions
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|PartitionSpec
 name|partitionSpec
@@ -7406,6 +7289,8 @@ parameter_list|,
 name|StorageDescriptor
 name|sd
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|PartitionSpec
 name|partitionSpec

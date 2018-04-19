@@ -180,6 +180,8 @@ parameter_list|(
 name|PartitionSpec
 name|partitionSpec
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 assert|assert
 name|partitionSpec
@@ -187,6 +189,27 @@ operator|.
 name|isSetSharedSDPartitionSpec
 argument_list|()
 assert|;
+if|if
+condition|(
+name|partitionSpec
+operator|.
+name|getSharedSDPartitionSpec
+argument_list|()
+operator|.
+name|getSd
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"The shared storage descriptor must be set."
+argument_list|)
+throw|;
+block|}
 name|this
 operator|.
 name|partitionSpec

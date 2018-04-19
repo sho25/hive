@@ -175,6 +175,8 @@ name|PartitionSpec
 argument_list|>
 name|partitionSpecs
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|this
 operator|.
@@ -316,6 +318,8 @@ name|PartitionSpec
 argument_list|>
 name|partitionSpecs
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|this
 argument_list|(
@@ -347,6 +351,8 @@ name|PartitionSpec
 argument_list|>
 name|partitionSpecs
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|this
 operator|.
