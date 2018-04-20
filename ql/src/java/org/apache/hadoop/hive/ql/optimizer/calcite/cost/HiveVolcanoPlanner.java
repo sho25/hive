@@ -105,7 +105,7 @@ name|calcite
 operator|.
 name|plan
 operator|.
-name|RelOptCostImpl
+name|RelOptPlanner
 import|;
 end_import
 
@@ -119,7 +119,7 @@ name|calcite
 operator|.
 name|plan
 operator|.
-name|RelOptPlanner
+name|RelOptUtil
 import|;
 end_import
 
@@ -221,13 +221,11 @@ name|org
 operator|.
 name|apache
 operator|.
-name|commons
-operator|.
-name|math3
+name|calcite
 operator|.
 name|util
 operator|.
-name|FastMath
+name|Util
 import|;
 end_import
 
@@ -336,14 +334,6 @@ specifier|private
 specifier|final
 name|boolean
 name|isHeuristic
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|double
-name|FACTOR
-init|=
-literal|0.2d
 decl_stmt|;
 comment|/** Creates a HiveVolcanoPlanner. */
 specifier|public
@@ -563,18 +553,32 @@ operator|instanceof
 name|RelSubset
 condition|)
 block|{
-return|return
-name|getCost
-argument_list|(
-operator|(
+comment|// Get cost of the subset, best rel may have been chosen or not
+name|RelSubset
+name|subset
+init|=
 operator|(
 name|RelSubset
 operator|)
 name|rel
-operator|)
+decl_stmt|;
+return|return
+name|getCost
+argument_list|(
+name|Util
+operator|.
+name|first
+argument_list|(
+name|subset
 operator|.
 name|getBest
 argument_list|()
+argument_list|,
+name|subset
+operator|.
+name|getOriginal
+argument_list|()
+argument_list|)
 argument_list|,
 name|mq
 argument_list|)
@@ -716,6 +720,38 @@ operator|&&
 name|usesMaterializedViews
 condition|)
 block|{
+comment|// If a child of this expression uses a materialized view,
+comment|// then we decrease its cost by a certain factor. This is
+comment|// useful for e.g. partial rewritings, where a part of plan
+comment|// does not use the materialization, but we still want to
+comment|// decrease its cost so it is chosen instead of the original
+comment|// plan
+name|cost
+operator|=
+name|cost
+operator|.
+name|multiplyBy
+argument_list|(
+name|RelOptUtil
+operator|.
+name|EPSILON
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+operator|!
+name|costFactory
+operator|.
+name|makeZeroCost
+argument_list|()
+operator|.
+name|isLt
+argument_list|(
+name|cost
+argument_list|)
+condition|)
+block|{
+comment|// cost must be positive, so nudge it
 name|cost
 operator|=
 name|costFactory
@@ -723,6 +759,7 @@ operator|.
 name|makeTinyCost
 argument_list|()
 expr_stmt|;
+block|}
 for|for
 control|(
 name|RelNode
@@ -734,12 +771,6 @@ name|getInputs
 argument_list|()
 control|)
 block|{
-comment|// If a child of this expression uses a materialized view,
-comment|// then we decrease its cost by a certain factor. This is
-comment|// useful for e.g. partial rewritings, where a part of plan
-comment|// does not use the materialization, but we still want to
-comment|// decrease its cost so it is chosen instead of the original
-comment|// plan
 name|cost
 operator|=
 name|cost
@@ -751,11 +782,6 @@ argument_list|(
 name|input
 argument_list|,
 name|mq
-argument_list|)
-operator|.
-name|multiplyBy
-argument_list|(
-name|FACTOR
 argument_list|)
 argument_list|)
 expr_stmt|;
