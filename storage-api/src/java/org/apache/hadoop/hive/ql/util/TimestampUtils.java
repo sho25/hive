@@ -94,7 +94,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Utitilities for Timestamps and the relevant conversions.  */
+comment|/**  * Utilities for Timestamps and the relevant conversions.  */
 end_comment
 
 begin_class
