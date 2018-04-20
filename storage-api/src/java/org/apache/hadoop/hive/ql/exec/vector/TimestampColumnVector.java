@@ -1482,6 +1482,18 @@ operator|=
 name|scratchWritable
 expr_stmt|;
 block|}
+comment|/**    * Return the value for the utc boolean variable.    * @return    */
+specifier|public
+name|boolean
+name|isUTC
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|isUTC
+return|;
+block|}
 comment|/**    * Set the utc boolean variable    * @param value    */
 specifier|public
 name|void
