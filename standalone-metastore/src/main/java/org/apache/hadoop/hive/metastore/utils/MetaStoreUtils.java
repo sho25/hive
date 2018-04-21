@@ -33,24 +33,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|ISchemaName
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|WMPoolSchedulingPolicy
 import|;
 end_import
@@ -4158,10 +4140,11 @@ return|return
 literal|false
 return|;
 block|}
+comment|/**    * Updates the numFiles and totalSize parameters for the passed Table by querying    * the warehouse if the passed Table does not already have values for these parameters.    * NOTE: This function is rather expensive since it needs to traverse the file system to get all    * the information.    *    * @param newDir if true, the directory was just created and can be assumed to be empty    * @param forceRecompute Recompute stats even if the passed Table already has    * these parameters set    */
 specifier|public
 specifier|static
-name|boolean
-name|updateTableStatsFast
+name|void
+name|updateTableStatsSlow
 parameter_list|(
 name|Database
 name|db
@@ -4173,84 +4156,6 @@ name|Warehouse
 name|wh
 parameter_list|,
 name|boolean
-name|madeDir
-parameter_list|,
-name|boolean
-name|forceRecompute
-parameter_list|,
-name|EnvironmentContext
-name|environmentContext
-parameter_list|,
-name|boolean
-name|isCreate
-parameter_list|)
-throws|throws
-name|MetaException
-block|{
-if|if
-condition|(
-name|tbl
-operator|.
-name|getPartitionKeysSize
-argument_list|()
-operator|!=
-literal|0
-condition|)
-return|return
-literal|false
-return|;
-comment|// Update stats only when unpartitioned
-comment|// TODO: this is also invalid for ACID tables, except for the create case by coincidence;
-comment|//       because the methods in metastore get all the files in the table directory without
-comment|//       regard for ACID state.
-name|List
-argument_list|<
-name|FileStatus
-argument_list|>
-name|fileStatuses
-init|=
-name|wh
-operator|.
-name|getFileStatusesForUnpartitionedTable
-argument_list|(
-name|db
-argument_list|,
-name|tbl
-argument_list|)
-decl_stmt|;
-return|return
-name|updateTableStatsFast
-argument_list|(
-name|tbl
-argument_list|,
-name|fileStatuses
-argument_list|,
-name|madeDir
-argument_list|,
-name|forceRecompute
-argument_list|,
-name|environmentContext
-argument_list|,
-name|isCreate
-argument_list|)
-return|;
-block|}
-comment|/**    * Updates the numFiles and totalSize parameters for the passed Table by querying    * the warehouse if the passed Table does not already have values for these parameters.    * @param tbl    * @param fileStatus    * @param newDir if true, the directory was just created and can be assumed to be empty    * @param forceRecompute Recompute stats even if the passed Table already has    * these parameters set    * @return true if the stats were updated, false otherwise    */
-specifier|private
-specifier|static
-name|boolean
-name|updateTableStatsFast
-parameter_list|(
-name|Table
-name|tbl
-parameter_list|,
-name|List
-argument_list|<
-name|FileStatus
-argument_list|>
-name|fileStatus
-parameter_list|,
-name|boolean
 name|newDir
 parameter_list|,
 name|boolean
@@ -4258,13 +4163,18 @@ name|forceRecompute
 parameter_list|,
 name|EnvironmentContext
 name|environmentContext
-parameter_list|,
-name|boolean
-name|isCreate
 parameter_list|)
 throws|throws
 name|MetaException
 block|{
+comment|// DO_NOT_UPDATE_STATS is supposed to be a transient parameter that is only passed via RPC
+comment|// We want to avoid this property from being persistent.
+comment|//
+comment|// NOTE: If this property *is* set as table property we will remove it which is incorrect but
+comment|// we can't distinguish between these two cases
+comment|//
+comment|// This problem was introduced by HIVE-10228. A better approach would be to pass the property
+comment|// via the environment context.
 name|Map
 argument_list|<
 name|String
@@ -4277,6 +4187,11 @@ name|tbl
 operator|.
 name|getParameters
 argument_list|()
+decl_stmt|;
+name|boolean
+name|updateStats
+init|=
+literal|true
 decl_stmt|;
 if|if
 condition|(
@@ -4296,9 +4211,9 @@ name|DO_NOT_UPDATE_STATS
 argument_list|)
 condition|)
 block|{
-name|boolean
-name|doNotUpdateStats
-init|=
+name|updateStats
+operator|=
+operator|!
 name|Boolean
 operator|.
 name|valueOf
@@ -4312,7 +4227,7 @@ operator|.
 name|DO_NOT_UPDATE_STATS
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|params
 operator|.
 name|remove
@@ -4322,24 +4237,25 @@ operator|.
 name|DO_NOT_UPDATE_STATS
 argument_list|)
 expr_stmt|;
-name|tbl
-operator|.
-name|setParameters
-argument_list|(
-name|params
-argument_list|)
-expr_stmt|;
-comment|// to make sure we remove this marker property
+block|}
 if|if
 condition|(
-name|doNotUpdateStats
+operator|!
+name|updateStats
+operator|||
+name|newDir
+operator|||
+name|tbl
+operator|.
+name|getPartitionKeysSize
+argument_list|()
+operator|!=
+literal|0
 condition|)
 block|{
-return|return
-literal|false
-return|;
+return|return;
 block|}
-block|}
+comment|// If stats are already present and forceRecompute isn't set, nothing to do
 if|if
 condition|(
 operator|!
@@ -4354,9 +4270,25 @@ argument_list|(
 name|params
 argument_list|)
 condition|)
-return|return
-literal|false
-return|;
+block|{
+return|return;
+block|}
+comment|// NOTE: wh.getFileStatusesForUnpartitionedTable() can be REALLY slow
+name|List
+argument_list|<
+name|FileStatus
+argument_list|>
+name|fileStatus
+init|=
+name|wh
+operator|.
+name|getFileStatusesForUnpartitionedTable
+argument_list|(
+name|db
+argument_list|,
+name|tbl
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|params
@@ -4371,36 +4303,6 @@ name|HashMap
 argument_list|<>
 argument_list|()
 expr_stmt|;
-block|}
-if|if
-condition|(
-operator|!
-name|isCreate
-operator|&&
-name|MetaStoreUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|tbl
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-condition|)
-block|{
-comment|// TODO: we should use AcidUtils.getAcidFilesForStats, but cannot access it from metastore.
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Not updating fast stats for a transactional table "
-operator|+
-name|tbl
-operator|.
-name|getTableName
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|tbl
 operator|.
 name|setParameters
@@ -4408,24 +4310,15 @@ argument_list|(
 name|params
 argument_list|)
 expr_stmt|;
-return|return
-literal|true
-return|;
 block|}
-if|if
-condition|(
-operator|!
-name|newDir
-condition|)
-block|{
 comment|// The table location already exists and may contain data.
 comment|// Let's try to populate those stats that don't require full scan.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updating table stats fast for "
-operator|+
+literal|"Updating table stats for {}"
+argument_list|,
 name|tbl
 operator|.
 name|getTableName
@@ -4443,15 +4336,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updated size of table "
-operator|+
+literal|"Updated size of table {} to {}"
+argument_list|,
 name|tbl
 operator|.
 name|getTableName
 argument_list|()
-operator|+
-literal|" to "
-operator|+
+argument_list|,
 name|params
 operator|.
 name|get
@@ -4519,17 +4410,6 @@ name|FALSE
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-name|tbl
-operator|.
-name|setParameters
-argument_list|(
-name|params
-argument_list|)
-expr_stmt|;
-return|return
-literal|true
-return|;
 block|}
 comment|/** This method is invalid for MM and ACID tables unless fileStatus comes from AcidUtils. */
 specifier|public

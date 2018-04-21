@@ -2236,7 +2236,7 @@ decl_stmt|;
 comment|// Update table stats. For partitioned table, we update stats in alterPartition()
 name|MetaStoreUtils
 operator|.
-name|updateTableStatsFast
+name|updateTableStatsSlow
 argument_list|(
 name|db
 argument_list|,
@@ -2249,8 +2249,6 @@ argument_list|,
 literal|true
 argument_list|,
 name|environmentContext
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 block|}

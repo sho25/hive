@@ -11108,7 +11108,7 @@ condition|)
 block|{
 name|MetaStoreUtils
 operator|.
-name|updateTableStatsFast
+name|updateTableStatsSlow
 argument_list|(
 name|db
 argument_list|,
@@ -11121,8 +11121,6 @@ argument_list|,
 literal|false
 argument_list|,
 name|envContext
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
