@@ -1112,7 +1112,12 @@ name|errCaptureExpect
 operator|.
 name|get
 argument_list|(
-literal|0
+name|errCaptureExpect
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
 argument_list|)
 argument_list|)
 condition|)
