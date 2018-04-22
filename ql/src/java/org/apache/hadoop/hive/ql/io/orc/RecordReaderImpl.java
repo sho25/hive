@@ -47,7 +47,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -58,6 +58,16 @@ operator|.
 name|util
 operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -3190,7 +3200,7 @@ return|;
 block|}
 block|}
 specifier|static
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -3298,7 +3308,7 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -3317,7 +3327,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|!=
-name|HashMap
+name|LinkedHashMap
 operator|.
 name|class
 condition|)
@@ -3325,7 +3335,7 @@ block|{
 name|result
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -3341,7 +3351,7 @@ block|{
 name|result
 operator|=
 operator|(
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

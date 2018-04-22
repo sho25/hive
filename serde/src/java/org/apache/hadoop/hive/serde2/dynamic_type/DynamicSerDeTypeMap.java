@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -431,7 +431,7 @@ name|TException
 throws|,
 name|IllegalAccessException
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -444,12 +444,21 @@ condition|(
 name|reuse
 operator|!=
 literal|null
+operator|&&
+name|reuse
+operator|.
+name|getClass
+argument_list|()
+operator|==
+name|LinkedHashMap
+operator|.
+name|class
 condition|)
 block|{
 name|deserializeReuse
 operator|=
 operator|(
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -469,7 +478,7 @@ block|{
 name|deserializeReuse
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

@@ -383,7 +383,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -2011,7 +2011,7 @@ parameter_list|()
 block|{
 return|return
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

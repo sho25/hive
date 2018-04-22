@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -322,7 +322,7 @@ argument_list|>
 name|m
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -353,7 +353,7 @@ argument_list|>
 name|m
 init|=
 operator|(
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -396,7 +396,7 @@ argument_list|>
 name|m
 init|=
 operator|(
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -440,7 +440,7 @@ argument_list|>
 name|m
 init|=
 operator|(
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,

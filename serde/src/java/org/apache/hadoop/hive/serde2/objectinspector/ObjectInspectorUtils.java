@@ -81,7 +81,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Iterator
 import|;
 end_import
 
@@ -91,7 +91,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
+name|LinkedHashMap
 import|;
 end_import
 
@@ -2882,7 +2882,7 @@ name|MapObjectInspector
 operator|)
 name|oi
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -2891,7 +2891,7 @@ argument_list|>
 name|map
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

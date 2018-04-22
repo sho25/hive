@@ -93,7 +93,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -2888,7 +2888,7 @@ operator|.
 name|getMapValueTypeInfo
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -2897,7 +2897,7 @@ argument_list|>
 name|hashMap
 init|=
 operator|(
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -3828,7 +3828,7 @@ operator|.
 name|getMapValueTypeInfo
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
@@ -3837,7 +3837,7 @@ argument_list|>
 name|hashMap
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

@@ -5037,7 +5037,7 @@ argument_list|>
 name|constant
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,

@@ -77,7 +77,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -3757,12 +3757,21 @@ condition|(
 name|reuse
 operator|==
 literal|null
+operator|||
+name|reuse
+operator|.
+name|getClass
+argument_list|()
+operator|!=
+name|LinkedHashMap
+operator|.
+name|class
 condition|)
 block|{
 name|r
 operator|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Object
 argument_list|,
@@ -3776,7 +3785,7 @@ block|{
 name|r
 operator|=
 operator|(
-name|HashMap
+name|Map
 argument_list|<
 name|Object
 argument_list|,
