@@ -3380,31 +3380,34 @@ literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// llap cluster info does not need admin privilege, since it is read only assigning privilege same as
+comment|// describe/explain/show commands
 name|op2Priv
 operator|.
 name|put
 argument_list|(
 name|HiveOperationType
 operator|.
-name|LLAP_CLUSTER
+name|LLAP_CLUSTER_INFO
 argument_list|,
 name|PrivRequirement
 operator|.
 name|newIOPrivRequirement
 argument_list|(
-literal|null
+name|SEL_NOGRANT_AR
 argument_list|,
 literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// llap cache purge requires admin privilege as it mutates state (cache) on the cluster
 name|op2Priv
 operator|.
 name|put
 argument_list|(
 name|HiveOperationType
 operator|.
-name|LLAP_CACHE
+name|LLAP_CACHE_PURGE
 argument_list|,
 name|PrivRequirement
 operator|.

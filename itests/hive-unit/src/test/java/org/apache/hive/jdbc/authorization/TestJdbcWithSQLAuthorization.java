@@ -893,11 +893,13 @@ expr_stmt|;
 name|String
 name|msg
 init|=
-literal|"Error while processing statement: Permission denied: Principal [name=user1, type=USER] "
+literal|"Error while processing statement: Permission denied: Principal [name=user1, type=USER] does "
 operator|+
-literal|"does not have following privileges for operation LLAP_CACHE [[ADMIN PRIVILEGE] on Object "
+literal|"not have following privileges for operation LLAP_CACHE_PURGE [[ADMIN PRIVILEGE] on Object "
 operator|+
-literal|"[type=COMMAND_PARAMS, name=[-purge]], [ADMIN PRIVILEGE] on Object [type=SERVICE_NAME, name=localhost]]"
+literal|"[type=COMMAND_PARAMS, name=[llap, cache, -purge]], [ADMIN PRIVILEGE] on Object "
+operator|+
+literal|"[type=SERVICE_NAME, name=localhost]]"
 decl_stmt|;
 name|assertEquals
 argument_list|(
