@@ -3286,6 +3286,8 @@ name|Serializable
 argument_list|>
 name|preCursor
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|HashMap
 argument_list|<
@@ -3618,6 +3620,8 @@ argument_list|>
 argument_list|>
 name|importTasks
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|String
 name|replState

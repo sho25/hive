@@ -6763,6 +6763,10 @@ name|error
 argument_list|(
 literal|"Table "
 operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
 name|tableName
 operator|+
 literal|" not found: "

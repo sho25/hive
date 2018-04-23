@@ -49,6 +49,27 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|public
+specifier|static
+interface|interface
+name|DDLDescWithWriteId
+block|{
+name|void
+name|setWriteId
+parameter_list|(
+name|long
+name|writeId
+parameter_list|)
+function_decl|;
+name|String
+name|getFullTableName
+parameter_list|()
+function_decl|;
+name|boolean
+name|mayNeedWriteId
+parameter_list|()
+function_decl|;
+block|}
 block|}
 end_class
 

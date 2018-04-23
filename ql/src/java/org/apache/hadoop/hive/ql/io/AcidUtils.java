@@ -7118,7 +7118,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-comment|/**     * The method for altering table props; may set the table to MM, non-MM, or not affect MM.     * todo: All such validation logic should be TransactionValidationListener     * @param tbl object image before alter table command     * @param props prop values set in this alter table command     */
+comment|/**     * The method for altering table props; may set the table to MM, non-MM, or not affect MM.     * todo: All such validation logic should be TransactionValidationListener     * @param tbl object image before alter table command (or null if not retrieved yet).     * @param props prop values set in this alter table command     */
 specifier|public
 specifier|static
 name|Boolean
@@ -7185,6 +7185,10 @@ condition|(
 name|transactional
 operator|==
 literal|null
+operator|&&
+name|tbl
+operator|!=
+literal|null
 condition|)
 block|{
 name|transactional
@@ -7222,6 +7226,10 @@ block|{
 if|if
 condition|(
 name|isSetToTxn
+operator|||
+name|tbl
+operator|==
+literal|null
 condition|)
 return|return
 literal|false
@@ -7267,6 +7275,16 @@ operator|!
 name|isSetToTxn
 condition|)
 block|{
+if|if
+condition|(
+name|tbl
+operator|==
+literal|null
+condition|)
+return|return
+literal|true
+return|;
+comment|// No table information yet; looks like it could be valid.
 throw|throw
 operator|new
 name|RuntimeException
