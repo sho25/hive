@@ -8791,87 +8791,7 @@ name|currentDb
 argument_list|)
 return|;
 block|}
-comment|/**    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param inheritTableSpecs    * @param isSkewedStoreAsSubdir    * @param isSrcLocal    * @param isAcid    * @param hasFollowingStatsTask    * @param writeId    * @param stmtId    * @return    * @throws HiveException    */
-specifier|public
-name|void
-name|loadPartition
-parameter_list|(
-name|Path
-name|loadPath
-parameter_list|,
-name|String
-name|tableName
-parameter_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
-parameter_list|,
-name|LoadFileType
-name|loadFileType
-parameter_list|,
-name|boolean
-name|inheritTableSpecs
-parameter_list|,
-name|boolean
-name|isSkewedStoreAsSubdir
-parameter_list|,
-name|boolean
-name|isSrcLocal
-parameter_list|,
-name|boolean
-name|isAcid
-parameter_list|,
-name|boolean
-name|hasFollowingStatsTask
-parameter_list|,
-name|Long
-name|writeId
-parameter_list|,
-name|int
-name|stmtId
-parameter_list|)
-throws|throws
-name|HiveException
-block|{
-name|Table
-name|tbl
-init|=
-name|getTable
-argument_list|(
-name|tableName
-argument_list|)
-decl_stmt|;
-name|loadPartition
-argument_list|(
-name|loadPath
-argument_list|,
-name|tbl
-argument_list|,
-name|partSpec
-argument_list|,
-name|loadFileType
-argument_list|,
-name|inheritTableSpecs
-argument_list|,
-name|isSkewedStoreAsSubdir
-argument_list|,
-name|isSrcLocal
-argument_list|,
-name|isAcid
-argument_list|,
-name|hasFollowingStatsTask
-argument_list|,
-name|writeId
-argument_list|,
-name|stmtId
-argument_list|)
-expr_stmt|;
-block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    * @return Partition object being loaded with data    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    * @param isInsertOverwrite     * @return Partition object being loaded with data    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -8913,6 +8833,9 @@ name|writeId
 parameter_list|,
 name|int
 name|stmtId
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -8959,6 +8882,16 @@ init|=
 name|AcidUtils
 operator|.
 name|isFullAcidTable
+argument_list|(
+name|tbl
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isTxnTable
+init|=
+name|AcidUtils
+operator|.
+name|isTransactionalTable
 argument_list|(
 name|tbl
 argument_list|)
@@ -9284,13 +9217,6 @@ block|}
 else|else
 block|{
 comment|// Either a non-MM query, or a load into MM table from an external source.
-name|PathFilter
-name|filter
-init|=
-name|FileUtils
-operator|.
-name|HIDDEN_FILES_PATH_FILTER
-decl_stmt|;
 name|Path
 name|destPath
 init|=
@@ -9301,8 +9227,11 @@ condition|(
 name|isMmTableWrite
 condition|)
 block|{
-comment|// We will load into MM directory, and delete from the parent if needed.
-comment|// TODO: this looks invalid after ACID integration. What about base dirs?
+assert|assert
+operator|!
+name|isAcidIUDoperation
+assert|;
+comment|// We will load into MM directory, and hide previous directories if needed.
 name|destPath
 operator|=
 operator|new
@@ -9310,6 +9239,15 @@ name|Path
 argument_list|(
 name|destPath
 argument_list|,
+name|isInsertOverwrite
+condition|?
+name|AcidUtils
+operator|.
+name|baseDir
+argument_list|(
+name|writeId
+argument_list|)
+else|:
 name|AcidUtils
 operator|.
 name|deltaSubdir
@@ -9322,35 +9260,7 @@ name|stmtId
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// TODO: loadFileType for MM table will no longer be REPLACE_ALL
-name|filter
-operator|=
-operator|(
-name|loadFileType
-operator|==
-name|LoadFileType
-operator|.
-name|REPLACE_ALL
-operator|)
-condition|?
-operator|new
-name|JavaUtils
-operator|.
-name|IdPathFilter
-argument_list|(
-name|writeId
-argument_list|,
-name|stmtId
-argument_list|,
-literal|false
-argument_list|,
-literal|true
-argument_list|)
-else|:
-name|filter
-expr_stmt|;
 block|}
-elseif|else
 if|if
 condition|(
 operator|!
@@ -9401,11 +9311,11 @@ name|destPath
 argument_list|)
 expr_stmt|;
 block|}
-comment|//todo: why is "&& !isAcidIUDoperation" needed here?
+comment|// TODO: why is "&& !isAcidIUDoperation" needed here?
 if|if
 condition|(
 operator|!
-name|isFullAcidTable
+name|isTxnTable
 operator|&&
 operator|(
 operator|(
@@ -9444,7 +9354,6 @@ literal|"auto.purge"
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// TODO: this should never run for MM tables anymore. Remove the flag, and maybe the filter?
 name|replaceFiles
 argument_list|(
 name|tbl
@@ -9467,9 +9376,9 @@ name|isAutoPurge
 argument_list|,
 name|newFiles
 argument_list|,
-name|filter
-argument_list|,
-name|isMmTableWrite
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|,
 operator|!
 name|tbl
@@ -9832,9 +9741,7 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
-name|isFullAcidTable
-operator|||
-name|isMmTableWrite
+name|isTxnTable
 condition|)
 block|{
 name|filesForStats
@@ -12089,6 +11996,8 @@ argument_list|,
 name|writeId
 argument_list|,
 name|stmtId
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 decl_stmt|;
 name|partitionsMap
@@ -12534,6 +12443,9 @@ name|writeId
 parameter_list|,
 name|int
 name|stmtId
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -12569,6 +12481,16 @@ operator|.
 name|getTableName
 argument_list|()
 assert|;
+name|boolean
+name|isTxnTable
+init|=
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|tbl
+argument_list|)
+decl_stmt|;
 name|boolean
 name|isMmTable
 init|=
@@ -12702,13 +12624,6 @@ name|destPath
 init|=
 name|tblPath
 decl_stmt|;
-name|PathFilter
-name|filter
-init|=
-name|FileUtils
-operator|.
-name|HIDDEN_FILES_PATH_FILTER
-decl_stmt|;
 if|if
 condition|(
 name|isMmTable
@@ -12718,8 +12633,7 @@ assert|assert
 operator|!
 name|isAcidIUDoperation
 assert|;
-comment|// We will load into MM directory, and delete from the parent if needed.
-comment|// TODO: this looks invalid after ACID integration. What about base dirs?
+comment|// We will load into MM directory, and hide previous directories if needed.
 name|destPath
 operator|=
 operator|new
@@ -12727,6 +12641,15 @@ name|Path
 argument_list|(
 name|destPath
 argument_list|,
+name|isInsertOverwrite
+condition|?
+name|AcidUtils
+operator|.
+name|baseDir
+argument_list|(
+name|writeId
+argument_list|)
+else|:
 name|AcidUtils
 operator|.
 name|deltaSubdir
@@ -12739,33 +12662,7 @@ name|stmtId
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// TODO: loadFileType for MM table will no longer be REPLACE_ALL
-name|filter
-operator|=
-name|loadFileType
-operator|==
-name|LoadFileType
-operator|.
-name|REPLACE_ALL
-condition|?
-operator|new
-name|JavaUtils
-operator|.
-name|IdPathFilter
-argument_list|(
-name|writeId
-argument_list|,
-name|stmtId
-argument_list|,
-literal|false
-argument_list|,
-literal|true
-argument_list|)
-else|:
-name|filter
-expr_stmt|;
 block|}
-elseif|else
 if|if
 condition|(
 operator|!
@@ -12820,11 +12717,10 @@ operator|.
 name|REPLACE_ALL
 operator|&&
 operator|!
-name|isFullAcidTable
+name|isTxnTable
 condition|)
 block|{
 comment|//for fullAcid we don't want to delete any files even for OVERWRITE see HIVE-14988/HIVE-17361
-comment|//todo:  should probably do the same for MM IOW
 name|boolean
 name|isAutopurge
 init|=
@@ -12840,7 +12736,6 @@ literal|"auto.purge"
 argument_list|)
 argument_list|)
 decl_stmt|;
-comment|// TODO: this should never run for MM tables anymore. Remove the flag, and maybe the filter?
 name|replaceFiles
 argument_list|(
 name|tblPath
@@ -12859,13 +12754,9 @@ name|isAutopurge
 argument_list|,
 name|newFiles
 argument_list|,
-name|filter
-argument_list|,
-name|isMmTable
-condition|?
-literal|true
-else|:
-literal|false
+name|FileUtils
+operator|.
+name|HIDDEN_FILES_PATH_FILTER
 argument_list|,
 operator|!
 name|tbl
@@ -22227,9 +22118,6 @@ name|PathFilter
 name|deletePathFilter
 parameter_list|,
 name|boolean
-name|isMmTableOverwrite
-parameter_list|,
-name|boolean
 name|isNeedRecycle
 parameter_list|)
 throws|throws
@@ -22322,8 +22210,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// Note: we assume lbLevels is 0 here. Same as old code for non-MM.
-comment|//       For MM tables, this can only be a LOAD command. Does LOAD even support LB?
 name|deleteOldPathForReplace
 argument_list|(
 name|destf
@@ -22335,10 +22221,6 @@ argument_list|,
 name|purge
 argument_list|,
 name|deletePathFilter
-argument_list|,
-name|isMmTableOverwrite
-argument_list|,
-literal|0
 argument_list|,
 name|isNeedRecycle
 argument_list|)
@@ -22581,12 +22463,6 @@ name|PathFilter
 name|pathFilter
 parameter_list|,
 name|boolean
-name|isMmTableOverwrite
-parameter_list|,
-name|int
-name|lbLevels
-parameter_list|,
-name|boolean
 name|isNeedRecycle
 parameter_list|)
 throws|throws
@@ -22656,18 +22532,6 @@ expr_stmt|;
 if|if
 condition|(
 name|isOldPathUnderDestf
-operator|||
-name|isMmTableOverwrite
-condition|)
-block|{
-if|if
-condition|(
-name|lbLevels
-operator|==
-literal|0
-operator|||
-operator|!
-name|isMmTableOverwrite
 condition|)
 block|{
 name|cleanUpOneDirectoryForReplace
@@ -22687,7 +22551,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
 catch|catch
 parameter_list|(
 name|IOException
@@ -22697,8 +22560,6 @@ block|{
 if|if
 condition|(
 name|isOldPathUnderDestf
-operator|||
-name|isMmTableOverwrite
 condition|)
 block|{
 comment|// if oldPath is a subdir of destf but it could not be cleaned

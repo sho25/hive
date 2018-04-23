@@ -2688,6 +2688,11 @@ name|tbd
 operator|.
 name|getStmtId
 argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|isInsertOverwrite
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -3332,6 +3337,10 @@ operator|.
 name|getSourcePath
 argument_list|()
 argument_list|,
+name|db
+operator|.
+name|getTable
+argument_list|(
 name|tbd
 operator|.
 name|getTable
@@ -3339,6 +3348,7 @@ argument_list|()
 operator|.
 name|getTableName
 argument_list|()
+argument_list|)
 argument_list|,
 name|tbd
 operator|.
@@ -3396,6 +3406,11 @@ argument_list|,
 name|tbd
 operator|.
 name|getStmtId
+argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|isInsertOverwrite
 argument_list|()
 argument_list|)
 expr_stmt|;
