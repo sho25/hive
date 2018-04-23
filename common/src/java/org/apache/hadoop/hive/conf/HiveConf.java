@@ -7115,6 +7115,17 @@ operator|+
 literal|"delta writer in terms of STRIPE_SIZE and BUFFER_SIZE."
 argument_list|)
 block|,
+name|HIVE_ORC_DELTA_STREAMING_OPTIMIZATIONS_ENABLED
+argument_list|(
+literal|"hive.exec.orc.delta.streaming.optimizations.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable streaming optimizations for ORC delta files. This will disable ORC's internal indexes,\n"
+operator|+
+literal|"disable compression, enable fast encoding and disable dictionary encoding."
+argument_list|)
+block|,
 name|HIVE_ORC_SPLIT_STRATEGY
 argument_list|(
 literal|"hive.exec.orc.split.strategy"

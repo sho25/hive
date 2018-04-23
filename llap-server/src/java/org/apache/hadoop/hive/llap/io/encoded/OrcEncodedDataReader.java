@@ -4713,6 +4713,13 @@ try|try
 block|{
 if|if
 condition|(
+name|codec
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
 name|isPool
 operator|&&
 operator|!
@@ -4736,6 +4743,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 catch|catch
