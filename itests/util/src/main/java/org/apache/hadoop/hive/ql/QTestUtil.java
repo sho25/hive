@@ -6717,7 +6717,7 @@ argument_list|()
 expr_stmt|;
 name|StatsSources
 operator|.
-name|clearGlobalStats
+name|clearAllStats
 argument_list|()
 expr_stmt|;
 block|}

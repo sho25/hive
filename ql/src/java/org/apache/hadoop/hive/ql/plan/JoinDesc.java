@@ -1314,7 +1314,7 @@ name|Signature
 specifier|public
 name|Map
 argument_list|<
-name|String
+name|Byte
 argument_list|,
 name|String
 argument_list|>
@@ -1334,7 +1334,7 @@ return|;
 block|}
 name|Map
 argument_list|<
-name|String
+name|Byte
 argument_list|,
 name|String
 argument_list|>
@@ -1343,7 +1343,7 @@ init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|String
+name|Byte
 argument_list|,
 name|String
 argument_list|>
@@ -1370,12 +1370,7 @@ name|keyMap
 operator|.
 name|put
 argument_list|(
-name|String
-operator|.
-name|valueOf
-argument_list|(
 name|i
-argument_list|)
 argument_list|,
 name|PlanUtils
 operator|.

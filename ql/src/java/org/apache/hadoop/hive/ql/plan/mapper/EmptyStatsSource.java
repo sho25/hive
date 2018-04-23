@@ -81,7 +81,6 @@ end_import
 
 begin_class
 specifier|public
-specifier|final
 class|class
 name|EmptyStatsSource
 implements|implements

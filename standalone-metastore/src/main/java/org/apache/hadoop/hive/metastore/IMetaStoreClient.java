@@ -1307,24 +1307,6 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|RuntimeStat
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
 name|SQLCheckConstraint
 import|;
 end_import
@@ -4748,8 +4730,6 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Drop partitions based on an expression.    * @param dbName database name.    * @param tblName table name.    * @param partExprs I don't understand this fully, so can't completely explain it.  The second    *                  half of the object pair is an expression used to determine which partitions    *                  to drop.  The first half has something to do with archive level, but I    *                  don't understand what.  I'm also not sure what happens if you pass multiple    *                  expressions.    * @param deleteData whether to delete the data as well as the metadata.    * @param ifExists if true, it is not an error if no partitions match the expression(s).    * @param needResults if true, the list of deleted partitions will be returned, if not, null    *                    will be returned.    * @return list of deleted partitions.    * @throws NoSuchObjectException No partition matches the expression(s), and ifExists was false.    * @throws MetaException error access the RDBMS or storage.    * @throws TException Thrift transport error.    * @deprecated Use {@link #dropPartitions(String, String, String, List, boolean, boolean, boolean)}    */
-annotation|@
-name|Deprecated
 name|List
 argument_list|<
 name|Partition
@@ -7805,26 +7785,6 @@ parameter_list|,
 name|long
 name|txnId
 parameter_list|)
-throws|throws
-name|TException
-function_decl|;
-comment|/** Adds a RuntimeStat for metastore persistence. */
-name|void
-name|addRuntimeStat
-parameter_list|(
-name|RuntimeStat
-name|stat
-parameter_list|)
-throws|throws
-name|TException
-function_decl|;
-comment|/** Reads runtime statistics. */
-name|List
-argument_list|<
-name|RuntimeStat
-argument_list|>
-name|getRuntimeStats
-parameter_list|()
 throws|throws
 name|TException
 function_decl|;
