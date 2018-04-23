@@ -86,7 +86,6 @@ specifier|public
 interface|interface
 name|OpTreeSignatureFactory
 block|{
-specifier|public
 name|OpTreeSignature
 name|getSignature
 parameter_list|(
@@ -99,8 +98,6 @@ argument_list|>
 name|op
 parameter_list|)
 function_decl|;
-specifier|static
-specifier|final
 name|OpTreeSignatureFactory
 name|DIRECT
 init|=
@@ -108,7 +105,6 @@ operator|new
 name|Direct
 argument_list|()
 decl_stmt|;
-specifier|public
 specifier|static
 name|OpTreeSignatureFactory
 name|direct
@@ -118,7 +114,6 @@ return|return
 name|DIRECT
 return|;
 block|}
-specifier|public
 specifier|static
 name|OpTreeSignatureFactory
 name|newCache
@@ -132,7 +127,6 @@ return|;
 block|}
 comment|// FIXME: possible alternative: move both OpSignature/OpTreeSignature into
 comment|// under some class as nested ones; and that way this factory level caching can be made "transparent"
-specifier|static
 class|class
 name|Direct
 implements|implements
@@ -165,7 +159,6 @@ argument_list|)
 return|;
 block|}
 block|}
-specifier|static
 class|class
 name|CachedFactory
 implements|implements

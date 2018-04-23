@@ -139,6 +139,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|RuntimeStatsCleanerTask
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|events
 operator|.
 name|EventCleanerTask
@@ -2524,6 +2540,51 @@ operator|+
 literal|"entries that are not relevant for materializations can be removed from invalidation cache."
 argument_list|)
 block|,
+name|RUNTIME_STATS_CLEAN_FREQUENCY
+argument_list|(
+literal|"runtime.stats.clean.frequency"
+argument_list|,
+literal|"hive.metastore.runtime.stats.clean.frequency"
+argument_list|,
+literal|3600
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"Frequency at which timer task runs to remove outdated runtime stat entries."
+argument_list|)
+block|,
+name|RUNTIME_STATS_MAX_AGE
+argument_list|(
+literal|"runtime.stats.max.age"
+argument_list|,
+literal|"hive.metastore.runtime.stats.max.age"
+argument_list|,
+literal|86400
+operator|*
+literal|3
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"Stat entries which are older than this are removed."
+argument_list|)
+block|,
+name|RUNTIME_STATS_MAX_ENTRIES
+argument_list|(
+literal|"runtime.stats.max.entries"
+argument_list|,
+literal|"hive.metastore.runtime.stats.max.entries"
+argument_list|,
+literal|100_000
+argument_list|,
+literal|"Maximum number of runtime stats to keep; unit is operator stat infos - a complicated query has ~100 of these."
+operator|+
+literal|"See also: hive.query.reexecution.stats.cache.size"
+argument_list|)
+block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION
@@ -3164,6 +3225,15 @@ argument_list|()
 operator|+
 literal|","
 operator|+
+name|RuntimeStatsCleanerTask
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|","
+operator|+
 literal|"org.apache.hadoop.hive.metastore.repl.DumpDirCleanerTask"
 operator|+
 literal|","
@@ -3178,6 +3248,15 @@ operator|+
 literal|","
 operator|+
 name|MaterializationsRebuildLockCleanerTask
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|","
+operator|+
+name|RuntimeStatsCleanerTask
 operator|.
 name|class
 operator|.
@@ -4763,6 +4842,7 @@ name|hiveSiteURL
 operator|!=
 literal|null
 condition|)
+block|{
 name|conf
 operator|.
 name|addResource
@@ -4770,6 +4850,7 @@ argument_list|(
 name|hiveSiteURL
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Now add hivemetastore-site.xml.  Again we add this before our own config files so that the
 comment|// newer overrides the older.
 name|hiveMetastoreSiteURL
@@ -4787,6 +4868,7 @@ name|hiveMetastoreSiteURL
 operator|!=
 literal|null
 condition|)
+block|{
 name|conf
 operator|.
 name|addResource
@@ -4794,6 +4876,7 @@ argument_list|(
 name|hiveMetastoreSiteURL
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Add in our conf file
 name|metastoreSiteURL
 operator|=
@@ -4810,6 +4893,7 @@ name|metastoreSiteURL
 operator|!=
 literal|null
 condition|)
+block|{
 name|conf
 operator|.
 name|addResource
@@ -4817,6 +4901,7 @@ argument_list|(
 name|metastoreSiteURL
 argument_list|)
 expr_stmt|;
+block|}
 comment|// If a system property that matches one of our conf value names is set then use the value
 comment|// it's set to to set our own conf value.
 for|for
@@ -5574,6 +5659,7 @@ name|val
 operator|==
 literal|null
 condition|)
+block|{
 name|val
 operator|=
 name|conf
@@ -5592,18 +5678,21 @@ operator|.
 name|defaultVal
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|val
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 name|Collections
 operator|.
 name|emptySet
 argument_list|()
 return|;
+block|}
 return|return
 name|StringUtils
 operator|.

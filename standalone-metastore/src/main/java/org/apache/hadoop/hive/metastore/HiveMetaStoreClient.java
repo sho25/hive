@@ -3827,6 +3827,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|new_part
 operator|.
 name|setCatName
@@ -3837,6 +3838,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|Partition
 name|p
 init|=
@@ -4136,6 +4138,7 @@ argument_list|()
 operator|==
 literal|null
 condition|)
+block|{
 name|partitionSpec
 operator|.
 name|setCatName
@@ -4146,6 +4149,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -4679,6 +4683,7 @@ operator|.
 name|isSetCatalogName
 argument_list|()
 condition|)
+block|{
 name|db
 operator|.
 name|setCatalogName
@@ -4689,6 +4694,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|client
 operator|.
 name|create_database
@@ -4755,6 +4761,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|tbl
 operator|.
 name|setCatName
@@ -4765,6 +4772,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|HiveMetaHook
 name|hook
 init|=
@@ -4866,6 +4874,8 @@ block|}
 block|}
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createTableWithConstraints
@@ -4950,6 +4960,7 @@ name|primaryKeys
 operator|!=
 literal|null
 condition|)
+block|{
 name|primaryKeys
 operator|.
 name|forEach
@@ -4964,12 +4975,14 @@ name|defaultCat
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|foreignKeys
 operator|!=
 literal|null
 condition|)
+block|{
 name|foreignKeys
 operator|.
 name|forEach
@@ -4984,12 +4997,14 @@ name|defaultCat
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|uniqueConstraints
 operator|!=
 literal|null
 condition|)
+block|{
 name|uniqueConstraints
 operator|.
 name|forEach
@@ -5004,12 +5019,14 @@ name|defaultCat
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|notNullConstraints
 operator|!=
 literal|null
 condition|)
+block|{
 name|notNullConstraints
 operator|.
 name|forEach
@@ -5024,12 +5041,14 @@ name|defaultCat
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|defaultConstraints
 operator|!=
 literal|null
 condition|)
+block|{
 name|defaultConstraints
 operator|.
 name|forEach
@@ -5044,12 +5063,14 @@ name|defaultCat
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|checkConstraints
 operator|!=
 literal|null
 condition|)
+block|{
 name|checkConstraints
 operator|.
 name|forEach
@@ -5064,6 +5085,7 @@ name|defaultCat
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|HiveMetaHook
 name|hook
@@ -5824,6 +5846,8 @@ name|cascade
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|dropDatabase
@@ -8953,6 +8977,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|request
 operator|.
 name|setCatName
@@ -8963,6 +8988,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -10872,6 +10898,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|req
 operator|.
 name|setCatName
@@ -10882,6 +10909,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -10921,6 +10949,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|req
 operator|.
 name|setCatName
@@ -10931,6 +10960,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -10970,6 +11000,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|req
 operator|.
 name|setCatName
@@ -10980,6 +11011,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -11019,6 +11051,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|req
 operator|.
 name|setCatName
@@ -11029,6 +11062,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -11068,6 +11102,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|req
 operator|.
 name|setCatName
@@ -11078,6 +11113,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -11117,6 +11153,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|req
 operator|.
 name|setCatName
@@ -11127,6 +11164,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -11163,6 +11201,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|statsObj
 operator|.
 name|getStatsDesc
@@ -11176,6 +11215,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -11208,6 +11248,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|statsObj
 operator|.
 name|getStatsDesc
@@ -11221,6 +11262,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -11272,6 +11314,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|stats
 operator|.
 name|getStatsDesc
@@ -11282,6 +11325,7 @@ argument_list|(
 name|defaultCat
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|client
@@ -12989,6 +13033,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|priv
 operator|.
 name|getHiveObject
@@ -12999,6 +13044,7 @@ argument_list|(
 name|defaultCat
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|GrantRevokePrivilegeRequest
 name|req
@@ -13205,6 +13251,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|priv
 operator|.
 name|getHiveObject
@@ -13215,6 +13262,7 @@ argument_list|(
 name|defaultCat
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|GrantRevokePrivilegeRequest
 name|req
@@ -13311,6 +13359,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|hiveObject
 operator|.
 name|setCatName
@@ -13321,6 +13370,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -13365,6 +13415,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|hiveObject
 operator|.
 name|setCatName
@@ -13375,6 +13426,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -15389,6 +15441,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|rqst
 operator|.
 name|setCatName
@@ -15399,6 +15452,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -15437,6 +15491,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|rqst
 operator|.
 name|setCatName
@@ -15447,6 +15502,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|client
 operator|.
@@ -15794,6 +15850,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|func
 operator|.
 name|setCatName
@@ -15804,6 +15861,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|client
 operator|.
 name|create_function
@@ -17901,6 +17959,8 @@ name|request
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|createISchema
@@ -17919,6 +17979,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|schema
 operator|.
 name|setCatName
@@ -17929,6 +17990,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|client
 operator|.
 name|create_ischema
@@ -18072,6 +18134,7 @@ operator|.
 name|isSetCatName
 argument_list|()
 condition|)
+block|{
 name|schemaVersion
 operator|.
 name|getSchema
@@ -18085,6 +18148,7 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|client
 operator|.
 name|add_schema_version
@@ -18093,6 +18157,8 @@ name|schemaVersion
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SchemaVersion
 name|getSchemaVersion
@@ -18435,10 +18501,12 @@ name|max
 operator|<
 literal|0
 condition|)
+block|{
 return|return
 operator|-
 literal|1
 return|;
+block|}
 elseif|else
 if|if
 condition|(
@@ -18448,18 +18516,22 @@ name|Short
 operator|.
 name|MAX_VALUE
 condition|)
+block|{
 return|return
 operator|(
 name|short
 operator|)
 name|max
 return|;
+block|}
 else|else
+block|{
 return|return
 name|Short
 operator|.
 name|MAX_VALUE
 return|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -18520,6 +18592,49 @@ argument_list|,
 name|tableName
 argument_list|,
 name|txnId
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|addRuntimeStat
+parameter_list|(
+name|RuntimeStat
+name|stat
+parameter_list|)
+throws|throws
+name|TException
+block|{
+name|client
+operator|.
+name|add_runtime_stats
+argument_list|(
+name|stat
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|List
+argument_list|<
+name|RuntimeStat
+argument_list|>
+name|getRuntimeStats
+parameter_list|()
+throws|throws
+name|TException
+block|{
+return|return
+name|client
+operator|.
+name|get_runtime_stats
+argument_list|(
+operator|new
+name|GetRuntimeStatsRequest
+argument_list|()
 argument_list|)
 return|;
 block|}
