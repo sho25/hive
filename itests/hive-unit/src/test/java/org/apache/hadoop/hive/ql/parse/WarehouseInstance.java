@@ -1109,6 +1109,8 @@ operator|.
 name|startMetaStoreWithRetry
 argument_list|(
 name|hiveConf
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Path
