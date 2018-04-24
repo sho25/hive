@@ -15672,7 +15672,9 @@ literal|"Sets the persistence scope of runtime statistics\n"
 operator|+
 literal|"  query: runtime statistics are only used during re-execution\n"
 operator|+
-literal|"  hiveserver: runtime statistics are persisted in the hiveserver - all sessions share it"
+literal|"  hiveserver: runtime statistics are persisted in the hiveserver - all sessions share it\n"
+operator|+
+literal|"  metastore: runtime statistics are persisted in the metastore as well"
 argument_list|)
 block|,
 name|HIVE_QUERY_MAX_REEXECUTION_COUNT
@@ -15699,7 +15701,7 @@ literal|"hive.query.reexecution.stats.cache.size"
 argument_list|,
 literal|100_000
 argument_list|,
-literal|"Size of the runtime statistics cache. Unit is: OperatorStat entry; a query plan consist ~100"
+literal|"Size of the runtime statistics cache. Unit is: OperatorStat entry; a query plan consist ~100. See also: runtime.stats.max.entries"
 argument_list|)
 block|,
 name|HIVE_QUERY_RESULTS_CACHE_ENABLED

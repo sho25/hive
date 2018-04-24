@@ -1300,7 +1300,7 @@ argument_list|)
 specifier|public
 name|Map
 argument_list|<
-name|Byte
+name|String
 argument_list|,
 name|String
 argument_list|>
@@ -1309,7 +1309,7 @@ parameter_list|()
 block|{
 name|Map
 argument_list|<
-name|Byte
+name|String
 argument_list|,
 name|String
 argument_list|>
@@ -1317,11 +1317,7 @@ name|keyMap
 init|=
 operator|new
 name|LinkedHashMap
-argument_list|<
-name|Byte
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 for|for
@@ -1350,10 +1346,15 @@ name|keyMap
 operator|.
 name|put
 argument_list|(
+name|String
+operator|.
+name|valueOf
+argument_list|(
 name|k
 operator|.
 name|getKey
 argument_list|()
+argument_list|)
 argument_list|,
 name|PlanUtils
 operator|.
