@@ -19637,7 +19637,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|679
+literal|677
 argument_list|,
 name|split
 operator|.
@@ -19692,7 +19692,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|705
+literal|703
 argument_list|,
 name|split
 operator|.
