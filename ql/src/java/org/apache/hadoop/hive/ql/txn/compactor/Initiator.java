@@ -1563,6 +1563,13 @@ argument_list|(
 literal|"Going to initiate as user "
 operator|+
 name|runAs
+operator|+
+literal|" for "
+operator|+
+name|ci
+operator|.
+name|getFullPartitionName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|UserGroupInformation

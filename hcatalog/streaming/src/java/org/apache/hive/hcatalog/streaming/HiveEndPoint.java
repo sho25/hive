@@ -645,12 +645,9 @@ operator|.
 name|database
 operator|=
 name|database
-expr_stmt|;
-name|this
 operator|.
-name|table
-operator|=
-name|table
+name|toLowerCase
+argument_list|()
 expr_stmt|;
 if|if
 condition|(
@@ -690,6 +687,15 @@ argument_list|>
 argument_list|(
 name|partitionVals
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|table
+operator|=
+name|table
+operator|.
+name|toLowerCase
+argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * @deprecated As of release 1.3/2.1.  Replaced by {@link #newConnection(boolean, String)}    */
