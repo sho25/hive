@@ -775,21 +775,6 @@ argument_list|,
 literal|1
 argument_list|)
 expr_stmt|;
-name|MetricsTestUtils
-operator|.
-name|verifyMetricsJson
-argument_list|(
-name|json
-argument_list|,
-name|MetricsTestUtils
-operator|.
-name|TIMER
-argument_list|,
-literal|"api_Driver.run"
-argument_list|,
-literal|1
-argument_list|)
-expr_stmt|;
 comment|//but there should be no more active calls.
 name|MetricsTestUtils
 operator|.

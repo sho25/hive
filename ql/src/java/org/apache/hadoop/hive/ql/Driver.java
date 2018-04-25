@@ -3389,21 +3389,8 @@ init|=
 name|SessionState
 operator|.
 name|getPerfLogger
-argument_list|(
-literal|true
-argument_list|)
+argument_list|()
 decl_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|CLASS_NAME
-argument_list|,
-name|PerfLogger
-operator|.
-name|DRIVER_RUN
-argument_list|)
-expr_stmt|;
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -4187,14 +4174,10 @@ name|queryStr
 argument_list|,
 name|sem
 argument_list|,
-name|perfLogger
+name|queryDisplay
 operator|.
-name|getStartTime
-argument_list|(
-name|PerfLogger
-operator|.
-name|DRIVER_RUN
-argument_list|)
+name|getQueryStartTime
+argument_list|()
 argument_list|,
 name|queryId
 argument_list|,
@@ -9579,7 +9562,9 @@ init|=
 name|SessionState
 operator|.
 name|getPerfLogger
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 decl_stmt|;
 name|perfLogger
 operator|.
@@ -10209,11 +10194,6 @@ literal|12
 argument_list|)
 throw|;
 block|}
-name|PerfLogger
-name|perfLogger
-init|=
-literal|null
-decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -10228,41 +10208,33 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// then we continue to use this perf logger
-name|perfLogger
-operator|=
-name|SessionState
-operator|.
-name|getPerfLogger
-argument_list|()
-expr_stmt|;
 block|}
 else|else
 block|{
-comment|// reuse existing perf logger.
-name|perfLogger
-operator|=
-name|SessionState
-operator|.
-name|getPerfLogger
-argument_list|()
-expr_stmt|;
 comment|// Since we're reusing the compiled plan, we need to update its start time for current run
 name|plan
 operator|.
 name|setQueryStartTime
 argument_list|(
-name|perfLogger
+name|queryDisplay
 operator|.
-name|getStartTime
-argument_list|(
-name|PerfLogger
-operator|.
-name|DRIVER_RUN
-argument_list|)
+name|getQueryStartTime
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|//Reset the PerfLogger so that it doesn't retain any previous values.
+comment|// Any value from compilation phase can be obtained through the map set in queryDisplay during compilation.
+name|PerfLogger
+name|perfLogger
+init|=
+name|SessionState
+operator|.
+name|getPerfLogger
+argument_list|(
+literal|true
+argument_list|)
+decl_stmt|;
 comment|// the reason that we set the txn manager for the cxt here is because each
 comment|// query has its own ctx object. The txn mgr is shared across the
 comment|// same instance of Driver, which can run multiple queries.
@@ -10372,17 +10344,6 @@ literal|12
 argument_list|)
 throw|;
 block|}
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|CLASS_NAME
-argument_list|,
-name|PerfLogger
-operator|.
-name|DRIVER_RUN
-argument_list|)
-expr_stmt|;
 name|queryDisplay
 operator|.
 name|setPerfLogStarts

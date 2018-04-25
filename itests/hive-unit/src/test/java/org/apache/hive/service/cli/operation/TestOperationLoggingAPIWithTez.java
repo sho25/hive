@@ -172,8 +172,6 @@ literal|"<PERFLOG method=compile from=org.apache.hadoop.hive.ql.Driver>"
 block|,
 literal|"<PERFLOG method=parse from=org.apache.hadoop.hive.ql.Driver>"
 block|,
-literal|"<PERFLOG method=Driver.run from=org.apache.hadoop.hive.ql.Driver>"
-block|,
 literal|"from=org.apache.hadoop.hive.ql.exec.tez.monitoring.TezJobMonitor"
 block|,
 literal|"org.apache.tez.common.counters.DAGCounter"
