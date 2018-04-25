@@ -135,11 +135,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|DynamicValue
+name|common
 operator|.
 name|NoDynamicValuesException
 import|;
