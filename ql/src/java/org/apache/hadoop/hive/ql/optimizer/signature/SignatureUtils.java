@@ -253,7 +253,12 @@ name|put
 argument_list|(
 name|classLabel
 argument_list|,
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
 name|o
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

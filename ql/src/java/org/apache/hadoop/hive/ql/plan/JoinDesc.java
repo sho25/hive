@@ -1534,7 +1534,7 @@ name|Signature
 specifier|public
 name|Map
 argument_list|<
-name|Byte
+name|String
 argument_list|,
 name|String
 argument_list|>
@@ -1563,7 +1563,7 @@ return|;
 block|}
 name|LinkedHashMap
 argument_list|<
-name|Byte
+name|String
 argument_list|,
 name|String
 argument_list|>
@@ -1571,11 +1571,7 @@ name|ret
 init|=
 operator|new
 name|LinkedHashMap
-argument_list|<
-name|Byte
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -1704,10 +1700,15 @@ name|ret
 operator|.
 name|put
 argument_list|(
+name|String
+operator|.
+name|valueOf
+argument_list|(
 name|ent
 operator|.
 name|getKey
 argument_list|()
+argument_list|)
 argument_list|,
 name|sb
 operator|.
