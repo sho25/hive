@@ -107,7 +107,7 @@ name|ProtocolInfo
 argument_list|(
 name|protocolName
 operator|=
-literal|"org.apache.hadoop.hive.llap.protocol.LlapPluginProtocolBlockingPB"
+literal|"org.apache.hadoop.hive.llap.protocol.LlapPluginProtocolPB"
 argument_list|,
 name|protocolVersion
 operator|=
