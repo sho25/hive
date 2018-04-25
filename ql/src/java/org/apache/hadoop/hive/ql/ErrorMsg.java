@@ -2347,6 +2347,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|ACID_OP_ON_INSERTONLYTRAN_TABLE
+argument_list|(
+literal|10414
+argument_list|,
+literal|"Attempt to do update or delete on table {0} that is "
+operator|+
+literal|"insert-only transactional"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

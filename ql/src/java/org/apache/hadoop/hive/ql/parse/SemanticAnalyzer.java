@@ -16169,7 +16169,7 @@ literal|" but it's not in isInsertIntoTable() or getInsertOverwriteTables()"
 assert|;
 comment|// Disallow update and delete on non-acid tables
 name|boolean
-name|isAcid
+name|isFullAcid
 init|=
 name|AcidUtils
 operator|.
@@ -16195,7 +16195,20 @@ argument_list|)
 operator|)
 operator|&&
 operator|!
-name|isAcid
+name|isFullAcid
+condition|)
+block|{
+if|if
+condition|(
+operator|!
+name|AcidUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|ts
+operator|.
+name|tableHandle
+argument_list|)
 condition|)
 block|{
 comment|// Whether we are using an acid compliant transaction manager has already been caught in
@@ -16214,6 +16227,23 @@ operator|.
 name|tableName
 argument_list|)
 throw|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+name|ErrorMsg
+operator|.
+name|ACID_OP_ON_INSERTONLYTRAN_TABLE
+argument_list|,
+name|ts
+operator|.
+name|tableName
+argument_list|)
+throw|;
+block|}
 block|}
 comment|// TableSpec ts is got from the query (user specified),
 comment|// which means the user didn't specify partitions in their query,
