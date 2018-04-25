@@ -574,7 +574,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Login failure"
+literal|"javax.security.auth.login.LoginException"
 argument_list|)
 argument_list|)
 expr_stmt|;
