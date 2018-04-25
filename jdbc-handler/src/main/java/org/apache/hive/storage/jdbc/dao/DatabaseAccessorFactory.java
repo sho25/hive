@@ -111,6 +111,16 @@ name|MySqlDatabaseAccessor
 argument_list|()
 expr_stmt|;
 break|break;
+case|case
+name|JETHRO_DATA
+case|:
+name|accessor
+operator|=
+operator|new
+name|JethroDatabaseAccessor
+argument_list|()
+expr_stmt|;
+break|break;
 default|default:
 name|accessor
 operator|=

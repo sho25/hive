@@ -37,6 +37,8 @@ block|,
 name|MSSQL
 block|,
 name|METASTORE
+block|,
+name|JETHRO_DATA
 block|}
 end_enum
 

@@ -41,6 +41,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|Constants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|HiveMetaHook
@@ -604,6 +620,19 @@ name|JobConf
 name|jobConf
 parameter_list|)
 block|{    }
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|Constants
+operator|.
+name|JDBC_HIVE_STORAGE_HANDLER_ID
+return|;
+block|}
 block|}
 end_class
 

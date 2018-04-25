@@ -33475,6 +33475,16 @@ name|sh
 operator|.
 name|equals
 argument_list|(
+name|Constants
+operator|.
+name|JDBC_HIVE_STORAGE_HANDLER_ID
+argument_list|)
+operator|&&
+operator|!
+name|sh
+operator|.
+name|equals
+argument_list|(
 literal|"org.apache.hadoop.hive.accumulo.AccumuloStorageHandler"
 argument_list|)
 expr_stmt|;

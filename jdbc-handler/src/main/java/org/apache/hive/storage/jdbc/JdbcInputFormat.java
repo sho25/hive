@@ -359,6 +359,14 @@ block|}
 name|int
 name|numRecords
 init|=
+name|numSplits
+operator|<=
+literal|1
+condition|?
+name|Integer
+operator|.
+name|MAX_VALUE
+else|:
 name|dbAccessor
 operator|.
 name|getTotalNumberOfRecords

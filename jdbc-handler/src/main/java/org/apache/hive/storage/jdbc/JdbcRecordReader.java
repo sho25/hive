@@ -290,7 +290,7 @@ parameter_list|)
 block|{
 name|LOGGER
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"Initializing JdbcRecordReader"
 argument_list|)
@@ -327,7 +327,7 @@ try|try
 block|{
 name|LOGGER
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"JdbcRecordReader.next called"
 argument_list|)
@@ -378,7 +378,7 @@ condition|)
 block|{
 name|LOGGER
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"JdbcRecordReader has more records to read."
 argument_list|)

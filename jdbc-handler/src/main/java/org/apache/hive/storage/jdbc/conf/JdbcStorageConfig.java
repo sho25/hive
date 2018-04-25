@@ -49,7 +49,14 @@ name|QUERY
 argument_list|(
 literal|"query"
 argument_list|,
-literal|true
+literal|false
+argument_list|)
+block|,
+name|TABLE
+argument_list|(
+literal|"table"
+argument_list|,
+literal|false
 argument_list|)
 block|,
 name|JDBC_FETCH_SIZE
