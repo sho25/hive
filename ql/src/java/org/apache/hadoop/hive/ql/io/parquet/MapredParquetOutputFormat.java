@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Arrays
 import|;
 end_import
 
@@ -47,7 +47,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
+name|Collections
 import|;
 end_import
 
@@ -662,8 +662,8 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"creating new record writer..."
-operator|+
+literal|"Creating new record writer: {}"
+argument_list|,
 name|this
 argument_list|)
 expr_stmt|;
@@ -698,12 +698,22 @@ argument_list|<
 name|String
 argument_list|>
 name|columnNames
+init|=
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
 name|TypeInfo
 argument_list|>
 name|columnTypes
+init|=
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
 decl_stmt|;
 specifier|final
 name|String
@@ -738,25 +748,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
 name|columnNameProperty
 operator|.
-name|length
+name|isEmpty
 argument_list|()
-operator|==
-literal|0
 condition|)
-block|{
-name|columnNames
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-expr_stmt|;
-block|}
-else|else
 block|{
 name|columnNames
 operator|=
@@ -775,25 +772,12 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+operator|!
 name|columnTypeProperty
 operator|.
-name|length
+name|isEmpty
 argument_list|()
-operator|==
-literal|0
 condition|)
-block|{
-name|columnTypes
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|TypeInfo
-argument_list|>
-argument_list|()
-expr_stmt|;
-block|}
-else|else
 block|{
 name|columnTypes
 operator|=
