@@ -8404,7 +8404,7 @@ literal|","
 operator|+
 name|txnId2
 operator|+
-literal|"] due to a write conflict on default/TAB_PART/p=blah committed by [txnid:"
+literal|"] due to a write conflict on default/tab_part/p=blah committed by [txnid:"
 operator|+
 name|txnId
 operator|+
