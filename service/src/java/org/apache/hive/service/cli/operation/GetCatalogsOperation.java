@@ -191,6 +191,26 @@ name|HiveSession
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * GetCatalogsOperation.  *  */
 end_comment
@@ -202,6 +222,24 @@ name|GetCatalogsOperation
 extends|extends
 name|MetadataOperation
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|GetCatalogsOperation
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -254,6 +292,13 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Starting GetCatalogsOperation"
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -294,6 +339,13 @@ argument_list|(
 name|OperationState
 operator|.
 name|FINISHED
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Fetching catalog metadata has been successfully finished"
 argument_list|)
 expr_stmt|;
 block|}
