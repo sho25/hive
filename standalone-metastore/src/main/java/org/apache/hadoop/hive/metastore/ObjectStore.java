@@ -4013,7 +4013,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Initialized ObjectStore"
 argument_list|)
@@ -4372,7 +4372,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"ObjectStore, initialize called"
 argument_list|)
