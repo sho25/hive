@@ -1595,6 +1595,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|TableValidWriteIds
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|TxnAbortedException
 import|;
 end_import
@@ -6200,13 +6218,13 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a structure that details valid write ids list for all tables read by current txn.    * @param currentTxnId current txn ID for which we try to get valid write ids list    * @param tablesList list of tables (format:<db_name>.<table_name>) read from the current transaction    *                   for which needs to populate the valid write ids    * @param validTxnList snapshot of valid txns for the current txn    * @return list of valid write ids for the given list of tables.    * @throws TException    */
-name|ValidTxnWriteIdList
+comment|/**    * Get a structure that details valid write ids list for all tables read by current txn.    * @param tablesList list of tables (format:<db_name>.<table_name>) read from the current transaction    *                   for which needs to populate the valid write ids    * @param validTxnList snapshot of valid txns for the current txn    * @return list of valid write ids for the given list of tables.    * @throws TException    */
+name|List
+argument_list|<
+name|TableValidWriteIds
+argument_list|>
 name|getValidWriteIds
 parameter_list|(
-name|Long
-name|currentTxnId
-parameter_list|,
 name|List
 argument_list|<
 name|String

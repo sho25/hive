@@ -1040,6 +1040,9 @@ name|String
 name|colTypes
 parameter_list|)
 block|{
+comment|// TODO: this should have an option for directory to inherit from the parent table,
+comment|//       including bucketing and list bucketing, for the use in compaction when the
+comment|//       latter runs inside a transaction.
 name|TableDesc
 name|ret
 init|=

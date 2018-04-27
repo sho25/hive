@@ -580,6 +580,15 @@ argument_list|(
 name|name
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Processing compaction request "
+operator|+
+name|ci
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|ci
@@ -1063,6 +1072,8 @@ argument_list|()
 argument_list|,
 name|t
 argument_list|,
+name|p
+argument_list|,
 name|sd
 argument_list|,
 name|tblValidWriteIds
@@ -1094,6 +1105,12 @@ operator|.
 name|getLoginUser
 argument_list|()
 argument_list|)
+decl_stmt|;
+specifier|final
+name|Partition
+name|fp
+init|=
+name|p
 decl_stmt|;
 name|ugi
 operator|.
@@ -1127,6 +1144,8 @@ name|toString
 argument_list|()
 argument_list|,
 name|t
+argument_list|,
+name|fp
 argument_list|,
 name|sd
 argument_list|,

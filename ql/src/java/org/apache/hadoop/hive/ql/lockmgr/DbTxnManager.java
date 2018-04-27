@@ -39,6 +39,28 @@ name|org
 operator|.
 name|apache
 operator|.
+name|curator
+operator|.
+name|shaded
+operator|.
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|conf
@@ -249,6 +271,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|ValidCompactorWriteIdList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|ValidTxnList
 import|;
 end_import
@@ -332,6 +370,24 @@ operator|.
 name|api
 operator|.
 name|*
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|txn
+operator|.
+name|TxnUtils
 import|;
 end_import
 
@@ -664,7 +720,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An implementation of HiveTxnManager that stores the transactions in the metastore database.  * There should be 1 instance o {@link DbTxnManager} per {@link org.apache.hadoop.hive.ql.session.SessionState}  * with a single thread accessing it at a time, with the exception of {@link #heartbeat()} method.  * The later may (usually will) be called from a timer thread.  * See {@link #getMS()} for more important concurrency/metastore access notes.  *   * Each statement that the TM (transaction manager) should be aware of should belong to a transaction.  * Effectively, that means any statement that has side effects.  Exceptions are statements like  * Show Compactions, Show Tables, Use Database foo, etc.  The transaction is started either  * explicitly ( via Start Transaction SQL statement from end user - not fully supported) or  * implicitly by the {@link org.apache.hadoop.hive.ql.Driver} (which looks exactly as autoCommit=true  * from end user poit of view). See more at {@link #isExplicitTransaction}.  */
+comment|/**  * An implementation of HiveTxnManager that stores the transactions in the metastore database.  * There should be 1 instance o {@link DbTxnManager} per {@link org.apache.hadoop.hive.ql.session.SessionState}  * with a single thread accessing it at a time, with the exception of {@link #heartbeat()} method.  * The later may (usually will) be called from a timer thread.  * See {@link #getMS()} for more important concurrency/metastore access notes.  *  * Each statement that the TM (transaction manager) should be aware of should belong to a transaction.  * Effectively, that means any statement that has side effects.  Exceptions are statements like  * Show Compactions, Show Tables, Use Database foo, etc.  The transaction is started either  * explicitly ( via Start Transaction SQL statement from end user - not fully supported) or  * implicitly by the {@link org.apache.hadoop.hive.ql.Driver} (which looks exactly as autoCommit=true  * from end user poit of view). See more at {@link #isExplicitTransaction}.  */
 end_comment
 
 begin_class
@@ -746,7 +802,7 @@ name|numStatements
 init|=
 literal|0
 decl_stmt|;
-comment|/**    * if {@code true} it means current transaction is started via START TRANSACTION which means it cannot    * include any Operations which cannot be rolled back (drop partition; write to  non-acid table).    * If false, it's a single statement transaction which can include any statement.  This is not a     * contradiction from the user point of view who doesn't know anything about the implicit txn    * and cannot call rollback (the statement of course can fail in which case there is nothing to     * rollback (assuming the statement is well implemented)).    *    * This is done so that all commands run in a transaction which simplifies implementation and    * allows a simple implementation of multi-statement txns which don't require a lock manager    * capable of deadlock detection.  (todo: not fully implemented; elaborate on how this LM works)    *    * Also, critically important, ensuring that everything runs in a transaction assigns an order    * to all operations in the system - needed for replication/DR.    *    * We don't want to allow non-transactional statements in a user demarcated txn because the effect    * of such statement is "visible" immediately on statement completion, but the user may    * issue a rollback but the action of the statement can't be undone (and has possibly already been    * seen by another txn).  For example,    * start transaction    * insert into transactional_table values(1);    * insert into non_transactional_table select * from transactional_table;    * rollback    *    * The user would be in for a surprise especially if they are not aware of transactional    * properties of the tables involved.    *    * As a side note: what should the lock manager do with locks for non-transactional resources?    * Should it it release them at the end of the stmt or txn?    * Some interesting thoughts: http://mysqlmusings.blogspot.com/2009/02/mixing-engines-in-transactions.html.    */
+comment|/**    * if {@code true} it means current transaction is started via START TRANSACTION which means it cannot    * include any Operations which cannot be rolled back (drop partition; write to  non-acid table).    * If false, it's a single statement transaction which can include any statement.  This is not a    * contradiction from the user point of view who doesn't know anything about the implicit txn    * and cannot call rollback (the statement of course can fail in which case there is nothing to    * rollback (assuming the statement is well implemented)).    *    * This is done so that all commands run in a transaction which simplifies implementation and    * allows a simple implementation of multi-statement txns which don't require a lock manager    * capable of deadlock detection.  (todo: not fully implemented; elaborate on how this LM works)    *    * Also, critically important, ensuring that everything runs in a transaction assigns an order    * to all operations in the system - needed for replication/DR.    *    * We don't want to allow non-transactional statements in a user demarcated txn because the effect    * of such statement is "visible" immediately on statement completion, but the user may    * issue a rollback but the action of the statement can't be undone (and has possibly already been    * seen by another txn).  For example,    * start transaction    * insert into transactional_table values(1);    * insert into non_transactional_table select * from transactional_table;    * rollback    *    * The user would be in for a surprise especially if they are not aware of transactional    * properties of the tables involved.    *    * As a side note: what should the lock manager do with locks for non-transactional resources?    * Should it it release them at the end of the stmt or txn?    * Some interesting thoughts: http://mysqlmusings.blogspot.com/2009/02/mixing-engines-in-transactions.html.    */
 specifier|private
 name|boolean
 name|isExplicitTransaction
@@ -1344,7 +1400,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Ensures that the current SQL statement is appropriate for the current state of the    * Transaction Manager (e.g. can call commit unless you called start transaction)    *     * Note that support for multi-statement txns is a work-in-progress so it's only supported in    * HiveConf#HIVE_IN_TEST/HiveConf#TEZ_HIVE_IN_TEST.    * @param queryPlan    * @throws LockException    */
+comment|/**    * Ensures that the current SQL statement is appropriate for the current state of the    * Transaction Manager (e.g. can call commit unless you called start transaction)    *    * Note that support for multi-statement txns is a work-in-progress so it's only supported in    * HiveConf#HIVE_IN_TEST/HiveConf#TEZ_HIVE_IN_TEST.    * @param queryPlan    * @throws LockException    */
 specifier|private
 name|void
 name|verifyState
@@ -4138,16 +4194,21 @@ assert|;
 try|try
 block|{
 return|return
+name|TxnUtils
+operator|.
+name|createValidTxnWriteIdList
+argument_list|(
+name|txnId
+argument_list|,
 name|getMS
 argument_list|()
 operator|.
 name|getValidWriteIds
 argument_list|(
-name|txnId
-argument_list|,
 name|tableList
 argument_list|,
 name|validTxnList
+argument_list|)
 argument_list|)
 return|;
 block|}

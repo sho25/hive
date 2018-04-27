@@ -123,6 +123,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ValidWriteIdList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|TransactionalValidationListener
@@ -507,7 +523,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetValidWriteIdsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnWriteIdList}.  This assumes that the caller intends to    * read the files, and thus treats both open and aborted transactions as invalid.    * @param currentTxnId current txn ID for which we get the valid write ids list    * @param validWriteIds valid write ids list from the metastore    * @return a valid write IDs list for the whole transaction.    */
+comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetValidWriteIdsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnWriteIdList}.  This assumes that the caller intends to    * read the files, and thus treats both open and aborted transactions as invalid.    * @param currentTxnId current txn ID for which we get the valid write ids list    * @param list valid write ids list from the metastore    * @return a valid write IDs list for the whole transaction.    */
 specifier|public
 specifier|static
 name|ValidTxnWriteIdList
@@ -516,8 +532,11 @@ parameter_list|(
 name|Long
 name|currentTxnId
 parameter_list|,
-name|GetValidWriteIdsResponse
-name|validWriteIds
+name|List
+argument_list|<
+name|TableValidWriteIds
+argument_list|>
+name|validIds
 parameter_list|)
 block|{
 name|ValidTxnWriteIdList
@@ -534,10 +553,7 @@ control|(
 name|TableValidWriteIds
 name|tableWriteIds
 range|:
-name|validWriteIds
-operator|.
-name|getTblValidWriteIds
-argument_list|()
+name|validIds
 control|)
 block|{
 name|validTxnWriteIdList
@@ -902,6 +918,57 @@ argument_list|)
 return|;
 block|}
 block|}
+specifier|public
+specifier|static
+name|ValidReaderWriteIdList
+name|updateForCompactionQuery
+parameter_list|(
+name|ValidReaderWriteIdList
+name|ids
+parameter_list|)
+block|{
+comment|// This is based on the existing valid write ID list that was built for a select query;
+comment|// therefore we assume all the aborted txns, etc. were already accounted for.
+comment|// All we do is adjust the high watermark to only include contiguous txns.
+name|Long
+name|minOpenWriteId
+init|=
+name|ids
+operator|.
+name|getMinOpenWriteId
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|minOpenWriteId
+operator|!=
+literal|null
+operator|&&
+name|minOpenWriteId
+operator|!=
+name|Long
+operator|.
+name|MAX_VALUE
+condition|)
+block|{
+return|return
+name|ids
+operator|.
+name|updateHighWatermark
+argument_list|(
+name|ids
+operator|.
+name|getMinOpenWriteId
+argument_list|()
+operator|-
+literal|1
+argument_list|)
+return|;
+block|}
+return|return
+name|ids
+return|;
+block|}
 comment|/**    * Get an instance of the TxnStore that is appropriate for this store    * @param conf configuration    * @return txn store    */
 specifier|public
 specifier|static
@@ -1123,7 +1190,7 @@ literal|"\\."
 argument_list|)
 return|;
 block|}
-comment|/**    * Build a query (or queries if one query is too big but only for the case of 'IN'     * composite clause. For the case of 'NOT IN' clauses, multiple queries change    * the semantics of the intended query.    * E.g., Let's assume that input "inList" parameter has [5, 6] and that    * _DIRECT_SQL_MAX_QUERY_LENGTH_ configuration parameter only allows one value in a 'NOT IN' clause,    * Then having two delete statements changes the semantics of the inteneded SQL statement.    * I.e. 'delete from T where a not in (5)' and 'delete from T where a not in (6)' sequence    * is not equal to 'delete from T where a not in (5, 6)'.)    * with one or multiple 'IN' or 'NOT IN' clauses with the given input parameters.    *    * Note that this method currently support only single column for    * IN/NOT IN clauses and that only covers OR-based composite 'IN' clause and    * AND-based composite 'NOT IN' clause.    * For example, for 'IN' clause case, the method will build a query with OR.    * E.g., "id in (1,2,3) OR id in (4,5,6)".    * For 'NOT IN' case, NOT IN list is broken into multiple 'NOT IN" clauses connected by AND.    *    * Note that, in this method, "a composite 'IN' clause" is defined as "a list of multiple 'IN'    * clauses in a query".    *    * @param queries   OUT: Array of query strings    * @param prefix    IN:  Part of the query that comes before IN list    * @param suffix    IN:  Part of the query that comes after IN list    * @param inList    IN:  the list with IN list values    * @param inColumn  IN:  single column name of IN list operator    * @param addParens IN:  add a pair of parenthesis outside the IN lists    *                       e.g. "(id in (1,2,3) OR id in (4,5,6))"    * @param notIn     IN:  is this for building a 'NOT IN' composite clause?    * @return          OUT: a list of the count of IN list values that are in each of the corresponding queries    */
+comment|/**    * Build a query (or queries if one query is too big but only for the case of 'IN'    * composite clause. For the case of 'NOT IN' clauses, multiple queries change    * the semantics of the intended query.    * E.g., Let's assume that input "inList" parameter has [5, 6] and that    * _DIRECT_SQL_MAX_QUERY_LENGTH_ configuration parameter only allows one value in a 'NOT IN' clause,    * Then having two delete statements changes the semantics of the inteneded SQL statement.    * I.e. 'delete from T where a not in (5)' and 'delete from T where a not in (6)' sequence    * is not equal to 'delete from T where a not in (5, 6)'.)    * with one or multiple 'IN' or 'NOT IN' clauses with the given input parameters.    *    * Note that this method currently support only single column for    * IN/NOT IN clauses and that only covers OR-based composite 'IN' clause and    * AND-based composite 'NOT IN' clause.    * For example, for 'IN' clause case, the method will build a query with OR.    * E.g., "id in (1,2,3) OR id in (4,5,6)".    * For 'NOT IN' case, NOT IN list is broken into multiple 'NOT IN" clauses connected by AND.    *    * Note that, in this method, "a composite 'IN' clause" is defined as "a list of multiple 'IN'    * clauses in a query".    *    * @param queries   OUT: Array of query strings    * @param prefix    IN:  Part of the query that comes before IN list    * @param suffix    IN:  Part of the query that comes after IN list    * @param inList    IN:  the list with IN list values    * @param inColumn  IN:  single column name of IN list operator    * @param addParens IN:  add a pair of parenthesis outside the IN lists    *                       e.g. "(id in (1,2,3) OR id in (4,5,6))"    * @param notIn     IN:  is this for building a 'NOT IN' composite clause?    * @return          OUT: a list of the count of IN list values that are in each of the corresponding queries    */
 specifier|public
 specifier|static
 name|List

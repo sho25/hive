@@ -17725,7 +17725,8 @@ return|return
 name|prop_string
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|StringBuilder
 name|appendSerdeParams
 parameter_list|(

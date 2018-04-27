@@ -9256,6 +9256,15 @@ operator|+
 literal|"Compaction jobs will be submitted.  Set to empty string to let Hadoop choose the queue."
 argument_list|)
 block|,
+name|HIVE_COMPACTOR_COMPACT_MM
+argument_list|(
+literal|"hive.compactor.compact.insert.only"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether the compactor should compact insert-only tables. A safety switch."
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_HISTORY_RETENTION_SUCCEEDED      */
 annotation|@
 name|Deprecated
