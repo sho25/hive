@@ -172,6 +172,17 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+name|context
+operator|.
+name|nestedContext
+operator|.
+name|setConf
+argument_list|(
+name|context
+operator|.
+name|hiveConf
+argument_list|)
+expr_stmt|;
 name|EximUtil
 operator|.
 name|SemanticAnalyzerWrapperContext
