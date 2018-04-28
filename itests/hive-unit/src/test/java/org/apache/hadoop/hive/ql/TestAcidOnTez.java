@@ -1599,7 +1599,7 @@ index|[]
 init|=
 block|{
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":0}\t5\t6"
 block|,
 name|AbstractFileMergeOperator
 operator|.
@@ -1619,7 +1619,7 @@ literal|"1/000000_0"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":2}\t5\t6"
+literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":2}\t1\t2"
 block|,
 name|AbstractFileMergeOperator
 operator|.
@@ -1838,7 +1838,7 @@ name|expected2
 init|=
 block|{
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":1}\t3\t4"
 block|,
 name|AbstractFileMergeOperator
 operator|.
@@ -1848,7 +1848,7 @@ literal|"1/000000_0"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":1}\t3\t4"
+literal|"{\"writeid\":0,\"bucketid\":536870912,\"rowid\":2}\t1\t2"
 block|,
 name|AbstractFileMergeOperator
 operator|.
@@ -3559,7 +3559,7 @@ index|[]
 init|=
 block|{
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t5\t6"
 block|,
 literal|"/delta_0000001_0000001_0001/bucket_00000"
 block|}
@@ -3571,7 +3571,7 @@ literal|"/delta_0000001_0000001_0001/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":2}\t5\t6"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":2}\t1\t2"
 block|,
 literal|"/delta_0000001_0000001_0001/bucket_00000"
 block|}
@@ -3774,13 +3774,13 @@ name|expected2
 init|=
 block|{
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t3\t4"
 block|,
 literal|"/delta_0000001_0000001_0001/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t3\t4"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":2}\t1\t2"
 block|,
 literal|"/delta_0000001_0000001_0001/bucket_00000"
 block|}
@@ -5196,13 +5196,13 @@ name|expected2
 init|=
 block|{
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t1\t2"
 block|,
 literal|"warehouse/t/delta_0000001_0000001_0001/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t3\t4"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t3\t4"
 block|,
 literal|"warehouse/t/delta_0000001_0000001_0001/bucket_00000"
 block|}
