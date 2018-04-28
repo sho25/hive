@@ -739,6 +739,13 @@ argument_list|)
 decl_stmt|;
 name|basicStatsWork
 operator|.
+name|setIsExplicitAnalyze
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|basicStatsWork
+operator|.
 name|setNoScanAnalyzeCommand
 argument_list|(
 name|parseContext

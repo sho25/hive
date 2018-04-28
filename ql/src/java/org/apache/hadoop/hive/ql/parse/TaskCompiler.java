@@ -3048,6 +3048,13 @@ name|getTableSpec
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|statsWork
+operator|.
+name|setIsExplicitAnalyze
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|StatsWork
 name|columnStatsWork
 init|=

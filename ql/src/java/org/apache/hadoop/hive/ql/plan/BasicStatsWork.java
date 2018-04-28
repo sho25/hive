@@ -127,6 +127,10 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
+name|boolean
+name|isExplicitAnalyze
+decl_stmt|;
+specifier|private
 name|TableSpec
 name|tableSpecs
 decl_stmt|;
@@ -483,12 +487,7 @@ parameter_list|()
 block|{
 comment|// ANALYZE TABLE
 return|return
-operator|(
-name|getTableSpecs
-argument_list|()
-operator|!=
-literal|null
-operator|)
+name|isExplicitAnalyze
 return|;
 block|}
 specifier|public
@@ -677,6 +676,21 @@ name|getViewName
 argument_list|()
 return|;
 block|}
+block|}
+specifier|public
+name|void
+name|setIsExplicitAnalyze
+parameter_list|(
+name|boolean
+name|b
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isExplicitAnalyze
+operator|=
+name|b
+expr_stmt|;
 block|}
 block|}
 end_class
