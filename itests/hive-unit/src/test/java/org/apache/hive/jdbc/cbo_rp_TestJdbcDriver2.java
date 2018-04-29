@@ -8629,6 +8629,23 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_ENABLED
+operator|.
+name|varname
+operator|+
+literal|"=false"
+argument_list|)
+expr_stmt|;
 name|ResultSet
 name|res
 init|=
