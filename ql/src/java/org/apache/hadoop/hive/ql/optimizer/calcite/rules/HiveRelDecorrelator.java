@@ -469,6 +469,22 @@ name|rel
 operator|.
 name|core
 operator|.
+name|Join
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rel
+operator|.
+name|core
+operator|.
 name|JoinRelType
 import|;
 end_import
@@ -486,22 +502,6 @@ operator|.
 name|core
 operator|.
 name|Project
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|core
-operator|.
-name|RelFactories
 import|;
 end_import
 
@@ -549,103 +549,7 @@ name|rel
 operator|.
 name|logical
 operator|.
-name|LogicalAggregate
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|logical
-operator|.
 name|LogicalCorrelate
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|logical
-operator|.
-name|LogicalFilter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|logical
-operator|.
-name|LogicalIntersect
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|logical
-operator|.
-name|LogicalJoin
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|logical
-operator|.
-name|LogicalProject
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|logical
-operator|.
-name|LogicalUnion
 import|;
 end_import
 
@@ -678,38 +582,6 @@ operator|.
 name|metadata
 operator|.
 name|RelMetadataQuery
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|rules
-operator|.
-name|FilterJoinRule
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|calcite
-operator|.
-name|rel
-operator|.
-name|rules
-operator|.
-name|FilterProjectTransposeRule
 import|;
 end_import
 
@@ -1235,6 +1107,46 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
+name|HiveRelFactories
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|HiveRelOptUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
 name|HiveRelShuttleImpl
 import|;
 end_import
@@ -1654,7 +1566,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * NOTE: this whole logic is replicated from Calcite's RelDecorrelator  *  and is exteneded to make it suitable for HIVE  *    We should get rid of this and replace it with Calcite's RelDecorrelator  *    once that works with Join, Project etc instead of LogicalJoin, LogicalProject.  *    At this point this has differed from Calcite's version significantly so cannot  *    get rid of this.  *  * RelDecorrelator replaces all correlated expressions (corExp) in a relational  * expression (RelNode) tree with non-correlated expressions that are produced  * from joining the RelNode that produces the corExp with the RelNode that  * references it.  *  *<p>TODO:</p>  *<ul>  *<li>replace {@code CorelMap} constructor parameter with a RelNode  *<li>make {@link #currentRel} immutable (would require a fresh  *      RelDecorrelator for each node being decorrelated)</li>  *<li>make fields of {@code CorelMap} immutable</li>  *<li>make sub-class rules static, and have them create their own  *   de-correlator</li>  *</ul>  */
+comment|/**  * NOTE: this whole logic is replicated from Calcite's RelDecorrelator  *  and is exteneded to make it suitable for HIVE  *    We should get rid of this and replace it with Calcite's RelDecorrelator  *    once that works with Join, Project etc instead of Join, Project.  *    At this point this has differed from Calcite's version significantly so cannot  *    get rid of this.  *  * RelDecorrelator replaces all correlated expressions (corExp) in a relational  * expression (RelNode) tree with non-correlated expressions that are produced  * from joining the RelNode that produces the corExp with the RelNode that  * references it.  *  *<p>TODO:</p>  *<ul>  *<li>replace {@code CorelMap} constructor parameter with a RelNode  *<li>make {@link #currentRel} immutable (would require a fresh  *      RelDecorrelator for each node being decorrelated)</li>  *<li>make fields of {@code CorelMap} immutable</li>  *<li>make sub-class rules static, and have them create their own  *   de-correlator</li>  *</ul>  */
 end_comment
 
 begin_class
@@ -1808,9 +1720,9 @@ name|context
 expr_stmt|;
 name|relBuilder
 operator|=
-name|RelFactories
+name|HiveRelFactories
 operator|.
-name|LOGICAL_BUILDER
+name|HIVE_BUILDER
 operator|.
 name|create
 argument_list|(
@@ -2002,14 +1914,14 @@ argument_list|)
 operator|.
 name|addRuleInstance
 argument_list|(
-name|FilterJoinRule
+name|HiveFilterJoinRule
 operator|.
 name|FILTER_ON_JOIN
 argument_list|)
 operator|.
 name|addRuleInstance
 argument_list|(
-name|FilterProjectTransposeRule
+name|HiveFilterProjectTransposeRule
 operator|.
 name|INSTANCE
 argument_list|)
@@ -2079,14 +1991,14 @@ argument_list|()
 operator|.
 name|addRuleInstance
 argument_list|(
-name|FilterJoinRule
+name|HiveFilterJoinRule
 operator|.
 name|FILTER_ON_JOIN
 argument_list|)
 operator|.
 name|addRuleInstance
 argument_list|(
-name|FilterJoinRule
+name|HiveFilterJoinRule
 operator|.
 name|JOIN
 argument_list|)
@@ -3128,12 +3040,12 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * Rewrites a {@link LogicalAggregate}.    *    * @param rel Aggregate to rewrite    */
+comment|/**    * Rewrites a {@link Aggregate}.    *    * @param rel Aggregate to rewrite    */
 specifier|public
 name|Frame
 name|decorrelateRel
 parameter_list|(
-name|LogicalAggregate
+name|Aggregate
 name|rel
 parameter_list|)
 throws|throws
@@ -3831,20 +3743,21 @@ name|relBuilder
 operator|.
 name|push
 argument_list|(
-name|LogicalAggregate
-operator|.
-name|create
-argument_list|(
 name|newProject
-argument_list|,
-literal|false
-argument_list|,
+argument_list|)
+operator|.
+name|aggregate
+argument_list|(
+name|relBuilder
+operator|.
+name|groupKey
+argument_list|(
 name|newGroupSet
 argument_list|,
 literal|null
+argument_list|)
 argument_list|,
 name|newAggCalls
-argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -4947,7 +4860,7 @@ operator|.
 name|getFieldList
 argument_list|()
 decl_stmt|;
-comment|// LogicalProject projects the original expressions,
+comment|// Project projects the original expressions,
 comment|// plus any correlated variables the input wants to pass along.
 specifier|final
 name|List
@@ -4966,7 +4879,7 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
-comment|// If this LogicalProject has correlated reference, create value generator
+comment|// If this Project has correlated reference, create value generator
 comment|// and produce the correlated variables in the new output.
 if|if
 condition|(
@@ -4988,7 +4901,7 @@ name|rel
 argument_list|)
 expr_stmt|;
 block|}
-comment|// LogicalProject projects the original expressions
+comment|// Project projects the original expressions
 specifier|final
 name|Map
 argument_list|<
@@ -5185,12 +5098,12 @@ name|corDefOutputs
 argument_list|)
 return|;
 block|}
-comment|/**    * Rewrite LogicalProject.    *    * @param rel the project rel to rewrite    */
+comment|/**    * Rewrite Project.    *    * @param rel the project rel to rewrite    */
 specifier|public
 name|Frame
 name|decorrelateRel
 parameter_list|(
-name|LogicalProject
+name|Project
 name|rel
 parameter_list|)
 throws|throws
@@ -5259,7 +5172,7 @@ operator|.
 name|getFieldList
 argument_list|()
 decl_stmt|;
-comment|// LogicalProject projects the original expressions,
+comment|// Project projects the original expressions,
 comment|// plus any correlated variables the input wants to pass along.
 specifier|final
 name|List
@@ -5278,7 +5191,7 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
-comment|// If this LogicalProject has correlated reference, create value generator
+comment|// If this Project has correlated reference, create value generator
 comment|// and produce the correlated variables in the new output.
 if|if
 condition|(
@@ -5300,7 +5213,7 @@ name|rel
 argument_list|)
 expr_stmt|;
 block|}
-comment|// LogicalProject projects the original expressions
+comment|// Project projects the original expressions
 specifier|final
 name|Map
 argument_list|<
@@ -5492,7 +5405,7 @@ name|corDefOutputs
 argument_list|)
 return|;
 block|}
-comment|/**    * Create RelNode tree that produces a list of correlated variables.    *    * @param correlations         correlated variables to generate    * @param valueGenFieldOffset  offset in the output that generated columns    *                             will start    * @param mapCorVarToOutputPos output positions for the correlated variables    *                             generated    * @return RelNode the root of the resultant RelNode tree    */
+comment|/**    * Create RelNode tree that produces a list of correlated variables.    */
 specifier|private
 name|RelNode
 name|createValueGenerator
@@ -5768,6 +5681,10 @@ name|RelOptUtil
 operator|.
 name|createProject
 argument_list|(
+name|HiveRelFactories
+operator|.
+name|HIVE_PROJECT_FACTORY
+argument_list|,
 name|newInput
 argument_list|,
 name|mapNewInputToOutputs
@@ -5781,12 +5698,18 @@ decl_stmt|;
 name|RelNode
 name|distinct
 init|=
-name|RelOptUtil
+name|relBuilder
 operator|.
-name|createDistinctRel
+name|push
 argument_list|(
 name|project
 argument_list|)
+operator|.
+name|distinct
+argument_list|()
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
 name|RelOptCluster
 name|cluster
@@ -5838,13 +5761,23 @@ else|else
 block|{
 name|r
 operator|=
-name|LogicalJoin
+name|relBuilder
 operator|.
-name|create
+name|push
 argument_list|(
 name|r
-argument_list|,
+argument_list|)
+operator|.
+name|push
+argument_list|(
 name|distinct
+argument_list|)
+operator|.
+name|join
+argument_list|(
+name|JoinRelType
+operator|.
+name|INNER
 argument_list|,
 name|cluster
 operator|.
@@ -5855,19 +5788,10 @@ name|makeLiteral
 argument_list|(
 literal|true
 argument_list|)
-argument_list|,
-name|ImmutableSet
-operator|.
-expr|<
-name|CorrelationId
-operator|>
-name|of
-argument_list|()
-argument_list|,
-name|JoinRelType
-operator|.
-name|INNER
 argument_list|)
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 block|}
 block|}
@@ -6349,15 +6273,25 @@ decl_stmt|;
 name|RelNode
 name|join
 init|=
-name|LogicalJoin
+name|relBuilder
 operator|.
-name|create
+name|push
 argument_list|(
 name|frame
 operator|.
 name|r
-argument_list|,
+argument_list|)
+operator|.
+name|push
+argument_list|(
 name|valueGenRel
+argument_list|)
+operator|.
+name|join
+argument_list|(
+name|JoinRelType
+operator|.
+name|INNER
 argument_list|,
 name|rexBuilder
 operator|.
@@ -6365,23 +6299,14 @@ name|makeLiteral
 argument_list|(
 literal|true
 argument_list|)
-argument_list|,
-name|ImmutableSet
-operator|.
-expr|<
-name|CorrelationId
-operator|>
-name|of
-argument_list|()
-argument_list|,
-name|JoinRelType
-operator|.
-name|INNER
 argument_list|)
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
-comment|// LogicalJoin or LogicalFilter does not change the old input ordering. All
+comment|// Join or Filter does not change the old input ordering. All
 comment|// input fields from newLeftInput(i.e. the original input to the old
-comment|// LogicalFilter) are in the output and in the same position.
+comment|// Filter) are in the output and in the same position.
 return|return
 name|register
 argument_list|(
@@ -6859,16 +6784,16 @@ block|{
 comment|//
 comment|// Rewrite logic:
 comment|//
-comment|// 1. If a LogicalFilter references a correlated field in its filter
-comment|// condition, rewrite the LogicalFilter to be
-comment|//   LogicalFilter
-comment|//     LogicalJoin(cross product)
+comment|// 1. If a Filter references a correlated field in its filter
+comment|// condition, rewrite the Filter to be
+comment|//   Filter
+comment|//     Join(cross product)
 comment|//       OriginalFilterInput
 comment|//       ValueGenerator(produces distinct sets of correlated variables)
 comment|// and rewrite the correlated fieldAccess in the filter condition to
-comment|// reference the LogicalJoin output.
+comment|// reference the Join output.
 comment|//
-comment|// 2. If LogicalFilter does not reference correlated variables, simply
+comment|// 2. If Filter does not reference correlated variables, simply
 comment|// rewrite the filter condition using new input.
 comment|//
 specifier|final
@@ -6907,7 +6832,7 @@ name|oldInputFrame
 init|=
 name|frame
 decl_stmt|;
-comment|// If this LogicalFilter has correlated reference, create value generator
+comment|// If this Filter has correlated reference, create value generator
 comment|// and produce the correlated variables in the new output.
 if|if
 condition|(
@@ -7164,28 +7089,28 @@ name|corDefOutputs
 argument_list|)
 return|;
 block|}
-comment|/**      * Rewrite LogicalFilter.      *      * @param rel the filter rel to rewrite      */
+comment|/**      * Rewrite Filter.      *      * @param rel the filter rel to rewrite      */
 specifier|public
 name|Frame
 name|decorrelateRel
 parameter_list|(
-name|LogicalFilter
+name|Filter
 name|rel
 parameter_list|)
 block|{
 comment|//
 comment|// Rewrite logic:
 comment|//
-comment|// 1. If a LogicalFilter references a correlated field in its filter
-comment|// condition, rewrite the LogicalFilter to be
-comment|//   LogicalFilter
-comment|//     LogicalJoin(cross product)
+comment|// 1. If a Filter references a correlated field in its filter
+comment|// condition, rewrite the Filter to be
+comment|//   Filter
+comment|//     Join(cross product)
 comment|//       OriginalFilterInput
 comment|//       ValueGenerator(produces distinct sets of correlated variables)
 comment|// and rewrite the correlated fieldAccess in the filter condition to
-comment|// reference the LogicalJoin output.
+comment|// reference the Join output.
 comment|//
-comment|// 2. If LogicalFilter does not reference correlated variables, simply
+comment|// 2. If Filter does not reference correlated variables, simply
 comment|// rewrite the filter condition using new input.
 comment|//
 specifier|final
@@ -7219,7 +7144,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|// If this LogicalFilter has correlated reference, create value generator
+comment|// If this Filter has correlated reference, create value generator
 comment|// and produce the correlated variables in the new output.
 if|if
 condition|(
@@ -8130,28 +8055,24 @@ expr_stmt|;
 block|}
 name|newJoin
 operator|=
-name|LogicalJoin
+name|relBuilder
 operator|.
-name|create
+name|push
 argument_list|(
 name|leftFrame
 operator|.
 name|r
-argument_list|,
+argument_list|)
+operator|.
+name|push
+argument_list|(
 name|rightFrame
 operator|.
 name|r
-argument_list|,
-name|condition
-argument_list|,
-name|ImmutableSet
+argument_list|)
 operator|.
-expr|<
-name|CorrelationId
-operator|>
-name|of
-argument_list|()
-argument_list|,
+name|join
+argument_list|(
 name|rel
 operator|.
 name|getJoinType
@@ -8159,7 +8080,12 @@ argument_list|()
 operator|.
 name|toJoinType
 argument_list|()
+argument_list|,
+name|condition
 argument_list|)
+operator|.
+name|build
+argument_list|()
 expr_stmt|;
 block|}
 name|valueGen
@@ -8471,12 +8397,12 @@ name|corDefOutputs
 argument_list|)
 return|;
 block|}
-comment|/**    * Rewrite LogicalJoin.    *    * @param rel LogicalJoin    */
+comment|/**    * Rewrite Join.    *    * @param rel Join    */
 specifier|public
 name|Frame
 name|decorrelateRel
 parameter_list|(
-name|LogicalJoin
+name|Join
 name|rel
 parameter_list|)
 block|{
@@ -9054,15 +8980,15 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Pulls project above the join from its RHS input. Enforces nullability    * for join output.    *    * @param join          Join    * @param project       Original project as the right-hand input of the join    * @param nullIndicatorPos Position of null indicator    * @return the subtree with the new LogicalProject at the root    */
+comment|/**    * Pulls project above the join from its RHS input. Enforces nullability    * for join output.    *    * @param join          Join    * @param project       Original project as the right-hand input of the join    * @param nullIndicatorPos Position of null indicator    * @return the subtree with the new Project at the root    */
 specifier|private
 name|RelNode
 name|projectJoinOutputWithNullability
 parameter_list|(
-name|LogicalJoin
+name|Join
 name|join
 parameter_list|,
-name|LogicalProject
+name|Project
 name|project
 parameter_list|,
 name|int
@@ -9262,13 +9188,27 @@ name|createProject
 argument_list|(
 name|join
 argument_list|,
+name|Pair
+operator|.
+name|left
+argument_list|(
 name|newProjExprs
+argument_list|)
+argument_list|,
+name|Pair
+operator|.
+name|right
+argument_list|(
+name|newProjExprs
+argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 return|;
 block|}
-comment|/**    * Pulls a {@link Project} above a {@link Correlate} from its RHS input.    * Enforces nullability for join output.    *    * @param correlate  Correlate    * @param project the original project as the RHS input of the join    * @param isCount Positions which are calls to the<code>COUNT</code>    *                aggregation function    * @return the subtree with the new LogicalProject at the root    */
+comment|/**    * Pulls a {@link Project} above a {@link Correlate} from its RHS input.    * Enforces nullability for join output.    *    * @param correlate  Correlate    * @param project the original project as the RHS input of the join    * @param isCount Positions which are calls to the<code>COUNT</code>    *                aggregation function    * @return the subtree with the new Project at the root    */
 specifier|private
 name|RelNode
 name|aggregateCorrelatorOutput
@@ -9276,7 +9216,7 @@ parameter_list|(
 name|Correlate
 name|correlate
 parameter_list|,
-name|LogicalProject
+name|Project
 name|project
 parameter_list|,
 name|Set
@@ -9440,9 +9380,23 @@ name|createProject
 argument_list|(
 name|correlate
 argument_list|,
+name|Pair
+operator|.
+name|left
+argument_list|(
 name|newProjects
+argument_list|)
+argument_list|,
+name|Pair
+operator|.
+name|right
+argument_list|(
+name|newProjects
+argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 return|;
 block|}
@@ -9454,10 +9408,10 @@ parameter_list|(
 name|LogicalCorrelate
 name|correlate
 parameter_list|,
-name|LogicalProject
+name|Project
 name|project
 parameter_list|,
-name|LogicalFilter
+name|Filter
 name|filter
 parameter_list|,
 name|List
@@ -9685,7 +9639,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Projects all {@code input} output fields plus the additional expressions.    *    * @param input        Input relational expression    * @param additionalExprs Additional expressions and names    * @return the new LogicalProject    */
+comment|/**    * Projects all {@code input} output fields plus the additional expressions.    *    * @param input        Input relational expression    * @param additionalExprs Additional expressions and names    * @return the new Project    */
 specifier|private
 name|RelNode
 name|createProjectWithAdditionalExprs
@@ -9803,9 +9757,23 @@ name|createProject
 argument_list|(
 name|input
 argument_list|,
+name|Pair
+operator|.
+name|left
+argument_list|(
 name|projects
+argument_list|)
+argument_list|,
+name|Pair
+operator|.
+name|right
+argument_list|(
+name|projects
+argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 return|;
 block|}
@@ -11108,10 +11076,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-specifier|final
-name|RelDataType
-name|newType
-decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -11124,8 +11088,21 @@ comment|// support from type inference rules to tell whether a rule
 comment|// decides return type based on input types, for now all
 comment|// operators will be recreated with new type if any operand
 comment|// changed, unless the operator has "built-in" type.
-name|newType
+name|newCall
 operator|=
+name|rexBuilder
+operator|.
+name|ensureType
+argument_list|(
+name|call
+operator|.
+name|getType
+argument_list|()
+argument_list|,
+name|rexBuilder
+operator|.
+name|makeCall
+argument_list|(
 name|rexBuilder
 operator|.
 name|deriveReturnType
@@ -11133,6 +11110,14 @@ argument_list|(
 name|operator
 argument_list|,
 name|clonedOperands
+argument_list|)
+argument_list|,
+name|operator
+argument_list|,
+name|clonedOperands
+argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -11145,27 +11130,23 @@ comment|// cast function with less than 2 operands.
 comment|// TODO: Comments in RexShuttle.visitCall() mention other
 comment|// types in this category. Need to resolve those together
 comment|// and preferably in the base class RexShuttle.
-name|newType
-operator|=
-name|call
-operator|.
-name|getType
-argument_list|()
-expr_stmt|;
-block|}
 name|newCall
 operator|=
 name|rexBuilder
 operator|.
 name|makeCall
 argument_list|(
-name|newType
+name|call
+operator|.
+name|getType
+argument_list|()
 argument_list|,
 name|operator
 argument_list|,
 name|clonedOperands
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -11219,19 +11200,19 @@ name|super
 argument_list|(
 name|operand
 argument_list|(
-name|LogicalAggregate
+name|Aggregate
 operator|.
 name|class
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalProject
+name|Project
 operator|.
 name|class
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalAggregate
+name|Aggregate
 operator|.
 name|class
 argument_list|,
@@ -11251,7 +11232,7 @@ name|RelOptRuleCall
 name|call
 parameter_list|)
 block|{
-name|LogicalAggregate
+name|Aggregate
 name|singleAggregate
 init|=
 name|call
@@ -11261,7 +11242,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|LogicalProject
+name|Project
 name|project
 init|=
 name|call
@@ -11271,7 +11252,7 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|LogicalAggregate
+name|Aggregate
 name|aggregate
 init|=
 name|call
@@ -11427,6 +11408,10 @@ argument_list|)
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 decl_stmt|;
 name|call
@@ -11469,13 +11454,13 @@ argument_list|)
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalAggregate
+name|Aggregate
 operator|.
 name|class
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalProject
+name|Project
 operator|.
 name|class
 argument_list|,
@@ -11525,7 +11510,7 @@ literal|1
 argument_list|)
 decl_stmt|;
 specifier|final
-name|LogicalAggregate
+name|Aggregate
 name|aggregate
 init|=
 name|call
@@ -11536,7 +11521,7 @@ literal|2
 argument_list|)
 decl_stmt|;
 specifier|final
-name|LogicalProject
+name|Project
 name|project
 init|=
 name|call
@@ -11584,9 +11569,23 @@ comment|// during decorrelation.
 comment|//
 comment|// CorrelateRel(left correlation, condition = true)
 comment|//   LeftInputRel
-comment|//   LogicalAggregate (groupby (0) single_value())
-comment|//     LogicalProject-A (may reference coVar)
+comment|//   Aggregate (groupby (0) single_value())
+comment|//     Project-A (may reference coVar)
 comment|//       RightInputRel
+if|if
+condition|(
+name|correlate
+operator|.
+name|getJoinType
+argument_list|()
+operator|!=
+name|SemiJoinType
+operator|.
+name|LEFT
+condition|)
+block|{
+return|return;
+block|}
 specifier|final
 name|JoinRelType
 name|joinType
@@ -11708,7 +11707,7 @@ condition|(
 operator|(
 name|right
 operator|instanceof
-name|LogicalFilter
+name|Filter
 operator|)
 operator|&&
 name|cm
@@ -11723,16 +11722,16 @@ condition|)
 block|{
 comment|// rightInputRel has this shape:
 comment|//
-comment|//       LogicalFilter (references corvar)
+comment|//       Filter (references corvar)
 comment|//         FilterInputRel
 comment|// If rightInputRel is a filter and contains correlated
 comment|// reference, make sure the correlated keys in the filter
 comment|// condition forms a unique key of the RHS.
-name|LogicalFilter
+name|Filter
 name|filter
 init|=
 operator|(
-name|LogicalFilter
+name|Filter
 operator|)
 name|right
 decl_stmt|;
@@ -11806,7 +11805,7 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
-name|RelOptUtil
+name|HiveRelOptUtil
 operator|.
 name|splitCorrelatedFilterCondition
 argument_list|(
@@ -11953,8 +11952,8 @@ block|}
 comment|// Change the plan to this structure.
 comment|// Note that the aggregateRel is removed.
 comment|//
-comment|// LogicalProject-A' (replace corvar to input ref from the LogicalJoin)
-comment|//   LogicalJoin (replace corvar to input ref from LeftInputRel)
+comment|// Project-A' (replace corvar to input ref from the Join)
+comment|//   Join (replace corvar to input ref from LeftInputRel)
 comment|//     LeftInputRel
 comment|//     RightInputRel(oreviously FilterInputRel)
 comment|// Change the filter condition into a join condition
@@ -12041,11 +12040,11 @@ return|return;
 block|}
 comment|// Change the plan to this structure.
 comment|//
-comment|// LogicalProject-A' (replace corvar to input ref from LogicalJoin)
-comment|//   LogicalJoin (left, condition = true)
+comment|// Project-A' (replace corvar to input ref from Join)
+comment|//   Join (left, condition = true)
 comment|//     LeftInputRel
-comment|//     LogicalAggregate(groupby(0), single_value(0), s_v(1)....)
-comment|//       LogicalProject-B (everything from input plus literal true)
+comment|//     Aggregate(groupby(0), single_value(0), s_v(1)....)
+comment|//       Project-B (everything from input plus literal true)
 comment|//         ProjInputRel
 comment|// make the new projRel to provide a null indicator
 name|right
@@ -12082,13 +12081,17 @@ expr_stmt|;
 comment|// make the new aggRel
 name|right
 operator|=
-name|RelOptUtil
+name|HiveRelOptUtil
 operator|.
 name|createSingleValueAggRel
 argument_list|(
 name|cluster
 argument_list|,
 name|right
+argument_list|,
+name|HiveRelFactories
+operator|.
+name|HIVE_AGGREGATE_FACTORY
 argument_list|)
 expr_stmt|;
 comment|// The last field:
@@ -12120,29 +12123,33 @@ block|{
 return|return;
 block|}
 comment|// make the new join rel
-name|LogicalJoin
+name|Join
 name|join
 init|=
-name|LogicalJoin
+operator|(
+name|Join
+operator|)
+name|relBuilder
 operator|.
-name|create
+name|push
 argument_list|(
 name|left
-argument_list|,
+argument_list|)
+operator|.
+name|push
+argument_list|(
 name|right
+argument_list|)
+operator|.
+name|join
+argument_list|(
+name|joinType
 argument_list|,
 name|joinCond
-argument_list|,
-name|ImmutableSet
-operator|.
-expr|<
-name|CorrelationId
-operator|>
-name|of
-argument_list|()
-argument_list|,
-name|joinType
 argument_list|)
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
 name|RelNode
 name|newProject
@@ -12201,13 +12208,13 @@ argument_list|)
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalProject
+name|Project
 operator|.
 name|class
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalAggregate
+name|Aggregate
 operator|.
 name|class
 argument_list|,
@@ -12219,7 +12226,7 @@ name|IS_SIMPLE
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalProject
+name|Project
 operator|.
 name|class
 argument_list|,
@@ -12270,7 +12277,7 @@ literal|1
 argument_list|)
 decl_stmt|;
 specifier|final
-name|LogicalProject
+name|Project
 name|aggOutputProject
 init|=
 name|call
@@ -12281,7 +12288,7 @@ literal|2
 argument_list|)
 decl_stmt|;
 specifier|final
-name|LogicalAggregate
+name|Aggregate
 name|aggregate
 init|=
 name|call
@@ -12292,7 +12299,7 @@ literal|3
 argument_list|)
 decl_stmt|;
 specifier|final
-name|LogicalProject
+name|Project
 name|aggInputProject
 init|=
 name|call
@@ -12340,9 +12347,9 @@ comment|// during decorrelation,
 comment|//
 comment|// CorrelateRel(left correlation, condition = true)
 comment|//   LeftInputRel
-comment|//   LogicalProject-A (a RexNode)
-comment|//     LogicalAggregate (groupby (0), agg0(), agg1()...)
-comment|//       LogicalProject-B (references coVar)
+comment|//   Project-A (a RexNode)
+comment|//     Aggregate (groupby (0), agg0(), agg1()...)
+comment|//       Project-B (references coVar)
 comment|//         rightInputRel
 comment|// check aggOutputProject projects only one expression
 specifier|final
@@ -12365,6 +12372,20 @@ name|size
 argument_list|()
 operator|!=
 literal|1
+condition|)
+block|{
+return|return;
+block|}
+if|if
+condition|(
+name|correlate
+operator|.
+name|getJoinType
+argument_list|()
+operator|!=
+name|SemiJoinType
+operator|.
+name|LEFT
 condition|)
 block|{
 return|return;
@@ -12525,7 +12546,7 @@ condition|(
 operator|(
 name|right
 operator|instanceof
-name|LogicalFilter
+name|Filter
 operator|)
 operator|&&
 name|cm
@@ -12540,13 +12561,13 @@ condition|)
 block|{
 comment|// rightInputRel has this shape:
 comment|//
-comment|//       LogicalFilter (references corvar)
+comment|//       Filter (references corvar)
 comment|//         FilterInputRel
-name|LogicalFilter
+name|Filter
 name|filter
 init|=
 operator|(
-name|LogicalFilter
+name|Filter
 operator|)
 name|right
 decl_stmt|;
@@ -12621,7 +12642,7 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
-name|RelOptUtil
+name|HiveRelOptUtil
 operator|.
 name|splitCorrelatedFilterCondition
 argument_list|(
@@ -12773,20 +12794,20 @@ comment|// Rewrite the above plan:
 comment|//
 comment|// CorrelateRel(left correlation, condition = true)
 comment|//   LeftInputRel
-comment|//   LogicalProject-A (a RexNode)
-comment|//     LogicalAggregate (groupby(0), agg0(),agg1()...)
-comment|//       LogicalProject-B (may reference coVar)
-comment|//         LogicalFilter (references corVar)
+comment|//   Project-A (a RexNode)
+comment|//     Aggregate (groupby(0), agg0(),agg1()...)
+comment|//       Project-B (may reference coVar)
+comment|//         Filter (references corVar)
 comment|//           RightInputRel (no correlated reference)
 comment|//
 comment|// to this plan:
 comment|//
-comment|// LogicalProject-A' (all gby keys + rewritten nullable ProjExpr)
-comment|//   LogicalAggregate (groupby(all left input refs)
+comment|// Project-A' (all gby keys + rewritten nullable ProjExpr)
+comment|//   Aggregate (groupby(all left input refs)
 comment|//                 agg0(rewritten expression),
 comment|//                 agg1()...)
-comment|//     LogicalProject-B' (rewriten original projected exprs)
-comment|//       LogicalJoin(replace corvar w/ input ref from LeftInputRel)
+comment|//     Project-B' (rewriten original projected exprs)
+comment|//       Join(replace corvar w/ input ref from LeftInputRel)
 comment|//         LeftInputRel
 comment|//         RightInputRel
 comment|//
@@ -12797,14 +12818,14 @@ comment|// the indicator however a "true" field is added to the
 comment|// projection list from the RHS for simplicity to avoid
 comment|// searching for non-null fields.
 comment|//
-comment|// LogicalProject-A' (all gby keys + rewritten nullable ProjExpr)
-comment|//   LogicalAggregate (groupby(all left input refs),
+comment|// Project-A' (all gby keys + rewritten nullable ProjExpr)
+comment|//   Aggregate (groupby(all left input refs),
 comment|//                 count(nullIndicator), other aggs...)
-comment|//     LogicalProject-B' (all left input refs plus
+comment|//     Project-B' (all left input refs plus
 comment|//                    the rewritten original projected exprs)
-comment|//       LogicalJoin(replace corvar to input ref from LeftInputRel)
+comment|//       Join(replace corvar to input ref from LeftInputRel)
 comment|//         LeftInputRel
-comment|//         LogicalProject (everything from RightInputRel plus
+comment|//         Project (everything from RightInputRel plus
 comment|//                     the nullIndicator "true")
 comment|//           RightInputRel
 comment|//
@@ -12927,19 +12948,19 @@ comment|// Rewrite the above plan:
 comment|//
 comment|// CorrelateRel(left correlation, condition = true)
 comment|//   LeftInputRel
-comment|//   LogicalProject-A (a RexNode)
-comment|//     LogicalAggregate (groupby(0), agg0(), agg1()...)
-comment|//       LogicalProject-B (references coVar)
+comment|//   Project-A (a RexNode)
+comment|//     Aggregate (groupby(0), agg0(), agg1()...)
+comment|//       Project-B (references coVar)
 comment|//         RightInputRel (no correlated reference)
 comment|//
 comment|// to this plan:
 comment|//
-comment|// LogicalProject-A' (all gby keys + rewritten nullable ProjExpr)
-comment|//   LogicalAggregate (groupby(all left input refs)
+comment|// Project-A' (all gby keys + rewritten nullable ProjExpr)
+comment|//   Aggregate (groupby(all left input refs)
 comment|//                 agg0(rewritten expression),
 comment|//                 agg1()...)
-comment|//     LogicalProject-B' (rewriten original projected exprs)
-comment|//       LogicalJoin (LOJ cond = true)
+comment|//     Project-B' (rewriten original projected exprs)
+comment|//       Join (LOJ cond = true)
 comment|//         LeftInputRel
 comment|//         RightInputRel
 comment|//
@@ -12950,14 +12971,14 @@ comment|// the indicator however a "true" field is added to the
 comment|// projection list from the RHS for simplicity to avoid
 comment|// searching for non-null fields.
 comment|//
-comment|// LogicalProject-A' (all gby keys + rewritten nullable ProjExpr)
-comment|//   LogicalAggregate (groupby(all left input refs),
+comment|// Project-A' (all gby keys + rewritten nullable ProjExpr)
+comment|//   Aggregate (groupby(all left input refs),
 comment|//                 count(nullIndicator), other aggs...)
-comment|//     LogicalProject-B' (all left input refs plus
+comment|//     Project-B' (all left input refs plus
 comment|//                    the rewritten original projected exprs)
-comment|//       LogicalJoin(replace corvar to input ref from LeftInputRel)
+comment|//       Join(replace corvar to input ref from LeftInputRel)
 comment|//         LeftInputRel
-comment|//         LogicalProject (everything from RightInputRel plus
+comment|//         Project (everything from RightInputRel plus
 comment|//                     the nullIndicator "true")
 comment|//           RightInputRel
 block|}
@@ -13024,29 +13045,33 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|LogicalJoin
+name|Join
 name|join
 init|=
-name|LogicalJoin
+operator|(
+name|Join
+operator|)
+name|relBuilder
 operator|.
-name|create
+name|push
 argument_list|(
 name|left
-argument_list|,
+argument_list|)
+operator|.
+name|push
+argument_list|(
 name|right
+argument_list|)
+operator|.
+name|join
+argument_list|(
+name|joinType
 argument_list|,
 name|joinCond
-argument_list|,
-name|ImmutableSet
-operator|.
-expr|<
-name|CorrelationId
-operator|>
-name|of
-argument_list|()
-argument_list|,
-name|joinType
 argument_list|)
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
 comment|// To the consumer of joinOutputProjRel, nullIndicator is located
 comment|// at the end
@@ -13204,6 +13229,10 @@ argument_list|,
 name|joinOutputProjects
 argument_list|,
 literal|null
+argument_list|,
+literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 decl_stmt|;
 comment|// nullIndicator is now at a different location in the output of
@@ -13360,23 +13389,35 @@ argument_list|(
 name|groupCount
 argument_list|)
 decl_stmt|;
-name|LogicalAggregate
+name|Aggregate
 name|newAggregate
 init|=
-name|LogicalAggregate
+operator|(
+name|Aggregate
+operator|)
+name|relBuilder
 operator|.
-name|create
+name|push
 argument_list|(
 name|joinOutputProject
-argument_list|,
-literal|false
-argument_list|,
+argument_list|)
+operator|.
+name|aggregate
+argument_list|(
+name|relBuilder
+operator|.
+name|groupKey
+argument_list|(
 name|groupSet
 argument_list|,
 literal|null
+argument_list|)
 argument_list|,
 name|newAggCalls
 argument_list|)
+operator|.
+name|build
+argument_list|()
 decl_stmt|;
 name|List
 argument_list|<
@@ -13466,6 +13507,10 @@ argument_list|,
 name|newAggOutputProjectList
 argument_list|,
 literal|null
+argument_list|,
+literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 decl_stmt|;
 name|call
@@ -13529,13 +13574,13 @@ argument_list|)
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalProject
+name|Project
 operator|.
 name|class
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalAggregate
+name|Aggregate
 operator|.
 name|class
 argument_list|,
@@ -13563,7 +13608,7 @@ argument_list|)
 argument_list|,
 name|operand
 argument_list|(
-name|LogicalAggregate
+name|Aggregate
 operator|.
 name|class
 argument_list|,
@@ -13611,11 +13656,11 @@ literal|1
 argument_list|)
 decl_stmt|;
 specifier|final
-name|LogicalProject
+name|Project
 name|aggOutputProject
 decl_stmt|;
 specifier|final
-name|LogicalAggregate
+name|Aggregate
 name|aggregate
 decl_stmt|;
 if|if
@@ -13725,7 +13770,7 @@ block|}
 name|aggOutputProject
 operator|=
 operator|(
-name|LogicalProject
+name|Project
 operator|)
 name|RelOptUtil
 operator|.
@@ -13733,9 +13778,23 @@ name|createProject
 argument_list|(
 name|aggregate
 argument_list|,
+name|Pair
+operator|.
+name|left
+argument_list|(
 name|projects
+argument_list|)
+argument_list|,
+name|Pair
+operator|.
+name|right
+argument_list|(
+name|projects
+argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|relBuilder
 argument_list|)
 expr_stmt|;
 block|}
@@ -13766,10 +13825,10 @@ parameter_list|,
 name|RelNode
 name|leftInput
 parameter_list|,
-name|LogicalProject
+name|Project
 name|aggOutputProject
 parameter_list|,
-name|LogicalAggregate
+name|Aggregate
 name|aggregate
 parameter_list|)
 block|{
@@ -13806,8 +13865,8 @@ comment|// during decorrelation,
 comment|//
 comment|// CorrelateRel(left correlation, condition = true)
 comment|//   LeftInputRel
-comment|//   LogicalProject-A (a RexNode)
-comment|//     LogicalAggregate (groupby (0), agg0(), agg1()...)
+comment|//   Project-A (a RexNode)
+comment|//     Aggregate (groupby (0), agg0(), agg1()...)
 comment|// check aggOutputProj projects only one expression
 name|List
 argument_list|<
@@ -13828,6 +13887,20 @@ name|size
 argument_list|()
 operator|!=
 literal|1
+condition|)
+block|{
+return|return;
+block|}
+if|if
+condition|(
+name|correlate
+operator|.
+name|getJoinType
+argument_list|()
+operator|!=
+name|SemiJoinType
+operator|.
+name|LEFT
 condition|)
 block|{
 return|return;
@@ -13959,7 +14032,7 @@ comment|// Project-A' (all LHS plus transformed original projections,
 comment|//             replacing references to count() with case statement)
 comment|//   Correlator(left correlation, condition = true)
 comment|//     LeftInputRel
-comment|//     LogicalAggregate (groupby (0), agg0(), agg1()...)
+comment|//     Aggregate (groupby (0), agg0(), agg1()...)
 comment|//
 name|LogicalCorrelate
 name|newCorrelate
@@ -14891,38 +14964,6 @@ specifier|public
 name|RelNode
 name|visit
 parameter_list|(
-name|LogicalUnion
-name|rel
-parameter_list|)
-block|{
-name|mightRequireValueGen
-operator|=
-literal|true
-expr_stmt|;
-return|return
-name|rel
-return|;
-block|}
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
-name|LogicalIntersect
-name|rel
-parameter_list|)
-block|{
-name|mightRequireValueGen
-operator|=
-literal|true
-expr_stmt|;
-return|return
-name|rel
-return|;
-block|}
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
 name|HiveIntersect
 name|rel
 parameter_list|)
@@ -14941,24 +14982,6 @@ specifier|public
 name|RelNode
 name|visit
 parameter_list|(
-name|LogicalJoin
-name|rel
-parameter_list|)
-block|{
-name|mightRequireValueGen
-operator|=
-literal|true
-expr_stmt|;
-return|return
-name|rel
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
 name|HiveProject
 name|rel
 parameter_list|)
@@ -14972,59 +14995,6 @@ argument_list|(
 operator|(
 operator|(
 name|HiveProject
-operator|)
-name|rel
-operator|)
-operator|.
-name|getProjects
-argument_list|()
-argument_list|)
-operator|)
-condition|)
-block|{
-name|mightRequireValueGen
-operator|=
-literal|false
-expr_stmt|;
-return|return
-name|super
-operator|.
-name|visit
-argument_list|(
-name|rel
-argument_list|)
-return|;
-block|}
-else|else
-block|{
-name|mightRequireValueGen
-operator|=
-literal|true
-expr_stmt|;
-return|return
-name|rel
-return|;
-block|}
-block|}
-annotation|@
-name|Override
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
-name|LogicalProject
-name|rel
-parameter_list|)
-block|{
-if|if
-condition|(
-operator|!
-operator|(
-name|hasRexOver
-argument_list|(
-operator|(
-operator|(
-name|LogicalProject
 operator|)
 name|rel
 operator|)
@@ -15071,62 +15041,6 @@ parameter_list|)
 block|{
 comment|// if there are aggregate functions or grouping sets we will need
 comment|// value generator
-if|if
-condition|(
-name|rel
-operator|.
-name|getAggCallList
-argument_list|()
-operator|.
-name|isEmpty
-argument_list|()
-operator|&&
-operator|!
-name|rel
-operator|.
-name|indicator
-condition|)
-block|{
-name|this
-operator|.
-name|mightRequireValueGen
-operator|=
-literal|false
-expr_stmt|;
-return|return
-name|super
-operator|.
-name|visit
-argument_list|(
-name|rel
-argument_list|)
-return|;
-block|}
-else|else
-block|{
-comment|// need to reset to true in case previous aggregate/project
-comment|// has set it to false
-name|this
-operator|.
-name|mightRequireValueGen
-operator|=
-literal|true
-expr_stmt|;
-return|return
-name|rel
-return|;
-block|}
-block|}
-annotation|@
-name|Override
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
-name|LogicalAggregate
-name|rel
-parameter_list|)
-block|{
 if|if
 condition|(
 name|rel
@@ -15369,60 +15283,6 @@ argument_list|,
 name|mapCorToCorRel
 argument_list|,
 name|mapFieldAccessToCorVar
-argument_list|)
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
-name|LogicalJoin
-name|join
-parameter_list|)
-block|{
-try|try
-block|{
-name|Stacks
-operator|.
-name|push
-argument_list|(
-name|stack
-argument_list|,
-name|join
-argument_list|)
-expr_stmt|;
-name|join
-operator|.
-name|getCondition
-argument_list|()
-operator|.
-name|accept
-argument_list|(
-name|rexVisitor
-argument_list|(
-name|join
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-finally|finally
-block|{
-name|Stacks
-operator|.
-name|pop
-argument_list|(
-name|stack
-argument_list|,
-name|join
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|visitJoin
-argument_list|(
-name|join
 argument_list|)
 return|;
 block|}
@@ -15725,128 +15585,6 @@ operator|.
 name|visit
 argument_list|(
 name|filter
-argument_list|)
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
-specifier|final
-name|LogicalFilter
-name|filter
-parameter_list|)
-block|{
-try|try
-block|{
-name|Stacks
-operator|.
-name|push
-argument_list|(
-name|stack
-argument_list|,
-name|filter
-argument_list|)
-expr_stmt|;
-name|filter
-operator|.
-name|getCondition
-argument_list|()
-operator|.
-name|accept
-argument_list|(
-name|rexVisitor
-argument_list|(
-name|filter
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-finally|finally
-block|{
-name|Stacks
-operator|.
-name|pop
-argument_list|(
-name|stack
-argument_list|,
-name|filter
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|super
-operator|.
-name|visit
-argument_list|(
-name|filter
-argument_list|)
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|RelNode
-name|visit
-parameter_list|(
-name|LogicalProject
-name|project
-parameter_list|)
-block|{
-try|try
-block|{
-name|Stacks
-operator|.
-name|push
-argument_list|(
-name|stack
-argument_list|,
-name|project
-argument_list|)
-expr_stmt|;
-for|for
-control|(
-name|RexNode
-name|node
-range|:
-name|project
-operator|.
-name|getProjects
-argument_list|()
-control|)
-block|{
-name|node
-operator|.
-name|accept
-argument_list|(
-name|rexVisitor
-argument_list|(
-name|project
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-finally|finally
-block|{
-name|Stacks
-operator|.
-name|pop
-argument_list|(
-name|stack
-argument_list|,
-name|project
-argument_list|)
-expr_stmt|;
-block|}
-return|return
-name|super
-operator|.
-name|visit
-argument_list|(
-name|project
 argument_list|)
 return|;
 block|}
