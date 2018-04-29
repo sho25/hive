@@ -55,6 +55,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|conf
+operator|.
+name|MetastoreConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hive
 operator|.
 name|jdbc
@@ -228,6 +246,66 @@ operator|+
 name|metastorePrincipal
 argument_list|)
 expr_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTOREWAREHOUSE
+operator|.
+name|varname
+argument_list|,
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|WAREHOUSE
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|METASTORECONNECTURLKEY
+operator|.
+name|varname
+argument_list|,
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|CONNECT_URL_KEY
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Before this patch, the Embedded MetaStore was used here not the one started by the MiniHS2
+comment|// The below 3 lines would change the tests to use the Remote MetaStore, but it will cause a
+comment|// failure. By removing the thrift MetaStore uris, the tests are passing again.
+comment|// I think this is an valid problem here, but not really sure about the
+comment|// tests original intention, so keep everything as it was originally.
+comment|//    System.setProperty(HiveConf.ConfVars.METASTOREURIS.varname,
+comment|//        MetastoreConf.getVar(hiveConf, MetastoreConf.ConfVars.THRIFT_URIS));
+comment|//    Thread.sleep(2000);
 block|}
 block|}
 end_class
