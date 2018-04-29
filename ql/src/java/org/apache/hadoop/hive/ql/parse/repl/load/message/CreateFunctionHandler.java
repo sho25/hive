@@ -1257,9 +1257,13 @@ operator|.
 name|build
 argument_list|()
 argument_list|,
-name|FileSystem
+operator|new
+name|Path
+argument_list|(
+name|functionsRootDir
+argument_list|)
 operator|.
-name|get
+name|getFileSystem
 argument_list|(
 name|context
 operator|.
