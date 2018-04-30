@@ -1040,7 +1040,7 @@ name|dagIdentifier
 parameter_list|)
 block|{
 comment|// TODO This is broken for secure clusters. The app will not have permission to create these directories.
-comment|// May work via Slider - since the directory would already exist. Otherwise may need a custom shuffle handler.
+comment|// May work via YARN Service - since the directory would already exist. Otherwise may need a custom shuffle handler.
 comment|// TODO This should be the process user - and not the user on behalf of whom the query is being submitted.
 return|return
 name|baseDir

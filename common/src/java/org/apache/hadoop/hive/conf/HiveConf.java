@@ -14278,9 +14278,9 @@ literal|""
 argument_list|,
 literal|"Working directories for the daemon. This should not be set if running as a YARN\n"
 operator|+
-literal|"application via Slider. It must be set when not running via Slider on YARN. If the value\n"
+literal|"Service. It must be set when not running on YARN. If the value is set when\n"
 operator|+
-literal|"is set when running as a Slider YARN application, the specified value will be used."
+literal|"running as a YARN Service, the specified value will be used."
 argument_list|,
 literal|"llap.daemon.work.dirs"
 argument_list|)
@@ -14314,7 +14314,7 @@ literal|"hive.llap.daemon.queue.name"
 argument_list|,
 literal|null
 argument_list|,
-literal|"Queue name within which the llap slider application will run."
+literal|"Queue name within which the llap application will run."
 operator|+
 literal|" Used in LlapServiceDriver and package.py"
 argument_list|)

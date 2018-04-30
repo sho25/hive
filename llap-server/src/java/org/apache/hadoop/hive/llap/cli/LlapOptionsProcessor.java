@@ -340,18 +340,18 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_SLIDER_AM_CONTAINER_MB
+name|OPTION_SERVICE_AM_CONTAINER_MB
 init|=
-literal|"slider-am-container-mb"
+literal|"service-am-container-mb"
 decl_stmt|;
 comment|// forward as arg
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_SLIDER_APPCONFIG_GLOBAL
+name|OPTION_SERVICE_APPCONFIG_GLOBAL
 init|=
-literal|"slider-appconfig-global"
+literal|"service-appconfig-global"
 decl_stmt|;
 comment|// forward as arg
 specifier|public
@@ -404,50 +404,41 @@ specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_CHAOS_MONKEY
+name|OPTION_SERVICE_KEYTAB_DIR
 init|=
-literal|"chaosmonkey"
-decl_stmt|;
-comment|// forward as arg
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|OPTION_SLIDER_KEYTAB_DIR
-init|=
-literal|"slider-keytab-dir"
+literal|"service-keytab-dir"
 decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_SLIDER_KEYTAB
+name|OPTION_SERVICE_KEYTAB
 init|=
-literal|"slider-keytab"
+literal|"service-keytab"
 decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_SLIDER_PRINCIPAL
+name|OPTION_SERVICE_PRINCIPAL
 init|=
-literal|"slider-principal"
+literal|"service-principal"
 decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_SLIDER_PLACEMENT
+name|OPTION_SERVICE_PLACEMENT
 init|=
-literal|"slider-placement"
+literal|"service-placement"
 decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
 name|String
-name|OPTION_SLIDER_DEFAULT_KEYTAB
+name|OPTION_SERVICE_DEFAULT_KEYTAB
 init|=
-literal|"slider-default-keytab"
+literal|"service-default-keytab"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -1164,53 +1155,23 @@ argument_list|(
 name|OptionBuilder
 operator|.
 name|hasArg
-argument_list|()
-operator|.
-name|withArgName
-argument_list|(
-name|OPTION_CHAOS_MONKEY
-argument_list|)
-operator|.
-name|withLongOpt
-argument_list|(
-name|OPTION_CHAOS_MONKEY
-argument_list|)
-operator|.
-name|withDescription
-argument_list|(
-literal|"chaosmonkey interval"
-argument_list|)
-operator|.
-name|create
-argument_list|(
-literal|'m'
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|options
-operator|.
-name|addOption
-argument_list|(
-name|OptionBuilder
-operator|.
-name|hasArg
 argument_list|(
 literal|false
 argument_list|)
 operator|.
 name|withArgName
 argument_list|(
-name|OPTION_SLIDER_DEFAULT_KEYTAB
+name|OPTION_SERVICE_DEFAULT_KEYTAB
 argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_DEFAULT_KEYTAB
+name|OPTION_SERVICE_DEFAULT_KEYTAB
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"try to set default settings for Slider AM keytab; mostly for dev testing"
+literal|"try to set default settings for Service AM keytab; mostly for dev testing"
 argument_list|)
 operator|.
 name|create
@@ -1228,17 +1189,17 @@ argument_list|()
 operator|.
 name|withArgName
 argument_list|(
-name|OPTION_SLIDER_KEYTAB_DIR
+name|OPTION_SERVICE_KEYTAB_DIR
 argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_KEYTAB_DIR
+name|OPTION_SERVICE_KEYTAB_DIR
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Slider AM keytab directory on HDFS (where the headless user keytab is stored by Slider keytab installation, e.g. .slider/keytabs/llap)"
+literal|"Service AM keytab directory on HDFS (where the headless user keytab is stored by Service keytab installation, e.g. .yarn/keytabs/llap)"
 argument_list|)
 operator|.
 name|create
@@ -1256,19 +1217,19 @@ argument_list|()
 operator|.
 name|withArgName
 argument_list|(
-name|OPTION_SLIDER_KEYTAB
+name|OPTION_SERVICE_KEYTAB
 argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_KEYTAB
+name|OPTION_SERVICE_KEYTAB
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Slider AM keytab file name inside "
+literal|"Service AM keytab file name inside "
 operator|+
-name|OPTION_SLIDER_KEYTAB_DIR
+name|OPTION_SERVICE_KEYTAB_DIR
 argument_list|)
 operator|.
 name|create
@@ -1286,17 +1247,17 @@ argument_list|()
 operator|.
 name|withArgName
 argument_list|(
-name|OPTION_SLIDER_PRINCIPAL
+name|OPTION_SERVICE_PRINCIPAL
 argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_PRINCIPAL
+name|OPTION_SERVICE_PRINCIPAL
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Slider AM principal; should be the user running the cluster, e.g. hive@EXAMPLE.COM"
+literal|"Service AM principal; should be the user running the cluster, e.g. hive@EXAMPLE.COM"
 argument_list|)
 operator|.
 name|create
@@ -1314,19 +1275,19 @@ argument_list|()
 operator|.
 name|withArgName
 argument_list|(
-name|OPTION_SLIDER_PLACEMENT
+name|OPTION_SERVICE_PLACEMENT
 argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_PLACEMENT
+name|OPTION_SERVICE_PLACEMENT
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Slider placement policy; see slider documentation at https://slider.incubator.apache.org/docs/placement.html."
+literal|"Service placement policy; see YARN documentation at https://issues.apache.org/jira/browse/YARN-1042."
 operator|+
-literal|" 4 means anti-affinity (the default; unnecessary if LLAP is going to take more than half of the YARN capacity of a node), 0 is normal."
+literal|" This is unnecessary if LLAP is going to take more than half of the YARN capacity of a node."
 argument_list|)
 operator|.
 name|create
@@ -1769,12 +1730,12 @@ argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_AM_CONTAINER_MB
+name|OPTION_SERVICE_AM_CONTAINER_MB
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"The size of the slider AppMaster container in MB"
+literal|"The size of the service AppMaster container in MB"
 argument_list|)
 operator|.
 name|create
@@ -1804,12 +1765,12 @@ argument_list|)
 operator|.
 name|withLongOpt
 argument_list|(
-name|OPTION_SLIDER_APPCONFIG_GLOBAL
+name|OPTION_SERVICE_APPCONFIG_GLOBAL
 argument_list|)
 operator|.
 name|withDescription
 argument_list|(
-literal|"Property (key=value) to be set in the global section of the Slider appConfig"
+literal|"Property (key=value) to be set in the global section of the Service appConfig"
 argument_list|)
 operator|.
 name|create
@@ -2301,7 +2262,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// loglevel, chaosmonkey& args are parsed by the python processor
+comment|// loglevel& args are parsed by the python processor
 return|return
 operator|new
 name|LlapOptions

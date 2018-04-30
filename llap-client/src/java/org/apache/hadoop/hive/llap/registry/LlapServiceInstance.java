@@ -84,7 +84,7 @@ name|int
 name|getOutputFormatPort
 parameter_list|()
 function_decl|;
-comment|/**    * Memory and Executors available for the LLAP tasks    *     * This does not include the size of the cache or the actual vCores allocated via Slider.    *     * @return    */
+comment|/**    * Memory and Executors available for the LLAP tasks    *     * This does not include the size of the cache or the actual vCores allocated via YARN.    *     * @return    */
 specifier|public
 name|Resource
 name|getResource

@@ -1000,7 +1000,7 @@ specifier|final
 name|String
 name|OUTPUT_DIR_PREFIX
 init|=
-literal|"llap-slider-"
+literal|"llap-yarn-"
 decl_stmt|;
 comment|// This is not a config that users set in hive-site. It's only use is to share information
 comment|// between the java component of the service driver and the python component.
@@ -4299,7 +4299,7 @@ literal|"llap-"
 operator|+
 name|version
 operator|+
-literal|".zip"
+literal|".tar.gz"
 argument_list|,
 name|packageDir
 argument_list|,
@@ -4419,7 +4419,7 @@ name|Path
 argument_list|(
 name|scriptParent
 argument_list|,
-literal|"slider"
+literal|"yarn"
 argument_list|)
 argument_list|,
 literal|"package.py"
@@ -4656,7 +4656,7 @@ parameter_list|)
 throws|throws
 name|JSONException
 block|{
-comment|// extract configs for processing by the python fragments in Slider
+comment|// extract configs for processing by the python fragments in YARN Service
 name|JSONObject
 name|configs
 init|=
