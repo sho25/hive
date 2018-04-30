@@ -1698,6 +1698,8 @@ operator|.
 name|hash32
 argument_list|(
 name|bytes
+argument_list|,
+name|arraySize
 argument_list|)
 decl_stmt|;
 name|Murmur3

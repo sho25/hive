@@ -2526,6 +2526,17 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+comment|// Set the bucketing Version
+name|ret
+operator|.
+name|setBucketingVersion
+argument_list|(
+name|oplist0
+operator|.
+name|getBucketingVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Add the new operator as child of each of the passed in operators
 name|List
 argument_list|<

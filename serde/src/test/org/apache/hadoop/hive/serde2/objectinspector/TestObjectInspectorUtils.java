@@ -1081,7 +1081,7 @@ name|hashCode
 init|=
 name|ObjectInspectorUtils
 operator|.
-name|getBucketHashCode
+name|getBucketHashCodeOld
 argument_list|(
 name|struct
 operator|.
@@ -1117,7 +1117,7 @@ name|bucketId
 init|=
 name|ObjectInspectorUtils
 operator|.
-name|getBucketNumber
+name|getBucketNumberOld
 argument_list|(
 name|struct
 operator|.

@@ -1420,6 +1420,21 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Explictly set the bucketing version
+name|t
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_BUCKETING_VERSION
+argument_list|,
+literal|"2"
+argument_list|)
+expr_stmt|;
 return|return
 name|t
 return|;
@@ -2450,6 +2465,9 @@ name|value
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Please note : Be very careful in using this function. If not used carefully,
+comment|// you may end up overwriting all the existing properties. If the usecase is to
+comment|// add or update certain properties use setProperty() instead.
 specifier|public
 name|void
 name|setParameters
@@ -2703,6 +2721,25 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
+specifier|public
+name|int
+name|getBucketingVersion
+parameter_list|()
+block|{
+return|return
+name|Utilities
+operator|.
+name|getBucketingVersion
+argument_list|(
+name|getProperty
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_BUCKETING_VERSION
+argument_list|)
+argument_list|)
+return|;
 block|}
 annotation|@
 name|Override

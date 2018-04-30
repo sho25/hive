@@ -8932,7 +8932,7 @@ name|columnNamesProperty
 argument_list|,
 name|columnTypesProperty
 argument_list|,
-literal|0
+literal|1
 argument_list|,
 literal|1L
 argument_list|,

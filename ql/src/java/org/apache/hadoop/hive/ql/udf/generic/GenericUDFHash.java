@@ -151,6 +151,8 @@ end_comment
 
 begin_class
 annotation|@
+name|Deprecated
+annotation|@
 name|Description
 argument_list|(
 name|name
@@ -266,7 +268,7 @@ name|r
 init|=
 name|ObjectInspectorUtils
 operator|.
-name|getBucketHashCode
+name|getBucketHashCodeOld
 argument_list|(
 name|fieldValues
 argument_list|,

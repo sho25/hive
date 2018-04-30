@@ -1817,6 +1817,14 @@ argument_list|,
 name|numBuckets
 argument_list|,
 name|fsParent
+argument_list|,
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getWriteType
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|List
@@ -3125,6 +3133,11 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 name|parent
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -3974,6 +3987,8 @@ argument_list|,
 name|keyTable
 argument_list|,
 name|valueTable
+argument_list|,
+name|writeType
 argument_list|)
 decl_stmt|;
 name|rsConf

@@ -277,6 +277,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|io
+operator|.
+name|AcidUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -1881,6 +1899,14 @@ argument_list|,
 name|allRSCols
 argument_list|,
 name|granularitySelOp
+argument_list|,
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getWriteType
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Create backtrack SelectOp
@@ -3021,6 +3047,11 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 name|parent
+parameter_list|,
+name|AcidUtils
+operator|.
+name|Operation
+name|writeType
 parameter_list|)
 block|{
 comment|// we will clone here as RS will update bucket column key with its
@@ -3492,6 +3523,8 @@ argument_list|,
 name|keyTable
 argument_list|,
 name|valueTable
+argument_list|,
+name|writeType
 argument_list|)
 decl_stmt|;
 specifier|final

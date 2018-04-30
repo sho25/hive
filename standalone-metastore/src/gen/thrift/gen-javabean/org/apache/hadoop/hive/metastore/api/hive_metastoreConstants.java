@@ -565,6 +565,14 @@ name|TABLE_TRANSACTIONAL_PROPERTIES
 init|=
 literal|"transactional_properties"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TABLE_BUCKETING_VERSION
+init|=
+literal|"bucketing_version"
+decl_stmt|;
 block|}
 end_class
 

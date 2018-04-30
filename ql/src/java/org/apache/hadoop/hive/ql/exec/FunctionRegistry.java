@@ -5650,6 +5650,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"murmur_hash"
+argument_list|,
+name|GenericUDFMurmurHash
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"coalesce"
 argument_list|,
 name|GenericUDFCoalesce

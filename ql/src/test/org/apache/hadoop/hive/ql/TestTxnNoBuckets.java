@@ -1586,9 +1586,9 @@ literal|"warehouse/myctas/delta_0000001_0000001_0000/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t2"
 block|,
-literal|"warehouse/myctas/delta_0000001_0000001_0000/bucket_00000"
+literal|"warehouse/myctas/delta_0000001_0000001_0000/bucket_00001"
 block|}
 block|,     }
 decl_stmt|;
@@ -1647,9 +1647,9 @@ literal|"warehouse/myctas2/delta_0000001_0000001_0000/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t2"
 block|,
-literal|"warehouse/myctas2/delta_0000001_0000001_0000/bucket_00000"
+literal|"warehouse/myctas2/delta_0000001_0000001_0000/bucket_00001"
 block|}
 block|}
 decl_stmt|;
@@ -1693,13 +1693,7 @@ index|[]
 init|=
 block|{
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t3\t4"
-block|,
-literal|"warehouse/myctas3/delta_0000001_0000001_0000/bucket_00000"
-block|}
-block|,
-block|{
-literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
 block|,
 literal|"warehouse/myctas3/delta_0000001_0000001_0000/bucket_00000"
 block|}
@@ -1711,9 +1705,15 @@ literal|"warehouse/myctas3/delta_0000001_0000001_0000/bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":537001984,\"rowid\":0}\t3\t4"
 block|,
-literal|"warehouse/myctas3/delta_0000001_0000001_0000/bucket_00001"
+literal|"warehouse/myctas3/delta_0000001_0000001_0000/bucket_00002"
+block|}
+block|,
+block|{
+literal|"{\"writeid\":1,\"bucketid\":537067520,\"rowid\":0}\t1\t2"
+block|,
+literal|"warehouse/myctas3/delta_0000001_0000001_0000/bucket_00003"
 block|}
 block|,     }
 decl_stmt|;
@@ -2006,13 +2006,7 @@ literal|"/delta_0000001_0000001_0001/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870914,\"rowid\":0}\t7\t8"
-block|,
-literal|"/delta_0000001_0000001_0002/bucket_00000"
-block|}
-block|,
-block|{
-literal|"{\"writeid\":1,\"bucketid\":536870914,\"rowid\":1}\t5\t6"
+literal|"{\"writeid\":1,\"bucketid\":536870914,\"rowid\":0}\t5\t6"
 block|,
 literal|"/delta_0000001_0000001_0002/bucket_00000"
 block|}
@@ -2021,6 +2015,12 @@ block|{
 literal|"{\"writeid\":1,\"bucketid\":536870915,\"rowid\":0}\t9\t10"
 block|,
 literal|"/delta_0000001_0000001_0003/bucket_00000"
+block|}
+block|,
+block|{
+literal|"{\"writeid\":1,\"bucketid\":536936450,\"rowid\":0}\t7\t8"
+block|,
+literal|"/delta_0000001_0000001_0002/bucket_00001"
 block|}
 block|,     }
 decl_stmt|;

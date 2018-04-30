@@ -229,6 +229,22 @@ name|ExprNodeDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|SerDeException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Operator factory for pruning processing of operator graph We find  * all the filter operators that appear just beneath the table scan operators.  * We then pass the filter to the pruner to construct a pruner for  * that table alias and store a mapping from the table scan operator to that  * pruner. We call that pruner later during plan generation.  *  * Create this class from org.apache.hadoop.hive.ql.optimizer.ppr.OpProcFactory  * so that in addition to ppr, other pruner like list bucketin pruner can use it.  */
 end_comment
@@ -429,8 +445,6 @@ name|top
 parameter_list|)
 throws|throws
 name|SemanticException
-throws|,
-name|UDFArgumentException
 function_decl|;
 comment|/**      * Add pruning predicate.      *      * @param opToPrunner      * @param top      * @param new_pruner_pred      * @throws UDFArgumentException      */
 specifier|protected

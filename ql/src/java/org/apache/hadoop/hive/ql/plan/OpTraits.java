@@ -34,6 +34,7 @@ specifier|public
 class|class
 name|OpTraits
 block|{
+specifier|private
 name|List
 argument_list|<
 name|List
@@ -43,6 +44,7 @@ argument_list|>
 argument_list|>
 name|bucketColNames
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|List
@@ -52,11 +54,17 @@ argument_list|>
 argument_list|>
 name|sortColNames
 decl_stmt|;
+specifier|private
 name|int
 name|numBuckets
 decl_stmt|;
+specifier|private
 name|int
 name|numReduceSinks
+decl_stmt|;
+specifier|private
+name|int
+name|bucketingVersion
 decl_stmt|;
 specifier|public
 name|OpTraits
@@ -84,6 +92,9 @@ name|sortColNames
 parameter_list|,
 name|int
 name|numReduceSinks
+parameter_list|,
+name|int
+name|bucketingVersion
 parameter_list|)
 block|{
 name|this
@@ -109,6 +120,12 @@ operator|.
 name|numReduceSinks
 operator|=
 name|numReduceSinks
+expr_stmt|;
+name|this
+operator|.
+name|bucketingVersion
+operator|=
+name|bucketingVersion
 expr_stmt|;
 block|}
 specifier|public
@@ -233,6 +250,30 @@ operator|.
 name|numReduceSinks
 return|;
 block|}
+specifier|public
+name|void
+name|setBucketingVersion
+parameter_list|(
+name|int
+name|bucketingVersion
+parameter_list|)
+block|{
+name|this
+operator|.
+name|bucketingVersion
+operator|=
+name|bucketingVersion
+expr_stmt|;
+block|}
+specifier|public
+name|int
+name|getBucketingVersion
+parameter_list|()
+block|{
+return|return
+name|bucketingVersion
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -252,6 +293,10 @@ operator|+
 literal|"; bucket count: "
 operator|+
 name|numBuckets
+operator|+
+literal|"; bucketing version: "
+operator|+
+name|bucketingVersion
 operator|+
 literal|" }"
 return|;

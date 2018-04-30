@@ -3777,7 +3777,27 @@ range|:
 name|files
 control|)
 block|{
-comment|// 0 length files cannot be ORC files
+if|if
+condition|(
+operator|!
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"mr"
+argument_list|)
+condition|)
+block|{
+comment|// 0 length files cannot be ORC files, not valid for MR.
 if|if
 condition|(
 name|file
@@ -3791,6 +3811,7 @@ block|{
 return|return
 literal|false
 return|;
+block|}
 block|}
 try|try
 block|{

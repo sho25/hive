@@ -10875,9 +10875,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertEquals
+name|assertTrue
 argument_list|(
-literal|"records in bucket does not match expectation"
+literal|"bucket 0 shouldn't have been created"
 argument_list|,
 name|actual1
 operator|.
@@ -10885,11 +10885,8 @@ name|get
 argument_list|(
 literal|0
 argument_list|)
-operator|.
-name|size
-argument_list|()
-argument_list|,
-literal|2
+operator|==
+literal|null
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -10913,9 +10910,9 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertEquals
 argument_list|(
-literal|"bucket 2 shouldn't have been created"
+literal|"records in bucket does not match expectation"
 argument_list|,
 name|actual1
 operator|.
@@ -10923,8 +10920,11 @@ name|get
 argument_list|(
 literal|2
 argument_list|)
-operator|==
-literal|null
+operator|.
+name|size
+argument_list|()
+argument_list|,
+literal|2
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -11908,13 +11908,13 @@ literal|"bucket_00002"
 argument_list|)
 condition|)
 block|{
-name|Assert
-operator|.
-name|assertFalse
+name|corruptDataFile
 argument_list|(
-literal|"bucket 2 shouldn't have been created"
+name|file
 argument_list|,
-literal|true
+name|conf
+argument_list|,
+literal|100
 argument_list|)
 expr_stmt|;
 block|}
@@ -12121,7 +12121,7 @@ name|errDump
 operator|.
 name|contains
 argument_list|(
-literal|"bucket_00000 recovered successfully!"
+literal|"bucket_00001 recovered successfully!"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12149,7 +12149,7 @@ name|errDump
 operator|.
 name|contains
 argument_list|(
-literal|"bucket_00001 recovered successfully!"
+literal|"bucket_00002 recovered successfully!"
 argument_list|)
 argument_list|)
 expr_stmt|;

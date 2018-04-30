@@ -2508,6 +2508,20 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+comment|// If it is bucketing version, skip it
+if|if
+condition|(
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"bucketing_version"
+argument_list|)
+condition|)
+continue|continue;
 name|assertTrue
 argument_list|(
 name|outer

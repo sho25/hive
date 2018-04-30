@@ -781,6 +781,13 @@ name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
+specifier|protected
+name|int
+name|bucketingVersion
+init|=
+operator|-
+literal|1
+decl_stmt|;
 comment|// It can be optimized later so that an operator operator (init/close) is performed
 comment|// only after that operation has been performed on all the parents. This will require
 comment|// initializing the whole tree in all the mappers (which might be required for mappers
@@ -6968,6 +6975,30 @@ block|}
 block|}
 return|return
 literal|true
+return|;
+block|}
+specifier|public
+name|void
+name|setBucketingVersion
+parameter_list|(
+name|int
+name|bucketingVersion
+parameter_list|)
+block|{
+name|this
+operator|.
+name|bucketingVersion
+operator|=
+name|bucketingVersion
+expr_stmt|;
+block|}
+specifier|public
+name|int
+name|getBucketingVersion
+parameter_list|()
+block|{
+return|return
+name|bucketingVersion
 return|;
 block|}
 block|}
