@@ -50823,7 +50823,17 @@ name|getMS
 argument_list|()
 operator|.
 name|getRuntimeStats
+argument_list|(
+name|rqst
+operator|.
+name|getMaxWeight
 argument_list|()
+argument_list|,
+name|rqst
+operator|.
+name|getMaxCreateTime
+argument_list|()
+argument_list|)
 decl_stmt|;
 return|return
 name|res

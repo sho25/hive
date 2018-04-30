@@ -2572,19 +2572,6 @@ argument_list|,
 literal|"Stat entries which are older than this are removed."
 argument_list|)
 block|,
-name|RUNTIME_STATS_MAX_ENTRIES
-argument_list|(
-literal|"runtime.stats.max.entries"
-argument_list|,
-literal|"hive.metastore.runtime.stats.max.entries"
-argument_list|,
-literal|100_000
-argument_list|,
-literal|"Maximum number of runtime stats to keep; unit is operator stat infos - a complicated query has ~100 of these."
-operator|+
-literal|"See also: hive.query.reexecution.stats.cache.size"
-argument_list|)
-block|,
 comment|// Parameters for exporting metadata on table drop (requires the use of the)
 comment|// org.apache.hadoop.hive.ql.parse.MetaDataExportListener preevent listener
 name|METADATA_EXPORT_LOCATION

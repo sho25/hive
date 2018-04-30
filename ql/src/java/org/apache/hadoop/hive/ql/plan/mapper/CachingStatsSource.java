@@ -240,6 +240,13 @@ parameter_list|)
 block|{
 if|if
 condition|(
+name|cache
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|0
+operator|&&
 name|Operator
 operator|.
 name|class

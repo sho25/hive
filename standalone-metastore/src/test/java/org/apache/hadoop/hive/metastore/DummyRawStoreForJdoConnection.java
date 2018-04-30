@@ -5227,7 +5227,13 @@ argument_list|<
 name|RuntimeStat
 argument_list|>
 name|getRuntimeStats
-parameter_list|()
+parameter_list|(
+name|int
+name|maxEntries
+parameter_list|,
+name|int
+name|maxCreateTime
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -5244,9 +5250,6 @@ specifier|public
 name|int
 name|deleteRuntimeStats
 parameter_list|(
-name|int
-name|maxRetained
-parameter_list|,
 name|int
 name|maxRetainSecs
 parameter_list|)

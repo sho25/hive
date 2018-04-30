@@ -15704,13 +15704,23 @@ argument_list|,
 literal|"If sessionstats are enabled; this option can be used to collect statistics all the time"
 argument_list|)
 block|,
+name|HIVE_QUERY_REEXECUTION_STATS_CACHE_BATCH_SIZE
+argument_list|(
+literal|"hive.query.reexecution.stats.cache.batch.size"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"If runtime stats are stored in metastore; the maximal batch size per round during load."
+argument_list|)
+block|,
 name|HIVE_QUERY_REEXECUTION_STATS_CACHE_SIZE
 argument_list|(
 literal|"hive.query.reexecution.stats.cache.size"
 argument_list|,
 literal|100_000
 argument_list|,
-literal|"Size of the runtime statistics cache. Unit is: OperatorStat entry; a query plan consist ~100. See also: runtime.stats.max.entries"
+literal|"Size of the runtime statistics cache. Unit is: OperatorStat entry; a query plan consist ~100."
 argument_list|)
 block|,
 name|HIVE_QUERY_RESULTS_CACHE_ENABLED

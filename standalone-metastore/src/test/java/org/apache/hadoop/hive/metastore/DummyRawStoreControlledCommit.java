@@ -6413,7 +6413,13 @@ argument_list|<
 name|RuntimeStat
 argument_list|>
 name|getRuntimeStats
-parameter_list|()
+parameter_list|(
+name|int
+name|maxEntries
+parameter_list|,
+name|int
+name|maxCreateTime
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -6421,7 +6427,11 @@ return|return
 name|objectStore
 operator|.
 name|getRuntimeStats
-argument_list|()
+argument_list|(
+name|maxEntries
+argument_list|,
+name|maxCreateTime
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -6430,9 +6440,6 @@ specifier|public
 name|int
 name|deleteRuntimeStats
 parameter_list|(
-name|int
-name|maxRetained
-parameter_list|,
 name|int
 name|maxRetainSecs
 parameter_list|)
@@ -6444,8 +6451,6 @@ name|objectStore
 operator|.
 name|deleteRuntimeStats
 argument_list|(
-name|maxRetained
-argument_list|,
 name|maxRetainSecs
 argument_list|)
 return|;
