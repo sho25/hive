@@ -2799,7 +2799,9 @@ name|argv
 operator|.
 name|add
 argument_list|(
-literal|"--remote-host"
+name|RemoteDriver
+operator|.
+name|REMOTE_DRIVER_HOST_CONF
 argument_list|)
 expr_stmt|;
 name|argv
@@ -2813,7 +2815,9 @@ name|argv
 operator|.
 name|add
 argument_list|(
-literal|"--remote-port"
+name|RemoteDriver
+operator|.
+name|REMOTE_DRIVER_PORT_CONF
 argument_list|)
 expr_stmt|;
 name|argv
@@ -2823,7 +2827,8 @@ argument_list|(
 name|serverPort
 argument_list|)
 expr_stmt|;
-comment|//hive.spark.* keys are passed down to the RemoteDriver via --conf,
+comment|//hive.spark.* keys are passed down to the RemoteDriver via REMOTE_DRIVER_CONF
+comment|// so that they are not used in sparkContext but only in remote driver,
 comment|//as --properties-file contains the spark.* keys that are meant for SparkConf object.
 for|for
 control|(
@@ -2851,7 +2856,9 @@ name|argv
 operator|.
 name|add
 argument_list|(
-literal|"--conf"
+name|RemoteDriver
+operator|.
+name|REMOTE_DRIVER_CONF
 argument_list|)
 expr_stmt|;
 name|argv

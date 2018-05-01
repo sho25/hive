@@ -2299,7 +2299,7 @@ argument_list|)
 expr_stmt|;
 name|setHiveConfDir
 argument_list|(
-literal|"data/conf/spark/yarn-client"
+literal|"data/conf/spark/yarn-cluster"
 argument_list|)
 expr_stmt|;
 name|setClusterType
