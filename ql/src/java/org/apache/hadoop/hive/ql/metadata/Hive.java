@@ -11372,8 +11372,6 @@ name|loadPath
 argument_list|,
 name|numDP
 argument_list|,
-name|numLB
-argument_list|,
 literal|null
 argument_list|,
 name|writeId
@@ -11403,30 +11401,6 @@ name|getParent
 argument_list|()
 decl_stmt|;
 comment|// Skip the MM directory that we have found.
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|numLB
-condition|;
-operator|++
-name|i
-control|)
-block|{
-name|dpPath
-operator|=
-name|dpPath
-operator|.
-name|getParent
-argument_list|()
-expr_stmt|;
-comment|// Now skip the LB directories, if any...
-block|}
 if|if
 condition|(
 name|Utilities
