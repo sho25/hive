@@ -54524,6 +54524,13 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
+name|catName
+operator|=
+name|normalizeIdentifier
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|db
 operator|=
 name|normalizeIdentifier
