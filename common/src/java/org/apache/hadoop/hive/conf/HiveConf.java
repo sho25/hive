@@ -10068,6 +10068,19 @@ operator|+
 literal|"session in background when running CLI with Tez, allowing CLI to be available earlier."
 argument_list|)
 block|,
+name|HIVE_DISABLE_UNSAFE_EXTERNALTABLE_OPERATIONS
+argument_list|(
+literal|"hive.disable.unsafe.external.table.operations"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to disable certain optimizations and operations on external tables,"
+operator|+
+literal|" on the assumption that data changes by external applications may have negative effects"
+operator|+
+literal|" on these operations."
+argument_list|)
+block|,
 name|HIVE_ERROR_ON_EMPTY_PARTITION
 argument_list|(
 literal|"hive.error.on.empty.partition"
