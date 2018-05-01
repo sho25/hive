@@ -3429,6 +3429,11 @@ name|tableUsed
 operator|.
 name|getDbName
 argument_list|()
+argument_list|,
+name|tableUsed
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if

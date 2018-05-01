@@ -80836,6 +80836,8 @@ operator|.
 name|getTempTablesForDatabase
 argument_list|(
 name|dbName
+argument_list|,
+name|tblName
 argument_list|)
 decl_stmt|;
 if|if

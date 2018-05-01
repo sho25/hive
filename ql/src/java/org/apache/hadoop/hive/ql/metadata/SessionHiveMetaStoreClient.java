@@ -778,6 +778,26 @@ import|;
 end_import
 
 begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
 import|import static
 name|org
 operator|.
@@ -795,6 +815,10 @@ name|DEFAULT_CATALOG_NAME
 import|;
 end_import
 
+begin_comment
+comment|/**  * todo: This need review re: thread safety.  Various places (see callsers of  * {@link SessionState#setCurrentSessionState(SessionState)}) pass SessionState to forked threads.  * Currently it looks like those threads only read metadata but this is fragile.  * Also, maps (in SessionState) where tempt table metadata is stored are concurrent and so  * any put/get crosses a memory barrier and so does using most {@code java.util.concurrent.*}  * so the readers of the objects in these maps should have the most recent view of the object.  * But again, could be fragile.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -804,6 +828,21 @@ name|HiveMetaStoreClient
 implements|implements
 name|IMetaStoreClient
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|SessionHiveMetaStoreClient
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 name|SessionHiveMetaStoreClient
 parameter_list|(
 name|Configuration
@@ -1330,6 +1369,8 @@ init|=
 name|getTempTablesForDatabase
 argument_list|(
 name|dbName
+argument_list|,
+literal|"?"
 argument_list|)
 decl_stmt|;
 if|if
@@ -1481,6 +1522,8 @@ init|=
 name|getTempTablesForDatabase
 argument_list|(
 name|dbName
+argument_list|,
+name|tablePattern
 argument_list|)
 decl_stmt|;
 if|if
@@ -1665,7 +1708,17 @@ argument_list|>
 name|tmpTables
 init|=
 name|getTempTables
-argument_list|()
+argument_list|(
+literal|"dbPatterns='"
+operator|+
+name|dbPatterns
+operator|+
+literal|"' tablePatterns='"
+operator|+
+name|tablePatterns
+operator|+
+literal|"'"
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -2994,7 +3047,7 @@ throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"No current SessionState, cannot create temporary table"
+literal|"No current SessionState, cannot create temporary table: "
 operator|+
 name|Warehouse
 operator|.
@@ -3040,6 +3093,8 @@ init|=
 name|getTempTablesForDatabase
 argument_list|(
 name|dbName
+argument_list|,
+name|tblName
 argument_list|)
 decl_stmt|;
 if|if
@@ -3305,6 +3360,11 @@ name|dbName
 operator|.
 name|toLowerCase
 argument_list|()
+argument_list|,
+name|tableName
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -3556,6 +3616,8 @@ init|=
 name|getTempTablesForDatabase
 argument_list|(
 name|dbname
+argument_list|,
+name|tbl_name
 argument_list|)
 decl_stmt|;
 if|if
@@ -3597,6 +3659,8 @@ operator|=
 name|getTempTablesForDatabase
 argument_list|(
 name|newDbName
+argument_list|,
+name|tbl_name
 argument_list|)
 expr_stmt|;
 if|if
@@ -3663,6 +3727,8 @@ block|}
 name|getTempTablesForDatabase
 argument_list|(
 name|dbname
+argument_list|,
+name|tbl_name
 argument_list|)
 operator|.
 name|put
@@ -4507,6 +4573,8 @@ init|=
 name|getTempTablesForDatabase
 argument_list|(
 name|dbName
+argument_list|,
+name|tableName
 argument_list|)
 decl_stmt|;
 if|if
@@ -4711,6 +4779,7 @@ return|return
 name|newCopy
 return|;
 block|}
+comment|/**    * @param dbName actual database name    * @param tblName actual table name or search pattern (for error message)    */
 specifier|public
 specifier|static
 name|Map
@@ -4723,11 +4792,23 @@ name|getTempTablesForDatabase
 parameter_list|(
 name|String
 name|dbName
+parameter_list|,
+name|String
+name|tblName
 parameter_list|)
 block|{
 return|return
 name|getTempTables
-argument_list|()
+argument_list|(
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+argument_list|)
 operator|.
 name|get
 argument_list|(
@@ -4735,7 +4816,7 @@ name|dbName
 argument_list|)
 return|;
 block|}
-specifier|public
+specifier|private
 specifier|static
 name|Map
 argument_list|<
@@ -4749,7 +4830,10 @@ name|Table
 argument_list|>
 argument_list|>
 name|getTempTables
-parameter_list|()
+parameter_list|(
+name|String
+name|msg
+parameter_list|)
 block|{
 name|SessionState
 name|ss
@@ -4768,9 +4852,11 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
-literal|"No current SessionState, skipping temp tables"
+literal|"No current SessionState, skipping temp tables for "
+operator|+
+name|msg
 argument_list|)
 expr_stmt|;
 return|return
@@ -4822,7 +4908,16 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"No current SessionState, skipping temp tables"
+literal|"No current SessionState, skipping temp tables for "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
@@ -6481,9 +6576,11 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
-literal|"No current SessionState, skipping temp partitions"
+literal|"No current SessionState, skipping temp partitions for "
+operator|+
+name|qualifiedTableName
 argument_list|)
 expr_stmt|;
 return|return
@@ -6523,6 +6620,30 @@ name|Table
 name|t
 parameter_list|)
 block|{
+name|String
+name|qualifiedTableName
+init|=
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|t
+operator|.
+name|getDbName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|,
+name|t
+operator|.
+name|getTableName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|SessionState
 name|ss
 init|=
@@ -6540,9 +6661,11 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
-literal|"No current SessionState, skipping temp partitions"
+literal|"No current SessionState, skipping temp partitions for "
+operator|+
+name|qualifiedTableName
 argument_list|)
 expr_stmt|;
 return|return;
@@ -6597,6 +6720,30 @@ block|{
 comment|//do nothing as it's not a partitioned table
 return|return;
 block|}
+name|String
+name|qualifiedTableName
+init|=
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|t
+operator|.
+name|getDbName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|,
+name|t
+operator|.
+name|getTableName
+argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|SessionState
 name|ss
 init|=
@@ -6614,9 +6761,11 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|warn
 argument_list|(
-literal|"No current SessionState, skipping temp partitions"
+literal|"No current SessionState, skipping temp partitions for "
+operator|+
+name|qualifiedTableName
 argument_list|)
 expr_stmt|;
 return|return;
@@ -6630,16 +6779,6 @@ argument_list|(
 name|t
 argument_list|)
 decl_stmt|;
-name|String
-name|qualifiedName
-init|=
-name|Warehouse
-operator|.
-name|getQualifiedName
-argument_list|(
-name|t
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
 name|ss
@@ -6649,7 +6788,7 @@ argument_list|()
 operator|.
 name|putIfAbsent
 argument_list|(
-name|qualifiedName
+name|qualifiedTableName
 argument_list|,
 name|tt
 argument_list|)
@@ -6663,7 +6802,7 @@ name|IllegalStateException
 argument_list|(
 literal|"TempTable for "
 operator|+
-name|qualifiedName
+name|qualifiedTableName
 operator|+
 literal|" already exists"
 argument_list|)

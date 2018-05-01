@@ -269,6 +269,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|ConcurrentHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|locks
 operator|.
 name|ReentrantLock
@@ -1299,6 +1311,7 @@ name|INFO_FILE_NAME
 init|=
 literal|"inuse.info"
 decl_stmt|;
+comment|/**    * Concurrent since SessionState is often propagated to workers in thread pools    */
 specifier|private
 specifier|final
 name|Map
@@ -1315,7 +1328,7 @@ argument_list|>
 name|tempTables
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -1335,17 +1348,8 @@ argument_list|>
 name|tempTableColStats
 init|=
 operator|new
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|ColumnStatisticsObj
-argument_list|>
-argument_list|>
+name|ConcurrentHashMap
+argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
@@ -1361,7 +1365,7 @@ argument_list|>
 name|tempPartitions
 init|=
 operator|new
-name|HashMap
+name|ConcurrentHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -2792,14 +2796,14 @@ block|}
 comment|/**    * Singleton Session object per thread.    *    **/
 specifier|private
 specifier|static
-name|InheritableThreadLocal
+name|ThreadLocal
 argument_list|<
 name|SessionStates
 argument_list|>
 name|tss
 init|=
 operator|new
-name|InheritableThreadLocal
+name|ThreadLocal
 argument_list|<
 name|SessionStates
 argument_list|>
