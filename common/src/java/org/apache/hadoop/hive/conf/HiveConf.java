@@ -14920,7 +14920,7 @@ name|LLAP_CLIENT_CONSISTENT_SPLITS
 argument_list|(
 literal|"hive.llap.client.consistent.splits"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to setup split locations to match nodes on which llap daemons are running, "
 operator|+
