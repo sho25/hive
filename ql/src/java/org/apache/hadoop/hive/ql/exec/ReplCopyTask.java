@@ -603,6 +603,11 @@ index|[
 literal|1
 index|]
 argument_list|,
+name|result
+index|[
+literal|2
+index|]
+argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
@@ -923,6 +928,8 @@ name|oneSrc
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1247,8 +1254,6 @@ block|{
 comment|// TODO : verify if skipping charset here is okay
 name|String
 name|line
-init|=
-literal|null
 decl_stmt|;
 while|while
 condition|(
@@ -1307,6 +1312,11 @@ argument_list|,
 name|fileWithChksum
 index|[
 literal|1
+index|]
+argument_list|,
+name|fileWithChksum
+index|[
+literal|2
 index|]
 argument_list|,
 name|conf

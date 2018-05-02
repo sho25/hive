@@ -3893,6 +3893,13 @@ expr_stmt|;
 block|}
 name|ctx
 operator|.
+name|setHiveTxnManager
+argument_list|(
+name|queryTxnMgr
+argument_list|)
+expr_stmt|;
+name|ctx
+operator|.
 name|setStatsSource
 argument_list|(
 name|statsSource

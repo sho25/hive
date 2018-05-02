@@ -245,11 +245,6 @@ name|LineageState
 name|sessionStateLineageState
 decl_stmt|;
 specifier|public
-specifier|final
-name|long
-name|currentTransactionId
-decl_stmt|;
-specifier|public
 name|ReplLoadWork
 parameter_list|(
 name|HiveConf
@@ -266,9 +261,6 @@ name|tableNameToLoadIn
 parameter_list|,
 name|LineageState
 name|lineageState
-parameter_list|,
-name|long
-name|currentTransactionId
 parameter_list|)
 throws|throws
 name|IOException
@@ -282,12 +274,6 @@ expr_stmt|;
 name|sessionStateLineageState
 operator|=
 name|lineageState
-expr_stmt|;
-name|this
-operator|.
-name|currentTransactionId
-operator|=
-name|currentTransactionId
 expr_stmt|;
 name|this
 operator|.
@@ -336,9 +322,6 @@ name|dbNameOrPattern
 parameter_list|,
 name|LineageState
 name|lineageState
-parameter_list|,
-name|long
-name|currentTransactionId
 parameter_list|)
 throws|throws
 name|IOException
@@ -354,8 +337,6 @@ argument_list|,
 literal|null
 argument_list|,
 name|lineageState
-argument_list|,
-name|currentTransactionId
 argument_list|)
 expr_stmt|;
 block|}

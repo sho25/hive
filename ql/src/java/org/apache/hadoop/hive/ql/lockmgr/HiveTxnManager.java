@@ -325,6 +325,28 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
+comment|/**   * Replicate Table Write Ids state to mark aborted write ids and writeid high water mark.   * @param validWriteIdList Snapshot of writeid list when the table/partition is dumped.   * @param dbName Database name   * @param tableName Table which is written.   * @param partNames List of partitions being written.   * @throws LockException in case of failure.   */
+name|void
+name|replTableWriteIdState
+parameter_list|(
+name|String
+name|validWriteIdList
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
 comment|/**    * Get the lock manager.  This must be used rather than instantiating an    * instance of the lock manager directly as the transaction manager will    * choose which lock manager to instantiate.    * @return the instance of the lock manager    * @throws LockException if there is an issue obtaining the lock manager.    */
 name|HiveLockManager
 name|getLockManager

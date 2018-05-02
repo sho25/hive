@@ -2259,6 +2259,13 @@ literal|0
 decl_stmt|;
 if|if
 condition|(
+operator|!
+name|replicationSpec
+operator|.
+name|isInReplicationScope
+argument_list|()
+operator|&&
+operator|(
 operator|(
 name|tableExists
 operator|&&
@@ -2283,6 +2290,7 @@ operator|.
 name|getTblProps
 argument_list|()
 argument_list|)
+operator|)
 operator|)
 condition|)
 block|{

@@ -6278,12 +6278,12 @@ name|NoSuchTxnException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Rollback a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be rolled back.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * Note that this can result from the transaction having timed out and been    * deleted.    * @throws TException    */
+comment|/**    * Rollback a transaction.  This will also unlock any locks associated with    * this transaction.    * @param srcTxnid id of transaction at source while is rolled back and to be replicated.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * Note that this can result from the transaction having timed out and been    * deleted.    * @throws TException    */
 name|void
 name|replRollbackTxn
 parameter_list|(
 name|long
-name|txnid
+name|srcTxnid
 parameter_list|,
 name|String
 name|replPolicy
@@ -6307,12 +6307,12 @@ name|TxnAbortedException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param txnid id of transaction to be committed.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
+comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param srcTxnid id of transaction at source which is committed and to be replicated.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
 name|void
 name|replCommitTxn
 parameter_list|(
 name|long
-name|txnid
+name|srcTxnid
 parameter_list|,
 name|String
 name|replPolicy
@@ -6349,6 +6349,28 @@ name|dbName
 parameter_list|,
 name|String
 name|tableName
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Replicate Table Write Ids state to mark aborted write ids and writeid high water mark.    * @param validWriteIdList Snapshot of writeid list when the table/partition is dumped.    * @param dbName Database name    * @param tableName Table which is written.    * @param partNames List of partitions being written.    * @throws TException in case of failure to replicate the writeid state    */
+name|void
+name|replTableWriteIdState
+parameter_list|(
+name|String
+name|validWriteIdList
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
 parameter_list|)
 throws|throws
 name|TException

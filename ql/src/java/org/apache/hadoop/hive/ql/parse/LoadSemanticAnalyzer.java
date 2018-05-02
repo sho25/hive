@@ -762,7 +762,7 @@ index|[
 literal|0
 index|]
 operator|.
-name|isDir
+name|isDirectory
 argument_list|()
 condition|)
 block|{

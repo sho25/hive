@@ -55,7 +55,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|plan
 operator|.
 name|ReplTxnWork
 import|;

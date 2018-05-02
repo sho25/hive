@@ -2925,6 +2925,27 @@ operator|+
 literal|"replication is supported."
 argument_list|)
 block|,
+name|REPL_BOOTSTRAP_DUMP_OPEN_TXN_TIMEOUT
+argument_list|(
+literal|"hive.repl.bootstrap.dump.open.txn.timeout"
+argument_list|,
+literal|"1h"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|HOURS
+argument_list|)
+argument_list|,
+literal|"Indicates the timeout for all transactions which are opened before triggering bootstrap REPL DUMP. "
+operator|+
+literal|"If these open transactions are not closed within the timeout value, then REPL DUMP will "
+operator|+
+literal|"forcefully abort those transactions and continue with bootstrap dump."
+argument_list|)
+block|,
 comment|//https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/TransparentEncryption.html#Running_as_the_superuser
 name|REPL_ADD_RAW_RESERVED_NAMESPACE
 argument_list|(

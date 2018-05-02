@@ -160,11 +160,6 @@ name|LineageState
 name|sessionStateLineageState
 decl_stmt|;
 specifier|public
-specifier|final
-name|long
-name|currentTransactionId
-decl_stmt|;
-specifier|public
 name|Context
 parameter_list|(
 name|HiveConf
@@ -175,9 +170,6 @@ name|hiveDb
 parameter_list|,
 name|LineageState
 name|lineageState
-parameter_list|,
-name|long
-name|currentTransactionId
 parameter_list|,
 name|org
 operator|.
@@ -230,12 +222,6 @@ expr_stmt|;
 name|sessionStateLineageState
 operator|=
 name|lineageState
-expr_stmt|;
-name|this
-operator|.
-name|currentTransactionId
-operator|=
-name|currentTransactionId
 expr_stmt|;
 name|this
 operator|.

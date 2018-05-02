@@ -2379,12 +2379,6 @@ name|queryState
 operator|.
 name|getLineageState
 argument_list|()
-argument_list|,
-name|getTxnMgr
-argument_list|()
-operator|.
-name|getCurrentTxnId
-argument_list|()
 argument_list|)
 decl_stmt|;
 name|rootTasks
@@ -2593,12 +2587,6 @@ argument_list|,
 name|queryState
 operator|.
 name|getLineageState
-argument_list|()
-argument_list|,
-name|getTxnMgr
-argument_list|()
-operator|.
-name|getCurrentTxnId
 argument_list|()
 argument_list|)
 decl_stmt|;
