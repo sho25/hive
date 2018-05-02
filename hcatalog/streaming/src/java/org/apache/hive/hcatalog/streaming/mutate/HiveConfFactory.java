@@ -70,10 +70,12 @@ import|;
 end_import
 
 begin_comment
-comment|/** Creates/configures {@link HiveConf} instances with required ACID attributes. */
+comment|/** Creates/configures {@link HiveConf} instances with required ACID attributes.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|HiveConfFactory

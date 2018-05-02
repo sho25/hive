@@ -170,10 +170,12 @@ import|;
 end_import
 
 begin_comment
-comment|/** Base {@link Mutator} implementation. Creates a suitable {@link RecordUpdater} and delegates mutation events. */
+comment|/** Base {@link Mutator} implementation. Creates a suitable {@link RecordUpdater} and delegates mutation events.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|MutatorImpl

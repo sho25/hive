@@ -22,13 +22,12 @@ name|PartitionCreationFailed
 extends|extends
 name|StreamingException
 block|{
-specifier|public
 name|PartitionCreationFailed
 parameter_list|(
-name|HiveEndPoint
-name|endPoint
+name|StreamingConnection
+name|connection
 parameter_list|,
-name|Exception
+name|Throwable
 name|cause
 parameter_list|)
 block|{
@@ -36,7 +35,7 @@ name|super
 argument_list|(
 literal|"Failed to create partition "
 operator|+
-name|endPoint
+name|connection
 argument_list|,
 name|cause
 argument_list|)

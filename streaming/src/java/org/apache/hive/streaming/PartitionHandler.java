@@ -15,28 +15,36 @@ name|streaming
 package|;
 end_package
 
-begin_class
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|List
+import|;
+end_import
+
+begin_interface
 specifier|public
-class|class
-name|InvalidTrasactionState
-extends|extends
-name|TransactionError
+interface|interface
+name|PartitionHandler
 block|{
-specifier|public
-name|InvalidTrasactionState
+comment|/**    * Creates a partition if it does not exist.    *    * @param partitionValues - partition values    * @return partition location    * @throws StreamingException - any metastore related exceptions    */
+name|PartitionInfo
+name|createPartitionIfNotExists
 parameter_list|(
+name|List
+argument_list|<
 name|String
-name|msg
+argument_list|>
+name|partitionValues
 parameter_list|)
-block|{
-name|super
-argument_list|(
-name|msg
-argument_list|)
-expr_stmt|;
+throws|throws
+name|StreamingException
+function_decl|;
 block|}
-block|}
-end_class
+end_interface
 
 end_unit
 

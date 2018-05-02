@@ -5240,7 +5240,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|long
 name|getHeartbeatInterval
@@ -5290,7 +5290,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_TXN_MANAGER
+name|HIVE_TXN_TIMEOUT
 operator|.
 name|toString
 argument_list|()

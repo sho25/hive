@@ -22,7 +22,6 @@ name|ConnectionError
 extends|extends
 name|StreamingException
 block|{
-specifier|public
 name|ConnectionError
 parameter_list|(
 name|String
@@ -35,7 +34,6 @@ name|msg
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
 name|ConnectionError
 parameter_list|(
 name|String
@@ -53,10 +51,9 @@ name|innerEx
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
 name|ConnectionError
 parameter_list|(
-name|HiveEndPoint
+name|StreamingConnection
 name|endPoint
 parameter_list|,
 name|Exception

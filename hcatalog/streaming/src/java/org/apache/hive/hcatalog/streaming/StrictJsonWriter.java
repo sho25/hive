@@ -230,10 +230,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Streaming Writer handles utf8 encoded Json (Strict syntax).  * Uses org.apache.hive.hcatalog.data.JsonSerDe to process Json input  */
+comment|/**  * Streaming Writer handles utf8 encoded Json (Strict syntax).  * Uses org.apache.hive.hcatalog.data.JsonSerDe to process Json input  * @deprecated as of Hive 3.0.0, replaced by {@link org.apache.hive.streaming.StrictJsonWriter}  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|StrictJsonWriter

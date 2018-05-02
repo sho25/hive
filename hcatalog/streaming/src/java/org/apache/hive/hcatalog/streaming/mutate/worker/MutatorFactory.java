@@ -63,7 +63,13 @@ name|AcidOutputFormat
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated as of Hive 3.0.0  */
+end_comment
+
 begin_interface
+annotation|@
+name|Deprecated
 specifier|public
 interface|interface
 name|MutatorFactory

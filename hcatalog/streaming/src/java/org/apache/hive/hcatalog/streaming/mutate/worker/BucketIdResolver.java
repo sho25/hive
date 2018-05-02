@@ -22,10 +22,12 @@ package|;
 end_package
 
 begin_comment
-comment|/** Computes and appends bucket ids to records that are due to be inserted. */
+comment|/** Computes and appends bucket ids to records that are due to be inserted.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_interface
+annotation|@
+name|Deprecated
 specifier|public
 interface|interface
 name|BucketIdResolver

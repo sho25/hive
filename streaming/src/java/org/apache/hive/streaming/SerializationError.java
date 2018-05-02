@@ -22,7 +22,6 @@ name|SerializationError
 extends|extends
 name|StreamingException
 block|{
-specifier|public
 name|SerializationError
 parameter_list|(
 name|String

@@ -17,69 +17,59 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|conf
-operator|.
-name|HiveConf
+name|List
 import|;
 end_import
+
+begin_comment
+comment|/**  * Helper interface to get connection related information.  */
+end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|StreamingConnection
-extends|extends
 name|ConnectionInfo
-extends|,
-name|PartitionHandler
 block|{
-comment|/**    * Returns hive configuration object used during connection creation.    *    * @return - hive conf    */
-name|HiveConf
-name|getHiveConf
+comment|/**    * Get metastore URI that metastore client uses.    *    * @return - metastore URI used by client    */
+name|String
+name|getMetastoreUri
 parameter_list|()
 function_decl|;
-comment|/**    * Begin a transaction for writing.    *    * @throws StreamingException - if there are errors when beginning transaction    */
-name|void
-name|beginTransaction
+comment|/**    * Get the database used by streaming connection.    *    * @return - database    */
+name|String
+name|getDatabase
 parameter_list|()
-throws|throws
-name|StreamingException
 function_decl|;
-comment|/**    * Write record using RecordWriter.    *    * @param record - the data to be written    * @throws StreamingException - if there are errors when writing    */
-name|void
-name|write
-parameter_list|(
-name|byte
-index|[]
-name|record
-parameter_list|)
-throws|throws
-name|StreamingException
-function_decl|;
-comment|/**    * Commit a transaction to make the writes visible for readers.    *    * @throws StreamingException - if there are errors when committing the open transaction    */
-name|void
-name|commitTransaction
+comment|/**    * Get the table used by streaming connection.    *    * @return - table    */
+name|String
+name|getTable
 parameter_list|()
-throws|throws
-name|StreamingException
 function_decl|;
-comment|/**    * Manually abort the opened transaction.    *    * @throws StreamingException - if there are errors when aborting the transaction    */
-name|void
-name|abortTransaction
+comment|/**    * Get any static partitions specified during streaming connection creation.    *    * @return - static partition values    */
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|getStaticPartitionValues
 parameter_list|()
-throws|throws
-name|StreamingException
 function_decl|;
-comment|/**    * Closes streaming connection.    */
-name|void
-name|close
+comment|/**    * Get if the specified table is partitioned table or not.    *    * @return - true if partitioned table else false    */
+name|boolean
+name|isPartitionedTable
+parameter_list|()
+function_decl|;
+comment|/**    * Get if dynamic partitioning is used.    *    * @return - true if dynamic partitioning case else false    */
+name|boolean
+name|isDynamicPartitioning
+parameter_list|()
+function_decl|;
+comment|/**    * Get agent info that is set during streaming connection.    *    * @return - agent info    */
+name|String
+name|getAgentInfo
 parameter_list|()
 function_decl|;
 block|}

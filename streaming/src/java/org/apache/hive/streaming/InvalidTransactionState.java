@@ -18,12 +18,11 @@ end_package
 begin_class
 specifier|public
 class|class
-name|InvalidColumn
+name|InvalidTransactionState
 extends|extends
-name|StreamingException
+name|TransactionError
 block|{
-specifier|public
-name|InvalidColumn
+name|InvalidTransactionState
 parameter_list|(
 name|String
 name|msg

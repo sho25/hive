@@ -13169,6 +13169,8 @@ name|getPartition
 argument_list|(
 name|i
 argument_list|)
+argument_list|,
+name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -13580,7 +13582,8 @@ return|return
 name|out
 return|;
 block|}
-specifier|private
+specifier|public
+specifier|static
 name|org
 operator|.
 name|apache
@@ -13603,6 +13606,10 @@ name|AddPartitionDesc
 operator|.
 name|OnePartitionDesc
 name|addSpec
+parameter_list|,
+specifier|final
+name|HiveConf
+name|conf
 parameter_list|)
 throws|throws
 name|HiveException

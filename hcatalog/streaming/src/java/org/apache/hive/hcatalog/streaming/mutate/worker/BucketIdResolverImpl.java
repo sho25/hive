@@ -158,10 +158,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of a {@link BucketIdResolver} that includes the logic required to calculate a bucket id from a record  * that is consistent with Hive's own internal computation scheme.  */
+comment|/**  * Implementation of a {@link BucketIdResolver} that includes the logic required to calculate a bucket id from a record  * that is consistent with Hive's own internal computation scheme.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|BucketIdResolverImpl

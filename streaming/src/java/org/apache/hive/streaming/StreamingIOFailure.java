@@ -22,7 +22,6 @@ name|StreamingIOFailure
 extends|extends
 name|StreamingException
 block|{
-specifier|public
 name|StreamingIOFailure
 parameter_list|(
 name|String
@@ -40,7 +39,6 @@ name|cause
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
 name|StreamingIOFailure
 parameter_list|(
 name|String

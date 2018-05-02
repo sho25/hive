@@ -2873,9 +2873,13 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-comment|// We only support flushes on files with multiple transactions, because
-comment|// flushes create significant overhead in HDFS. Record updaters with a
-comment|// single transaction should be closed rather than flushed.
+name|initWriter
+argument_list|()
+expr_stmt|;
+comment|// streaming ingest writer with single transaction batch size, in which case the transaction is
+comment|// either committed or aborted. In either cases we don't need flush length file but we need to
+comment|// flush intermediate footer to reduce memory pressure. Also with HIVE-19206, streaming writer does
+comment|// automatic memory management which would require flush of open files without actually closing it.
 if|if
 condition|(
 name|flushLengths
@@ -2883,21 +2887,16 @@ operator|==
 literal|null
 condition|)
 block|{
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Attempting to flush a RecordUpdater on "
-operator|+
-name|path
-operator|+
-literal|" with a single transaction."
-argument_list|)
-throw|;
-block|}
-name|initWriter
+comment|// transaction batch size = 1 case
+name|writer
+operator|.
+name|writeIntermediateFooter
 argument_list|()
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// transaction batch size> 1 case
 name|long
 name|len
 init|=
@@ -2922,6 +2921,7 @@ argument_list|(
 name|flushLengths
 argument_list|)
 expr_stmt|;
+block|}
 comment|//multiple transactions only happen for streaming ingest which only allows inserts
 assert|assert
 name|deleteEventWriter

@@ -3725,6 +3725,59 @@ argument_list|,
 literal|"Whether to check client capabilities for potentially breaking API usage."
 argument_list|)
 block|,
+name|METASTORE_CLIENT_CACHE_ENABLED
+argument_list|(
+literal|"hive.metastore.client.cache.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable metastore client cache"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_CACHE_EXPIRY_TIME
+argument_list|(
+literal|"hive.metastore.client.cache.expiry.time"
+argument_list|,
+literal|"120s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Expiry time for metastore client cache"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_CACHE_INITIAL_CAPACITY
+argument_list|(
+literal|"hive.metastore.client.cache.initial.capacity"
+argument_list|,
+literal|50
+argument_list|,
+literal|"Initial capacity for metastore client cache"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_CACHE_MAX_CAPACITY
+argument_list|(
+literal|"hive.metastore.client.cache.max.capacity"
+argument_list|,
+literal|50
+argument_list|,
+literal|"Max capacity for metastore client cache"
+argument_list|)
+block|,
+name|METASTORE_CLIENT_CACHE_STATS_ENABLED
+argument_list|(
+literal|"hive.metastore.client.cache.stats.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable metastore client cache stats"
+argument_list|)
+block|,
 name|METASTORE_FASTPATH
 argument_list|(
 literal|"hive.metastore.fastpath"

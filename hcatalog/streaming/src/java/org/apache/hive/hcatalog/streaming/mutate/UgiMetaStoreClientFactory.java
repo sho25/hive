@@ -236,10 +236,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Creates a proxied {@link IMetaStoreClient client} that wraps calls in a {@link PrivilegedExceptionAction} if the  * {@link UserGroupInformation} is specified. Invokes directly otherwise.  */
+comment|/**  * Creates a proxied {@link IMetaStoreClient client} that wraps calls in a {@link PrivilegedExceptionAction} if the  * {@link UserGroupInformation} is specified. Invokes directly otherwise.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|UgiMetaStoreClientFactory

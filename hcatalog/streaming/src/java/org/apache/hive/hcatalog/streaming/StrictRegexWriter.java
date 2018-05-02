@@ -290,10 +290,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Streaming Writer handles text input data with regex. Uses  * org.apache.hadoop.hive.serde2.RegexSerDe  */
+comment|/**  * Streaming Writer handles text input data with regex. Uses  * org.apache.hadoop.hive.serde2.RegexSerDe  * @deprecated as of Hive 3.0.0, replaced by {@link org.apache.hive.streaming.StrictRegexWriter}  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|StrictRegexWriter

@@ -28,7 +28,7 @@ parameter_list|(
 name|String
 name|msg
 parameter_list|,
-name|Exception
+name|Throwable
 name|cause
 parameter_list|)
 block|{

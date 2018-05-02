@@ -22,7 +22,6 @@ name|TransactionError
 extends|extends
 name|StreamingException
 block|{
-specifier|public
 name|TransactionError
 parameter_list|(
 name|String
@@ -55,7 +54,6 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
 name|TransactionError
 parameter_list|(
 name|String

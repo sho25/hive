@@ -220,10 +220,12 @@ import|;
 end_import
 
 begin_comment
-comment|/** Convenience class for building {@link MutatorCoordinator} instances. */
+comment|/** Convenience class for building {@link MutatorCoordinator} instances.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|MutatorCoordinatorBuilder

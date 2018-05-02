@@ -473,7 +473,13 @@ name|Properties
 import|;
 end_import
 
+begin_comment
+comment|/**  * @deprecated as of Hive 3.0.0, replaced by {@link org.apache.hive.streaming.AbstractRecordWriter}  */
+end_comment
+
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 specifier|abstract
 class|class

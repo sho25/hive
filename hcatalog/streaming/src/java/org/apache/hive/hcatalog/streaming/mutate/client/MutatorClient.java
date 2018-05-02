@@ -254,10 +254,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Responsible for orchestrating {@link Transaction Transactions} within which ACID table mutation events can occur.  * Typically this will be a large batch of delta operations.  */
+comment|/**  * Responsible for orchestrating {@link Transaction Transactions} within which ACID table mutation events can occur.  * Typically this will be a large batch of delta operations.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|MutatorClient

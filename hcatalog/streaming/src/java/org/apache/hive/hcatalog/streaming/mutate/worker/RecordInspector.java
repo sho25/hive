@@ -40,10 +40,12 @@ import|;
 end_import
 
 begin_comment
-comment|/** Provide a means to extract {@link RecordIdentifier} from record objects. */
+comment|/** Provide a means to extract {@link RecordIdentifier} from record objects.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_interface
+annotation|@
+name|Deprecated
 specifier|public
 interface|interface
 name|RecordInspector

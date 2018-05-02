@@ -68,10 +68,12 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Describes an ACID table that can receive mutation events. Used to encode the information required by workers to write  * ACID events without requiring them to once more retrieve the data from the meta store db.  */
+comment|/**  * Describes an ACID table that can receive mutation events. Used to encode the information required by workers to write  * ACID events without requiring them to once more retrieve the data from the meta store db.  * @deprecated as of Hive 3.0.0  */
 end_comment
 
 begin_class
+annotation|@
+name|Deprecated
 specifier|public
 class|class
 name|AcidTable

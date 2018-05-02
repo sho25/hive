@@ -15,12 +15,38 @@ name|streaming
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
 name|RecordWriter
 block|{
-comment|/** Writes using a hive RecordUpdater    *    * @param writeId the write ID of the table mapping to Txn in which the write occurs    * @param record the record to be written    */
+comment|/**    * Initialize record writer.    *    * @param connection - streaming connection    * @param minWriteId - min write id    * @param maxWriteID - max write id    * @throws StreamingException - thrown when initialization failed    */
+name|void
+name|init
+parameter_list|(
+name|StreamingConnection
+name|connection
+parameter_list|,
+name|long
+name|minWriteId
+parameter_list|,
+name|long
+name|maxWriteID
+parameter_list|)
+throws|throws
+name|StreamingException
+function_decl|;
+comment|/**    * Writes using a hive RecordUpdater    *    * @param writeId the write ID of the table mapping to Txn in which the write occurs    * @param record  the record to be written    */
 name|void
 name|write
 parameter_list|(
@@ -34,39 +60,27 @@ parameter_list|)
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/** Flush records from buffer. Invoked by TransactionBatch.commit() */
+comment|/**    * Flush records from buffer. Invoked by TransactionBatch.commitTransaction()    */
 name|void
 name|flush
 parameter_list|()
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/** Clear bufferred writes. Invoked by TransactionBatch.abort() */
+comment|/**    * Close the RecordUpdater. Invoked by TransactionBatch.close()    *    * @throws StreamingException - thrown when record writer cannot be closed.    */
 name|void
-name|clear
+name|close
 parameter_list|()
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/** Acquire a new RecordUpdater. Invoked when    * StreamingConnection.fetchTransactionBatch() is called */
-name|void
-name|newBatch
-parameter_list|(
-name|Long
-name|minWriteId
-parameter_list|,
-name|Long
-name|maxWriteID
-parameter_list|)
-throws|throws
-name|StreamingException
-function_decl|;
-comment|/** Close the RecordUpdater. Invoked by TransactionBatch.close() */
-name|void
-name|closeBatch
+comment|/**    * Get the set of partitions that were added by the record writer.    *    * @return - set of partitions    */
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|getPartitions
 parameter_list|()
-throws|throws
-name|StreamingException
 function_decl|;
 block|}
 end_interface
