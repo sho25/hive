@@ -1750,7 +1750,7 @@ literal|"load data inpath partitioned overwrite"
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * By default you can't load into bucketed tables.  Things will break badly in acid (data loss, etc)    * if loaded data is not bucketed properly.  This test is to capture that this is still the default.    * If the default is changed, Load Data should probably do more validation to ensure data is    * properly distributed into files and files are named correctly.    */
+comment|/**    * By default you can't load into bucketed tables.  Things will break badly in acid (data loss, etc)    * if loaded data is not bucketed properly.  This test is to capture that this is still the default.    * If the default is changed, Load Data should probably do more validation to ensure data is    * properly distributed into files and files are named correctly.    * With the availability of new feature to rewrite such "load data" commands into insert-as-select,    * the test should let the load data pass.    */
 annotation|@
 name|Test
 specifier|public
@@ -1818,9 +1818,10 @@ operator|+
 literal|"' into table T"
 argument_list|)
 decl_stmt|;
+comment|// This condition should not occur with the new support of rewriting load into IAS.
 name|Assert
 operator|.
-name|assertTrue
+name|assertFalse
 argument_list|(
 name|cpr
 operator|.

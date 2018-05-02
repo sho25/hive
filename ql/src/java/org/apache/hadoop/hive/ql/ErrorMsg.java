@@ -2358,6 +2358,20 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|LOAD_DATA_LAUNCH_JOB_IO_ERROR
+argument_list|(
+literal|10415
+argument_list|,
+literal|"Encountered I/O error while parsing rewritten load data into insert query"
+argument_list|)
+block|,
+name|LOAD_DATA_LAUNCH_JOB_PARSE_ERROR
+argument_list|(
+literal|10416
+argument_list|,
+literal|"Encountered parse error while parsing rewritten load data into insert query"
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

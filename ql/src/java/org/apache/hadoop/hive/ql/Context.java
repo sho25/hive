@@ -1069,6 +1069,11 @@ specifier|private
 name|int
 name|executionIndex
 decl_stmt|;
+comment|// Load data rewrite
+specifier|private
+name|Table
+name|tempTableForLoad
+decl_stmt|;
 specifier|public
 name|void
 name|setOperation
@@ -2569,7 +2574,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS), unless isFinalJob and    * {@link BlobStorageUtils#areOptimizationsEnabled(Configuration)} are both true, then return a path on    * the blobstore.    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    * @param isFinalJob true if the required {@link Path} will be used for the final job (e.g. the final FSOP)    *    * @return A path to the new temporary directory    */
+comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS), unless isFinalJob and    * {@link BlobStorageUtils#areOptimizationsEnabled(Configuration)} are both true, then return a path on    * the blobstore.    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    *    * @return A path to the new temporary directory    */
 specifier|public
 name|Path
 name|getTempDirForInterimJobPath
@@ -4611,6 +4616,30 @@ operator|.
 name|conf
 operator|=
 name|conf
+expr_stmt|;
+block|}
+specifier|public
+name|Table
+name|getTempTableForLoad
+parameter_list|()
+block|{
+return|return
+name|tempTableForLoad
+return|;
+block|}
+specifier|public
+name|void
+name|setTempTableForLoad
+parameter_list|(
+name|Table
+name|tempTableForLoad
+parameter_list|)
+block|{
+name|this
+operator|.
+name|tempTableForLoad
+operator|=
+name|tempTableForLoad
 expr_stmt|;
 block|}
 block|}

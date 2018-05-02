@@ -3045,12 +3045,8 @@ name|getPartColByName
 argument_list|(
 name|colName
 argument_list|)
-operator|==
+operator|!=
 literal|null
-condition|?
-literal|false
-else|:
-literal|true
 return|;
 block|}
 comment|// TODO merge this with getBucketCols function
@@ -5284,7 +5280,7 @@ decl_stmt|;
 for|for
 control|(
 name|FieldSchema
-name|partCol
+name|col
 range|:
 name|columns
 control|)
@@ -5294,7 +5290,7 @@ name|colName
 init|=
 name|normalize
 argument_list|(
-name|partCol
+name|col
 operator|.
 name|getName
 argument_list|()
