@@ -372,7 +372,7 @@ block|{
 return|return;
 block|}
 name|File
-name|yetusScriptDir
+name|yetusBuildScratchDir
 init|=
 operator|new
 name|File
@@ -382,7 +382,7 @@ argument_list|,
 name|buildTag
 argument_list|)
 decl_stmt|;
-name|yetusScriptDir
+name|yetusBuildScratchDir
 operator|.
 name|mkdir
 argument_list|()
@@ -393,7 +393,7 @@ init|=
 operator|new
 name|File
 argument_list|(
-name|yetusScriptDir
+name|yetusBuildScratchDir
 argument_list|,
 name|YETUS_EXEC_SCRIPT
 argument_list|)
@@ -542,6 +542,18 @@ name|getAbsolutePath
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|templateVars
+operator|.
+name|put
+argument_list|(
+literal|"yetusBuildScratchDir"
+argument_list|,
+name|yetusBuildScratchDir
+operator|.
+name|getAbsolutePath
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|logger
@@ -648,11 +660,11 @@ name|debug
 argument_list|(
 literal|"Deleting "
 operator|+
-name|yetusScriptDir
+name|yetusBuildScratchDir
 operator|+
 literal|": "
 operator|+
-name|yetusScriptDir
+name|yetusBuildScratchDir
 operator|.
 name|delete
 argument_list|()
