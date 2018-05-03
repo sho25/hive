@@ -7227,6 +7227,48 @@ operator|+
 literal|" based on heuristics."
 argument_list|)
 block|,
+comment|// hive streaming ingest settings
+name|HIVE_STREAMING_AUTO_FLUSH_ENABLED
+argument_list|(
+literal|"hive.streaming.auto.flush.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable memory \n"
+operator|+
+literal|"monitoring and automatic flushing of open record updaters during streaming ingest. This is an expert level \n"
+operator|+
+literal|"setting and disabling this may have severe performance impact under memory pressure."
+argument_list|)
+block|,
+name|HIVE_HEAP_MEMORY_MONITOR_USAGE_THRESHOLD
+argument_list|(
+literal|"hive.heap.memory.monitor.usage.threshold"
+argument_list|,
+literal|0.7f
+argument_list|,
+literal|"Hive streaming does automatic memory management across all open record writers. This threshold will let the \n"
+operator|+
+literal|"memory monitor take an action (flush open files) when heap memory usage exceeded this threshold."
+argument_list|)
+block|,
+name|HIVE_STREAMING_AUTO_FLUSH_CHECK_INTERVAL_SIZE
+argument_list|(
+literal|"hive.streaming.auto.flush.check.interval.size"
+argument_list|,
+literal|"100Mb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"Hive streaming ingest has auto flush mechanism to flush all open record updaters under memory pressure.\n"
+operator|+
+literal|"When memory usage exceed hive.heap.memory.monitor.default.usage.threshold, the auto-flush mechanism will \n"
+operator|+
+literal|"wait until this size (default 100Mb) of records are ingested before triggering flush."
+argument_list|)
+block|,
 name|HIVE_ORC_MS_FOOTER_CACHE_ENABLED
 argument_list|(
 literal|"hive.orc.splits.ms.footer.cache.enabled"

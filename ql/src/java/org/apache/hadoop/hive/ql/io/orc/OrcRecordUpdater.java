@@ -773,6 +773,13 @@ name|rowCountDelta
 init|=
 literal|0
 decl_stmt|;
+comment|// used only for insert events, this is the number of rows held in memory before flush() is invoked
+specifier|private
+name|long
+name|bufferedRows
+init|=
+literal|0
+decl_stmt|;
 specifier|private
 specifier|final
 name|KeyIndexBuilder
@@ -2722,6 +2729,9 @@ block|}
 name|rowCountDelta
 operator|++
 expr_stmt|;
+name|bufferedRows
+operator|++
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -2922,6 +2932,10 @@ name|flushLengths
 argument_list|)
 expr_stmt|;
 block|}
+name|bufferedRows
+operator|=
+literal|0
+expr_stmt|;
 comment|//multiple transactions only happen for streaming ingest which only allows inserts
 assert|assert
 name|deleteEventWriter
@@ -3177,6 +3191,17 @@ comment|// Don't worry about setting raw data size diff.  I have no idea how to 
 comment|// without finding the row we are updating or deleting, which would be a mess.
 return|return
 name|stats
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getBufferedRowCount
+parameter_list|()
+block|{
+return|return
+name|bufferedRows
 return|;
 block|}
 specifier|static

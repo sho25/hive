@@ -82,6 +82,11 @@ name|void
 name|close
 parameter_list|()
 function_decl|;
+comment|/**    * Gets stats about the streaming connection.    *    * @return - connection stats    */
+name|ConnectionStats
+name|getConnectionStats
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 

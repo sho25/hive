@@ -25,6 +25,24 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Table
+import|;
+end_import
+
 begin_comment
 comment|/**  * Helper interface to get connection related information.  */
 end_comment
@@ -39,13 +57,8 @@ name|String
 name|getMetastoreUri
 parameter_list|()
 function_decl|;
-comment|/**    * Get the database used by streaming connection.    *    * @return - database    */
-name|String
-name|getDatabase
-parameter_list|()
-function_decl|;
 comment|/**    * Get the table used by streaming connection.    *    * @return - table    */
-name|String
+name|Table
 name|getTable
 parameter_list|()
 function_decl|;

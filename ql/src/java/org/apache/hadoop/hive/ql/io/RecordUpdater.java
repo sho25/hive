@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|IOException
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -32,34 +42,6 @@ operator|.
 name|serde2
 operator|.
 name|SerDeStats
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|objectinspector
-operator|.
-name|ObjectInspector
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
 import|;
 end_import
 
@@ -131,6 +113,11 @@ function_decl|;
 comment|/**    * Returns the statistics information    * @return SerDeStats    */
 name|SerDeStats
 name|getStats
+parameter_list|()
+function_decl|;
+comment|/**    * Returns the number of rows in memory before flush().    *    * @return - buffered row count    */
+name|long
+name|getBufferedRowCount
 parameter_list|()
 function_decl|;
 block|}
