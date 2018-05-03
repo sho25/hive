@@ -1686,7 +1686,6 @@ comment|//see HIVE-18154
 return|return
 literal|false
 return|;
-comment|// TODO: is this still relevant for insert-only tables?
 default|default:
 comment|//not relevant for LOAD
 return|return
