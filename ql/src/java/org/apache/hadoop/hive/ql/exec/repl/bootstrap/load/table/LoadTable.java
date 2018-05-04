@@ -1302,9 +1302,9 @@ name|table
 argument_list|,
 name|replicationSpec
 argument_list|,
-name|event
+name|table
 operator|.
-name|metadataPath
+name|getDataLocation
 argument_list|()
 argument_list|,
 name|event

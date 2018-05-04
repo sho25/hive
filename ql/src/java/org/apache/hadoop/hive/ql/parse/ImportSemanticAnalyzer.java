@@ -7198,11 +7198,10 @@ operator|.
 name|isReplace
 argument_list|()
 argument_list|,
-operator|new
-name|Path
-argument_list|(
-name|fromURI
-argument_list|)
+name|table
+operator|.
+name|getDataLocation
+argument_list|()
 argument_list|,
 name|replicationSpec
 argument_list|,
