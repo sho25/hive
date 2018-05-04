@@ -657,6 +657,20 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|mapred
+operator|.
+name|TextInputFormat
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -1307,7 +1321,6 @@ expr_stmt|;
 return|return
 literal|null
 return|;
-comment|/*          throw new SemanticException(ErrorMsg.INVALID_PATH.getMsg(fromTree,               "source contains directory: " + oneSrc.getPath().toString()));*/
 block|}
 block|}
 name|validateAcidFiles
@@ -2846,7 +2859,7 @@ argument_list|<>
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Set data location
+comment|// Set data location and input format, it must be text
 name|tempTableObj
 operator|.
 name|setDataLocation
@@ -2856,6 +2869,15 @@ name|Path
 argument_list|(
 name|fromURI
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|tempTableObj
+operator|.
+name|setInputFormatClass
+argument_list|(
+name|TextInputFormat
+operator|.
+name|class
 argument_list|)
 expr_stmt|;
 comment|// Step 2 : create the Insert query
