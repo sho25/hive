@@ -2281,6 +2281,17 @@ operator|.
 name|getPartitionKeys
 argument_list|()
 decl_stmt|;
+specifier|final
+name|String
+name|tableName
+init|=
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|tTable
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|partCols
@@ -2308,7 +2319,9 @@ throw|throw
 operator|new
 name|ValidationFailureSemanticException
 argument_list|(
-literal|"table is not partitioned but partition spec exists: "
+name|tableName
+operator|+
+literal|" table is not partitioned but partition spec exists: "
 operator|+
 name|spec
 argument_list|)
@@ -2333,7 +2346,9 @@ throw|throw
 operator|new
 name|ValidationFailureSemanticException
 argument_list|(
-literal|"table is partitioned but partition spec is not specified"
+name|tableName
+operator|+
+literal|" table is partitioned but partition spec is not specified"
 argument_list|)
 throw|;
 block|}
@@ -2396,7 +2411,9 @@ throw|throw
 operator|new
 name|ValidationFailureSemanticException
 argument_list|(
-literal|"Partition spec "
+name|tableName
+operator|+
+literal|": Partition spec "
 operator|+
 name|spec
 operator|+
@@ -2425,7 +2442,9 @@ throw|throw
 operator|new
 name|ValidationFailureSemanticException
 argument_list|(
-literal|"partition spec "
+name|tableName
+operator|+
+literal|": partition spec "
 operator|+
 name|spec
 operator|+

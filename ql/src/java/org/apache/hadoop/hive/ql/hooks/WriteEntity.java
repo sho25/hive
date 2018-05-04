@@ -252,9 +252,10 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|writeType
-operator|=
+name|setWriteTypeInternal
+argument_list|(
 name|type
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Constructor for a table.    *    * @param t    *          Table that is written to.    */
@@ -275,9 +276,10 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|writeType
-operator|=
+name|setWriteTypeInternal
+argument_list|(
 name|type
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -300,9 +302,10 @@ argument_list|,
 name|complete
 argument_list|)
 expr_stmt|;
-name|writeType
-operator|=
+name|setWriteTypeInternal
+argument_list|(
 name|type
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Constructor for objects represented as String.    * Currently applicable only for function names.    * @param db    * @param objName    * @param className    * @param type    * @param writeType    */
@@ -361,9 +364,10 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|writeType
-operator|=
+name|setWriteTypeInternal
+argument_list|(
 name|type
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public
@@ -386,9 +390,10 @@ argument_list|,
 name|complete
 argument_list|)
 expr_stmt|;
-name|writeType
-operator|=
+name|setWriteTypeInternal
+argument_list|(
 name|type
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Constructor for a file.    *    * @param d    *          The name of the directory that is being written to.    * @param islocal    *          Flag to decide whether this directory is local or in dfs.    */
@@ -490,6 +495,20 @@ comment|/**    * Only use this if you are very sure of what you are doing.  This
 specifier|public
 name|void
 name|setWriteType
+parameter_list|(
+name|WriteType
+name|type
+parameter_list|)
+block|{
+name|setWriteTypeInternal
+argument_list|(
+name|type
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|setWriteTypeInternal
 parameter_list|(
 name|WriteType
 name|type

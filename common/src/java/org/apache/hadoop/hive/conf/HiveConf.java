@@ -9034,6 +9034,19 @@ operator|+
 literal|"DROP TABLE etc. when the table is being written to"
 argument_list|)
 block|,
+name|TXN_OVERWRITE_X_LOCK
+argument_list|(
+literal|"hive.txn.xlock.iow"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Ensures commands with OVERWRITE (such as INSERT OVERWRITE) acquire Exclusive locks for\b"
+operator|+
+literal|"transactional tables.  This ensures that inserts (w/o overwrite) running concurrently\n"
+operator|+
+literal|"are not hidden by the INSERT OVERWRITE."
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.TXN_TIMEOUT      */
 annotation|@
 name|Deprecated
