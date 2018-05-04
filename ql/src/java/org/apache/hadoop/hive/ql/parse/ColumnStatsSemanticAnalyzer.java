@@ -273,6 +273,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|HiveOperation
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -2487,6 +2505,19 @@ expr_stmt|;
 name|analyzeInternal
 argument_list|(
 name|rewrittenTree
+argument_list|)
+expr_stmt|;
+comment|// After analyzeInternal() Hiveop get set as Query
+comment|// since we are passing in AST for select query, so reset it.
+name|this
+operator|.
+name|queryState
+operator|.
+name|setCommandType
+argument_list|(
+name|HiveOperation
+operator|.
+name|ANALYZE_TABLE
 argument_list|)
 expr_stmt|;
 block|}
