@@ -10987,6 +10987,42 @@ operator|+
 literal|" in the HS2 WebUI / Drilldown / Query Plan tab.\n"
 argument_list|)
 block|,
+name|HIVE_SERVER2_WEBUI_ENABLE_CORS
+argument_list|(
+literal|"hive.server2.webui.enable.cors"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to enable cross origin requests (CORS)\n"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_CORS_ALLOWED_ORIGINS
+argument_list|(
+literal|"hive.server2.webui.cors.allowed.origins"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"Comma separated list of origins that are allowed when CORS is enabled.\n"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_CORS_ALLOWED_METHODS
+argument_list|(
+literal|"hive.server2.webui.cors.allowed.methods"
+argument_list|,
+literal|"GET,POST,DELETE,HEAD"
+argument_list|,
+literal|"Comma separated list of http methods that are allowed when CORS is enabled.\n"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_CORS_ALLOWED_HEADERS
+argument_list|(
+literal|"hive.server2.webui.cors.allowed.headers"
+argument_list|,
+literal|"X-Requested-With,Content-Type,Accept,Origin"
+argument_list|,
+literal|"Comma separated list of http headers that are allowed when CORS is enabled.\n"
+argument_list|)
+block|,
 comment|// Tez session settings
 name|HIVE_SERVER2_ACTIVE_PASSIVE_HA_ENABLE
 argument_list|(
