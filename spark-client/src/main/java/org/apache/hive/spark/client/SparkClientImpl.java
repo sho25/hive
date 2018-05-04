@@ -309,6 +309,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collections
 import|;
 end_import
@@ -829,8 +839,6 @@ parameter_list|)
 block|{
 name|String
 name|errorMsg
-init|=
-literal|null
 decl_stmt|;
 if|if
 condition|(
@@ -844,9 +852,9 @@ condition|)
 block|{
 name|errorMsg
 operator|=
-literal|"Timed out waiting for client to connect.\nPossible reasons include network "
+literal|"Timed out waiting for Remote Spark Driver to connect to HiveServer2.\nPossible reasons "
 operator|+
-literal|"issues, errors in remote driver or the cluster has no available resources, etc."
+literal|"include network issues, errors in remote driver, cluster has no available resources, etc."
 operator|+
 literal|"\nPlease check YARN or Spark driver's logs for further information."
 expr_stmt|;
@@ -864,18 +872,16 @@ condition|)
 block|{
 name|errorMsg
 operator|=
-literal|"Interruption occurred while waiting for client to connect.\nPossibly the Spark session is closed "
+literal|"Interrupted while waiting for Remote Spark Driver to connect to HiveServer2.\nIt is possible "
 operator|+
-literal|"such as in case of query cancellation."
-operator|+
-literal|"\nPlease refer to HiveServer2 logs for further information."
+literal|"that the query was cancelled which would cause the Spark Session to close."
 expr_stmt|;
 block|}
 else|else
 block|{
 name|errorMsg
 operator|=
-literal|"Error while waiting for client to connect."
+literal|"Error while waiting for Remote Spark Driver to connect back to HiveServer2."
 expr_stmt|;
 block|}
 name|LOG
@@ -926,6 +932,20 @@ name|e
 argument_list|)
 throw|;
 block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Successfully connected to Remote Spark Driver at: "
+operator|+
+name|this
+operator|.
+name|driverRpc
+operator|.
+name|getRemoteAddress
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|driverRpc
 operator|.
 name|addListener
@@ -955,7 +975,12 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Client RPC channel closed unexpectedly."
+literal|"Connection to Remote Spark Driver {} closed unexpectedly"
+argument_list|,
+name|driverRpc
+operator|.
+name|getRemoteAddress
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|isAlive
@@ -963,6 +988,17 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"Connection to Remote Spark Driver Closed Unexpectedly"
+return|;
 block|}
 block|}
 argument_list|)
@@ -1653,7 +1689,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Loading spark defaults: "
+literal|"Loading spark defaults configs from: "
 operator|+
 name|sparkDefaultsUrl
 argument_list|)
@@ -3748,7 +3784,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error reported from remote driver: {}"
+literal|"Error reported from Remote Spark Driver: {}"
 argument_list|,
 name|msg
 operator|.
@@ -3820,11 +3856,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Received metrics for unknown job {}"
+literal|"Received metrics for unknown Spark job {}"
 argument_list|,
 name|msg
 operator|.
-name|jobId
+name|sparkJobId
 argument_list|)
 expr_stmt|;
 block|}
@@ -3864,9 +3900,9 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Received result for {}"
+literal|"Received result for client job {}"
 argument_list|,
 name|msg
 operator|.
@@ -3923,7 +3959,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Received result for unknown job {}"
+literal|"Received result for unknown client job {}"
 argument_list|,
 name|msg
 operator|.
@@ -3983,7 +4019,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Received event for unknown job {}"
+literal|"Received event for unknown client job {}"
 argument_list|,
 name|msg
 operator|.
@@ -4029,7 +4065,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Received spark job ID: {} for {}"
+literal|"Received Spark job ID: {} for client job {}"
 argument_list|,
 name|msg
 operator|.
@@ -4056,7 +4092,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Received spark job ID: {} for unknown job {}"
+literal|"Received Spark job ID: {} for unknown client job {}"
 argument_list|,
 name|msg
 operator|.
@@ -4068,6 +4104,17 @@ name|clientJobId
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|String
+name|name
+parameter_list|()
+block|{
+return|return
+literal|"HiveServer2 to Remote Spark Driver Connection"
+return|;
 block|}
 block|}
 specifier|private

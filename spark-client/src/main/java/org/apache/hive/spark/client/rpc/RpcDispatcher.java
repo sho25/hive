@@ -312,11 +312,15 @@ name|MessageHeader
 operator|)
 condition|)
 block|{
-name|LOG
-operator|.
-name|warn
+throw|throw
+operator|new
+name|IllegalArgumentException
 argument_list|(
-literal|"[{}] Expected RPC header, got {} instead."
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"[%s] Expected RPC header, got %s instead."
 argument_list|,
 name|name
 argument_list|()
@@ -335,11 +339,7 @@ argument_list|()
 else|:
 literal|null
 argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|()
+argument_list|)
 throw|;
 block|}
 name|lastHeader
@@ -356,7 +356,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"[{}] Received RPC message: type={} id={} payload={}"
 argument_list|,
@@ -447,7 +447,12 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Unknown RPC message type: "
+literal|"["
+operator|+
+name|name
+argument_list|()
+operator|+
+literal|"] Unknown RPC message type: "
 operator|+
 name|lastHeader
 operator|.
@@ -528,7 +533,10 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Received RPC reply for unknown RPC (%d)."
+literal|"[%s] Received RPC reply for unknown RPC (%d)."
+argument_list|,
+name|name
+argument_list|()
 argument_list|,
 name|id
 argument_list|)
@@ -663,7 +671,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|error
 argument_list|(
 name|String
 operator|.
@@ -792,9 +800,12 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|warn
+name|error
 argument_list|(
-literal|"Received error message:{}."
+literal|"[{}] Received error message: {}."
+argument_list|,
+name|name
+argument_list|()
 argument_list|,
 name|msg
 argument_list|)
@@ -844,7 +855,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|warn
+name|error
 argument_list|(
 name|String
 operator|.
@@ -1049,7 +1060,7 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"[{}] Registered outstanding rpc {} ({})."
 argument_list|,

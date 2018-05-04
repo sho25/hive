@@ -654,20 +654,26 @@ name|getHostName
 argument_list|()
 return|;
 block|}
-comment|/**    * Parses the port string like 49152-49222,49228 into the port list. A default 0    * is added for the empty port string.    * @return a list of configured ports.    * @exception IOException is thrown if the property is not configured properly    */
+comment|/**    * Parses the port string like 49152-49222,49228 into the port list. A default 0    * is added for the empty port string.    * @return a list of configured ports.    */
 name|List
 argument_list|<
 name|Integer
 argument_list|>
 name|getServerPorts
 parameter_list|()
-throws|throws
-name|IOException
 block|{
 name|String
 name|errMsg
 init|=
-literal|"Incorrect RPC server port configuration for HiveServer2"
+literal|"Malformed configuration value for "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|SPARK_RPC_SERVER_PORT
+operator|.
+name|varname
 decl_stmt|;
 name|String
 name|portString
@@ -780,7 +786,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|IllegalArgumentException
 argument_list|(
 name|errMsg
 argument_list|)
@@ -877,9 +883,11 @@ parameter_list|)
 block|{
 throw|throw
 operator|new
-name|IOException
+name|IllegalArgumentException
 argument_list|(
 name|errMsg
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}

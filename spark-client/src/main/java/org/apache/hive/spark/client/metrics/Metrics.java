@@ -514,6 +514,71 @@ else|:
 literal|null
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"Metrics{"
+operator|+
+literal|"executorDeserializeTime="
+operator|+
+name|executorDeserializeTime
+operator|+
+literal|", executorDeserializeCpuTime="
+operator|+
+name|executorDeserializeCpuTime
+operator|+
+literal|", executorRunTime="
+operator|+
+name|executorRunTime
+operator|+
+literal|", executorCpuTime="
+operator|+
+name|executorCpuTime
+operator|+
+literal|", resultSize="
+operator|+
+name|resultSize
+operator|+
+literal|", jvmGCTime="
+operator|+
+name|jvmGCTime
+operator|+
+literal|", resultSerializationTime="
+operator|+
+name|resultSerializationTime
+operator|+
+literal|", memoryBytesSpilled="
+operator|+
+name|memoryBytesSpilled
+operator|+
+literal|", diskBytesSpilled="
+operator|+
+name|diskBytesSpilled
+operator|+
+literal|", taskDurationTime="
+operator|+
+name|taskDurationTime
+operator|+
+literal|", inputMetrics="
+operator|+
+name|inputMetrics
+operator|+
+literal|", shuffleReadMetrics="
+operator|+
+name|shuffleReadMetrics
+operator|+
+literal|", shuffleWriteMetrics="
+operator|+
+name|shuffleWriteMetrics
+operator|+
+literal|'}'
+return|;
+block|}
 block|}
 end_class
 

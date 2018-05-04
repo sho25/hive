@@ -43,6 +43,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|InetSocketAddress
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Collection
@@ -813,7 +823,7 @@ argument_list|(
 operator|new
 name|TimeoutException
 argument_list|(
-literal|"Timed out waiting for RPC server connection."
+literal|"Timed out waiting to connect to HiveServer2."
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1587,7 +1597,11 @@ operator|.
 name|isActive
 argument_list|()
 argument_list|,
-literal|"RPC channel is closed."
+literal|"Unable to send message "
+operator|+
+name|msg
+operator|+
+literal|" because the Remote Spark Driver - HiveServer2 connection has been closed."
 argument_list|)
 expr_stmt|;
 try|try
@@ -1648,7 +1662,13 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to send RPC, closing connection."
+literal|"Failed to send message '"
+operator|+
+name|msg
+operator|+
+literal|"', closing Remote Spark Driver - "
+operator|+
+literal|"HiveServer2 connection."
 argument_list|,
 name|cf
 operator|.
@@ -1805,6 +1825,41 @@ return|return
 name|channel
 return|;
 block|}
+comment|/**    * Returns the "hostname:port" that the RPC is connected to    */
+specifier|public
+name|String
+name|getRemoteAddress
+parameter_list|()
+block|{
+name|InetSocketAddress
+name|remoteAddress
+init|=
+operator|(
+operator|(
+name|InetSocketAddress
+operator|)
+name|this
+operator|.
+name|channel
+operator|.
+name|remoteAddress
+argument_list|()
+operator|)
+decl_stmt|;
+return|return
+name|remoteAddress
+operator|.
+name|getHostName
+argument_list|()
+operator|+
+literal|":"
+operator|+
+name|remoteAddress
+operator|.
+name|getPort
+argument_list|()
+return|;
+block|}
 name|void
 name|setDispatcher
 parameter_list|(
@@ -1929,7 +1984,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Error caught in Rpc.Listener invocation."
+literal|"Error caught while running '"
+operator|+
+name|l
+operator|+
+literal|"' listener"
 argument_list|,
 name|e
 argument_list|)
@@ -2627,7 +2686,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to send hello to server"
+literal|"Failed to send test message to HiveServer2"
 argument_list|,
 name|future
 operator|.

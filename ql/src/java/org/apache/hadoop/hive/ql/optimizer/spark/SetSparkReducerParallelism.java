@@ -1867,8 +1867,8 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Failed to get a spark session: "
-operator|+
+literal|"Failed to get a Hive on Spark session"
+argument_list|,
 name|e
 argument_list|)
 throw|;
@@ -1883,7 +1883,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to get spark memory/core info"
+literal|"Failed to get spark memory/core info, reducer parallelism may be inaccurate"
 argument_list|,
 name|e
 argument_list|)

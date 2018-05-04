@@ -551,7 +551,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"Decoded message of type {} ({} bytes)"
 argument_list|,
@@ -656,7 +656,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"Encoded message of type {} ({} bytes)"
 argument_list|,

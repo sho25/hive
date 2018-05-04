@@ -65,6 +65,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -630,7 +640,7 @@ argument_list|()
 operator|.
 name|setNameFormat
 argument_list|(
-literal|"RPC-Handler-%d"
+literal|"Spark-Driver-RPC-Handler-%d"
 argument_list|)
 operator|.
 name|setDaemon
@@ -732,7 +742,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Timed out waiting for hello from client."
+literal|"Timed out waiting for test message from Remote Spark driver."
 argument_list|)
 expr_stmt|;
 name|newRpc
@@ -837,6 +847,21 @@ name|config
 operator|.
 name|getServerAddress
 argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Successfully created Remote Spark Driver RPC Server with address {}:{}"
+argument_list|,
+name|this
+operator|.
+name|address
+argument_list|,
+name|this
+operator|.
+name|port
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Retry the list of configured ports until one is found    * @param serverBootstrap    * @return    * @throws InterruptedException    * @throws IOException    */
@@ -960,7 +985,20 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"No available ports from configured RPC Server ports for HiveServer2"
+literal|"Remote Spark Driver RPC Server cannot bind to any of the configured ports: "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|config
+operator|.
+name|getServerPorts
+argument_list|()
+operator|.
+name|toArray
+argument_list|()
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1058,7 +1096,16 @@ argument_list|(
 operator|new
 name|TimeoutException
 argument_list|(
-literal|"Timed out waiting for client connection."
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Client '%s' timed out waiting for connection from the Remote Spark"
+operator|+
+literal|" Driver"
+argument_list|,
+name|clientId
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1124,7 +1171,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Client '%s' already registered."
+literal|"Remote Spark Driver with client ID '%s' already registered"
 argument_list|,
 name|clientId
 argument_list|)
@@ -1251,7 +1298,7 @@ name|String
 operator|.
 name|format
 argument_list|(
-literal|"Cancel client '%s'. Error: "
+literal|"Cancelling Remote Spark Driver client connection '%s' with error: "
 operator|+
 name|msg
 argument_list|,

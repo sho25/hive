@@ -1213,7 +1213,20 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Operation is cancelled."
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Spark task %s cancelled for query %s"
+argument_list|,
+name|getId
+argument_list|()
+argument_list|,
+name|sparkWork
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -1432,7 +1445,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"The spark job or one stage of it has too many tasks"
+literal|"The Spark job or one stage of it has too many tasks"
 operator|+
 literal|". Cancelling Spark job "
 operator|+
@@ -1481,7 +1494,12 @@ block|{
 name|String
 name|msg
 init|=
-literal|"Failed to execute spark task, with exception '"
+literal|"Failed to execute Spark task "
+operator|+
+name|getId
+argument_list|()
+operator|+
+literal|", with exception '"
 operator|+
 name|Utilities
 operator|.

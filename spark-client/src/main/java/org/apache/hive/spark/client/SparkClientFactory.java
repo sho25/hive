@@ -325,7 +325,7 @@ name|server
 operator|!=
 literal|null
 argument_list|,
-literal|"initialize() not called."
+literal|"Invalid state: Hive on Spark RPC Server has not been initialized"
 argument_list|)
 expr_stmt|;
 return|return

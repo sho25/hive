@@ -213,6 +213,35 @@ operator|+
 name|localBlocksFetched
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"ShuffleReadMetrics{"
+operator|+
+literal|"remoteBlocksFetched="
+operator|+
+name|remoteBlocksFetched
+operator|+
+literal|", localBlocksFetched="
+operator|+
+name|localBlocksFetched
+operator|+
+literal|", fetchWaitTime="
+operator|+
+name|fetchWaitTime
+operator|+
+literal|", remoteBytesRead="
+operator|+
+name|remoteBytesRead
+operator|+
+literal|'}'
+return|;
+block|}
 block|}
 end_class
 

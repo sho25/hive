@@ -578,7 +578,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Trying to open Spark session {}"
+literal|"Trying to open Hive on Spark session {}"
 argument_list|,
 name|sessionId
 argument_list|)
@@ -655,7 +655,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Spark session {} is successfully opened"
+literal|"Hive on Spark session {} successfully opened"
 argument_list|,
 name|sessionId
 argument_list|)
@@ -682,7 +682,7 @@ name|checkState
 argument_list|(
 name|isOpen
 argument_list|,
-literal|"Session is not open. Can't submit jobs."
+literal|"Hive on Spark session is not open. Can't submit jobs."
 argument_list|)
 expr_stmt|;
 return|return
@@ -910,7 +910,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Spark cluster current has executors: "
+literal|"Hive on Spark application currently has number of executors: "
 operator|+
 name|numExecutors
 operator|+
@@ -922,7 +922,7 @@ literal|", memory per executor: "
 operator|+
 name|executorMemoryInMB
 operator|+
-literal|"M, memoryFraction: "
+literal|" mb, memoryFraction: "
 operator|+
 name|memoryFraction
 argument_list|)
@@ -996,7 +996,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Trying to close Spark session {}"
+literal|"Trying to close Hive on Spark session {}"
 argument_list|,
 name|sessionId
 argument_list|)
@@ -1023,7 +1023,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Spark session {} is successfully closed"
+literal|"Hive on Spark session {} successfully closed"
 argument_list|,
 name|sessionId
 argument_list|)
@@ -1042,11 +1042,11 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to close spark session ("
+literal|"Failed to close Hive on Spark session ("
 operator|+
 name|sessionId
 operator|+
-literal|")."
+literal|")"
 argument_list|,
 name|e
 argument_list|)
@@ -1287,6 +1287,8 @@ argument_list|,
 name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_TIMEOUT
+argument_list|,
+name|sessionId
 argument_list|)
 return|;
 block|}
@@ -1351,6 +1353,8 @@ argument_list|,
 name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_TIMEOUT
+argument_list|,
+name|sessionId
 argument_list|)
 return|;
 block|}
@@ -1386,6 +1390,8 @@ name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_INVALID_QUEUE
 argument_list|,
+name|sessionId
+argument_list|,
 name|matchedString
 operator|.
 name|toString
@@ -1415,6 +1421,8 @@ argument_list|,
 name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_QUEUE_FULL
+argument_list|,
+name|sessionId
 argument_list|,
 name|matchedString
 operator|.
@@ -1454,6 +1462,8 @@ argument_list|,
 name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_INVALID_RESOURCE_REQUEST
+argument_list|,
+name|sessionId
 argument_list|,
 name|matchedString
 operator|.

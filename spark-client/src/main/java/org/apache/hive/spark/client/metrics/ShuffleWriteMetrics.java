@@ -151,6 +151,27 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"ShuffleWriteMetrics{"
+operator|+
+literal|"shuffleBytesWritten="
+operator|+
+name|shuffleBytesWritten
+operator|+
+literal|", shuffleWriteTime="
+operator|+
+name|shuffleWriteTime
+operator|+
+literal|'}'
+return|;
+block|}
 block|}
 end_class
 

@@ -105,26 +105,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
-operator|.
-name|InetAddress
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URI
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Iterator
@@ -892,7 +872,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Invalid command line: "
+literal|"Invalid command line arguments: "
 operator|+
 name|Joiner
 operator|.
@@ -920,7 +900,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Connecting to: {}:{}"
+literal|"Connecting to HiveServer2 address: {}:{}"
 argument_list|,
 name|serverAddress
 argument_list|,
@@ -962,7 +942,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Remote Driver configured with: "
+literal|"Remote Spark Driver configured with: "
 operator|+
 name|e
 operator|.
@@ -1051,7 +1031,7 @@ argument_list|()
 operator|.
 name|setNameFormat
 argument_list|(
-literal|"Driver-RPC-Handler-%d"
+literal|"Spark-Driver-RPC-Handler-%d"
 argument_list|)
 operator|.
 name|setDaemon
@@ -1130,7 +1110,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Shutting down driver because RPC channel was closed."
+literal|"Shutting down driver because Remote Spark Driver to HiveServer2 connection was closed."
 argument_list|)
 expr_stmt|;
 name|shutdown
@@ -1138,6 +1118,17 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"Shutting Down Remote Spark Driver to HiveServer2 Connection"
+return|;
 block|}
 block|}
 argument_list|)
@@ -1406,7 +1397,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"SparkContext not yet up, queueing job request."
+literal|"SparkContext not yet up; adding Hive on Spark job request to the queue."
 argument_list|)
 expr_stmt|;
 name|jobQueue
@@ -1444,7 +1435,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Shutting down remote driver."
+literal|"Shutting down Spark Remote Driver."
 argument_list|)
 expr_stmt|;
 block|}
@@ -1454,7 +1445,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Shutting down remote driver due to error: "
+literal|"Shutting down Spark Remote Driver due to error: "
 operator|+
 name|error
 argument_list|,
@@ -1629,7 +1620,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Invalid command line: "
+literal|"Invalid command line arguments: "
 operator|+
 name|Joiner
 operator|.
@@ -1923,7 +1914,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Requested to cancel an already finished job."
+literal|"Requested to cancel an already finished client job."
 argument_list|)
 expr_stmt|;
 block|}
@@ -1965,9 +1956,9 @@ parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Received job request {}"
+literal|"Received client job request {}"
 argument_list|,
 name|msg
 operator|.
@@ -2055,7 +2046,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Remote context is shutting down."
+literal|"Remote Spark context is shutting down."
 argument_list|)
 throw|;
 block|}
@@ -2126,6 +2117,17 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|name
+parameter_list|()
+block|{
+return|return
+literal|"Remote Spark Driver to HiveServer2 Connection"
+return|;
 block|}
 block|}
 specifier|private
@@ -2490,7 +2492,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Failed to run job "
+literal|"Failed to run client job "
 operator|+
 name|req
 operator|.

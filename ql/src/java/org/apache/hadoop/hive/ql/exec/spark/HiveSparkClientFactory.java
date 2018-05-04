@@ -743,7 +743,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"loading spark properties from: "
+literal|"Loading Spark properties from: "
 operator|+
 name|SPARK_DEFAULT_CONF_FILE
 argument_list|)
@@ -854,7 +854,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Failed to open spark configuration file: "
+literal|"Failed to open Spark configuration file: "
 operator|+
 name|SPARK_DEFAULT_CONF_FILE
 argument_list|,

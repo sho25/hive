@@ -2506,9 +2506,9 @@ name|SPARK_CREATE_CLIENT_INVALID_QUEUE
 argument_list|(
 literal|20014
 argument_list|,
-literal|"Spark job is submitted to an invalid queue: {0}."
+literal|"Spark app for session {0} was submitted to an invalid"
 operator|+
-literal|" Please fix and try again."
+literal|" queue: {1}. Please fix and try again."
 argument_list|,
 literal|true
 argument_list|)
@@ -2812,7 +2812,7 @@ name|SPARK_CREATE_CLIENT_QUEUE_FULL
 argument_list|(
 literal|30039
 argument_list|,
-literal|"Failed to create Spark client because job queue is full: {0}."
+literal|"Failed to create Spark client for session {0} because job queue is full: {1}."
 argument_list|,
 literal|true
 argument_list|)
@@ -2839,7 +2839,7 @@ name|SPARK_CREATE_CLIENT_INVALID_RESOURCE_REQUEST
 argument_list|(
 literal|30042
 argument_list|,
-literal|"Failed to create Spark client due to invalid resource request: {0}"
+literal|"Failed to create Spark client for session {0} due to invalid resource request: {1}"
 argument_list|,
 literal|true
 argument_list|)
