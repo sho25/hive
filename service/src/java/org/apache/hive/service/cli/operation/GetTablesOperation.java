@@ -738,6 +738,29 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
+name|String
+name|dbName
+range|:
+name|metastoreClient
+operator|.
+name|getDatabases
+argument_list|(
+name|schemaPattern
+argument_list|)
+control|)
+block|{
+name|String
+name|dbNamePattern
+init|=
+name|convertIdentifierPattern
+argument_list|(
+name|dbName
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+for|for
+control|(
 name|TableMeta
 name|tableMeta
 range|:
@@ -745,7 +768,7 @@ name|metastoreClient
 operator|.
 name|getTableMeta
 argument_list|(
-name|schemaPattern
+name|dbNamePattern
 argument_list|,
 name|tablePattern
 argument_list|,
@@ -873,6 +896,7 @@ argument_list|(
 literal|"No table metadata has been returned."
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|setState
 argument_list|(
