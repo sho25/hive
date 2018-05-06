@@ -15560,7 +15560,7 @@ name|HIVE_MSCK_REPAIR_BATCH_SIZE
 argument_list|(
 literal|"hive.msck.repair.batch.size"
 argument_list|,
-literal|0
+literal|3000
 argument_list|,
 literal|"Batch size for the msck repair command. If the value is greater than zero,\n "
 operator|+
@@ -15568,14 +15568,14 @@ literal|"it will execute batch wise with the configured batch size. In case of e
 operator|+
 literal|"adding unknown partitions the batch size is automatically reduced by half in the subsequent\n"
 operator|+
-literal|"retry attempt. The default value is zero which means it will execute directly (not batch wise)"
+literal|"retry attempt. The default value is 3000 which means it will execute in the batches of 3000."
 argument_list|)
 block|,
 name|HIVE_MSCK_REPAIR_BATCH_MAX_RETRIES
 argument_list|(
 literal|"hive.msck.repair.batch.max.retries"
 argument_list|,
-literal|0
+literal|4
 argument_list|,
 literal|"Maximum number of retries for the msck repair command when adding unknown partitions.\n "
 operator|+
