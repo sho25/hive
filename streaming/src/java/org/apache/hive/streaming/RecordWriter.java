@@ -19,6 +19,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|InputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Set
@@ -46,7 +56,7 @@ parameter_list|)
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/**    * Writes using a hive RecordUpdater    *    * @param writeId the write ID of the table mapping to Txn in which the write occurs    * @param record  the record to be written    */
+comment|/**    * Writes using a hive RecordUpdater.    *    * @param writeId - the write ID of the table mapping to Txn in which the write occurs    * @param record  - the record to be written    * @throws StreamingException - thrown when write fails    */
 name|void
 name|write
 parameter_list|(
@@ -60,7 +70,20 @@ parameter_list|)
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/**    * Flush records from buffer. Invoked by TransactionBatch.commitTransaction()    */
+comment|/**    * Writes using a hive RecordUpdater. The specified input stream will be automatically closed    * by the API after reading all the records out of it.    *    * @param writeId     - the write ID of the table mapping to Txn in which the write occurs    * @param inputStream - the record to be written    * @throws StreamingException - thrown when write fails    */
+name|void
+name|write
+parameter_list|(
+name|long
+name|writeId
+parameter_list|,
+name|InputStream
+name|inputStream
+parameter_list|)
+throws|throws
+name|StreamingException
+function_decl|;
+comment|/**    * Flush records from buffer. Invoked by TransactionBatch.commitTransaction()    *    * @throws StreamingException - thrown when flush fails    */
 name|void
 name|flush
 parameter_list|()

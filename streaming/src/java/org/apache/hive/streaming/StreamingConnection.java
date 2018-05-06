@@ -17,6 +17,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|InputStream
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -59,6 +69,16 @@ parameter_list|(
 name|byte
 index|[]
 name|record
+parameter_list|)
+throws|throws
+name|StreamingException
+function_decl|;
+comment|/**    * Write record using RecordWriter.    *    * @param inputStream - input stream of records    * @throws StreamingException - if there are errors when writing    */
+name|void
+name|write
+parameter_list|(
+name|InputStream
+name|inputStream
 parameter_list|)
 throws|throws
 name|StreamingException
