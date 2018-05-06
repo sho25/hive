@@ -1588,13 +1588,22 @@ expr_stmt|;
 comment|// Alter table "tbl" via ObjectStore
 name|tblOwner
 operator|=
-literal|"user2"
+literal|"role1"
 expr_stmt|;
 name|tbl
 operator|.
 name|setOwner
 argument_list|(
 name|tblOwner
+argument_list|)
+expr_stmt|;
+name|tbl
+operator|.
+name|setOwnerType
+argument_list|(
+name|PrincipalType
+operator|.
+name|ROLE
 argument_list|)
 expr_stmt|;
 name|objectStore
@@ -1621,6 +1630,36 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Owner of the table did not change."
+argument_list|,
+name|tblOwner
+argument_list|,
+name|tbl
+operator|.
+name|getOwner
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Owner type of the table did not change"
+argument_list|,
+name|PrincipalType
+operator|.
+name|ROLE
+argument_list|,
+name|tbl
+operator|.
+name|getOwnerType
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Drop table "tbl1" via ObjectStore

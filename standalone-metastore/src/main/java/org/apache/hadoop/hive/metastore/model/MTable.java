@@ -61,6 +61,10 @@ name|String
 name|owner
 decl_stmt|;
 specifier|private
+name|String
+name|ownerType
+decl_stmt|;
+specifier|private
 name|int
 name|createTime
 decl_stmt|;
@@ -108,7 +112,7 @@ specifier|public
 name|MTable
 parameter_list|()
 block|{}
-comment|/**    * @param tableName    * @param database    * @param sd    * @param owner    * @param createTime    * @param lastAccessTime    * @param retention    * @param partitionKeys    * @param parameters    * @param viewOriginalText    * @param viewExpandedText    * @param tableType    */
+comment|/**    * @param tableName    * @param database    * @param sd    * @param owner    * @param ownerType    * @param createTime    * @param lastAccessTime    * @param retention    * @param partitionKeys    * @param parameters    * @param viewOriginalText    * @param viewExpandedText    * @param tableType    */
 specifier|public
 name|MTable
 parameter_list|(
@@ -123,6 +127,9 @@ name|sd
 parameter_list|,
 name|String
 name|owner
+parameter_list|,
+name|String
+name|ownerType
 parameter_list|,
 name|int
 name|createTime
@@ -183,6 +190,12 @@ operator|.
 name|owner
 operator|=
 name|owner
+expr_stmt|;
+name|this
+operator|.
+name|ownerType
+operator|=
+name|ownerType
 expr_stmt|;
 name|this
 operator|.
@@ -462,6 +475,32 @@ operator|.
 name|owner
 operator|=
 name|owner
+expr_stmt|;
+block|}
+comment|/**    * @return the owner type    */
+specifier|public
+name|String
+name|getOwnerType
+parameter_list|()
+block|{
+return|return
+name|ownerType
+return|;
+block|}
+comment|/**    * @param ownerType the owner type to set    */
+specifier|public
+name|void
+name|setOwnerType
+parameter_list|(
+name|String
+name|ownerType
+parameter_list|)
+block|{
+name|this
+operator|.
+name|ownerType
+operator|=
+name|ownerType
 expr_stmt|;
 block|}
 comment|/**    * @return the createTime    */
