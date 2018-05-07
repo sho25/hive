@@ -1348,6 +1348,13 @@ argument_list|,
 name|reporter
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|backupPath
+operator|!=
+literal|null
+condition|)
+block|{
 name|fs
 operator|.
 name|delete
@@ -1357,6 +1364,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 end_class
