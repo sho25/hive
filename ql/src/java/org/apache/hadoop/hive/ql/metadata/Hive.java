@@ -24411,7 +24411,7 @@ if|if
 condition|(
 literal|"major"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|compactType
 argument_list|)
@@ -24429,7 +24429,7 @@ if|if
 condition|(
 literal|"minor"
 operator|.
-name|equals
+name|equalsIgnoreCase
 argument_list|(
 name|compactType
 argument_list|)

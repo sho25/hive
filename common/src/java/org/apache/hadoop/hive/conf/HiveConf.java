@@ -9387,6 +9387,15 @@ operator|+
 literal|"Compaction jobs will be submitted.  Set to empty string to let Hadoop choose the queue."
 argument_list|)
 block|,
+name|TRANSACTIONAL_CONCATENATE_NOBLOCK
+argument_list|(
+literal|"hive.transactional.concatenate.noblock"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Will cause 'alter table T concatenate' to be non-blocking"
+argument_list|)
+block|,
 name|HIVE_COMPACTOR_COMPACT_MM
 argument_list|(
 literal|"hive.compactor.compact.insert.only"
