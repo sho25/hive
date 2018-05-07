@@ -5865,6 +5865,21 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * @param revokePrivileges    * @param objToRefresh    * @return true on success    * @throws MetaException    * @throws TException    */
+name|boolean
+name|refresh_privileges
+parameter_list|(
+name|HiveObjectRef
+name|objToRefresh
+parameter_list|,
+name|PrivilegeBag
+name|grantPrivileges
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * This is expected to be a no-op when in local mode,    * which means that the implementation will return null.    * @param owner the intended owner for the token    * @param renewerKerberosPrincipalName    * @return the string of the token    * @throws MetaException    * @throws TException    */
 name|String
 name|getDelegationToken

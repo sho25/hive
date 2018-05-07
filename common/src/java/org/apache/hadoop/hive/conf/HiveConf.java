@@ -8897,7 +8897,9 @@ literal|"3. For delegation token storage if zookeeper store is used, if\n"
 operator|+
 literal|"hive.cluster.delegation.token.store.zookeeper.connectString is not set\n"
 operator|+
-literal|"4. LLAP daemon registry service"
+literal|"4. LLAP daemon registry service\n"
+operator|+
+literal|"5. Leader selection for privilege synchronizer"
 argument_list|)
 block|,
 name|HIVE_ZOOKEEPER_CLIENT_PORT
@@ -10669,6 +10671,32 @@ argument_list|,
 literal|"SSLv2,SSLv3"
 argument_list|,
 literal|"SSL Versions to disable for all Hive Servers"
+argument_list|)
+block|,
+name|HIVE_PRIVILEGE_SYNCHRONIZER
+argument_list|(
+literal|"hive.privilege.synchronizer"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Synchronize privileges from external authorizer such as ranger to Hive periodically in HS2"
+argument_list|)
+block|,
+name|HIVE_PRIVILEGE_SYNCHRONIZER_INTERVAL
+argument_list|(
+literal|"hive.privilege.synchronizer.interval"
+argument_list|,
+literal|"1800s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Interval to synchronize privileges from external authorizer periodically in HS2"
 argument_list|)
 block|,
 comment|// HiveServer2 specific configs
@@ -15677,6 +15705,10 @@ operator|+
 literal|"hive.server2.authentication.ldap.groupClassKey,"
 operator|+
 literal|"hive.server2.authentication.ldap.customLDAPQuery,"
+operator|+
+literal|"hive.privilege.synchronizer,"
+operator|+
+literal|"hive.privilege.synchronizer.interval,"
 operator|+
 literal|"hive.spark.client.connect.timeout,"
 operator|+

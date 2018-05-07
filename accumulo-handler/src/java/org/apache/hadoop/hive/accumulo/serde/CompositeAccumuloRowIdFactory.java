@@ -85,9 +85,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|accumulo
+name|ql
 operator|.
-name|Utils
+name|metadata
+operator|.
+name|JarUtils
 import|;
 end_import
 
@@ -269,7 +271,7 @@ name|IOException
 block|{
 comment|// Make sure the jar containing the custom CompositeRowId is included
 comment|// in the mapreduce job's classpath (libjars)
-name|Utils
+name|JarUtils
 operator|.
 name|addDependencyJars
 argument_list|(

@@ -650,6 +650,16 @@ argument_list|(
 literal|"spark.home"
 argument_list|)
 expr_stmt|;
+name|addToExpectedRestrictedMap
+argument_list|(
+literal|"hive.privilege.synchronizer"
+argument_list|)
+expr_stmt|;
+name|addToExpectedRestrictedMap
+argument_list|(
+literal|"hive.privilege.synchronizer.interval"
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|AfterClass
