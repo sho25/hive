@@ -1710,6 +1710,11 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+assert|assert
+name|cache
+operator|!=
+literal|null
+assert|;
 name|this
 operator|.
 name|cache

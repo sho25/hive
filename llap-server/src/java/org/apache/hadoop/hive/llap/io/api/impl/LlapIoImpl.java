@@ -1325,6 +1325,8 @@ decl_stmt|;
 name|boolean
 name|isEncodeEnabled
 init|=
+name|useLowLevelCache
+operator|&&
 name|HiveConf
 operator|.
 name|getBoolVar
