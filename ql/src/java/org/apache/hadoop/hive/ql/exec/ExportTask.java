@@ -315,6 +315,11 @@ argument_list|,
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+name|work
+operator|.
+name|getMmContext
+argument_list|()
 argument_list|)
 decl_stmt|;
 if|if

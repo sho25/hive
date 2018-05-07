@@ -1367,6 +1367,10 @@ operator|+
 literal|": "
 operator|+
 name|msg
+operator|+
+literal|"; "
+operator|+
+name|rs
 argument_list|,
 name|expected
 operator|.

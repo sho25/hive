@@ -159,6 +159,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|plan
+operator|.
+name|ExportWork
+operator|.
+name|MmContext
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -295,6 +315,14 @@ begin_comment
 comment|/**  * This class manages writing multiple partitions _data files simultaneously.  * it has a blocking queue that stores partitions to be dumped via a producer thread.  * it has a worker thread pool that reads of the queue to perform the various tasks.  */
 end_comment
 
+begin_comment
+comment|// TODO: this object is created once to call one method and then immediately destroyed.
+end_comment
+
+begin_comment
+comment|//       So it's basically just a roundabout way to pass arguments to a static method. Simplify?
+end_comment
+
 begin_class
 class|class
 name|PartitionExport
@@ -328,6 +356,11 @@ specifier|private
 specifier|final
 name|SessionState
 name|callersSession
+decl_stmt|;
+specifier|private
+specifier|final
+name|MmContext
+name|mmCtx
 decl_stmt|;
 specifier|private
 specifier|static
@@ -364,6 +397,9 @@ name|distCpDoAsUser
 parameter_list|,
 name|HiveConf
 name|hiveConf
+parameter_list|,
+name|MmContext
+name|mmCtx
 parameter_list|)
 block|{
 name|this
@@ -389,6 +425,12 @@ operator|.
 name|hiveConf
 operator|=
 name|hiveConf
+expr_stmt|;
+name|this
+operator|.
+name|mmCtx
+operator|=
+name|mmCtx
 expr_stmt|;
 name|this
 operator|.
@@ -675,6 +717,8 @@ argument_list|,
 name|distCpDoAsUser
 argument_list|,
 name|hiveConf
+argument_list|,
+name|mmCtx
 argument_list|)
 operator|.
 name|export
