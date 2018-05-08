@@ -902,6 +902,8 @@ parameter_list|,
 name|boolean
 name|isLastGroupBatch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 comment|// Streaming evaluators fill in their results during the evaluate call.
 for|for
@@ -933,6 +935,8 @@ parameter_list|,
 name|boolean
 name|isLastGroupBatch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 for|for
 control|(

@@ -63,6 +63,24 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * This vector expression implements a Checked variant of LongColModuloLongColumn  * If the outputTypeInfo is not long it casts the result column vector values to  * the set outputType so as to have similar result when compared to non-vectorized UDF  * execution.  */
 end_comment
@@ -114,6 +132,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|super
 operator|.

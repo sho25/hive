@@ -692,7 +692,7 @@ name|outputDataTypePhysicalVariation
 argument_list|)
 return|;
 block|}
-comment|/**    * This is the primary method to implement expression logic.    * @param batch    */
+comment|/**    * This is the primary method to implement expression logic.    * @param batch    * @throws HiveException     */
 specifier|public
 specifier|abstract
 name|void
@@ -701,6 +701,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 function_decl|;
 specifier|public
 name|void
@@ -752,6 +754,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|vrg
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(

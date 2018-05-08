@@ -113,6 +113,24 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/*  * ELT(index, string, ....) returns the string column/expression value at the specified  * index expression.  *  * The first argument expression indicates the index of the string to be retrieved from  * remaining arguments.  We return NULL when the index number is less than 1 or  * index number is greater than the number of the string arguments.  */
 end_comment
@@ -183,6 +201,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(

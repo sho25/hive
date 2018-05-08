@@ -93,6 +93,24 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Cast a decimal to a decimal, accounting for precision and scale changes.  *  * If other functions besides cast need to take a decimal in and produce a decimal,  * you can subclass this class or convert it to a superclass, and  * implement different methods for each operation. If that's done, the  * convert() method should be renamed to func() for consistency with other  * similar super classes such as FuncLongToDecimal.  */
 end_comment
@@ -197,6 +215,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(

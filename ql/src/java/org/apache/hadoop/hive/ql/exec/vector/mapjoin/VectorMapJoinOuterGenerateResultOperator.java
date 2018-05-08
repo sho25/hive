@@ -743,6 +743,8 @@ parameter_list|,
 name|int
 name|inputLogicalSize
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|int
 name|saveBatchSize
@@ -842,6 +844,8 @@ parameter_list|,
 name|int
 name|size
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|int
 name|saveBatchSize

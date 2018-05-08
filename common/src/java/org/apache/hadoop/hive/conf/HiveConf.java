@@ -12985,6 +12985,17 @@ operator|+
 literal|" checked vector expressions so that they produce same result as non-vectorized evaluation."
 argument_list|)
 block|,
+name|HIVE_VECTORIZED_ADAPTOR_SUPPRESS_EVALUATE_EXCEPTIONS
+argument_list|(
+literal|"hive.vectorized.adaptor.suppress.evaluate.exceptions"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to suppress HiveException from the generic UDF function\n"
+operator|+
+literal|"evaluate call and turn them into NULLs. Assume, by default, this is not needed"
+argument_list|)
+block|,
 name|HIVE_VECTORIZED_INPUT_FORMAT_SUPPORTS_ENABLED
 argument_list|(
 literal|"hive.vectorized.input.format.supports.enabled"

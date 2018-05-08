@@ -467,6 +467,8 @@ specifier|public
 name|void
 name|testLongUDF
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// create a syntax tree for a simple function call "longudf(col0)"
 name|ExprNodeGenericFuncDesc
@@ -869,6 +871,8 @@ specifier|public
 name|void
 name|testMultiArgumentUDF
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// create a syntax tree for a function call "testudf(col0, col1, col2)"
 name|ExprNodeGenericFuncDesc
@@ -1668,6 +1672,8 @@ specifier|public
 name|void
 name|testGenericUDF
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// create a syntax tree for a function call 'myisnull(col0, "UNKNOWN")'
 name|ExprNodeGenericFuncDesc

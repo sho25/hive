@@ -93,6 +93,24 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Implement vectorized math function that takes a long (and optionally additional  * constant argument(s)) and returns long. Use this for PMOD() etc.  *  * Do NOT use this for simple math functions like sin/cos/exp etc. that just take  * a single argument. For those, modify the template ColumnUnaryFunc.txt  * and expand the template to generate needed classes.  */
 end_comment
@@ -173,6 +191,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(

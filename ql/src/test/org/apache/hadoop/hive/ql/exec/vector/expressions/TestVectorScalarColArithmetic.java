@@ -189,6 +189,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Test
@@ -395,6 +413,8 @@ specifier|public
 name|void
 name|testLongScalarModuloLongColNoNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -520,6 +540,8 @@ specifier|public
 name|void
 name|testLongScalarSubtractLongColNoNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -643,6 +665,8 @@ specifier|public
 name|void
 name|testLongScalarSubtractLongColWithNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -850,6 +874,8 @@ specifier|public
 name|void
 name|testLongScalarSubtractLongColWithRepeating
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|LongColumnVector
 name|in
@@ -1142,6 +1168,8 @@ specifier|public
 name|void
 name|testLongScalarDivide
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -1309,6 +1337,8 @@ specifier|public
 name|void
 name|testScalarLongDivide
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -1502,6 +1532,8 @@ specifier|public
 name|void
 name|testBooleanValuedLongIn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch

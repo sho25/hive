@@ -863,6 +863,8 @@ specifier|public
 name|void
 name|testVectorRound
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -1184,6 +1186,8 @@ specifier|public
 name|void
 name|testRoundToDecimalPlaces
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -2754,6 +2758,8 @@ specifier|public
 name|void
 name|testVectorSin
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -2829,6 +2835,8 @@ specifier|public
 name|void
 name|testVectorCos
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -2904,6 +2912,8 @@ specifier|public
 name|void
 name|testVectorTan
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -2979,6 +2989,8 @@ specifier|public
 name|void
 name|testVectorASin
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3054,6 +3066,8 @@ specifier|public
 name|void
 name|testVectorACos
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3129,6 +3143,8 @@ specifier|public
 name|void
 name|testVectorATan
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3204,6 +3220,8 @@ specifier|public
 name|void
 name|testVectorDegrees
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3279,6 +3297,8 @@ specifier|public
 name|void
 name|testVectorRadians
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3354,6 +3374,8 @@ specifier|public
 name|void
 name|testVectorFloor
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3439,6 +3461,8 @@ specifier|public
 name|void
 name|testVectorCeil
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3524,6 +3548,8 @@ specifier|public
 name|void
 name|testVectorExp
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3599,6 +3625,8 @@ specifier|public
 name|void
 name|testVectorLn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -3740,6 +3768,8 @@ specifier|public
 name|void
 name|testVectorLog2
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -3895,6 +3925,8 @@ specifier|public
 name|void
 name|testVectorLog10
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -4053,6 +4085,8 @@ specifier|public
 name|void
 name|testVectorRand
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -4297,6 +4331,8 @@ specifier|public
 name|void
 name|testVectorLogBase
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -4385,6 +4421,8 @@ specifier|public
 name|void
 name|testVectorPosMod
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -4768,6 +4806,8 @@ specifier|public
 name|void
 name|testVectorPosModWithFloatOutputType
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -4965,6 +5005,8 @@ specifier|public
 name|void
 name|testVectorPower
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5042,6 +5084,8 @@ specifier|public
 name|void
 name|testVectorSqrt
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5117,6 +5161,8 @@ specifier|public
 name|void
 name|testVectorAbs
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch
@@ -5277,6 +5323,8 @@ specifier|public
 name|void
 name|testVectorSign
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test double->double version
 name|VectorizedRowBatch

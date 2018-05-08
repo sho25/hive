@@ -384,6 +384,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|Preconditions
 operator|.

@@ -588,6 +588,10 @@ name|ExprNodeGenericFuncDesc
 name|expr
 decl_stmt|;
 specifier|private
+name|boolean
+name|suppressEvaluateExceptions
+decl_stmt|;
+specifier|private
 specifier|transient
 name|GenericUDF
 name|genericUDF
@@ -671,6 +675,21 @@ operator|.
 name|argDescs
 operator|=
 name|argDescs
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setSuppressEvaluateExceptions
+parameter_list|(
+name|boolean
+name|suppressEvaluateExceptions
+parameter_list|)
+block|{
+name|this
+operator|.
+name|suppressEvaluateExceptions
+operator|=
+name|suppressEvaluateExceptions
 expr_stmt|;
 block|}
 comment|// Initialize transient fields. To be called after deserialization of other fields.
@@ -864,6 +883,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -1168,6 +1189,8 @@ parameter_list|,
 name|VectorizedRowBatch
 name|b
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 comment|// get arguments
 for|for
@@ -1213,6 +1236,24 @@ comment|// call function
 name|Object
 name|result
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|suppressEvaluateExceptions
+condition|)
+block|{
+name|result
+operator|=
+name|genericUDF
+operator|.
+name|evaluate
+argument_list|(
+name|deferredChildren
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 try|try
 block|{
 name|result
@@ -1231,11 +1272,12 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
-comment|/* For UDFs that expect primitive types (like int instead of Integer or IntWritable),        * this will catch the the exception that happens if they are passed a NULL value.        * Then the default NULL handling logic will apply, and the result will be NULL.        */
+comment|/* For UDFs that expect primitive types (like int instead of Integer or IntWritable),          * this will catch the the exception that happens if they are passed a NULL value.          * Then the default NULL handling logic will apply, and the result will be NULL.          */
 name|result
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 comment|// Set output column vector entry.  Since we have one output column, the logical index = 0.
 name|outputVectorAssignRow

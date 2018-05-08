@@ -93,6 +93,24 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * This class performs OR expression on two input columns and stores,  * the boolean output in a separate output column. The boolean values  * are supposed to be represented as 0/1 in a long vector.  */
 end_comment
@@ -181,6 +199,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(

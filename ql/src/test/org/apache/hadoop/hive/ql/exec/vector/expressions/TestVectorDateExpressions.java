@@ -956,6 +956,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorExpression
 name|udf
@@ -1181,6 +1183,8 @@ specifier|public
 name|void
 name|testVectorUDFYear
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -1483,6 +1487,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorExpression
 name|udf
@@ -1708,6 +1714,8 @@ specifier|public
 name|void
 name|testVectorUDFDayOfMonth
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2010,6 +2018,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorExpression
 name|udf
@@ -2233,6 +2243,8 @@ specifier|public
 name|void
 name|testVectorUDFMonth
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2608,6 +2620,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorExpression
 name|udf
@@ -2828,6 +2842,8 @@ specifier|public
 name|void
 name|testVectorUDFUnixTimeStamp
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -3779,6 +3795,8 @@ specifier|public
 name|void
 name|testMultiThreadedVectorUDFDate
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|List
 argument_list|<

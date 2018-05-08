@@ -807,6 +807,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|typeinfo
@@ -840,6 +858,8 @@ specifier|public
 name|void
 name|testLongColAddLongScalarNoNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongScalarNoNulls
 argument_list|(
@@ -853,6 +873,8 @@ specifier|public
 name|void
 name|testLongColAddLongScalarCheckedNoNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongScalarNoNulls
 argument_list|(
@@ -867,6 +889,8 @@ parameter_list|(
 name|boolean
 name|checked
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|vrg
@@ -1243,6 +1267,8 @@ specifier|public
 name|void
 name|testLongColAddLongScalarWithNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongScalarCheckedWithNulls
 argument_list|(
@@ -1256,6 +1282,8 @@ specifier|public
 name|void
 name|testLongColAddLongScalarCheckedWithNulls
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongScalarCheckedWithNulls
 argument_list|(
@@ -1270,6 +1298,8 @@ parameter_list|(
 name|boolean
 name|isChecked
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -1475,6 +1505,8 @@ specifier|public
 name|void
 name|testLongColAddLongScalarWithRepeating
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongScalarWithRepeatingUtil
 argument_list|(
@@ -1488,6 +1520,8 @@ specifier|public
 name|void
 name|testLongColAddLongScalarCheckedWithRepeating
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongScalarWithRepeatingUtil
 argument_list|(
@@ -1502,6 +1536,8 @@ parameter_list|(
 name|boolean
 name|isChecked
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|LongColumnVector
 name|in
@@ -2002,6 +2038,8 @@ specifier|public
 name|void
 name|testLongColAddLongColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongColumnUtil
 argument_list|(
@@ -2015,6 +2053,8 @@ specifier|public
 name|void
 name|testLongColAddLongColumnChecked
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|longColAddLongColumnUtil
 argument_list|(
@@ -2029,6 +2069,8 @@ parameter_list|(
 name|boolean
 name|isChecked
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -2678,6 +2720,8 @@ specifier|public
 name|void
 name|testLongColDivideLongColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|/* Testing for equality of doubles after a math operation is      * not always reliable so use this as a tolerance.      */
 specifier|final
@@ -2898,6 +2942,8 @@ specifier|public
 name|void
 name|testLongColModuloLongColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -3198,6 +3244,8 @@ specifier|public
 name|void
 name|testDecimalColAddDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3756,6 +3804,8 @@ specifier|public
 name|void
 name|testDecimalColSubtractDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -3946,6 +3996,8 @@ specifier|public
 name|void
 name|testDecimalColMultiplyDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -4166,6 +4218,8 @@ specifier|public
 name|void
 name|testDecimalColAddDecimalScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -4593,6 +4647,8 @@ specifier|public
 name|void
 name|testDecimalColDivideDecimalScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5026,6 +5082,8 @@ specifier|public
 name|void
 name|testDecimalScalarDivideDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5377,6 +5435,8 @@ specifier|public
 name|void
 name|testDecimalColModuloDecimalScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5720,6 +5780,8 @@ specifier|public
 name|void
 name|testDecimalScalarModuloDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5995,6 +6057,8 @@ specifier|public
 name|void
 name|testDecimalColDivideDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -6640,6 +6704,8 @@ specifier|public
 name|void
 name|testDecimalColModuloDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -6803,6 +6869,8 @@ specifier|public
 name|void
 name|testDecimalColSubtractDecimalScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -7004,6 +7072,8 @@ specifier|public
 name|void
 name|testDecimalColMultiplyDecimalScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -7205,6 +7275,8 @@ specifier|public
 name|void
 name|testDecimalScalarAddDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -7632,6 +7704,8 @@ specifier|public
 name|void
 name|testDecimalScalarSubtractDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -7833,6 +7907,8 @@ specifier|public
 name|void
 name|testDecimalScalarMultiplyDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b

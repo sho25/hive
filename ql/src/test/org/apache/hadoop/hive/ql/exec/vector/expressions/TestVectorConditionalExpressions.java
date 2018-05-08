@@ -373,6 +373,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Test
@@ -1142,6 +1160,8 @@ specifier|public
 name|void
 name|testLongColumnColumnIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2125,6 +2145,8 @@ specifier|public
 name|void
 name|testDoubleColumnColumnIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// Just spot check because we already checked the logic for long.
 comment|// The code is from the same template file.
@@ -2245,6 +2267,8 @@ specifier|public
 name|void
 name|testLongColumnScalarIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2344,6 +2368,8 @@ specifier|public
 name|void
 name|testLongScalarColumnIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2441,6 +2467,8 @@ specifier|public
 name|void
 name|testLongScalarScalarIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2538,6 +2566,8 @@ specifier|public
 name|void
 name|testDoubleScalarScalarIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2643,6 +2673,8 @@ specifier|public
 name|void
 name|testDoubleScalarColumnIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2748,6 +2780,8 @@ specifier|public
 name|void
 name|testDoubleColumnScalarIfExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2855,6 +2889,8 @@ specifier|public
 name|void
 name|testIfExprStringColumnStringColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -3698,6 +3734,8 @@ specifier|public
 name|void
 name|testIfExprStringColumnStringScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -3893,6 +3931,8 @@ specifier|public
 name|void
 name|testIfExprStringScalarStringColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -4088,6 +4128,8 @@ specifier|public
 name|void
 name|testIfExprStringScalarStringScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// standard case
 name|VectorizedRowBatch

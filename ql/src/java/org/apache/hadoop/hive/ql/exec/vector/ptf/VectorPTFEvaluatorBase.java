@@ -169,6 +169,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ptf
@@ -345,6 +363,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -374,6 +394,8 @@ parameter_list|,
 name|boolean
 name|isLastGroupBatch
 parameter_list|)
+throws|throws
+name|HiveException
 function_decl|;
 comment|// Returns true if the aggregation result will be streamed.
 specifier|public

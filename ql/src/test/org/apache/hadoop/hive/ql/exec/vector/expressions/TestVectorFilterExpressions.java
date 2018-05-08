@@ -822,6 +822,8 @@ specifier|public
 name|void
 name|testFilterLongColEqualLongScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|vrg
@@ -883,6 +885,8 @@ specifier|public
 name|void
 name|testFilterLongColGreaterLongColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -1229,6 +1233,8 @@ specifier|public
 name|void
 name|testColOpScalarNumericFilterNullAndRepeatingLogic
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// No nulls, not repeating
 name|FilterLongColGreaterLongScalar
@@ -1676,6 +1682,8 @@ specifier|public
 name|void
 name|testFilterLongColLessLongColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -1897,6 +1905,8 @@ specifier|public
 name|void
 name|testFilterLongScalarLessLongColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -2564,6 +2574,8 @@ specifier|public
 name|void
 name|testFilterLongBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -3168,6 +3180,8 @@ specifier|public
 name|void
 name|testFilterLongNotBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// Spot check only. null& repeating behavior are checked elsewhere for the same template.
 name|int
@@ -3303,6 +3317,8 @@ specifier|public
 name|void
 name|testFilterDoubleBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// Spot check only. null& repeating behavior are checked elsewhere for the same template.
 name|int
@@ -3441,6 +3457,8 @@ specifier|public
 name|void
 name|testFilterDoubleNotBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// Spot check only. null& repeating behavior are checked elsewhere for the same template.
 name|int
@@ -3650,6 +3668,8 @@ specifier|public
 name|void
 name|testFilterStringBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -3973,6 +3993,8 @@ specifier|public
 name|void
 name|testFilterStringNotBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// Spot check only. Non-standard cases are checked for the same template in another test.
 name|int
@@ -4117,6 +4139,8 @@ specifier|public
 name|void
 name|testFilterTimestampBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|vrb
@@ -4291,6 +4315,8 @@ specifier|public
 name|void
 name|testFilterTimestampNotBetween
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|vrb
@@ -5321,6 +5347,8 @@ specifier|public
 name|void
 name|testFilterStringIn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 name|seed
@@ -5664,6 +5692,8 @@ specifier|public
 name|void
 name|testFilterDecimalColEqualDecimalScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -5877,6 +5907,8 @@ specifier|public
 name|void
 name|testFilterDecimalScalarEqualDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -6090,6 +6122,8 @@ specifier|public
 name|void
 name|testFilterDecimalColumnEqualDecimalColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -6411,6 +6445,8 @@ specifier|public
 name|void
 name|testFilterDecimalColLessScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -6483,6 +6519,8 @@ specifier|public
 name|void
 name|testFilterDecimalScalarGreaterThanColumn
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -6555,6 +6593,8 @@ specifier|public
 name|void
 name|testFilterDecimalColGreaterEqualCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b

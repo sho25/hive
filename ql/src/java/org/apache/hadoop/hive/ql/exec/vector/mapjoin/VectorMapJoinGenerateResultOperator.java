@@ -932,6 +932,8 @@ parameter_list|,
 name|int
 name|allMatchCount
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 comment|/*      *  For the moment, pretend all matched are selected so we can evaluate the value      *  expressions.      *      *  Since we may use the overflow batch when generating results, we will assign the      *  selected and real batch size later...      */
 name|int

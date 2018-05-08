@@ -33977,6 +33977,8 @@ specifier|public
 name|void
 name|testStringColCompareStringScalarFilter
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -34148,6 +34150,8 @@ specifier|public
 name|void
 name|testStringColCompareCharScalarFilter
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -34349,6 +34353,8 @@ specifier|public
 name|void
 name|testStringColCompareVarCharScalarFilter
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -34549,6 +34555,8 @@ specifier|public
 name|void
 name|testStringColCompareStringScalarProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -34740,6 +34748,8 @@ specifier|public
 name|void
 name|testStringColCompareCharScalarProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -34951,6 +34961,8 @@ specifier|public
 name|void
 name|testStringColCompareVarCharScalarProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -35163,6 +35175,8 @@ specifier|public
 name|void
 name|testStringScalarCompareStringCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -35334,6 +35348,8 @@ specifier|public
 name|void
 name|testCharScalarCompareStringCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -35535,6 +35551,8 @@ specifier|public
 name|void
 name|testVarCharScalarCompareStringCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -35735,6 +35753,8 @@ specifier|public
 name|void
 name|testStringScalarCompareStringColProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -35926,6 +35946,8 @@ specifier|public
 name|void
 name|testCharScalarCompareStringColProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -36137,6 +36159,8 @@ specifier|public
 name|void
 name|testVarCharScalarCompareStringColProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -36348,6 +36372,8 @@ specifier|public
 name|void
 name|testStringColCompareStringColFilter
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -37307,6 +37333,8 @@ specifier|public
 name|void
 name|testStringColCompareStringColProjection
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -40215,6 +40243,8 @@ specifier|public
 name|void
 name|testColLower
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -40655,6 +40685,8 @@ specifier|public
 name|void
 name|testColUpper
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// no nulls, not repeating
 comment|/* We don't test all the combinations because (at least currently)      * the logic is inherited to be the same as testColLower, which checks all the cases).      */
@@ -40768,6 +40800,8 @@ specifier|public
 name|void
 name|testStringLength
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -43014,6 +43048,8 @@ specifier|public
 name|void
 name|testColConcatStringScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -43574,6 +43610,8 @@ specifier|public
 name|void
 name|testColConcatCharScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -44144,6 +44182,8 @@ specifier|public
 name|void
 name|testColConcatVarCharScalar
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -44714,6 +44754,8 @@ specifier|public
 name|void
 name|testStringScalarConcatCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -45274,6 +45316,8 @@ specifier|public
 name|void
 name|testCharScalarConcatCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -45844,6 +45888,8 @@ specifier|public
 name|void
 name|testVarCharScalarConcatCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -46414,6 +46460,8 @@ specifier|public
 name|void
 name|testColConcatCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -47709,6 +47757,8 @@ name|void
 name|testSubstrStart
 parameter_list|()
 throws|throws
+name|HiveException
+throws|,
 name|UnsupportedEncodingException
 block|{
 comment|// Testing no nulls and no repeating
@@ -49058,6 +49108,8 @@ name|void
 name|testSubstrStartLen
 parameter_list|()
 throws|throws
+name|HiveException
+throws|,
 name|UnsupportedEncodingException
 block|{
 comment|// Testing no nulls and no repeating
@@ -50813,6 +50865,8 @@ specifier|public
 name|void
 name|testVectorLTrim
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -51082,6 +51136,8 @@ specifier|public
 name|void
 name|testVectorRTrim
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -51351,6 +51407,8 @@ specifier|public
 name|void
 name|testVectorTrim
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -51766,6 +51824,8 @@ specifier|public
 name|void
 name|testStringInExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// test basic operation
 name|VectorizedRowBatch

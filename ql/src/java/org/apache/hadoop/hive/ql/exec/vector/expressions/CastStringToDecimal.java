@@ -131,6 +131,24 @@ name|VectorizedRowBatch
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
 begin_comment
 comment|/**  * Cast a string to a decimal.  *  * If other functions besides cast need to take a string in and produce a decimal,  * you can subclass this class or convert it to a superclass, and  * implement different "func()" methods for each operation.  */
 end_comment
@@ -292,6 +310,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(

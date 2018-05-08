@@ -1394,6 +1394,10 @@ operator|.
 name|defaultBoolVal
 decl_stmt|;
 specifier|private
+name|boolean
+name|adaptorSuppressEvaluateExceptions
+decl_stmt|;
+specifier|private
 name|void
 name|setHiveConfVars
 parameter_list|(
@@ -1456,6 +1460,21 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_VECTORIZATION_USE_CHECKED_EXPRESSIONS
+argument_list|)
+expr_stmt|;
+name|adaptorSuppressEvaluateExceptions
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZED_ADAPTOR_SUPPRESS_EVALUATE_EXCEPTIONS
 argument_list|)
 expr_stmt|;
 block|}
@@ -19424,7 +19443,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Make vectorized operator
-name|VectorExpression
+name|VectorUDFAdaptor
 name|ve
 init|=
 operator|new
@@ -19439,6 +19458,13 @@ argument_list|,
 name|argDescs
 argument_list|)
 decl_stmt|;
+name|ve
+operator|.
+name|setSuppressEvaluateExceptions
+argument_list|(
+name|adaptorSuppressEvaluateExceptions
+argument_list|)
+expr_stmt|;
 comment|// Set child expressions
 name|VectorExpression
 index|[]

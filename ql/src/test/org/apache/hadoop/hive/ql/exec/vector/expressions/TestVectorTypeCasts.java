@@ -504,6 +504,8 @@ specifier|public
 name|void
 name|testVectorCastLongToDouble
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -576,6 +578,8 @@ specifier|public
 name|void
 name|testVectorCastDoubleToLong
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -648,6 +652,8 @@ specifier|public
 name|void
 name|testCastDateToTimestamp
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|int
 index|[]
@@ -769,6 +775,8 @@ specifier|public
 name|void
 name|testCastDoubleToBoolean
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -855,6 +863,8 @@ specifier|public
 name|void
 name|testCastDoubleToTimestamp
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -951,6 +961,8 @@ specifier|public
 name|void
 name|testCastLongToBoolean
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -1060,6 +1072,8 @@ specifier|public
 name|void
 name|testCastStringToBoolean
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -1238,6 +1252,8 @@ specifier|public
 name|void
 name|testCastLongToTimestamp
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|long
 index|[]
@@ -1356,6 +1372,8 @@ specifier|public
 name|void
 name|testCastTimestampToLong
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|long
 index|[]
@@ -1490,6 +1508,8 @@ specifier|public
 name|void
 name|testCastTimestampToDouble
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|double
 index|[]
@@ -1799,6 +1819,8 @@ specifier|public
 name|void
 name|testCastBooleanToString
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|byte
 index|[]
@@ -2543,6 +2565,8 @@ specifier|public
 name|void
 name|testCastDecimalToDouble
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 specifier|final
 name|double
@@ -3335,6 +3359,8 @@ specifier|public
 name|void
 name|testCastDecimalToTimestamp
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|double
 index|[]
@@ -3751,6 +3777,8 @@ specifier|public
 name|void
 name|testCastLongToDecimal
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -4217,6 +4245,8 @@ specifier|public
 name|void
 name|testCastDoubleToDecimal
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -4455,6 +4485,8 @@ specifier|public
 name|void
 name|testCastStringToDecimal
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|b
@@ -4695,6 +4727,8 @@ specifier|public
 name|void
 name|testCastTimestampToDecimal
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// The input timestamps are stored as long values
 comment|// measured in nanoseconds from the epoch.

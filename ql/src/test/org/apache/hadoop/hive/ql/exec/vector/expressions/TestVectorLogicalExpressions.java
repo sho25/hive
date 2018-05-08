@@ -153,6 +153,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Assert
@@ -192,6 +210,8 @@ specifier|public
 name|void
 name|testLongColOrLongCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -673,6 +693,8 @@ specifier|public
 name|void
 name|testLongColAndLongCol
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -1689,6 +1711,8 @@ specifier|public
 name|void
 name|testBooleanNot
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2014,6 +2038,8 @@ specifier|public
 name|void
 name|testIsNullExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -2318,6 +2344,8 @@ specifier|public
 name|void
 name|testIsNotNullExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -2622,6 +2650,8 @@ specifier|public
 name|void
 name|testBooleanFiltersOnColumns
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch
@@ -2763,6 +2793,8 @@ specifier|public
 name|void
 name|testSelectColumnIsNull
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -2976,6 +3008,8 @@ specifier|public
 name|void
 name|testSelectColumnIsNotNull
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// has nulls, not repeating
 name|VectorizedRowBatch
@@ -3278,6 +3312,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -3374,6 +3410,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -3474,6 +3512,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -3588,6 +3628,8 @@ parameter_list|(
 name|VectorizedRowBatch
 name|batch
 parameter_list|)
+throws|throws
+name|HiveException
 block|{
 if|if
 condition|(
@@ -3651,6 +3693,8 @@ specifier|public
 name|void
 name|testFilterExprOrExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch1
@@ -3963,6 +4007,8 @@ specifier|public
 name|void
 name|testFilterExprMultiOrExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// Select all with the first expression and expect the other 2 children to not be invoked.
 name|VectorizedRowBatch
@@ -4654,6 +4700,8 @@ specifier|public
 name|void
 name|testFilterExprOrExprWithBatchReuse
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch1
@@ -4864,6 +4912,8 @@ specifier|public
 name|void
 name|testFilterExprOrExprWithSelectInUse
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch1
@@ -5046,6 +5096,8 @@ specifier|public
 name|void
 name|testFilterExprAndExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 name|VectorizedRowBatch
 name|batch1
@@ -5127,6 +5179,8 @@ specifier|public
 name|void
 name|testLongInExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// check basic operation
 name|VectorizedRowBatch
@@ -5352,6 +5406,8 @@ specifier|public
 name|void
 name|testDoubleInExpr
 parameter_list|()
+throws|throws
+name|HiveException
 block|{
 comment|// check basic operation
 name|VectorizedRowBatch
