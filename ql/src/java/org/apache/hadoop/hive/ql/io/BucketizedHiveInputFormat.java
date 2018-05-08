@@ -854,17 +854,6 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-throw|throw
-operator|new
-name|AssertionError
-argument_list|(
-name|dir
-operator|+
-literal|": "
-operator|+
-name|part
-argument_list|)
-throw|;
 block|}
 comment|// TODO: should this also handle ACID operation, etc.? seems to miss a lot of stuff from HIF.
 name|Path
