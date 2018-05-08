@@ -617,12 +617,10 @@ name|FILE_OP_LOGGER
 operator|.
 name|debug
 argument_list|(
-literal|"Part ID: "
-operator|+
+literal|"Part ID: {}, {}"
+argument_list|,
 name|partID
-operator|+
-literal|"\t"
-operator|+
+argument_list|,
 name|statType
 argument_list|)
 expr_stmt|;
@@ -705,16 +703,12 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Read stats for : "
-operator|+
+literal|"Read stats for {}, {}, {}: "
+argument_list|,
 name|partID
-operator|+
-literal|"\t"
-operator|+
+argument_list|,
 name|statType
-operator|+
-literal|"\t"
-operator|+
+argument_list|,
 name|counter
 argument_list|)
 expr_stmt|;
