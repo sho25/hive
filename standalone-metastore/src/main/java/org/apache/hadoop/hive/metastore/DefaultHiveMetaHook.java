@@ -61,7 +61,7 @@ name|DefaultHiveMetaHook
 implements|implements
 name|HiveMetaHook
 block|{
-comment|/**    * Called after successfully after INSERT [OVERWRITE] statement is executed.    * @param table table definition    * @param overwrite true if it is INSERT OVERWRITE    *    * @throws MetaException    */
+comment|/**    * Called after successfully INSERT [OVERWRITE] statement is executed.    * @param table table definition    * @param overwrite true if it is INSERT OVERWRITE    *    * @throws MetaException    */
 specifier|public
 specifier|abstract
 name|void

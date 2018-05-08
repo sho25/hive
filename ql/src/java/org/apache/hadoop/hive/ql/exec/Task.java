@@ -552,12 +552,6 @@ name|isLocalMode
 init|=
 literal|false
 decl_stmt|;
-specifier|private
-name|boolean
-name|retryCmdWhenFail
-init|=
-literal|false
-decl_stmt|;
 specifier|public
 specifier|static
 specifier|final

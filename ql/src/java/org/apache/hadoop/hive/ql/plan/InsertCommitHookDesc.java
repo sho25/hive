@@ -43,7 +43,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Insert"
+literal|"Commit-Insert-Hook"
 argument_list|,
 name|explainLevels
 operator|=
@@ -69,7 +69,7 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|InsertTableDesc
+name|InsertCommitHookDesc
 extends|extends
 name|DDLDesc
 block|{
@@ -84,7 +84,7 @@ name|boolean
 name|overwrite
 decl_stmt|;
 specifier|public
-name|InsertTableDesc
+name|InsertCommitHookDesc
 parameter_list|(
 name|Table
 name|table
