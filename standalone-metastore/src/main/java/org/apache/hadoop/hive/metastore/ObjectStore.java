@@ -20191,7 +20191,7 @@ expr_stmt|;
 if|if
 condition|(
 name|max
-operator|>
+operator|>=
 literal|0
 condition|)
 block|{
