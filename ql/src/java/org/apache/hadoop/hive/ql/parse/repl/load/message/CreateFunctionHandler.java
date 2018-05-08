@@ -1173,7 +1173,15 @@ name|String
 index|[]
 name|split
 init|=
+name|ReplChangeManager
+operator|.
+name|decodeFileUri
+argument_list|(
 name|sourceUri
+argument_list|)
+index|[
+literal|0
+index|]
 operator|.
 name|split
 argument_list|(
@@ -1236,10 +1244,6 @@ argument_list|)
 operator|.
 name|addDescendant
 argument_list|(
-name|ReplChangeManager
-operator|.
-name|getFileWithChksumFromURI
-argument_list|(
 name|split
 index|[
 name|split
@@ -1247,10 +1251,6 @@ operator|.
 name|length
 operator|-
 literal|1
-index|]
-argument_list|)
-index|[
-literal|0
 index|]
 argument_list|)
 operator|.

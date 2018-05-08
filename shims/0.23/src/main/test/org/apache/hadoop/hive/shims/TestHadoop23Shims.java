@@ -49,47 +49,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|security
-operator|.
-name|UserGroupInformation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|tools
-operator|.
-name|DistCpOptions
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|junit
 operator|.
 name|Test
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
 import|;
 end_import
 
@@ -133,91 +95,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertFalse
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
 name|assertTrue
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Matchers
-operator|.
-name|any
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|doReturn
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|mock
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|spy
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|when
 import|;
 end_import
 
@@ -289,7 +167,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|5
+literal|4
 argument_list|,
 name|paramsDefault
 operator|.
@@ -311,25 +189,13 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"Distcp -skipcrccheck set by default"
+literal|"Distcp -pbx set by default"
 argument_list|,
 name|paramsDefault
 operator|.
 name|contains
 argument_list|(
-literal|"-skipcrccheck"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertTrue
-argument_list|(
-literal|"Distcp -pb set by default"
-argument_list|,
-name|paramsDefault
-operator|.
-name|contains
-argument_list|(
-literal|"-pb"
+literal|"-pbx"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -344,7 +210,7 @@ name|paramsDefault
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|2
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -359,7 +225,7 @@ name|paramsDefault
 operator|.
 name|get
 argument_list|(
-literal|4
+literal|3
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -454,14 +320,14 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"Distcp -pb not set if not requested"
+literal|"Distcp -pbx not set if not requested"
 argument_list|,
 operator|!
 name|paramsWithCustomParamInjection
 operator|.
 name|contains
 argument_list|(
-literal|"-pb"
+literal|"-pbx"
 argument_list|)
 argument_list|)
 expr_stmt|;

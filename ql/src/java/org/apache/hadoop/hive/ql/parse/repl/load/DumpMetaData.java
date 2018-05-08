@@ -512,13 +512,6 @@ literal|4
 index|]
 argument_list|)
 expr_stmt|;
-name|ReplChangeManager
-operator|.
-name|setCmRoot
-argument_list|(
-name|cmRoot
-argument_list|)
-expr_stmt|;
 block|}
 else|else
 block|{
