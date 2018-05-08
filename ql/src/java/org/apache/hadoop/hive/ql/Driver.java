@@ -11257,6 +11257,29 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|ValidTxnWriteIdList
+name|txnWriteIdList
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|plan
+operator|.
+name|hasAcidResourcesInQuery
+argument_list|()
+condition|)
+block|{
+name|txnWriteIdList
+operator|=
+name|AcidUtils
+operator|.
+name|getValidTxnWriteIdList
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+block|}
 comment|// The results of this query execution might be cacheable.
 comment|// Add a placeholder entry in the cache so other queries know this result is pending.
 name|CacheEntry
@@ -11273,6 +11296,8 @@ name|cacheUsage
 operator|.
 name|getQueryInfo
 argument_list|()
+argument_list|,
+name|txnWriteIdList
 argument_list|)
 decl_stmt|;
 if|if
@@ -11436,8 +11461,6 @@ argument_list|()
 operator|.
 name|getWork
 argument_list|()
-argument_list|,
-name|txnWriteIdList
 argument_list|)
 decl_stmt|;
 name|LOG
