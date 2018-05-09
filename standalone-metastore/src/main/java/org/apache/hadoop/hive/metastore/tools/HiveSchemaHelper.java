@@ -273,6 +273,22 @@ name|DB_ORACLE
 init|=
 literal|"oracle"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|EMBEDDED_HS2_URL
+init|=
+literal|"jdbc:hive2://"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_JDBC_DRIVER
+init|=
+literal|"org.apache.hive.jdbc.HiveDriver"
+decl_stmt|;
 comment|/***    * Get JDBC connection to metastore db    * @param userName metastore connection username    * @param password metastore connection password    * @param url Metastore URL.  If null will be read from config file.    * @param driver Driver class.  If null will be read from config file.    * @param printInfo print connection parameters    * @param conf hive config object    * @param schema the schema to create the connection for    * @return metastore connection object    * @throws org.apache.hadoop.hive.metastore.HiveMetaException    */
 specifier|public
 specifier|static

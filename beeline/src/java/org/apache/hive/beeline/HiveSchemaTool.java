@@ -984,6 +984,34 @@ argument_list|,
 name|dbType
 argument_list|)
 expr_stmt|;
+comment|// If the dbType is "hive", this is setting up the information schema in Hive.
+comment|// We will set the default jdbc url and driver.
+comment|// It is overriden by command line options if passed (-url and -driver
+if|if
+condition|(
+name|dbType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|HiveSchemaHelper
+operator|.
+name|DB_HIVE
+argument_list|)
+condition|)
+block|{
+name|url
+operator|=
+name|HiveSchemaHelper
+operator|.
+name|EMBEDDED_HS2_URL
+expr_stmt|;
+name|driver
+operator|=
+name|HiveSchemaHelper
+operator|.
+name|HIVE_JDBC_DRIVER
+expr_stmt|;
+block|}
 block|}
 specifier|public
 name|HiveConf
