@@ -3378,6 +3378,8 @@ name|Object
 argument_list|>
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 name|ObjectInspectorUtils
 operator|.
 name|copyToStandardObject
@@ -3393,6 +3395,23 @@ operator|.
 name|WRITABLE
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"copyToStandardObject failed: "
+operator|+
+name|e
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|standardObjects
