@@ -353,7 +353,7 @@ name|execute
 argument_list|(
 literal|"CREATE TABLE TXN_COMPONENTS ("
 operator|+
-literal|"  TC_TXNID bigint REFERENCES TXNS (TXN_ID),"
+literal|"  TC_TXNID bigint NOT NULL REFERENCES TXNS (TXN_ID),"
 operator|+
 literal|"  TC_DATABASE varchar(128) NOT NULL,"
 operator|+
@@ -372,7 +372,7 @@ name|execute
 argument_list|(
 literal|"CREATE TABLE COMPLETED_TXN_COMPONENTS ("
 operator|+
-literal|"  CTC_TXNID bigint,"
+literal|"  CTC_TXNID bigint NOT NULL,"
 operator|+
 literal|"  CTC_DATABASE varchar(128) NOT NULL,"
 operator|+
