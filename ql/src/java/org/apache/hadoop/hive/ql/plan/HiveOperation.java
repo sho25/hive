@@ -482,6 +482,15 @@ argument_list|,
 literal|null
 argument_list|)
 block|,
+name|ALTERTABLE_OWNER
+argument_list|(
+literal|"ALTERTABLE_OWNER"
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
 name|ALTERTABLE_SERIALIZER
 argument_list|(
 literal|"ALTERTABLE_SERIALIZER"
