@@ -122,13 +122,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Test class for {@link GenericUDFEnforceNotNullConstraint}.  */
+comment|/**  * Test class for {@link GenericUDFEnforceConstraint}.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestGenericUDFEnforceNotNullConstraint
+name|TestGenericUDFEnforceConstraint
 extends|extends
 name|TestCase
 block|{
@@ -141,11 +141,11 @@ name|HiveException
 block|{
 try|try
 block|{
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 name|udf
 init|=
 operator|new
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -239,11 +239,11 @@ name|HiveException
 block|{
 try|try
 block|{
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 name|udf
 init|=
 operator|new
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 argument_list|()
 decl_stmt|;
 name|ObjectInspector
@@ -312,11 +312,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 name|udf
 init|=
 operator|new
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 argument_list|()
 decl_stmt|;
 name|ObjectInspector

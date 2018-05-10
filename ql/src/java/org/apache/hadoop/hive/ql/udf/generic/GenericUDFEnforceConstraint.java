@@ -199,7 +199,7 @@ literal|"enforce_constraint"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(x) - Internal UDF to enforce NOT NULL constraint"
+literal|"_FUNC_(x) - Internal UDF to enforce CHECK and NOT NULL constraint"
 argument_list|,
 name|extended
 operator|=
@@ -207,7 +207,7 @@ literal|"For internal use only"
 argument_list|)
 specifier|public
 class|class
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 extends|extends
 name|GenericUDF
 block|{
@@ -319,7 +319,7 @@ throw|throw
 operator|new
 name|DataConstraintViolationError
 argument_list|(
-literal|"NOT NULL constraint violated!"
+literal|"Either CHECK or NOT NULL constraint violated!"
 argument_list|)
 throw|;
 block|}

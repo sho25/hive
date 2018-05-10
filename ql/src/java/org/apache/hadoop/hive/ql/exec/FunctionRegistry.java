@@ -2789,7 +2789,7 @@ name|registerGenericUDF
 argument_list|(
 literal|"enforce_constraint"
 argument_list|,
-name|GenericUDFEnforceNotNullConstraint
+name|GenericUDFEnforceConstraint
 operator|.
 name|class
 argument_list|)
