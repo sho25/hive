@@ -1865,6 +1865,8 @@ literal|" connection: "
 operator|+
 name|toConnectionInfoString
 argument_list|()
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -2343,7 +2345,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IllegalStateException
+name|StreamingException
 argument_list|(
 literal|"Cannot begin next transaction on a closed streaming connection"
 argument_list|)
