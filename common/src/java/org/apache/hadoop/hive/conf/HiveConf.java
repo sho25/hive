@@ -15218,6 +15218,25 @@ operator|+
 literal|" via the LLAP output service to external clients."
 argument_list|)
 block|,
+name|LLAP_EXTERNAL_SPLITS_TEMP_TABLE_STORAGE_FORMAT
+argument_list|(
+literal|"hive.llap.external.splits.temp.table.storage.format"
+argument_list|,
+literal|"orc"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"default"
+argument_list|,
+literal|"text"
+argument_list|,
+literal|"orc"
+argument_list|)
+argument_list|,
+literal|"Storage format for temp tables created using LLAP external client"
+argument_list|)
+block|,
 name|LLAP_ENABLE_GRACE_JOIN_IN_LLAP
 argument_list|(
 literal|"hive.llap.enable.grace.join.in.llap"
