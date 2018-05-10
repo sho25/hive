@@ -9562,6 +9562,27 @@ operator|+
 literal|"table there is at most 1 matching row in the source table per SQL Specification."
 argument_list|)
 block|,
+comment|// For Arrow SerDe
+name|HIVE_ARROW_ROOT_ALLOCATOR_LIMIT
+argument_list|(
+literal|"hive.arrow.root.allocator.limit"
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|"Arrow root allocator memory size limitation in bytes."
+argument_list|)
+block|,
+name|HIVE_ARROW_BATCH_SIZE
+argument_list|(
+literal|"hive.arrow.batch.size"
+argument_list|,
+literal|1000
+argument_list|,
+literal|"The number of rows sent in one Arrow batch."
+argument_list|)
+block|,
 comment|// For Druid storage handler
 name|HIVE_DRUID_INDEXING_GRANULARITY
 argument_list|(
