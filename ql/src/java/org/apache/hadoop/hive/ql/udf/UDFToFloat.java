@@ -75,7 +75,7 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|CastDecimalToDouble
+name|CastDecimalToFloat
 import|;
 end_import
 
@@ -356,7 +356,7 @@ name|CastLongToFloatViaLongToDouble
 operator|.
 name|class
 block|,
-name|CastDecimalToDouble
+name|CastDecimalToFloat
 operator|.
 name|class
 block|,
