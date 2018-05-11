@@ -3980,6 +3980,330 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testIncrementalReplWithDropAndCreateTableDifferentPartitionTypeAndInsert
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+comment|// Bootstrap dump with empty db
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|bootstrapTuple
+init|=
+name|primary
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+comment|// Bootstrap load in replica
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|bootstrapTuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|status
+argument_list|(
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|bootstrapTuple
+operator|.
+name|lastReplicationId
+argument_list|)
+expr_stmt|;
+comment|// First incremental dump
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|firstIncremental
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table1 (id int) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table2 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table3 (id int) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table1 partition(country='india') values(1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table2 values(2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table3 partition(country='india') values(3)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|bootstrapTuple
+operator|.
+name|lastReplicationId
+argument_list|)
+decl_stmt|;
+comment|// Second incremental dump
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|secondIncremental
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table2"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table3"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table1 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table1 values (10)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table2 (id int) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table2 partition(country='india') values(20)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table3 (id int) partitioned by (name string, rank int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table3 partition(name='adam', rank=100) values(30)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|firstIncremental
+operator|.
+name|lastReplicationId
+argument_list|)
+decl_stmt|;
+comment|// First incremental load
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|firstIncremental
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|status
+argument_list|(
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|firstIncremental
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from table1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from table2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"2"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from table3"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"3"
+block|}
+argument_list|)
+expr_stmt|;
+comment|// Second incremental load
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|secondIncremental
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|status
+argument_list|(
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|secondIncremental
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from table1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"10"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from table2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"20"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from table3"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"30"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

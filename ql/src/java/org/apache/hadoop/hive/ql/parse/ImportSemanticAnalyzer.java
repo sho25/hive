@@ -6020,7 +6020,7 @@ name|Table
 name|createNewTableMetadataObject
 parameter_list|(
 name|ImportTableDesc
-name|tblDesk
+name|tblDesc
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -6031,12 +6031,12 @@ init|=
 operator|new
 name|Table
 argument_list|(
-name|tblDesk
+name|tblDesc
 operator|.
 name|getDatabaseName
 argument_list|()
 argument_list|,
-name|tblDesk
+name|tblDesc
 operator|.
 name|getTableName
 argument_list|()
@@ -6047,7 +6047,7 @@ name|newTable
 operator|.
 name|setParameters
 argument_list|(
-name|tblDesk
+name|tblDesc
 operator|.
 name|getTblProps
 argument_list|()
@@ -6055,7 +6055,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|tblDesk
+name|tblDesc
 operator|.
 name|isExternal
 argument_list|()
@@ -6078,12 +6078,12 @@ name|Warehouse
 operator|.
 name|getQualifiedName
 argument_list|(
-name|tblDesk
+name|tblDesc
 operator|.
 name|getDatabaseName
 argument_list|()
 argument_list|,
-name|tblDesk
+name|tblDesc
 operator|.
 name|getTableName
 argument_list|()
@@ -6690,13 +6690,47 @@ block|}
 block|}
 else|else
 block|{
-comment|// Table existed, and is okay to replicate into, not dropping and re-creating.
+comment|// If table of current event has partition flag different from existing table, it means, some
+comment|// of the previous events in same batch have drop and create table events with same same but
+comment|// different partition flag. In this case, should go with current event's table type and so
+comment|// create the dummy table object for adding repl tasks.
+name|boolean
+name|isOldTableValid
+init|=
+literal|true
+decl_stmt|;
 if|if
 condition|(
 name|table
 operator|.
 name|isPartitioned
 argument_list|()
+operator|!=
+name|isPartitioned
+argument_list|(
+name|tblDesc
+argument_list|)
+condition|)
+block|{
+name|table
+operator|=
+name|createNewTableMetadataObject
+argument_list|(
+name|tblDesc
+argument_list|)
+expr_stmt|;
+name|isOldTableValid
+operator|=
+literal|false
+expr_stmt|;
+block|}
+comment|// Table existed, and is okay to replicate into, not dropping and re-creating.
+if|if
+condition|(
+name|isPartitioned
+argument_list|(
+name|tblDesc
+argument_list|)
 condition|)
 block|{
 name|x
@@ -6761,7 +6795,13 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
-operator|(
+name|isOldTableValid
+condition|)
+block|{
+comment|// If existing table is valid but the partition spec is different, then ignore partition
+comment|// validation and create new partition.
+try|try
+block|{
 name|ptn
 operator|=
 name|x
@@ -6777,7 +6817,34 @@ name|partSpec
 argument_list|,
 literal|false
 argument_list|)
-operator|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|ex
+parameter_list|)
+block|{
+name|ptn
+operator|=
+literal|null
+expr_stmt|;
+name|table
+operator|=
+name|createNewTableMetadataObject
+argument_list|(
+name|tblDesc
+argument_list|)
+expr_stmt|;
+name|isOldTableValid
+operator|=
+literal|false
+expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+name|ptn
 operator|==
 literal|null
 condition|)
@@ -7124,10 +7191,14 @@ operator|.
 name|isReplace
 argument_list|()
 argument_list|,
-name|table
+operator|new
+name|Path
+argument_list|(
+name|tblDesc
 operator|.
-name|getDataLocation
+name|getLocation
 argument_list|()
+argument_list|)
 argument_list|,
 name|replicationSpec
 argument_list|,
