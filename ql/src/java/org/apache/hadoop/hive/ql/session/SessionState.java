@@ -9117,6 +9117,20 @@ name|currentTimeMillis
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|sessionConf
+operator|.
+name|setLongVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_QUERY_TIMESTAMP
+argument_list|,
+name|queryCurrentTimestamp
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Provide a facility to set current timestamp during tests
 if|if
 condition|(

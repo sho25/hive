@@ -6973,6 +6973,18 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVE_QUERY_TIMESTAMP
+argument_list|(
+literal|"hive.query.timestamp"
+argument_list|,
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+argument_list|,
+literal|"query execute time."
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"
