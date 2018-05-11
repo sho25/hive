@@ -2431,6 +2431,7 @@ argument_list|(
 name|finalPath
 argument_list|)
 condition|)
+block|{
 throw|throw
 operator|new
 name|RuntimeException
@@ -2440,6 +2441,7 @@ operator|+
 literal|" already exists"
 argument_list|)
 throw|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2612,9 +2614,11 @@ name|taskOutputTempPathRoot
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 assert|assert
 name|subdirForTxn
 operator|==
@@ -9084,11 +9088,9 @@ block|}
 block|}
 name|sContext
 operator|.
-name|setIndexForTezUnion
+name|setContextSuffix
 argument_list|(
-name|this
-operator|.
-name|getIndexForTezUnion
+name|getOperatorId
 argument_list|()
 argument_list|)
 expr_stmt|;

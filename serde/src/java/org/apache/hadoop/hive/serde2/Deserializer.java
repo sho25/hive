@@ -112,7 +112,7 @@ parameter_list|()
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * Returns statistics collected when serializing    */
+comment|/**    * Returns statistics collected when serializing    *    * @return {@link SerDeStats} object; or in case not supported: null    */
 name|SerDeStats
 name|getSerDeStats
 parameter_list|()

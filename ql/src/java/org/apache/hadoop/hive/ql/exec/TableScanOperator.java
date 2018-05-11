@@ -1808,6 +1808,14 @@ name|getTmpStatsDir
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|sc
+operator|.
+name|setContextSuffix
+argument_list|(
+name|getOperatorId
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!

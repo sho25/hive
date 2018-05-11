@@ -1544,8 +1544,6 @@ operator|.
 name|cloneOperatorTree
 argument_list|(
 name|roots
-argument_list|,
-name|indexForTezUnion
 argument_list|)
 decl_stmt|;
 comment|// we're cloning the operator plan but we're retaining the original work. That means
