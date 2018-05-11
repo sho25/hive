@@ -2783,6 +2783,20 @@ name|conf
 decl_stmt|;
 comment|// stores datastore (jpox) properties,
 comment|// right now they come from jpox.properties
+comment|// Flag to control that always threads are initialized only once
+comment|// instead of multiple times
+specifier|private
+specifier|final
+specifier|static
+name|AtomicBoolean
+name|alwaysThreadsInitialized
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 name|String
@@ -4239,6 +4253,19 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+comment|// We only initialize once the tasks that need to be run periodically
+if|if
+condition|(
+name|alwaysThreadsInitialized
+operator|.
+name|compareAndSet
+argument_list|(
+literal|false
+argument_list|,
+literal|true
+argument_list|)
+condition|)
+block|{
 name|ThreadPool
 operator|.
 name|initialize
@@ -4336,6 +4363,7 @@ operator|.
 name|MILLISECONDS
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|expressionProxy
