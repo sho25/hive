@@ -2900,6 +2900,15 @@ block|{
 comment|// This stream is for entire stripe and needed for every RG; uncompress once and reuse.
 if|if
 condition|(
+name|sctx
+operator|.
+name|stripeLevelStream
+operator|==
+literal|null
+condition|)
+block|{
+if|if
+condition|(
 name|isTracingEnabled
 condition|)
 block|{
@@ -2954,15 +2963,6 @@ operator|.
 name|kind
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|sctx
-operator|.
-name|stripeLevelStream
-operator|==
-literal|null
-condition|)
-block|{
 name|sctx
 operator|.
 name|stripeLevelStream

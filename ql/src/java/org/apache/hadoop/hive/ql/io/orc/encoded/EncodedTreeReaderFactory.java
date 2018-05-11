@@ -223,6 +223,20 @@ name|orc
 operator|.
 name|impl
 operator|.
+name|InStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
 name|PositionProvider
 import|;
 end_import
@@ -1080,6 +1094,30 @@ argument_list|()
 return|;
 block|}
 block|}
+specifier|private
+specifier|static
+name|void
+name|skipCompressedIndex
+parameter_list|(
+name|boolean
+name|isCompressed
+parameter_list|,
+name|PositionProvider
+name|index
+parameter_list|)
+block|{
+if|if
+condition|(
+operator|!
+name|isCompressed
+condition|)
+return|return;
+name|index
+operator|.
+name|getNext
+argument_list|()
+expr_stmt|;
+block|}
 specifier|protected
 specifier|static
 class|class
@@ -1309,6 +1347,13 @@ block|{
 comment|// DICTIONARY encoding
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_dataStream
@@ -1323,17 +1368,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 operator|(
 operator|(
 name|StringDictionaryTreeReader
@@ -1350,37 +1384,24 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 else|else
 block|{
 comment|// DIRECT encoding
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
-if|if
-condition|(
-name|_dataStream
-operator|!=
-literal|null
-operator|&&
-name|_dataStream
-operator|.
-name|available
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
-if|if
-condition|(
+name|skipCompressedIndex
+argument_list|(
 name|_isFileCompressed
-condition|)
-block|{
+argument_list|,
 name|index
-operator|.
-name|getNext
-argument_list|()
+argument_list|)
 expr_stmt|;
-block|}
+comment|// TODO: why does the original code not just use _dataStream that it passes in as stream?
+name|InStream
+name|stream
+init|=
 operator|(
 operator|(
 name|StringDirectTreeReader
@@ -1390,6 +1411,23 @@ operator|)
 operator|.
 name|getStream
 argument_list|()
+decl_stmt|;
+comment|// TODO: not clear why this check and skipSeek are needed.
+if|if
+condition|(
+name|_dataStream
+operator|!=
+literal|null
+operator|&&
+name|_dataStream
+operator|.
+name|available
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|stream
 operator|.
 name|seek
 argument_list|(
@@ -1397,6 +1435,26 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+assert|assert
+name|stream
+operator|==
+name|_dataStream
+assert|;
+name|skipSeek
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+block|}
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_lengthStream
@@ -1411,17 +1469,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 operator|(
 operator|(
 name|StringDirectTreeReader
@@ -1438,6 +1485,7 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 block|}
 annotation|@
@@ -4022,6 +4070,13 @@ expr_stmt|;
 block|}
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_dataStream
@@ -4032,17 +4087,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 name|stream
 operator|.
 name|seek
@@ -4560,6 +4604,13 @@ expr_stmt|;
 block|}
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_dataStream
@@ -4570,17 +4621,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 name|stream
 operator|.
 name|seek
@@ -5160,6 +5200,14 @@ expr_stmt|;
 block|}
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
+comment|// TODO: not clear why this check and skipSeek are needed.
 if|if
 condition|(
 name|_valueStream
@@ -5170,17 +5218,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 name|valueStream
 operator|.
 name|seek
@@ -5189,6 +5226,26 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+assert|assert
+name|valueStream
+operator|==
+name|_valueStream
+assert|;
+name|skipSeek
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+block|}
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_scaleStream
@@ -5199,17 +5256,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 name|scaleReader
 operator|.
 name|seek
@@ -5218,6 +5264,7 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 annotation|@
 name|Override
@@ -6601,6 +6648,13 @@ block|{
 comment|// DICTIONARY encoding
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_dataStream
@@ -6611,17 +6665,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 operator|(
 operator|(
 name|StringDictionaryTreeReader
@@ -6638,12 +6681,34 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 else|else
 block|{
 comment|// DIRECT encoding
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
+name|InStream
+name|stream
+init|=
+operator|(
+operator|(
+name|StringDirectTreeReader
+operator|)
+name|reader
+operator|)
+operator|.
+name|getStream
+argument_list|()
+decl_stmt|;
+comment|// TODO: not clear why this check and skipSeek are needed.
 if|if
 condition|(
 name|_dataStream
@@ -6654,26 +6719,7 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
-operator|(
-operator|(
-name|StringDirectTreeReader
-operator|)
-name|reader
-operator|)
-operator|.
-name|getStream
-argument_list|()
+name|stream
 operator|.
 name|seek
 argument_list|(
@@ -6681,6 +6727,26 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+assert|assert
+name|stream
+operator|==
+name|_dataStream
+assert|;
+name|skipSeek
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+block|}
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_lengthStream
@@ -6691,17 +6757,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 operator|(
 operator|(
 name|StringDirectTreeReader
@@ -6718,6 +6773,7 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 block|}
 annotation|@
@@ -7562,6 +7618,13 @@ block|{
 comment|// DICTIONARY encoding
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_dataStream
@@ -7572,17 +7635,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 operator|(
 operator|(
 name|StringDictionaryTreeReader
@@ -7599,12 +7651,34 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 else|else
 block|{
 comment|// DIRECT encoding
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
+name|InStream
+name|stream
+init|=
+operator|(
+operator|(
+name|StringDirectTreeReader
+operator|)
+name|reader
+operator|)
+operator|.
+name|getStream
+argument_list|()
+decl_stmt|;
+comment|// TODO: not clear why this check and skipSeek are needed.
 if|if
 condition|(
 name|_dataStream
@@ -7615,26 +7689,7 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
-operator|(
-operator|(
-name|StringDirectTreeReader
-operator|)
-name|reader
-operator|)
-operator|.
-name|getStream
-argument_list|()
+name|stream
 operator|.
 name|seek
 argument_list|(
@@ -7642,6 +7697,26 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+assert|assert
+name|stream
+operator|==
+name|_dataStream
+assert|;
+name|skipSeek
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+block|}
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|_lengthStream
@@ -7652,17 +7727,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 operator|(
 operator|(
 name|StringDirectTreeReader
@@ -7679,6 +7743,7 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 block|}
 annotation|@
@@ -9070,6 +9135,14 @@ expr_stmt|;
 block|}
 comment|// data stream could be empty stream or already reached end of stream before present stream.
 comment|// This can happen if all values in stream are nulls or last row group values are all null.
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
+comment|// TODO: not clear why this check and skipSeek are needed.
 if|if
 condition|(
 name|_dataStream
@@ -9080,17 +9153,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 name|stream
 operator|.
 name|seek
@@ -9099,6 +9161,26 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+assert|assert
+name|stream
+operator|==
+name|_dataStream
+assert|;
+name|skipSeek
+argument_list|(
+name|index
+argument_list|)
+expr_stmt|;
+block|}
+name|skipCompressedIndex
+argument_list|(
+name|_isFileCompressed
+argument_list|,
+name|index
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|lengths
@@ -9113,17 +9195,6 @@ operator|>
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|_isFileCompressed
-condition|)
-block|{
-name|index
-operator|.
-name|getNext
-argument_list|()
-expr_stmt|;
-block|}
 name|lengths
 operator|.
 name|seek
@@ -9132,6 +9203,7 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+comment|// No need to skip seek here, index won't be used anymore.
 block|}
 annotation|@
 name|Override
@@ -10312,6 +10384,22 @@ operator|.
 name|build
 argument_list|()
 return|;
+block|}
+specifier|private
+specifier|static
+name|void
+name|skipSeek
+parameter_list|(
+name|PositionProvider
+name|index
+parameter_list|)
+block|{
+comment|// Must be consistent with uncompressed stream seek in ORC. See call site comments.
+name|index
+operator|.
+name|getNext
+argument_list|()
+expr_stmt|;
 block|}
 specifier|private
 specifier|static
