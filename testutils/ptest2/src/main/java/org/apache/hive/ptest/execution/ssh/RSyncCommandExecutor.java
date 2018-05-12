@@ -566,6 +566,16 @@ name|getExitCode
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|command
+operator|.
+name|setElapsedTimeInMs
+argument_list|(
+name|cmd
+operator|.
+name|getElapsedTimeInMs
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

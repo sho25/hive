@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|security
+operator|.
+name|SecureRandom
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|LinkedList
@@ -54,6 +64,16 @@ operator|.
 name|util
 operator|.
 name|Queue
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Random
 import|;
 end_import
 
@@ -413,6 +433,14 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|//simulating dummy rsync delay of 17 msec
+name|command
+operator|.
+name|setElapsedTimeInMs
+argument_list|(
+literal|17L
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|int
