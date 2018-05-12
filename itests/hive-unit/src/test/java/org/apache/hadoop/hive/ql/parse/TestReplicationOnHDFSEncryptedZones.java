@@ -654,6 +654,25 @@ argument_list|,
 literal|"false"
 argument_list|)
 expr_stmt|;
+name|put
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_DISTCP_DOAS_USER
+operator|.
+name|varname
+argument_list|,
+name|UserGroupInformation
+operator|.
+name|getCurrentUser
+argument_list|()
+operator|.
+name|getUserName
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 argument_list|,
@@ -710,7 +729,9 @@ name|tuple
 operator|.
 name|dumpLocation
 operator|+
-literal|"' with('hive.repl.add.raw.reserved.namespace'='true')"
+literal|"' with('hive.repl.add.raw.reserved.namespace'='true', "
+operator|+
+literal|"'distcp.options.pugpbx'='', 'distcp.options.skipcrccheck'='')"
 argument_list|)
 operator|.
 name|run
