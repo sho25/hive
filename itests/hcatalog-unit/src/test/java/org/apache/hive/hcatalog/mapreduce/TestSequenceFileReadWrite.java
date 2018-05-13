@@ -73,6 +73,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -1195,6 +1205,11 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
+name|Ignore
+argument_list|(
+literal|"Disabling this test. Check HIVE-19506 for more details"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -1539,6 +1554,11 @@ name|numTuplesRead
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"Disabling this test. Check HIVE-19506 for more details"
+argument_list|)
 annotation|@
 name|Test
 specifier|public
