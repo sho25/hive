@@ -941,6 +941,11 @@ argument_list|(
 literal|"tez_smb_1.q"
 argument_list|)
 expr_stmt|;
+name|excludeQuery
+argument_list|(
+literal|"union_fast_stats.q"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
