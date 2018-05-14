@@ -569,6 +569,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|IfExprTimestampColumnColumn
 import|;
 end_import
@@ -590,6 +592,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|IfExprTimestampColumnScalar
 import|;
@@ -613,6 +617,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|IfExprTimestampScalarColumn
 import|;
 end_import
@@ -634,6 +640,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|IfExprTimestampScalarScalar
 import|;

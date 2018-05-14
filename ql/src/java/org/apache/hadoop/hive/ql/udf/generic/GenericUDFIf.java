@@ -531,6 +531,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|IfExprIntervalDayTimeColumnColumn
 import|;
 end_import
@@ -552,6 +554,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|IfExprIntervalDayTimeColumnScalar
 import|;
@@ -575,6 +579,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|IfExprIntervalDayTimeScalarColumn
 import|;
 end_import
@@ -596,6 +602,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|IfExprIntervalDayTimeScalarScalar
 import|;
@@ -773,6 +781,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|IfExprTimestampColumnColumn
 import|;
 end_import
@@ -794,6 +804,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|IfExprTimestampColumnScalar
 import|;
@@ -817,6 +829,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|IfExprTimestampScalarColumn
 import|;
 end_import
@@ -838,6 +852,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|IfExprTimestampScalarScalar
 import|;

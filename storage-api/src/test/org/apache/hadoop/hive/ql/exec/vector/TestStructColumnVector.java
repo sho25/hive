@@ -829,7 +829,7 @@ name|String
 name|EXPECTED
 init|=
 operator|(
-literal|"Column vector types: 0:STRUCT, 1:BYTES\n"
+literal|"Column vector types: 0:STRUCT<LONG, TIMESTAMP>, 1:BYTES\n"
 operator|+
 literal|"[[0, 2000-01-01 00:00:01.0], \"value 0\"]\n"
 operator|+
@@ -1045,7 +1045,7 @@ name|String
 name|EXPECTED
 init|=
 operator|(
-literal|"Column vector types: 0:STRUCT, 1:BYTES\n"
+literal|"Column vector types: 0:STRUCT<LONG, TIMESTAMP>, 1:BYTES\n"
 operator|+
 literal|"[[0, 2000-01-01 00:00:01], \"value 0\"]\n"
 operator|+
