@@ -1416,13 +1416,21 @@ comment|// Should not reach here
 block|}
 catch|catch
 parameter_list|(
-name|IOException
+name|IllegalArgumentException
 name|e
 parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"Incorrect RPC server port configuration for HiveServer2"
+literal|"Malformed configuration value for "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|SPARK_RPC_SERVER_PORT
+operator|.
+name|varname
 argument_list|,
 name|e
 operator|.
