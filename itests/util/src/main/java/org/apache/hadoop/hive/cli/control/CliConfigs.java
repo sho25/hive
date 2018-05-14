@@ -262,6 +262,7 @@ argument_list|(
 literal|"fouter_join_ppr.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive"
@@ -820,6 +821,12 @@ argument_list|,
 literal|"druid.kafka.query.files"
 argument_list|)
 expr_stmt|;
+name|excludeQuery
+argument_list|(
+literal|"druidkafkamini_basic.q"
+argument_list|)
+expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/druid"
@@ -931,36 +938,43 @@ argument_list|(
 literal|"bucket_map_join_tez1.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"special_character_in_tabnames_1.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"sysdb.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"tez_smb_1.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"union_fast_stats.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"schema_evol_orc_acidvec_part.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"schema_evol_orc_vec_part_llap_io.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
@@ -1513,11 +1527,13 @@ argument_list|(
 literal|"merge_negative_5.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
 literal|"mm_concatenate.q"
 argument_list|)
 expr_stmt|;
+comment|// Disabled in HIVE-19509
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientnegative"

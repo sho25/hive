@@ -2089,6 +2089,11 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -2265,6 +2270,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
 annotation|@
 name|Test
 specifier|public

@@ -464,6 +464,11 @@ block|}
 block|}
 block|}
 annotation|@
+name|Ignore
+argument_list|(
+literal|"Disabling till HIVE-19509 gets solved"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void

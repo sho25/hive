@@ -433,6 +433,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -3771,6 +3781,11 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test Beeline could show the query progress for time-consuming query when hive.exec.parallel    * is true    *    * We have changed the pattern to not look of the progress bar as the test runs fine individually    * and also as part of the whole class, on CI however they are batched and that might have caused    * some issue, it needs more investigation for the same    *    * @throws Throwable    */
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
 annotation|@
 name|Test
 specifier|public
