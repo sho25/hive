@@ -22303,6 +22303,13 @@ argument_list|(
 name|this
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Using direct SQL optimization."
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -22333,6 +22340,13 @@ operator|=
 name|getJdoResult
 argument_list|(
 name|this
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Not using direct SQL optimization."
 argument_list|)
 expr_stmt|;
 block|}
