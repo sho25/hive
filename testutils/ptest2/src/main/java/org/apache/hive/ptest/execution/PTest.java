@@ -1415,6 +1415,11 @@ name|localCommandFactory
 argument_list|,
 name|templateDefaults
 argument_list|,
+name|configuration
+operator|.
+name|getPatch
+argument_list|()
+argument_list|,
 name|patchFile
 argument_list|,
 name|logger
