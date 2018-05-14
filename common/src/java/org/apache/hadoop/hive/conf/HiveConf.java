@@ -9837,17 +9837,6 @@ argument_list|,
 literal|"Coding algorithm use to encode the bitmaps"
 argument_list|)
 block|,
-name|HIVE_DRUID_APPROX_RESULT
-argument_list|(
-literal|"hive.druid.approx.result"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether to allow approximate results from druid. \n"
-operator|+
-literal|"When set to true decimals will be stored as double and druid is allowed to return approximate results for decimal columns."
-argument_list|)
-block|,
 comment|// For HBase storage handler
 name|HIVE_HBASE_WAL_ENABLED
 argument_list|(
