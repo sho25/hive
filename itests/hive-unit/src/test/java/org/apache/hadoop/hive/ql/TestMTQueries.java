@@ -170,7 +170,7 @@ name|setBoolean
 argument_list|(
 literal|"hive.vectorized.execution.enabled"
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 name|util
