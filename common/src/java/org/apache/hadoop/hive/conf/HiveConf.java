@@ -7269,6 +7269,19 @@ operator|+
 literal|"wait until this size (default 100Mb) of records are ingested before triggering flush."
 argument_list|)
 block|,
+name|HIVE_CLASSLOADER_SHADE_PREFIX
+argument_list|(
+literal|"hive.classloader.shade.prefix"
+argument_list|,
+literal|""
+argument_list|,
+literal|"During reflective instantiation of a class\n"
+operator|+
+literal|"(input, output formats, serde etc.), when classloader throws ClassNotFoundException, as a fallback this\n"
+operator|+
+literal|"shade prefix will be used before class reference and retried."
+argument_list|)
+block|,
 name|HIVE_ORC_MS_FOOTER_CACHE_ENABLED
 argument_list|(
 literal|"hive.orc.splits.ms.footer.cache.enabled"
