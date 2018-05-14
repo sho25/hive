@@ -1253,7 +1253,12 @@ name|super
 operator|.
 name|getTable
 argument_list|(
-name|DEFAULT_CATALOG_NAME
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
 argument_list|,
 name|dbname
 argument_list|,
