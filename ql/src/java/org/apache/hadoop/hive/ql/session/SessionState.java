@@ -1385,7 +1385,6 @@ argument_list|()
 decl_stmt|;
 comment|/**    * current configuration.    */
 specifier|private
-specifier|final
 name|HiveConf
 name|sessionConf
 decl_stmt|;
@@ -1732,6 +1731,21 @@ block|{
 return|return
 name|sessionConf
 return|;
+block|}
+specifier|public
+name|void
+name|setConf
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|)
+block|{
+name|this
+operator|.
+name|sessionConf
+operator|=
+name|conf
+expr_stmt|;
 block|}
 specifier|public
 name|File
