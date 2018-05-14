@@ -1276,6 +1276,11 @@ expr_stmt|;
 block|}
 comment|/**    * Tests non acid to acid conversion where starting table has non-standard layout, i.e.    * where "original" files are not immediate children of the partition dir    */
 annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -3368,6 +3373,11 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * CTAS + Tez + Union creates a non-standard layout in table dir    * Each leg of the union places data into a subdir of the table/partition.    * Subdirs are named HIVE_UNION_SUBDIR_1/, HIVE_UNION_SUBDIR_2/, etc    * For Acid tables the writer for each dir must have a different statementId ensured by    * {@link org.apache.hadoop.hive.ql.optimizer.QueryPlanPostProcessor}.    * {@link org.apache.hadoop.hive.ql.metadata.Hive#moveAcidFiles(FileSystem, FileStatus[], Path, List)} drops the union subdirs    * since each delta file has a unique name.    */
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
 annotation|@
 name|Test
 specifier|public

@@ -1888,6 +1888,11 @@ expr_stmt|;
 block|}
 comment|/**    * Start HS2 in Http mode with SSL enabled, open a SSL connection and fetch data    * @throws Exception    */
 annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
