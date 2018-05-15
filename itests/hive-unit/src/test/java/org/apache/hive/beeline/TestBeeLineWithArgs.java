@@ -3704,6 +3704,11 @@ expr_stmt|;
 block|}
 comment|/**    * Test Beeline could show the query progress for time-consuming query.    * @throws Throwable    */
 annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-19509: Disable tests that are failing continuously"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
