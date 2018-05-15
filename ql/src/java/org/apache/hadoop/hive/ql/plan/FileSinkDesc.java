@@ -392,10 +392,10 @@ specifier|private
 name|boolean
 name|isMmCtas
 decl_stmt|;
-comment|/**    * Whether is a HiveServer query, and the destination table is    * indeed written using ThriftJDBCBinarySerDe    */
+comment|/**    * Whether is a HiveServer query, and the destination table is    * indeed written using a row batching SerDe    */
 specifier|private
 name|boolean
-name|isUsingThriftJDBCBinarySerDe
+name|isUsingBatchingSerDe
 init|=
 literal|false
 decl_stmt|;
@@ -813,28 +813,28 @@ expr_stmt|;
 block|}
 specifier|public
 name|boolean
-name|isUsingThriftJDBCBinarySerDe
+name|isUsingBatchingSerDe
 parameter_list|()
 block|{
 return|return
 name|this
 operator|.
-name|isUsingThriftJDBCBinarySerDe
+name|isUsingBatchingSerDe
 return|;
 block|}
 specifier|public
 name|void
-name|setIsUsingThriftJDBCBinarySerDe
+name|setIsUsingBatchingSerDe
 parameter_list|(
 name|boolean
-name|isUsingThriftJDBCBinarySerDe
+name|isUsingBatchingSerDe
 parameter_list|)
 block|{
 name|this
 operator|.
-name|isUsingThriftJDBCBinarySerDe
+name|isUsingBatchingSerDe
 operator|=
-name|isUsingThriftJDBCBinarySerDe
+name|isUsingBatchingSerDe
 expr_stmt|;
 block|}
 annotation|@

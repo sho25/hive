@@ -2704,6 +2704,17 @@ operator|.
 name|varname
 argument_list|)
 expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_OUTPUT_FORMAT_ARROW
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Get a set containing configuration parameter names used by LLAP Server isntances    * @return an unmodifiable set containing llap ConfVars    */
 specifier|public
@@ -15307,6 +15318,15 @@ name|LLAP_LOGGER_NAME_CONSOLE
 argument_list|)
 argument_list|,
 literal|"logger used for llap-daemons."
+argument_list|)
+block|,
+name|LLAP_OUTPUT_FORMAT_ARROW
+argument_list|(
+literal|"hive.llap.output.format.arrow"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether LLapOutputFormatService should output arrow batches"
 argument_list|)
 block|,
 name|HIVE_TRIGGER_VALIDATION_INTERVAL
