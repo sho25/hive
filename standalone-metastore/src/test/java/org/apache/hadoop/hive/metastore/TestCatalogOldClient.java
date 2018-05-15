@@ -62,7 +62,7 @@ specifier|public
 class|class
 name|TestCatalogOldClient
 extends|extends
-name|TestNonCatCallsWithCatalog
+name|NonCatCallsWithCatalog
 block|{
 annotation|@
 name|Override

@@ -154,7 +154,7 @@ specifier|public
 class|class
 name|TestCatalogNonDefaultClient
 extends|extends
-name|TestNonCatCallsWithCatalog
+name|NonCatCallsWithCatalog
 block|{
 specifier|final
 specifier|private

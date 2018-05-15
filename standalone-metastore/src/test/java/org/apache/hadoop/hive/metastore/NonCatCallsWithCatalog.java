@@ -1032,12 +1032,10 @@ import|;
 end_import
 
 begin_class
-annotation|@
-name|Ignore
 specifier|public
 specifier|abstract
 class|class
-name|TestNonCatCallsWithCatalog
+name|NonCatCallsWithCatalog
 block|{
 specifier|private
 specifier|static
