@@ -975,18 +975,6 @@ literal|"schema_evol_orc_vec_part_llap_io.q"
 argument_list|)
 expr_stmt|;
 comment|// Disabled in HIVE-19509
-name|excludeQuery
-argument_list|(
-literal|"tez_dynpart_hashjoin_1.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-19509
-name|excludeQuery
-argument_list|(
-literal|"tez_vector_dynpart_hashjoin_1.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-19509
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
