@@ -912,35 +912,6 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI"
-argument_list|)
-expr_stmt|;
-comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: KILL Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: RETURN Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
 literal|"\"eventType\" : \"GET\""
 argument_list|)
 expr_stmt|;
@@ -1008,6 +979,35 @@ operator|.
 name|add
 argument_list|(
 literal|"\"subscribedCounters\" : [ \"EXECUTION_TIME\" ]"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI"
+argument_list|)
+expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: KILL Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
 argument_list|)
 expr_stmt|;
 name|runQueryWithTrigger
@@ -1186,28 +1186,6 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI"
-argument_list|)
-expr_stmt|;
-comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: RETURN Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
 literal|"\"eventType\" : \"GET\""
 argument_list|)
 expr_stmt|;
@@ -1256,6 +1234,28 @@ operator|.
 name|add
 argument_list|(
 literal|"\"subscribedCounters\" : [ \"HDFS_BYTES_READ\", \"EXECUTION_TIME\" ]"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI"
+argument_list|)
+expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
 argument_list|)
 expr_stmt|;
 name|runQueryWithTrigger
@@ -1467,42 +1467,6 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI"
-argument_list|)
-expr_stmt|;
-comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: MOVE Pool: BI Cluster %: 80.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: KILL Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: RETURN Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
 literal|"\"eventType\" : \"GET\""
 argument_list|)
 expr_stmt|;
@@ -1598,6 +1562,42 @@ argument_list|(
 literal|"\"subscribedCounters\" : [ \"HDFS_BYTES_READ\", \"EXECUTION_TIME\", \"SHUFFLE_BYTES\" ]"
 argument_list|)
 expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI"
+argument_list|)
+expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: ETL Cluster %: 20.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: MOVE Pool: BI Cluster %: 80.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: KILL Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
@@ -1631,10 +1631,6 @@ comment|//    setCmds.add("set hive.exec.post.hooks=org.apache.hadoop.hive.ql.ho
 comment|//    setCmds.add("set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter");
 comment|//    List<String> errCaptureExpect = new ArrayList<>();
 comment|//    errCaptureExpect.add("Workload Manager Events Summary");
-comment|//    errCaptureExpect.add("Event: GET Pool: BI Cluster %: 80.00");
-comment|//    errCaptureExpect.add("Event: MOVE Pool: ETL Cluster %: 20.00");
-comment|//    errCaptureExpect.add("Event: KILL Pool: null Cluster %: 0.00");
-comment|//    errCaptureExpect.add("Event: RETURN Pool: null Cluster %: 0.00");
 comment|//    errCaptureExpect.add("\"eventType\" : \"GET\"");
 comment|//    errCaptureExpect.add("\"eventType\" : \"MOVE\"");
 comment|//    errCaptureExpect.add("\"eventType\" : \"KILL\"");
@@ -1646,6 +1642,10 @@ comment|//    errCaptureExpect.add("\"violationMsg\" : \"Trigger " + moveTrigger
 comment|//    // violation in ETL queue
 comment|//    errCaptureExpect.add("\"violationMsg\" : \"Trigger " + killTrigger + " violated");
 comment|//    errCaptureExpect.add("\"subscribedCounters\" : [ \"HDFS_BYTES_READ\", \"HDFS_BYTES_WRITTEN\" ]");
+comment|//    errCaptureExpect.add("Event: GET Pool: BI Cluster %: 80.00");
+comment|//    errCaptureExpect.add("Event: MOVE Pool: ETL Cluster %: 20.00");
+comment|//    errCaptureExpect.add("Event: KILL Pool: null Cluster %: 0.00");
+comment|//    errCaptureExpect.add("Event: RETURN Pool: null Cluster %: 0.00");
 comment|//    runQueryWithTrigger(query, setCmds, killTrigger + " violated", errCaptureExpect);
 comment|//  }
 annotation|@
@@ -1810,28 +1810,6 @@ name|errCaptureExpect
 operator|.
 name|add
 argument_list|(
-literal|"Event: GET Pool: BI"
-argument_list|)
-expr_stmt|;
-comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: KILL Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
-literal|"Event: RETURN Pool: null Cluster %: 0.00"
-argument_list|)
-expr_stmt|;
-name|errCaptureExpect
-operator|.
-name|add
-argument_list|(
 literal|"\"eventType\" : \"GET\""
 argument_list|)
 expr_stmt|;
@@ -1880,6 +1858,28 @@ operator|.
 name|add
 argument_list|(
 literal|"\"subscribedCounters\" : [ \"HDFS_BYTES_READ\" ]"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: GET Pool: BI"
+argument_list|)
+expr_stmt|;
+comment|// HIVE-19061 introduces UPDATE event which will capture changes to allocation % after GET
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: KILL Pool: null Cluster %: 0.00"
+argument_list|)
+expr_stmt|;
+name|errCaptureExpect
+operator|.
+name|add
+argument_list|(
+literal|"Event: RETURN Pool: null Cluster %: 0.00"
 argument_list|)
 expr_stmt|;
 name|runQueryWithTrigger

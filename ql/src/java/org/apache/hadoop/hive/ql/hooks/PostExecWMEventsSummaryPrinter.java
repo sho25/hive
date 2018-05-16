@@ -334,6 +334,13 @@ condition|)
 block|{
 name|wmContext
 operator|.
+name|printJson
+argument_list|(
+name|console
+argument_list|)
+expr_stmt|;
+name|wmContext
+operator|.
 name|shortPrint
 argument_list|(
 name|console
