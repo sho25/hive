@@ -148,11 +148,25 @@ name|Timestamp
 name|readTimestamp
 parameter_list|()
 function_decl|;
-comment|/**    * @param value data to be checked for validity    * @return is data valid for the type    * The type of the data in Parquet files need not match the type in HMS.  In that case    * the value returned to the user will depend on the data.  If the data value is within the valid    * range accommodated by the HMS type, the data will be returned as is.  When data is not within    * the valid range, a NULL will be returned.  This function will do the appropriate check.    */
+comment|/**    * @param value data to be checked for validity    * @return is data valid for the type    * The type of the data in Parquet files need not match the type in HMS.  In that case    * the value returned to the user will depend on the data.  If the data value is within the valid    * range accommodated by the HMS type, the data will be returned as is.  When data is not within    * the valid range, a NULL will be returned.  These functions will do the appropriate check.    */
 name|boolean
 name|isValid
 parameter_list|(
 name|long
+name|value
+parameter_list|)
+function_decl|;
+name|boolean
+name|isValid
+parameter_list|(
+name|float
+name|value
+parameter_list|)
+function_decl|;
+name|boolean
+name|isValid
+parameter_list|(
+name|double
 name|value
 parameter_list|)
 function_decl|;
