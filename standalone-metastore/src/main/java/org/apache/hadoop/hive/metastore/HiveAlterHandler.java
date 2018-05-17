@@ -2949,6 +2949,53 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|oldt
+operator|.
+name|getParameters
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|oldt
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|hive_metastoreConstants
+operator|.
+name|TABLE_IS_TRANSACTIONAL
+argument_list|)
+argument_list|)
+condition|)
+block|{
+comment|/*Why does it split Alter into Drop + Create here?????  This causes onDropTable logic            * to wipe out acid related metadata and writeIds from old table don't make sense            * in the new table.*/
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Changing database name of a transactional table "
+operator|+
+name|Warehouse
+operator|.
+name|getQualifiedName
+argument_list|(
+name|oldt
+argument_list|)
+operator|+
+literal|" is not supported.  Please use create-table-as"
+operator|+
+literal|" or create new table manually followed by Insert."
+argument_list|)
+throw|;
+block|}
 name|MetaStoreListenerNotifier
 operator|.
 name|notifyEvent
