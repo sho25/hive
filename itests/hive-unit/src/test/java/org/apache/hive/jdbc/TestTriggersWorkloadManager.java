@@ -243,22 +243,6 @@ name|apache
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|util
-operator|.
-name|RetryTestRunner
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
 name|jdbc
 operator|.
 name|miniHS2
@@ -297,18 +281,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|runner
-operator|.
-name|RunWith
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|google
@@ -322,13 +294,6 @@ import|;
 end_import
 
 begin_class
-annotation|@
-name|RunWith
-argument_list|(
-name|RetryTestRunner
-operator|.
-name|class
-argument_list|)
 specifier|public
 class|class
 name|TestTriggersWorkloadManager
