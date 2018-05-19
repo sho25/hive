@@ -271,6 +271,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -331,11 +341,9 @@ end_import
 
 begin_class
 annotation|@
-name|RunWith
+name|Ignore
 argument_list|(
-name|RetryTestRunner
-operator|.
-name|class
+literal|"Flaky"
 argument_list|)
 specifier|public
 class|class
