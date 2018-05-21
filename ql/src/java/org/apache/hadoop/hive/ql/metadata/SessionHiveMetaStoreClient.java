@@ -1071,9 +1071,10 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Object not found in metastore"
-argument_list|,
 name|err
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -3770,9 +3771,10 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Object not found in metastore"
-argument_list|,
 name|err
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
