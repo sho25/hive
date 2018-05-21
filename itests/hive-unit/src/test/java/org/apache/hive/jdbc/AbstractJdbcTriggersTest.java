@@ -705,7 +705,7 @@ name|Exception
 block|{
 name|hs2Conn
 operator|=
-name|TestJdbcWithMiniLlap
+name|BaseJdbcWithMiniLlap
 operator|.
 name|getConnection
 argument_list|(
@@ -885,7 +885,7 @@ name|con
 init|=
 name|hs2Conn
 decl_stmt|;
-name|TestJdbcWithMiniLlap
+name|BaseJdbcWithMiniLlap
 operator|.
 name|createTestTable
 argument_list|(

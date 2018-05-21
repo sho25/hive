@@ -15324,7 +15324,7 @@ name|LLAP_OUTPUT_FORMAT_ARROW
 argument_list|(
 literal|"hive.llap.output.format.arrow"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether LLapOutputFormatService should output arrow batches"
 argument_list|)

@@ -145,6 +145,36 @@ return|return
 name|rootAllocator
 return|;
 block|}
+comment|//arrowAllocatorLimit is ignored if an allocator was previously created
+specifier|public
+specifier|synchronized
+name|RootAllocator
+name|getOrCreateRootAllocator
+parameter_list|(
+name|long
+name|arrowAllocatorLimit
+parameter_list|)
+block|{
+if|if
+condition|(
+name|rootAllocator
+operator|==
+literal|null
+condition|)
+block|{
+name|rootAllocator
+operator|=
+operator|new
+name|RootAllocator
+argument_list|(
+name|arrowAllocatorLimit
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|rootAllocator
+return|;
+block|}
 block|}
 end_enum
 
