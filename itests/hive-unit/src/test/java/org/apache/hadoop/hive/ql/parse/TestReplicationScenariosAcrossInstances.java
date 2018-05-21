@@ -85,6 +85,20 @@ name|hadoop
 operator|.
 name|fs
 operator|.
+name|FileSystem
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
 name|Path
 import|;
 end_import
@@ -414,6 +428,18 @@ operator|.
 name|Matchers
 operator|.
 name|containsInAnyOrder
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
 import|;
 end_import
 
@@ -4301,6 +4327,102 @@ index|[]
 block|{
 literal|"30"
 block|}
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|shouldNotCreateDirectoryForNonNativeTableInDumpDirectory
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|createTableQuery
+init|=
+literal|"CREATE TABLE custom_serdes( serde_id bigint COMMENT 'from deserializer', name string "
+operator|+
+literal|"COMMENT 'from deserializer', slib string COMMENT 'from deserializer') "
+operator|+
+literal|"ROW FORMAT SERDE 'org.apache.hive.storage.jdbc.JdbcSerDe' "
+operator|+
+literal|"STORED BY 'org.apache.hive.storage.jdbc.JdbcStorageHandler' "
+operator|+
+literal|"WITH SERDEPROPERTIES ('serialization.format'='1') "
+operator|+
+literal|"TBLPROPERTIES ( "
+operator|+
+literal|"'hive.sql.database.type'='METASTORE', "
+operator|+
+literal|"'hive.sql.query'='SELECT \"SERDE_ID\", \"NAME\", \"SLIB\" FROM \"SERDES\"')"
+decl_stmt|;
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|bootstrapTuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+name|createTableQuery
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|Path
+name|cSerdesTableDumpLocation
+init|=
+operator|new
+name|Path
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|bootstrapTuple
+operator|.
+name|dumpLocation
+argument_list|,
+name|primaryDbName
+argument_list|)
+argument_list|,
+literal|"custom_serdes"
+argument_list|)
+decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|cSerdesTableDumpLocation
+operator|.
+name|getFileSystem
+argument_list|(
+name|primary
+operator|.
+name|hiveConf
+argument_list|)
+decl_stmt|;
+name|assertFalse
+argument_list|(
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|cSerdesTableDumpLocation
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

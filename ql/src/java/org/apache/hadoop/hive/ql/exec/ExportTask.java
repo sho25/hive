@@ -281,7 +281,7 @@ literal|"Exporting data to: {}"
 argument_list|,
 name|exportPaths
 operator|.
-name|getExportRootDir
+name|exportRootDir
 argument_list|()
 argument_list|)
 expr_stmt|;
