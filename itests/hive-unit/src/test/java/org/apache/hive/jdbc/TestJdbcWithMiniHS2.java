@@ -5542,7 +5542,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// This should fail with given HTTP response code 413 in error message, since header is more
+comment|// This should fail with given HTTP response code 431 in error message, since header is more
 comment|// than the configured the header size
 name|password
 operator|=
@@ -5634,7 +5634,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"HTTP Response code: 413"
+literal|"HTTP Response code: 431"
 argument_list|)
 argument_list|)
 expr_stmt|;
