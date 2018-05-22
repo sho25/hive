@@ -816,9 +816,11 @@ name|val
 parameter_list|)
 block|{
 comment|// puts long in little endian order
-name|addBytes
+name|addHash
 argument_list|(
-name|longToByteArrayLE
+name|Murmur3
+operator|.
+name|hash64
 argument_list|(
 name|val
 argument_list|)
@@ -1225,9 +1227,11 @@ name|val
 parameter_list|)
 block|{
 return|return
-name|testBytes
+name|testHash
 argument_list|(
-name|longToByteArrayLE
+name|Murmur3
+operator|.
+name|hash64
 argument_list|(
 name|val
 argument_list|)
