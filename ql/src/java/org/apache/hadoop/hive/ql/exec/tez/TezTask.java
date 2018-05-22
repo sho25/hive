@@ -1413,6 +1413,8 @@ expr_stmt|;
 block|}
 else|else
 block|{
+try|try
+block|{
 name|groups
 operator|=
 name|UserGroupInformation
@@ -1425,6 +1427,25 @@ operator|.
 name|getGroups
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Cannot obtain groups for "
+operator|+
+name|userName
+argument_list|,
+name|ex
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 name|MappingInput
 name|mi
