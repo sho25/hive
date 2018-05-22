@@ -271,6 +271,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -325,6 +335,21 @@ specifier|abstract
 class|class
 name|TxnCommandsBaseForTests
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|TxnCommandsBaseForTests
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 comment|//bucket count for test tables; set it to 1 for easier debugging
 specifier|final
 specifier|static
@@ -710,6 +735,15 @@ operator|.
 name|HIVESTATSCOLAUTOGATHER
 argument_list|,
 literal|false
+argument_list|)
+expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolean
+argument_list|(
+literal|"mapred.input.dir.recursive"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|TxnDbUtil
@@ -1109,6 +1143,15 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Running the query: "
+operator|+
+name|stmt
+argument_list|)
+expr_stmt|;
 name|CommandProcessorResponse
 name|cpr
 init|=

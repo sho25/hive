@@ -8902,6 +8902,19 @@ operator|+
 literal|"The default value is 1000000, since the data limit of a znode is 1MB"
 argument_list|)
 block|,
+name|HIVE_MM_ALLOW_ORIGINALS
+argument_list|(
+literal|"hive.mm.allow.originals"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether to allow original files in MM tables. Conversion to MM may be expensive if\n"
+operator|+
+literal|"this is set to false, however unless MAPREDUCE-7086 fix is present, queries that\n"
+operator|+
+literal|"read MM tables with original files will fail. The default in Hive 3.0 is false."
+argument_list|)
+block|,
 comment|// Zookeeper related configs
 name|HIVE_ZOOKEEPER_QUORUM
 argument_list|(

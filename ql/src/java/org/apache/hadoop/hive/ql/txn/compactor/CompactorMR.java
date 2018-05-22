@@ -2715,6 +2715,17 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+name|int
+name|origCount
+init|=
+name|dir
+operator|.
+name|getOriginalFiles
+argument_list|()
+operator|.
+name|size
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|(
@@ -2733,6 +2744,8 @@ else|:
 literal|1
 operator|)
 operator|)
+operator|+
+name|origCount
 operator|<=
 literal|1
 condition|)
@@ -2759,7 +2772,11 @@ literal|" and there are "
 operator|+
 name|deltaCount
 operator|+
-literal|" deltas"
+literal|" deltas and "
+operator|+
+name|origCount
+operator|+
+literal|" originals"
 argument_list|)
 expr_stmt|;
 return|return;
@@ -2846,8 +2863,11 @@ name|getTableName
 argument_list|()
 operator|+
 literal|"_"
-decl_stmt|,
+decl_stmt|;
+name|String
 name|tmpTableName
+init|=
+literal|null
 decl_stmt|;
 while|while
 condition|(
