@@ -2142,7 +2142,7 @@ argument_list|(
 literal|"[0-9]+_[0-9]+"
 argument_list|)
 decl_stmt|;
-comment|/**    * @see org.apache.hadoop.hive.ql.exec.Utilities#COPY_KEYWORD    */
+comment|/**    * see org.apache.hadoop.hive.ql.exec.Utilities#COPY_KEYWORD    */
 specifier|private
 specifier|static
 specifier|final
@@ -2211,6 +2211,27 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+name|String
+name|catName
+init|=
+name|table
+operator|.
+name|isSetCatName
+argument_list|()
+condition|?
+name|table
+operator|.
+name|getCatName
+argument_list|()
+else|:
+name|MetaStoreUtils
+operator|.
+name|getDefaultCatalog
+argument_list|(
+name|getConf
+argument_list|()
+argument_list|)
+decl_stmt|;
 name|tablePath
 operator|=
 name|wh
@@ -2224,13 +2245,7 @@ argument_list|()
 operator|.
 name|getDatabase
 argument_list|(
-name|MetaStoreUtils
-operator|.
-name|getDefaultCatalog
-argument_list|(
-name|getConf
-argument_list|()
-argument_list|)
+name|catName
 argument_list|,
 name|table
 operator|.
