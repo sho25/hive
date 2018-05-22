@@ -4004,6 +4004,13 @@ operator|.
 name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|buckets
+argument_list|)
+expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
@@ -4032,7 +4039,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_00001"
+literal|"bucket_00000"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4323,6 +4330,13 @@ operator|.
 name|HIDDEN_FILES_PATH_FILTER
 argument_list|)
 decl_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|buckets
+argument_list|)
+expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
@@ -4351,7 +4365,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_00001"
+literal|"bucket_00000"
 argument_list|)
 argument_list|)
 expr_stmt|;
