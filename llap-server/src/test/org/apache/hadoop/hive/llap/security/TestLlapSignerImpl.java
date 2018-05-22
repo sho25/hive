@@ -722,6 +722,10 @@ decl_stmt|;
 if|if
 condition|(
 name|curDk
+operator|==
+literal|null
+operator|||
+name|curDk
 operator|.
 name|getKeyId
 argument_list|()
@@ -739,10 +743,18 @@ name|idToPreserve
 operator|+
 literal|" but got "
 operator|+
+operator|(
+name|curDk
+operator|==
+literal|null
+condition|?
+literal|"null"
+else|:
 name|curDk
 operator|.
 name|getKeyId
 argument_list|()
+operator|)
 argument_list|)
 expr_stmt|;
 block|}
