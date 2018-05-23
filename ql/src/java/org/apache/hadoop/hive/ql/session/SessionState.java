@@ -1602,6 +1602,18 @@ operator|.
 name|newHashMap
 argument_list|()
 decl_stmt|;
+comment|/**    * Cache for Erasure Coding shims.    */
+specifier|private
+name|Map
+argument_list|<
+name|URI
+argument_list|,
+name|HadoopShims
+operator|.
+name|HdfsErasureCodingShim
+argument_list|>
+name|erasureCodingShims
+decl_stmt|;
 specifier|private
 specifier|final
 name|String

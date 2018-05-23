@@ -62,6 +62,11 @@ argument_list|(
 literal|true
 argument_list|)
 operator|,
+name|ERASURE
+argument_list|(
+literal|true
+argument_list|)
+operator|,
 name|ADD
 argument_list|()
 operator|,
