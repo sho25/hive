@@ -1337,24 +1337,6 @@ name|hive
 operator|.
 name|shims
 operator|.
-name|HadoopShims
-operator|.
-name|HdfsErasureCodingShim
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
 name|ShimLoader
 import|;
 end_import
@@ -1627,8 +1609,6 @@ name|String
 index|[]
 block|{
 literal|"crypto"
-block|,
-literal|"erasure"
 block|}
 decl_stmt|;
 specifier|public
@@ -1664,15 +1644,6 @@ name|String
 name|TEST_HIVE_USER_PROPERTY
 init|=
 literal|"test.hive.user"
-decl_stmt|;
-comment|/**    * The Erasure Coding Policy to use in TestErasureCodingHDFSCliDriver.    */
-specifier|private
-specifier|static
-specifier|final
-name|String
-name|DEFAULT_TEST_EC_POLICY
-init|=
-literal|"RS-3-2-1024k"
 decl_stmt|;
 specifier|private
 name|String
@@ -3463,8 +3434,6 @@ block|,
 name|hdfs
 block|,
 name|encrypted_hdfs
-block|,
-name|erasure_coded_hdfs
 block|,   }
 specifier|public
 enum|enum
@@ -4502,12 +4471,6 @@ operator|==
 name|FsType
 operator|.
 name|encrypted_hdfs
-operator|||
-name|fsType
-operator|==
-name|FsType
-operator|.
-name|erasure_coded_hdfs
 condition|)
 block|{
 name|int
@@ -4515,15 +4478,15 @@ name|numDataNodes
 init|=
 literal|4
 decl_stmt|;
-comment|// Setup before getting dfs
-switch|switch
+if|if
 condition|(
 name|fsType
+operator|==
+name|FsType
+operator|.
+name|encrypted_hdfs
 condition|)
 block|{
-case|case
-name|encrypted_hdfs
-case|:
 comment|// Set the security key provider so that the MiniDFS cluster is initialized
 comment|// with encryption
 name|conf
@@ -4545,21 +4508,6 @@ argument_list|,
 literal|50
 argument_list|)
 expr_stmt|;
-break|break;
-case|case
-name|erasure_coded_hdfs
-case|:
-comment|// We need more NameNodes for EC.
-comment|// To fully exercise hdfs code paths we need 5 NameNodes for the RS-3-2-1024k policy.
-comment|// With 6 NameNodes we can also run the RS-6-3-1024k policy.
-name|numDataNodes
-operator|=
-literal|6
-expr_stmt|;
-break|break;
-default|default:
-break|break;
-block|}
 name|dfs
 operator|=
 name|shims
@@ -4582,15 +4530,6 @@ operator|.
 name|getFileSystem
 argument_list|()
 expr_stmt|;
-comment|// Setup after getting dfs
-switch|switch
-condition|(
-name|fsType
-condition|)
-block|{
-case|case
-name|encrypted_hdfs
-case|:
 comment|// set up the java key provider for encrypted hdfs cluster
 name|hes
 operator|=
@@ -4610,48 +4549,31 @@ argument_list|(
 literal|"key provider is initialized"
 argument_list|)
 expr_stmt|;
-break|break;
-case|case
-name|erasure_coded_hdfs
-case|:
-comment|// The Erasure policy can't be set in a q_test_init script as QTestUtil runs that code in
-comment|// a mode that disallows test-only CommandProcessors.
-comment|// Set the default policy on the root of the file system here.
-name|HdfsErasureCodingShim
-name|erasureCodingShim
-init|=
+block|}
+else|else
+block|{
+name|dfs
+operator|=
 name|shims
 operator|.
-name|createHdfsErasureCodingShim
+name|getMiniDfs
 argument_list|(
-name|fs
-argument_list|,
 name|conf
-argument_list|)
-decl_stmt|;
-name|erasureCodingShim
-operator|.
-name|enableErasureCodingPolicy
-argument_list|(
-name|DEFAULT_TEST_EC_POLICY
-argument_list|)
-expr_stmt|;
-name|erasureCodingShim
-operator|.
-name|setErasureCodingPolicy
-argument_list|(
-operator|new
-name|Path
-argument_list|(
-literal|"hdfs:///"
-argument_list|)
 argument_list|,
-name|DEFAULT_TEST_EC_POLICY
+name|numDataNodes
+argument_list|,
+literal|true
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
-break|break;
-default|default:
-break|break;
+name|fs
+operator|=
+name|dfs
+operator|.
+name|getFileSystem
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 else|else
@@ -6702,10 +6624,11 @@ literal|true
 argument_list|,
 literal|true
 argument_list|,
-name|fsNeedsPurge
-argument_list|(
 name|fsType
-argument_list|)
+operator|==
+name|FsType
+operator|.
+name|encrypted_hdfs
 argument_list|)
 expr_stmt|;
 block|}
@@ -13901,45 +13824,6 @@ name|getConf
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
-end_function
-
-begin_comment
-comment|/**    * Should deleted test tables have their data purged.    * @return true if data should be purged    */
-end_comment
-
-begin_function
-specifier|private
-specifier|static
-name|boolean
-name|fsNeedsPurge
-parameter_list|(
-name|FsType
-name|type
-parameter_list|)
-block|{
-if|if
-condition|(
-name|type
-operator|==
-name|FsType
-operator|.
-name|encrypted_hdfs
-operator|||
-name|type
-operator|==
-name|FsType
-operator|.
-name|erasure_coded_hdfs
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
-return|return
-literal|false
-return|;
 block|}
 end_function
 

@@ -109,8 +109,6 @@ name|String
 index|[]
 block|{
 literal|"crypto"
-block|,
-literal|"erasure"
 block|}
 decl_stmt|;
 specifier|private
