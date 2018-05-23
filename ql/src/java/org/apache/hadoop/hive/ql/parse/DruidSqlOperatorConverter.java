@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *      http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -124,6 +124,22 @@ operator|.
 name|druid
 operator|.
 name|FloorOperatorConversion
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|adapter
+operator|.
+name|druid
+operator|.
+name|UnarySuffixOperatorConversion
 import|;
 end_import
 
@@ -544,12 +560,50 @@ name|DruidSubstringOperatorConversion
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|druidOperatorMap
+operator|.
+name|put
+argument_list|(
+name|SqlStdOperatorTable
+operator|.
+name|IS_NULL
+argument_list|,
+operator|new
+name|UnarySuffixOperatorConversion
+argument_list|(
+name|SqlStdOperatorTable
+operator|.
+name|IS_NULL
+argument_list|,
+literal|"isnull"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|druidOperatorMap
+operator|.
+name|put
+argument_list|(
+name|SqlStdOperatorTable
+operator|.
+name|IS_NOT_NULL
+argument_list|,
+operator|new
+name|UnarySuffixOperatorConversion
+argument_list|(
+name|SqlStdOperatorTable
+operator|.
+name|IS_NOT_NULL
+argument_list|,
+literal|"notnull"
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|druidOperatorMap
 return|;
 block|}
-comment|//@TODO remove this when it is fixed in calcite https://issues.apache.org/jira/browse/HIVE-18996
+comment|/**    * Druid operator converter from Hive Substring to Druid SubString.    * This is a temporary fix that can be removed once we move to a Calcite version including the following.    * https://issues.apache.org/jira/browse/CALCITE-2226    */
 specifier|public
 specifier|static
 class|class
