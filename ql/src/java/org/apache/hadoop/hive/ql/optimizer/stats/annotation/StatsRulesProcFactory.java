@@ -2604,6 +2604,7 @@ argument_list|,
 name|evaluatedRowCount
 argument_list|)
 expr_stmt|;
+block|}
 name|newNumRows
 operator|=
 name|evaluatedRowCount
@@ -2650,7 +2651,6 @@ argument_list|,
 name|op
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 elseif|else
