@@ -81738,7 +81738,7 @@ decl_stmt|;
 name|boolean
 name|rewriteEnabled
 init|=
-literal|false
+literal|true
 decl_stmt|;
 name|boolean
 name|orReplace
@@ -81907,11 +81907,11 @@ break|break;
 case|case
 name|HiveParser
 operator|.
-name|TOK_REWRITE_ENABLED
+name|TOK_REWRITE_DISABLED
 case|:
 name|rewriteEnabled
 operator|=
-literal|true
+literal|false
 expr_stmt|;
 break|break;
 case|case
