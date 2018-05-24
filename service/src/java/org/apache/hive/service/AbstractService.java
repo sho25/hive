@@ -119,7 +119,7 @@ name|long
 name|startTime
 decl_stmt|;
 comment|/**    * The configuration. Will be null until the service is initialized.    */
-specifier|protected
+specifier|private
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -154,6 +154,7 @@ operator|=
 name|name
 expr_stmt|;
 block|}
+comment|// This probably doesn't need to be sync, but nobody calls this, so it doesn't matter.
 annotation|@
 name|Override
 specifier|public
@@ -185,11 +186,10 @@ operator|.
 name|NOTINITED
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
+name|setHiveConf
+argument_list|(
 name|hiveConf
-operator|=
-name|hiveConf
+argument_list|)
 expr_stmt|;
 name|changeState
 argument_list|(
@@ -209,6 +209,22 @@ argument_list|()
 operator|+
 literal|" is inited."
 argument_list|)
+expr_stmt|;
+block|}
+specifier|protected
+specifier|final
+name|void
+name|setHiveConf
+parameter_list|(
+name|HiveConf
+name|hiveConf
+parameter_list|)
+block|{
+name|this
+operator|.
+name|hiveConf
+operator|=
+name|hiveConf
 expr_stmt|;
 block|}
 comment|/**    * {@inheritDoc}    *    * @throws IllegalStateException    *           if the current service state does not permit    *           this action    */
@@ -318,13 +334,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|void
 name|register
 parameter_list|(
 name|ServiceStateChangeListener
 name|l
 parameter_list|)
+block|{
+synchronized|synchronized
+init|(
+name|listeners
+init|)
 block|{
 name|listeners
 operator|.
@@ -334,16 +354,21 @@ name|l
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|void
 name|unregister
 parameter_list|(
 name|ServiceStateChangeListener
 name|l
 parameter_list|)
+block|{
+synchronized|synchronized
+init|(
+name|listeners
+init|)
 block|{
 name|listeners
 operator|.
@@ -352,6 +377,7 @@ argument_list|(
 name|l
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -367,7 +393,6 @@ block|}
 annotation|@
 name|Override
 specifier|public
-specifier|synchronized
 name|HiveConf
 name|getHiveConf
 parameter_list|()

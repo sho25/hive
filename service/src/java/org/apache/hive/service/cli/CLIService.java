@@ -581,11 +581,10 @@ name|HiveConf
 name|hiveConf
 parameter_list|)
 block|{
-name|this
-operator|.
+name|setHiveConf
+argument_list|(
 name|hiveConf
-operator|=
-name|hiveConf
+argument_list|)
 expr_stmt|;
 name|sessionManager
 operator|=
@@ -853,6 +852,12 @@ name|void
 name|setupBlockedUdfs
 parameter_list|()
 block|{
+name|HiveConf
+name|hiveConf
+init|=
+name|getHiveConf
+argument_list|()
+decl_stmt|;
 name|FunctionRegistry
 operator|.
 name|setupPermissionsForBuiltinUDFs
@@ -2876,6 +2881,7 @@ name|rowSet
 return|;
 block|}
 comment|// obtain delegation token for the give user from metastore
+comment|// TODO: why is this synchronized?
 specifier|public
 specifier|synchronized
 name|String
@@ -2893,6 +2899,12 @@ name|LoginException
 throws|,
 name|IOException
 block|{
+name|HiveConf
+name|hiveConf
+init|=
+name|getHiveConf
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!

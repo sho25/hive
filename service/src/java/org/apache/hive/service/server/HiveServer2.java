@@ -5104,7 +5104,8 @@ name|getBoolVar
 argument_list|(
 name|hiveServer2
 operator|.
-name|hiveConf
+name|getHiveConf
+argument_list|()
 argument_list|,
 name|ConfVars
 operator|.
@@ -5181,7 +5182,8 @@ name|getBoolVar
 argument_list|(
 name|hiveServer2
 operator|.
-name|hiveConf
+name|getHiveConf
+argument_list|()
 argument_list|,
 name|ConfVars
 operator|.
@@ -5258,7 +5260,8 @@ name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
-name|hiveConf
+name|getHiveConf
+argument_list|()
 argument_list|,
 name|ConfVars
 operator|.
@@ -5293,7 +5296,8 @@ name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
-name|hiveConf
+name|getHiveConf
+argument_list|()
 argument_list|,
 name|ConfVars
 operator|.
@@ -5354,6 +5358,12 @@ operator|.
 name|getInstance
 argument_list|()
 expr_stmt|;
+name|HiveConf
+name|hiveConf
+init|=
+name|getHiveConf
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|hiveConf
@@ -5456,7 +5466,8 @@ name|create
 argument_list|(
 name|wmQueue
 argument_list|,
-name|hiveConf
+name|getHiveConf
+argument_list|()
 argument_list|,
 name|resourcePlan
 argument_list|)
