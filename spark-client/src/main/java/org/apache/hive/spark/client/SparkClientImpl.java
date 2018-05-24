@@ -3079,7 +3079,7 @@ name|LogRedirector
 operator|.
 name|redirect
 argument_list|(
-literal|"RemoteDriver-stdout-redir-"
+literal|"spark-submit-stdout-redir-"
 operator|+
 name|threadName
 argument_list|,
@@ -3101,7 +3101,7 @@ name|LogRedirector
 operator|.
 name|redirect
 argument_list|(
-literal|"RemoteDriver-stderr-redir-"
+literal|"spark-submit-stderr-redir-"
 operator|+
 name|threadName
 argument_list|,
