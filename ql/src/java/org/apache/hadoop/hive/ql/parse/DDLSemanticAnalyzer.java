@@ -8865,6 +8865,8 @@ name|builder
 operator|.
 name|append
 argument_list|(
+name|stripQuotes
+argument_list|(
 name|ast
 operator|.
 name|getChild
@@ -8874,6 +8876,7 @@ argument_list|)
 operator|.
 name|getText
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|builder

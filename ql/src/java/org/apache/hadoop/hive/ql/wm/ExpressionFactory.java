@@ -135,6 +135,24 @@ name|ParseException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|PlanUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * Factory to create expressions  */
 end_comment
@@ -339,6 +357,10 @@ specifier|final
 name|String
 name|counterValueStr
 init|=
+name|PlanUtils
+operator|.
+name|stripQuotes
+argument_list|(
 name|node
 operator|.
 name|getChild
@@ -351,6 +373,7 @@ argument_list|()
 operator|.
 name|toLowerCase
 argument_list|()
+argument_list|)
 decl_stmt|;
 if|if
 condition|(

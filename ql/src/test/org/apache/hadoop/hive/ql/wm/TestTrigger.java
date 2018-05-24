@@ -1605,7 +1605,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 100MB"
+literal|" SHUFFLE_BYTES> '100MB'"
 argument_list|)
 decl_stmt|;
 name|Expression
@@ -1660,7 +1660,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 1gB"
+literal|" SHUFFLE_BYTES> '1gB'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1714,7 +1714,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 1TB"
+literal|" SHUFFLE_BYTES> '1TB'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -1881,18 +1881,11 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression:  SHUFFLE_BYTES> 300GiB"
-argument_list|)
-expr_stmt|;
 name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 300GiB"
+literal|" SHUFFLE_BYTES> '300GiB'"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1912,18 +1905,11 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression:  SHUFFLE_BYTES> 300 foo"
-argument_list|)
-expr_stmt|;
 name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" SHUFFLE_BYTES> 300 foo"
+literal|" SHUFFLE_BYTES> '300 foo'"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1941,7 +1927,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300sec"
+literal|" elapsed_TIME> '300sec'"
 argument_list|)
 decl_stmt|;
 name|Expression
@@ -1990,7 +1976,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300seconds"
+literal|" elapsed_TIME> '300seconds'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2038,7 +2024,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300sec"
+literal|" elapsed_TIME> '300sec'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2086,7 +2072,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300second"
+literal|" elapsed_TIME> '300second'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2134,7 +2120,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300seconds"
+literal|" elapsed_TIME> '300seconds'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2182,7 +2168,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300sec"
+literal|" elapsed_TIME> '300sec'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2230,7 +2216,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300000ms"
+literal|" elapsed_TIME> '300000ms'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2278,7 +2264,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300000000microseconds"
+literal|" elapsed_TIME> '300000000microseconds'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2326,7 +2312,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 1DAY"
+literal|" elapsed_TIME> '1DAY'"
 argument_list|)
 expr_stmt|;
 name|expected
@@ -2391,18 +2377,11 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression:  elapsed_TIME> 300lightyears"
-argument_list|)
-expr_stmt|;
 name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300lightyears"
+literal|" elapsed_TIME> '300lightyears'"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2422,18 +2401,11 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression:  elapsed_TIME> 300secTOR"
-argument_list|)
-expr_stmt|;
 name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|" elapsed_TIME> 300secTOR"
+literal|" elapsed_TIME> '300secTOR'"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2995,6 +2967,30 @@ annotation|@
 name|Test
 specifier|public
 name|void
+name|testIllegalExpressionsNoQuoutes
+parameter_list|()
+block|{
+name|thrown
+operator|.
+name|expect
+argument_list|(
+name|IllegalArgumentException
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|ExpressionFactory
+operator|.
+name|fromString
+argument_list|(
+literal|"BYTES_READ> 1mb"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
 name|testIllegalExpressionsInvalidLimitPost
 parameter_list|()
 block|{
@@ -3007,18 +3003,11 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression: BYTES_READ> 1024aaaa"
-argument_list|)
-expr_stmt|;
 name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"BYTES_READ> 1024aaaa"
+literal|"BYTES_READ> '1024aaaa'"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3036,13 +3025,6 @@ argument_list|(
 name|IllegalArgumentException
 operator|.
 name|class
-argument_list|)
-expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression: BYTES_READ> foo1024"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory
@@ -3067,13 +3049,6 @@ argument_list|(
 name|IllegalArgumentException
 operator|.
 name|class
-argument_list|)
-expr_stmt|;
-name|thrown
-operator|.
-name|expectMessage
-argument_list|(
-literal|"Invalid expression: BYTES_READ> -1024"
 argument_list|)
 expr_stmt|;
 name|ExpressionFactory

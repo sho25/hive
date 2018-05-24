@@ -148,7 +148,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"BYTES_READ> 5kb"
+literal|"BYTES_READ> '5kb'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -206,7 +206,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"BYTES_READ> 2mb"
+literal|"BYTES_READ> '2mb'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -264,7 +264,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"BYTES_READ> 3gb"
+literal|"BYTES_READ> '3gb'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -322,7 +322,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"SHUFFLE_BYTES> 7tb"
+literal|"SHUFFLE_BYTES> '7tb'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -380,7 +380,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"SHUFFLE_BYTES> 6pb"
+literal|"SHUFFLE_BYTES> '6pb'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -555,7 +555,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"ELAPSED_TIME> 1ms"
+literal|"ELAPSED_TIME> '1ms'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -607,7 +607,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"ELAPSED_TIME> 1sec"
+literal|"ELAPSED_TIME> '1sec'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -659,7 +659,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"ELAPSED_TIME> 1min"
+literal|"ELAPSED_TIME> '1min'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -713,7 +713,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"ELAPSED_TIME> 1hour"
+literal|"ELAPSED_TIME> '1hour'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull
@@ -767,7 +767,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"ELAPSED_TIME> 1day"
+literal|"ELAPSED_TIME> '1day'"
 argument_list|)
 expr_stmt|;
 name|assertNotNull

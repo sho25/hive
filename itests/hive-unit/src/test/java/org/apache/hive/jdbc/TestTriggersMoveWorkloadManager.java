@@ -771,7 +771,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"EXECUTION_TIME> 1sec"
+literal|"EXECUTION_TIME> '1sec'"
 argument_list|)
 decl_stmt|;
 name|Expression
@@ -781,7 +781,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"EXECUTION_TIME> 5000ms"
+literal|"EXECUTION_TIME> '5000ms'"
 argument_list|)
 decl_stmt|;
 name|Trigger
