@@ -165,6 +165,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|RetryTestRunner
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|tez
 operator|.
 name|dag
@@ -182,6 +198,18 @@ operator|.
 name|junit
 operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|runner
+operator|.
+name|RunWith
 import|;
 end_import
 
@@ -346,6 +374,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|RunWith
+argument_list|(
+name|RetryTestRunner
+operator|.
+name|class
+argument_list|)
 specifier|public
 class|class
 name|TestAMReporter
