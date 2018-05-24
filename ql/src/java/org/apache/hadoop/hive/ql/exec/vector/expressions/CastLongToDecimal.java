@@ -144,10 +144,13 @@ parameter_list|)
 block|{
 name|outV
 operator|.
+name|vector
+index|[
+name|i
+index|]
+operator|.
 name|set
 argument_list|(
-name|i
-argument_list|,
 name|HiveDecimal
 operator|.
 name|create

@@ -5486,10 +5486,13 @@ operator|)
 name|colVector
 operator|)
 operator|.
+name|vector
+index|[
+name|batchIndex
+index|]
+operator|.
 name|set
 argument_list|(
-name|batchIndex
-argument_list|,
 name|kw
 operator|.
 name|getDecimal

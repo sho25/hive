@@ -574,10 +574,13 @@ literal|false
 expr_stmt|;
 name|outputColVector
 operator|.
+name|vector
+index|[
+literal|0
+index|]
+operator|.
 name|set
 argument_list|(
-literal|0
-argument_list|,
 name|firstValue
 argument_list|)
 expr_stmt|;

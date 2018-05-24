@@ -1102,10 +1102,13 @@ operator|)
 name|outputColVector
 operator|)
 operator|.
+name|vector
+index|[
+literal|0
+index|]
+operator|.
 name|set
 argument_list|(
-literal|0
-argument_list|,
 name|evaluator
 operator|.
 name|getDecimalGroupResult

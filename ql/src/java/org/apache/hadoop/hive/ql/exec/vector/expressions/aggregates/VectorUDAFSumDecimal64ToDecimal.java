@@ -2271,10 +2271,13 @@ literal|false
 expr_stmt|;
 name|outputColVector
 operator|.
+name|vector
+index|[
+name|batchIndex
+index|]
+operator|.
 name|set
 argument_list|(
-name|batchIndex
-argument_list|,
 name|myagg
 operator|.
 name|regularDecimalSum

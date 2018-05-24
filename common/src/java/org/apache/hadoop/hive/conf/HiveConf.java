@@ -12935,19 +12935,6 @@ operator|+
 literal|"2. all    : use VectorUDFAdaptor for all UDFs"
 argument_list|)
 block|,
-name|HIVE_TEST_VECTOR_ADAPTOR_OVERRIDE
-argument_list|(
-literal|"hive.test.vectorized.adaptor.override"
-argument_list|,
-literal|false
-argument_list|,
-literal|"internal use only, used to force always using the VectorUDFAdaptor.\n"
-operator|+
-literal|"The default is false, of course"
-argument_list|,
-literal|true
-argument_list|)
-block|,
 name|HIVE_VECTORIZATION_PTF_ENABLED
 argument_list|(
 literal|"hive.vectorized.execution.ptf.enabled"
