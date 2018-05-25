@@ -514,6 +514,7 @@ specifier|private
 name|Path
 name|root
 decl_stmt|;
+specifier|public
 specifier|static
 class|class
 name|DummyRow

@@ -14122,8 +14122,6 @@ parameter_list|,
 name|boolean
 name|isDefaultFs
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 name|List
 argument_list|<
@@ -14183,14 +14181,12 @@ operator|.
 name|getLen
 argument_list|()
 expr_stmt|;
-name|AcidOutputFormat
-operator|.
-name|Options
-name|opts
+name|int
+name|b
 init|=
 name|AcidUtils
 operator|.
-name|parseBaseOrDeltaBucketFilename
+name|parseBucketId
 argument_list|(
 name|child
 operator|.
@@ -14199,19 +14195,7 @@ argument_list|()
 operator|.
 name|getPath
 argument_list|()
-argument_list|,
-name|context
-operator|.
-name|conf
 argument_list|)
-decl_stmt|;
-name|int
-name|b
-init|=
-name|opts
-operator|.
-name|getBucketId
-argument_list|()
 decl_stmt|;
 comment|// If the bucket is in the valid range, mark it as covered.
 comment|// I wish Hive actually enforced bucketing all of the time.
