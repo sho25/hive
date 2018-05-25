@@ -1813,6 +1813,13 @@ name|whereClause
 init|=
 literal|null
 decl_stmt|;
+name|int
+name|partColsIdx
+init|=
+operator|-
+literal|1
+decl_stmt|;
+comment|//keep track of corresponding col in partCols
 for|for
 control|(
 name|Map
@@ -1834,6 +1841,9 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+name|partColsIdx
+operator|++
+expr_stmt|;
 if|if
 condition|(
 name|ent
@@ -1908,10 +1918,23 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
+name|genPartValueString
+argument_list|(
+name|partCols
+operator|.
+name|get
+argument_list|(
+name|partColsIdx
+argument_list|)
+operator|.
+name|getType
+argument_list|()
+argument_list|,
 name|ent
 operator|.
 name|getValue
 argument_list|()
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
