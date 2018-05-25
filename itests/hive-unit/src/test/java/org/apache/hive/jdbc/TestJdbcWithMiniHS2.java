@@ -787,6 +787,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -5734,6 +5744,11 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Test for jdbc driver retry on NoHttpResponseException    * @throws Exception    */
+annotation|@
+name|Ignore
+argument_list|(
+literal|"Flaky test. Should be re-enabled in HIVE-19706"
+argument_list|)
 annotation|@
 name|Test
 specifier|public
