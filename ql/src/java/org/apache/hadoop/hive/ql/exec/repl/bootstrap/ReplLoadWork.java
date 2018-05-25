@@ -215,6 +215,10 @@ specifier|final
 name|String
 name|tableNameToLoadIn
 decl_stmt|;
+specifier|final
+name|String
+name|dumpDirectory
+decl_stmt|;
 specifier|private
 specifier|final
 name|BootstrapEventsIterator
@@ -274,6 +278,12 @@ expr_stmt|;
 name|sessionStateLineageState
 operator|=
 name|lineageState
+expr_stmt|;
+name|this
+operator|.
+name|dumpDirectory
+operator|=
+name|dumpDirectory
 expr_stmt|;
 name|this
 operator|.

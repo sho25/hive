@@ -6664,18 +6664,19 @@ operator|.
 name|createStatement
 argument_list|()
 expr_stmt|;
-comment|// Clean the txn to writeid map/TXN_COMPONENTS for the given table as we bootstrap here
+comment|// Check if this txn state is already replicated for this given table. If yes, then it is
+comment|// idempotent case and just return.
 name|String
 name|sql
 init|=
-literal|"delete from TXN_TO_WRITE_ID where t2w_database = "
+literal|"select nwi_next from NEXT_WRITE_ID where nwi_database = "
 operator|+
 name|quoteString
 argument_list|(
 name|dbName
 argument_list|)
 operator|+
-literal|" and t2w_table = "
+literal|" and nwi_table = "
 operator|+
 name|quoteString
 argument_list|(
@@ -6686,20 +6687,54 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Going to execute delete<"
+literal|"Going to execute query<"
 operator|+
 name|sql
 operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+name|rs
+operator|=
 name|stmt
 operator|.
-name|executeUpdate
+name|executeQuery
 argument_list|(
 name|sql
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|rs
+operator|.
+name|next
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Idempotent flow: WriteId state<"
+operator|+
+name|validWriteIdList
+operator|+
+literal|"> is already applied for the table: "
+operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tblName
+argument_list|)
+expr_stmt|;
+name|rollbackDBConn
+argument_list|(
+name|dbConn
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 if|if
 condition|(
 name|numAbortedWrites
@@ -6903,39 +6938,7 @@ argument_list|)
 expr_stmt|;
 comment|// There are some txns in the list which has no write id allocated and hence go ahead and do it.
 comment|// Get the next write id for the given table and update it with new next write id.
-comment|// This is select for update query which takes a lock if the table entry is already there in NEXT_WRITE_ID
-name|sql
-operator|=
-name|sqlGenerator
-operator|.
-name|addForUpdateClause
-argument_list|(
-literal|"select nwi_next from NEXT_WRITE_ID where nwi_database = "
-operator|+
-name|quoteString
-argument_list|(
-name|dbName
-argument_list|)
-operator|+
-literal|" and nwi_table = "
-operator|+
-name|quoteString
-argument_list|(
-name|tblName
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute query<"
-operator|+
-name|sql
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
+comment|// It is expected NEXT_WRITE_ID doesn't have entry for this table and hence directly insert it.
 name|long
 name|nextWriteId
 init|=
@@ -6946,24 +6949,6 @@ argument_list|()
 operator|+
 literal|1
 decl_stmt|;
-name|rs
-operator|=
-name|stmt
-operator|.
-name|executeQuery
-argument_list|(
-name|sql
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-operator|!
-name|rs
-operator|.
-name|next
-argument_list|()
-condition|)
-block|{
 comment|// First allocation of write id (hwm+1) should add the table to the next_write_id meta table.
 name|sql
 operator|=
@@ -7010,51 +6995,23 @@ argument_list|(
 name|sql
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-comment|// Update the NEXT_WRITE_ID for the given table with hwm+1 from source
-name|sql
-operator|=
-literal|"update NEXT_WRITE_ID set nwi_next = "
-operator|+
-operator|(
-name|nextWriteId
-operator|)
-operator|+
-literal|" where nwi_database = "
-operator|+
-name|quoteString
+name|LOG
+operator|.
+name|info
 argument_list|(
+literal|"WriteId state<"
+operator|+
+name|validWriteIdList
+operator|+
+literal|"> is applied for the table: "
+operator|+
 name|dbName
-argument_list|)
 operator|+
-literal|" and nwi_table = "
+literal|"."
 operator|+
-name|quoteString
-argument_list|(
 name|tblName
 argument_list|)
 expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to execute update<"
-operator|+
-name|sql
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|stmt
-operator|.
-name|executeUpdate
-argument_list|(
-name|sql
-argument_list|)
-expr_stmt|;
-block|}
 name|LOG
 operator|.
 name|debug

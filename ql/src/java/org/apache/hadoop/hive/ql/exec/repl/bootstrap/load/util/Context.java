@@ -120,6 +120,11 @@ name|Context
 block|{
 specifier|public
 specifier|final
+name|String
+name|dumpDirectory
+decl_stmt|;
+specifier|public
+specifier|final
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -162,6 +167,9 @@ decl_stmt|;
 specifier|public
 name|Context
 parameter_list|(
+name|String
+name|dumpDirectory
+parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|,
@@ -187,6 +195,12 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+name|this
+operator|.
+name|dumpDirectory
+operator|=
+name|dumpDirectory
+expr_stmt|;
 name|this
 operator|.
 name|hiveConf

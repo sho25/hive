@@ -291,6 +291,26 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|ReplUtils
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -574,6 +594,21 @@ name|CURR_STATE_ID
 operator|.
 name|toString
 argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Add the checkpoint key to the Database binding it to current dump directory.
+comment|// So, if retry using same dump, we shall skip Database object update.
+name|parameters
+operator|.
+name|put
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_CHECKPOINT_KEY
+argument_list|,
+name|context
+operator|.
+name|dumpDirectory
 argument_list|)
 expr_stmt|;
 name|createDbDesc

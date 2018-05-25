@@ -768,6 +768,10 @@ init|=
 operator|new
 name|Context
 argument_list|(
+name|work
+operator|.
+name|dumpDirectory
+argument_list|,
 name|conf
 argument_list|,
 name|getHive
