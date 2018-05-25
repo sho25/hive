@@ -7608,7 +7608,7 @@ name|HIVECONVERTJOINMAXSHUFFLESIZE
 argument_list|(
 literal|"hive.auto.convert.join.shuffle.max.size"
 argument_list|,
-literal|10000000L
+literal|10000000000L
 argument_list|,
 literal|"If hive.auto.convert.join.noconditionaltask is off, this parameter does not take affect. \n"
 operator|+
