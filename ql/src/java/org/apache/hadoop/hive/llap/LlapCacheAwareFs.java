@@ -988,7 +988,9 @@ argument_list|(
 name|arg0
 argument_list|)
 decl_stmt|;
-return|return
+name|FileStatus
+name|fileStatus
+init|=
 name|ctx
 operator|.
 name|getFs
@@ -1000,6 +1002,18 @@ name|ctx
 operator|.
 name|path
 argument_list|)
+decl_stmt|;
+comment|// We replace the path in the file status by the input path as Parquet
+comment|// may use the path in the file status to open the file
+name|fileStatus
+operator|.
+name|setPath
+argument_list|(
+name|arg0
+argument_list|)
+expr_stmt|;
+return|return
+name|fileStatus
 return|;
 block|}
 annotation|@

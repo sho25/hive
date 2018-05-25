@@ -31,6 +31,20 @@ name|apache
 operator|.
 name|parquet
 operator|.
+name|bytes
+operator|.
+name|ByteBufferInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
 name|column
 operator|.
 name|Dictionary
@@ -66,19 +80,15 @@ specifier|public
 interface|interface
 name|ParquetDataColumnReader
 block|{
-comment|/**    * Initialize the reader by page data.    * @param valueCount value count    * @param page page data    * @param offset current offset    * @throws IOException    */
+comment|/**    * Initialize the reader by page data.    * @param valueCount value count    * @param in page data    * @throws IOException    */
 name|void
 name|initFromPage
 parameter_list|(
 name|int
 name|valueCount
 parameter_list|,
-name|byte
-index|[]
-name|page
-parameter_list|,
-name|int
-name|offset
+name|ByteBufferInputStream
+name|in
 parameter_list|)
 throws|throws
 name|IOException
