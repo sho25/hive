@@ -1132,7 +1132,10 @@ name|mPrime
 operator|-
 name|sparseRegister
 operator|.
-name|getSize
+name|getSparseMap
+argument_list|()
+operator|.
+name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
