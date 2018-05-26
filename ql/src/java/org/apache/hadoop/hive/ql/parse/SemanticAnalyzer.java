@@ -6031,8 +6031,6 @@ argument_list|,
 name|qbexpr1
 argument_list|,
 name|id
-operator|+
-name|SUBQUERY_TAG_1
 argument_list|,
 name|alias
 operator|+
@@ -6087,8 +6085,6 @@ argument_list|,
 name|qbexpr2
 argument_list|,
 name|id
-operator|+
-name|SUBQUERY_TAG_2
 argument_list|,
 name|alias
 operator|+
