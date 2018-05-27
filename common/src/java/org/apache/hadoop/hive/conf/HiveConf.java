@@ -14175,6 +14175,15 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
+name|HIVEUSEGOOGLEREGEXENGINE
+argument_list|(
+literal|"hive.use.googleregex.engine"
+argument_list|,
+literal|false
+argument_list|,
+literal|"whether to use google regex engine or not, default regex engine is java.util.regex"
+argument_list|)
+block|,
 name|HIVECOUNTERGROUP
 argument_list|(
 literal|"hive.counters.group.name"
