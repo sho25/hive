@@ -189,13 +189,10 @@ block|{
 comment|// The set routine enforces precision and scale.
 name|outputColVector
 operator|.
-name|vector
-index|[
-name|i
-index|]
-operator|.
 name|set
 argument_list|(
+name|i
+argument_list|,
 name|inputColVector
 operator|.
 name|vector

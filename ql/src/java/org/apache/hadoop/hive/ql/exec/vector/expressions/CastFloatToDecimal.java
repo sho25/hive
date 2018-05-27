@@ -102,13 +102,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Cast input double to a decimal. Get target value scale from output column vector.  */
+comment|/**  * Cast input float to a decimal. Get target value scale from output column vector.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|CastDoubleToDecimal
+name|CastFloatToDecimal
 extends|extends
 name|FuncDoubleToDecimal
 block|{
@@ -121,7 +121,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|public
-name|CastDoubleToDecimal
+name|CastFloatToDecimal
 parameter_list|()
 block|{
 name|super
@@ -129,7 +129,7 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|public
-name|CastDoubleToDecimal
+name|CastFloatToDecimal
 parameter_list|(
 name|int
 name|inputColumn
@@ -172,16 +172,40 @@ index|[
 name|i
 index|]
 decl_stmt|;
-name|decWritable
+comment|// TEMPORARY: In order to avoid a new version of storage-api, do the conversion here...
+name|byte
+index|[]
+name|floatBytes
+init|=
+name|Float
 operator|.
-name|setFromDouble
+name|toString
 argument_list|(
+operator|(
+name|float
+operator|)
 name|inV
 operator|.
 name|vector
 index|[
 name|i
 index|]
+argument_list|)
+operator|.
+name|getBytes
+argument_list|()
+decl_stmt|;
+name|decWritable
+operator|.
+name|setFromBytes
+argument_list|(
+name|floatBytes
+argument_list|,
+literal|0
+argument_list|,
+name|floatBytes
+operator|.
+name|length
 argument_list|)
 expr_stmt|;
 if|if

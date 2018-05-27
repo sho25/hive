@@ -9691,26 +9691,6 @@ block|,
 literal|""
 block|}
 block|,
-block|{
-literal|"ColumnUnaryFunc"
-block|,
-literal|"CastDateToBooleanVia"
-block|,
-literal|"long"
-block|,
-literal|"long"
-block|,
-literal|"MathExpr.toBool"
-block|,
-literal|""
-block|,
-literal|""
-block|,
-literal|""
-block|,
-literal|"date"
-block|}
-block|,
 comment|// Boolean to long is done with an IdentityExpression
 comment|// Boolean to double is done with standard Long to Double cast
 comment|// See org.apache.hadoop.hive.ql.exec.vector.expressions for remaining cast VectorExpression
