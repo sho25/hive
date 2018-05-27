@@ -5206,13 +5206,13 @@ name|expected2
 init|=
 block|{
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t1\t2"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t1\t2"
 block|,
 literal|"warehouse/t/delta_0000001_0000001_0001/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t3\t4"
+literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t3\t4"
 block|,
 literal|"warehouse/t/delta_0000001_0000001_0001/bucket_00000"
 block|}

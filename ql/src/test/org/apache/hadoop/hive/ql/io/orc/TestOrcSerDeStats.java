@@ -1550,7 +1550,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 3 hasNull: true sum: 15"
+literal|"count: 3 hasNull: true bytesOnDisk: 28 sum: 15"
 argument_list|,
 name|stats
 index|[
@@ -1630,7 +1630,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 3 hasNull: true min: bar max: hi sum: 8"
+literal|"count: 3 hasNull: true bytesOnDisk: 22 min: bar max: hi sum: 8"
 argument_list|,
 name|stats
 index|[
@@ -3513,7 +3513,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false true: 1"
+literal|"count: 2 hasNull: false bytesOnDisk: 5 true: 1"
 argument_list|,
 name|stats
 index|[
@@ -3598,7 +3598,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: 1024 max: 2048 sum: 3072"
+literal|"count: 2 hasNull: false bytesOnDisk: 9 min: 1024 max: 2048 sum: 3072"
 argument_list|,
 name|stats
 index|[
@@ -3669,7 +3669,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: 9223372036854775807 max: 9223372036854775807"
+literal|"count: 2 hasNull: false bytesOnDisk: 12 min: 9223372036854775807 max: 9223372036854775807"
 argument_list|,
 name|stats
 index|[
@@ -3741,7 +3741,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: -15.0 max: -5.0 sum: -20.0"
+literal|"count: 2 hasNull: false bytesOnDisk: 15 min: -15.0 max: -5.0 sum: -20.0"
 argument_list|,
 name|stats
 index|[
@@ -3754,7 +3754,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: bye max: hi sum: 5"
+literal|"count: 2 hasNull: false bytesOnDisk: 14 min: bye max: hi sum: 5"
 argument_list|,
 name|stats
 index|[
@@ -4545,7 +4545,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false true: 1"
+literal|"count: 2 hasNull: false bytesOnDisk: 5 true: 1"
 argument_list|,
 name|stats
 index|[
@@ -4630,7 +4630,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: 1024 max: 2048 sum: 3072"
+literal|"count: 2 hasNull: false bytesOnDisk: 8 min: 1024 max: 2048 sum: 3072"
 argument_list|,
 name|stats
 index|[
@@ -4701,7 +4701,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: 9223372036854775807 max: 9223372036854775807"
+literal|"count: 2 hasNull: false bytesOnDisk: 12 min: 9223372036854775807 max: 9223372036854775807"
 argument_list|,
 name|stats
 index|[
@@ -4773,7 +4773,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: -15.0 max: -5.0 sum: -20.0"
+literal|"count: 2 hasNull: false bytesOnDisk: 15 min: -15.0 max: -5.0 sum: -20.0"
 argument_list|,
 name|stats
 index|[
@@ -4804,7 +4804,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false sum: 5"
+literal|"count: 2 hasNull: false bytesOnDisk: 14 sum: 5"
 argument_list|,
 name|stats
 index|[
@@ -4871,7 +4871,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: bye max: hi sum: 5"
+literal|"count: 2 hasNull: false bytesOnDisk: 20 min: bye max: hi sum: 5"
 argument_list|,
 name|stats
 index|[

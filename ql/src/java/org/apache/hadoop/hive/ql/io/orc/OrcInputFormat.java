@@ -141,16 +141,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -1532,6 +1522,18 @@ operator|.
 name|orc
 operator|.
 name|ColumnStatistics
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|FileFormatException
 import|;
 end_import
 
@@ -13130,6 +13132,8 @@ parameter_list|,
 name|int
 name|stripeCount
 parameter_list|)
+throws|throws
+name|FileFormatException
 block|{
 name|LOG
 operator|.

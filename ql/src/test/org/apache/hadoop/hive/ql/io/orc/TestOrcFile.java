@@ -1083,6 +1083,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -5970,7 +5980,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 3 hasNull: true sum: 15"
+literal|"count: 3 hasNull: true bytesOnDisk: 28 sum: 15"
 argument_list|,
 name|stats
 index|[
@@ -6050,7 +6060,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 3 hasNull: true min: bar max: hi sum: 8"
+literal|"count: 3 hasNull: true bytesOnDisk: 22 min: bar max: hi sum: 8"
 argument_list|,
 name|stats
 index|[
@@ -8189,7 +8199,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false true: 1"
+literal|"count: 2 hasNull: false bytesOnDisk: 5 true: 1"
 argument_list|,
 name|stats
 index|[
@@ -8274,7 +8284,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: 1024 max: 2048 sum: 3072"
+literal|"count: 2 hasNull: false bytesOnDisk: 9 min: 1024 max: 2048 sum: 3072"
 argument_list|,
 name|stats
 index|[
@@ -8459,7 +8469,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: -15.0 max: -5.0 sum: -20.0"
+literal|"count: 2 hasNull: false bytesOnDisk: 15 min: -15.0 max: -5.0 sum: -20.0"
 argument_list|,
 name|stats
 index|[
@@ -8472,7 +8482,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"count: 2 hasNull: false min: bye max: hi sum: 5"
+literal|"count: 2 hasNull: false bytesOnDisk: 14 min: bye max: hi sum: 5"
 argument_list|,
 name|stats
 index|[
@@ -14980,6 +14990,11 @@ argument_list|()
 expr_stmt|;
 block|}
 annotation|@
+name|Ignore
+argument_list|(
+literal|"ORC-367. Will be re-enabled in HIVE-19669"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -15453,6 +15468,7 @@ argument_list|,
 name|i
 argument_list|)
 decl_stmt|;
+comment|//assertEquals(expected, row);
 name|assertEquals
 argument_list|(
 name|expected
@@ -16000,6 +16016,11 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"ORC-367. Will be re-enabled in HIVE-19669"
+argument_list|)
 annotation|@
 name|Test
 specifier|public

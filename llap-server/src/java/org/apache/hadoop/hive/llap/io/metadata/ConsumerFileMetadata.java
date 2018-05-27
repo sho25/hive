@@ -51,6 +51,18 @@ name|apache
 operator|.
 name|orc
 operator|.
+name|FileFormatException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
 name|OrcProto
 operator|.
 name|Type
@@ -92,6 +104,8 @@ function_decl|;
 name|TypeDescription
 name|getSchema
 parameter_list|()
+throws|throws
+name|FileFormatException
 function_decl|;
 block|}
 end_interface
