@@ -4514,6 +4514,12 @@ name|fieldStart
 init|=
 name|currentFieldStart
 decl_stmt|;
+specifier|final
+name|int
+name|fieldLength
+init|=
+name|currentFieldLength
+decl_stmt|;
 name|int
 name|k
 init|=
@@ -4528,7 +4534,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|bufferLength
+name|fieldLength
 condition|;
 name|i
 operator|++
@@ -4552,7 +4558,7 @@ name|escapeChar
 operator|&&
 name|i
 operator|<
-name|bufferLength
+name|fieldLength
 operator|-
 literal|1
 condition|)
