@@ -1691,7 +1691,12 @@ name|srcPath
 argument_list|,
 name|destPath
 argument_list|,
-literal|true
+name|ReplChangeManager
+operator|.
+name|isSourceOfReplication
+argument_list|(
+name|olddb
+argument_list|)
 argument_list|)
 condition|)
 block|{
@@ -3750,6 +3755,9 @@ name|dataWasMoved
 init|=
 literal|false
 decl_stmt|;
+name|Database
+name|db
+decl_stmt|;
 try|try
 block|{
 name|msdb
@@ -3908,14 +3916,8 @@ condition|)
 block|{
 try|try
 block|{
-comment|// if tbl location is available use it
-comment|// else derive the tbl location from database location
-name|destPath
+name|db
 operator|=
-name|wh
-operator|.
-name|getPartitionPath
-argument_list|(
 name|msdb
 operator|.
 name|getDatabase
@@ -3924,6 +3926,16 @@ name|catName
 argument_list|,
 name|dbname
 argument_list|)
+expr_stmt|;
+comment|// if tbl location is available use it
+comment|// else derive the tbl location from database location
+name|destPath
+operator|=
+name|wh
+operator|.
+name|getPartitionPath
+argument_list|(
+name|db
 argument_list|,
 name|tbl
 argument_list|,
@@ -4179,7 +4191,12 @@ name|srcPath
 argument_list|,
 name|destPath
 argument_list|,
-literal|true
+name|ReplChangeManager
+operator|.
+name|isSourceOfReplication
+argument_list|(
+name|db
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG

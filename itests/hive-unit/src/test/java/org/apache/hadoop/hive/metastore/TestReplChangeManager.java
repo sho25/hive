@@ -196,6 +196,24 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|ReplChangeManager
+operator|.
+name|SOURCE_OF_REPLICATION
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -854,6 +872,15 @@ operator|new
 name|Database
 argument_list|()
 decl_stmt|;
+name|db
+operator|.
+name|putToParameters
+argument_list|(
+name|SOURCE_OF_REPLICATION
+argument_list|,
+literal|"1,2,3"
+argument_list|)
+expr_stmt|;
 name|db
 operator|.
 name|setName
@@ -1587,6 +1614,15 @@ operator|new
 name|Database
 argument_list|()
 decl_stmt|;
+name|db
+operator|.
+name|putToParameters
+argument_list|(
+name|SOURCE_OF_REPLICATION
+argument_list|,
+literal|"1, 2, 3"
+argument_list|)
+expr_stmt|;
 name|db
 operator|.
 name|setName

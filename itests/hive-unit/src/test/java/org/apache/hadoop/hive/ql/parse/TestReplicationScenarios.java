@@ -1069,6 +1069,24 @@ name|assertNull
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|ReplChangeManager
+operator|.
+name|SOURCE_OF_REPLICATION
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -3181,10 +3199,8 @@ name|driver
 argument_list|)
 expr_stmt|;
 comment|// Create an empty database to load
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName
 operator|+
 literal|"_empty"
@@ -3237,10 +3253,8 @@ literal|"NULL"
 block|}
 decl_stmt|;
 comment|// Create a database with a table
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName
 operator|+
 literal|"_withtable"
@@ -3290,10 +3304,8 @@ name|driverMirror
 argument_list|)
 expr_stmt|;
 comment|// Create a database with a view
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName
 operator|+
 literal|"_withview"
@@ -14490,19 +14502,15 @@ name|dbName2
 operator|+
 literal|"_dupe"
 decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName1
 argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName2
 argument_list|,
 name|driver
@@ -14615,7 +14623,7 @@ argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyFail
 argument_list|(
 literal|"ALTER TABLE "
 operator|+
@@ -14656,14 +14664,14 @@ name|verifyIfTableNotExist
 argument_list|(
 name|replDbName1
 argument_list|,
-literal|"unptned"
+literal|"unptned_renamed"
 argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|replDbName1
+name|replDbName2
 argument_list|,
 literal|"unptned_renamed"
 argument_list|,
@@ -14674,9 +14682,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|replDbName2
+name|replDbName1
 operator|+
-literal|".unptned_renamed ORDER BY a"
+literal|".unptned ORDER BY a"
 argument_list|,
 name|unptn_data
 argument_list|,
@@ -14743,19 +14751,15 @@ name|dbName2
 operator|+
 literal|"_dupe"
 decl_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName1
 argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
-name|run
+name|createDB
 argument_list|(
-literal|"CREATE DATABASE "
-operator|+
 name|dbName2
 argument_list|,
 name|driver
@@ -14868,7 +14872,7 @@ argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
-name|run
+name|verifyFail
 argument_list|(
 literal|"ALTER TABLE "
 operator|+
@@ -14909,14 +14913,14 @@ name|verifyIfTableNotExist
 argument_list|(
 name|replDbName1
 argument_list|,
-literal|"ptned"
+literal|"ptned_renamed"
 argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 name|verifyIfTableNotExist
 argument_list|(
-name|replDbName1
+name|replDbName2
 argument_list|,
 literal|"ptned_renamed"
 argument_list|,
@@ -14927,9 +14931,9 @@ name|verifyRun
 argument_list|(
 literal|"SELECT a from "
 operator|+
-name|replDbName2
+name|replDbName1
 operator|+
-literal|".ptned_renamed where (b=1) ORDER BY a"
+literal|".ptned where (b=1) ORDER BY a"
 argument_list|,
 name|ptn_data
 argument_list|,
@@ -23354,13 +23358,11 @@ name|dbName
 init|=
 literal|"testAuthForNotificationAPIs"
 decl_stmt|;
-name|driver
-operator|.
-name|run
+name|createDB
 argument_list|(
-literal|"create database "
-operator|+
 name|dbName
+argument_list|,
+name|driver
 argument_list|)
 expr_stmt|;
 name|NotificationEventResponse
@@ -23874,10 +23876,466 @@ name|fileCountAfter
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDumpNonReplDatabase
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|dbName
+init|=
+name|createDBNonRepl
+argument_list|(
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|verifyFail
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifyFail
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" from 1 "
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"alter database "
+operator|+
+name|dbName
+operator|+
+literal|" set dbproperties ('repl.source.for' = '1, 2, 3')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" from 1 "
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|dbName
+operator|=
+name|createDBNonRepl
+argument_list|(
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+operator|+
+literal|"_case"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"alter database "
+operator|+
+name|dbName
+operator|+
+literal|" set dbproperties ('repl.SOURCE.for' = '1, 2, 3')"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" from 1 "
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testRecycleFileNonReplDatabase
+parameter_list|()
+throws|throws
+name|IOException
+block|{
+name|String
+name|dbName
+init|=
+name|createDBNonRepl
+argument_list|(
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+argument_list|,
+name|driver
+argument_list|)
+decl_stmt|;
+name|String
+name|cmDir
+init|=
+name|hconf
+operator|.
+name|getVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPLCMDIR
+argument_list|)
+decl_stmt|;
+name|Path
+name|path
+init|=
+operator|new
+name|Path
+argument_list|(
+name|cmDir
+argument_list|)
+decl_stmt|;
+name|FileSystem
+name|fs
+init|=
+name|path
+operator|.
+name|getFileSystem
+argument_list|(
+name|hconf
+argument_list|)
+decl_stmt|;
+name|ContentSummary
+name|cs
+init|=
+name|fs
+operator|.
+name|getContentSummary
+argument_list|(
+name|path
+argument_list|)
+decl_stmt|;
+name|long
+name|fileCount
+init|=
+name|cs
+operator|.
+name|getFileCount
+argument_list|()
+decl_stmt|;
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".normal(a int)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|dbName
+operator|+
+literal|".normal values (1)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|cs
+operator|=
+name|fs
+operator|.
+name|getContentSummary
+argument_list|(
+name|path
+argument_list|)
+expr_stmt|;
+name|long
+name|fileCountAfter
+init|=
+name|cs
+operator|.
+name|getFileCount
+argument_list|()
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|fileCount
+operator|==
+name|fileCountAfter
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|dbName
+operator|+
+literal|".normal values (3)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"TRUNCATE TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".normal"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|cs
+operator|=
+name|fs
+operator|.
+name|getContentSummary
+argument_list|(
+name|path
+argument_list|)
+expr_stmt|;
+name|fileCountAfter
+operator|=
+name|cs
+operator|.
+name|getFileCount
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|fileCount
+operator|==
+name|fileCountAfter
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|dbName
+operator|+
+literal|".normal values (4)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"ALTER TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".normal RENAME to "
+operator|+
+name|dbName
+operator|+
+literal|".normal1"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|verifyRun
+argument_list|(
+literal|"SELECT count(*) from "
+operator|+
+name|dbName
+operator|+
+literal|".normal1"
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|}
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|cs
+operator|=
+name|fs
+operator|.
+name|getContentSummary
+argument_list|(
+name|path
+argument_list|)
+expr_stmt|;
+name|fileCountAfter
+operator|=
+name|cs
+operator|.
+name|getFileCount
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|fileCount
+operator|==
+name|fileCountAfter
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|dbName
+operator|+
+literal|".normal1 values (5)"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"DROP TABLE "
+operator|+
+name|dbName
+operator|+
+literal|".normal1"
+argument_list|,
+name|driver
+argument_list|)
+expr_stmt|;
+name|cs
+operator|=
+name|fs
+operator|.
+name|getContentSummary
+argument_list|(
+name|path
+argument_list|)
+expr_stmt|;
+name|fileCountAfter
+operator|=
+name|cs
+operator|.
+name|getFileCount
+argument_list|()
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|fileCount
+operator|==
+name|fileCountAfter
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 specifier|static
 name|String
 name|createDB
+parameter_list|(
+name|String
+name|name
+parameter_list|,
+name|IDriver
+name|myDriver
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Testing "
+operator|+
+name|name
+argument_list|)
+expr_stmt|;
+name|run
+argument_list|(
+literal|"CREATE DATABASE "
+operator|+
+name|name
+operator|+
+literal|" WITH DBPROPERTIES ( '"
+operator|+
+name|SOURCE_OF_REPLICATION
+operator|+
+literal|"' = '1,2,3')"
+argument_list|,
+name|myDriver
+argument_list|)
+expr_stmt|;
+return|return
+name|name
+return|;
+block|}
+specifier|private
+specifier|static
+name|String
+name|createDBNonRepl
 parameter_list|(
 name|String
 name|name

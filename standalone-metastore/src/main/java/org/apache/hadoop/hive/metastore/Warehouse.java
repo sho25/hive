@@ -1600,6 +1600,9 @@ name|f
 parameter_list|,
 name|boolean
 name|recursive
+parameter_list|,
+name|Database
+name|db
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1612,6 +1615,8 @@ argument_list|,
 name|recursive
 argument_list|,
 literal|false
+argument_list|,
+name|db
 argument_list|)
 return|;
 block|}
@@ -1627,6 +1632,9 @@ name|recursive
 parameter_list|,
 name|boolean
 name|ifPurge
+parameter_list|,
+name|Database
+name|db
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1640,7 +1648,12 @@ name|recursive
 argument_list|,
 name|ifPurge
 argument_list|,
-literal|true
+name|ReplChangeManager
+operator|.
+name|isSourceOfReplication
+argument_list|(
+name|db
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -1663,7 +1676,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|// no need to create the CM recycle file for temporary tables
 if|if
 condition|(
 name|needCmRecycle

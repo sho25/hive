@@ -206,6 +206,24 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|ReplChangeManager
+operator|.
+name|SOURCE_OF_REPLICATION
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -738,6 +756,12 @@ argument_list|(
 literal|"create database "
 operator|+
 name|primaryDbName
+operator|+
+literal|" WITH DBPROPERTIES ( '"
+operator|+
+name|SOURCE_OF_REPLICATION
+operator|+
+literal|"' = '1,2,3')"
 argument_list|)
 expr_stmt|;
 block|}
