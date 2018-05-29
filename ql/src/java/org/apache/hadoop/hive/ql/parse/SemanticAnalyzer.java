@@ -78761,6 +78761,9 @@ name|sortCols
 parameter_list|,
 name|boolean
 name|isMaterialization
+parameter_list|,
+name|boolean
+name|isTemporaryTable
 parameter_list|)
 block|{
 name|Map
@@ -78910,6 +78913,9 @@ decl_stmt|;
 name|boolean
 name|makeAcid
 init|=
+operator|!
+name|isTemporaryTable
+operator|&&
 name|MetastoreConf
 operator|.
 name|getBoolVar
@@ -80738,6 +80744,8 @@ argument_list|,
 name|sortCols
 argument_list|,
 name|isMaterialization
+argument_list|,
+name|isTemporary
 argument_list|)
 expr_stmt|;
 name|addDbAndTabToOutputs
@@ -80910,6 +80918,8 @@ argument_list|,
 name|sortCols
 argument_list|,
 name|isMaterialization
+argument_list|,
+name|isTemporary
 argument_list|)
 expr_stmt|;
 name|addDbAndTabToOutputs
@@ -81424,6 +81434,8 @@ argument_list|,
 name|sortCols
 argument_list|,
 name|isMaterialization
+argument_list|,
+name|isTemporary
 argument_list|)
 expr_stmt|;
 name|addDbAndTabToOutputs
