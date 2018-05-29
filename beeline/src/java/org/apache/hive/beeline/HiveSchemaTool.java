@@ -275,22 +275,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|DatabaseProduct
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|HiveMetaException
 import|;
 end_import
@@ -434,24 +418,6 @@ operator|.
 name|HiveSchemaHelper
 operator|.
 name|NestedScriptParser
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|tools
-operator|.
-name|SQLGenerator
 import|;
 end_import
 
@@ -5499,35 +5465,9 @@ expr_stmt|;
 return|return;
 block|}
 block|}
-name|SQLGenerator
-name|sqlGenerator
-init|=
-operator|new
-name|SQLGenerator
-argument_list|(
-name|DatabaseProduct
-operator|.
-name|determineDatabaseProduct
-argument_list|(
-name|conn
-operator|.
-name|getMetaData
-argument_list|()
-operator|.
-name|getDatabaseProductName
-argument_list|()
-argument_list|)
-argument_list|,
-name|hiveConf
-argument_list|)
-decl_stmt|;
 name|String
 name|query
 init|=
-name|sqlGenerator
-operator|.
-name|addForUpdateClause
-argument_list|(
 literal|"select max("
 operator|+
 name|quoteIf
@@ -5535,14 +5475,11 @@ argument_list|(
 literal|"CTLG_ID"
 argument_list|)
 operator|+
-literal|") "
-operator|+
-literal|"from "
+literal|") from "
 operator|+
 name|quoteIf
 argument_list|(
 literal|"CTLGS"
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -5680,8 +5617,6 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|MetaException
-decl||
 name|SQLException
 name|e
 parameter_list|)
@@ -5723,6 +5658,8 @@ operator|.
 name|error
 argument_list|(
 literal|"Failed to rollback, everything will probably go bad from here."
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
 block|}
