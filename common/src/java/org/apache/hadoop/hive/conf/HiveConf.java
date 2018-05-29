@@ -8814,6 +8814,18 @@ operator|+
 literal|"filter operators."
 argument_list|)
 block|,
+name|HIVE_STATS_IN_MIN_RATIO
+argument_list|(
+literal|"hive.stats.filter.in.min.ratio"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.05
+argument_list|,
+literal|"Output estimation of an IN filter can't be lower than this ratio"
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
