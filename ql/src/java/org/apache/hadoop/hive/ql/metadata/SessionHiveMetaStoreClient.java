@@ -4859,7 +4859,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|warn
+name|debug
 argument_list|(
 literal|"No current SessionState, skipping temp tables for "
 operator|+

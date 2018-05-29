@@ -5556,6 +5556,8 @@ name|ROLE
 argument_list|,
 literal|true
 argument_list|)
+argument_list|,
+literal|"SQL"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -37920,6 +37922,9 @@ parameter_list|(
 name|HiveObjectRef
 name|objToRefresh
 parameter_list|,
+name|String
+name|authorizer
+parameter_list|,
 name|GrantRevokePrivilegeRequest
 name|grantRequest
 parameter_list|)
@@ -37958,6 +37963,8 @@ operator|.
 name|refreshPrivileges
 argument_list|(
 name|objToRefresh
+argument_list|,
+name|authorizer
 argument_list|,
 name|grantRequest
 operator|.

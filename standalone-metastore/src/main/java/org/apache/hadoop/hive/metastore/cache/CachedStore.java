@@ -9942,6 +9942,9 @@ parameter_list|(
 name|HiveObjectRef
 name|objToRefresh
 parameter_list|,
+name|String
+name|authorizer
+parameter_list|,
 name|PrivilegeBag
 name|grantPrivileges
 parameter_list|)
@@ -9958,6 +9961,8 @@ operator|.
 name|refreshPrivileges
 argument_list|(
 name|objToRefresh
+argument_list|,
+name|authorizer
 argument_list|,
 name|grantPrivileges
 argument_list|)

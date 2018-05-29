@@ -5865,12 +5865,15 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param revokePrivileges    * @param objToRefresh    * @return true on success    * @throws MetaException    * @throws TException    */
+comment|/**    * @param revokePrivileges    * @param authorizer    * @param objToRefresh    * @return true on success    * @throws MetaException    * @throws TException    */
 name|boolean
 name|refresh_privileges
 parameter_list|(
 name|HiveObjectRef
 name|objToRefresh
+parameter_list|,
+name|String
+name|authorizer
 parameter_list|,
 name|PrivilegeBag
 name|grantPrivileges

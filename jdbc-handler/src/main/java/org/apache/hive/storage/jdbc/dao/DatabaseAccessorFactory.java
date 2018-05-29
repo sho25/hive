@@ -191,6 +191,9 @@ operator|.
 name|getPropertyName
 argument_list|()
 argument_list|)
+operator|.
+name|toUpperCase
+argument_list|()
 argument_list|)
 decl_stmt|;
 return|return

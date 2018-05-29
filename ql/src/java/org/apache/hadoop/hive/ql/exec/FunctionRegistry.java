@@ -4347,6 +4347,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"current_authorizer"
+argument_list|,
+name|GenericUDFCurrentAuthorizer
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"isnull"
 argument_list|,
 name|GenericUDFOPNull

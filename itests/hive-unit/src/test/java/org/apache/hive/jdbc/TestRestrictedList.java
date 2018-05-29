@@ -652,11 +652,6 @@ argument_list|)
 expr_stmt|;
 name|addToExpectedRestrictedMap
 argument_list|(
-literal|"hive.privilege.synchronizer"
-argument_list|)
-expr_stmt|;
-name|addToExpectedRestrictedMap
-argument_list|(
 literal|"hive.privilege.synchronizer.interval"
 argument_list|)
 expr_stmt|;

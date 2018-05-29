@@ -2526,6 +2526,9 @@ parameter_list|(
 name|HiveObjectRef
 name|objToRefresh
 parameter_list|,
+name|String
+name|authorizer
+parameter_list|,
 name|PrivilegeBag
 name|grantPrivileges
 parameter_list|)

@@ -952,6 +952,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|grantInfo
+argument_list|,
+literal|"SQL"
 argument_list|)
 decl_stmt|;
 name|privBag

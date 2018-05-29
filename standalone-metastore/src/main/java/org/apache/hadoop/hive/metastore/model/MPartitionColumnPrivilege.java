@@ -60,11 +60,15 @@ specifier|private
 name|boolean
 name|grantOption
 decl_stmt|;
+specifier|private
+name|String
+name|authorizer
+decl_stmt|;
 specifier|public
 name|MPartitionColumnPrivilege
 parameter_list|()
 block|{   }
-comment|/**    * @param principalName    * @param principalType    * @param partition    * @param columnName    * @param privileges    * @param createTime    * @param grantor    * @param grantorType    * @param grantOption    */
+comment|/**    * @param principalName    * @param principalType    * @param partition    * @param columnName    * @param privileges    * @param createTime    * @param grantor    * @param grantorType    * @param grantOption    * @param authorizer    */
 specifier|public
 name|MPartitionColumnPrivilege
 parameter_list|(
@@ -94,6 +98,9 @@ name|grantorType
 parameter_list|,
 name|boolean
 name|grantOption
+parameter_list|,
+name|String
+name|authorizer
 parameter_list|)
 block|{
 name|super
@@ -152,6 +159,12 @@ operator|.
 name|grantOption
 operator|=
 name|grantOption
+expr_stmt|;
+name|this
+operator|.
+name|authorizer
+operator|=
+name|authorizer
 expr_stmt|;
 block|}
 comment|/**    * @return column name    */
@@ -374,6 +387,30 @@ operator|.
 name|principalType
 operator|=
 name|principalType
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getAuthorizer
+parameter_list|()
+block|{
+return|return
+name|authorizer
+return|;
+block|}
+specifier|public
+name|void
+name|setAuthorizer
+parameter_list|(
+name|String
+name|authorizer
+parameter_list|)
+block|{
+name|this
+operator|.
+name|authorizer
+operator|=
+name|authorizer
 expr_stmt|;
 block|}
 block|}
