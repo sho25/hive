@@ -344,8 +344,6 @@ literal|"  TXN_LAST_HEARTBEAT bigint NOT NULL,"
 operator|+
 literal|"  TXN_USER varchar(128) NOT NULL,"
 operator|+
-literal|"  TXN_TYPE integer,"
-operator|+
 literal|"  TXN_HOST varchar(128) NOT NULL)"
 argument_list|)
 expr_stmt|;
