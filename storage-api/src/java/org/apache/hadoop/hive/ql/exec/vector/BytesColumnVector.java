@@ -1411,7 +1411,6 @@ literal|0
 index|]
 condition|)
 block|{
-comment|// loops start at position 1 because position 0 is already set
 if|if
 condition|(
 name|selectedInUse
@@ -1422,7 +1421,7 @@ control|(
 name|int
 name|j
 init|=
-literal|1
+literal|0
 init|;
 name|j
 operator|<
@@ -1471,7 +1470,7 @@ control|(
 name|int
 name|i
 init|=
-literal|1
+literal|0
 init|;
 name|i
 operator|<

@@ -260,7 +260,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|FLOAT
+name|DOUBLE
 argument_list|)
 operator|.
 name|setInputExpressionTypes
