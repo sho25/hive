@@ -389,16 +389,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Ignore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Rule
 import|;
 end_import
@@ -426,11 +416,6 @@ import|;
 end_import
 
 begin_class
-annotation|@
-name|Ignore
-argument_list|(
-literal|"Flaky. Will be re-enabled by HIVE-19697"
-argument_list|)
 specifier|public
 class|class
 name|TestReOptimization
@@ -1211,6 +1196,14 @@ argument_list|(
 literal|"reoptimize"
 argument_list|)
 decl_stmt|;
+comment|// loading of metastore stats is async; execute a simple to ensure they are loaded
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"select count(*) from tu group by id_uv"
+argument_list|)
+expr_stmt|;
 name|checkUsageOfRuntimeStats
 argument_list|(
 name|driver
