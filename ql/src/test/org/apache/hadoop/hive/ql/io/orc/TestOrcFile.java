@@ -1083,16 +1083,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Ignore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Rule
 import|;
 end_import
@@ -14990,11 +14980,6 @@ argument_list|()
 expr_stmt|;
 block|}
 annotation|@
-name|Ignore
-argument_list|(
-literal|"ORC-367. Will be re-enabled in HIVE-19669"
-argument_list|)
-annotation|@
 name|Test
 specifier|public
 name|void
@@ -16016,11 +16001,6 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
-annotation|@
-name|Ignore
-argument_list|(
-literal|"ORC-367. Will be re-enabled in HIVE-19669"
-argument_list|)
 annotation|@
 name|Test
 specifier|public
