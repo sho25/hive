@@ -1930,6 +1930,8 @@ operator|.
 name|getOriginColumnOrdinal
 argument_list|()
 argument_list|)
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|get

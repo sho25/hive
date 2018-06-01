@@ -651,6 +651,13 @@ name|Integer
 operator|.
 name|class
 argument_list|)
+argument_list|,
+name|Matchers
+operator|.
+name|eq
+argument_list|(
+literal|false
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Mockito

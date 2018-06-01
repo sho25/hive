@@ -3046,7 +3046,7 @@ argument_list|>
 name|projIndxLst
 parameter_list|,
 name|boolean
-name|allowNullColumnForMissingStats
+name|allowMissingStats
 parameter_list|)
 block|{
 name|List
@@ -4194,7 +4194,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|allowNullColumnForMissingStats
+name|allowMissingStats
 condition|)
 block|{
 name|LOG
@@ -4278,12 +4278,26 @@ argument_list|>
 name|projIndxLst
 parameter_list|)
 block|{
+comment|// If we allow estimated stats for the columns, then we shall set the boolean to true,
+comment|// since otherwise we will throw an exception because columns with estimated stats are
+comment|// actually added to the list of columns that do not contain stats.
 return|return
 name|getColStat
 argument_list|(
 name|projIndxLst
 argument_list|,
-literal|false
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_ESTIMATE_STATS
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -4301,7 +4315,7 @@ argument_list|>
 name|projIndxLst
 parameter_list|,
 name|boolean
-name|allowNullColumnForMissingStats
+name|allowMissingStats
 parameter_list|)
 block|{
 name|List
@@ -4391,7 +4405,7 @@ name|updateColStats
 argument_list|(
 name|projIndxSet
 argument_list|,
-name|allowNullColumnForMissingStats
+name|allowMissingStats
 argument_list|)
 expr_stmt|;
 for|for
@@ -4488,7 +4502,7 @@ argument_list|(
 name|pILst
 argument_list|)
 argument_list|,
-name|allowNullColumnForMissingStats
+name|allowMissingStats
 argument_list|)
 expr_stmt|;
 for|for
