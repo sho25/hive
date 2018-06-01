@@ -2071,6 +2071,13 @@ operator|.
 name|STAGING_DIR_PATH_FILTER
 argument_list|)
 expr_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|status
+argument_list|)
+expr_stmt|;
 comment|// There should be 1 delta dir, plus a base dir in the location
 name|Assert
 operator|.
