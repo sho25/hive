@@ -824,7 +824,7 @@ operator|!
 name|isTransactionalPropertiesPresent
 condition|)
 block|{
-name|normazlieTransactionalPropertyDefault
+name|normalizeTransactionalPropertyDefault
 argument_list|(
 name|newTable
 argument_list|)
@@ -838,19 +838,11 @@ operator|=
 name|DEFAULT_TRANSACTIONAL_PROPERTY
 expr_stmt|;
 block|}
-comment|//only need to check conformance if alter table enabled acid
-if|if
-condition|(
-operator|!
-name|conformToAcid
-argument_list|(
-name|newTable
-argument_list|)
-condition|)
-block|{
-comment|// INSERT_ONLY tables don't have to conform to ACID requirement like ORC or bucketing
-if|if
-condition|(
+comment|// We only need to check conformance if alter table enabled acid.
+comment|// INSERT_ONLY tables don't have to conform to ACID requirement like ORC or bucketing.
+name|boolean
+name|isFullAcid
+init|=
 name|transactionalPropertiesValue
 operator|==
 literal|null
@@ -862,13 +854,25 @@ name|equalsIgnoreCase
 argument_list|(
 name|transactionalPropertiesValue
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|isFullAcid
+operator|&&
+operator|!
+name|conformToAcid
+argument_list|(
+name|newTable
+argument_list|)
 condition|)
 block|{
 throw|throw
 operator|new
 name|MetaException
 argument_list|(
-literal|"The table must be stored using an ACID compliant format (such as ORC): "
+literal|"The table must be stored using an ACID compliant "
+operator|+
+literal|"format (such as ORC): "
 operator|+
 name|Warehouse
 operator|.
@@ -878,7 +882,6 @@ name|newTable
 argument_list|)
 argument_list|)
 throw|;
-block|}
 block|}
 if|if
 condition|(
@@ -913,6 +916,11 @@ literal|" cannot be declared transactional because it's an external table"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|isFullAcid
+condition|)
+block|{
 name|validateTableStructure
 argument_list|(
 name|context
@@ -923,6 +931,7 @@ argument_list|,
 name|newTable
 argument_list|)
 expr_stmt|;
+block|}
 name|hasValidTransactionalValue
 operator|=
 literal|true
@@ -1719,7 +1728,7 @@ operator|==
 literal|null
 condition|)
 block|{
-name|normazlieTransactionalPropertyDefault
+name|normalizeTransactionalPropertyDefault
 argument_list|(
 name|newTable
 argument_list|)
@@ -1756,7 +1765,7 @@ block|}
 comment|/**    * When a table is marked transactional=true but transactional_properties is not set then    * transactional_properties should take on the default value.  Easier to make this explicit in    * table definition than keep checking everywhere if it's set or not.    */
 specifier|private
 name|void
-name|normazlieTransactionalPropertyDefault
+name|normalizeTransactionalPropertyDefault
 parameter_list|(
 name|Table
 name|table
