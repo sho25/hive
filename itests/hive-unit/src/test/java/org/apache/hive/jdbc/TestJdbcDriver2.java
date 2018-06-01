@@ -6243,8 +6243,7 @@ name|assertEquals
 argument_list|(
 literal|"get update count not as expected"
 argument_list|,
-operator|-
-literal|1
+literal|0
 argument_list|,
 name|stmt
 operator|.
@@ -18387,6 +18386,8 @@ name|tblName
 init|=
 literal|"testInsertOverwriteExecAsync"
 decl_stmt|;
+try|try
+block|{
 name|int
 name|rowCount
 init|=
@@ -18425,6 +18426,8 @@ name|isResulSet
 argument_list|)
 expr_stmt|;
 comment|// HiveStatement#getUpdateCount blocks until the async query is complete
+name|rowCount
+operator|=
 name|stmt
 operator|.
 name|getUpdateCount
@@ -18466,9 +18469,6 @@ argument_list|(
 literal|2
 argument_list|)
 decl_stmt|;
-name|rowCount
-operator|++
-expr_stmt|;
 name|assertNotNull
 argument_list|(
 name|value
@@ -18477,11 +18477,14 @@ expr_stmt|;
 block|}
 name|assertEquals
 argument_list|(
-name|rowCount
-argument_list|,
 name|dataFileRowCount
+argument_list|,
+name|rowCount
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|stmt
 operator|.
 name|execute
@@ -18491,6 +18494,7 @@ operator|+
 name|tblName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Test that opening a JDBC connection to a non-existent database throws a HiveSQLException
 annotation|@

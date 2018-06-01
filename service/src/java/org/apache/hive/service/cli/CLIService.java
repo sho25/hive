@@ -2415,6 +2415,21 @@ operator|+
 literal|": getOperationStatus()"
 argument_list|)
 expr_stmt|;
+name|long
+name|numModifiedRows
+init|=
+name|operation
+operator|.
+name|getNumModifiedRows
+argument_list|()
+decl_stmt|;
+name|opStatus
+operator|.
+name|setNumModifiedRows
+argument_list|(
+name|numModifiedRows
+argument_list|)
+expr_stmt|;
 name|opStatus
 operator|.
 name|setJobProgressUpdate

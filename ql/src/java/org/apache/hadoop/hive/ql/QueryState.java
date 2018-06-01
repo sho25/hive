@@ -131,6 +131,13 @@ specifier|private
 name|HiveTxnManager
 name|txnManager
 decl_stmt|;
+comment|/**    * Holds the number of rows affected for insert queries.    */
+specifier|private
+name|long
+name|numModifiedRows
+init|=
+literal|0
+decl_stmt|;
 comment|/**    * Private constructor, use QueryState.Builder instead.    * @param conf The query specific configuration object    */
 specifier|private
 name|QueryState
@@ -280,6 +287,30 @@ operator|.
 name|txnManager
 operator|=
 name|txnManager
+expr_stmt|;
+block|}
+specifier|public
+name|long
+name|getNumModifiedRows
+parameter_list|()
+block|{
+return|return
+name|numModifiedRows
+return|;
+block|}
+specifier|public
+name|void
+name|setNumModifiedRows
+parameter_list|(
+name|long
+name|numModifiedRows
+parameter_list|)
+block|{
+name|this
+operator|.
+name|numModifiedRows
+operator|=
+name|numModifiedRows
 expr_stmt|;
 block|}
 comment|/**    * Builder to instantiate the QueryState object.    */
