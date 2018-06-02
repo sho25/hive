@@ -14408,8 +14408,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
-block|}
 for|for
 control|(
 name|String
@@ -14425,6 +14423,35 @@ argument_list|(
 name|colName
 argument_list|)
 expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|// partition spec is not specified but column schema can have partitions specified
+for|for
+control|(
+name|FieldSchema
+name|f
+range|:
+name|targetTable
+operator|.
+name|getPartCols
+argument_list|()
+control|)
+block|{
+comment|//parser only allows foo(a,b), not foo(foo.a, foo.b)
+name|targetColumns
+operator|.
+name|remove
+argument_list|(
+name|f
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 if|if
 condition|(
