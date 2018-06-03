@@ -256,26 +256,6 @@ import|;
 end_import
 
 begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|SortedSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|TreeSet
-import|;
-end_import
-
-begin_import
 import|import static
 name|org
 operator|.
@@ -298,6 +278,7 @@ import|;
 end_import
 
 begin_class
+specifier|public
 class|class
 name|TezProgressMonitor
 implements|implements
@@ -1141,6 +1122,7 @@ return|return
 name|mode
 return|;
 block|}
+specifier|public
 specifier|static
 class|class
 name|VertexProgress
@@ -1665,6 +1647,15 @@ return|return
 name|result
 return|;
 block|}
+block|}
+specifier|public
+name|DAGStatus
+name|getStatus
+parameter_list|()
+block|{
+return|return
+name|status
+return|;
 block|}
 block|}
 end_class
