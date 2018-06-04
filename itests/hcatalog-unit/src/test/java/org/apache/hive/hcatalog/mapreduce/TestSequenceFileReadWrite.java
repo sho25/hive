@@ -800,12 +800,11 @@ argument_list|)
 expr_stmt|;
 name|server
 operator|=
-operator|new
-name|PigServer
-argument_list|(
-name|ExecType
+name|HCatBaseTest
 operator|.
-name|LOCAL
+name|createPigServer
+argument_list|(
+literal|false
 argument_list|)
 expr_stmt|;
 block|}

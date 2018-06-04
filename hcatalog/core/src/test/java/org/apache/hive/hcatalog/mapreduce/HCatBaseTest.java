@@ -808,7 +808,6 @@ name|lineNumber
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * creates PigServer in LOCAL mode.    * http://pig.apache.org/docs/r0.12.0/perf.html#error-handling    * @param stopOnFailure equivalent of "-stop_on_failure" command line arg, setting to 'true' makes    *                      debugging easier    */
 specifier|public
 specifier|static
 name|PigServer
@@ -820,13 +819,32 @@ parameter_list|)
 throws|throws
 name|ExecException
 block|{
-name|Properties
-name|p
-init|=
+return|return
+name|createPigServer
+argument_list|(
+name|stopOnFailure
+argument_list|,
 operator|new
 name|Properties
 argument_list|()
-decl_stmt|;
+argument_list|)
+return|;
+block|}
+comment|/**    * creates PigServer in LOCAL mode.    * http://pig.apache.org/docs/r0.12.0/perf.html#error-handling    * @param stopOnFailure equivalent of "-stop_on_failure" command line arg, setting to 'true' makes    *                      debugging easier    */
+specifier|public
+specifier|static
+name|PigServer
+name|createPigServer
+parameter_list|(
+name|boolean
+name|stopOnFailure
+parameter_list|,
+name|Properties
+name|p
+parameter_list|)
+throws|throws
+name|ExecException
+block|{
 name|Path
 name|workDir
 init|=

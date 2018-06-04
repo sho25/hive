@@ -655,7 +655,7 @@ name|hcatalog
 operator|.
 name|mapreduce
 operator|.
-name|HCatInputFormat
+name|HCatBaseTest
 import|;
 end_import
 
@@ -665,9 +665,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|pig
+name|hive
 operator|.
-name|ExecType
+name|hcatalog
+operator|.
+name|mapreduce
+operator|.
+name|HCatInputFormat
 import|;
 end_import
 
@@ -1672,12 +1676,11 @@ expr_stmt|;
 name|PigServer
 name|server
 init|=
-operator|new
-name|PigServer
-argument_list|(
-name|ExecType
+name|HCatBaseTest
 operator|.
-name|LOCAL
+name|createPigServer
+argument_list|(
+literal|false
 argument_list|)
 decl_stmt|;
 name|server
@@ -2239,12 +2242,11 @@ expr_stmt|;
 name|PigServer
 name|server
 init|=
-operator|new
-name|PigServer
-argument_list|(
-name|ExecType
+name|HCatBaseTest
 operator|.
-name|LOCAL
+name|createPigServer
+argument_list|(
+literal|false
 argument_list|)
 decl_stmt|;
 name|server
