@@ -179,6 +179,25 @@ name|name
 argument_list|)
 return|;
 block|}
+specifier|public
+name|boolean
+name|containsSparkStatistic
+parameter_list|(
+name|String
+name|name
+parameter_list|)
+block|{
+return|return
+name|this
+operator|.
+name|statistics
+operator|.
+name|containsKey
+argument_list|(
+name|name
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

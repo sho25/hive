@@ -76,10 +76,17 @@ name|InputMetrics
 implements|implements
 name|Serializable
 block|{
+comment|/** Total number of bytes read. */
 specifier|public
 specifier|final
 name|long
 name|bytesRead
+decl_stmt|;
+comment|/** Total number of records read. */
+specifier|public
+specifier|final
+name|long
+name|recordsRead
 decl_stmt|;
 specifier|private
 name|InputMetrics
@@ -89,6 +96,8 @@ comment|// For Serialization only.
 name|this
 argument_list|(
 literal|0L
+argument_list|,
+literal|0L
 argument_list|)
 expr_stmt|;
 block|}
@@ -97,6 +106,9 @@ name|InputMetrics
 parameter_list|(
 name|long
 name|bytesRead
+parameter_list|,
+name|long
+name|recordsRead
 parameter_list|)
 block|{
 name|this
@@ -104,6 +116,12 @@ operator|.
 name|bytesRead
 operator|=
 name|bytesRead
+expr_stmt|;
+name|this
+operator|.
+name|recordsRead
+operator|=
+name|recordsRead
 expr_stmt|;
 block|}
 specifier|public
@@ -121,6 +139,14 @@ name|inputMetrics
 argument_list|()
 operator|.
 name|bytesRead
+argument_list|()
+argument_list|,
+name|metrics
+operator|.
+name|inputMetrics
+argument_list|()
+operator|.
+name|recordsRead
 argument_list|()
 argument_list|)
 expr_stmt|;

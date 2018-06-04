@@ -579,7 +579,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|18
+literal|24
 argument_list|,
 name|sparkStats
 operator|.

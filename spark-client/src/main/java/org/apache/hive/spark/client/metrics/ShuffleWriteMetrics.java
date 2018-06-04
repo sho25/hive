@@ -88,6 +88,12 @@ specifier|final
 name|long
 name|shuffleWriteTime
 decl_stmt|;
+comment|/** Total number of records written to the shuffle by this task. */
+specifier|public
+specifier|final
+name|long
+name|shuffleRecordsWritten
+decl_stmt|;
 specifier|private
 name|ShuffleWriteMetrics
 parameter_list|()
@@ -95,6 +101,8 @@ block|{
 comment|// For Serialization only.
 name|this
 argument_list|(
+literal|0L
+argument_list|,
 literal|0L
 argument_list|,
 literal|0L
@@ -109,6 +117,9 @@ name|shuffleBytesWritten
 parameter_list|,
 name|long
 name|shuffleWriteTime
+parameter_list|,
+name|long
+name|shuffleRecordsWritten
 parameter_list|)
 block|{
 name|this
@@ -122,6 +133,12 @@ operator|.
 name|shuffleWriteTime
 operator|=
 name|shuffleWriteTime
+expr_stmt|;
+name|this
+operator|.
+name|shuffleRecordsWritten
+operator|=
+name|shuffleRecordsWritten
 expr_stmt|;
 block|}
 specifier|public
@@ -147,6 +164,14 @@ name|shuffleWriteMetrics
 argument_list|()
 operator|.
 name|shuffleWriteTime
+argument_list|()
+argument_list|,
+name|metrics
+operator|.
+name|shuffleWriteMetrics
+argument_list|()
+operator|.
+name|shuffleRecordsWritten
 argument_list|()
 argument_list|)
 expr_stmt|;
