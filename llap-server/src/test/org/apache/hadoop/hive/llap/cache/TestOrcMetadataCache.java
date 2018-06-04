@@ -320,19 +320,10 @@ name|listener
 parameter_list|)
 block|{     }
 specifier|public
-name|String
-name|debugDumpForOom
-parameter_list|()
-block|{
-return|return
-literal|""
-return|;
-block|}
-specifier|public
 name|void
 name|setParentDebugDumper
 parameter_list|(
-name|LlapOomDebugDump
+name|LlapIoDebugDump
 name|dumper
 parameter_list|)
 block|{     }
@@ -411,32 +402,11 @@ block|{     }
 annotation|@
 name|Override
 specifier|public
-name|String
-name|debugDumpForOom
-parameter_list|()
-block|{
-return|return
-literal|""
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
 name|void
 name|updateMaxSize
 parameter_list|(
 name|long
 name|maxSize
-parameter_list|)
-block|{     }
-annotation|@
-name|Override
-specifier|public
-name|void
-name|debugDumpShort
-parameter_list|(
-name|StringBuilder
-name|sb
 parameter_list|)
 block|{     }
 block|}

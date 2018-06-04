@@ -613,19 +613,10 @@ name|listener
 parameter_list|)
 block|{     }
 specifier|public
-name|String
-name|debugDumpForOom
-parameter_list|()
-block|{
-return|return
-literal|""
-return|;
-block|}
-specifier|public
 name|void
 name|setParentDebugDumper
 parameter_list|(
-name|LlapOomDebugDump
+name|LlapIoDebugDump
 name|dumper
 parameter_list|)
 block|{     }

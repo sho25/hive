@@ -548,29 +548,6 @@ literal|"Buffer manager doesn't have cache"
 argument_list|)
 throw|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|debugDumpForOom
-parameter_list|()
-block|{
-return|return
-literal|""
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|void
-name|debugDumpShort
-parameter_list|(
-name|StringBuilder
-name|sb
-parameter_list|)
-block|{
-comment|// TODO Auto-generated method stub
-block|}
 block|}
 end_class
 

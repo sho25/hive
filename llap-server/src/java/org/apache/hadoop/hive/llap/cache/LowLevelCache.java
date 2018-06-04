@@ -119,8 +119,6 @@ begin_interface
 specifier|public
 interface|interface
 name|LowLevelCache
-extends|extends
-name|LlapOomDebugDump
 block|{
 specifier|public
 enum|enum

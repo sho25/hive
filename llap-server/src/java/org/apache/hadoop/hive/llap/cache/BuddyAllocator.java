@@ -373,7 +373,7 @@ name|EvictionAwareAllocator
 implements|,
 name|BuddyAllocatorMXBean
 implements|,
-name|LlapOomDebugDump
+name|LlapIoDebugDump
 block|{
 specifier|private
 specifier|final
@@ -3690,13 +3690,6 @@ name|StringBuilder
 name|sb
 parameter_list|)
 block|{
-name|memoryManager
-operator|.
-name|debugDumpShort
-argument_list|(
-name|sb
-argument_list|)
-expr_stmt|;
 name|sb
 operator|.
 name|append
@@ -9011,27 +9004,6 @@ return|return
 name|sb
 operator|.
 name|toString
-argument_list|()
-return|;
-block|}
-annotation|@
-name|Override
-specifier|public
-name|String
-name|debugDumpForOom
-parameter_list|()
-block|{
-return|return
-literal|"\nALLOCATOR STATE:\n"
-operator|+
-name|debugDumpForOomInternal
-argument_list|()
-operator|+
-literal|"\nPARENT STATE:\n"
-operator|+
-name|memoryManager
-operator|.
-name|debugDumpForOom
 argument_list|()
 return|;
 block|}

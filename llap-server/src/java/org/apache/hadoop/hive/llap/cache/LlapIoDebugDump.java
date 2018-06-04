@@ -22,12 +22,8 @@ end_package
 begin_interface
 specifier|public
 interface|interface
-name|LlapOomDebugDump
+name|LlapIoDebugDump
 block|{
-name|String
-name|debugDumpForOom
-parameter_list|()
-function_decl|;
 name|void
 name|debugDumpShort
 parameter_list|(
