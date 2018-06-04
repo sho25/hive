@@ -733,18 +733,21 @@ name|Exception
 block|{
 try|try
 block|{
-if|if
-condition|(
-name|client
-operator|!=
-literal|null
-condition|)
+try|try
 block|{
 name|client
 operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// HIVE-19729: Shallow the exceptions based on the discussion in the Jira
 block|}
 block|}
 finally|finally
