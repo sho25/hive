@@ -132,6 +132,8 @@ block|,
 name|DROP_CATALOG
 block|,
 name|READ_CATALOG
+block|,
+name|ALTER_CATALOG
 block|}
 specifier|private
 specifier|final

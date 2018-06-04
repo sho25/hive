@@ -1998,6 +1998,25 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Alter an existing catalog.    * @param catalogName the name of the catalog to alter.    * @param newCatalog the new catalog object.  All relevant details of the catalog should be    *                   set, don't rely on the system to figure out what you changed and only copy    *                   that in.    * @throws NoSuchObjectException no catalog of this name exists    * @throws InvalidObjectException an attempt was made to make an unsupported change (such as    * catalog name).    * @throws MetaException usually indicates a database error    * @throws TException general thrift exception    */
+name|void
+name|alterCatalog
+parameter_list|(
+name|String
+name|catalogName
+parameter_list|,
+name|Catalog
+name|newCatalog
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|InvalidObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
 comment|/**    * Get a catalog object.    * @param catName Name of the catalog to fetch.    * @return The catalog.    * @throws NoSuchObjectException no catalog of this name exists.    * @throws MetaException something went wrong, usually in the database.    * @throws TException general thrift exception.    */
 name|Catalog
 name|getCatalog

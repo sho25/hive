@@ -228,6 +228,13 @@ name|MessageFactory
 operator|.
 name|ALLOC_WRITE_ID_EVENT
 argument_list|)
+operator|,
+name|ALTER_CATALOG
+argument_list|(
+name|MessageFactory
+operator|.
+name|ALTER_CATALOG_EVENT
+argument_list|)
 expr_stmt|;
 end_class
 
