@@ -21,6 +21,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -369,6 +379,26 @@ name|Object
 index|[]
 name|keys
 decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"ListKeyWrapper [keys="
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|keys
+argument_list|)
+operator|+
+literal|"]"
+return|;
+block|}
 comment|// decide whether this is already in hashmap (keys in hashmap are deepcopied
 comment|// version, and we need to use 'currentKeyObjectInspector').
 name|ListObjectsEqualComparer
@@ -846,6 +876,21 @@ name|TextKeyWrapper
 extends|extends
 name|KeyWrapper
 block|{
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"TextKeyWrapper [key="
+operator|+
+name|key
+operator|+
+literal|"]"
+return|;
+block|}
 name|int
 name|hashcode
 decl_stmt|;

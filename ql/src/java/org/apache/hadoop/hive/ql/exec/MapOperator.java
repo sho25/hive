@@ -807,6 +807,25 @@ specifier|static
 class|class
 name|MapOpCtx
 block|{
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+literal|"[alias="
+operator|+
+name|alias
+operator|+
+literal|", op="
+operator|+
+name|op
+operator|+
+literal|"]"
+return|;
+block|}
 specifier|final
 name|String
 name|alias
