@@ -89558,6 +89558,21 @@ return|return
 literal|false
 return|;
 block|}
+comment|// HIVE-19096 - disable for explain analyze
+if|if
+condition|(
+name|ctx
+operator|.
+name|getExplainAnalyze
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
 return|return
 literal|true
 return|;
