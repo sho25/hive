@@ -149,7 +149,7 @@ argument_list|>
 block|{
 specifier|private
 specifier|final
-name|SparkClientImpl
+name|SparkClient
 name|client
 decl_stmt|;
 specifier|private
@@ -201,7 +201,7 @@ name|sparkCounters
 decl_stmt|;
 name|JobHandleImpl
 parameter_list|(
-name|SparkClientImpl
+name|SparkClient
 name|client
 parameter_list|,
 name|Promise
@@ -903,7 +903,7 @@ argument_list|()
 throw|;
 block|}
 block|}
-comment|/** Last attempt at preventing stray jobs from accumulating in SparkClientImpl. */
+comment|/** Last attempt at preventing stray jobs from accumulating in SparkClient. */
 annotation|@
 name|Override
 specifier|protected

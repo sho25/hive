@@ -148,7 +148,7 @@ block|{
 annotation|@
 name|Mock
 specifier|private
-name|SparkClientImpl
+name|SparkClient
 name|client
 decl_stmt|;
 annotation|@

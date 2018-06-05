@@ -2053,6 +2053,22 @@ name|HIVE_SERVER2_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
 init|=
 literal|"hive.server2.authentication.ldap.userMembershipKey"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_SPARK_SUBMIT_CLIENT
+init|=
+literal|"spark-submit"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_SPARK_LAUNCHER_CLIENT
+init|=
+literal|"spark-launcher"
+decl_stmt|;
 comment|/**    * dbVars are the parameters can be set per database. If these    * parameters are set as a database property, when switching to that    * database, the HiveConf variable will be changed. The change of these    * parameters will effectively change the DFS and MapReduce clusters    * for different databases.    */
 specifier|public
 specifier|static
@@ -15635,6 +15651,29 @@ operator|+
 literal|"If a Spark job stage contains more tasks than the maximum, the job will be cancelled. A value of -1 means no limit."
 argument_list|)
 block|,
+name|SPARK_CLIENT_TYPE
+argument_list|(
+literal|"hive.spark.client.type"
+argument_list|,
+name|HIVE_SPARK_SUBMIT_CLIENT
+argument_list|,
+literal|"Controls how the Spark application is launched. If "
+operator|+
+name|HIVE_SPARK_SUBMIT_CLIENT
+operator|+
+literal|" is "
+operator|+
+literal|"specified (default) then the spark-submit shell script is used to launch the Spark "
+operator|+
+literal|"app. If "
+operator|+
+name|HIVE_SPARK_LAUNCHER_CLIENT
+operator|+
+literal|" is specified then Spark's "
+operator|+
+literal|"InProcessLauncher is used to programmatically launch the app."
+argument_list|)
+block|,
 name|NWAYJOINREORDER
 argument_list|(
 literal|"hive.reorder.nway.joins"
@@ -15912,6 +15951,12 @@ operator|+
 literal|","
 operator|+
 name|SPARK_CLIENT_FUTURE_TIMEOUT
+operator|.
+name|varname
+operator|+
+literal|","
+operator|+
+name|SPARK_CLIENT_TYPE
 operator|.
 name|varname
 argument_list|,

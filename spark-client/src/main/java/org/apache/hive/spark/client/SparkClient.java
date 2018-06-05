@@ -208,6 +208,14 @@ name|boolean
 name|isActive
 parameter_list|()
 function_decl|;
+comment|/**    * Cancel the specified jobId    *    * @param jobId the jobId to cancel    */
+name|void
+name|cancel
+parameter_list|(
+name|String
+name|jobId
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
