@@ -2860,6 +2860,20 @@ argument_list|,
 literal|"Spark job was interrupted while executing"
 argument_list|)
 block|,
+name|SPARK_GET_JOB_INFO_INTERRUPTED
+argument_list|(
+literal|30045
+argument_list|,
+literal|"Spark job was interrupted while getting job info"
+argument_list|)
+block|,
+name|SPARK_GET_JOB_INFO_EXECUTIONERROR
+argument_list|(
+literal|30046
+argument_list|,
+literal|"Spark job failed in execution while getting job info due to exception {0}"
+argument_list|)
+block|,
 comment|//========================== 40000 range starts here ========================//
 name|SPARK_JOB_RUNTIME_ERROR
 argument_list|(
