@@ -15470,7 +15470,7 @@ operator|.
 name|SECONDS
 argument_list|)
 argument_list|,
-literal|"Timeout for requests from Hive client to remote Spark driver."
+literal|"Timeout for requests between Hive client and remote Spark driver."
 argument_list|)
 block|,
 name|SPARK_JOB_MONITOR_TIMEOUT
