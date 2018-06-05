@@ -7652,6 +7652,15 @@ name|equals
 argument_list|(
 name|parts
 argument_list|)
+operator|||
+comment|// skip Druid properties which are used in DruidSerde, since they are also updated
+comment|// after SerDeInfo properties are copied.
+name|key
+operator|.
+name|startsWith
+argument_list|(
+literal|"druid."
+argument_list|)
 operator|)
 condition|)
 block|{
