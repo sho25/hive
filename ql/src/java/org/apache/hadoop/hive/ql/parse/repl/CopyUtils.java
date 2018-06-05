@@ -225,6 +225,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|FileNotFoundException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -716,6 +726,43 @@ name|MAX_COPY_RETRY
 operator|)
 condition|)
 block|{
+try|try
+block|{
+comment|// if its retrying, first regenerate the path list.
+if|if
+condition|(
+name|repeat
+operator|>
+literal|0
+condition|)
+block|{
+name|pathList
+operator|=
+name|getFilesToRetry
+argument_list|(
+name|sourceFs
+argument_list|,
+name|srcFileList
+argument_list|,
+name|destinationFs
+argument_list|,
+name|destination
+argument_list|,
+name|isCopyError
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|pathList
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// all files were copied successfully in last try. So can break from here.
+break|break;
+block|}
+block|}
 name|LOG
 operator|.
 name|info
@@ -733,11 +780,10 @@ operator|+
 name|pathList
 argument_list|)
 expr_stmt|;
-try|try
-block|{
+comment|// if exception happens during doCopyOnce, then need to call getFilesToRetry with copy error as true in retry.
 name|isCopyError
 operator|=
-literal|false
+literal|true
 expr_stmt|;
 name|doCopyOnce
 argument_list|(
@@ -752,6 +798,11 @@ argument_list|,
 name|useRegularCopy
 argument_list|)
 expr_stmt|;
+comment|// if exception happens after doCopyOnce, then need to call getFilesToRetry with copy error as false in retry.
+name|isCopyError
+operator|=
+literal|false
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -760,26 +811,131 @@ name|e
 parameter_list|)
 block|{
 comment|// If copy fails, fall through the retry logic
-name|isCopyError
-operator|=
-literal|true
-expr_stmt|;
-block|}
-name|pathList
-operator|=
-name|getFilesToRetry
+name|LOG
+operator|.
+name|info
 argument_list|(
-name|sourceFs
+literal|"file operation failed"
 argument_list|,
-name|srcFileList
-argument_list|,
-name|destinationFs
-argument_list|,
-name|destination
-argument_list|,
-name|isCopyError
+name|e
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|repeat
+operator|>=
+operator|(
+name|MAX_COPY_RETRY
+operator|-
+literal|1
+operator|)
+condition|)
+block|{
+comment|//no need to wait in the last iteration
+break|break;
+block|}
+if|if
+condition|(
+operator|!
+operator|(
+name|e
+operator|instanceof
+name|FileNotFoundException
+operator|)
+condition|)
+block|{
+name|int
+name|sleepTime
+init|=
+name|FileUtils
+operator|.
+name|getSleepTime
+argument_list|(
+name|repeat
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sleep for "
+operator|+
+name|sleepTime
+operator|+
+literal|" milliseconds before retry "
+operator|+
+operator|(
+name|repeat
+operator|+
+literal|1
+operator|)
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+name|sleepTime
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|timerEx
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"sleep interrupted"
+argument_list|,
+name|timerEx
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// looks like some network outrage, reset the file system object and retry.
+name|FileSystem
+operator|.
+name|closeAllForUGI
+argument_list|(
+name|Utils
+operator|.
+name|getUGI
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|sourceFs
+operator|=
+name|pathList
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getFileSystem
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+name|destinationFs
+operator|=
+name|destination
+operator|.
+name|getFileSystem
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|repeat
 operator|++
 expr_stmt|;
@@ -800,7 +956,7 @@ name|error
 argument_list|(
 literal|"File copy failed even after several attempts. Files list: "
 operator|+
-name|srcFileList
+name|pathList
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -964,20 +1120,7 @@ continue|continue;
 block|}
 block|}
 block|}
-else|else
-block|{
-comment|// If destination file is missing, then retry copy
-if|if
-condition|(
-name|sourceFs
-operator|.
-name|exists
-argument_list|(
-name|srcPath
-argument_list|)
-condition|)
-block|{
-comment|// If checksum does not match, likely the file is changed/removed, retry from CM path
+elseif|else
 if|if
 condition|(
 name|isSourceFileMismatch
@@ -988,6 +1131,7 @@ name|srcFile
 argument_list|)
 condition|)
 block|{
+comment|// If checksum does not match, likely the file is changed/removed, retry from CM path
 name|srcFile
 operator|.
 name|setIsUseSourcePath
@@ -995,66 +1139,6 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
-block|}
-block|}
-else|else
-block|{
-if|if
-condition|(
-name|srcFile
-operator|.
-name|isUseSourcePath
-argument_list|()
-condition|)
-block|{
-comment|// Source file missing, then try with CM path
-name|srcFile
-operator|.
-name|setIsUseSourcePath
-argument_list|(
-literal|false
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// CM path itself is missing, cannot recover from this error
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"File Copy Failed. Both source and CM files are missing from source. "
-operator|+
-literal|"Missing Source File: "
-operator|+
-name|srcFile
-operator|.
-name|getSourcePath
-argument_list|()
-operator|+
-literal|", CM File: "
-operator|+
-name|srcFile
-operator|.
-name|getCmPath
-argument_list|()
-operator|+
-literal|". "
-operator|+
-literal|"Try setting higher value for hive.repl.cm.retain in source warehouse. "
-operator|+
-literal|"Also, bootstrap the system again to get back the consistent replicated state."
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-literal|"Both source and CM path are missing from source."
-argument_list|)
-throw|;
-block|}
-block|}
 block|}
 name|srcPath
 operator|=
@@ -1090,6 +1174,62 @@ operator|new
 name|IOException
 argument_list|(
 literal|"File copy failed and likely source file is deleted or modified."
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+operator|!
+name|srcFile
+operator|.
+name|isUseSourcePath
+argument_list|()
+operator|&&
+operator|!
+name|sourceFs
+operator|.
+name|exists
+argument_list|(
+name|srcFile
+operator|.
+name|getCmPath
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// CM path itself is missing, cannot recover from this error
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"File Copy Failed. Both source and CM files are missing from source. "
+operator|+
+literal|"Missing Source File: "
+operator|+
+name|srcFile
+operator|.
+name|getSourcePath
+argument_list|()
+operator|+
+literal|", CM File: "
+operator|+
+name|srcFile
+operator|.
+name|getCmPath
+argument_list|()
+operator|+
+literal|". "
+operator|+
+literal|"Try setting higher value for hive.repl.cm.retain in source warehouse. "
+operator|+
+literal|"Also, bootstrap the system again to get back the consistent replicated state."
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Both source and CM path are missing from source."
 argument_list|)
 throw|;
 block|}
