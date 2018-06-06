@@ -319,7 +319,7 @@ literal|0
 decl_stmt|;
 name|Map
 argument_list|<
-name|String
+name|SparkStage
 argument_list|,
 name|SparkStageProgress
 argument_list|>
@@ -512,7 +512,7 @@ condition|)
 block|{
 name|Map
 argument_list|<
-name|String
+name|SparkStage
 argument_list|,
 name|SparkStageProgress
 argument_list|>
@@ -755,7 +755,7 @@ name|SUCCEEDED
 case|:
 name|Map
 argument_list|<
-name|String
+name|SparkStage
 argument_list|,
 name|SparkStageProgress
 argument_list|>

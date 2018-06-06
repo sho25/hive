@@ -161,7 +161,7 @@ literal|null
 decl_stmt|;
 name|Map
 argument_list|<
-name|String
+name|SparkStage
 argument_list|,
 name|SparkStageProgress
 argument_list|>
@@ -314,7 +314,7 @@ name|state
 expr_stmt|;
 name|Map
 argument_list|<
-name|String
+name|SparkStage
 argument_list|,
 name|SparkStageProgress
 argument_list|>

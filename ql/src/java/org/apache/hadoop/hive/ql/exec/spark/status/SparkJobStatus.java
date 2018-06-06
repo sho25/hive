@@ -133,7 +133,7 @@ name|HiveException
 function_decl|;
 name|Map
 argument_list|<
-name|String
+name|SparkStage
 argument_list|,
 name|SparkStageProgress
 argument_list|>
