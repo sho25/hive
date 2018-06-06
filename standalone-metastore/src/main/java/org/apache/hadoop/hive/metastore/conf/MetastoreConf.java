@@ -558,6 +558,17 @@ name|TEST_ENV_WORKAROUND
 init|=
 literal|"metastore.testing.env.workaround.dont.ever.set.this."
 decl_stmt|;
+specifier|public
+specifier|static
+enum|enum
+name|StatsUpdateMode
+block|{
+name|NONE
+block|,
+name|EXISTING
+block|,
+name|ALL
+block|}
 specifier|private
 specifier|static
 class|class
@@ -3149,6 +3160,64 @@ argument_list|,
 literal|""
 argument_list|,
 literal|"The Java class (implementing the StatsPublisher interface) that is used by default if hive.stats.dbclass is custom type."
+argument_list|)
+block|,
+name|STATS_AUTO_UPDATE
+argument_list|(
+literal|"metastore.stats.auto.analyze"
+argument_list|,
+literal|"hive.metastore.stats.auto.analyze"
+argument_list|,
+literal|"none"
+argument_list|,
+operator|new
+name|EnumValidator
+argument_list|(
+name|StatsUpdateMode
+operator|.
+name|values
+argument_list|()
+argument_list|)
+argument_list|,
+literal|"Whether to update stats in the background; none - no, all - for all tables, existing - only existing, out of date, stats."
+argument_list|)
+block|,
+name|STATS_AUTO_UPDATE_NOOP_WAIT
+argument_list|(
+literal|"metastore.stats.auto.analyze.noop.wait"
+argument_list|,
+literal|"hive.metastore.stats.auto.analyze.noop.wait"
+argument_list|,
+literal|5L
+argument_list|,
+name|TimeUnit
+operator|.
+name|MINUTES
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MINUTES
+argument_list|)
+argument_list|,
+literal|"How long to sleep if there were no stats needing update during an update iteration.\n"
+operator|+
+literal|"This is a setting to throttle table/partition checks when nothing is being changed; not\n"
+operator|+
+literal|"the analyze queries themselves."
+argument_list|)
+block|,
+name|STATS_AUTO_UPDATE_WORKER_COUNT
+argument_list|(
+literal|"metastore.stats.auto.analyze.worker.count"
+argument_list|,
+literal|"hive.metastore.stats.auto.analyze.worker.count"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Number of parallel analyze commands to run for background stats update."
 argument_list|)
 block|,
 name|STORAGE_SCHEMA_READER_IMPL

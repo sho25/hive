@@ -3683,11 +3683,25 @@ name|InvalidObjectException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Alter failed"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|InvalidOperationException
 argument_list|(
-literal|"alter is not possible"
+literal|"alter is not possible: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -3702,7 +3716,12 @@ throw|throw
 operator|new
 name|InvalidOperationException
 argument_list|(
-literal|"alter is not possible"
+literal|"alter is not possible: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 throw|;
 block|}

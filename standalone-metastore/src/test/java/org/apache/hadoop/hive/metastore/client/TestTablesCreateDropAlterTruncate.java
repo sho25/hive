@@ -2702,7 +2702,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|MetaException
+name|InvalidObjectException
 operator|.
 name|class
 argument_list|)
@@ -6356,7 +6356,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|MetaException
+name|InvalidOperationException
 operator|.
 name|class
 argument_list|)
