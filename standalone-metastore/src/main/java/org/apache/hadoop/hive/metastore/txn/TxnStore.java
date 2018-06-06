@@ -404,6 +404,16 @@ name|TxnAbortedException
 throws|,
 name|MetaException
 function_decl|;
+comment|/**    * Called on conversion of existing table to full acid.  Sets initial write ID to a high    * enough value so that we can assign unique ROW__IDs to data in existing files.    */
+name|void
+name|seedWriteIdOnAcidConversion
+parameter_list|(
+name|InitializeTableWriteIdsRequest
+name|rqst
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * Obtain a lock.    * @param rqst information on the lock to obtain.  If the requester is part of a transaction    *             the txn information must be included in the lock request.    * @return info on the lock, including whether it was obtained.    * @throws NoSuchTxnException    * @throws TxnAbortedException    * @throws MetaException    */
 annotation|@
 name|RetrySemantics

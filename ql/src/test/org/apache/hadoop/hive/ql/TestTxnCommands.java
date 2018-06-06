@@ -7652,7 +7652,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
+literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7676,7 +7676,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/delta_0000001_0000001_0000/bucket_00001"
+literal|"nonacidorctbl/delta_10000001_10000001_0000/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7795,7 +7795,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000001/bucket_00001"
+literal|"nonacidorctbl/base_10000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7843,7 +7843,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000001/bucket_00001"
+literal|"nonacidorctbl/base_10000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7891,7 +7891,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000001/bucket_00001"
+literal|"nonacidorctbl/base_10000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7915,7 +7915,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
+literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7939,7 +7939,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nonacidorctbl/base_0000001/bucket_00001"
+literal|"nonacidorctbl/base_10000001/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;

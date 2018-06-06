@@ -2914,19 +2914,19 @@ literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t0\t15"
+literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":1}\t0\t15"
 block|,
 literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":3,\"bucketid\":536936448,\"rowid\":0}\t0\t17"
+literal|"{\"writeid\":10000003,\"bucketid\":536936448,\"rowid\":0}\t0\t17"
 block|,
 literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":0}\t0\t120"
+literal|"{\"writeid\":10000002,\"bucketid\":536936448,\"rowid\":0}\t0\t120"
 block|,
 literal|"bucket_00001"
 block|}
@@ -2956,7 +2956,7 @@ literal|"bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
+literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":0}\t1\t16"
 block|,
 literal|"bucket_00001"
 block|}
@@ -6433,7 +6433,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000001_0000001_0000"
+literal|"delta_10000001_10000001_0000"
 argument_list|,
 name|status
 index|[
@@ -6491,7 +6491,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delta_0000002_0000002_0000"
+literal|"delta_10000002_10000002_0000"
 argument_list|,
 name|status
 index|[
@@ -6598,7 +6598,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"delete_delta_0000001_0000001_0000"
+literal|"delete_delta_10000001_10000001_0000"
 argument_list|,
 name|status
 index|[
@@ -7078,7 +7078,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000002"
+literal|"base_10000002"
 argument_list|,
 name|status
 index|[
@@ -7308,7 +7308,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"base_0000002"
+literal|"base_10000002"
 argument_list|,
 name|status
 index|[
