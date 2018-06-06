@@ -832,6 +832,11 @@ name|getDatabase
 argument_list|(
 name|table
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getDbName
 argument_list|()
 argument_list|)

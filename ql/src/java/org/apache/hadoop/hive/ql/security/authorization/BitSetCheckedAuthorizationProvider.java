@@ -1309,6 +1309,11 @@ name|getDatabase
 argument_list|(
 name|table
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getDbName
 argument_list|()
 argument_list|)
@@ -1428,6 +1433,14 @@ name|hive_db
 operator|.
 name|getDatabase
 argument_list|(
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|part
 operator|.
 name|getTable
@@ -1621,7 +1634,7 @@ return|return
 name|pass
 return|;
 block|}
-comment|/**    * try to match an array of privileges from user/groups/roles grants.    *    * @param container    */
+comment|/**    * try to match an array of privileges from user/groups/roles grants.    *    */
 specifier|private
 name|boolean
 name|matchPrivs
