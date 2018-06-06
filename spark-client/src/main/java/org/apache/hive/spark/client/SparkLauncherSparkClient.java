@@ -305,6 +305,7 @@ name|LOST
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|transient
 name|AbstractLauncher
 argument_list|<
 name|InProcessLauncher
