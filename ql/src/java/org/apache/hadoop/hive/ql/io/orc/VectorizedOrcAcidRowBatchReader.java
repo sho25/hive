@@ -2539,6 +2539,7 @@ condition|(
 name|rowIdProjected
 condition|)
 block|{
+comment|// TODO: could we just do: int ix = rbCtx.findVirtualColumnNum(VirtualColumn.ROWID); value.cols[ix] = recordIdColumnVector;
 name|rbCtx
 operator|.
 name|setRecordIdColumnVector

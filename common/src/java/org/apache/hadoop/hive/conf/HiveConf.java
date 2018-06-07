@@ -13779,6 +13779,15 @@ argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
+name|LLAP_IO_ROW_WRAPPER_ENABLED
+argument_list|(
+literal|"hive.llap.io.row.wrapper.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether the LLAP IO row wrapper is enabled for non-vectorized queries."
+argument_list|)
+block|,
 name|LLAP_IO_ACID_ENABLED
 argument_list|(
 literal|"hive.llap.io.acid"

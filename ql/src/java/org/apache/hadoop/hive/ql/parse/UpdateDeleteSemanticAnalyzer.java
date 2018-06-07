@@ -205,6 +205,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|TableType
@@ -3191,6 +3209,20 @@ operator|.
 name|DYNAMICPARTITIONINGMODE
 argument_list|,
 literal|"nonstrict"
+argument_list|)
+expr_stmt|;
+comment|// Disable LLAP IO wrapper; doesn't propagate extra ACID columns correctly.
+name|HiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_IO_ROW_WRAPPER_ENABLED
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Parse the rewritten query string
