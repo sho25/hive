@@ -353,7 +353,7 @@ name|String
 name|statsAggKeyPrefix
 decl_stmt|;
 comment|// stats publishing/aggregating key prefix
-comment|/**   * A list of the partition columns of the table.   * Set by the semantic analyzer only in case of the analyze command.   */
+comment|/**    * A list of the partition columns of the table.    * Set by the semantic analyzer only in case of the analyze command.    */
 specifier|private
 name|List
 argument_list|<
@@ -705,9 +705,6 @@ name|displayName
 operator|=
 literal|"alias"
 argument_list|)
-comment|// FIXME: this might not needed to be in the signature; but in that case the compare shouldn't consider it either!
-annotation|@
-name|Signature
 specifier|public
 name|String
 name|getAlias
@@ -1626,17 +1623,19 @@ return|return
 name|isMetadataOnly
 return|;
 block|}
-comment|//  @Signature
+annotation|@
+name|Signature
 specifier|public
 name|String
 name|getQualifiedTable
 parameter_list|()
 block|{
 return|return
-name|tableMetadata
-operator|.
-name|getFullyQualifiedName
-argument_list|()
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tableName
 return|;
 block|}
 specifier|public
@@ -2355,12 +2354,12 @@ name|Objects
 operator|.
 name|equals
 argument_list|(
-name|getAlias
+name|getQualifiedTable
 argument_list|()
 argument_list|,
 name|otherDesc
 operator|.
-name|getAlias
+name|getQualifiedTable
 argument_list|()
 argument_list|)
 operator|&&

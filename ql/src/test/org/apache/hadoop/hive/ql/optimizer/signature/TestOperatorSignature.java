@@ -652,16 +652,6 @@ argument_list|(
 literal|4
 argument_list|)
 decl_stmt|;
-name|assertTrue
-argument_list|(
-name|t1
-operator|.
-name|logicalEquals
-argument_list|(
-name|t1a
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|checkEquals
 argument_list|(
 name|t1
@@ -1054,15 +1044,18 @@ argument_list|,
 literal|"table"
 argument_list|)
 decl_stmt|;
-comment|// FIXME: I think this shouldn't be sensitive to the alias; but currently its included in logicalEquals...check that
 name|TableScanDesc
 name|desc
 init|=
 operator|new
 name|TableScanDesc
 argument_list|(
-literal|"alias"
-comment|/*+ cCtx.nextOperatorId()*/
+literal|"alias_"
+operator|+
+name|cCtx
+operator|.
+name|nextOperatorId
+argument_list|()
 argument_list|,
 name|tblMetadata
 argument_list|)
