@@ -2671,6 +2671,13 @@ argument_list|)
 expr_stmt|;
 name|driver
 operator|.
+name|releaseLocksAndCommitOrRollback
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
 name|releaseResources
 argument_list|()
 expr_stmt|;
