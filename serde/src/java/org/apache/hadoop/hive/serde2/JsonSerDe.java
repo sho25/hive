@@ -1564,6 +1564,9 @@ name|p
 operator|.
 name|getText
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 decl_stmt|;
 name|int
 name|fpos

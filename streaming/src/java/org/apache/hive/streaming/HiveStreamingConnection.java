@@ -4381,6 +4381,15 @@ parameter_list|)
 throws|throws
 name|StreamingException
 block|{
+if|if
+condition|(
+name|minTxnId
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 name|transactionLock
 operator|.
 name|lock
