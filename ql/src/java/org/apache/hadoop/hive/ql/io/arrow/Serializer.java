@@ -211,7 +211,7 @@ name|arrow
 operator|.
 name|vector
 operator|.
-name|TimeStampNanoVector
+name|TimeStampMicroVector
 import|;
 end_import
 
@@ -959,7 +959,7 @@ name|arrow
 operator|.
 name|ArrowColumnarBatchSerDe
 operator|.
-name|MS_PER_SECOND
+name|MICROS_PER_MILLIS
 import|;
 end_import
 
@@ -981,7 +981,51 @@ name|arrow
 operator|.
 name|ArrowColumnarBatchSerDe
 operator|.
-name|NS_PER_MS
+name|MILLIS_PER_SECOND
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|arrow
+operator|.
+name|ArrowColumnarBatchSerDe
+operator|.
+name|NS_PER_MICROS
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|arrow
+operator|.
+name|ArrowColumnarBatchSerDe
+operator|.
+name|NS_PER_MILLIS
 import|;
 end_import
 
@@ -1646,12 +1690,13 @@ return|;
 case|case
 name|TIMESTAMP
 case|:
+comment|// HIVE-19723: Prefer microsecond because Spark supports it
 return|return
 name|Types
 operator|.
 name|MinorType
 operator|.
-name|TIMESTAMPNANO
+name|TIMESTAMPMICRO
 operator|.
 name|getType
 argument_list|()
@@ -3243,11 +3288,11 @@ name|TIMESTAMP
 case|:
 block|{
 specifier|final
-name|TimeStampNanoVector
-name|timeStampNanoVector
+name|TimeStampMicroVector
+name|timeStampMicroVector
 init|=
 operator|(
-name|TimeStampNanoVector
+name|TimeStampMicroVector
 operator|)
 name|arrowVector
 decl_stmt|;
@@ -3285,7 +3330,7 @@ name|i
 index|]
 condition|)
 block|{
-name|timeStampNanoVector
+name|timeStampMicroVector
 operator|.
 name|setNull
 argument_list|(
@@ -3309,22 +3354,21 @@ argument_list|)
 decl_stmt|;
 specifier|final
 name|long
-name|secondInNanos
+name|secondInMicros
 init|=
 operator|(
 name|secondInMillis
 operator|-
 name|secondInMillis
 operator|%
-literal|1000
+name|MILLIS_PER_SECOND
 operator|)
 operator|*
-name|NS_PER_MS
+name|MICROS_PER_MILLIS
 decl_stmt|;
-comment|// second
 specifier|final
 name|long
-name|subSecondInNanos
+name|subSecondInMicros
 init|=
 name|timestampColumnVector
 operator|.
@@ -3332,8 +3376,9 @@ name|getNanos
 argument_list|(
 name|i
 argument_list|)
+operator|/
+name|NS_PER_MICROS
 decl_stmt|;
-comment|// sub-second
 if|if
 condition|(
 operator|(
@@ -3341,7 +3386,7 @@ name|secondInMillis
 operator|>
 literal|0
 operator|&&
-name|secondInNanos
+name|secondInMicros
 operator|<
 literal|0
 operator|)
@@ -3351,14 +3396,14 @@ name|secondInMillis
 argument_list|<
 literal|0
 operator|&&
-name|secondInNanos
+name|secondInMicros
 argument_list|>
 literal|0
 operator|)
 condition|)
 block|{
-comment|// If the timestamp cannot be represented in long nanosecond, set it as a null value
-name|timeStampNanoVector
+comment|// If the timestamp cannot be represented in long microsecond, set it as a null value
+name|timeStampMicroVector
 operator|.
 name|setNull
 argument_list|(
@@ -3368,15 +3413,15 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|timeStampNanoVector
+name|timeStampMicroVector
 operator|.
 name|set
 argument_list|(
 name|i
 argument_list|,
-name|secondInNanos
+name|secondInMicros
 operator|+
-name|subSecondInNanos
+name|subSecondInMicros
 argument_list|)
 expr_stmt|;
 block|}
@@ -3726,7 +3771,7 @@ operator|*
 name|SECOND_PER_DAY
 operator|)
 operator|*
-name|MS_PER_SECOND
+name|MILLIS_PER_SECOND
 operator|+
 name|intervalDayTimeColumnVector
 operator|.
@@ -3735,7 +3780,7 @@ argument_list|(
 name|i
 argument_list|)
 operator|/
-name|NS_PER_MS
+name|NS_PER_MILLIS
 decl_stmt|;
 name|intervalDayVector
 operator|.

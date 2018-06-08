@@ -1379,7 +1379,7 @@ name|Timestamp
 operator|.
 name|valueOf
 argument_list|(
-literal|"2012-04-22 09:00:00.123456789"
+literal|"2012-04-22 09:00:00.123456"
 argument_list|)
 argument_list|,
 name|rowValues
