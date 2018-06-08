@@ -510,6 +510,18 @@ name|APPLICATION_THRIFT
 init|=
 literal|"application/x-thrift"
 decl_stmt|;
+specifier|protected
+name|org
+operator|.
+name|eclipse
+operator|.
+name|jetty
+operator|.
+name|server
+operator|.
+name|Server
+name|server
+decl_stmt|;
 specifier|private
 specifier|final
 name|Runnable
@@ -544,18 +556,19 @@ operator|=
 name|oomHook
 expr_stmt|;
 block|}
-comment|/**    * Configure Jetty to serve http requests. Example of a client connection URL:    * http://localhost:10000/servlets/thrifths2/ A gateway may cause actual target URL to differ,    * e.g. http://gateway:port/hive2/servlets/thrifths2/    */
+comment|/**    * Configure Jetty to serve http requests. Example of a client connection URL:    * http://localhost:10000/servlets/thrifths2/ A gateway may cause actual target    * URL to differ, e.g. http://gateway:port/hive2/servlets/thrifths2/    */
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
-name|run
+name|initServer
 parameter_list|()
 block|{
 try|try
 block|{
 comment|// Server thread pool
-comment|// Start with minWorkerThreads, expand till maxWorkerThreads and reject subsequent requests
+comment|// Start with minWorkerThreads, expand till maxWorkerThreads and reject
+comment|// subsequent requests
 name|String
 name|threadPoolName
 init|=
@@ -603,7 +616,7 @@ name|executorService
 argument_list|)
 decl_stmt|;
 comment|// HTTP Server
-name|httpServer
+name|server
 operator|=
 operator|new
 name|Server
@@ -838,7 +851,7 @@ operator|=
 operator|new
 name|ServerConnector
 argument_list|(
-name|httpServer
+name|server
 argument_list|,
 name|sslContextFactory
 argument_list|,
@@ -853,7 +866,7 @@ operator|=
 operator|new
 name|ServerConnector
 argument_list|(
-name|httpServer
+name|server
 argument_list|,
 name|http
 argument_list|)
@@ -900,7 +913,7 @@ argument_list|(
 name|maxIdleTime
 argument_list|)
 expr_stmt|;
-name|httpServer
+name|server
 operator|.
 name|addConnector
 argument_list|(
@@ -1026,7 +1039,7 @@ argument_list|)
 condition|)
 block|{
 comment|// context.addFilter(Utils.getXSRFFilterHolder(null, null), "/" ,
-comment|//    FilterMapping.REQUEST);
+comment|// FilterMapping.REQUEST);
 comment|// Filtering does not work here currently, doing filter in ThriftHttpServlet
 name|LOG
 operator|.
@@ -1239,7 +1252,7 @@ argument_list|(
 name|APPLICATION_THRIFT
 argument_list|)
 expr_stmt|;
-name|httpServer
+name|server
 operator|.
 name|setHandler
 argument_list|(
@@ -1249,7 +1262,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|httpServer
+name|server
 operator|.
 name|setHandler
 argument_list|(
@@ -1270,9 +1283,10 @@ argument_list|,
 name|httpPath
 argument_list|)
 expr_stmt|;
-comment|// TODO: check defaults: maxTimeout, keepalive, maxBodySize, bodyRecieveDuration, etc.
+comment|// TODO: check defaults: maxTimeout, keepalive, maxBodySize,
+comment|// bodyRecieveDuration, etc.
 comment|// Finally, start the server
-name|httpServer
+name|server
 operator|.
 name|start
 argument_list|()
@@ -1318,7 +1332,34 @@ argument_list|(
 name|msg
 argument_list|)
 expr_stmt|;
-name|httpServer
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Failed to init HttpServer"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|run
+parameter_list|()
+block|{
+try|try
+block|{
+name|server
 operator|.
 name|join
 argument_list|()
@@ -1330,11 +1371,39 @@ name|Throwable
 name|t
 parameter_list|)
 block|{
+if|if
+condition|(
+name|t
+operator|instanceof
+name|InterruptedException
+condition|)
+block|{
+comment|// This is likely a shutdown
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Caught "
+operator|+
+name|t
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|". Shutting down thrift server."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error starting HiveServer2: could not start "
+literal|"Exception caught by "
 operator|+
 name|ThriftHttpCLIService
 operator|.
@@ -1342,6 +1411,8 @@ name|class
 operator|.
 name|getSimpleName
 argument_list|()
+operator|+
+literal|". Exiting."
 argument_list|,
 name|t
 argument_list|)
@@ -1354,6 +1425,7 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * The config parameter can be like "path", "/path", "/path/", "path/*", "/path1/path2/*" and so on.    * httpPath should end up as "/*", "/path/*" or "/path1/../pathN/*"    * @param httpPath    * @return    */
@@ -1443,6 +1515,64 @@ block|}
 return|return
 name|httpPath
 return|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|void
+name|stopServer
+parameter_list|()
+block|{
+if|if
+condition|(
+operator|(
+name|server
+operator|!=
+literal|null
+operator|)
+operator|&&
+name|server
+operator|.
+name|isStarted
+argument_list|()
+condition|)
+block|{
+try|try
+block|{
+name|server
+operator|.
+name|stop
+argument_list|()
+expr_stmt|;
+name|server
+operator|=
+literal|null
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Thrift HTTP server has been stopped"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error stopping HTTP server: "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 end_class
