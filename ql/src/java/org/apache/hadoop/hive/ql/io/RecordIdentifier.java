@@ -1141,6 +1141,20 @@ name|String
 name|bucketToString
 parameter_list|()
 block|{
+if|if
+condition|(
+name|bucketId
+operator|==
+operator|-
+literal|1
+condition|)
+return|return
+operator|(
+literal|"bucket: "
+operator|+
+name|bucketId
+operator|)
+return|;
 name|BucketCodec
 name|codec
 init|=
