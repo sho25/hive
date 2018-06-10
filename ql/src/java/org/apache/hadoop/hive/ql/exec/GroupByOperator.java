@@ -4412,7 +4412,7 @@ name|rowInspector
 init|=
 name|inputObjInspectors
 index|[
-name|tag
+literal|0
 index|]
 decl_stmt|;
 comment|// Total number of input rows is needed for hash aggregation only

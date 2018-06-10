@@ -7878,7 +7878,7 @@ name|HIVE_AUTO_SORTMERGE_JOIN
 argument_list|(
 literal|"hive.auto.convert.sortmerge.join"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Will the join be automatically converted to a sort-merge join, if the joined tables pass the criteria for sort-merge join."
 argument_list|)

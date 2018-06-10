@@ -1548,6 +1548,16 @@ name|SelectRule
 implements|implements
 name|NodeProcessor
 block|{
+name|boolean
+name|processSortCols
+init|=
+literal|false
+decl_stmt|;
+comment|// For bucket columns
+comment|// If all the columns match to the parent, put them in the bucket cols
+comment|// else, add empty list.
+comment|// For sort columns
+comment|// Keep the subset of all the columns as long as order is maintained.
 specifier|public
 name|List
 argument_list|<
@@ -1582,12 +1592,7 @@ name|listBucketCols
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|List
-argument_list|<
-name|String
-argument_list|>
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 if|if
@@ -1626,10 +1631,13 @@ name|bucketColNames
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
+decl_stmt|;
+name|boolean
+name|found
+init|=
+literal|false
 decl_stmt|;
 for|for
 control|(
@@ -1660,16 +1668,16 @@ control|)
 block|{
 if|if
 condition|(
+operator|(
 name|entry
 operator|.
 name|getValue
 argument_list|()
 operator|instanceof
 name|ExprNodeColumnDesc
-condition|)
-block|{
-if|if
-condition|(
+operator|)
+operator|&&
+operator|(
 operator|(
 call|(
 name|ExprNodeColumnDesc
@@ -1689,6 +1697,7 @@ name|equals
 argument_list|(
 name|colName
 argument_list|)
+operator|)
 condition|)
 block|{
 name|bucketColNames
@@ -1701,10 +1710,48 @@ name|getKey
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|found
+operator|=
+literal|true
+expr_stmt|;
+break|break;
 block|}
 block|}
+if|if
+condition|(
+operator|!
+name|found
+condition|)
+block|{
+comment|// Bail out on first missed column.
+break|break;
 block|}
 block|}
+if|if
+condition|(
+operator|!
+name|processSortCols
+operator|&&
+operator|!
+name|found
+condition|)
+block|{
+comment|// While processing bucket columns, atleast one bucket column
+comment|// missed. This results in a different bucketing scheme.
+comment|// Add empty list
+name|listBucketCols
+operator|.
+name|add
+argument_list|(
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|listBucketCols
 operator|.
 name|add
@@ -1712,6 +1759,7 @@ argument_list|(
 name|bucketColNames
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1858,6 +1906,10 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|processSortCols
+operator|=
+literal|true
+expr_stmt|;
 name|listSortCols
 operator|=
 name|getConvertedColNames
@@ -1909,6 +1961,32 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// if bucket columns are empty, then numbuckets must be set to -1.
+if|if
+condition|(
+name|listBucketCols
+operator|!=
+literal|null
+operator|&&
+operator|!
+operator|(
+name|listBucketCols
+operator|.
+name|isEmpty
+argument_list|()
+operator|||
+name|listBucketCols
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+condition|)
+block|{
 name|numBuckets
 operator|=
 name|parentOpTraits
@@ -1916,6 +1994,7 @@ operator|.
 name|getNumBuckets
 argument_list|()
 expr_stmt|;
+block|}
 name|numReduceSinks
 operator|=
 name|parentOpTraits
