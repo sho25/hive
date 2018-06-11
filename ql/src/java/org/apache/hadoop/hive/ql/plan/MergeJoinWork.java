@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|LinkedHashSet
 import|;
 end_import
 
@@ -280,7 +280,7 @@ argument_list|>
 name|set
 init|=
 operator|new
-name|HashSet
+name|LinkedHashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -466,7 +466,7 @@ literal|null
 operator|)
 condition|)
 block|{
-comment|/*          * For tez to route data from an up-stream vertex correctly to the following vertex, the          * output name in the reduce sink needs to be setup appropriately. In the case of reduce          * side merge work, we need to ensure that the parent work that provides data to this merge          * work is setup to point to the right vertex name - the main work name.          *           * In this case, if the big table work has already been created, we can hook up the merge          * work items for the small table correctly.          */
+comment|/*          * For tez to route data from an up-stream vertex correctly to the following vertex, the          * output name in the reduce sink needs to be setup appropriately. In the case of reduce          * side merge work, we need to ensure that the parent work that provides data to this merge          * work is setup to point to the right vertex name - the main work name.          *          * In this case, if the big table work has already been created, we can hook up the merge          * work items for the small table correctly.          */
 name|setReduceSinkOutputName
 argument_list|(
 name|connectWork
@@ -835,6 +835,8 @@ name|getLlapMode
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|addDummyOp

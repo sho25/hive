@@ -83,20 +83,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -277,6 +263,20 @@ name|SemanticException
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|base
+operator|.
+name|Preconditions
+import|;
+end_import
+
 begin_comment
 comment|/**  * This processor triggers on SparkPartitionPruningSinkOperator. For a operator tree like  * this:  *  * Original Tree:  *     TS1       TS2  *      |          |  *      FIL       FIL  *      |          |  *      RS      /   \   \  *      |      |    \    \  *      |     RS  SEL  SEL  *      \   /      |     |  *      JOIN      GBY   GBY  *                  |    |  *                  |  SPARKPRUNINGSINK  *                  |  *              SPARKPRUNINGSINK  *  * It removes the branch containing SPARKPRUNINGSINK from the original operator tree, and splits it into  * two separate trees:  * Tree #1:                       Tree #2  *      TS1    TS2                 TS2  *      |      |                    |  *      FIL    FIL                 FIL  *      |       |                   |_____  *      RS     SEL                  |     \  *      |       |                   SEL    SEL  *      |     RS                    |      |  *      \   /                       GBY    GBY  *      JOIN                        |      |  *                                  |    SPARKPRUNINGSINK  *                                 SPARKPRUNINGSINK   * For MapJoinOperator, this optimizer will not do anything - it should be executed within  * the same SparkTask.  */
 end_comment
@@ -423,6 +423,23 @@ operator|.
 name|getBranchingOp
 argument_list|()
 decl_stmt|;
+name|String
+name|marker
+init|=
+literal|"SPARK_DPP_BRANCH_POINT_"
+operator|+
+name|branchingOp
+operator|.
+name|getOperatorId
+argument_list|()
+decl_stmt|;
+name|branchingOp
+operator|.
+name|setMarker
+argument_list|(
+name|marker
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|Operator
@@ -576,7 +593,7 @@ name|newBranchingOp
 operator|=
 name|OperatorUtils
 operator|.
-name|findOperatorById
+name|findOperatorByMarker
 argument_list|(
 name|newRoots
 operator|.
@@ -585,10 +602,7 @@ argument_list|(
 name|i
 argument_list|)
 argument_list|,
-name|branchingOp
-operator|.
-name|getOperatorId
-argument_list|()
+name|marker
 argument_list|)
 expr_stmt|;
 block|}

@@ -804,6 +804,16 @@ argument_list|)
 decl_stmt|;
 name|ctx
 operator|.
+name|setOpContext
+argument_list|(
+name|origCtx
+operator|.
+name|getOpContext
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|ctx
+operator|.
 name|setExplainConfig
 argument_list|(
 name|origCtx

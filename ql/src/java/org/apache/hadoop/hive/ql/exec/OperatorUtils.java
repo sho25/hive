@@ -2756,7 +2756,7 @@ name|Operator
 argument_list|<
 name|?
 argument_list|>
-name|findOperatorById
+name|findOperatorByMarker
 parameter_list|(
 name|Operator
 argument_list|<
@@ -2765,7 +2765,7 @@ argument_list|>
 name|start
 parameter_list|,
 name|String
-name|opId
+name|marker
 parameter_list|)
 block|{
 name|Deque
@@ -2811,14 +2811,14 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|op
-operator|.
-name|getOperatorId
-argument_list|()
+name|marker
 operator|.
 name|equals
 argument_list|(
-name|opId
+name|op
+operator|.
+name|getMarker
+argument_list|()
 argument_list|)
 condition|)
 block|{

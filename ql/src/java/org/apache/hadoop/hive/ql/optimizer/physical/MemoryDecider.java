@@ -57,16 +57,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Iterator
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -77,7 +67,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Map
+name|Iterator
 import|;
 end_import
 
@@ -98,6 +88,16 @@ operator|.
 name|util
 operator|.
 name|LinkedHashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -145,26 +145,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|apache
 operator|.
 name|hadoop
@@ -191,7 +171,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|StatsTask
+name|MapJoinOperator
 import|;
 end_import
 
@@ -209,7 +189,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|MapJoinOperator
+name|StatsTask
 import|;
 end_import
 
@@ -554,6 +534,26 @@ operator|.
 name|plan
 operator|.
 name|TezWork
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -987,7 +987,7 @@ name|MapJoinOperator
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|Rule
 argument_list|,
@@ -996,7 +996,7 @@ argument_list|>
 name|rules
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|Rule
 argument_list|,
