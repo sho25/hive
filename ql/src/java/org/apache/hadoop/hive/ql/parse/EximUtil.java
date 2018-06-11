@@ -117,6 +117,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|ReplChangeManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|Database
@@ -188,6 +204,26 @@ operator|.
 name|exec
 operator|.
 name|Task
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|ReplUtils
 import|;
 end_import
 
@@ -1593,7 +1629,7 @@ block|{
 comment|// WARNING NOTE : at this point, createDbExportDump lives only in a world where ReplicationSpec is in replication scope
 comment|// If we later make this work for non-repl cases, analysis of this logic might become necessary. Also, this is using
 comment|// Replv2 semantics, i.e. with listFiles laziness (no copy at export time)
-comment|// Remove all the entries from the parameters which are added for bootstrap dump progress
+comment|// Remove all the entries from the parameters which are added by repl tasks internally.
 name|Map
 argument_list|<
 name|String
@@ -1648,6 +1684,30 @@ argument_list|(
 name|Utils
 operator|.
 name|BOOTSTRAP_DUMP_STATE_KEY_PREFIX
+argument_list|)
+operator|||
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_CHECKPOINT_KEY
+argument_list|)
+operator|||
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|ReplChangeManager
+operator|.
+name|SOURCE_OF_REPLICATION
 argument_list|)
 argument_list|)
 expr_stmt|;

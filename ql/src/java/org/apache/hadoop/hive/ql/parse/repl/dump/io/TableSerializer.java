@@ -103,6 +103,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|ReplUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|Partition
@@ -363,7 +383,7 @@ argument_list|()
 decl_stmt|;
 name|tTable
 operator|=
-name|addPropertiesToTable
+name|updatePropertiesInTable
 argument_list|(
 name|tTable
 argument_list|,
@@ -446,7 +466,7 @@ block|}
 block|}
 specifier|private
 name|Table
-name|addPropertiesToTable
+name|updatePropertiesInTable
 parameter_list|(
 name|Table
 name|table
@@ -455,6 +475,50 @@ name|ReplicationSpec
 name|additionalPropertiesProvider
 parameter_list|)
 block|{
+comment|// Remove all the entries from the parameters which are added by repl tasks internally.
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+init|=
+name|table
+operator|.
+name|getParameters
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|parameters
+operator|!=
+literal|null
+condition|)
+block|{
+name|parameters
+operator|.
+name|entrySet
+argument_list|()
+operator|.
+name|removeIf
+argument_list|(
+name|e
+lambda|->
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_CHECKPOINT_KEY
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|additionalPropertiesProvider
@@ -546,7 +610,7 @@ block|{
 comment|// ReplicationSpec.KEY scopeKey = ReplicationSpec.KEY.REPL_SCOPE;
 comment|// write(out, ",\""+ scopeKey.toString() +"\":\"" + replicationSpec.get(scopeKey) + "\"");
 comment|// TODO: if we want to be explicit about this dump not being a replication dump, we can
-comment|// uncomment this else section, but currently unnneeded. Will require a lot of golden file
+comment|// uncomment this else section, but currently unneeded. Will require a lot of golden file
 comment|// regen if we do so.
 block|}
 return|return
