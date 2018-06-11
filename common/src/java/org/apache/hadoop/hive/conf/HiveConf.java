@@ -15347,19 +15347,6 @@ argument_list|,
 literal|"Storage format for temp tables created using LLAP external client"
 argument_list|)
 block|,
-name|LLAP_EXTERNAL_SPLITS_ORDER_BY_FORCE_SINGLE_SPLIT
-argument_list|(
-literal|"hive.llap.external.splits.order.by.force.single.split"
-argument_list|,
-literal|true
-argument_list|,
-literal|"If LLAP external clients submits ORDER BY queries, force return a single split to guarantee reading\n"
-operator|+
-literal|"data out in ordered way. Setting this to false will let external clients read data out in parallel\n"
-operator|+
-literal|"losing the ordering (external clients are responsible for guaranteeing the ordering)"
-argument_list|)
-block|,
 name|LLAP_ENABLE_GRACE_JOIN_IN_LLAP
 argument_list|(
 literal|"hive.llap.enable.grace.join.in.llap"
