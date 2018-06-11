@@ -528,6 +528,13 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|RunWith
+argument_list|(
+name|RetryTestRunner
+operator|.
+name|class
+argument_list|)
 specifier|public
 class|class
 name|TestWorkloadManager
