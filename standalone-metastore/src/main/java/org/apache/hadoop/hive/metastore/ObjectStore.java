@@ -45,42 +45,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|Warehouse
-operator|.
-name|getCatalogQualifiedDbName
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|Warehouse
-operator|.
-name|getCatalogQualifiedTableName
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|utils
 operator|.
 name|MetaStoreUtils
@@ -741,7 +705,39 @@ name|hive
 operator|.
 name|common
 operator|.
+name|DatabaseName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|StatsSetupConst
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|TableName
 import|;
 end_import
 
@@ -3092,26 +3088,6 @@ operator|.
 name|utils
 operator|.
 name|MetaStoreUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|utils
-operator|.
-name|MetaStoreUtils
-operator|.
-name|FullTableName
 import|;
 end_import
 
@@ -9445,7 +9421,9 @@ name|info
 argument_list|(
 literal|"Found no table level column statistics associated with {} to delete"
 argument_list|,
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -10251,7 +10229,7 @@ name|Override
 specifier|public
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|getTableNamesWithStats
 parameter_list|()
@@ -10264,7 +10242,7 @@ return|return
 operator|new
 name|GetListHelper
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 argument_list|(
 literal|null
@@ -10283,7 +10261,7 @@ name|Override
 specifier|protected
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|getSqlResult
 parameter_list|(
@@ -10291,7 +10269,7 @@ name|GetHelper
 argument_list|<
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 argument_list|>
 name|ctx
@@ -10311,7 +10289,7 @@ name|Override
 specifier|protected
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|getJdoResult
 parameter_list|(
@@ -10319,7 +10297,7 @@ name|GetHelper
 argument_list|<
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 argument_list|>
 name|ctx
@@ -10540,7 +10518,7 @@ name|Override
 specifier|public
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|getAllTableNamesForStats
 parameter_list|()
@@ -10553,7 +10531,7 @@ return|return
 operator|new
 name|GetListHelper
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 argument_list|(
 literal|null
@@ -10572,7 +10550,7 @@ name|Override
 specifier|protected
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|getSqlResult
 parameter_list|(
@@ -10580,7 +10558,7 @@ name|GetHelper
 argument_list|<
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 argument_list|>
 name|ctx
@@ -10600,7 +10578,7 @@ name|Override
 specifier|protected
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|getJdoResult
 parameter_list|(
@@ -10608,7 +10586,7 @@ name|GetHelper
 argument_list|<
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 argument_list|>
 name|ctx
@@ -10628,7 +10606,7 @@ literal|null
 decl_stmt|;
 name|List
 argument_list|<
-name|FullTableName
+name|TableName
 argument_list|>
 name|result
 init|=
@@ -10767,7 +10745,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|FullTableName
+name|TableName
 argument_list|(
 name|tbl
 operator|.
@@ -12308,7 +12286,9 @@ name|debug
 argument_list|(
 literal|"Executing getMTable for "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -12786,7 +12766,9 @@ name|UnknownDBException
 argument_list|(
 literal|"Could not find database "
 operator|+
-name|getCatalogQualifiedDbName
+name|DatabaseName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -13320,7 +13302,9 @@ name|InvalidObjectException
 argument_list|(
 literal|"Database "
 operator|+
-name|getCatalogQualifiedDbName
+name|DatabaseName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -19222,7 +19206,9 @@ name|info
 argument_list|(
 literal|"Table: {} filter: \"{}\" cols: {}"
 argument_list|,
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -19416,7 +19402,9 @@ name|filter
 operator|+
 literal|"\" for "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -20440,7 +20428,9 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -24778,7 +24768,9 @@ name|NoSuchObjectException
 argument_list|(
 literal|"Specified catalog.database.table does not exist : "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -29660,7 +29652,9 @@ name|MetaException
 argument_list|(
 literal|" Primary key already exists for: "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -50313,6 +50307,8 @@ literal|"Updating table level column statistics for table={}"
 operator|+
 literal|" colName={}"
 argument_list|,
+name|Warehouse
+operator|.
 name|getCatalogQualifiedTableName
 argument_list|(
 name|table
@@ -50480,7 +50476,9 @@ name|info
 argument_list|(
 literal|"Updating partition level column statistics for table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -53731,7 +53729,9 @@ name|NoSuchObjectException
 argument_list|(
 literal|"Column stats doesn't exist for table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -53816,7 +53816,9 @@ name|NoSuchObjectException
 argument_list|(
 literal|"Column stats don't exist for table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -53977,7 +53979,9 @@ name|NoSuchObjectException
 argument_list|(
 literal|"Table "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,

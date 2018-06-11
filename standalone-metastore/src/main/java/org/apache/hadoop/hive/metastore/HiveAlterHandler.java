@@ -69,6 +69,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|TableName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|conf
@@ -1236,9 +1252,9 @@ name|InvalidOperationException
 argument_list|(
 literal|"table "
 operator|+
-name|Warehouse
+name|TableName
 operator|.
-name|getCatalogQualifiedTableName
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -1656,9 +1672,9 @@ name|InvalidOperationException
 argument_list|(
 literal|"New location for this table "
 operator|+
-name|Warehouse
+name|TableName
 operator|.
-name|getCatalogQualifiedTableName
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -2799,9 +2815,9 @@ name|error
 argument_list|(
 literal|"Failed to alter table "
 operator|+
-name|Warehouse
+name|TableName
 operator|.
-name|getCatalogQualifiedTableName
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,

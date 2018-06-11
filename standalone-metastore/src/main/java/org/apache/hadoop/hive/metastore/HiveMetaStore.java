@@ -783,6 +783,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|TableName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -6111,7 +6127,9 @@ name|function
 argument_list|,
 literal|" : tbl="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -6192,7 +6210,9 @@ name|function
 argument_list|,
 literal|" : tbl="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|cat
 argument_list|,
@@ -6245,7 +6265,9 @@ name|function
 argument_list|,
 literal|" : tbl="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -15268,7 +15290,9 @@ block|{
 name|String
 name|tableName
 init|=
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -17664,7 +17688,9 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -19840,7 +19866,9 @@ name|InvalidObjectException
 argument_list|(
 literal|"Unable to add partitions because "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -19966,7 +19994,9 @@ name|format
 argument_list|(
 literal|"Partition does not belong to target table %s. It belongs to the table %s.%s : %s"
 argument_list|,
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -23562,7 +23592,9 @@ name|MetaException
 argument_list|(
 literal|"The destination table "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDestDbName
 index|[
@@ -23614,7 +23646,9 @@ name|MetaException
 argument_list|(
 literal|"The source table "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedSourceDbName
 index|[
@@ -24058,7 +24092,9 @@ name|MetaException
 argument_list|(
 literal|"Exchange partition not allowed for "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedSourceDbName
 index|[
@@ -26831,7 +26867,9 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -30095,7 +30133,9 @@ literal|"alter_table"
 argument_list|,
 literal|": "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -30292,7 +30332,9 @@ name|MetaException
 argument_list|(
 literal|"Alter table not allowed for table "
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -32182,7 +32224,9 @@ throw|throw
 operator|new
 name|NoSuchObjectException
 argument_list|(
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -32244,7 +32288,9 @@ literal|"get_partition_by_name"
 argument_list|,
 literal|": tbl="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -32417,7 +32463,9 @@ literal|"append_partition_by_name"
 argument_list|,
 literal|": tbl="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -32751,7 +32799,9 @@ literal|"drop_partition_by_name"
 argument_list|,
 literal|": tbl="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -33652,7 +33702,9 @@ literal|"get_column_statistics_by_table"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -33807,7 +33859,9 @@ literal|"get_table_statistics_req"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -34002,7 +34056,9 @@ literal|"get_column_statistics_by_partition"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -34200,7 +34256,9 @@ literal|"get_partitions_statistics_req"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -34523,9 +34581,9 @@ literal|"write_column_statistics"
 argument_list|,
 literal|":  table="
 operator|+
-name|Warehouse
+name|TableName
 operator|.
-name|getCatalogQualifiedTableName
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -35021,7 +35079,9 @@ literal|"delete_column_statistics_by_partition"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -35192,7 +35252,9 @@ literal|"delete_column_statistics_by_table"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|parsedDbName
 index|[
@@ -43813,7 +43875,9 @@ literal|"get_aggr_stats_for"
 argument_list|,
 literal|": table="
 operator|+
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
@@ -44760,7 +44824,9 @@ throw|throw
 operator|new
 name|InvalidObjectException
 argument_list|(
-name|getCatalogQualifiedTableName
+name|TableName
+operator|.
+name|getQualified
 argument_list|(
 name|catName
 argument_list|,
