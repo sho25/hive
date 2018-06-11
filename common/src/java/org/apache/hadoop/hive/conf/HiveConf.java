@@ -13868,7 +13868,7 @@ name|LLAP_ALLOCATOR_MIN_ALLOC
 argument_list|(
 literal|"hive.llap.io.allocator.alloc.min"
 argument_list|,
-literal|"16Kb"
+literal|"4Kb"
 argument_list|,
 operator|new
 name|SizeValidator
