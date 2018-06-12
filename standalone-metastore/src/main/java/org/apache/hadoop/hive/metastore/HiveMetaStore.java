@@ -3292,10 +3292,12 @@ return|;
 block|}
 specifier|private
 specifier|static
-name|int
+name|AtomicInteger
 name|nextSerialNum
 init|=
-literal|0
+operator|new
+name|AtomicInteger
+argument_list|()
 decl_stmt|;
 specifier|private
 specifier|static
@@ -3321,7 +3323,9 @@ parameter_list|()
 block|{
 return|return
 name|nextSerialNum
-operator|++
+operator|.
+name|getAndIncrement
+argument_list|()
 return|;
 block|}
 block|}
