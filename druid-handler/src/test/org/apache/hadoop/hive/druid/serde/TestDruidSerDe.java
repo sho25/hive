@@ -855,6 +855,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|BooleanWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|FloatWritable
 import|;
 end_import
@@ -2457,7 +2471,7 @@ literal|"    \"event\" : {   "
 operator|+
 literal|"     \"timestamp\" : \"2013-01-01T00:00:00.000Z\",   "
 operator|+
-literal|"     \"robot\" : \"1\",   "
+literal|"     \"robot\" : 1,   "
 operator|+
 literal|"     \"namespace\" : \"article\",   "
 operator|+
@@ -2495,7 +2509,7 @@ literal|"    \"event\" : {   "
 operator|+
 literal|"     \"timestamp\" : \"2013-01-01T00:00:00.000Z\",   "
 operator|+
-literal|"     \"robot\" : \"0\",   "
+literal|"     \"robot\" : 0,   "
 operator|+
 literal|"     \"namespace\" : \"article\",   "
 operator|+
@@ -2533,7 +2547,7 @@ literal|"    \"event\" : {   "
 operator|+
 literal|"     \"timestamp\" : \"2013-01-01T00:00:12.000Z\",   "
 operator|+
-literal|"     \"robot\" : \"0\",   "
+literal|"     \"robot\" : 0,   "
 operator|+
 literal|"     \"namespace\" : \"article\",   "
 operator|+
@@ -2571,7 +2585,7 @@ literal|"    \"event\" : {   "
 operator|+
 literal|"     \"timestamp\" : \"2013-01-01T00:00:12.000Z\",   "
 operator|+
-literal|"     \"robot\" : \"0\",   "
+literal|"     \"robot\" : 0,   "
 operator|+
 literal|"     \"namespace\" : \"article\",   "
 operator|+
@@ -2609,7 +2623,7 @@ literal|"    \"event\" : {   "
 operator|+
 literal|"     \"timestamp\" : \"2013-01-01T00:00:12.000Z\",   "
 operator|+
-literal|"     \"robot\" : \"0\",   "
+literal|"     \"robot\" : 0,   "
 operator|+
 literal|"     \"namespace\" : \"article\",   "
 operator|+
@@ -2654,7 +2668,7 @@ specifier|final
 name|String
 name|SELECT_COLUMN_TYPES
 init|=
-literal|"timestamp with local time zone,string,string,string,string,string,string,string,string,double,double,float,float,float"
+literal|"timestamp with local time zone,boolean,string,string,string,string,string,string,string,double,double,float,float,float"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -2696,9 +2710,9 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|Text
+name|BooleanWritable
 argument_list|(
-literal|"1"
+literal|true
 argument_list|)
 block|,
 operator|new
@@ -2801,9 +2815,9 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|Text
+name|BooleanWritable
 argument_list|(
-literal|"0"
+literal|false
 argument_list|)
 block|,
 operator|new
@@ -2906,9 +2920,9 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|Text
+name|BooleanWritable
 argument_list|(
-literal|"0"
+literal|false
 argument_list|)
 block|,
 operator|new
@@ -3011,9 +3025,9 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|Text
+name|BooleanWritable
 argument_list|(
-literal|"0"
+literal|false
 argument_list|)
 block|,
 operator|new
@@ -3116,9 +3130,9 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|Text
+name|BooleanWritable
 argument_list|(
-literal|"0"
+literal|false
 argument_list|)
 block|,
 operator|new
