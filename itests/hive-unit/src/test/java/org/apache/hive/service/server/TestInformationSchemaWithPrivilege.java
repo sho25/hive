@@ -2356,7 +2356,7 @@ name|args
 operator|.
 name|add
 argument_list|(
-literal|"../../metastore/scripts/upgrade/hive/hive-schema-3.0.0.hive.sql"
+literal|"../../metastore/scripts/upgrade/hive/hive-schema-3.1.0.hive.sql"
 argument_list|)
 expr_stmt|;
 name|BeeLine
