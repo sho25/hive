@@ -882,6 +882,22 @@ name|logs
 return|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|toString
+parameter_list|()
+block|{
+return|return
+name|logFile
+operator|.
+name|file
+operator|.
+name|toString
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

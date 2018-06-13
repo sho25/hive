@@ -11440,6 +11440,25 @@ operator|+
 literal|"  VERBOSE: All logs"
 argument_list|)
 block|,
+name|HIVE_SERVER2_OPERATION_LOG_CLEANUP_DELAY
+argument_list|(
+literal|"hive.server2.operation.log.cleanup.delay"
+argument_list|,
+literal|"300s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"When a query is cancelled (via kill query, query timeout or triggers),\n"
+operator|+
+literal|" operation logs gets cleaned up after this delay"
+argument_list|)
+block|,
 comment|// HS2 connections guard rails
 name|HIVE_SERVER2_LIMIT_CONNECTIONS_PER_USER
 argument_list|(

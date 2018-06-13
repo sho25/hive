@@ -345,7 +345,9 @@ name|CLOSED
 argument_list|)
 expr_stmt|;
 name|cleanupOperationLog
-argument_list|()
+argument_list|(
+literal|0
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Convert wildchars and escape sequence from JDBC format to datanucleous/regex    */
