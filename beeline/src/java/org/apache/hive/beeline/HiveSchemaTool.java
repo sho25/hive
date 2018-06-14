@@ -9605,6 +9605,13 @@ argument_list|(
 literal|"schemaTool completed"
 argument_list|)
 expr_stmt|;
+name|System
+operator|.
+name|exit
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class

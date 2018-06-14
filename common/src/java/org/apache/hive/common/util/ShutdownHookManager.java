@@ -85,6 +85,26 @@ name|VisibleForTesting
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * This is just a wrapper around hadoop's ShutdownHookManager but also manages delete on exit hook for temp files.  */
 end_comment
@@ -130,6 +150,24 @@ init|=
 operator|new
 name|DeleteOnExitHook
 argument_list|()
+decl_stmt|;
+specifier|static
+specifier|final
+specifier|private
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|ShutdownHookManager
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
 decl_stmt|;
 static|static
 block|{
@@ -264,13 +302,13 @@ name|isShutdownInProgress
 argument_list|()
 condition|)
 block|{
-throw|throw
-operator|new
-name|IllegalStateException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"Shutdown in progress, cannot add a deleteOnExit"
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|DELETE_ON_EXIT_HOOK
 operator|.
@@ -300,13 +338,13 @@ name|isShutdownInProgress
 argument_list|()
 condition|)
 block|{
-throw|throw
-operator|new
-name|IllegalStateException
+name|LOG
+operator|.
+name|warn
 argument_list|(
 literal|"Shutdown in progress, cannot cancel a deleteOnExit"
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 name|DELETE_ON_EXIT_HOOK
 operator|.

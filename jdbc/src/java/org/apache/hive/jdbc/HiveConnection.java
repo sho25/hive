@@ -1753,11 +1753,24 @@ operator|.
 name|init
 argument_list|(
 literal|null
+argument_list|,
+name|connParams
+operator|.
+name|getHiveConfs
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|client
 operator|=
 name|embeddedClient
+expr_stmt|;
+name|connParams
+operator|.
+name|getHiveConfs
+argument_list|()
+operator|.
+name|clear
+argument_list|()
 expr_stmt|;
 comment|// open client session
 name|openSession
