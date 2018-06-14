@@ -411,6 +411,7 @@ name|TEST_DATA_DIR
 operator|+
 literal|"/input.data"
 decl_stmt|;
+specifier|protected
 name|String
 name|storageFormat
 decl_stmt|;
