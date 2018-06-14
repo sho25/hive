@@ -3811,6 +3811,12 @@ name|tableName
 parameter_list|,
 name|List
 argument_list|<
+name|FieldSchema
+argument_list|>
+name|partKeys
+parameter_list|,
+name|List
+argument_list|<
 name|String
 argument_list|>
 name|partVals

@@ -4797,6 +4797,12 @@ name|tableName
 parameter_list|,
 name|List
 argument_list|<
+name|FieldSchema
+argument_list|>
+name|partKeys
+parameter_list|,
+name|List
+argument_list|<
 name|String
 argument_list|>
 name|partVals
@@ -4816,6 +4822,8 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tableName
+argument_list|,
+name|partKeys
 argument_list|,
 name|partVals
 argument_list|)

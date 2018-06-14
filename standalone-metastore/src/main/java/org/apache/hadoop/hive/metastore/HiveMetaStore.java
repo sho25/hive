@@ -20768,6 +20768,11 @@ name|ms
 argument_list|,
 name|part
 argument_list|,
+name|tbl
+operator|.
+name|getPartitionKeys
+argument_list|()
+argument_list|,
 name|ifNotExists
 argument_list|)
 decl_stmt|;
@@ -22275,6 +22280,11 @@ name|ms
 argument_list|,
 name|part
 argument_list|,
+name|tbl
+operator|.
+name|getPartitionKeys
+argument_list|()
+argument_list|,
 name|ifNotExists
 argument_list|)
 decl_stmt|;
@@ -22798,6 +22808,12 @@ parameter_list|,
 name|Partition
 name|part
 parameter_list|,
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partitionKeys
+parameter_list|,
 name|boolean
 name|ifNotExists
 parameter_list|)
@@ -22837,6 +22853,8 @@ name|part
 operator|.
 name|getTableName
 argument_list|()
+argument_list|,
+name|partitionKeys
 argument_list|,
 name|part
 operator|.
@@ -23570,6 +23588,11 @@ argument_list|(
 name|ms
 argument_list|,
 name|part
+argument_list|,
+name|tbl
+operator|.
+name|getPartitionKeys
+argument_list|()
 argument_list|,
 literal|false
 argument_list|)

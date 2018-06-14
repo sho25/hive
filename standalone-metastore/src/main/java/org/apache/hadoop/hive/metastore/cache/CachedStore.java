@@ -6561,6 +6561,12 @@ name|tblName
 parameter_list|,
 name|List
 argument_list|<
+name|FieldSchema
+argument_list|>
+name|partKeys
+parameter_list|,
+name|List
+argument_list|<
 name|String
 argument_list|>
 name|part_vals
@@ -6619,6 +6625,8 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
+name|partKeys
+argument_list|,
 name|part_vals
 argument_list|)
 return|;
@@ -6655,6 +6663,8 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|partKeys
 argument_list|,
 name|part_vals
 argument_list|)

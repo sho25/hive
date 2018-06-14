@@ -1573,7 +1573,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Check whether a partition exists.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param part_vals list of partition values.    * @return true if the partition exists, false otherwise.    * @throws MetaException failure reading RDBMS    * @throws NoSuchObjectException this is never thrown.    */
+comment|/**    * Check whether a partition exists.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partKeys list of partition keys used to generate the partition name.    * @param part_vals list of partition values.    * @return true if the partition exists, false otherwise.    * @throws MetaException failure reading RDBMS    * @throws NoSuchObjectException this is never thrown.    */
 name|boolean
 name|doesPartitionExist
 parameter_list|(
@@ -1585,6 +1585,12 @@ name|dbName
 parameter_list|,
 name|String
 name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|FieldSchema
+argument_list|>
+name|partKeys
 parameter_list|,
 name|List
 argument_list|<
