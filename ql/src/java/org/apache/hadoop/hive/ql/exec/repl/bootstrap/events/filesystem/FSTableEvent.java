@@ -460,9 +460,7 @@ block|{
 name|ReplicationSpec
 name|spec
 init|=
-name|metadata
-operator|.
-name|getReplicationSpec
+name|replicationSpec
 argument_list|()
 decl_stmt|;
 return|return
@@ -542,9 +540,7 @@ name|tableDesc
 operator|.
 name|setReplicationSpec
 argument_list|(
-name|metadata
-operator|.
-name|getReplicationSpec
+name|replicationSpec
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -932,9 +928,7 @@ name|partsDesc
 operator|.
 name|setReplicationSpec
 argument_list|(
-name|metadata
-operator|.
-name|getReplicationSpec
+name|replicationSpec
 argument_list|()
 argument_list|)
 expr_stmt|;

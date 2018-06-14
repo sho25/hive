@@ -133,22 +133,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|Warehouse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|api
 operator|.
 name|Database
@@ -2354,6 +2338,13 @@ comment|// looking at each db, and then each table, and then setting up the appr
 comment|// import job in its place.
 try|try
 block|{
+assert|assert
+operator|(
+name|path
+operator|!=
+literal|null
+operator|)
+assert|;
 name|Path
 name|loadPath
 init|=
@@ -2374,6 +2365,16 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// Make fully qualified path for further use.
+name|loadPath
+operator|=
+name|fs
+operator|.
+name|makeQualified
+argument_list|(
+name|loadPath
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
