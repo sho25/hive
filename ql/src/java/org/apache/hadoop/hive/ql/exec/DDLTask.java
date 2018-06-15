@@ -33328,93 +33328,19 @@ operator|.
 name|getSd
 argument_list|()
 decl_stmt|;
-name|String
-name|name
-init|=
-name|table
-operator|.
-name|getTableName
-argument_list|()
-decl_stmt|;
+comment|// If the table's location is currently unset, it is left unset, allowing the metastore to
+comment|// fill in the table's location.
+comment|// Note that the previous logic for some reason would make a special case if the DB was the
+comment|// default database, and actually attempt to generate a  location.
+comment|// This seems incorrect and uncessary, since the metastore is just as able to fill in the
+comment|// default table location in the case of the default DB, as it is for non-default DBs.
 if|if
 condition|(
-operator|!
 name|sd
 operator|.
 name|isSetLocation
 argument_list|()
 condition|)
-block|{
-comment|// Leave temp tables as-is, default location will be handled by SessionHiveMetastoreClient.
-if|if
-condition|(
-operator|!
-name|table
-operator|.
-name|isTemporary
-argument_list|()
-condition|)
-block|{
-comment|// Location is not set, leave it as-is if this is not a default DB
-if|if
-condition|(
-name|databaseName
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-name|Warehouse
-operator|.
-name|DEFAULT_DATABASE_NAME
-argument_list|)
-condition|)
-block|{
-comment|// Default database name path is always ignored, use METASTOREWAREHOUSE and object name
-comment|// instead
-name|path
-operator|=
-operator|new
-name|Path
-argument_list|(
-name|HiveConf
-operator|.
-name|getVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|METASTOREWAREHOUSE
-argument_list|)
-argument_list|,
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|utils
-operator|.
-name|MetaStoreUtils
-operator|.
-name|encodeTableName
-argument_list|(
-name|name
-operator|.
-name|toLowerCase
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-block|}
-else|else
 block|{
 name|path
 operator|=

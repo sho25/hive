@@ -2654,7 +2654,7 @@ name|getDefaultPartitionPath
 argument_list|(
 name|dbObj
 argument_list|,
-name|tableName
+name|tableObj
 argument_list|,
 name|partSpec
 argument_list|)

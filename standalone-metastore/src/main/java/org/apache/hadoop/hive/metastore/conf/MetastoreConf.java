@@ -3755,6 +3755,19 @@ argument_list|,
 literal|"location of default database for the warehouse"
 argument_list|)
 block|,
+name|WAREHOUSE_EXTERNAL
+argument_list|(
+literal|"metastore.warehouse.external.dir"
+argument_list|,
+literal|"hive.metastore.warehouse.external.dir"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Default location for external tables created in the warehouse. "
+operator|+
+literal|"If not set or null, then the normal warehouse location will be used as the default location."
+argument_list|)
+block|,
 name|WRITE_SET_REAPER_INTERVAL
 argument_list|(
 literal|"metastore.writeset.reaper.interval"

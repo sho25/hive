@@ -3702,6 +3702,17 @@ argument_list|,
 literal|"location of default database for the warehouse"
 argument_list|)
 block|,
+name|HIVE_METASTORE_WAREHOUSE_EXTERNAL
+argument_list|(
+literal|"hive.metastore.warehouse.external.dir"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Default location for external tables created in the warehouse. "
+operator|+
+literal|"If not set or null, then the normal warehouse location will be used as the default location."
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.THRIFT_URIS      */
 annotation|@
 name|Deprecated

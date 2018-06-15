@@ -1190,7 +1190,7 @@ name|getDefaultPartitionPath
 argument_list|(
 name|db
 argument_list|,
-name|tblName
+name|tbl
 argument_list|,
 name|ImmutableMap
 operator|.
@@ -1236,7 +1236,7 @@ name|getDefaultPartitionPath
 argument_list|(
 name|db
 argument_list|,
-name|tblName
+name|tbl
 argument_list|,
 name|ImmutableMap
 operator|.
@@ -1282,7 +1282,7 @@ name|getDefaultPartitionPath
 argument_list|(
 name|db
 argument_list|,
-name|tblName
+name|tbl
 argument_list|,
 name|ImmutableMap
 operator|.

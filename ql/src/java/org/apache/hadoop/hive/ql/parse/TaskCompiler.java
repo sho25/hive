@@ -3326,6 +3326,11 @@ name|protoName
 init|=
 literal|null
 decl_stmt|;
+name|boolean
+name|isExternal
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|pCtx
@@ -3345,6 +3350,16 @@ name|getCreateTable
 argument_list|()
 operator|.
 name|getTableName
+argument_list|()
+expr_stmt|;
+name|isExternal
+operator|=
+name|pCtx
+operator|.
+name|getCreateTable
+argument_list|()
+operator|.
+name|isExternal
 argument_list|()
 expr_stmt|;
 block|}
@@ -3439,6 +3454,8 @@ name|names
 index|[
 literal|1
 index|]
+argument_list|,
+name|isExternal
 argument_list|)
 return|;
 block|}
