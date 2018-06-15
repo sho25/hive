@@ -629,7 +629,7 @@ name|inV2
 operator|.
 name|isNull
 index|[
-literal|0
+name|i
 index|]
 condition|)
 block|{
