@@ -3143,6 +3143,37 @@ init|=
 name|getWh
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+comment|// Temp tables that do not go through SemanticAnalyzer may not have location set - do it here.
+comment|// For example export of acid tables generates a query plan that creates a temp table.
+name|tbl
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|setLocation
+argument_list|(
+name|SessionState
+operator|.
+name|generateTempTableLocation
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|Path
 name|tblPath
 init|=

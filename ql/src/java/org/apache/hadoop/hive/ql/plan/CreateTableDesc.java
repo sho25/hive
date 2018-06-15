@@ -4247,14 +4247,6 @@ name|getDbName
 argument_list|()
 argument_list|,
 name|tbl
-operator|.
-name|getTTable
-argument_list|()
-operator|.
-name|getSd
-argument_list|()
-argument_list|,
-name|tableName
 argument_list|,
 name|conf
 argument_list|)
