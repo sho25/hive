@@ -23918,6 +23918,38 @@ argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
+name|assertTrue
+argument_list|(
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" with ('hive.repl.dump.metadata.only' = 'true')"
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|run
+argument_list|(
+literal|"REPL DUMP "
+operator|+
+name|dbName
+operator|+
+literal|" from 1  with ('hive.repl.dump.metadata.only' = 'true')"
+argument_list|,
+literal|true
+argument_list|,
+name|driver
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|run
 argument_list|(
 literal|"alter database "
