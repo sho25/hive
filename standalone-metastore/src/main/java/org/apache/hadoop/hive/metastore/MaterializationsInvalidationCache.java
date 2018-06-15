@@ -1652,6 +1652,41 @@ argument_list|(
 name|qNameTableUsed
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|usedTableModifications
+operator|==
+literal|null
+condition|)
+block|{
+comment|// This is not necessarily an error, since the table may be empty. To be safe,
+comment|// instead of including this materialized view, we just log the information and
+comment|// skip it (if table is really empty, it will not matter for performance anyway).
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"No information found in invalidation cache for table {}, possible tables are: {}"
+argument_list|,
+name|qNameTableUsed
+argument_list|,
+name|tableModifications
+operator|.
+name|keySet
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|materialization
+operator|.
+name|setInvalidationTime
+argument_list|(
+name|Long
+operator|.
+name|MIN_VALUE
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 specifier|final
 name|ConcurrentSkipListSet
 argument_list|<
