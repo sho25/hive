@@ -5018,20 +5018,6 @@ name|getHiveName
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Avoids creating Tez Client sessions internally as it takes much longer currently
-name|setHiveConf
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_EXECUTION_ENGINE
-argument_list|,
-literal|"mr"
-argument_list|)
-expr_stmt|;
 name|setHiveConf
 argument_list|(
 name|conf
