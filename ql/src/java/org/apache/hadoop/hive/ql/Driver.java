@@ -5140,8 +5140,11 @@ name|getHiveLockComponents
 argument_list|()
 control|)
 block|{
+comment|// We only consider tables for which we hold either an exclusive
+comment|// or a shared write lock
 if|if
 condition|(
+operator|(
 name|lckCmp
 operator|.
 name|getType
@@ -5159,6 +5162,14 @@ operator|==
 name|LockType
 operator|.
 name|SHARED_WRITE
+operator|)
+operator|&&
+name|lckCmp
+operator|.
+name|getTablename
+argument_list|()
+operator|!=
+literal|null
 condition|)
 block|{
 name|nonSharedLocks
@@ -5186,9 +5197,11 @@ block|}
 block|}
 else|else
 block|{
-comment|// The lock has a single components, e.g., SimpleHiveLock or ZooKeeperHiveLock
+comment|// The lock has a single components, e.g., SimpleHiveLock or ZooKeeperHiveLock.
+comment|// Pos 0 of lock paths array contains dbname, pos 1 contains tblname
 if|if
 condition|(
+operator|(
 name|lock
 operator|.
 name|getHiveLockMode
@@ -5206,10 +5219,8 @@ operator|==
 name|HiveLockMode
 operator|.
 name|SEMI_SHARED
-condition|)
-block|{
-if|if
-condition|(
+operator|)
+operator|&&
 name|lock
 operator|.
 name|getHiveLockObject
@@ -5223,7 +5234,6 @@ operator|==
 literal|2
 condition|)
 block|{
-comment|// Pos 0 of lock paths array contains dbname, pos 1 contains tblname
 name|nonSharedLocks
 operator|.
 name|add
@@ -5259,14 +5269,10 @@ expr_stmt|;
 block|}
 block|}
 block|}
-block|}
 comment|// 3) Get txn tables that are being written
-name|ValidTxnWriteIdList
-name|txnWriteIdList
+name|String
+name|txnWriteIdListStr
 init|=
-operator|new
-name|ValidTxnWriteIdList
-argument_list|(
 name|conf
 operator|.
 name|get
@@ -5275,13 +5281,19 @@ name|ValidTxnWriteIdList
 operator|.
 name|VALID_TABLES_WRITEIDS_KEY
 argument_list|)
-argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|txnWriteIdList
+name|txnWriteIdListStr
 operator|==
 literal|null
+operator|||
+name|txnWriteIdListStr
+operator|.
+name|length
+argument_list|()
+operator|==
+literal|0
 condition|)
 block|{
 comment|// Nothing to check
@@ -5289,6 +5301,15 @@ return|return
 literal|true
 return|;
 block|}
+name|ValidTxnWriteIdList
+name|txnWriteIdList
+init|=
+operator|new
+name|ValidTxnWriteIdList
+argument_list|(
+name|txnWriteIdListStr
+argument_list|)
+decl_stmt|;
 name|List
 argument_list|<
 name|Pair

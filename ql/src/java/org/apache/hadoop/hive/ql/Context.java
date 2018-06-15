@@ -2045,6 +2045,14 @@ name|HashSet
 argument_list|<>
 argument_list|()
 expr_stmt|;
+name|this
+operator|.
+name|opContext
+operator|=
+operator|new
+name|CompilationOpContext
+argument_list|()
+expr_stmt|;
 block|}
 specifier|public
 name|Map
