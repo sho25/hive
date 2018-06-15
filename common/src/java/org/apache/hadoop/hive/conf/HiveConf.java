@@ -14204,7 +14204,7 @@ name|LLAP_IO_VRB_QUEUE_LIMIT_BASE
 argument_list|(
 literal|"hive.llap.io.vrb.queue.limit.base"
 argument_list|,
-literal|10000
+literal|50000
 argument_list|,
 literal|"The default queue size for VRBs produced by a LLAP IO thread when the processing is\n"
 operator|+
