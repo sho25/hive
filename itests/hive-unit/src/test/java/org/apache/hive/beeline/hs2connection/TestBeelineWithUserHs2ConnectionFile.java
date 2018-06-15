@@ -90,7 +90,7 @@ init|=
 name|createHttpHs2ConnectionFile
 argument_list|()
 decl_stmt|;
-name|testBeeLineConnection
+name|assertBeelineOutputContains
 argument_list|(
 name|path
 argument_list|,
@@ -310,7 +310,7 @@ init|=
 name|createNoAuthHs2ConnectionFile
 argument_list|()
 decl_stmt|;
-name|testBeeLineConnection
+name|assertBeelineOutputContains
 argument_list|(
 name|path
 argument_list|,
@@ -466,7 +466,7 @@ init|=
 name|createSSLHs2ConnectionFile
 argument_list|()
 decl_stmt|;
-name|testBeeLineConnection
+name|assertBeelineOutputContains
 argument_list|(
 name|path
 argument_list|,
