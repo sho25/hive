@@ -17,24 +17,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|WMTrigger
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -85,7 +67,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|WMPool
+name|WMResourcePlan
 import|;
 end_import
 
@@ -103,7 +85,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|WMResourcePlan
+name|WMTrigger
 import|;
 end_import
 
@@ -223,7 +205,29 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Rule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|rules
+operator|.
+name|TestName
 import|;
 end_import
 
@@ -248,6 +252,38 @@ name|TestTriggersTezSessionPoolManager
 extends|extends
 name|AbstractJdbcTriggersTest
 block|{
+annotation|@
+name|Rule
+specifier|public
+name|TestName
+name|testName
+init|=
+operator|new
+name|TestName
+argument_list|()
+decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getTestName
+parameter_list|()
+block|{
+return|return
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|"#"
+operator|+
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+return|;
+block|}
 annotation|@
 name|Test
 argument_list|(
@@ -316,15 +352,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -396,15 +459,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -476,15 +566,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -561,6 +678,20 @@ argument_list|(
 literal|"set hive.auto.convert.join=false"
 argument_list|)
 expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 comment|// to slow down the reducer so that SHUFFLE_BYTES publishing and validation can happen, adding sleep between
 comment|// multiple reduce stages
 name|String
@@ -589,6 +720,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -660,15 +793,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -740,15 +900,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -773,7 +960,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"VERTEX_TOTAL_TASKS> 50"
+literal|"VERTEX_TOTAL_TASKS> 20"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -820,16 +1007,40 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+name|getConfigs
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|getConfigs
-argument_list|()
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -901,16 +1112,40 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+name|getConfigs
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|getConfigs
-argument_list|()
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -982,16 +1217,40 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+name|getConfigs
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|getConfigs
-argument_list|()
+name|setCmds
 argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1018,6 +1277,20 @@ init|=
 name|getConfigs
 argument_list|()
 decl_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|Expression
 name|expression
 init|=
@@ -1075,6 +1348,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 comment|// partitioned insert
@@ -1148,6 +1423,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1186,6 +1463,20 @@ operator|.
 name|add
 argument_list|(
 literal|"create table src2 (key int) partitioned by (value string)"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
 argument_list|)
 expr_stmt|;
 comment|// query will get cancelled before creating 57 partitions
@@ -1248,6 +1539,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 name|cmds
@@ -1279,6 +1572,8 @@ argument_list|,
 name|cmds
 argument_list|,
 literal|null
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 comment|// query will try to add 64 more partitions to already existing 57 partitions but will get cancelled for violation
@@ -1338,6 +1633,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 comment|// let it create 64 more partitions (total 57 + 64 = 121) without any triggers
@@ -1364,6 +1661,8 @@ argument_list|,
 name|cmds
 argument_list|,
 literal|null
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 comment|// re-run insert into but this time no new partitions will be created, so there will be no violation
@@ -1421,6 +1720,8 @@ argument_list|,
 name|cmds
 argument_list|,
 literal|null
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1473,6 +1774,20 @@ operator|.
 name|add
 argument_list|(
 literal|"create table src3 (key int) partitioned by (value string)"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
 argument_list|)
 expr_stmt|;
 name|String
@@ -1536,6 +1851,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1574,6 +1891,20 @@ operator|.
 name|add
 argument_list|(
 literal|"create table src2 (key int) partitioned by (value string)"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
 argument_list|)
 expr_stmt|;
 comment|// query will get cancelled before creating 57 partitions
@@ -1648,6 +1979,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1719,13 +2052,40 @@ name|tableName
 operator|+
 literal|" r on l.under_col>=r.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 literal|null
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1743,8 +2103,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// Map 1 - 55 splits
-comment|// Map 3 - 55 splits
+comment|// Map 1 - 28 splits
+comment|// Map 3 - 28 splits
 name|Expression
 name|expression
 init|=
@@ -1752,7 +2112,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"DAG_RAW_INPUT_SPLITS> 100"
+literal|"DAG_RAW_INPUT_SPLITS> 50"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -1799,14 +2159,38 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+name|getConfigs
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|getConfigs
-argument_list|()
+name|setCmds
 argument_list|,
 literal|"Query was cancelled"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1824,89 +2208,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// Map 1 - 55 splits
-comment|// Map 3 - 55 splits
-name|Expression
-name|expression
-init|=
-name|ExpressionFactory
-operator|.
-name|fromString
-argument_list|(
-literal|"VERTEX_RAW_INPUT_SPLITS> 100"
-argument_list|)
-decl_stmt|;
-name|Trigger
-name|trigger
-init|=
-operator|new
-name|ExecutionTrigger
-argument_list|(
-literal|"highly_parallel"
-argument_list|,
-name|expression
-argument_list|,
-operator|new
-name|Action
-argument_list|(
-name|Action
-operator|.
-name|Type
-operator|.
-name|KILL_QUERY
-argument_list|)
-argument_list|)
-decl_stmt|;
-name|setupTriggers
-argument_list|(
-name|Lists
-operator|.
-name|newArrayList
-argument_list|(
-name|trigger
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|String
-name|query
-init|=
-literal|"select t1.under_col, t1.value from "
-operator|+
-name|tableName
-operator|+
-literal|" t1 join "
-operator|+
-name|tableName
-operator|+
-literal|" t2 on t1.under_col>=t2.under_col"
-decl_stmt|;
-name|runQueryWithTrigger
-argument_list|(
-name|query
-argument_list|,
-name|getConfigs
-argument_list|()
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-block|}
-annotation|@
-name|Test
-argument_list|(
-name|timeout
-operator|=
-literal|120000
-argument_list|)
-specifier|public
-name|void
-name|testTriggerVertexRawInputSplitsKill
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-comment|// Map 1 - 55 splits
-comment|// Map 3 - 55 splits
+comment|// Map 1 - 28 splits
+comment|// Map 3 - 28 splits
 name|Expression
 name|expression
 init|=
@@ -1961,14 +2264,40 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|getConfigs
-argument_list|()
+name|setCmds
 argument_list|,
-literal|"Query was cancelled"
+literal|null
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -1981,13 +2310,13 @@ literal|120000
 argument_list|)
 specifier|public
 name|void
-name|testTriggerDefaultRawInputSplits
+name|testTriggerVertexRawInputSplitsKill
 parameter_list|()
 throws|throws
 name|Exception
 block|{
-comment|// Map 1 - 55 splits
-comment|// Map 3 - 55 splits
+comment|// Map 1 - 28 splits
+comment|// Map 3 - 28 splits
 name|Expression
 name|expression
 init|=
@@ -1995,7 +2324,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"RAW_INPUT_SPLITS> 50"
+literal|"VERTEX_RAW_INPUT_SPLITS> 20"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -2042,14 +2371,143 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+name|getConfigs
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-name|getConfigs
-argument_list|()
+name|setCmds
 argument_list|,
 literal|"Query was cancelled"
+argument_list|,
+literal|110
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|timeout
+operator|=
+literal|120000
+argument_list|)
+specifier|public
+name|void
+name|testTriggerDefaultRawInputSplits
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// Map 1 - 28 splits
+comment|// Map 3 - 28 splits
+name|Expression
+name|expression
+init|=
+name|ExpressionFactory
+operator|.
+name|fromString
+argument_list|(
+literal|"RAW_INPUT_SPLITS> 20"
+argument_list|)
+decl_stmt|;
+name|Trigger
+name|trigger
+init|=
+operator|new
+name|ExecutionTrigger
+argument_list|(
+literal|"highly_parallel"
+argument_list|,
+name|expression
+argument_list|,
+operator|new
+name|Action
+argument_list|(
+name|Action
+operator|.
+name|Type
+operator|.
+name|KILL_QUERY
+argument_list|)
+argument_list|)
+decl_stmt|;
+name|setupTriggers
+argument_list|(
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+name|trigger
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|String
+name|query
+init|=
+literal|"select t1.under_col, t1.value from "
+operator|+
+name|tableName
+operator|+
+literal|" t1 join "
+operator|+
+name|tableName
+operator|+
+literal|" t2 on t1.under_col>=t2.under_col"
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+name|getConfigs
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|runQueryWithTrigger
+argument_list|(
+name|query
+argument_list|,
+name|setCmds
+argument_list|,
+literal|"Query was cancelled"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -2154,15 +2612,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|execTimeTrigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}
@@ -2267,15 +2752,42 @@ name|tableName
 operator|+
 literal|" t2 on t1.under_col>=t2.under_col"
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|setCmds
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.post.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|setCmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
 name|runQueryWithTrigger
 argument_list|(
 name|query
 argument_list|,
-literal|null
+name|setCmds
 argument_list|,
 name|shuffleTrigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|110
 argument_list|)
 expr_stmt|;
 block|}

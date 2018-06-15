@@ -17,24 +17,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|WMTrigger
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -75,7 +57,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|WMPool
+name|WMResourcePlan
 import|;
 end_import
 
@@ -93,7 +75,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|WMResourcePlan
+name|WMTrigger
 import|;
 end_import
 
@@ -213,7 +195,29 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Rule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|rules
+operator|.
+name|TestName
 import|;
 end_import
 
@@ -238,6 +242,38 @@ name|TestTriggersNoTezSessionPool
 extends|extends
 name|AbstractJdbcTriggersTest
 block|{
+annotation|@
+name|Rule
+specifier|public
+name|TestName
+name|testName
+init|=
+operator|new
+name|TestName
+argument_list|()
+decl_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getTestName
+parameter_list|()
+block|{
+return|return
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+operator|+
+literal|"#"
+operator|+
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+return|;
+block|}
 annotation|@
 name|Test
 argument_list|(
@@ -315,6 +351,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|50
 argument_list|)
 expr_stmt|;
 block|}
@@ -339,7 +377,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"VERTEX_TOTAL_TASKS> 50"
+literal|"VERTEX_TOTAL_TASKS> 20"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -396,6 +434,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|50
 argument_list|)
 expr_stmt|;
 block|}
@@ -420,7 +460,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"DAG_TOTAL_TASKS> 50"
+literal|"DAG_TOTAL_TASKS> 20"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -477,6 +517,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|50
 argument_list|)
 expr_stmt|;
 block|}
@@ -501,7 +543,7 @@ name|ExpressionFactory
 operator|.
 name|fromString
 argument_list|(
-literal|"TOTAL_LAUNCHED_TASKS> 50"
+literal|"TOTAL_LAUNCHED_TASKS> 20"
 argument_list|)
 decl_stmt|;
 name|Trigger
@@ -558,6 +600,8 @@ argument_list|,
 name|trigger
 operator|+
 literal|" violated"
+argument_list|,
+literal|50
 argument_list|)
 expr_stmt|;
 block|}
@@ -573,8 +617,6 @@ name|Trigger
 argument_list|>
 name|triggers
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|WMFullResourcePlan
 name|rp
