@@ -5183,6 +5183,16 @@ operator|==
 name|CoreClusterType
 operator|.
 name|TEZ
+operator|&&
+name|SessionState
+operator|.
+name|get
+argument_list|()
+operator|.
+name|getTezSession
+argument_list|()
+operator|!=
+literal|null
 condition|)
 block|{
 name|SessionState

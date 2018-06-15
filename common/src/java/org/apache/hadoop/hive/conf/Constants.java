@@ -224,6 +224,16 @@ name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
 init|=
 literal|"druid.kafka.ingestion."
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DRUID_KAFKA_CONSUMER_PROPERTY_PREFIX
+init|=
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"consumer."
+decl_stmt|;
 comment|/* Kafka Ingestion state - valid values - START/STOP/RESET */
 specifier|public
 specifier|static
