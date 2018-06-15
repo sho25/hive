@@ -256,8 +256,39 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testExport
+name|testExportDefaultDb
 parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testExport
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testExportCustomDb
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|testExport
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|testExport
+parameter_list|(
+name|boolean
+name|useDefualtDb
+parameter_list|)
 throws|throws
 name|Exception
 block|{
@@ -280,9 +311,21 @@ literal|4
 block|}
 block|}
 decl_stmt|;
+specifier|final
+name|String
+name|tblName
+init|=
+name|useDefualtDb
+condition|?
+literal|"T"
+else|:
+literal|"foo.T"
+decl_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"drop table if exists T"
+literal|"drop table if exists "
+operator|+
+name|tblName
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -290,9 +333,25 @@ argument_list|(
 literal|"drop table if exists TImport "
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|useDefualtDb
+condition|)
+block|{
 name|runStatementOnDriver
 argument_list|(
-literal|"create table T (a int, b int) stored as ORC"
+literal|"create database foo"
+argument_list|)
+expr_stmt|;
+block|}
+name|runStatementOnDriver
+argument_list|(
+literal|"create table "
+operator|+
+name|tblName
+operator|+
+literal|" (a int, b int) stored as ORC"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
@@ -304,7 +363,11 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"insert into T(a,b) "
+literal|"insert into "
+operator|+
+name|tblName
+operator|+
+literal|"(a,b) "
 operator|+
 name|makeValuesClause
 argument_list|(
@@ -320,7 +383,11 @@ name|rs
 init|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select * from T order by a,b"
+literal|"select * from "
+operator|+
+name|tblName
+operator|+
+literal|" order by a,b"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -340,7 +407,11 @@ expr_stmt|;
 name|String
 name|exportStmt
 init|=
-literal|"export table T to '"
+literal|"export table "
+operator|+
+name|tblName
+operator|+
+literal|" to '"
 operator|+
 name|getTestDataDir
 argument_list|()
