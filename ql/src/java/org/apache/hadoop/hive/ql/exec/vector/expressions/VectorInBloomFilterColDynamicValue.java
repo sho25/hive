@@ -572,6 +572,9 @@ block|{
 case|case
 name|LONG
 case|:
+case|case
+name|DECIMAL_64
+case|:
 name|bfCheck
 operator|=
 operator|new

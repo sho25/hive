@@ -85,6 +85,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -1082,7 +1098,7 @@ specifier|final
 name|RecordIdentifier
 name|maxKey
 decl_stmt|;
-comment|/**      * Create a reader that reads from the first key larger than minKey to any      * keys equal to maxKey.      * @param key the key to read into      * @param reader the ORC file reader      * @param minKey only return keys larger than minKey if it is non-null      * @param maxKey only return keys less than or equal to maxKey if it is      *               non-null      * @param options options to provide to read the rows.      * @throws IOException      */
+comment|/**      * Create a reader that reads from the first key larger than minKey to any      * keys equal to maxKey.      * @param key the key to read into      * @param reader the ORC file reader      * @param minKey only return keys larger than minKey if it is non-null      * @param maxKey only return keys less than or equal to maxKey if it is      *               non-null      * @param options options to provide to read the rows.      * @param conf      * @throws IOException      */
 annotation|@
 name|VisibleForTesting
 name|ReaderPairAcid
@@ -1103,6 +1119,10 @@ name|ReaderImpl
 operator|.
 name|Options
 name|options
+parameter_list|,
+specifier|final
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|IOException
@@ -1127,6 +1147,8 @@ operator|.
 name|rowsOptions
 argument_list|(
 name|options
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|this
@@ -2109,6 +2131,8 @@ operator|.
 name|rowsOptions
 argument_list|(
 name|options
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 comment|/**        * Logically each bucket consists of 0000_0, 0000_0_copy_1... 0000_0_copy_N. etc  We don't        * know N a priori so if this is true, then the current split is from 0000_0_copy_N file.        * It's needed to correctly set maxKey.  In particular, set maxKey==null if this split        * is the tail of the last file for this logical bucket to include all deltas written after        * non-acid to acid table conversion (todo: HIVE-17320).        * Also, see comments at {@link OriginalReaderPair} about unbucketed tables.        */
@@ -2749,6 +2773,8 @@ operator|.
 name|rowsOptions
 argument_list|(
 name|options
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|next
@@ -2904,6 +2930,8 @@ operator|.
 name|rowsOptions
 argument_list|(
 name|options
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4560,6 +4588,8 @@ name|getMaxKey
 argument_list|()
 argument_list|,
 name|eventOptions
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4618,6 +4648,8 @@ name|getMaxKey
 argument_list|()
 argument_list|,
 name|eventOptions
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -4982,6 +5014,8 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|deltaEventOptions
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
@@ -5082,6 +5116,8 @@ argument_list|,
 name|maxKey
 argument_list|,
 name|deltaEventOptions
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 if|if

@@ -3830,7 +3830,6 @@ operator|||
 operator|!
 operator|(
 name|scratchVectorTypeNames
-operator|)
 index|[
 name|i
 index|]
@@ -3846,6 +3845,7 @@ name|i
 index|]
 operator|==
 name|dataTypePhysicalVariation
+operator|)
 condition|)
 block|{
 continue|continue;
@@ -11130,7 +11130,7 @@ return|return
 name|cleaned
 return|;
 block|}
-specifier|private
+specifier|public
 name|VectorExpression
 name|instantiateExpression
 parameter_list|(

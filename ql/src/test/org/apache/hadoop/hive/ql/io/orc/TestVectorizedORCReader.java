@@ -485,6 +485,18 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|Before
@@ -1307,7 +1319,7 @@ operator|.
 name|getSchema
 argument_list|()
 operator|.
-name|createRowBatch
+name|createRowBatchV2
 argument_list|()
 decl_stmt|;
 name|OrcStruct

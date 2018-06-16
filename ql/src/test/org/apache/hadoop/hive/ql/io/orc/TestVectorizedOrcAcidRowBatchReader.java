@@ -1751,7 +1751,7 @@ name|vectorizedRowBatch
 init|=
 name|schema
 operator|.
-name|createRowBatch
+name|createRowBatchV2
 argument_list|()
 decl_stmt|;
 name|vectorizedRowBatch

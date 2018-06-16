@@ -1671,6 +1671,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
+specifier|public
 specifier|static
 name|InputFormat
 name|getInputFormatFromCache
@@ -1683,7 +1684,7 @@ name|InputFormat
 argument_list|>
 name|inputFormatClass
 parameter_list|,
-name|JobConf
+name|Configuration
 name|conf
 parameter_list|)
 throws|throws

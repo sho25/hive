@@ -29,7 +29,15 @@ begin_interface
 specifier|public
 interface|interface
 name|VectorizedInputFormatInterface
-block|{  }
+block|{
+name|VectorizedSupport
+operator|.
+name|Support
+index|[]
+name|getSupportedFeatures
+parameter_list|()
+function_decl|;
+block|}
 end_interface
 
 end_unit
