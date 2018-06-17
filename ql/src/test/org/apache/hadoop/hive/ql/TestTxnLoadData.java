@@ -1805,33 +1805,15 @@ argument_list|(
 literal|"insert into Tstage values(1,2),(3,4)"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
-name|runStatementOnDriverNegative
+comment|// This will work with the new support of rewriting load into IAS.
+name|runStatementOnDriver
 argument_list|(
 literal|"load data local inpath '"
 operator|+
 name|getWarehouseDir
 argument_list|()
 operator|+
-literal|"' into table T"
-argument_list|)
-decl_stmt|;
-comment|// This condition should not occur with the new support of rewriting load into IAS.
-name|Assert
-operator|.
-name|assertFalse
-argument_list|(
-name|cpr
-operator|.
-name|getErrorMessage
-argument_list|()
-operator|.
-name|contains
-argument_list|(
-literal|"Load into bucketed tables are disabled"
-argument_list|)
+literal|"/Tstage' into table T"
 argument_list|)
 expr_stmt|;
 block|}

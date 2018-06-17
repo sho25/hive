@@ -738,7 +738,7 @@ specifier|final
 name|String
 name|tempTblNameSuffix
 init|=
-literal|"__TEMP_TABLE_FOR_LOAD_DATA__"
+literal|"__temp_table_for_load_data__"
 decl_stmt|;
 comment|// AST specific data
 specifier|private
