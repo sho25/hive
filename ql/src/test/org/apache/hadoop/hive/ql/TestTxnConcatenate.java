@@ -145,24 +145,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|processors
-operator|.
-name|CommandProcessorResponse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|junit
 operator|.
 name|Assert
@@ -1431,38 +1413,97 @@ literal|"select count(*) from NEXT_WRITE_ID where NWI_TABLE='s'"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//this causes MetaStoreEvenListener.onDropTable()/onCreateTable() to execute and the data
-comment|//files are just moved under new table.  This can't work since a drop table in Acid removes
-comment|//the relevant table metadata (like writeid, etc.), so writeIds in file names/ROW_IDs
-comment|//no longer make sense.  (In fact 'select ...' returns nothing since there is no NEXT_WRITE_ID
-comment|//entry for the 'new' table and all existing data is 'above HWM'. see HIVE-19569
-name|CommandProcessorResponse
-name|cpr
-init|=
-name|runStatementOnDriverNegative
+name|runStatementOnDriver
 argument_list|(
 literal|"alter table mydb1.S RENAME TO mydb2.bar"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertEquals
 argument_list|(
-name|cpr
+name|TxnDbUtil
 operator|.
-name|getErrorMessage
-argument_list|()
-operator|!=
-literal|null
-operator|&&
-name|cpr
-operator|.
-name|getErrorMessage
-argument_list|()
-operator|.
-name|contains
+name|queryToString
 argument_list|(
-literal|"Changing database name of a transactional table mydb1.s is not supported."
+name|hiveConf
+argument_list|,
+literal|"select * from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+argument_list|,
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_TABLE='bar'"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from COMPACTION_QUEUE where CQ_TABLE='bar'"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from WRITE_SET where WS_TABLE='bar'"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from TXN_TO_WRITE_ID where T2W_TABLE='bar'"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|hiveConf
+argument_list|,
+literal|"select count(*) from NEXT_WRITE_ID where NWI_TABLE='bar'"
 argument_list|)
 argument_list|)
 expr_stmt|;
