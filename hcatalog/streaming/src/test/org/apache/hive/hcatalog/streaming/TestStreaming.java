@@ -3725,20 +3725,6 @@ literal|"nobucket"
 operator|+
 literal|"'"
 decl_stmt|;
-comment|// disabling vectorization as this test yields incorrect results with vectorization
-name|conf
-operator|.
-name|setBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_VECTORIZATION_ENABLED
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
 try|try
 init|(
 name|IDriver
