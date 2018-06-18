@@ -353,6 +353,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Utility method, which can be used to start MetaStore instances with specific configurations    * different from the default.    * @param msConf Specific MetaStore configuration values    * @param extraConf Specific other configuration values    */
+specifier|public
 specifier|static
 name|void
 name|startMetaStores
