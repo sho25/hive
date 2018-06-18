@@ -454,6 +454,11 @@ operator|new
 name|IOException
 argument_list|(
 name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -823,6 +828,11 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
 name|e
 argument_list|)
 throw|;

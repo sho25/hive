@@ -1024,6 +1024,15 @@ specifier|final
 name|ClientCapabilities
 name|version
 decl_stmt|;
+comment|//copied from ErrorMsg.java
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|REPL_EVENTS_MISSING_IN_METASTORE
+init|=
+literal|"Notification events are missing in the meta store."
+decl_stmt|;
 specifier|static
 specifier|final
 specifier|protected
@@ -15675,7 +15684,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"Notification events are missing."
+name|REPL_EVENTS_MISSING_IN_METASTORE
 argument_list|)
 throw|;
 block|}

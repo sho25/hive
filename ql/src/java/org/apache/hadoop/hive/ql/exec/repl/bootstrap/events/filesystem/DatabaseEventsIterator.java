@@ -585,13 +585,25 @@ name|e
 parameter_list|)
 block|{
 comment|// may be do some retry logic here.
-throw|throw
-operator|new
-name|RuntimeException
+name|LOG
+operator|.
+name|error
 argument_list|(
 literal|"could not traverse the file via remote iterator "
 operator|+
 name|dbLevelPath
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)

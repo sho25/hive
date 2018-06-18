@@ -149,6 +149,40 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|ErrorMsg
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|HiveFatalException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|shims
 operator|.
 name|ShimLoader
@@ -460,6 +494,8 @@ throws|throws
 name|IOException
 throws|,
 name|LoginException
+throws|,
+name|HiveFatalException
 block|{
 name|Map
 argument_list|<
@@ -681,6 +717,8 @@ throws|throws
 name|IOException
 throws|,
 name|LoginException
+throws|,
+name|HiveFatalException
 block|{
 name|int
 name|repeat
@@ -963,7 +1001,12 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"File copy failed even after several attempts."
+name|ErrorMsg
+operator|.
+name|REPL_FILE_SYSTEM_OPERATION_RETRY
+operator|.
+name|getMsg
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -1000,6 +1043,8 @@ name|isCopyError
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|HiveFatalException
 block|{
 name|List
 argument_list|<
@@ -1159,7 +1204,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"File copy failed and likely source file is deleted or modified. "
+literal|"File copy failed and likely source file is deleted or modified."
 operator|+
 literal|"Source File: "
 operator|+
@@ -1171,9 +1216,14 @@ argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|IOException
+name|HiveFatalException
 argument_list|(
-literal|"File copy failed and likely source file is deleted or modified."
+name|ErrorMsg
+operator|.
+name|REPL_FILE_MISSING_FROM_SRC_AND_CM_PATH
+operator|.
+name|getMsg
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -1227,9 +1277,14 @@ argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|IOException
+name|HiveFatalException
 argument_list|(
-literal|"Both source and CM path are missing from source."
+name|ErrorMsg
+operator|.
+name|REPL_FILE_MISSING_FROM_SRC_AND_CM_PATH
+operator|.
+name|getMsg
+argument_list|()
 argument_list|)
 throw|;
 block|}

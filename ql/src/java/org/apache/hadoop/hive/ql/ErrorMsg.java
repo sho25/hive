@@ -2520,6 +2520,43 @@ argument_list|,
 literal|"Spark job failed because of out of memory."
 argument_list|)
 block|,
+comment|//if the error message is changed for REPL_EVENTS_MISSING_IN_METASTORE, then need modification in getNextNotification
+comment|//method in HiveMetaStoreClient
+name|REPL_EVENTS_MISSING_IN_METASTORE
+argument_list|(
+literal|20016
+argument_list|,
+literal|"Notification events are missing in the meta store."
+argument_list|)
+block|,
+name|REPL_BOOTSTRAP_LOAD_PATH_NOT_VALID
+argument_list|(
+literal|20017
+argument_list|,
+literal|"Target database is bootstrapped from some other path."
+argument_list|)
+block|,
+name|REPL_FILE_MISSING_FROM_SRC_AND_CM_PATH
+argument_list|(
+literal|20018
+argument_list|,
+literal|"File is missing from both source and cm path."
+argument_list|)
+block|,
+name|REPL_LOAD_PATH_NOT_FOUND
+argument_list|(
+literal|20019
+argument_list|,
+literal|"Load path does not exist."
+argument_list|)
+block|,
+name|REPL_DATABASE_IS_NOT_SOURCE_OF_REPLICATION
+argument_list|(
+literal|20020
+argument_list|,
+literal|"Source of replication (repl.source.for) is not set in the database properties."
+argument_list|)
+block|,
 comment|// An exception from runtime that will show the full stack to client
 name|UNRESOLVED_RT_EXCEPTION
 argument_list|(
@@ -2872,6 +2909,13 @@ argument_list|(
 literal|30046
 argument_list|,
 literal|"Spark job failed in execution while getting job info due to exception {0}"
+argument_list|)
+block|,
+name|REPL_FILE_SYSTEM_OPERATION_RETRY
+argument_list|(
+literal|30047
+argument_list|,
+literal|"Replication file system operation retry expired."
 argument_list|)
 block|,
 comment|//========================== 40000 range starts here ========================//
