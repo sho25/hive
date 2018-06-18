@@ -4811,7 +4811,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|shouldNotCreateDirectoryForNonNativeTableInDumpDirectory
+name|testShouldNotCreateDirectoryForNonNativeTableInDumpDirectory
 parameter_list|()
 throws|throws
 name|Throwable
@@ -5028,6 +5028,123 @@ expr_stmt|;
 block|}
 block|}
 block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testShouldDumpMetaDataForNonNativeTableIfSetMeataDataOnly
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|tableName
+init|=
+name|testName
+operator|.
+name|getMethodName
+argument_list|()
+operator|+
+literal|"_table"
+decl_stmt|;
+name|String
+name|createTableQuery
+init|=
+literal|"CREATE TABLE "
+operator|+
+name|tableName
+operator|+
+literal|" ( serde_id bigint COMMENT 'from deserializer', name string "
+operator|+
+literal|"COMMENT 'from deserializer', slib string COMMENT 'from deserializer') "
+operator|+
+literal|"ROW FORMAT SERDE 'org.apache.hive.storage.jdbc.JdbcSerDe' "
+operator|+
+literal|"STORED BY 'org.apache.hive.storage.jdbc.JdbcStorageHandler' "
+operator|+
+literal|"WITH SERDEPROPERTIES ('serialization.format'='1') "
+operator|+
+literal|"TBLPROPERTIES ( "
+operator|+
+literal|"'hive.sql.database.type'='METASTORE', "
+operator|+
+literal|"'hive.sql.query'='SELECT \"SERDE_ID\", \"NAME\", \"SLIB\" FROM \"SERDES\"')"
+decl_stmt|;
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|bootstrapTuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+name|createTableQuery
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|,
+name|Collections
+operator|.
+name|singletonList
+argument_list|(
+literal|"'hive.repl.dump.metadata.only'='true'"
+argument_list|)
+argument_list|)
+decl_stmt|;
+comment|// Bootstrap load in replica
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|bootstrapTuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|status
+argument_list|(
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|bootstrapTuple
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|tableName
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void

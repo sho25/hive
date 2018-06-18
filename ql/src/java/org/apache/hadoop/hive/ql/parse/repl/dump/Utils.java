@@ -1135,11 +1135,18 @@ return|return
 literal|false
 return|;
 block|}
+comment|// if its metadata only, then dump metadata of non native tables also.
 if|if
 condition|(
 name|tableHandle
 operator|.
 name|isNonNative
+argument_list|()
+operator|&&
+operator|!
+name|replicationSpec
+operator|.
+name|isMetadataOnly
 argument_list|()
 condition|)
 block|{
