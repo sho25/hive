@@ -2213,6 +2213,8 @@ operator|.
 name|result
 argument_list|,
 name|environmentContext
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -2267,6 +2269,8 @@ argument_list|,
 name|results
 argument_list|,
 name|environmentContext
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|LOG

@@ -168,6 +168,18 @@ return|return
 literal|null
 return|;
 block|}
+specifier|public
+name|boolean
+name|isEmpty
+parameter_list|()
+block|{
+return|return
+name|tablesValidWriteIdList
+operator|.
+name|isEmpty
+argument_list|()
+return|;
+block|}
 comment|// Each ValidWriteIdList is separated with "$" and each one maps to one table
 comment|// Format<txnId>$<table_name>:<hwm>:<minOpenWriteId>:<open_writeids>:<abort_writeids>$<table_name>...
 specifier|private
