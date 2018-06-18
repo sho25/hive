@@ -79197,6 +79197,9 @@ block|}
 name|boolean
 name|makeInsertOnly
 init|=
+operator|!
+name|isTemporaryTable
+operator|&&
 name|HiveConf
 operator|.
 name|getBoolVar
