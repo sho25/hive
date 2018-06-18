@@ -411,31 +411,6 @@ argument_list|(
 name|fpath
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|qt
-operator|.
-name|shouldBeSkipped
-argument_list|(
-name|fname
-argument_list|)
-condition|)
-block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Test "
-operator|+
-name|fname
-operator|+
-literal|" skipped"
-argument_list|)
-expr_stmt|;
-return|return;
-block|}
 name|qt
 operator|.
 name|cliInit
