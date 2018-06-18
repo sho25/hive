@@ -211,7 +211,7 @@ name|arrow
 operator|.
 name|vector
 operator|.
-name|TimeStampMicroVector
+name|TimeStampMicroTZVector
 import|;
 end_import
 
@@ -316,6 +316,22 @@ operator|.
 name|complex
 operator|.
 name|NullableMapVector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|arrow
+operator|.
+name|vector
+operator|.
+name|types
+operator|.
+name|TimeUnit
 import|;
 end_import
 
@@ -1690,16 +1706,19 @@ return|;
 case|case
 name|TIMESTAMP
 case|:
-comment|// HIVE-19723: Prefer microsecond because Spark supports it
+comment|// HIVE-19853: Prefer timestamp in microsecond with time zone because Spark supports it
 return|return
-name|Types
+operator|new
+name|ArrowType
 operator|.
-name|MinorType
+name|Timestamp
+argument_list|(
+name|TimeUnit
 operator|.
-name|TIMESTAMPMICRO
-operator|.
-name|getType
-argument_list|()
+name|MICROSECOND
+argument_list|,
+literal|"UTC"
+argument_list|)
 return|;
 case|case
 name|BINARY
@@ -3288,11 +3307,11 @@ name|TIMESTAMP
 case|:
 block|{
 specifier|final
-name|TimeStampMicroVector
-name|timeStampMicroVector
+name|TimeStampMicroTZVector
+name|timeStampMicroTZVector
 init|=
 operator|(
-name|TimeStampMicroVector
+name|TimeStampMicroTZVector
 operator|)
 name|arrowVector
 decl_stmt|;
@@ -3330,7 +3349,7 @@ name|i
 index|]
 condition|)
 block|{
-name|timeStampMicroVector
+name|timeStampMicroTZVector
 operator|.
 name|setNull
 argument_list|(
@@ -3403,7 +3422,7 @@ operator|)
 condition|)
 block|{
 comment|// If the timestamp cannot be represented in long microsecond, set it as a null value
-name|timeStampMicroVector
+name|timeStampMicroTZVector
 operator|.
 name|setNull
 argument_list|(
@@ -3413,7 +3432,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|timeStampMicroVector
+name|timeStampMicroTZVector
 operator|.
 name|set
 argument_list|(
