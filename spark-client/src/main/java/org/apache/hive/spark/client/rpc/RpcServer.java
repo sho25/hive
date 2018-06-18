@@ -742,7 +742,9 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Timed out waiting for test message from Remote Spark driver."
+literal|"Timed out waiting for the completion of SASL negotiation "
+operator|+
+literal|"between HiveServer2 and the Remote Spark Driver."
 argument_list|)
 expr_stmt|;
 name|newRpc
