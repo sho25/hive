@@ -393,7 +393,7 @@ name|path
 return|;
 block|}
 specifier|protected
-name|String
+name|Path
 name|getNominalPath
 parameter_list|(
 name|Path
@@ -548,9 +548,6 @@ throw|;
 block|}
 return|return
 name|nominal
-operator|.
-name|toString
-argument_list|()
 return|;
 block|}
 specifier|public

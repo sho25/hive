@@ -521,10 +521,12 @@ name|this
 operator|.
 name|baseFileName
 operator|=
-name|baseFileName
+name|StringInternUtils
 operator|.
-name|intern
-argument_list|()
+name|internIfNotNull
+argument_list|(
+name|baseFileName
+argument_list|)
 expr_stmt|;
 block|}
 specifier|public

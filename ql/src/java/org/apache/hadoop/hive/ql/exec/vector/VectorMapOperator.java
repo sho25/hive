@@ -819,7 +819,7 @@ specifier|private
 specifier|transient
 name|HashMap
 argument_list|<
-name|String
+name|Path
 argument_list|,
 name|VectorPartitionContext
 argument_list|>
@@ -2199,11 +2199,7 @@ name|fileToPartitionContextMap
 operator|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|VectorPartitionContext
-argument_list|>
+argument_list|<>
 argument_list|()
 expr_stmt|;
 comment|// Temporary map so we only create one partition context entry.
@@ -2319,9 +2315,6 @@ operator|.
 name|put
 argument_list|(
 name|path
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|vectorPartitionContext
 argument_list|)
@@ -2414,7 +2407,7 @@ operator|.
 name|getCurrentInputPath
 argument_list|()
 decl_stmt|;
-name|String
+name|Path
 name|nominalPath
 init|=
 name|getNominalPath
@@ -2452,7 +2445,7 @@ operator|.
 name|getCurrentInputPath
 argument_list|()
 decl_stmt|;
-name|String
+name|Path
 name|nominalPath
 init|=
 name|getNominalPath
@@ -2582,7 +2575,7 @@ specifier|private
 name|void
 name|setupPartitionContextVars
 parameter_list|(
-name|String
+name|Path
 name|nominalPath
 parameter_list|)
 throws|throws
