@@ -279,11 +279,11 @@ specifier|final
 name|String
 name|EMBEDDED_HS2_URL
 init|=
-literal|"jdbc:hive2://?hive.conf.restricted.list=;hive.security.authorization.sqlstd.confwhitelist=*;"
+literal|"jdbc:hive2://?hive.conf.restricted.list=;hive.security.authorization.sqlstd.confwhitelist=.*;"
 operator|+
-literal|"hive.security.authorization.sqlstd.confwhitelist.append=*;hive.security.authorization.enabled=false;"
+literal|"hive.security.authorization.sqlstd.confwhitelist.append=.*;hive.security.authorization.enabled=false;"
 operator|+
-literal|"hive.metastore.uris="
+literal|"hive.metastore.uris=;hive.security.authorization.manager=org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory"
 decl_stmt|;
 specifier|public
 specifier|static
