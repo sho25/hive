@@ -520,6 +520,13 @@ name|TypeDescription
 name|schema
 parameter_list|)
 block|{
+if|if
+condition|(
+name|schema
+operator|!=
+literal|null
+condition|)
+block|{
 name|this
 operator|.
 name|explicitSchema
@@ -533,6 +540,7 @@ argument_list|(
 name|schema
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|this
 return|;

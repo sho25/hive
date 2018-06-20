@@ -237,6 +237,20 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
+name|SchemaEvolution
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -3508,7 +3522,7 @@ name|maxKey
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert from the row include/sarg/columnNames to the event equivalent    * for the underlying file.    * @param options options for the row reader    * @return a cloned options object that is modified for the event reader    */
+comment|/**    * Convert from the row include/sarg/columnNames to the event equivalent    * for the underlying file.    * @param options options for the row reader    * @param rowSchema schema of the row, excluding ACID columns    * @return a cloned options object that is modified for the event reader    */
 specifier|static
 name|Reader
 operator|.
@@ -3519,6 +3533,9 @@ name|Reader
 operator|.
 name|Options
 name|options
+parameter_list|,
+name|TypeDescription
+name|rowSchema
 parameter_list|)
 block|{
 name|Reader
@@ -3622,6 +3639,14 @@ name|cols
 argument_list|)
 expr_stmt|;
 block|}
+comment|// schema evolution will insert the acid columns to row schema for ACID read
+name|result
+operator|.
+name|schema
+argument_list|(
+name|rowSchema
+argument_list|)
+expr_stmt|;
 return|return
 name|result
 return|;
@@ -4047,7 +4072,7 @@ name|objectInspector
 operator|=
 name|OrcRecordUpdater
 operator|.
-name|createEventSchema
+name|createEventObjectInspector
 argument_list|(
 name|OrcStruct
 operator|.
@@ -4088,6 +4113,8 @@ init|=
 name|createEventOptions
 argument_list|(
 name|options
+argument_list|,
+name|typeDescr
 argument_list|)
 decl_stmt|;
 comment|//suppose it's the first Major compaction so we only have deltas
