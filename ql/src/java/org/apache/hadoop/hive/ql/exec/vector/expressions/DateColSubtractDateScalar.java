@@ -53,15 +53,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|exec
+name|type
 operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|VectorExpression
+name|Date
 import|;
 end_import
 
@@ -101,49 +97,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|TimestampColumnVector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|VectorizedRowBatch
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|NullUtil
 import|;
 end_import
 
@@ -217,7 +171,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -316,7 +270,7 @@ name|value
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -488,7 +442,7 @@ name|scratchTimestamp1
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -622,7 +576,7 @@ name|scratchTimestamp1
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -689,7 +643,7 @@ name|scratchTimestamp1
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -774,7 +728,7 @@ name|scratchTimestamp1
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -866,7 +820,7 @@ name|scratchTimestamp1
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -939,7 +893,7 @@ name|scratchTimestamp1
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(
@@ -1010,7 +964,15 @@ argument_list|)
 operator|+
 literal|", val "
 operator|+
+name|Date
+operator|.
+name|ofEpochMilli
+argument_list|(
 name|value
+operator|.
+name|getTime
+argument_list|()
+argument_list|)
 return|;
 block|}
 annotation|@

@@ -97,7 +97,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -226,7 +226,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The ParquetStringInspector inspects a BytesWritable, TimestampWritable, HiveDecimalWritable,  * DoubleWritable, FloatWritable, LongWritable, IntWritable, and BooleanWritable to give a Text  * or String.  *  */
+comment|/**  * The ParquetStringInspector inspects a BytesWritable, TimestampWritableV2, HiveDecimalWritable,  * DoubleWritable, FloatWritable, LongWritable, IntWritable, and BooleanWritable to give a Text  * or String.  *  */
 end_comment
 
 begin_class
@@ -327,7 +327,7 @@ condition|(
 operator|(
 name|o
 operator|instanceof
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 operator|||
 operator|(
@@ -497,7 +497,7 @@ condition|(
 operator|(
 name|o
 operator|instanceof
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 operator|||
 operator|(

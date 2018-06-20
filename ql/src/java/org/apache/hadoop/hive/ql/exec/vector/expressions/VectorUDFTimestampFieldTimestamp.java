@@ -45,6 +45,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TimeZone
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -268,7 +278,14 @@ init|=
 name|Calendar
 operator|.
 name|getInstance
-argument_list|()
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
+argument_list|)
 decl_stmt|;
 specifier|public
 name|VectorUDFTimestampFieldTimestamp

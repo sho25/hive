@@ -37,7 +37,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -62,7 +62,7 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|private
-name|DateWritable
+name|DateWritableV2
 name|dateWritable
 decl_stmt|;
 annotation|@
@@ -116,7 +116,7 @@ expr_stmt|;
 name|dateWritable
 operator|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|()
 expr_stmt|;
 block|}

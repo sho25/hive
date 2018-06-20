@@ -3061,7 +3061,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|1740
+literal|1668
 argument_list|,
 name|rawDataSize
 argument_list|)
@@ -3100,7 +3100,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|1740
+literal|1668
 argument_list|,
 name|reader
 operator|.
@@ -3314,7 +3314,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|80
+literal|8
 argument_list|,
 name|reader
 operator|.
@@ -3348,7 +3348,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|88
+literal|16
 argument_list|,
 name|reader
 operator|.
@@ -4093,7 +4093,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|1740
+literal|1668
 argument_list|,
 name|rawDataSize
 argument_list|)
@@ -4132,7 +4132,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|1740
+literal|1668
 argument_list|,
 name|reader
 operator|.
@@ -4346,7 +4346,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|80
+literal|8
 argument_list|,
 name|reader
 operator|.
@@ -4380,7 +4380,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|88
+literal|16
 argument_list|,
 name|reader
 operator|.

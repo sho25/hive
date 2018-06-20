@@ -49,16 +49,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Arrays
@@ -95,11 +85,27 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|serde2
+operator|.
+name|RandomTypeUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|common
 operator|.
 name|type
 operator|.
-name|RandomTypeUtil
+name|Timestamp
 import|;
 end_import
 
@@ -787,7 +793,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -2380,7 +2386,7 @@ index|[
 name|i
 index|]
 operator|=
-name|TimestampWritable
+name|TimestampWritableV2
 operator|.
 name|getLong
 argument_list|(
@@ -2394,6 +2400,9 @@ argument_list|(
 literal|0
 argument_list|,
 name|randTimestamp
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

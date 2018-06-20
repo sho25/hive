@@ -377,7 +377,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -539,7 +539,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -2950,7 +2950,7 @@ case|case
 name|DATE
 case|:
 block|{
-name|DateWritable
+name|DateWritableV2
 name|d
 init|=
 name|reuse
@@ -2958,11 +2958,11 @@ operator|==
 literal|null
 condition|?
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|()
 else|:
 operator|(
-name|DateWritable
+name|DateWritableV2
 operator|)
 name|reuse
 decl_stmt|;
@@ -2985,7 +2985,7 @@ block|}
 case|case
 name|TIMESTAMP
 case|:
-name|TimestampWritable
+name|TimestampWritableV2
 name|t
 init|=
 operator|(
@@ -2994,11 +2994,11 @@ operator|==
 literal|null
 condition|?
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|()
 else|:
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|reuse
 operator|)
@@ -3010,7 +3010,7 @@ init|=
 operator|new
 name|byte
 index|[
-name|TimestampWritable
+name|TimestampWritableV2
 operator|.
 name|BINARY_SORTABLE_LENGTH
 index|]
@@ -5263,7 +5263,7 @@ name|TimestampObjectInspector
 operator|)
 name|poi
 decl_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|t
 init|=
 name|toi
@@ -6647,7 +6647,7 @@ operator|.
 name|Output
 name|buffer
 parameter_list|,
-name|TimestampWritable
+name|TimestampWritableV2
 name|t
 parameter_list|,
 name|boolean

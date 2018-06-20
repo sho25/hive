@@ -71,7 +71,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -143,7 +143,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -380,7 +380,7 @@ block|{
 name|currentDateWritable
 operator|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -398,7 +398,7 @@ block|{
 name|currentTimestampWritable
 operator|=
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -996,12 +996,12 @@ name|currentBytesLength
 decl_stmt|;
 comment|/*    * DATE.    */
 specifier|public
-name|DateWritable
+name|DateWritableV2
 name|currentDateWritable
 decl_stmt|;
 comment|/*    * TIMESTAMP.    */
 specifier|public
-name|TimestampWritable
+name|TimestampWritableV2
 name|currentTimestampWritable
 decl_stmt|;
 comment|/*    * INTERVAL_YEAR_MONTH.    */

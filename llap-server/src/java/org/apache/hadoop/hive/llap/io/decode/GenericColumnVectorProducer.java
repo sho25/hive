@@ -920,13 +920,7 @@ specifier|final
 name|String
 name|writerTimezone
 init|=
-name|TimeZone
-operator|.
-name|getDefault
-argument_list|()
-operator|.
-name|getID
-argument_list|()
+literal|"UTC"
 decl_stmt|;
 specifier|private
 name|List

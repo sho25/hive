@@ -37,6 +37,16 @@ name|SimpleDateFormat
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TimeZone
+import|;
+end_import
+
 begin_comment
 comment|/**  * DateUtils. Thread-safe class  *  */
 end_comment
@@ -83,6 +93,18 @@ operator|.
 name|setLenient
 argument_list|(
 literal|false
+argument_list|)
+expr_stmt|;
+name|simpleDateFormat
+operator|.
+name|setTimeZone
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
 argument_list|)
 expr_stmt|;
 return|return

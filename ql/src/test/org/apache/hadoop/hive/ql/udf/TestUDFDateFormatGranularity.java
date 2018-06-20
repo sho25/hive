@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|time
 operator|.
 name|Instant
@@ -51,11 +41,19 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|time
+name|apache
 operator|.
-name|ZoneOffset
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -109,7 +107,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -153,14 +151,15 @@ block|{
 comment|// Running example
 comment|// Friday 30th August 1985 02:47:02 AM
 specifier|final
-name|TimestampWritable
+name|TimestampWritableV2
 name|t
 init|=
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|494243222000L
 argument_list|)
@@ -177,7 +176,7 @@ operator|new
 name|UDFDateFloorYear
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i1
 init|=
 name|g
@@ -189,14 +188,14 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|473414400000L
+literal|473385600000L
 argument_list|,
 name|i1
 operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -208,7 +207,7 @@ operator|new
 name|UDFDateFloorQuarter
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i2
 init|=
 name|g
@@ -220,14 +219,14 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|489049200000L
+literal|489024000000L
 argument_list|,
 name|i2
 operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -239,7 +238,7 @@ operator|new
 name|UDFDateFloorMonth
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i3
 init|=
 name|g
@@ -251,14 +250,14 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|491727600000L
+literal|491702400000L
 argument_list|,
 name|i3
 operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -270,7 +269,7 @@ operator|new
 name|UDFDateFloorWeek
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i4
 init|=
 name|g
@@ -282,14 +281,14 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|493887600000L
+literal|493862400000L
 argument_list|,
 name|i4
 operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -301,7 +300,7 @@ operator|new
 name|UDFDateFloorDay
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i5
 init|=
 name|g
@@ -313,14 +312,14 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|494233200000L
+literal|494208000000L
 argument_list|,
 name|i5
 operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -332,7 +331,7 @@ operator|new
 name|UDFDateFloorHour
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i6
 init|=
 name|g
@@ -351,7 +350,7 @@ operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -363,7 +362,7 @@ operator|new
 name|UDFDateFloorMinute
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i7
 init|=
 name|g
@@ -382,7 +381,7 @@ operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -394,7 +393,7 @@ operator|new
 name|UDFDateFloorSecond
 argument_list|()
 expr_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|i8
 init|=
 name|g
@@ -413,7 +412,7 @@ operator|.
 name|getTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -23,9 +23,17 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Date
 import|;
@@ -33,9 +41,17 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Timestamp
 import|;
@@ -117,7 +133,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -135,7 +151,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -377,13 +393,6 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|boolean
-name|caught
-init|=
-literal|false
-decl_stmt|;
-try|try
-block|{
 name|GenericUDFMonthsBetween
 name|udf
 init|=
@@ -442,23 +451,6 @@ argument_list|,
 literal|null
 argument_list|,
 name|udf
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-name|caught
-operator|=
-literal|true
-expr_stmt|;
-block|}
-name|assertTrue
-argument_list|(
-name|caught
 argument_list|)
 expr_stmt|;
 block|}
@@ -1115,7 +1107,7 @@ name|runTestTs
 argument_list|(
 literal|"2003-04-23 23:59:59"
 argument_list|,
-literal|"2003-03-24 00:0:0"
+literal|"2003-03-24 00:00:00"
 argument_list|,
 literal|0.99999963
 argument_list|,
@@ -1526,7 +1518,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|TimestampWritable
+name|TimestampWritableV2
 name|tsWr1
 init|=
 name|ts1
@@ -1536,7 +1528,7 @@ condition|?
 literal|null
 else|:
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -1546,7 +1538,7 @@ name|ts1
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|tsWr2
 init|=
 name|ts2
@@ -1556,7 +1548,7 @@ condition|?
 literal|null
 else|:
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|Timestamp
 operator|.
@@ -1669,7 +1661,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|DateWritable
+name|DateWritableV2
 name|dtWr1
 init|=
 name|dt1
@@ -1679,7 +1671,7 @@ condition|?
 literal|null
 else|:
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.
@@ -1689,7 +1681,7 @@ name|dt1
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|DateWritable
+name|DateWritableV2
 name|dtWr2
 init|=
 name|dt2
@@ -1699,7 +1691,7 @@ condition|?
 literal|null
 else|:
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|Date
 operator|.

@@ -265,7 +265,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -337,7 +337,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -804,7 +804,7 @@ specifier|public
 name|BooleanWritable
 name|evaluate
 parameter_list|(
-name|DateWritable
+name|DateWritableV2
 name|d
 parameter_list|)
 block|{
@@ -817,7 +817,7 @@ specifier|public
 name|BooleanWritable
 name|evaluate
 parameter_list|(
-name|TimestampWritable
+name|TimestampWritableV2
 name|i
 parameter_list|)
 block|{

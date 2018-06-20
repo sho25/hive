@@ -317,7 +317,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -1988,7 +1988,7 @@ literal|"max"
 argument_list|)
 condition|)
 block|{
-name|DateWritable
+name|DateWritableV2
 name|v
 init|=
 operator|(
@@ -2035,7 +2035,7 @@ literal|"min"
 argument_list|)
 condition|)
 block|{
-name|DateWritable
+name|DateWritableV2
 name|v
 init|=
 operator|(

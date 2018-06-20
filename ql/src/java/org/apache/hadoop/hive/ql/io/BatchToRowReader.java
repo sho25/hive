@@ -69,13 +69,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|serde2
 operator|.
-name|exec
+name|io
 operator|.
-name|vector
-operator|.
-name|Decimal64ColumnVector
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -206,6 +204,26 @@ operator|.
 name|vector
 operator|.
 name|DecimalColumnVector
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|Decimal64ColumnVector
 import|;
 end_import
 
@@ -421,7 +439,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -512,24 +530,6 @@ operator|.
 name|io
 operator|.
 name|ShortWritable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|io
-operator|.
-name|TimestampWritable
 import|;
 end_import
 
@@ -2760,7 +2760,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|DateWritable
+name|DateWritableV2
 name|nextDate
 parameter_list|(
 name|ColumnVector
@@ -2800,7 +2800,7 @@ name|row
 index|]
 condition|)
 block|{
-name|DateWritable
+name|DateWritableV2
 name|result
 decl_stmt|;
 if|if
@@ -2814,7 +2814,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|!=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|class
 condition|)
@@ -2822,7 +2822,7 @@ block|{
 name|result
 operator|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -2831,7 +2831,7 @@ block|{
 name|result
 operator|=
 operator|(
-name|DateWritable
+name|DateWritableV2
 operator|)
 name|previous
 expr_stmt|;
@@ -2874,7 +2874,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|TimestampWritable
+name|TimestampWritableV2
 name|nextTimestamp
 parameter_list|(
 name|ColumnVector
@@ -2914,7 +2914,7 @@ name|row
 index|]
 condition|)
 block|{
-name|TimestampWritable
+name|TimestampWritableV2
 name|result
 decl_stmt|;
 if|if
@@ -2928,7 +2928,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|!=
-name|TimestampWritable
+name|TimestampWritableV2
 operator|.
 name|class
 condition|)
@@ -2936,7 +2936,7 @@ block|{
 name|result
 operator|=
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -2945,7 +2945,7 @@ block|{
 name|result
 operator|=
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|previous
 expr_stmt|;

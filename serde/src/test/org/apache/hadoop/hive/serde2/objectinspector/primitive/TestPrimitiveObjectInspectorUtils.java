@@ -25,26 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|text
 operator|.
 name|DateFormat
@@ -68,6 +48,24 @@ operator|.
 name|util
 operator|.
 name|TimeZone
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Date
 import|;
 end_import
 
@@ -122,6 +120,24 @@ operator|.
 name|type
 operator|.
 name|HiveVarchar
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -452,15 +468,6 @@ name|testgetTimestampWithMillisecondsInt
 parameter_list|()
 block|{
 name|DateFormat
-name|localDateFormat
-init|=
-operator|new
-name|SimpleDateFormat
-argument_list|(
-literal|"yyyy-MM-dd HH:mm:ss.SSS"
-argument_list|)
-decl_stmt|;
-name|DateFormat
 name|gmtDateFormat
 init|=
 operator|new
@@ -537,6 +544,9 @@ literal|true
 argument_list|,
 name|booleanOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -556,6 +566,9 @@ literal|false
 argument_list|,
 name|booleanOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -590,6 +603,9 @@ literal|1
 argument_list|,
 name|byteOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -613,6 +629,9 @@ literal|1
 argument_list|,
 name|byteOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -647,6 +666,9 @@ literal|1
 argument_list|,
 name|shortOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -670,6 +692,9 @@ literal|1
 argument_list|,
 name|shortOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -704,6 +729,9 @@ literal|1423321282
 argument_list|,
 name|intOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -727,6 +755,9 @@ literal|1
 argument_list|,
 name|intOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -758,6 +789,9 @@ literal|1423321282L
 argument_list|,
 name|longOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -778,6 +812,9 @@ literal|1L
 argument_list|,
 name|longOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -810,6 +847,9 @@ literal|1423321282.123f
 argument_list|,
 name|floatOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -830,6 +870,9 @@ literal|1.123f
 argument_list|,
 name|floatOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -864,6 +907,9 @@ literal|1423321282.123
 argument_list|,
 name|doubleOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -887,6 +933,9 @@ literal|1.123
 argument_list|,
 name|doubleOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -923,6 +972,9 @@ argument_list|)
 argument_list|,
 name|decimalOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -948,6 +1000,9 @@ argument_list|)
 argument_list|,
 name|decimalOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -967,7 +1022,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 15:01:22.123"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -979,6 +1034,9 @@ literal|"2015-02-07 15:01:22.123"
 argument_list|,
 name|stringOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -998,7 +1056,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 15:01:22.123"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1016,6 +1074,9 @@ argument_list|)
 argument_list|,
 name|charOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1035,7 +1096,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 15:01:22.123"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1053,6 +1114,9 @@ argument_list|)
 argument_list|,
 name|varcharOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1072,7 +1136,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 00:00:00.000"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1080,14 +1144,18 @@ name|PrimitiveObjectInspectorUtils
 operator|.
 name|getTimestamp
 argument_list|(
-operator|new
 name|Date
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|1423321282123L
 argument_list|)
 argument_list|,
 name|dateOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1115,14 +1183,18 @@ name|PrimitiveObjectInspectorUtils
 operator|.
 name|getTimestamp
 argument_list|(
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|1423321282123L
 argument_list|)
 argument_list|,
 name|timestampOI
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1135,15 +1207,6 @@ name|testgetTimestampWithSecondsInt
 parameter_list|()
 block|{
 name|DateFormat
-name|localDateFormat
-init|=
-operator|new
-name|SimpleDateFormat
-argument_list|(
-literal|"yyyy-MM-dd HH:mm:ss.SSS"
-argument_list|)
-decl_stmt|;
-name|DateFormat
 name|gmtDateFormat
 init|=
 operator|new
@@ -1222,6 +1285,9 @@ name|booleanOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1243,6 +1309,9 @@ name|booleanOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1279,6 +1348,9 @@ name|byteOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1304,6 +1376,9 @@ name|byteOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1340,6 +1415,9 @@ name|shortOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1365,6 +1443,9 @@ name|shortOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1401,6 +1482,9 @@ name|intOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1426,6 +1510,9 @@ name|intOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1459,6 +1546,9 @@ name|longOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1481,6 +1571,9 @@ name|longOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1515,6 +1608,9 @@ name|floatOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1537,6 +1633,9 @@ name|floatOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1573,6 +1672,9 @@ name|doubleOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1598,6 +1700,9 @@ name|doubleOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1636,6 +1741,9 @@ name|decimalOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1663,6 +1771,9 @@ name|decimalOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1682,7 +1793,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 15:01:22.123"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1696,6 +1807,9 @@ name|stringOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1715,7 +1829,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 15:01:22.123"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1735,6 +1849,9 @@ name|charOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1754,7 +1871,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 15:01:22.123"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1774,6 +1891,9 @@ name|varcharOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1793,7 +1913,7 @@ name|assertEquals
 argument_list|(
 literal|"2015-02-07 00:00:00.000"
 argument_list|,
-name|localDateFormat
+name|gmtDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1801,8 +1921,9 @@ name|PrimitiveObjectInspectorUtils
 operator|.
 name|getTimestamp
 argument_list|(
-operator|new
 name|Date
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|1423321282123L
 argument_list|)
@@ -1811,6 +1932,9 @@ name|dateOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1838,8 +1962,9 @@ name|PrimitiveObjectInspectorUtils
 operator|.
 name|getTimestamp
 argument_list|(
-operator|new
 name|Timestamp
+operator|.
+name|ofEpochMilli
 argument_list|(
 literal|1423321282123L
 argument_list|)
@@ -1848,6 +1973,9 @@ name|timestampOI
 argument_list|,
 literal|true
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1860,7 +1988,7 @@ name|testGetTimestampFromString
 parameter_list|()
 block|{
 name|DateFormat
-name|localDateFormat
+name|udfDateFormat
 init|=
 operator|new
 name|SimpleDateFormat
@@ -1868,11 +1996,23 @@ argument_list|(
 literal|"yyyy-MM-dd HH:mm:ss.SSS"
 argument_list|)
 decl_stmt|;
+name|udfDateFormat
+operator|.
+name|setTimeZone
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|"2015-02-07 00:00:00.000"
 argument_list|,
-name|localDateFormat
+name|udfDateFormat
 operator|.
 name|format
 argument_list|(
@@ -1882,6 +2022,9 @@ name|getTimestampFromString
 argument_list|(
 literal|"2015-02-07"
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

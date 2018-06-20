@@ -75,28 +75,6 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|CastDecimalToDouble
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
 name|CastDecimalToLong
 import|;
 end_import
@@ -255,7 +233,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -777,7 +755,7 @@ specifier|public
 name|ShortWritable
 name|evaluate
 parameter_list|(
-name|TimestampWritable
+name|TimestampWritableV2
 name|i
 parameter_list|)
 block|{

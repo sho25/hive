@@ -143,7 +143,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -215,7 +215,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -2211,7 +2211,7 @@ name|BooleanRef
 name|warnedOnceNullMapKey
 parameter_list|)
 block|{
-name|DateWritable
+name|DateWritableV2
 name|d
 init|=
 operator|(
@@ -2272,7 +2272,7 @@ name|TimestampObjectInspector
 operator|)
 name|objInspector
 decl_stmt|;
-name|TimestampWritable
+name|TimestampWritableV2
 name|t
 init|=
 name|toi

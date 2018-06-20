@@ -23,26 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|TimeZone
@@ -63,7 +43,43 @@ name|common
 operator|.
 name|type
 operator|.
+name|Date
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
 name|HiveIntervalYearMonth
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -435,7 +451,7 @@ name|plus
 argument_list|,
 literal|"0-6"
 argument_list|,
-literal|"2001-07-01 02:02:03"
+literal|"2001-07-01 01:02:03"
 argument_list|)
 expr_stmt|;
 name|checkTimestampIntervalYearMonthArithmetic
@@ -446,7 +462,7 @@ name|plus
 argument_list|,
 literal|"0-6"
 argument_list|,
-literal|"2002-01-01 00:02:03"
+literal|"2002-01-01 01:02:03"
 argument_list|)
 expr_stmt|;
 name|TimeZone
@@ -1204,7 +1220,7 @@ name|plus
 argument_list|,
 literal|"0 0:0:01"
 argument_list|,
-literal|"2015-03-08 03:00:00"
+literal|"2015-03-08 02:00:00"
 argument_list|)
 expr_stmt|;
 name|checkTsIntervalDayTimeArithmetic
@@ -1215,7 +1231,7 @@ name|minus
 argument_list|,
 literal|"0 0:0:01"
 argument_list|,
-literal|"2015-03-08 01:59:59"
+literal|"2015-03-08 02:59:59"
 argument_list|)
 expr_stmt|;
 name|checkTsIntervalDayTimeArithmetic
@@ -1226,7 +1242,7 @@ name|plus
 argument_list|,
 literal|"0 0:0:0.005"
 argument_list|,
-literal|"2015-03-08 03:00:00"
+literal|"2015-03-08 02:00:00"
 argument_list|)
 expr_stmt|;
 name|checkTsIntervalDayTimeArithmetic
@@ -1237,7 +1253,7 @@ name|plus
 argument_list|,
 literal|"0 0:0:0.0051"
 argument_list|,
-literal|"2015-03-08 03:00:00.0001"
+literal|"2015-03-08 02:00:00.0001"
 argument_list|)
 expr_stmt|;
 name|checkTsIntervalDayTimeArithmetic
@@ -1248,7 +1264,7 @@ name|minus
 argument_list|,
 literal|"0 0:0:0.005"
 argument_list|,
-literal|"2015-03-08 01:59:59.995"
+literal|"2015-03-08 02:59:59.995"
 argument_list|)
 expr_stmt|;
 name|checkTsIntervalDayTimeArithmetic
@@ -1676,7 +1692,7 @@ literal|"1999-12-15 00:00:00"
 argument_list|,
 literal|"1999-09-15 00:00:00"
 argument_list|,
-literal|"91 1:0:0"
+literal|"91 0:0:0"
 argument_list|)
 expr_stmt|;
 name|checkTsArithmetic
@@ -1685,7 +1701,7 @@ literal|"1999-09-15 00:00:00"
 argument_list|,
 literal|"1999-12-15 00:00:00"
 argument_list|,
-literal|"-91 1:0:0"
+literal|"-91 0:0:0"
 argument_list|)
 expr_stmt|;
 name|checkTsArithmetic
@@ -1694,7 +1710,7 @@ literal|"1999-12-15 00:00:00"
 argument_list|,
 literal|"1995-09-15 00:00:00"
 argument_list|,
-literal|"1552 1:0:0"
+literal|"1552 0:0:0"
 argument_list|)
 expr_stmt|;
 name|checkTsArithmetic
@@ -1703,7 +1719,7 @@ literal|"1995-09-15 00:00:00"
 argument_list|,
 literal|"1999-12-15 00:00:00"
 argument_list|,
-literal|"-1552 1:0:0"
+literal|"-1552 0:0:0"
 argument_list|)
 expr_stmt|;
 name|TimeZone

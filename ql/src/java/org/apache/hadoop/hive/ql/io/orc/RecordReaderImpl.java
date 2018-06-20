@@ -373,7 +373,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -481,7 +481,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -566,18 +566,6 @@ operator|.
 name|io
 operator|.
 name|Text
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|OrcFile
 import|;
 end_import
 
@@ -2531,7 +2519,7 @@ return|;
 block|}
 block|}
 specifier|static
-name|DateWritable
+name|DateWritableV2
 name|nextDate
 parameter_list|(
 name|ColumnVector
@@ -2571,7 +2559,7 @@ name|row
 index|]
 condition|)
 block|{
-name|DateWritable
+name|DateWritableV2
 name|result
 decl_stmt|;
 if|if
@@ -2585,7 +2573,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|!=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|class
 condition|)
@@ -2593,7 +2581,7 @@ block|{
 name|result
 operator|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -2602,7 +2590,7 @@ block|{
 name|result
 operator|=
 operator|(
-name|DateWritable
+name|DateWritableV2
 operator|)
 name|previous
 expr_stmt|;
@@ -2644,7 +2632,7 @@ return|;
 block|}
 block|}
 specifier|static
-name|TimestampWritable
+name|TimestampWritableV2
 name|nextTimestamp
 parameter_list|(
 name|ColumnVector
@@ -2684,7 +2672,7 @@ name|row
 index|]
 condition|)
 block|{
-name|TimestampWritable
+name|TimestampWritableV2
 name|result
 decl_stmt|;
 if|if
@@ -2698,7 +2686,7 @@ operator|.
 name|getClass
 argument_list|()
 operator|!=
-name|TimestampWritable
+name|TimestampWritableV2
 operator|.
 name|class
 condition|)
@@ -2706,7 +2694,7 @@ block|{
 name|result
 operator|=
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -2715,7 +2703,7 @@ block|{
 name|result
 operator|=
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|previous
 expr_stmt|;
