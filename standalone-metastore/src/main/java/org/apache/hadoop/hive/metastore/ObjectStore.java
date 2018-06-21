@@ -24412,6 +24412,7 @@ block|{
 comment|// Check concurrent INSERT case and set false to the flag.
 if|if
 condition|(
+operator|!
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|oldt
@@ -72544,6 +72545,19 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+comment|// if statsWriteIdList is null,
+comment|// return true since the stats does not seem to be transactional.
+if|if
+condition|(
+name|statsWriteIdList
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
 comment|// If the current query is a stats updater, then we can return true
 comment|// to avoid implementing a logic inside TxnIdUtils.checkEquivalentWriteIds().
 if|if
