@@ -5838,6 +5838,15 @@ operator|+
 literal|"  Load into bucketed tables."
 argument_list|)
 block|,
+name|HIVE_LOAD_DATA_OWNER
+argument_list|(
+literal|"hive.load.data.owner"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Set the owner of files loaded using load data in managed tables."
+argument_list|)
+block|,
 annotation|@
 name|Deprecated
 name|HIVEMAPREDMODE
