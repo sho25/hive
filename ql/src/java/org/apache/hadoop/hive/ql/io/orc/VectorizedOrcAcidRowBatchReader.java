@@ -1137,16 +1137,11 @@ argument_list|)
 expr_stmt|;
 name|readerOptions
 operator|=
-name|OrcRawRecordMerger
-operator|.
-name|createEventOptions
-argument_list|(
 name|OrcInputFormat
 operator|.
 name|createOptionsForReader
 argument_list|(
 name|conf
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|this

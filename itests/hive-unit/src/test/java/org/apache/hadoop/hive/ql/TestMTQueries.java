@@ -209,6 +209,13 @@ argument_list|,
 literal|"false"
 argument_list|)
 expr_stmt|;
+name|util
+operator|.
+name|newSession
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 block|}
 name|boolean
 name|success

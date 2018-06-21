@@ -12976,7 +12976,7 @@ name|HIVE_VECTORIZATION_ROW_DESERIALIZE_INPUTFORMAT_EXCLUDES
 argument_list|(
 literal|"hive.vectorized.row.serde.inputformat.excludes"
 argument_list|,
-literal|"org.apache.parquet.hadoop.ParquetInputFormat,org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat,org.apache.hive.storage.jdbc.JdbcInputFormat"
+literal|"org.apache.parquet.hadoop.ParquetInputFormat,org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat"
 argument_list|,
 literal|"The input formats not supported by row deserialize vectorization."
 argument_list|)
