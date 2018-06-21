@@ -435,9 +435,15 @@ name|Exception
 block|{
 name|qt
 operator|.
+name|newSession
+argument_list|()
+expr_stmt|;
+name|qt
+operator|.
 name|cleanUp
 argument_list|()
 expr_stmt|;
+comment|// I don't think this is neccessary...
 return|return
 literal|null
 return|;
@@ -562,7 +568,7 @@ name|Exception
 block|{
 name|qt
 operator|.
-name|clearTestSideEffects
+name|newSession
 argument_list|()
 expr_stmt|;
 return|return
@@ -650,6 +656,11 @@ block|{
 name|qt
 operator|.
 name|clearPostTestEffects
+argument_list|()
+expr_stmt|;
+name|qt
+operator|.
+name|clearTestSideEffects
 argument_list|()
 expr_stmt|;
 return|return
@@ -881,8 +892,6 @@ name|File
 argument_list|(
 name|fpath
 argument_list|)
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|int

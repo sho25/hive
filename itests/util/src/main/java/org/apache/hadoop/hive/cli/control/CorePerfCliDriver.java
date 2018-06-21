@@ -282,6 +282,11 @@ expr_stmt|;
 comment|// do a one time initialization
 name|qt
 operator|.
+name|newSession
+argument_list|()
+expr_stmt|;
+name|qt
+operator|.
 name|cleanUp
 argument_list|()
 expr_stmt|;
@@ -388,7 +393,7 @@ try|try
 block|{
 name|qt
 operator|.
-name|clearPostTestEffects
+name|newSession
 argument_list|()
 expr_stmt|;
 block|}
@@ -550,8 +555,6 @@ name|File
 argument_list|(
 name|fpath
 argument_list|)
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|int

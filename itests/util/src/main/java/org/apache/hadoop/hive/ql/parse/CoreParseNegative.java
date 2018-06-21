@@ -359,6 +359,11 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|qt
+operator|.
+name|newSession
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -577,8 +582,6 @@ name|File
 argument_list|(
 name|fpath
 argument_list|)
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|ASTNode

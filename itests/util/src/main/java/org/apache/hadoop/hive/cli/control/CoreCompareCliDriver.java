@@ -292,6 +292,11 @@ expr_stmt|;
 comment|// do a one time initialization
 name|qt
 operator|.
+name|newSession
+argument_list|()
+expr_stmt|;
+name|qt
+operator|.
 name|cleanUp
 argument_list|()
 expr_stmt|;
@@ -671,8 +676,6 @@ name|File
 argument_list|(
 name|fpath
 argument_list|)
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|List
@@ -741,8 +744,6 @@ literal|"."
 operator|+
 name|versionStr
 argument_list|)
-argument_list|,
-literal|false
 argument_list|)
 argument_list|)
 expr_stmt|;

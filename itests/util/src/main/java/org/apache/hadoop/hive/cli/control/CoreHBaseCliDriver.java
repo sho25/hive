@@ -252,6 +252,11 @@ argument_list|)
 expr_stmt|;
 name|qt
 operator|.
+name|newSession
+argument_list|()
+expr_stmt|;
+name|qt
+operator|.
 name|cleanUp
 argument_list|(
 literal|null
@@ -297,16 +302,13 @@ operator|.
 name|flush
 argument_list|()
 expr_stmt|;
-name|fail
+throw|throw
+operator|new
+name|RuntimeException
 argument_list|(
-literal|"Unexpected exception in static initialization: "
-operator|+
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 block|}
 annotation|@
@@ -322,7 +324,7 @@ try|try
 block|{
 name|qt
 operator|.
-name|clearTestSideEffects
+name|newSession
 argument_list|()
 expr_stmt|;
 block|}
@@ -381,6 +383,11 @@ operator|.
 name|clearPostTestEffects
 argument_list|()
 expr_stmt|;
+name|qt
+operator|.
+name|clearTestSideEffects
+argument_list|()
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -434,7 +441,6 @@ name|Exception
 block|{
 try|try
 block|{
-comment|// FIXME: there were 2 afterclass methods...i guess this is the right order...maybe not
 name|qt
 operator|.
 name|shutdown
@@ -540,8 +546,6 @@ name|File
 argument_list|(
 name|fpath
 argument_list|)
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 name|int

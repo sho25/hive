@@ -121,6 +121,16 @@ name|setup
 operator|=
 name|setup
 expr_stmt|;
+name|this
+operator|.
+name|savedConf
+operator|=
+operator|new
+name|HiveConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Override
