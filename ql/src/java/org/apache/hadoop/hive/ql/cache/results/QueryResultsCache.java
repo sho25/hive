@@ -2771,6 +2771,29 @@ name|cachedResultsPath
 operator|=
 name|zeroRowsPath
 expr_stmt|;
+comment|// Even if there are no results to move, at least check that we have permission
+comment|// to check the existence of zeroRowsPath, or the read using the cache will fail.
+comment|// A failure here will cause this query to not be added to the cache.
+name|FileSystem
+name|cacheFs
+init|=
+name|cachedResultsPath
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
+name|boolean
+name|fakePathExists
+init|=
+name|cacheFs
+operator|.
+name|exists
+argument_list|(
+name|zeroRowsPath
+argument_list|)
+decl_stmt|;
 name|resultSize
 operator|=
 literal|0
