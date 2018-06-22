@@ -436,10 +436,6 @@ constructor_decl|;
 block|}
 block|}
 decl_stmt|;
-specifier|private
-name|String
-name|storageFormat
-decl_stmt|;
 annotation|@
 name|Parameterized
 operator|.
@@ -482,7 +478,9 @@ name|getStorageFormat
 parameter_list|()
 block|{
 return|return
-literal|null
+name|this
+operator|.
+name|storageFormat
 return|;
 block|}
 annotation|@

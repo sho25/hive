@@ -500,13 +500,29 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+comment|// The condition fetched here can reference a udf that is not deterministic, but defined
+comment|// as part of the select list when a view is in play.  But the condition after the pushdown
+comment|// will resolve to using the udf from select list.  The check here for deterministic filters
+comment|// should be based on the resolved expression.  Refer to test case cbo_ppd_non_deterministic.q.
 name|RexNode
 name|condition
 init|=
+name|RelOptUtil
+operator|.
+name|pushPastProject
+argument_list|(
 name|filterRel
 operator|.
 name|getCondition
 argument_list|()
+argument_list|,
+name|call
+operator|.
+name|rel
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
