@@ -731,8 +731,6 @@ name|vector
 operator|.
 name|expressions
 operator|.
-name|gen
-operator|.
 name|LongColModuloLongColumn
 import|;
 end_import
