@@ -10327,17 +10327,6 @@ operator|+
 literal|" on these operations."
 argument_list|)
 block|,
-name|HIVE_STRICT_MANAGED_TABLES
-argument_list|(
-literal|"hive.strict.managed.tables"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether strict managed tables mode is enabled. With this mode enabled, "
-operator|+
-literal|"only transactional tables (both full and insert-only) are allowed to be created as managed tables"
-argument_list|)
-block|,
 name|HIVE_ERROR_ON_EMPTY_PARTITION
 argument_list|(
 literal|"hive.error.on.empty.partition"
