@@ -6069,7 +6069,7 @@ name|HIVE_MATERIALIZED_VIEW_ENABLE_AUTO_REWRITING
 argument_list|(
 literal|"hive.materializedview.rewriting"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to try to rewrite queries using the materialized views enabled for rewriting"
 argument_list|)
