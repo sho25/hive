@@ -746,6 +746,11 @@ operator|!
 name|maskAndFilterInfo
 operator|.
 name|isView
+operator|&&
+operator|!
+name|maskAndFilterInfo
+operator|.
+name|isNonNative
 condition|)
 block|{
 comment|// put all virtual columns in RowResolver.

@@ -73756,6 +73756,11 @@ name|table
 operator|.
 name|isView
 argument_list|()
+argument_list|,
+name|table
+operator|.
+name|isNonNative
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

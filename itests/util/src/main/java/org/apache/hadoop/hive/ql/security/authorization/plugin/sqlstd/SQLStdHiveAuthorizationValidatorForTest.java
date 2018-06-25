@@ -915,6 +915,36 @@ name|privObj
 argument_list|)
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|privObj
+operator|.
+name|getObjectName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+literal|"masking_test_druid"
+argument_list|)
+condition|)
+block|{
+comment|// testing druid queries row filtering is present
+name|privObj
+operator|.
+name|setRowFilterExpression
+argument_list|(
+literal|"key> 10"
+argument_list|)
+expr_stmt|;
+name|needRewritePrivObjs
+operator|.
+name|add
+argument_list|(
+name|privObj
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 return|return
 name|needRewritePrivObjs
