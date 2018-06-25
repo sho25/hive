@@ -41,16 +41,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|TimeZone
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -350,18 +340,6 @@ name|format
 operator|.
 name|toString
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|formatter
-operator|.
-name|setTimeZone
-argument_list|(
-name|TimeZone
-operator|.
-name|getTimeZone
-argument_list|(
-literal|"UTC"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|lastFormat

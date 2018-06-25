@@ -917,6 +917,22 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|DateUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * VectorExpressionWritableFactory helper class for generating VectorExpressionWritable objects.  */
 end_comment
@@ -1227,7 +1243,7 @@ specifier|public
 name|Object
 name|writeValue
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 name|value
 parameter_list|)
 throws|throws
@@ -1249,7 +1265,7 @@ parameter_list|(
 name|Object
 name|field
 parameter_list|,
-name|TimestampWritableV2
+name|TimestampWritable
 name|value
 parameter_list|)
 throws|throws
@@ -3632,11 +3648,11 @@ name|TimestampColumnVector
 operator|)
 name|column
 decl_stmt|;
-name|TimestampWritableV2
+name|TimestampWritable
 name|timestampWritable
 init|=
 operator|(
-name|TimestampWritableV2
+name|TimestampWritable
 operator|)
 name|dcv
 operator|.
@@ -3653,7 +3669,7 @@ block|{
 name|timestampWritable
 operator|=
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|()
 expr_stmt|;
 name|dcv
@@ -3907,11 +3923,11 @@ name|TimestampColumnVector
 operator|)
 name|column
 decl_stmt|;
-name|TimestampWritableV2
+name|TimestampWritable
 name|timestampWritable
 init|=
 operator|(
-name|TimestampWritableV2
+name|TimestampWritable
 operator|)
 name|dcv
 operator|.
@@ -3928,7 +3944,7 @@ block|{
 name|timestampWritable
 operator|=
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|()
 expr_stmt|;
 name|dcv
@@ -5456,7 +5472,7 @@ parameter_list|(
 name|Object
 name|field
 parameter_list|,
-name|TimestampWritableV2
+name|TimestampWritable
 name|value
 parameter_list|)
 block|{
@@ -5649,7 +5665,7 @@ name|dt
 operator|.
 name|setTime
 argument_list|(
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|daysToMillis
 argument_list|(
@@ -5712,7 +5728,7 @@ name|dt
 operator|.
 name|setTime
 argument_list|(
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|daysToMillis
 argument_list|(
@@ -5835,7 +5851,7 @@ specifier|public
 name|Object
 name|writeValue
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 name|value
 parameter_list|)
 throws|throws
@@ -5958,7 +5974,7 @@ parameter_list|(
 name|Object
 name|field
 parameter_list|,
-name|TimestampWritableV2
+name|TimestampWritable
 name|value
 parameter_list|)
 block|{

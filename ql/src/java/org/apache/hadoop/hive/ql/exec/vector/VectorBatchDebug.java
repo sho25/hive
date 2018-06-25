@@ -23,19 +23,11 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|sql
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|HiveIntervalDayTime
+name|Timestamp
 import|;
 end_import
 
@@ -53,7 +45,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Timestamp
+name|HiveIntervalDayTime
 import|;
 end_import
 
@@ -548,18 +540,10 @@ operator|instanceof
 name|TimestampColumnVector
 condition|)
 block|{
-name|java
-operator|.
-name|sql
-operator|.
 name|Timestamp
 name|timestamp
 init|=
 operator|new
-name|java
-operator|.
-name|sql
-operator|.
 name|Timestamp
 argument_list|(
 literal|0
@@ -583,20 +567,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-name|Timestamp
-operator|.
-name|ofEpochMilli
-argument_list|(
 name|timestamp
-operator|.
-name|getTime
-argument_list|()
-argument_list|,
-name|timestamp
-operator|.
-name|getNanos
-argument_list|()
-argument_list|)
 operator|.
 name|toString
 argument_list|()

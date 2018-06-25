@@ -21,6 +21,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Random
@@ -59,7 +69,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Timestamp
+name|RandomTypeUtil
 import|;
 end_import
 
@@ -200,22 +210,6 @@ operator|.
 name|vector
 operator|.
 name|VectorizedRowBatch
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|RandomTypeUtil
 import|;
 end_import
 
@@ -1031,9 +1025,8 @@ index|[
 name|i
 index|]
 operator|=
+operator|new
 name|Timestamp
-operator|.
-name|ofEpochMilli
 argument_list|(
 name|rand
 operator|.
@@ -1207,9 +1200,6 @@ argument_list|(
 name|i
 argument_list|,
 name|randomTimestamp
-operator|.
-name|toSqlTimestamp
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|timestampValues
@@ -1229,9 +1219,6 @@ argument_list|(
 name|i
 argument_list|,
 name|repeatingTimestamp
-operator|.
-name|toSqlTimestamp
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|timestampValues

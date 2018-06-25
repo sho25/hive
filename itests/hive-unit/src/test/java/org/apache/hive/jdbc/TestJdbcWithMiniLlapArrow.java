@@ -51,17 +51,9 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Date
 import|;
@@ -69,17 +61,9 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Timestamp
 import|;

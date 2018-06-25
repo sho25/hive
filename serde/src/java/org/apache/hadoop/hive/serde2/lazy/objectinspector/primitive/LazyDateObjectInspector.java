@@ -25,17 +25,9 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Date
 import|;
@@ -55,7 +47,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -116,7 +108,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A WritableDateObjectInspector inspects a DateWritableV2 Object.  */
+comment|/**  * A WritableDateObjectInspector inspects a DateWritable Object.  */
 end_comment
 
 begin_class
@@ -126,7 +118,7 @@ name|LazyDateObjectInspector
 extends|extends
 name|AbstractPrimitiveLazyObjectInspector
 argument_list|<
-name|DateWritableV2
+name|DateWritable
 argument_list|>
 implements|implements
 name|DateObjectInspector

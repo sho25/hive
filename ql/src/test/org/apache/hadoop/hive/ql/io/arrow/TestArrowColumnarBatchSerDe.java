@@ -177,24 +177,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -297,7 +279,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -441,7 +423,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -672,6 +654,16 @@ operator|.
 name|junit
 operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -1244,18 +1236,16 @@ static|static
 block|{
 name|TIMESTAMP
 operator|=
+operator|new
 name|Timestamp
-operator|.
-name|ofEpochMilli
 argument_list|(
 name|TIME_IN_MILLIS
 argument_list|)
 expr_stmt|;
 name|NEGATIVE_TIMESTAMP_WITHOUT_NANOS
 operator|=
+operator|new
 name|Timestamp
-operator|.
-name|ofEpochMilli
 argument_list|(
 name|NEGATIVE_TIME_IN_MILLIS
 argument_list|)
@@ -1272,9 +1262,9 @@ init|=
 block|{
 block|{
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|millisToDays
 argument_list|(
@@ -1283,7 +1273,7 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|TIMESTAMP
 argument_list|)
@@ -1321,9 +1311,9 @@ block|}
 block|,
 block|{
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|millisToDays
 argument_list|(
@@ -1332,7 +1322,7 @@ argument_list|)
 argument_list|)
 block|,
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|NEGATIVE_TIMESTAMP_WITHOUT_NANOS
 argument_list|)
@@ -2863,7 +2853,7 @@ argument_list|)
 block|,
 comment|// c16:array<struct<m:map<string,string>,n:int>>
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|TIMESTAMP
 argument_list|)
@@ -2893,7 +2883,7 @@ argument_list|)
 block|,
 comment|// c19:binary
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 literal|123
 argument_list|)
@@ -3657,9 +3647,8 @@ decl_stmt|;
 name|Timestamp
 name|timestamp
 init|=
+operator|new
 name|Timestamp
-operator|.
-name|ofEpochMilli
 argument_list|(
 name|rand
 operator|.
@@ -3696,7 +3685,7 @@ name|Object
 index|[]
 block|{
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|timestamp
 argument_list|)

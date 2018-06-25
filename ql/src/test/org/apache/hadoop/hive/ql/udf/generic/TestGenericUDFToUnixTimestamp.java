@@ -23,17 +23,9 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Date
 import|;
@@ -41,17 +33,9 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Timestamp
 import|;
@@ -133,7 +117,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -151,7 +135,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -436,7 +420,7 @@ argument_list|(
 name|udf
 argument_list|,
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|ts
 argument_list|)
@@ -446,8 +430,10 @@ name|LongWritable
 argument_list|(
 name|ts
 operator|.
-name|toEpochSecond
+name|getTime
 argument_list|()
+operator|/
+literal|1000
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -465,7 +451,7 @@ argument_list|(
 name|udf
 argument_list|,
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|ts
 argument_list|)
@@ -475,8 +461,10 @@ name|LongWritable
 argument_list|(
 name|ts
 operator|.
-name|toEpochSecond
+name|getTime
 argument_list|()
+operator|/
+literal|1000
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -542,7 +530,7 @@ argument_list|(
 name|udf
 argument_list|,
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 name|date
 argument_list|)
@@ -552,8 +540,10 @@ name|LongWritable
 argument_list|(
 name|date
 operator|.
-name|toEpochSecond
+name|getTime
 argument_list|()
+operator|/
+literal|1000
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -629,8 +619,10 @@ argument_list|(
 name|val
 argument_list|)
 operator|.
-name|toEpochSecond
+name|getTime
 argument_list|()
+operator|/
+literal|1000
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -704,8 +696,10 @@ argument_list|(
 name|val
 argument_list|)
 operator|.
-name|toEpochSecond
+name|getTime
 argument_list|()
+operator|/
+literal|1000
 argument_list|)
 argument_list|)
 expr_stmt|;

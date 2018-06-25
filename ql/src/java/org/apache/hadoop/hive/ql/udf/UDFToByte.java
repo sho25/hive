@@ -233,7 +233,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -760,7 +760,7 @@ specifier|public
 name|ByteWritable
 name|evaluate
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 name|i
 parameter_list|)
 block|{

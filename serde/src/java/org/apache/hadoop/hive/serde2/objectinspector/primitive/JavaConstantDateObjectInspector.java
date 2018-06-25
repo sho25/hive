@@ -23,17 +23,9 @@ end_package
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Date
 import|;
@@ -53,7 +45,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -125,7 +117,7 @@ return|;
 block|}
 return|return
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 name|value
 argument_list|)

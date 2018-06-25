@@ -153,7 +153,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -1004,7 +1004,7 @@ name|DATE
 case|:
 name|longValue
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -1031,9 +1031,6 @@ name|val
 argument_list|,
 name|poi
 argument_list|)
-operator|.
-name|toSqlTimestamp
-argument_list|()
 expr_stmt|;
 break|break;
 case|case

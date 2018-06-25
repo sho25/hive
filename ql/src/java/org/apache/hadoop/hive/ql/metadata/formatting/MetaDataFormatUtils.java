@@ -679,7 +679,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -985,11 +985,11 @@ return|return
 literal|""
 return|;
 block|}
-name|DateWritableV2
+name|DateWritable
 name|writableValue
 init|=
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 operator|(
 name|int

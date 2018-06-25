@@ -37,6 +37,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -50,24 +60,6 @@ operator|.
 name|util
 operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Timestamp
 import|;
 end_import
 
@@ -161,7 +153,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -215,7 +207,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -2190,7 +2182,7 @@ block|}
 block|,
 name|ETIMESTAMP_CONVERTER
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 operator|.
 name|class
 parameter_list|)
@@ -2220,7 +2212,7 @@ return|return
 operator|new
 name|BinaryConverter
 argument_list|<
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|>
 argument_list|(
 name|type
@@ -2233,7 +2225,7 @@ block|{
 annotation|@
 name|Override
 specifier|protected
-name|TimestampWritableV2
+name|TimestampWritable
 name|convert
 parameter_list|(
 name|Binary
@@ -2300,7 +2292,7 @@ argument_list|)
 decl_stmt|;
 return|return
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|ts
 argument_list|)
@@ -2313,7 +2305,7 @@ block|}
 block|,
 name|EDATE_CONVERTER
 parameter_list|(
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|class
 parameter_list|)
@@ -2362,7 +2354,7 @@ argument_list|(
 name|index
 argument_list|,
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 name|value
 argument_list|)

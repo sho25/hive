@@ -33,6 +33,26 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|parser
+operator|.
+name|ExpressionTree
+operator|.
+name|Operator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -175,7 +195,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -228,6 +248,18 @@ operator|.
 name|io
 operator|.
 name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|charset
+operator|.
+name|StandardCharsets
 import|;
 end_import
 
@@ -636,7 +668,7 @@ argument_list|)
 expr_stmt|;
 name|baseDate
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -678,7 +710,7 @@ argument_list|)
 expr_stmt|;
 name|baseDate
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -2002,7 +2034,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 return|return
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -2122,7 +2154,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(

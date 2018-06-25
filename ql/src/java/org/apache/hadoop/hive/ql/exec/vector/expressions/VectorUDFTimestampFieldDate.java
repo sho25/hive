@@ -45,16 +45,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|TimeZone
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -165,7 +155,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -276,14 +266,7 @@ init|=
 name|Calendar
 operator|.
 name|getInstance
-argument_list|(
-name|TimeZone
-operator|.
-name|getTimeZone
-argument_list|(
-literal|"UTC"
-argument_list|)
-argument_list|)
+argument_list|()
 decl_stmt|;
 specifier|public
 name|VectorUDFTimestampFieldDate
@@ -370,7 +353,7 @@ name|calendar
 operator|.
 name|setTimeInMillis
 argument_list|(
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|daysToMillis
 argument_list|(

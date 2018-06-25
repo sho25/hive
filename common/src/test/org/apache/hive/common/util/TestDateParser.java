@@ -33,27 +33,19 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|junit
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Date
+name|Test
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|junit
+name|sql
 operator|.
-name|Test
+name|Date
 import|;
 end_import
 
@@ -74,7 +66,9 @@ name|date
 init|=
 operator|new
 name|Date
-argument_list|()
+argument_list|(
+literal|0
+argument_list|)
 decl_stmt|;
 name|void
 name|checkValidCase
@@ -277,6 +271,7 @@ literal|"2001-11-12"
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// Current date parsing is lenient
 name|checkValidCase
 argument_list|(
 literal|"2001-13-12"

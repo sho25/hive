@@ -37,7 +37,7 @@ name|common
 operator|.
 name|type
 operator|.
-name|Date
+name|HiveDecimal
 import|;
 end_import
 
@@ -153,7 +153,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -218,6 +218,26 @@ specifier|private
 specifier|final
 name|int
 name|inputColumn
+decl_stmt|;
+specifier|private
+specifier|transient
+specifier|final
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
+name|sqlDate
+init|=
+operator|new
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
+argument_list|(
+literal|0
+argument_list|)
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -790,13 +810,6 @@ operator|.
 name|UTF_8
 argument_list|)
 decl_stmt|;
-name|Date
-name|hDate
-init|=
-operator|new
-name|Date
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|dateParser
@@ -805,7 +818,7 @@ name|parseDate
 argument_list|(
 name|dateString
 argument_list|,
-name|hDate
+name|sqlDate
 argument_list|)
 condition|)
 block|{
@@ -816,11 +829,11 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
-name|hDate
+name|sqlDate
 argument_list|)
 expr_stmt|;
 return|return;

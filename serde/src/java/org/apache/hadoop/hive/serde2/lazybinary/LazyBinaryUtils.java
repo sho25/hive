@@ -101,7 +101,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -911,7 +911,7 @@ name|recordInfo
 operator|.
 name|elementSize
 operator|=
-name|TimestampWritableV2
+name|TimestampWritable
 operator|.
 name|getTotalLength
 argument_list|(

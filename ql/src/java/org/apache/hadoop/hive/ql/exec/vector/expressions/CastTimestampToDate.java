@@ -77,7 +77,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -149,7 +149,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|millisToDays
 argument_list|(

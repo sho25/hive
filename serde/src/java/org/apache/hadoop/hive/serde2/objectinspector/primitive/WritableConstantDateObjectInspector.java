@@ -33,9 +33,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|io
+name|objectinspector
 operator|.
-name|DateWritableV2
+name|ConstantObjectInspector
 import|;
 end_import
 
@@ -51,9 +51,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|objectinspector
+name|io
 operator|.
-name|ConstantObjectInspector
+name|DateWritable
 import|;
 end_import
 
@@ -71,7 +71,7 @@ implements|implements
 name|ConstantObjectInspector
 block|{
 specifier|private
-name|DateWritableV2
+name|DateWritable
 name|value
 decl_stmt|;
 specifier|protected
@@ -84,7 +84,7 @@ expr_stmt|;
 block|}
 name|WritableConstantDateObjectInspector
 parameter_list|(
-name|DateWritableV2
+name|DateWritable
 name|value
 parameter_list|)
 block|{
@@ -101,7 +101,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|DateWritableV2
+name|DateWritable
 name|getWritableConstantValue
 parameter_list|()
 block|{

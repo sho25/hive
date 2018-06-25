@@ -269,7 +269,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -1456,7 +1456,7 @@ operator|=
 operator|new
 name|byte
 index|[
-name|TimestampWritableV2
+name|TimestampWritable
 operator|.
 name|BINARY_SORTABLE_LENGTH
 index|]

@@ -25,6 +25,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Arrays
@@ -133,24 +143,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|metadata
@@ -191,7 +183,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -335,7 +327,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -526,6 +518,22 @@ operator|.
 name|io
 operator|.
 name|Writable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|DateUtils
 import|;
 end_import
 
@@ -1095,9 +1103,6 @@ argument_list|(
 name|index
 argument_list|,
 name|value
-operator|.
-name|toSqlTimestamp
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1105,7 +1110,7 @@ specifier|protected
 name|void
 name|assignTimestamp
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 name|tw
 parameter_list|,
 name|int
@@ -1121,9 +1126,6 @@ argument_list|,
 name|tw
 operator|.
 name|getTimestamp
-argument_list|()
-operator|.
-name|toSqlTimestamp
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -2062,7 +2064,7 @@ block|{
 name|assignTimestamp
 argument_list|(
 operator|(
-name|TimestampWritableV2
+name|TimestampWritable
 operator|)
 name|val
 argument_list|,
@@ -2123,11 +2125,11 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|DateWritableV2
+name|DateWritable
 name|bw
 init|=
 operator|(
-name|DateWritableV2
+name|DateWritable
 operator|)
 name|val
 decl_stmt|;
@@ -3479,7 +3481,7 @@ index|[
 name|i
 index|]
 operator|instanceof
-name|TimestampWritableV2
+name|TimestampWritable
 condition|)
 block|{
 name|vcas

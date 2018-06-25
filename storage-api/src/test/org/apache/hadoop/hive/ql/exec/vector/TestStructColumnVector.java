@@ -731,10 +731,11 @@ expr_stmt|;
 name|Timestamp
 name|ts
 init|=
-operator|new
 name|Timestamp
+operator|.
+name|valueOf
 argument_list|(
-literal|946684800000L
+literal|"2000-01-01 00:00:00"
 argument_list|)
 decl_stmt|;
 for|for
@@ -830,25 +831,25 @@ init|=
 operator|(
 literal|"Column vector types: 0:STRUCT<LONG, TIMESTAMP>, 1:BYTES\n"
 operator|+
-literal|"[[0, 2000-01-01 00:00:01], \"value 0\"]\n"
+literal|"[[0, 2000-01-01 00:00:01.0], \"value 0\"]\n"
 operator|+
-literal|"[[3, 2000-01-01 00:00:02], \"value 1\"]\n"
+literal|"[[3, 2000-01-01 00:00:02.0], \"value 1\"]\n"
 operator|+
-literal|"[[6, 2000-01-01 00:00:03], \"value 2\"]\n"
+literal|"[[6, 2000-01-01 00:00:03.0], \"value 2\"]\n"
 operator|+
-literal|"[[9, 2000-01-01 00:00:04], \"value 3\"]\n"
+literal|"[[9, 2000-01-01 00:00:04.0], \"value 3\"]\n"
 operator|+
-literal|"[[12, 2000-01-01 00:00:05], \"value 4\"]\n"
+literal|"[[12, 2000-01-01 00:00:05.0], \"value 4\"]\n"
 operator|+
-literal|"[[15, 2000-01-01 00:00:06], \"value 5\"]\n"
+literal|"[[15, 2000-01-01 00:00:06.0], \"value 5\"]\n"
 operator|+
-literal|"[[18, 2000-01-01 00:00:07], \"value 6\"]\n"
+literal|"[[18, 2000-01-01 00:00:07.0], \"value 6\"]\n"
 operator|+
-literal|"[[21, 2000-01-01 00:00:08], \"value 7\"]\n"
+literal|"[[21, 2000-01-01 00:00:08.0], \"value 7\"]\n"
 operator|+
-literal|"[[24, 2000-01-01 00:00:09], \"value 8\"]\n"
+literal|"[[24, 2000-01-01 00:00:09.0], \"value 8\"]\n"
 operator|+
-literal|"[[27, 2000-01-01 00:00:10], \"value 9\"]"
+literal|"[[27, 2000-01-01 00:00:10.0], \"value 9\"]"
 operator|)
 decl_stmt|;
 name|assertEquals

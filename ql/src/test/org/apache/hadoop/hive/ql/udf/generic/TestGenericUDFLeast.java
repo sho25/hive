@@ -23,29 +23,21 @@ end_package
 
 begin_import
 import|import
-name|junit
+name|java
 operator|.
-name|framework
+name|sql
 operator|.
-name|TestCase
+name|Date
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|junit
 operator|.
-name|apache
+name|framework
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Date
+name|TestCase
 import|;
 end_import
 
@@ -161,7 +153,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -1892,7 +1884,7 @@ operator|!=
 literal|null
 condition|?
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 operator|(
 name|Date
@@ -2060,13 +2052,13 @@ if|if
 condition|(
 name|o
 operator|instanceof
-name|DateWritableV2
+name|DateWritable
 condition|)
 block|{
 return|return
 operator|(
 operator|(
-name|DateWritableV2
+name|DateWritable
 operator|)
 name|o
 operator|)

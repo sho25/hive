@@ -133,7 +133,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -810,7 +810,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 literal|4
 argument_list|)
@@ -877,7 +877,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 literal|4
 argument_list|)
@@ -887,7 +887,7 @@ operator|new
 name|DeferredJavaObject
 argument_list|(
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 literal|4
 argument_list|)

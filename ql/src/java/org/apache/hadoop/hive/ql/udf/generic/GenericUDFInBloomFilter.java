@@ -67,24 +67,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Timestamp
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|exec
@@ -203,7 +185,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -363,6 +345,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|ByteArrayInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -374,6 +366,16 @@ operator|.
 name|io
 operator|.
 name|InputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Timestamp
 import|;
 end_import
 
@@ -1042,7 +1044,7 @@ return|;
 case|case
 name|DATE
 case|:
-name|DateWritableV2
+name|DateWritable
 name|vDate
 init|=
 operator|(
@@ -1105,7 +1107,7 @@ name|testLong
 argument_list|(
 name|vTimeStamp
 operator|.
-name|toEpochMilli
+name|getTime
 argument_list|()
 argument_list|)
 return|;

@@ -217,7 +217,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -7199,7 +7199,7 @@ name|GenericUDAFDateStatsEvaluator
 extends|extends
 name|GenericUDAFNumericStatsEvaluator
 argument_list|<
-name|DateWritableV2
+name|DateWritable
 argument_list|,
 name|DateObjectInspector
 argument_list|>
@@ -7287,15 +7287,15 @@ name|PrimitiveObjectInspector
 name|inputOI
 parameter_list|)
 block|{
-comment|// DateWritableV2 is mutable, DateStatsAgg needs its own copy
-name|DateWritableV2
+comment|// DateWritable is mutable, DateStatsAgg needs its own copy
+name|DateWritable
 name|v
 init|=
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 operator|(
-name|DateWritableV2
+name|DateWritable
 operator|)
 name|inputOI
 operator|.
@@ -7403,11 +7403,11 @@ literal|0
 operator|)
 condition|)
 block|{
-comment|// DateWritableV2 is mutable, DateStatsAgg needs its own copy
+comment|// DateWritable is mutable, DateStatsAgg needs its own copy
 name|min
 operator|=
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 name|minFieldOI
 operator|.
@@ -7461,11 +7461,11 @@ literal|0
 operator|)
 condition|)
 block|{
-comment|// DateWritableV2 is mutable, DateStatsAgg needs its own copy
+comment|// DateWritable is mutable, DateStatsAgg needs its own copy
 name|max
 operator|=
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 name|maxFieldOI
 operator|.

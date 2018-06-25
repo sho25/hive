@@ -41,24 +41,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|exec
@@ -161,7 +143,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -278,6 +260,16 @@ operator|.
 name|io
 operator|.
 name|Text
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Date
 import|;
 end_import
 
@@ -1888,7 +1880,7 @@ operator|!=
 literal|null
 condition|?
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 operator|(
 name|Date
@@ -2056,13 +2048,13 @@ if|if
 condition|(
 name|o
 operator|instanceof
-name|DateWritableV2
+name|DateWritable
 condition|)
 block|{
 return|return
 operator|(
 operator|(
-name|DateWritableV2
+name|DateWritable
 operator|)
 name|o
 operator|)

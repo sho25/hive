@@ -157,7 +157,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -259,7 +259,7 @@ function_decl|;
 name|Object
 name|writeValue
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 name|value
 parameter_list|)
 throws|throws

@@ -778,7 +778,7 @@ argument_list|,
 name|primitive
 argument_list|)
 operator|.
-name|toEpochMilli
+name|getTime
 argument_list|()
 expr_stmt|;
 block|}

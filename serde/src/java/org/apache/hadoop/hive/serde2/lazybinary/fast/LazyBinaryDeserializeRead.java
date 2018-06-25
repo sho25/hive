@@ -113,7 +113,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -1571,7 +1571,7 @@ block|{
 name|int
 name|length
 init|=
-name|TimestampWritableV2
+name|TimestampWritable
 operator|.
 name|getTotalLength
 argument_list|(

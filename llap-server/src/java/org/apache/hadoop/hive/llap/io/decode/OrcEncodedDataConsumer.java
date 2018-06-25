@@ -1560,11 +1560,6 @@ operator|.
 name|getFileVersion
 argument_list|()
 argument_list|)
-operator|.
-name|useUTCTimestamp
-argument_list|(
-literal|true
-argument_list|)
 decl_stmt|;
 name|this
 operator|.

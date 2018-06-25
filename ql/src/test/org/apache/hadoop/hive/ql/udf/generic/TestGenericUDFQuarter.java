@@ -23,27 +23,9 @@ end_package
 
 begin_import
 import|import
-name|junit
+name|java
 operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Date
 import|;
@@ -51,19 +33,21 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
+name|sql
 operator|.
 name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -143,7 +127,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -161,7 +145,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -574,6 +558,13 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+name|boolean
+name|caught
+init|=
+literal|false
+decl_stmt|;
+try|try
+block|{
 name|GenericUDFQuarter
 name|udf
 init|=
@@ -637,6 +628,23 @@ argument_list|,
 literal|null
 argument_list|,
 name|udf
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+name|caught
+operator|=
+literal|true
+expr_stmt|;
+block|}
+name|assertTrue
+argument_list|(
+name|caught
 argument_list|)
 expr_stmt|;
 block|}
@@ -1126,7 +1134,7 @@ operator|!=
 literal|null
 condition|?
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|(
 name|Date
 operator|.
@@ -1224,7 +1232,7 @@ operator|!=
 literal|null
 condition|?
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|(
 name|Timestamp
 operator|.

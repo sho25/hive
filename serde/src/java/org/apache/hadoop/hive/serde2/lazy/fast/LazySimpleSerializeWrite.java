@@ -45,6 +45,26 @@ begin_import
 import|import
 name|java
 operator|.
+name|sql
+operator|.
+name|Date
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayDeque
@@ -94,42 +114,6 @@ operator|.
 name|binary
 operator|.
 name|Base64
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|io
-operator|.
-name|DateWritableV2
 import|;
 end_import
 
@@ -253,11 +237,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|serde2
 operator|.
-name|type
+name|ByteStream
 operator|.
-name|Timestamp
+name|Output
 import|;
 end_import
 
@@ -273,9 +257,9 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|ByteStream
+name|io
 operator|.
-name|Output
+name|DateWritable
 import|;
 end_import
 
@@ -347,7 +331,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -634,11 +618,11 @@ argument_list|()
 decl_stmt|;
 comment|// For thread safety, we allocate private writable objects for our use only.
 specifier|private
-name|DateWritableV2
+name|DateWritable
 name|dateWritable
 decl_stmt|;
 specifier|private
-name|TimestampWritableV2
+name|TimestampWritable
 name|timestampWritable
 decl_stmt|;
 specifier|private
@@ -1495,7 +1479,7 @@ block|{
 name|dateWritable
 operator|=
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|()
 expr_stmt|;
 block|}
@@ -1545,7 +1529,7 @@ block|{
 name|dateWritable
 operator|=
 operator|new
-name|DateWritableV2
+name|DateWritable
 argument_list|()
 expr_stmt|;
 block|}
@@ -1595,7 +1579,7 @@ block|{
 name|timestampWritable
 operator|=
 operator|new
-name|TimestampWritableV2
+name|TimestampWritable
 argument_list|()
 expr_stmt|;
 block|}

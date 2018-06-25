@@ -175,7 +175,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -638,7 +638,7 @@ argument_list|)
 expr_stmt|;
 name|baseDate
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -680,7 +680,7 @@ argument_list|)
 expr_stmt|;
 name|baseDate
 operator|=
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -2006,7 +2006,7 @@ expr_stmt|;
 return|return
 name|baseDate
 operator|-
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(
@@ -2126,7 +2126,7 @@ index|]
 operator|=
 name|baseDate
 operator|-
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|dateToDays
 argument_list|(

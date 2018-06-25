@@ -137,6 +137,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|FunctionInfo
+operator|.
+name|FunctionType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ExprNodeDesc
@@ -176,6 +196,24 @@ operator|.
 name|session
 operator|.
 name|SessionState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|udf
+operator|.
+name|UDFAscii
 import|;
 end_import
 
@@ -311,7 +349,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritableV2
+name|DateWritable
 import|;
 end_import
 
@@ -365,7 +403,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritableV2
+name|TimestampWritable
 import|;
 end_import
 
@@ -594,7 +632,7 @@ specifier|public
 name|void
 name|mismatch
 parameter_list|(
-name|DateWritableV2
+name|DateWritable
 name|x
 parameter_list|,
 name|HiveDecimalWritable
@@ -605,7 +643,7 @@ specifier|public
 name|void
 name|mismatch
 parameter_list|(
-name|TimestampWritableV2
+name|TimestampWritable
 name|x
 parameter_list|,
 name|HiveDecimalWritable
@@ -627,7 +665,7 @@ specifier|public
 name|void
 name|typeaffinity1
 parameter_list|(
-name|DateWritableV2
+name|DateWritable
 name|x
 parameter_list|)
 block|{}
@@ -1300,7 +1338,7 @@ name|dateTypeInfo
 argument_list|,
 literal|1
 argument_list|,
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|class
 argument_list|)
@@ -1315,7 +1353,7 @@ name|timestampTypeInfo
 argument_list|,
 literal|1
 argument_list|,
-name|DateWritableV2
+name|DateWritable
 operator|.
 name|class
 argument_list|)

@@ -23,27 +23,29 @@ begin_import
 import|import
 name|java
 operator|.
-name|util
+name|sql
 operator|.
-name|Random
+name|Date
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|sql
 operator|.
-name|hadoop
+name|Timestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|hive
+name|util
 operator|.
-name|common
-operator|.
-name|type
-operator|.
-name|Date
+name|Random
 import|;
 end_import
 
@@ -147,7 +149,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde2
+name|common
+operator|.
+name|type
 operator|.
 name|RandomTypeUtil
 import|;
@@ -163,11 +167,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
+name|serde2
 operator|.
-name|type
+name|binarysortable
 operator|.
-name|Timestamp
+name|MyTestClass
 import|;
 end_import
 
