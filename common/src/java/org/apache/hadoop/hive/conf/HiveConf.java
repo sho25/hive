@@ -7983,7 +7983,7 @@ name|HIVEOPTINDEXFILTER
 argument_list|(
 literal|"hive.optimize.index.filter"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to enable automatic use of indexes"
 argument_list|)
