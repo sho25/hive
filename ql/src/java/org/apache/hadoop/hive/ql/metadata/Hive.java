@@ -13213,7 +13213,9 @@ argument_list|()
 argument_list|,
 name|partsToAlter
 argument_list|,
-literal|null
+operator|new
+name|EnvironmentContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 for|for
