@@ -6069,7 +6069,7 @@ name|HIVE_MATERIALIZED_VIEW_ENABLE_AUTO_REWRITING
 argument_list|(
 literal|"hive.materializedview.rewriting"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to try to rewrite queries using the materialized views enabled for rewriting"
 argument_list|)
@@ -7983,7 +7983,7 @@ name|HIVEOPTINDEXFILTER
 argument_list|(
 literal|"hive.optimize.index.filter"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to enable automatic use of indexes"
 argument_list|)
@@ -10325,17 +10325,6 @@ operator|+
 literal|" on the assumption that data changes by external applications may have negative effects"
 operator|+
 literal|" on these operations."
-argument_list|)
-block|,
-name|HIVE_STRICT_MANAGED_TABLES
-argument_list|(
-literal|"hive.strict.managed.tables"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Whether strict managed tables mode is enabled. With this mode enabled, "
-operator|+
-literal|"only transactional tables (both full and insert-only) are allowed to be created as managed tables"
 argument_list|)
 block|,
 name|HIVE_ERROR_ON_EMPTY_PARTITION

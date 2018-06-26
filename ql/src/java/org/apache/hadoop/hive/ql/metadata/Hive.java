@@ -8697,16 +8697,10 @@ name|tbl
 operator|.
 name|getTableType
 argument_list|()
-operator|.
-name|equals
-argument_list|(
+operator|==
 name|TableType
 operator|.
 name|MANAGED_TABLE
-operator|.
-name|toString
-argument_list|()
-argument_list|)
 decl_stmt|;
 comment|// TODO: why is "&& !isAcidIUDoperation" needed here?
 if|if
@@ -12170,16 +12164,10 @@ name|tbl
 operator|.
 name|getTableType
 argument_list|()
-operator|.
-name|equals
-argument_list|(
+operator|==
 name|TableType
 operator|.
 name|MANAGED_TABLE
-operator|.
-name|toString
-argument_list|()
-argument_list|)
 decl_stmt|;
 if|if
 condition|(

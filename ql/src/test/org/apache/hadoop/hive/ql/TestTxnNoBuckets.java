@@ -833,6 +833,49 @@ literal|"nobuckets/delta_0000001_0000001_0000/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXPLAIN_USER
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|rs
+operator|=
+name|runStatementOnDriver
+argument_list|(
+literal|"explain  update nobuckets set c3 = 17 where c3 in(0,1)"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Query Plan: "
+argument_list|)
+expr_stmt|;
+for|for
+control|(
+name|String
+name|s
+range|:
+name|rs
+control|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+block|}
 name|runStatementOnDriver
 argument_list|(
 literal|"update nobuckets set c3 = 17 where c3 in(0,1)"
@@ -964,7 +1007,7 @@ literal|"nobuckets/delta_0000001_0000001_0000/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|//so update has 1 writer which creates bucket0 where both new rows land
+comment|//so update has 1 writer, but which creates buckets where the new rows land
 name|Assert
 operator|.
 name|assertTrue
@@ -1013,6 +1056,7 @@ literal|"nobuckets/delta_0000002_0000002_0000/bucket_00000"
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// update for "{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t1\t1\t"
 name|Assert
 operator|.
 name|assertTrue
@@ -1033,7 +1077,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":1}\t1\t1\t17\t"
+literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":0}\t1\t1\t17\t"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1057,7 +1101,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000002_0000002_0000/bucket_00000"
+literal|"nobuckets/delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1072,12 +1116,19 @@ name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|//both delete events land in a single bucket0.  Each has a different ROW__ID.bucketId value (even writerId in it is different)
+comment|//both delete events land in corresponding buckets to the original row-ids
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
 literal|"ts/delete_delta_0000002_0000002_0000/bucket_00000"
+argument_list|)
+expr_stmt|;
+name|expectedFiles
+operator|.
+name|add
+argument_list|(
+literal|"ts/delete_delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
@@ -1099,6 +1150,13 @@ operator|.
 name|add
 argument_list|(
 literal|"nobuckets/delta_0000002_0000002_0000/bucket_00000"
+argument_list|)
+expr_stmt|;
+name|expectedFiles
+operator|.
+name|add
+argument_list|(
+literal|"nobuckets/delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 comment|//check that we get the right files on disk
@@ -1156,7 +1214,7 @@ name|s
 argument_list|)
 expr_stmt|;
 block|}
-comment|/* ├── base_0000002 │   ├── bucket_00000 │   └── bucket_00001 ├── delete_delta_0000002_0000002_0000 │   └── bucket_00000 ├── delta_0000001_0000001_0000 │   ├── bucket_00000 │   └── bucket_00001 └── delta_0000002_0000002_0000     └── bucket_00000     */
+comment|/* ├── base_0000002 │   ├── bucket_00000 │   └── bucket_00001 ├── delete_delta_0000002_0000002_0000 │   └── bucket_00000 |   └── bucket_00001 ├── delta_0000001_0000001_0000 │   ├── bucket_00000 │   └── bucket_00001 └── delta_0000002_0000002_0000     └── bucket_00000     */
 name|Assert
 operator|.
 name|assertTrue
@@ -1273,7 +1331,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":1}\t1\t1\t17\t"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t2\t2\t2\t"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1297,7 +1355,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/base_0000002/bucket_00000"
+literal|"nobuckets/base_0000002/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1321,7 +1379,7 @@ argument_list|)
 operator|.
 name|startsWith
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t2\t2\t2\t"
+literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":0}\t1\t1\t17\t"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1365,6 +1423,13 @@ name|expectedFiles
 operator|.
 name|add
 argument_list|(
+literal|"delete_delta_0000002_0000002_0000/bucket_00001"
+argument_list|)
+expr_stmt|;
+name|expectedFiles
+operator|.
+name|add
+argument_list|(
 literal|"uckets/delta_0000001_0000001_0000/bucket_00000"
 argument_list|)
 expr_stmt|;
@@ -1380,6 +1445,13 @@ operator|.
 name|add
 argument_list|(
 literal|"uckets/delta_0000002_0000002_0000/bucket_00000"
+argument_list|)
+expr_stmt|;
+name|expectedFiles
+operator|.
+name|add
+argument_list|(
+literal|"uckets/delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
@@ -2764,12 +2836,13 @@ block|,
 literal|"warehouse/t/HIVE_UNION_SUBDIR_16/000000_0"
 block|}
 block|,
+comment|// update for "{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t60\t80"
 block|{
-literal|"{\"writeid\":10000001,\"bucketid\":536870912,\"rowid\":0}\t60\t88"
+literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":0}\t60\t88"
 block|,
-literal|"warehouse/t/delta_10000001_10000001_0000/bucket_00000"
+literal|"warehouse/t/delta_10000001_10000001_0000/bucket_00001"
 block|}
-block|,     }
+block|,      }
 decl_stmt|;
 name|rs
 operator|=
@@ -2863,9 +2936,9 @@ literal|"warehouse/t/base_10000002/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":10000001,\"bucketid\":536870912,\"rowid\":0}\t60\t88"
+literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":0}\t60\t88"
 block|,
-literal|"warehouse/t/base_10000002/bucket_00000"
+literal|"warehouse/t/base_10000002/bucket_00001"
 block|}
 block|,     }
 decl_stmt|;

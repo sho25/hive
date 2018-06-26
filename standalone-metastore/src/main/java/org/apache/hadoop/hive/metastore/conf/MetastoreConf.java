@@ -3249,6 +3249,19 @@ argument_list|,
 literal|"metadata store type"
 argument_list|)
 block|,
+name|STRICT_MANAGED_TABLES
+argument_list|(
+literal|"metastore.strict.managed.tables"
+argument_list|,
+literal|"hive.strict.managed.tables"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether strict managed tables mode is enabled. With this mode enabled, "
+operator|+
+literal|"only transactional tables (both full and insert-only) are allowed to be created as managed tables"
+argument_list|)
+block|,
 name|SUPPORT_SPECICAL_CHARACTERS_IN_TABLE_NAMES
 argument_list|(
 literal|"metastore.support.special.characters.tablename"

@@ -8865,8 +8865,6 @@ name|builder
 operator|.
 name|append
 argument_list|(
-name|stripQuotes
-argument_list|(
 name|ast
 operator|.
 name|getChild
@@ -8877,8 +8875,8 @@ operator|.
 name|getText
 argument_list|()
 argument_list|)
-argument_list|)
 expr_stmt|;
+comment|// Don't strip quotes.
 name|builder
 operator|.
 name|append

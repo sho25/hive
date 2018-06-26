@@ -52,6 +52,9 @@ decl_stmt|;
 name|boolean
 name|isView
 decl_stmt|;
+name|boolean
+name|isNonNative
+decl_stmt|;
 specifier|public
 name|MaskAndFilterInfo
 parameter_list|(
@@ -72,6 +75,9 @@ name|astNode
 parameter_list|,
 name|boolean
 name|isView
+parameter_list|,
+name|boolean
+name|isNonNative
 parameter_list|)
 block|{
 name|super
@@ -106,6 +112,12 @@ operator|.
 name|isView
 operator|=
 name|isView
+expr_stmt|;
+name|this
+operator|.
+name|isNonNative
+operator|=
+name|isNonNative
 expr_stmt|;
 block|}
 block|}
