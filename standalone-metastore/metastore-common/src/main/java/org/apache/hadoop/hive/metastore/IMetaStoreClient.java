@@ -2814,22 +2814,14 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Returns the invalidation information for the materialized views given as input.    */
-name|Map
-argument_list|<
-name|String
-argument_list|,
 name|Materialization
-argument_list|>
-name|getMaterializationsInvalidationInfo
+name|getMaterializationInvalidationInfo
 parameter_list|(
-name|String
-name|dbName
+name|CreationMetadata
+name|cm
 parameter_list|,
-name|List
-argument_list|<
 name|String
-argument_list|>
-name|viewNames
+name|validTxnList
 parameter_list|)
 throws|throws
 name|MetaException

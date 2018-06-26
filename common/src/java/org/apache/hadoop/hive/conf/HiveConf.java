@@ -6172,32 +6172,32 @@ name|HIVE_MATERIALIZED_VIEW_REWRITING_TIME_WINDOW
 argument_list|(
 literal|"hive.materializedview.rewriting.time.window"
 argument_list|,
-literal|"0s"
+literal|"0min"
 argument_list|,
 operator|new
 name|TimeValidator
 argument_list|(
 name|TimeUnit
 operator|.
-name|SECONDS
+name|MINUTES
 argument_list|)
 argument_list|,
 literal|"Time window, specified in seconds, after which outdated materialized views become invalid for automatic query rewriting.\n"
 operator|+
-literal|"For instance, if a materialized view is created and afterwards one of its source tables is changed at "
+literal|"For instance, if more time than the value assigned to the property has passed since the materialized view "
 operator|+
-literal|"moment in time t0, the materialized view will not be considered for rewriting anymore after t0 plus "
+literal|"was created or rebuilt, and one of its source tables has changed since, the materialized view will not be "
 operator|+
-literal|"the value assigned to this property. Default value 0 means that the materialized view cannot be "
+literal|"considered for rewriting. Default value 0 means that the materialized view cannot be "
 operator|+
-literal|"outdated to be used automatically in query rewriting."
+literal|"outdated to be used automatically in query rewriting. Value -1 means to skip this check."
 argument_list|)
 block|,
 name|HIVE_MATERIALIZED_VIEW_REWRITING_INCREMENTAL
 argument_list|(
 literal|"hive.materializedview.rewriting.incremental"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether to try to execute incremental rewritings based on outdated materializations and\n"
 operator|+
@@ -6218,9 +6218,7 @@ literal|"tries to modify the original materialization contents to reflect the la
 operator|+
 literal|"materialized view source tables, instead of rebuilding the contents fully. Incremental rebuild\n"
 operator|+
-literal|"is based on the materialized view algebraic incremental rewriting. Hence, this requires\n"
-operator|+
-literal|"hive.materializedview.rewriting.incremental to be true."
+literal|"is based on the materialized view algebraic incremental rewriting."
 argument_list|)
 block|,
 name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
@@ -6253,65 +6251,6 @@ argument_list|,
 literal|"org.apache.hadoop.hive.ql.io.orc.OrcSerde"
 argument_list|,
 literal|"Default SerDe used for materialized views"
-argument_list|)
-block|,
-name|HIVE_MATERIALIZATIONS_INVALIDATION_CACHE_IMPL
-argument_list|(
-literal|"hive.metastore.materializations.invalidation.impl"
-argument_list|,
-literal|"DEFAULT"
-argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"DEFAULT"
-argument_list|,
-literal|"DISABLE"
-argument_list|)
-argument_list|,
-literal|"The implementation that we should use for the materializations invalidation cache. \n"
-operator|+
-literal|"  DEFAULT: Default implementation for invalidation cache\n"
-operator|+
-literal|"  DISABLE: Disable invalidation cache (debugging purposes)"
-argument_list|)
-block|,
-name|HIVE_MATERIALIZATIONS_INVALIDATION_CACHE_CLEAN_FREQUENCY
-argument_list|(
-literal|"hive.metastore.materializations.invalidation.clean.frequency"
-argument_list|,
-literal|"3600s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"Frequency at which timer task runs to remove unnecessary transactions information from"
-operator|+
-literal|"materializations invalidation cache."
-argument_list|)
-block|,
-name|HIVE_MATERIALIZATIONS_INVALIDATION_CACHE_EXPIRY_DURATION
-argument_list|(
-literal|"hive.metastore.materializations.invalidation.max.duration"
-argument_list|,
-literal|"86400s"
-argument_list|,
-operator|new
-name|TimeValidator
-argument_list|(
-name|TimeUnit
-operator|.
-name|SECONDS
-argument_list|)
-argument_list|,
-literal|"Maximum duration for query producing a materialization. After this time, transactions"
-operator|+
-literal|"information that is not relevant for materializations can be removed from invalidation cache."
 argument_list|)
 block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,

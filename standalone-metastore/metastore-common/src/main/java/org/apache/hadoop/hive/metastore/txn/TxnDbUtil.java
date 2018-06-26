@@ -382,11 +382,11 @@ literal|"  CTC_TABLE varchar(128),"
 operator|+
 literal|"  CTC_PARTITION varchar(767),"
 operator|+
-literal|"  CTC_ID bigint GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) NOT NULL,"
-operator|+
 literal|"  CTC_TIMESTAMP timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 operator|+
-literal|"  CTC_WRITEID bigint)"
+literal|"  CTC_WRITEID bigint,"
+operator|+
+literal|"  CTC_UPDATE_DELETE char(1) NOT NULL)"
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -639,6 +639,23 @@ operator|+
 literal|" RTM_TARGET_TXN_ID bigint NOT NULL, "
 operator|+
 literal|" PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID))"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE MATERIALIZATION_REBUILD_LOCKS ("
+operator|+
+literal|"  MRL_TXN_ID BIGINT NOT NULL, "
+operator|+
+literal|"  MRL_DB_NAME VARCHAR(128) NOT NULL, "
+operator|+
+literal|"  MRL_TBL_NAME VARCHAR(256) NOT NULL, "
+operator|+
+literal|"  MRL_LAST_HEARTBEAT BIGINT NOT NULL, "
+operator|+
+literal|"  PRIMARY KEY(MRL_TXN_ID))"
 argument_list|)
 expr_stmt|;
 try|try
@@ -1327,6 +1344,17 @@ argument_list|(
 name|stmt
 argument_list|,
 literal|"REPL_TXN_MAP"
+argument_list|,
+name|retryCount
+argument_list|)
+expr_stmt|;
+name|success
+operator|&=
+name|dropTable
+argument_list|(
+name|stmt
+argument_list|,
+literal|"MATERIALIZATION_REBUILD_LOCKS"
 argument_list|,
 name|retryCount
 argument_list|)

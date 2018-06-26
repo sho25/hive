@@ -30,7 +30,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Represents the creation metadata of a materialization.  * It includes the database and table name for the materialization,  * the set of tables that it uses, and the valid transaction list  * when it was created.  */
+comment|/**  * Represents the creation metadata of a materialization.  * It includes the database and table name for the materialization,  * the set of tables that it uses, the valid transaction list  * when it was created, and the creation/rebuild time.  */
 end_comment
 
 begin_class
@@ -61,6 +61,10 @@ specifier|private
 name|String
 name|txnList
 decl_stmt|;
+specifier|private
+name|long
+name|materializationTime
+decl_stmt|;
 specifier|public
 name|MCreationMetadata
 parameter_list|()
@@ -85,6 +89,9 @@ name|tables
 parameter_list|,
 name|String
 name|txnList
+parameter_list|,
+name|long
+name|materializationTime
 parameter_list|)
 block|{
 name|this
@@ -116,6 +123,12 @@ operator|.
 name|txnList
 operator|=
 name|txnList
+expr_stmt|;
+name|this
+operator|.
+name|materializationTime
+operator|=
+name|materializationTime
 expr_stmt|;
 block|}
 specifier|public
@@ -242,6 +255,30 @@ operator|.
 name|tblName
 operator|=
 name|tblName
+expr_stmt|;
+block|}
+specifier|public
+name|long
+name|getMaterializationTime
+parameter_list|()
+block|{
+return|return
+name|materializationTime
+return|;
+block|}
+specifier|public
+name|void
+name|setMaterializationTime
+parameter_list|(
+name|long
+name|materializationTime
+parameter_list|)
+block|{
+name|this
+operator|.
+name|materializationTime
+operator|=
+name|materializationTime
 expr_stmt|;
 block|}
 block|}
