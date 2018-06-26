@@ -4799,14 +4799,11 @@ name|metastoreHook
 init|=
 name|sessionConf
 operator|.
-name|get
+name|getVar
 argument_list|(
 name|ConfVars
 operator|.
 name|METASTORE_FILTER_HOOK
-operator|.
-name|name
-argument_list|()
 argument_list|)
 decl_stmt|;
 if|if
@@ -4846,8 +4843,7 @@ name|ConfVars
 operator|.
 name|METASTORE_FILTER_HOOK
 operator|.
-name|name
-argument_list|()
+name|varname
 operator|+
 literal|" will be ignored, since hive.security.authorization.manager"
 operator|+

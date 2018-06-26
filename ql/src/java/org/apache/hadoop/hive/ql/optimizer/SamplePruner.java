@@ -103,6 +103,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|TableType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -996,20 +1012,19 @@ decl_stmt|;
 comment|// check if input pruning is possible
 comment|// TODO: this code is buggy - it relies on having one file per bucket; no MM support (by design).
 name|boolean
-name|isMmTable
+name|isManagedTable
 init|=
-name|AcidUtils
-operator|.
-name|isInsertOnlyTable
-argument_list|(
 name|part
 operator|.
 name|getTable
 argument_list|()
 operator|.
-name|getParameters
+name|getTableType
 argument_list|()
-argument_list|)
+operator|==
+name|TableType
+operator|.
+name|MANAGED_TABLE
 decl_stmt|;
 if|if
 condition|(
@@ -1019,7 +1034,7 @@ name|getInputPruning
 argument_list|()
 operator|&&
 operator|!
-name|isMmTable
+name|isManagedTable
 condition|)
 block|{
 name|LOG
@@ -1231,9 +1246,9 @@ block|{
 comment|// need to do full scan
 name|fullScanMsg
 operator|=
-name|isMmTable
+name|isManagedTable
 condition|?
-literal|"MM table"
+literal|"Managed table"
 else|:
 literal|"Tablesample not on clustered columns"
 expr_stmt|;

@@ -1455,14 +1455,6 @@ argument_list|(
 name|jobConf
 argument_list|)
 decl_stmt|;
-name|splits
-operator|=
-operator|new
-name|InputSplit
-index|[
-literal|1
-index|]
-expr_stmt|;
 name|List
 argument_list|<
 name|Path
@@ -1509,14 +1501,30 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|FileStatus
-name|fileStatus
-init|=
+if|if
+condition|(
 name|fileStatuses
+operator|.
+name|length
+operator|==
+literal|0
+condition|)
+block|{
+comment|// generate single split typically happens when reading data out of order by queries.
+comment|// if order by query returns no rows, no files will exists in input path
+name|splits
+operator|=
+operator|new
+name|InputSplit
 index|[
 literal|0
 index|]
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// if files exists in input path then it has to be 1 as this code path gets triggered only
+comment|// of order by queries which is expected to write only one file (written by one reducer)
 name|Preconditions
 operator|.
 name|checkState
@@ -1560,6 +1568,22 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+name|splits
+operator|=
+operator|new
+name|InputSplit
+index|[
+literal|1
+index|]
+expr_stmt|;
+name|FileStatus
+name|fileStatus
+init|=
+name|fileStatuses
+index|[
+literal|0
+index|]
+decl_stmt|;
 name|BlockLocation
 index|[]
 name|locations
@@ -1698,6 +1722,7 @@ argument_list|,
 name|partIF
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{

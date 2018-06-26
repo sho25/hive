@@ -945,6 +945,26 @@ name|query
 operator|=
 literal|"select get_splits("
 operator|+
+literal|"'select value from "
+operator|+
+name|tableName
+operator|+
+literal|" order by under_col limit 0', 5)"
+expr_stmt|;
+name|runQuery
+argument_list|(
+name|query
+argument_list|,
+name|getConfigs
+argument_list|()
+argument_list|,
+literal|0
+argument_list|)
+expr_stmt|;
+name|query
+operator|=
+literal|"select get_splits("
+operator|+
 literal|"'select `value` from (select value from "
 operator|+
 name|tableName
