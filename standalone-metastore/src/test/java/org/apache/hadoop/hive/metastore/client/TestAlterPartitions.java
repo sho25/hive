@@ -23,6 +23,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|net
+operator|.
+name|ProtocolException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -370,6 +380,20 @@ operator|.
 name|thrift
 operator|.
 name|TException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|thrift
+operator|.
+name|protocol
+operator|.
+name|TProtocolException
 import|;
 end_import
 
@@ -5511,13 +5535,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionsNullTblName
@@ -5553,6 +5570,8 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partitions
@@ -5569,6 +5588,24 @@ name|part
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"didn't throw"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|TProtocolException
+decl||
+name|MetaException
+name|e
+parameter_list|)
+block|{
+comment|// By design
+block|}
 block|}
 annotation|@
 name|Test
@@ -5757,6 +5794,8 @@ parameter_list|(
 name|NullPointerException
 decl||
 name|TTransportException
+decl||
+name|TProtocolException
 name|e
 parameter_list|)
 block|{
@@ -6234,8 +6273,6 @@ argument_list|,
 name|TABLE_NAME
 argument_list|,
 name|newParts
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 for|for
@@ -6913,13 +6950,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionsWithEnvironmentCtxNullTblName
@@ -6955,6 +6985,8 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partitions
@@ -6975,6 +7007,24 @@ name|EnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"didn't throw"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{
+comment|// By design.
+block|}
 block|}
 annotation|@
 name|Test
@@ -7175,6 +7225,8 @@ parameter_list|(
 name|NullPointerException
 decl||
 name|TTransportException
+decl||
+name|TProtocolException
 name|e
 parameter_list|)
 block|{

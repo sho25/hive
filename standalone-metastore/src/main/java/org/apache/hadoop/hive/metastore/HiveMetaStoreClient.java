@@ -11166,7 +11166,9 @@ name|tblName
 argument_list|,
 name|newParts
 argument_list|,
-literal|null
+operator|new
+name|EnvironmentContext
+argument_list|()
 argument_list|,
 operator|-
 literal|1
