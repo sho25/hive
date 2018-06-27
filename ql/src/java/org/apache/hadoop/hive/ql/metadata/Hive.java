@@ -27,6 +27,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|base
 operator|.
 name|Splitter
@@ -4307,6 +4321,8 @@ argument_list|)
 operator|.
 name|getTable
 argument_list|()
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -12563,6 +12579,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Creates a partition.    *    * @param tbl    *          table for which partition needs to be created    * @param partSpec    *          partition keys and their values    * @return created partition object    * @throws HiveException    *           if table doesn't exist or partition already exists    */
+annotation|@
+name|VisibleForTesting
 specifier|public
 name|Partition
 name|createPartition
@@ -12621,6 +12639,8 @@ argument_list|(
 name|conf
 argument_list|,
 name|tbl
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|part

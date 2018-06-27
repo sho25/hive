@@ -8035,6 +8035,32 @@ name|validWriteIdList
 expr_stmt|;
 block|}
 block|}
+comment|// TODO# remove
+specifier|public
+specifier|static
+name|TableSnapshot
+name|getTableSnapshot
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
+name|Table
+name|tbl
+parameter_list|)
+throws|throws
+name|LockException
+block|{
+return|return
+name|getTableSnapshot
+argument_list|(
+name|conf
+argument_list|,
+name|tbl
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
 comment|/**    * Create a TableShopshot with the given "conf"    * for the table of the given "tbl".    *    * @param conf    * @param tbl    * @return TableSnapshot on success, null on failure    * @throws LockException    */
 specifier|public
 specifier|static
@@ -8046,6 +8072,9 @@ name|conf
 parameter_list|,
 name|Table
 name|tbl
+parameter_list|,
+name|boolean
+name|isInTxnScope
 parameter_list|)
 throws|throws
 name|LockException
@@ -8138,13 +8167,15 @@ argument_list|,
 name|fullTableName
 argument_list|)
 expr_stmt|;
-comment|// TODO: we shouldn't do this during normal Hive compilation, write IDs should be in conf.
-comment|//       Can this still happen for DDLTask-based queries?
+comment|// TODO: remove in_test filters?
 if|if
 condition|(
 name|validWriteIdList
 operator|==
 literal|null
+operator|&&
+operator|!
+name|isInTxnScope
 operator|&&
 operator|!
 name|HiveConf
