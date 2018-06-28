@@ -51,11 +51,19 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
 operator|.
-name|Timestamp
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -89,11 +97,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|serde2
+name|common
 operator|.
-name|io
+name|type
 operator|.
-name|TimestampWritable
+name|Timestamp
 import|;
 end_import
 
@@ -132,7 +140,7 @@ name|LazyPrimitive
 argument_list|<
 name|LazyTimestampObjectInspector
 argument_list|,
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|>
 block|{
 specifier|private
@@ -165,7 +173,7 @@ expr_stmt|;
 name|data
 operator|=
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|()
 expr_stmt|;
 block|}
@@ -184,7 +192,7 @@ expr_stmt|;
 name|data
 operator|=
 operator|new
-name|TimestampWritable
+name|TimestampWritableV2
 argument_list|(
 name|copy
 operator|.
@@ -372,7 +380,7 @@ parameter_list|(
 name|OutputStream
 name|out
 parameter_list|,
-name|TimestampWritable
+name|TimestampWritableV2
 name|i
 parameter_list|)
 throws|throws
@@ -390,7 +398,7 @@ name|out
 operator|.
 name|write
 argument_list|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|.
 name|nullBytes
 argument_list|)
@@ -418,7 +426,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|TimestampWritable
+name|TimestampWritableV2
 name|getWritableObject
 parameter_list|()
 block|{

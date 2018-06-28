@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|java
-operator|.
-name|sql
-operator|.
-name|Date
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -77,11 +67,29 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|Date
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -122,7 +130,7 @@ name|DateObjectInspector
 extends|extends
 name|PrimitiveObjectInspector
 block|{
-name|DateWritable
+name|DateWritableV2
 name|getPrimitiveWritableObject
 parameter_list|(
 name|Object

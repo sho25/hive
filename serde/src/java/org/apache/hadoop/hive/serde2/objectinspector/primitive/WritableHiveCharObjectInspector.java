@@ -107,7 +107,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -217,38 +217,6 @@ name|BooleanWritable
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|ByteBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|CharBuffer
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|nio
-operator|.
-name|charset
-operator|.
-name|Charset
-import|;
-end_import
-
 begin_class
 specifier|public
 class|class
@@ -310,7 +278,7 @@ operator|||
 operator|(
 name|o
 operator|instanceof
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 operator|||
 operator|(
@@ -442,7 +410,7 @@ operator|||
 operator|(
 name|o
 operator|instanceof
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 operator|||
 operator|(

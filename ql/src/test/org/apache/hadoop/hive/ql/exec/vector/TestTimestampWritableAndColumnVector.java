@@ -61,9 +61,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|common
-operator|.
-name|type
+name|serde2
 operator|.
 name|RandomTypeUtil
 import|;
@@ -185,6 +183,9 @@ name|getRandTimestamp
 argument_list|(
 name|r
 argument_list|)
+operator|.
+name|toSqlTimestamp
+argument_list|()
 decl_stmt|;
 name|randTimestamps
 index|[

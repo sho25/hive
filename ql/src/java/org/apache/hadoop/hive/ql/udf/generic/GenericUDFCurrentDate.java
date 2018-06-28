@@ -23,9 +23,17 @@ end_package
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|sql
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|type
 operator|.
 name|Date
 import|;
@@ -153,7 +161,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -242,7 +250,7 @@ extends|extends
 name|GenericUDF
 block|{
 specifier|protected
-name|DateWritable
+name|DateWritableV2
 name|currentDate
 decl_stmt|;
 annotation|@
@@ -315,7 +323,7 @@ decl_stmt|;
 name|currentDate
 operator|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|dateVal
 argument_list|)
@@ -345,7 +353,7 @@ name|currentDate
 return|;
 block|}
 specifier|public
-name|DateWritable
+name|DateWritableV2
 name|getCurrentDate
 parameter_list|()
 block|{
@@ -357,7 +365,7 @@ specifier|public
 name|void
 name|setCurrentDate
 parameter_list|(
-name|DateWritable
+name|DateWritableV2
 name|currentDate
 parameter_list|)
 block|{
@@ -425,7 +433,7 @@ operator|.
 name|currentDate
 operator|=
 operator|new
-name|DateWritable
+name|DateWritableV2
 argument_list|(
 name|this
 operator|.

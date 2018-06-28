@@ -127,8 +127,6 @@ name|exec
 operator|.
 name|repl
 operator|.
-name|bootstrap
-operator|.
 name|ReplLoadWork
 import|;
 end_import

@@ -885,7 +885,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|TimestampWritable
+name|TimestampWritableV2
 import|;
 end_import
 
@@ -10466,14 +10466,14 @@ if|if
 condition|(
 name|key
 operator|instanceof
-name|TimestampWritable
+name|TimestampWritableV2
 condition|)
 block|{
-name|TimestampWritable
+name|TimestampWritableV2
 name|twKey
 init|=
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|key
 decl_stmt|;
@@ -11312,14 +11312,14 @@ if|if
 condition|(
 name|key
 operator|instanceof
-name|TimestampWritable
+name|TimestampWritableV2
 condition|)
 block|{
-name|TimestampWritable
+name|TimestampWritableV2
 name|twKey
 init|=
 operator|(
-name|TimestampWritable
+name|TimestampWritableV2
 operator|)
 name|key
 decl_stmt|;
@@ -11328,6 +11328,9 @@ operator|=
 name|twKey
 operator|.
 name|getTimestamp
+argument_list|()
+operator|.
+name|toSqlTimestamp
 argument_list|()
 expr_stmt|;
 block|}

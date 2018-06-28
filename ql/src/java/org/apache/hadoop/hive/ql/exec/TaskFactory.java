@@ -201,8 +201,6 @@ name|exec
 operator|.
 name|repl
 operator|.
-name|bootstrap
-operator|.
 name|ReplLoadTask
 import|;
 end_import
@@ -222,8 +220,6 @@ operator|.
 name|exec
 operator|.
 name|repl
-operator|.
-name|bootstrap
 operator|.
 name|ReplLoadWork
 import|;

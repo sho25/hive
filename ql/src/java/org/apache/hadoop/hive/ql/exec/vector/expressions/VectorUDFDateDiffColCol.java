@@ -79,26 +79,6 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|DoubleColumnVector
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|vector
-operator|.
 name|LongColumnVector
 import|;
 end_import
@@ -195,7 +175,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -1426,7 +1406,7 @@ index|[
 literal|0
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -1889,7 +1869,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -1991,7 +1971,7 @@ index|[
 literal|0
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -2099,7 +2079,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -2161,7 +2141,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -2234,7 +2214,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -2379,7 +2359,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(
@@ -2436,7 +2416,7 @@ index|[
 name|i
 index|]
 operator|=
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|dateToDays
 argument_list|(

@@ -13552,7 +13552,7 @@ literal|""
 expr_stmt|;
 name|conversionMethod
 operator|=
-literal|"DateWritable.dateToDays"
+literal|"DateWritableV2.dateToDays"
 expr_stmt|;
 comment|// Special case - Date requires its own specific BetweenDynamicValue class, but derives from FilterLongColumnBetween
 name|typeName
@@ -13585,7 +13585,7 @@ literal|"getTimestamp"
 expr_stmt|;
 name|getValueMethod
 operator|=
-literal|""
+literal|".toSqlTimestamp()"
 expr_stmt|;
 name|conversionMethod
 operator|=
@@ -24470,9 +24470,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|"Date dt = new Date(0);"
-operator|+
-literal|"    dt.setTime(DateWritable.daysToMillis((int) value));\n"
+literal|"Date dt = Date.ofEpochMilli(DateWritableV2.daysToMillis((int) value));\n"
 operator|+
 literal|"    return  \"date \" + dt.toString() + \", \" + getColumnParamString(0, colNum);"
 return|;
@@ -24503,9 +24501,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|"Date dt = new Date(0);"
-operator|+
-literal|"    dt.setTime(DateWritable.daysToMillis((int) value));\n"
+literal|"Date dt = Date.ofEpochMilli(DateWritableV2.daysToMillis((int) value));\n"
 operator|+
 literal|"    return getColumnParamString(0, colNum) + \", date \" + dt.toString();"
 return|;
@@ -28410,7 +28406,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|"HiveDateWritable"
+literal|"DateWritableV2"
 return|;
 block|}
 elseif|else
@@ -28425,7 +28421,7 @@ argument_list|)
 condition|)
 block|{
 return|return
-literal|"HiveTimestampWritable"
+literal|"TimestampWritable"
 return|;
 block|}
 throw|throw

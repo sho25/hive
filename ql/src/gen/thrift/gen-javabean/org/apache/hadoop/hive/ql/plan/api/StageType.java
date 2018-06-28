@@ -145,6 +145,11 @@ name|REPL_TXN
 argument_list|(
 literal|15
 argument_list|)
+block|,
+name|REPL_INCREMENTAL_LOAD
+argument_list|(
+literal|16
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -285,6 +290,12 @@ literal|15
 case|:
 return|return
 name|REPL_TXN
+return|;
+case|case
+literal|16
+case|:
+return|return
+name|REPL_INCREMENTAL_LOAD
 return|;
 default|default:
 return|return

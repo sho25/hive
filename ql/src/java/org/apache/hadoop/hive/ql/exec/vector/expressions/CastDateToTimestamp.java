@@ -145,7 +145,7 @@ name|serde2
 operator|.
 name|io
 operator|.
-name|DateWritable
+name|DateWritableV2
 import|;
 end_import
 
@@ -226,7 +226,7 @@ argument_list|()
 operator|.
 name|setTime
 argument_list|(
-name|DateWritable
+name|DateWritableV2
 operator|.
 name|daysToMillis
 argument_list|(

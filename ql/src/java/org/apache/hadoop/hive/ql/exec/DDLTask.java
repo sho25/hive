@@ -18250,7 +18250,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"results : {}"
+literal|"Found {} database(s) matching the SHOW DATABASES statement."
 argument_list|,
 name|databases
 operator|.
@@ -18422,7 +18422,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"results : {}"
+literal|"Found {} tables/view(s) matching the SHOW TABLES/VIEWS statement."
 argument_list|,
 name|tablesOrViews
 operator|.
@@ -18955,7 +18955,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"results : {}"
+literal|"Found {} function(s) matching the SHOW FUNCTIONS statement."
 argument_list|,
 name|funcs
 operator|.
@@ -22455,7 +22455,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"results : {}"
+literal|"Found {} table(s) matching the SHOW TABLE EXTENDED statement."
 argument_list|,
 name|tblStr
 operator|.

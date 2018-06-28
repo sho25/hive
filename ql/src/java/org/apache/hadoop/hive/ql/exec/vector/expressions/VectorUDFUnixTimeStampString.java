@@ -89,6 +89,16 @@ name|Date
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|TimeZone
+import|;
+end_import
+
 begin_comment
 comment|/**  * Return Unix Timestamp.  * Extends {@link VectorUDFTimestampFieldString}  */
 end_comment
@@ -115,11 +125,8 @@ specifier|final
 name|SimpleDateFormat
 name|format
 init|=
-operator|new
-name|SimpleDateFormat
-argument_list|(
-literal|"yyyy-MM-dd HH:mm:ss"
-argument_list|)
+name|getFormatter
+argument_list|()
 decl_stmt|;
 specifier|private
 specifier|transient
@@ -130,7 +137,14 @@ init|=
 name|Calendar
 operator|.
 name|getInstance
-argument_list|()
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
+argument_list|)
 decl_stmt|;
 specifier|public
 name|VectorUDFUnixTimeStampString
@@ -242,6 +256,37 @@ name|getTimeInMillis
 argument_list|()
 operator|/
 literal|1000
+return|;
+block|}
+specifier|private
+specifier|static
+name|SimpleDateFormat
+name|getFormatter
+parameter_list|()
+block|{
+name|SimpleDateFormat
+name|format
+init|=
+operator|new
+name|SimpleDateFormat
+argument_list|(
+literal|"yyyy-MM-dd HH:mm:ss"
+argument_list|)
+decl_stmt|;
+name|format
+operator|.
+name|setTimeZone
+argument_list|(
+name|TimeZone
+operator|.
+name|getTimeZone
+argument_list|(
+literal|"UTC"
+argument_list|)
+argument_list|)
+expr_stmt|;
+return|return
+name|format
 return|;
 block|}
 block|}
