@@ -679,6 +679,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|*
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|UserGroupInformation
@@ -5182,6 +5200,40 @@ argument_list|,
 name|tableName
 argument_list|,
 literal|true
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|long
+name|getAllocatedTableWriteId
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|LockException
+block|{
+assert|assert
+name|isTxnOpen
+argument_list|()
+assert|;
+comment|// Calls getTableWriteId() with allocateIfNotYet being false
+comment|// to return 0 if the dbName:tableName's writeId is yet allocated.
+comment|// This happens when the current context is before
+comment|// Driver.acquireLocks() is called.
+return|return
+name|getTableWriteId
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+literal|false
 argument_list|)
 return|;
 block|}

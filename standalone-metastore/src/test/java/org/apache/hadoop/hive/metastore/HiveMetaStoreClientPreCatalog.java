@@ -8301,6 +8301,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -16938,6 +16941,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|InvalidOperationException

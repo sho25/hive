@@ -2132,6 +2132,9 @@ operator|-
 literal|1
 argument_list|,
 literal|null
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -4382,6 +4385,9 @@ literal|1
 argument_list|,
 literal|null
 argument_list|,
+operator|-
+literal|1
+argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -4429,6 +4435,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|,
 name|IHMSHandler
 name|handler
@@ -4771,6 +4780,8 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
+argument_list|,
+name|writeId
 argument_list|)
 expr_stmt|;
 name|Iterator

@@ -557,6 +557,20 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
+comment|/**   * if {@code isTxnOpen()}, returns the already allocated table write ID of the table with   * the given "dbName.tableName" for the current active transaction.   * If not allocated, then returns 0.   * @param dbName   * @param tableName   * @return 0 if not yet allocated   * @throws LockException   */
+specifier|public
+name|long
+name|getAllocatedTableWriteId
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|LockException
+function_decl|;
 comment|/**    * Allocates write id for each transaction in the list.    * @param dbName database name    * @param tableName the name of the table to allocate the write id    * @param replPolicy used by replication task to identify the source cluster    * @param srcTxnToWriteIdList List of txn id to write id Map    * @throws LockException    */
 name|void
 name|replAllocateTableWriteIdsBatch

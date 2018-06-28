@@ -5233,6 +5233,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -5286,6 +5289,9 @@ operator|-
 literal|1
 argument_list|,
 literal|null
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -5316,6 +5322,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|InvalidOperationException

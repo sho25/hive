@@ -701,7 +701,7 @@ literal|" \"VIEW_EXPANDED_TEXT\" LONG VARCHAR, \"VIEW_ORIGINAL_TEXT\" LONG VARCH
 operator|+
 literal|" \"IS_REWRITE_ENABLED\" CHAR(1) NOT NULL DEFAULT \'N\', \"TXN_ID\" BIGINT DEFAULT 0, "
 operator|+
-literal|" \"WRITEID_LIST\" CLOB, "
+literal|" \"WRITE_ID\" BIGINT DEFAULT 0, \"WRITEID_LIST\" CLOB, "
 operator|+
 literal|" PRIMARY KEY (TBL_ID))"
 argument_list|)
@@ -762,7 +762,7 @@ literal|" \"LAST_ACCESS_TIME\" INTEGER NOT NULL, \"PART_NAME\" VARCHAR(767), "
 operator|+
 literal|" \"SD_ID\" BIGINT, \"TBL_ID\" BIGINT, \"TXN_ID\" BIGINT DEFAULT 0, "
 operator|+
-literal|" \"WRITEID_LIST\" CLOB, "
+literal|" \"WRITE_ID\" BIGINT DEFAULT 0, \"WRITEID_LIST\" CLOB, "
 operator|+
 literal|" PRIMARY KEY (PART_ID))"
 argument_list|)

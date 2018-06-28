@@ -11174,6 +11174,9 @@ operator|-
 literal|1
 argument_list|,
 literal|null
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -11220,6 +11223,9 @@ operator|-
 literal|1
 argument_list|,
 literal|null
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}
@@ -11249,6 +11255,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -11277,6 +11286,8 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
+argument_list|,
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -11309,6 +11320,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|TException
@@ -11367,6 +11381,13 @@ operator|.
 name|setValidWriteIdList
 argument_list|(
 name|writeIdList
+argument_list|)
+expr_stmt|;
+name|req
+operator|.
+name|setWriteId
+argument_list|(
+name|writeId
 argument_list|)
 expr_stmt|;
 name|client

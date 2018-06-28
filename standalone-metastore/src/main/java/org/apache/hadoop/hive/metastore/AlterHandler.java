@@ -442,6 +442,9 @@ parameter_list|,
 name|String
 name|writeIdList
 parameter_list|,
+name|long
+name|writeId
+parameter_list|,
 name|IHMSHandler
 name|handler
 parameter_list|)

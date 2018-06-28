@@ -33,6 +33,16 @@ name|ValidWriteIdList
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|*
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -138,11 +148,14 @@ parameter_list|(
 name|ValidWriteIdList
 name|older
 parameter_list|,
+name|long
+name|olderWriteId
+parameter_list|,
 name|ValidWriteIdList
 name|newer
 parameter_list|,
 name|long
-name|statsWriteId
+name|newerWriteId
 parameter_list|)
 block|{
 if|if
@@ -179,9 +192,78 @@ name|getHighWatermark
 argument_list|()
 operator|)
 assert|;
-comment|// TODO: Just return false for now.
+comment|// Return false when a write id is not positive.
+if|if
+condition|(
+name|olderWriteId
+operator|<=
+literal|0
+operator|||
+name|newerWriteId
+operator|<=
+literal|0
+condition|)
+block|{
 return|return
 literal|false
+return|;
+block|}
+comment|// If olderWriteId is for aborted write, return false.
+if|if
+condition|(
+name|newer
+operator|.
+name|isWriteIdAborted
+argument_list|(
+name|olderWriteId
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|// TODO: does this need to account for watermark?
+comment|// If either writeId is contained in the other's writeIdList,
+comment|// it is a concurrent INSERTs case.
+name|int
+name|index2Older
+init|=
+name|Arrays
+operator|.
+name|binarySearch
+argument_list|(
+name|older
+operator|.
+name|getInvalidWriteIds
+argument_list|()
+argument_list|,
+name|olderWriteId
+argument_list|)
+decl_stmt|;
+name|int
+name|index2Newer
+init|=
+name|Arrays
+operator|.
+name|binarySearch
+argument_list|(
+name|newer
+operator|.
+name|getInvalidWriteIds
+argument_list|()
+argument_list|,
+name|newerWriteId
+argument_list|)
+decl_stmt|;
+return|return
+name|index2Older
+operator|>=
+literal|0
+operator|||
+name|index2Newer
+operator|>=
+literal|0
 return|;
 block|}
 comment|/**    * Check the min open ID/highwater mark/exceptions list to see if 2 ID lists are at the same commit point.    * This can also be used for ValidTxnList as well as ValidWriteIdList.    */

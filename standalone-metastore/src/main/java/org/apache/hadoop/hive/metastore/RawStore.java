@@ -1001,7 +1001,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @param txnId transaction id of the transaction that called this method.    * @param writeIdList valid write id list of the transaction on the current table    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
+comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @param txnId transaction id of the transaction that called this method.    * @param writeIdList valid write id list of the transaction on the current table    * @param writeid write id of the transaction for the table    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
 name|void
 name|alterPartitions
 parameter_list|(
@@ -1034,6 +1034,9 @@ name|txnId
 parameter_list|,
 name|String
 name|writeIdList
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|InvalidObjectException
