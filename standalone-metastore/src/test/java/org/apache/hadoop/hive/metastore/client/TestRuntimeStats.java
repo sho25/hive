@@ -184,6 +184,18 @@ import|;
 end_import
 
 begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
 import|import static
 name|org
 operator|.
@@ -547,11 +559,13 @@ literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Thread
+name|TimeUnit
+operator|.
+name|SECONDS
 operator|.
 name|sleep
 argument_list|(
-literal|2000
+literal|6
 argument_list|)
 expr_stmt|;
 name|objStore
@@ -571,7 +585,7 @@ name|objStore
 operator|.
 name|deleteRuntimeStats
 argument_list|(
-literal|1
+literal|5
 argument_list|)
 decl_stmt|;
 name|assertEquals
