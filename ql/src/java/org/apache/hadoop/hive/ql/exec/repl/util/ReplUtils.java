@@ -18,6 +18,8 @@ operator|.
 name|exec
 operator|.
 name|repl
+operator|.
+name|util
 package|;
 end_package
 
@@ -88,6 +90,26 @@ operator|.
 name|exec
 operator|.
 name|TaskFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|ReplStateLogWork
 import|;
 end_import
 

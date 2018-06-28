@@ -191,7 +191,7 @@ name|exec
 operator|.
 name|repl
 operator|.
-name|bootstrap
+name|util
 operator|.
 name|AddDependencyToLeaves
 import|;
@@ -244,6 +244,28 @@ operator|.
 name|util
 operator|.
 name|Context
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|util
+operator|.
+name|TaskTracker
 import|;
 end_import
 

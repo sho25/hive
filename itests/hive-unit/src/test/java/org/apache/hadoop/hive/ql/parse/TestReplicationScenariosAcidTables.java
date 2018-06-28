@@ -2363,13 +2363,19 @@ argument_list|)
 decl_stmt|;
 name|replicaNonAcid
 operator|.
-name|loadFailure
+name|runFailure
 argument_list|(
+literal|"REPL LOAD "
+operator|+
 name|replicatedDbName
-argument_list|,
+operator|+
+literal|" FROM '"
+operator|+
 name|incrementalDump
 operator|.
 name|dumpLocation
+operator|+
+literal|"'"
 argument_list|)
 operator|.
 name|run
@@ -2649,7 +2655,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"show tables"
+literal|"show tables like t2"
 argument_list|)
 operator|.
 name|verifyResults
@@ -2657,24 +2663,7 @@ argument_list|(
 operator|new
 name|String
 index|[]
-block|{
-literal|"t1"
-block|}
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"select id from t1"
-argument_list|)
-operator|.
-name|verifyResults
-argument_list|(
-name|Arrays
-operator|.
-name|asList
-argument_list|(
-literal|"1"
-argument_list|)
+block|{ }
 argument_list|)
 expr_stmt|;
 comment|// Retry with different dump should fail.
@@ -2750,42 +2739,6 @@ argument_list|)
 expr_stmt|;
 return|return
 literal|false
-return|;
-block|}
-if|if
-condition|(
-name|args
-operator|.
-name|tblName
-operator|!=
-literal|null
-condition|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Verifier - Table: "
-operator|+
-name|String
-operator|.
-name|valueOf
-argument_list|(
-name|args
-operator|.
-name|tblName
-argument_list|)
-argument_list|)
-expr_stmt|;
-return|return
-name|args
-operator|.
-name|tblName
-operator|.
-name|equals
-argument_list|(
-literal|"t2"
-argument_list|)
 return|;
 block|}
 return|return

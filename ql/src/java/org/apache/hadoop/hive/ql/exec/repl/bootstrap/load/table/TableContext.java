@@ -57,9 +57,7 @@ name|exec
 operator|.
 name|repl
 operator|.
-name|bootstrap
-operator|.
-name|load
+name|util
 operator|.
 name|TaskTracker
 import|;

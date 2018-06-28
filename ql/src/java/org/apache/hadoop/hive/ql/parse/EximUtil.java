@@ -223,6 +223,8 @@ name|exec
 operator|.
 name|repl
 operator|.
+name|util
+operator|.
 name|ReplUtils
 import|;
 end_import

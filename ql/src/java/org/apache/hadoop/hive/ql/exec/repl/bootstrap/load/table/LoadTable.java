@@ -217,6 +217,8 @@ name|exec
 operator|.
 name|repl
 operator|.
+name|util
+operator|.
 name|ReplUtils
 import|;
 end_import
@@ -236,6 +238,8 @@ operator|.
 name|exec
 operator|.
 name|repl
+operator|.
+name|util
 operator|.
 name|ReplUtils
 operator|.
@@ -283,9 +287,7 @@ name|exec
 operator|.
 name|repl
 operator|.
-name|bootstrap
-operator|.
-name|load
+name|util
 operator|.
 name|TaskTracker
 import|;

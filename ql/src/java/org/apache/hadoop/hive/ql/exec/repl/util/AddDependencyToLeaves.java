@@ -19,7 +19,7 @@ name|exec
 operator|.
 name|repl
 operator|.
-name|bootstrap
+name|util
 package|;
 end_package
 
@@ -112,6 +112,7 @@ argument_list|>
 argument_list|>
 name|postDependencyCollectionTasks
 decl_stmt|;
+specifier|public
 name|AddDependencyToLeaves
 parameter_list|(
 name|List
