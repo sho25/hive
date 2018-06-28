@@ -10327,6 +10327,21 @@ operator|+
 literal|" on these operations."
 argument_list|)
 block|,
+name|HIVE_EXTERNALTABLE_PURGE_DEFAULT
+argument_list|(
+literal|"hive.external.table.purge.default"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set to true to set external.table.purge=true on newly created external tables,"
+operator|+
+literal|" which will specify that the table data should be deleted when the table is dropped."
+operator|+
+literal|" Set to false maintain existing behavior that external tables do not delete data"
+operator|+
+literal|" when the table is dropped."
+argument_list|)
+block|,
 name|HIVE_ERROR_ON_EMPTY_PARTITION
 argument_list|(
 literal|"hive.error.on.empty.partition"

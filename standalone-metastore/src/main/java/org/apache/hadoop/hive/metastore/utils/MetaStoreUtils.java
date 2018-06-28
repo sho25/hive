@@ -1295,6 +1295,14 @@ name|DB_EMPTY_MARKER
 init|=
 literal|"!"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|EXTERNAL_TABLE_PURGE
+init|=
+literal|"external.table.purge"
+decl_stmt|;
 comment|// Right now we only support one special character '/'.
 comment|// More special characters can be added accordingly in the future.
 comment|// NOTE:
@@ -3784,6 +3792,32 @@ name|tableParams
 parameter_list|)
 block|{
 return|return
+name|isPropertyTrue
+argument_list|(
+name|tableParams
+argument_list|,
+literal|"EXTERNAL"
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|boolean
+name|isPropertyTrue
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|tableParams
+parameter_list|,
+name|String
+name|prop
+parameter_list|)
+block|{
+return|return
 literal|"TRUE"
 operator|.
 name|equalsIgnoreCase
@@ -3792,7 +3826,7 @@ name|tableParams
 operator|.
 name|get
 argument_list|(
-literal|"EXTERNAL"
+name|prop
 argument_list|)
 argument_list|)
 return|;
