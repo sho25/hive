@@ -51480,6 +51480,8 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
+comment|// TODO: this will get stats without verifying ACID. Not clear when this can be valid...
+comment|//       We need to check that this is not called on a txn table.
 return|return
 name|getPartitionColumnStatisticsInternal
 argument_list|(
@@ -72818,6 +72820,24 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
+comment|// Note: can be changed to debug/info to verify the calls.
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"Called with stats {}, {}; query {}, {}; checkConcurrentWrites {}"
+argument_list|,
+name|statsTxnId
+argument_list|,
+name|statsWriteIdList
+argument_list|,
+name|queryTxnId
+argument_list|,
+name|queryValidWriteIdList
+argument_list|,
+name|checkConcurrentWrites
+argument_list|)
+expr_stmt|;
 comment|// if statsWriteIdList is null,
 comment|// return true since the stats does not seem to be transactional.
 if|if

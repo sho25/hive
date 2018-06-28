@@ -4321,8 +4321,6 @@ argument_list|)
 operator|.
 name|getTable
 argument_list|()
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -12639,8 +12637,6 @@ argument_list|(
 name|conf
 argument_list|,
 name|tbl
-argument_list|,
-literal|false
 argument_list|)
 decl_stmt|;
 name|part
