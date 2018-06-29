@@ -885,9 +885,13 @@ comment|// Other exceptions which defaults to SPARK_CREATE_CLIENT_ERROR
 name|e
 operator|=
 operator|new
-name|Exception
+name|java
+operator|.
+name|lang
+operator|.
+name|NoClassDefFoundError
 argument_list|(
-literal|"Other exception"
+literal|"org/apache/spark/SparkConf"
 argument_list|)
 expr_stmt|;
 name|checkHiveException
@@ -900,7 +904,7 @@ name|ErrorMsg
 operator|.
 name|SPARK_CREATE_CLIENT_ERROR
 argument_list|,
-literal|"Other exception"
+literal|"java.lang.NoClassDefFoundError: org/apache/spark/SparkConf"
 argument_list|)
 expr_stmt|;
 block|}
