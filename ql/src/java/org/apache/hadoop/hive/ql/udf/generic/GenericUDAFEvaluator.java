@@ -457,6 +457,10 @@ name|mode
 operator|=
 name|m
 expr_stmt|;
+name|partitionEvaluator
+operator|=
+literal|null
+expr_stmt|;
 return|return
 literal|null
 return|;
