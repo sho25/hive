@@ -1319,6 +1319,22 @@ literal|"metrics2reporter"
 argument_list|)
 condition|)
 block|{
+name|String
+name|applicationName
+init|=
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|METRICS_HADOOP2_COMPONENT_NAME
+argument_list|)
+decl_stmt|;
 name|HadoopMetrics2Reporter
 name|reporter
 init|=
@@ -1349,16 +1365,16 @@ name|DefaultMetricsSystem
 operator|.
 name|initialize
 argument_list|(
-literal|"metastore"
+name|applicationName
 argument_list|)
 argument_list|,
-literal|"metastore"
+name|applicationName
 argument_list|,
 literal|"Runtime metadata"
 operator|+
 literal|" catalog"
 argument_list|,
-literal|"general-metadata"
+literal|"General"
 argument_list|)
 decl_stmt|;
 name|reporter

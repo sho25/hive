@@ -2626,6 +2626,17 @@ argument_list|,
 literal|"Enable metrics on the metastore."
 argument_list|)
 block|,
+name|METRICS_HADOOP2_COMPONENT_NAME
+argument_list|(
+literal|"metastore.metrics.hadoop2.component"
+argument_list|,
+literal|"hive.service.metrics.hadoop2.component"
+argument_list|,
+literal|"hivemetastore"
+argument_list|,
+literal|"Component name to provide to Hadoop2 Metrics system."
+argument_list|)
+block|,
 name|METRICS_JSON_FILE_INTERVAL
 argument_list|(
 literal|"metastore.metrics.file.frequency"
