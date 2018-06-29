@@ -15580,7 +15580,7 @@ name|SPARK_OPTIMIZE_SHUFFLE_SERDE
 argument_list|(
 literal|"hive.spark.optimize.shuffle.serde"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"If this is set to true, Hive on Spark will register custom serializers for data types\n"
 operator|+
