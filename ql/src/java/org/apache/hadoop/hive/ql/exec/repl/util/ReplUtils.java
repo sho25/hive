@@ -69,6 +69,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ErrorMsg
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|exec
 operator|.
 name|Task
@@ -938,21 +954,20 @@ throw|throw
 operator|new
 name|InvalidOperationException
 argument_list|(
-literal|"REPL LOAD with Dump: "
-operator|+
+name|ErrorMsg
+operator|.
+name|REPL_BOOTSTRAP_LOAD_PATH_NOT_VALID
+operator|.
+name|format
+argument_list|(
 name|dumpRoot
-operator|+
-literal|" is not allowed as the target DB: "
-operator|+
-name|dbName
-operator|+
-literal|" is already bootstrap loaded by another Dump "
-operator|+
+argument_list|,
 name|props
 operator|.
 name|get
 argument_list|(
 name|REPL_CHECKPOINT_KEY
+argument_list|)
 argument_list|)
 argument_list|)
 throw|;

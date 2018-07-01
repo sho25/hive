@@ -2533,7 +2533,9 @@ name|REPL_BOOTSTRAP_LOAD_PATH_NOT_VALID
 argument_list|(
 literal|20017
 argument_list|,
-literal|"Target database is bootstrapped from some other path."
+literal|"Load path {0} not valid as target database is bootstrapped "
+operator|+
+literal|"from some other path : {1}."
 argument_list|)
 block|,
 name|REPL_FILE_MISSING_FROM_SRC_AND_CM_PATH
