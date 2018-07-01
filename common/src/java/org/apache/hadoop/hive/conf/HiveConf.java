@@ -15995,6 +15995,12 @@ operator|+
 name|HIVE_SERVER2_SSL_KEYSTORE_PASSWORD
 operator|.
 name|varname
+operator|+
+literal|","
+operator|+
+name|DRUID_METADATA_DB_PASSWORD
+operator|.
+name|varname
 comment|// Adding the S3 credentials from Hadoop config to be hidden
 operator|+
 literal|",fs.s3.awsAccessKeyId"
