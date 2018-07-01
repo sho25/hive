@@ -1318,6 +1318,7 @@ name|IOException
 block|{
 if|if
 condition|(
+operator|!
 name|HiveConf
 operator|.
 name|getBoolVar
