@@ -3290,6 +3290,26 @@ argument_list|)
 expr_stmt|;
 name|rewrittenCtx
 operator|.
+name|setStatsSource
+argument_list|(
+name|ctx
+operator|.
+name|getStatsSource
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|rewrittenCtx
+operator|.
+name|setPlanMapper
+argument_list|(
+name|ctx
+operator|.
+name|getPlanMapper
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|rewrittenCtx
+operator|.
 name|setIsUpdateDeleteMerge
 argument_list|(
 literal|true
@@ -4484,7 +4504,7 @@ specifier|private
 name|IdentifierQuoter
 name|quotedIdenfierHelper
 decl_stmt|;
-comment|/**    * This allows us to take an arbitrary ASTNode and turn it back into SQL that produced it.    * Since HiveLexer.g is written such that it strips away any ` (back ticks) around     * quoted identifiers we need to add those back to generated SQL.    * Additionally, the parser only produces tokens of type Identifier and never    * QuotedIdentifier (HIVE-6013).  So here we just quote all identifiers.    * (') around String literals are retained w/o issues    */
+comment|/**    * This allows us to take an arbitrary ASTNode and turn it back into SQL that produced it.    * Since HiveLexer.g is written such that it strips away any ` (back ticks) around    * quoted identifiers we need to add those back to generated SQL.    * Additionally, the parser only produces tokens of type Identifier and never    * QuotedIdentifier (HIVE-6013).  So here we just quote all identifiers.    * (') around String literals are retained w/o issues    */
 specifier|private
 specifier|static
 class|class
@@ -4639,7 +4659,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * This allows us to take an arbitrary ASTNode and turn it back into SQL that produced it without    * needing to understand what it is (except for QuotedIdentifiers)    *     */
+comment|/**    * This allows us to take an arbitrary ASTNode and turn it back into SQL that produced it without    * needing to understand what it is (except for QuotedIdentifiers)    *    */
 specifier|private
 name|String
 name|getMatchedText

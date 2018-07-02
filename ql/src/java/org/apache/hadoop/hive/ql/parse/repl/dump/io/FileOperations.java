@@ -41,6 +41,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|FileNotFoundException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -410,6 +420,24 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ErrorMsg
+operator|.
+name|FILE_NOT_FOUND
 import|;
 end_import
 
@@ -1064,6 +1092,44 @@ name|IOException
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|e
+operator|instanceof
+name|FileNotFoundException
+condition|)
+block|{
+name|logger
+operator|.
+name|error
+argument_list|(
+literal|"exporting data files in dir : "
+operator|+
+name|dataPathList
+operator|+
+literal|" to "
+operator|+
+name|exportRootDataDir
+operator|+
+literal|" failed"
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|FileNotFoundException
+argument_list|(
+name|FILE_NOT_FOUND
+operator|.
+name|format
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+argument_list|)
+throw|;
+block|}
 name|repeat
 operator|++
 expr_stmt|;

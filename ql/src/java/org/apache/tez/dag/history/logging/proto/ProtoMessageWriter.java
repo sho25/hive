@@ -115,6 +115,22 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
+name|SequenceFile
+operator|.
+name|Writer
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -156,8 +172,6 @@ name|filePath
 decl_stmt|;
 specifier|private
 specifier|final
-name|SequenceFile
-operator|.
 name|Writer
 name|writer
 decl_stmt|;
@@ -202,8 +216,6 @@ name|createWriter
 argument_list|(
 name|conf
 argument_list|,
-name|SequenceFile
-operator|.
 name|Writer
 operator|.
 name|file
@@ -211,8 +223,6 @@ argument_list|(
 name|filePath
 argument_list|)
 argument_list|,
-name|SequenceFile
-operator|.
 name|Writer
 operator|.
 name|keyClass
@@ -222,8 +232,6 @@ operator|.
 name|class
 argument_list|)
 argument_list|,
-name|SequenceFile
-operator|.
 name|Writer
 operator|.
 name|valueClass
@@ -233,17 +241,6 @@ operator|.
 name|class
 argument_list|)
 argument_list|,
-name|SequenceFile
-operator|.
-name|Writer
-operator|.
-name|appendIfExists
-argument_list|(
-literal|true
-argument_list|)
-argument_list|,
-name|SequenceFile
-operator|.
 name|Writer
 operator|.
 name|compression

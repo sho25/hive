@@ -10959,6 +10959,25 @@ name|InvalidObjectException
 throws|,
 name|NoSuchObjectException
 block|{
+comment|// To preserve backward compatibility throw MetaException in case of null database
+if|if
+condition|(
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Null database name is not allowed"
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 operator|!

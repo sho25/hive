@@ -94,6 +94,8 @@ operator|.
 name|io
 operator|.
 name|SequenceFile
+operator|.
+name|Reader
 import|;
 end_import
 
@@ -140,8 +142,6 @@ name|filePath
 decl_stmt|;
 specifier|private
 specifier|final
-name|SequenceFile
-operator|.
 name|Reader
 name|reader
 decl_stmt|;
@@ -176,24 +176,32 @@ name|filePath
 operator|=
 name|filePath
 expr_stmt|;
+comment|// The writer does not flush the length during hflush. Using length options lets us read
+comment|// past length in the FileStatus but it will throw EOFException during a read instead
+comment|// of returning null.
 name|this
 operator|.
 name|reader
 operator|=
 operator|new
-name|SequenceFile
-operator|.
 name|Reader
 argument_list|(
 name|conf
 argument_list|,
-name|SequenceFile
-operator|.
 name|Reader
 operator|.
 name|file
 argument_list|(
 name|filePath
+argument_list|)
+argument_list|,
+name|Reader
+operator|.
+name|length
+argument_list|(
+name|Long
+operator|.
+name|MAX_VALUE
 argument_list|)
 argument_list|)
 expr_stmt|;

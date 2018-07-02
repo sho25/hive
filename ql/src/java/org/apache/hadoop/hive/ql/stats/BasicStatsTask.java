@@ -1063,11 +1063,6 @@ argument_list|,
 name|parameters
 argument_list|,
 name|prefix
-argument_list|,
-name|p
-operator|.
-name|isAcid
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1294,9 +1289,6 @@ name|parameters
 parameter_list|,
 name|String
 name|aggKey
-parameter_list|,
-name|boolean
-name|isFullAcid
 parameter_list|)
 throws|throws
 name|HiveException

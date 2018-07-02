@@ -5160,7 +5160,7 @@ name|setBoolVar
 argument_list|(
 name|var
 argument_list|,
-literal|true
+name|value
 argument_list|)
 expr_stmt|;
 block|}
