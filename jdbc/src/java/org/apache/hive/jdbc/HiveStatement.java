@@ -1596,6 +1596,12 @@ argument_list|(
 name|statusReq
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isOperationComplete
+condition|)
+block|{
 name|inPlaceUpdateStream
 operator|.
 name|update
@@ -1606,6 +1612,7 @@ name|getProgressUpdateResponse
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|Utils
 operator|.
 name|verifySuccessWithInfo

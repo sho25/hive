@@ -850,6 +850,13 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|hiveConf
+argument_list|)
+expr_stmt|;
 name|RemoteSparkJobMonitor
 name|remoteSparkJobMonitor
 init|=

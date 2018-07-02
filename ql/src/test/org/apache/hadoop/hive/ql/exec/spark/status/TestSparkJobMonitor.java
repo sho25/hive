@@ -43,6 +43,24 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|junit
 operator|.
 name|After
@@ -164,6 +182,12 @@ specifier|private
 name|PrintStream
 name|curErr
 decl_stmt|;
+specifier|private
+name|RenderStrategy
+operator|.
+name|InPlaceUpdateFunction
+name|updateFunction
+decl_stmt|;
 annotation|@
 name|Before
 specifier|public
@@ -171,12 +195,6 @@ name|void
 name|setUp
 parameter_list|()
 block|{
-name|testConf
-operator|=
-operator|new
-name|HiveConf
-argument_list|()
-expr_stmt|;
 name|curOut
 operator|=
 name|System
@@ -211,6 +229,19 @@ name|errContent
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|testConf
+operator|=
+operator|new
+name|HiveConf
+argument_list|()
+expr_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|testConf
+argument_list|)
+expr_stmt|;
 name|monitor
 operator|=
 operator|new
@@ -231,6 +262,16 @@ literal|0
 return|;
 block|}
 block|}
+expr_stmt|;
+name|updateFunction
+operator|=
+operator|new
+name|RenderStrategy
+operator|.
+name|InPlaceUpdateFunction
+argument_list|(
+name|monitor
+argument_list|)
 expr_stmt|;
 block|}
 specifier|private
@@ -446,7 +487,7 @@ annotation|@
 name|Test
 specifier|public
 name|void
-name|testGetReport
+name|testProgress
 parameter_list|()
 block|{
 name|Map
@@ -460,7 +501,7 @@ init|=
 name|progressMap
 argument_list|()
 decl_stmt|;
-name|monitor
+name|updateFunction
 operator|.
 name|printStatus
 argument_list|(
@@ -469,12 +510,17 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-name|assertTrue
-argument_list|(
+name|String
+name|testOutput
+init|=
 name|errContent
 operator|.
 name|toString
 argument_list|()
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|testOutput
 operator|.
 name|contains
 argument_list|(
@@ -484,6 +530,54 @@ literal|"Stage-15_1: 3(+1)/4\tStage-15_2: 4/4 Finished\tStage-20_3: 1(+1,-1)/3\t
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|String
+index|[]
+name|testStrings
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"STAGES   ATTEMPT        STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED"
+block|,
+literal|"Stage-1 ......           0       RUNNING      4          3        1        0       0"
+block|,
+literal|"Stage-3 .....            1       RUNNING      6          4        1        1       1"
+block|,
+literal|"Stage-9 ........         0      FINISHED      5          5        0        0       0"
+block|,
+literal|"Stage-10 ....            2       RUNNING      5          3        2        0       0"
+block|,
+literal|"Stage-15 .....           1       RUNNING      4          3        1        0       0"
+block|,
+literal|"Stage-15 .......         2      FINISHED      4          4        0        0       0"
+block|,
+literal|"Stage-20 ..              3       RUNNING      3          1        1        1       1"
+block|,
+literal|"Stage-21 .......         1      FINISHED      2          2        0        0       0"
+block|,
+literal|"STAGES: 03/08    [===================>>-------] 75%   ELAPSED TIME:"
+block|}
+decl_stmt|;
+for|for
+control|(
+name|String
+name|testString
+range|:
+name|testStrings
+control|)
+block|{
+name|assertTrue
+argument_list|(
+name|testOutput
+operator|.
+name|contains
+argument_list|(
+name|testString
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|After

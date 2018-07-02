@@ -13754,7 +13754,7 @@ literal|true
 argument_list|,
 literal|"Allows hive server 2 to send progress bar update information. This is currently available"
 operator|+
-literal|" only if the execution engine is tez."
+literal|" only if the execution engine is tez or Spark."
 argument_list|)
 block|,
 name|TEZ_DAG_STATUS_CHECK_INTERVAL

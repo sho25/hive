@@ -727,6 +727,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+name|updateFunction
+operator|.
 name|printStatus
 argument_list|(
 name|progressMap
@@ -756,6 +758,8 @@ operator|.
 name|getSparkStageProgress
 argument_list|()
 decl_stmt|;
+name|updateFunction
+operator|.
 name|printStatus
 argument_list|(
 name|progressMap
