@@ -1780,6 +1780,16 @@ control|)
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|outPaths
+index|[
+name|idx
+index|]
+operator|!=
+literal|null
+condition|)
+block|{
 name|commitOneOutPath
 argument_list|(
 name|idx
@@ -1789,6 +1799,7 @@ argument_list|,
 name|commitPaths
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
