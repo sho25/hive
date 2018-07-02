@@ -263,6 +263,11 @@ specifier|static
 name|WarehouseInstance
 name|destHiveWarehouse
 decl_stmt|;
+specifier|private
+specifier|static
+name|WarehouseInstance
+name|dumpExternalWarehouse
+decl_stmt|;
 annotation|@
 name|Rule
 specifier|public
@@ -385,6 +390,53 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|overridesForHiveConfDump
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+block|{
+block|{
+name|put
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST
+operator|.
+name|varname
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
+name|put
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_INCLUDE_EXTERNAL_TABLES
+operator|.
+name|varname
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+decl_stmt|;
 name|srcHiveWarehouse
 operator|=
 operator|new
@@ -407,6 +459,18 @@ argument_list|,
 name|miniDFSCluster
 argument_list|,
 name|overridesForHiveConf
+argument_list|)
+expr_stmt|;
+name|dumpExternalWarehouse
+operator|=
+operator|new
+name|WarehouseInstance
+argument_list|(
+name|LOG
+argument_list|,
+name|miniDFSCluster
+argument_list|,
+name|overridesForHiveConfDump
 argument_list|)
 expr_stmt|;
 block|}
@@ -685,6 +749,394 @@ operator|+
 name|replDbName
 operator|+
 literal|".t1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testExportExternalTableSetFalse
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|path
+init|=
+literal|"hdfs:///tmp/"
+operator|+
+name|dbName
+operator|+
+literal|"/"
+decl_stmt|;
+name|String
+name|exportMDPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"1/'"
+decl_stmt|;
+name|String
+name|exportDataPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"2/'"
+decl_stmt|;
+name|String
+name|exportDataPathRepl
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"3/'"
+decl_stmt|;
+name|srcHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"create external table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 (i int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 values (1),(2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportMDPath
+operator|+
+literal|" for metadata replication('1')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportDataPath
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportDataPathRepl
+operator|+
+literal|" for replication('2')"
+argument_list|)
+expr_stmt|;
+name|destHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t1 from "
+operator|+
+name|exportMDPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't1'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t2 from "
+operator|+
+name|exportDataPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from "
+operator|+
+name|replDbName
+operator|+
+literal|".t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t3 from "
+operator|+
+name|exportDataPathRepl
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't3'"
+argument_list|)
+operator|.
+name|verifyFailure
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t3"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testExportExternalTableSetTrue
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|path
+init|=
+literal|"hdfs:///tmp/"
+operator|+
+name|dbName
+operator|+
+literal|"/"
+decl_stmt|;
+name|String
+name|exportMDPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"1/'"
+decl_stmt|;
+name|String
+name|exportDataPath
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"2/'"
+decl_stmt|;
+name|String
+name|exportDataPathRepl
+init|=
+literal|"'"
+operator|+
+name|path
+operator|+
+literal|"3/'"
+decl_stmt|;
+name|dumpExternalWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"create external table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 (i int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 values (1),(2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportDataPathRepl
+operator|+
+literal|" for replication('2')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportMDPath
+operator|+
+literal|" for metadata replication('1')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"export table "
+operator|+
+name|dbName
+operator|+
+literal|".t1 to "
+operator|+
+name|exportDataPath
+argument_list|)
+expr_stmt|;
+name|destHiveWarehouse
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t1 from "
+operator|+
+name|exportMDPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't1'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t2 from "
+operator|+
+name|exportDataPath
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from "
+operator|+
+name|replDbName
+operator|+
+literal|".t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"import table "
+operator|+
+name|replDbName
+operator|+
+literal|".t3 from "
+operator|+
+name|exportDataPathRepl
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select * from "
+operator|+
+name|replDbName
+operator|+
+literal|".t3"
 argument_list|)
 operator|.
 name|verifyResults

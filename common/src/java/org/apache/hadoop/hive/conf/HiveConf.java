@@ -2932,7 +2932,9 @@ literal|"hive.repl.dump.metadata.only"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Indicates whether replication dump only metadata information or data + metadata."
+literal|"Indicates whether replication dump only metadata information or data + metadata. \n"
+operator|+
+literal|"This config makes hive.repl.include.external.tables config ineffective."
 argument_list|)
 block|,
 name|REPL_DUMP_INCLUDE_ACID_TABLES
@@ -2983,6 +2985,21 @@ argument_list|,
 literal|"For TDE with same encryption keys on source and target, allow Distcp super user to access \n"
 operator|+
 literal|"the raw bytes from filesystem without decrypting on source and then encrypting on target."
+argument_list|)
+block|,
+name|REPL_INCLUDE_EXTERNAL_TABLES
+argument_list|(
+literal|"hive.repl.include.external.tables"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Indicates if repl dump should include information about external tables. It should be \n"
+operator|+
+literal|"used in conjunction with 'hive.repl.dump.metadata.only' set to false. if 'hive.repl.dump.metadata.only' \n"
+operator|+
+literal|" is set to true then this config parameter has no effect as external table meta data is flushed \n"
+operator|+
+literal|" always by default."
 argument_list|)
 block|,
 name|LOCALSCRATCHDIR

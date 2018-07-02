@@ -1121,14 +1121,14 @@ name|INCOMPATIBLE_SCHEMA
 argument_list|(
 literal|10120
 argument_list|,
-literal|"The existing table is not compatible with the import spec. "
+literal|"The existing table is not compatible with the Export/Import spec. "
 argument_list|)
 block|,
 name|EXIM_FOR_NON_NATIVE
 argument_list|(
 literal|10121
 argument_list|,
-literal|"Export/Import cannot be done for a non-native table. "
+literal|"Export/Import cannot be done for a non-native table."
 argument_list|)
 block|,
 name|INSERT_INTO_BUCKETIZED_TABLE

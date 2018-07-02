@@ -8162,6 +8162,432 @@ literal|".testFunctionOne"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDumpExternalTableSetFalse
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t1 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t1 values (1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t1 values (2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t2 (place string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='us') values ('austin')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='france') values ('paris')"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"repl status "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|tuple
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't1'"
+argument_list|)
+operator|.
+name|verifyFailure
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t1"
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't2'"
+argument_list|)
+operator|.
+name|verifyFailure
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"t2"
+block|}
+argument_list|)
+expr_stmt|;
+name|tuple
+operator|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t3 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t3 values (10)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t3 values (20)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+operator|+
+literal|" from "
+operator|+
+name|tuple
+operator|.
+name|lastReplicationId
+operator|+
+literal|" with ('hive.repl.dump.metadata.only'='true')"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't3'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t3"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from t3 where id = 10"
+argument_list|)
+operator|.
+name|verifyFailure
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"10"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDumpExternalTableSetTrue
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t1 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t1 values (1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t1 values (2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t2 (place string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='us') values ('austin')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='france') values ('paris')"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+operator|+
+literal|" with ('hive.repl.include.external.tables'='true')"
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't1'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't2'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t2"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"repl status "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+name|tuple
+operator|.
+name|lastReplicationId
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select country from t2 where country = 'us'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"us"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select country from t2 where country = 'france'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"france"
+argument_list|)
+expr_stmt|;
+name|tuple
+operator|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t3 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t3 values (10)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+operator|+
+literal|" from "
+operator|+
+name|tuple
+operator|.
+name|lastReplicationId
+operator|+
+literal|" with ('hive.repl.include.external.tables'='true')"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't3'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t3"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from t3"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"10"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
