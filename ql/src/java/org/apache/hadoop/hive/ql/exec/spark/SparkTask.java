@@ -1540,56 +1540,16 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|String
-name|msg
-init|=
-literal|"Failed to execute Spark task "
-operator|+
-name|getId
-argument_list|()
-operator|+
-literal|", with exception '"
-operator|+
-name|Utilities
-operator|.
-name|getNameMessage
-argument_list|(
-name|e
-argument_list|)
-operator|+
-literal|"'"
-decl_stmt|;
-comment|// Has to use full name to make sure it does not conflict with
-comment|// org.apache.commons.lang.StringUtils
-name|console
-operator|.
-name|printError
-argument_list|(
-name|msg
-argument_list|,
-literal|"\n"
-operator|+
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-expr_stmt|;
 name|LOG
 operator|.
 name|error
 argument_list|(
-name|msg
+literal|"Failed to execute Spark task \""
+operator|+
+name|getId
+argument_list|()
+operator|+
+literal|"\""
 argument_list|,
 name|e
 argument_list|)
@@ -3680,6 +3640,13 @@ condition|)
 block|{
 if|if
 condition|(
+name|error
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
 name|taskFailedPattern
 operator|.
 name|matcher
@@ -3743,12 +3710,19 @@ name|error
 operator|.
 name|getMessage
 argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|error
+operator|.
+name|getMessage
+argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"Container killed by YARN for exceeding memory "
+literal|"Container killed by "
 operator|+
-literal|"limits"
+literal|"YARN for exceeding memory limits"
 argument_list|)
 condition|)
 block|{

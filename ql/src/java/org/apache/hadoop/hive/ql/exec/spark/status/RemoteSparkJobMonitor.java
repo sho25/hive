@@ -441,16 +441,6 @@ name|timeCount
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|console
-operator|.
-name|printError
-argument_list|(
-name|he
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|sparkJobStatus
 operator|.
 name|setMonitorError
