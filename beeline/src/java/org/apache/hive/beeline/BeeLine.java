@@ -1299,6 +1299,7 @@ name|PROP_FILE_PREFIX
 init|=
 literal|"--property-file"
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|String
