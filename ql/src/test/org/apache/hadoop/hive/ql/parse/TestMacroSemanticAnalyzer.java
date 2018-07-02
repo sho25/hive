@@ -23,29 +23,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|Assert
 import|;
 end_import
 
@@ -209,6 +189,16 @@ name|Test
 import|;
 end_import
 
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|Assert
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -324,8 +314,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -352,8 +340,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 range|:

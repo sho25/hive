@@ -1986,8 +1986,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2068,8 +2066,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|findStatsTasks
@@ -2079,8 +2075,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2090,8 +2084,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|statsTasks
@@ -2177,8 +2169,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2189,8 +2179,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|statsTasks
@@ -2216,8 +2204,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|statsTask
 range|:
@@ -2242,8 +2228,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|t
 range|:

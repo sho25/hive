@@ -35,16 +35,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|UnsupportedEncodingException
 import|;
 end_import
@@ -199,9 +189,7 @@ name|antlr
 operator|.
 name|runtime
 operator|.
-name|tree
-operator|.
-name|Tree
+name|TokenRewriteStream
 import|;
 end_import
 
@@ -213,7 +201,9 @@ name|antlr
 operator|.
 name|runtime
 operator|.
-name|TokenRewriteStream
+name|tree
+operator|.
+name|Tree
 import|;
 end_import
 
@@ -1988,8 +1978,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2200,8 +2188,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|getRootTasks
@@ -2253,8 +2239,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -5567,7 +5551,9 @@ name|checkExpr
 operator|==
 literal|null
 condition|)
+block|{
 return|return;
+block|}
 if|if
 condition|(
 name|checkExpr
@@ -13676,8 +13662,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|getAllRootTasks
