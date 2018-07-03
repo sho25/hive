@@ -1232,7 +1232,7 @@ return|return
 name|promise
 return|;
 block|}
-comment|/**    * Tells the RPC server to cancel the connection from an existing pending client    * @param clientId The identifier for the client    * @param msg The error message about why the connection should be canceled    */
+comment|/**    * Tells the RPC server to cancel the connection from an existing pending client.    *    * @param clientId The identifier for the client    * @param failure The error about why the connection should be canceled    */
 specifier|public
 name|void
 name|cancelClient
@@ -1242,8 +1242,8 @@ name|String
 name|clientId
 parameter_list|,
 specifier|final
-name|String
-name|msg
+name|Throwable
+name|failure
 parameter_list|)
 block|{
 specifier|final
@@ -1293,6 +1293,29 @@ name|promise
 operator|.
 name|setFailure
 argument_list|(
+name|failure
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|/**    * Tells the RPC server to cancel the connection from an existing pending client.    *    * @param clientId The identifier for the client    * @param msg The error message about why the connection should be canceled    */
+specifier|public
+name|void
+name|cancelClient
+parameter_list|(
+specifier|final
+name|String
+name|clientId
+parameter_list|,
+specifier|final
+name|String
+name|msg
+parameter_list|)
+block|{
+name|cancelClient
+argument_list|(
+name|clientId
+argument_list|,
 operator|new
 name|RuntimeException
 argument_list|(
@@ -1309,7 +1332,6 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|/**    * Creates a secret for identifying a client connection.    */
 specifier|public

@@ -12,6 +12,8 @@ operator|.
 name|hive
 operator|.
 name|beeline
+operator|.
+name|schematool
 package|;
 end_package
 

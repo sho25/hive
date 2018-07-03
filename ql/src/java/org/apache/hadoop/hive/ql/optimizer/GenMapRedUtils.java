@@ -11057,10 +11057,6 @@ decl_stmt|;
 comment|// TODO: wtf?!! why is this in this method? This has nothing to do with anything.
 if|if
 condition|(
-name|mvTask
-operator|!=
-literal|null
-operator|&&
 name|isInsertTable
 operator|&&
 name|hconf
@@ -11112,6 +11108,10 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|mvTask
+operator|!=
+literal|null
+operator|&&
 operator|!
 name|mvTask
 operator|.

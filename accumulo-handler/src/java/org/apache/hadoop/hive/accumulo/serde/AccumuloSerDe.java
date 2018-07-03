@@ -393,6 +393,8 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|void
 name|initialize
@@ -754,6 +756,8 @@ return|return
 name|cachedRow
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Class
 argument_list|<
@@ -883,6 +887,8 @@ return|return
 name|cachedRow
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|ObjectInspector
 name|getObjectInspector
@@ -894,18 +900,16 @@ return|return
 name|cachedObjectInspector
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|SerDeStats
 name|getSerDeStats
 parameter_list|()
 block|{
-throw|throw
-operator|new
-name|UnsupportedOperationException
-argument_list|(
-literal|"SerdeStats not supported."
-argument_list|)
-throw|;
+return|return
+literal|null
+return|;
 block|}
 specifier|public
 name|AccumuloSerDeParameters

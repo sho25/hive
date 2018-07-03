@@ -1367,6 +1367,24 @@ literal|"task_#ID#"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|ppm
+operator|.
+name|add
+argument_list|(
+operator|new
+name|PatternReplacementPair
+argument_list|(
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"for Spark session.*?:"
+argument_list|)
+argument_list|,
+literal|"#SPARK_SESSION_ID#:"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|partialPlanMask
 operator|=
 name|ppm

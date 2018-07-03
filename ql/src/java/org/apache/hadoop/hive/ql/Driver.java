@@ -253,20 +253,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|annotations
-operator|.
-name|VisibleForTesting
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -869,7 +855,9 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FunctionUtils
+name|FunctionInfo
+operator|.
+name|FunctionType
 import|;
 end_import
 
@@ -887,9 +875,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FunctionInfo
-operator|.
-name|FunctionType
+name|FunctionUtils
 import|;
 end_import
 
@@ -2162,6 +2148,20 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
 import|;
 end_import
 
@@ -8250,6 +8250,38 @@ argument_list|()
 condition|)
 block|{
 comment|//do not authorize temporary uris
+continue|continue;
+block|}
+if|if
+condition|(
+name|privObject
+operator|.
+name|getTyp
+argument_list|()
+operator|==
+name|Type
+operator|.
+name|TABLE
+operator|&&
+operator|(
+name|privObject
+operator|.
+name|getT
+argument_list|()
+operator|==
+literal|null
+operator|||
+name|privObject
+operator|.
+name|getT
+argument_list|()
+operator|.
+name|isTemporary
+argument_list|()
+operator|)
+condition|)
+block|{
+comment|// skip temporary tables from authorization
 continue|continue;
 block|}
 comment|//support for authorization on partitions needs to be added

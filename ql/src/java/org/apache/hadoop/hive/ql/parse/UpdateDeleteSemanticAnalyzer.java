@@ -1267,6 +1267,72 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|String
+name|location
+decl_stmt|;
+comment|// for temporary tables we set the location to something in the session's scratch dir
+comment|// it has the same life cycle as the tmp table
+try|try
+block|{
+comment|// Generate a unique ID for temp table path.
+comment|// This path will be fixed for the life of the temp table.
+name|Path
+name|path
+init|=
+operator|new
+name|Path
+argument_list|(
+name|SessionState
+operator|.
+name|getTempTableSpace
+argument_list|(
+name|conf
+argument_list|)
+argument_list|,
+name|UUID
+operator|.
+name|randomUUID
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|path
+operator|=
+name|Warehouse
+operator|.
+name|getDnsPath
+argument_list|(
+name|path
+argument_list|,
+name|conf
+argument_list|)
+expr_stmt|;
+name|location
+operator|=
+name|path
+operator|.
+name|toString
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|err
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Error while generating temp table path:"
+argument_list|,
+name|err
+argument_list|)
+throw|;
+block|}
 name|CreateTableLikeDesc
 name|ctlt
 init|=
@@ -1283,7 +1349,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|null
+name|location
 argument_list|,
 literal|null
 argument_list|,
@@ -1986,8 +2052,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2068,8 +2132,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|findStatsTasks
@@ -2079,8 +2141,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2090,8 +2150,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|statsTasks
@@ -2177,8 +2235,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2189,8 +2245,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|statsTasks
@@ -2216,8 +2270,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|statsTask
 range|:
@@ -2242,8 +2294,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|t
 range|:

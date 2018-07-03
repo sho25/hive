@@ -441,16 +441,6 @@ name|timeCount
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|console
-operator|.
-name|printError
-argument_list|(
-name|he
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|sparkJobStatus
 operator|.
 name|setMonitorError
@@ -737,6 +727,8 @@ expr_stmt|;
 block|}
 block|}
 block|}
+name|updateFunction
+operator|.
 name|printStatus
 argument_list|(
 name|progressMap
@@ -766,6 +758,8 @@ operator|.
 name|getSparkStageProgress
 argument_list|()
 decl_stmt|;
+name|updateFunction
+operator|.
 name|printStatus
 argument_list|(
 name|progressMap

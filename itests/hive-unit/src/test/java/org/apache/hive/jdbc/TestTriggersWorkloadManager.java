@@ -285,6 +285,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -316,6 +326,11 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|Ignore
+argument_list|(
+literal|"Disabled in HIVE-20074 temporary as it is unstable, Will re-enable in HIVE-20075."
+argument_list|)
 specifier|public
 class|class
 name|TestTriggersWorkloadManager

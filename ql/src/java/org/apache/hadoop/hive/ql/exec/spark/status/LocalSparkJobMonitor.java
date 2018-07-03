@@ -417,6 +417,8 @@ literal|"SucceededTasksCount(+RunningTasksCount-FailedTasksCount)/TotalTasksCoun
 argument_list|)
 expr_stmt|;
 block|}
+name|updateFunction
+operator|.
 name|printStatus
 argument_list|(
 name|progressMap
@@ -432,6 +434,8 @@ break|break;
 case|case
 name|SUCCEEDED
 case|:
+name|updateFunction
+operator|.
 name|printStatus
 argument_list|(
 name|progressMap

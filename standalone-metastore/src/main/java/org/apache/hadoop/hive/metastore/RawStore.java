@@ -2553,13 +2553,15 @@ name|NotificationEventRequest
 name|rqst
 parameter_list|)
 function_decl|;
-comment|/**    * Add a notification entry.  This should only be called from inside the metastore    * @param event the notification to add    */
+comment|/**    * Add a notification entry.  This should only be called from inside the metastore    * @param event the notification to add    * @throws MetaException error accessing RDBMS    */
 name|void
 name|addNotificationEvent
 parameter_list|(
 name|NotificationEvent
 name|event
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * Remove older notification events.    * @param olderThan Remove any events older than a given number of seconds    */
 name|void
@@ -3571,6 +3573,33 @@ throws|throws
 name|MetaException
 throws|,
 name|NoSuchObjectException
+function_decl|;
+comment|/**    * Remove older notification events.    * @param olderThan Remove any events older than a given number of seconds    */
+name|void
+name|cleanWriteNotificationEvents
+parameter_list|(
+name|int
+name|olderThan
+parameter_list|)
+function_decl|;
+comment|/**    * Get all write events for a specific transaction .    * @param txnId get all the events done by this transaction    * @param dbName the name of db for which dump is being taken    * @param tableName the name of the table for which the dump is being taken    */
+name|List
+argument_list|<
+name|WriteEventInfo
+argument_list|>
+name|getAllWriteEventInfo
+parameter_list|(
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 block|}
 end_interface

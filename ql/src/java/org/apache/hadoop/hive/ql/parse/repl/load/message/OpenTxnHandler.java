@@ -313,6 +313,17 @@ operator|.
 name|hiveConf
 argument_list|)
 decl_stmt|;
+comment|// For warehouse level dump, don't update the metadata of database as we don't know this txn is for which database.
+comment|// Anyways, if this event gets executed again, it is taken care of.
+if|if
+condition|(
+operator|!
+name|context
+operator|.
+name|isDbNameEmpty
+argument_list|()
+condition|)
+block|{
 name|updatedMetadata
 operator|.
 name|set
@@ -338,6 +349,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
 name|context
 operator|.
 name|log

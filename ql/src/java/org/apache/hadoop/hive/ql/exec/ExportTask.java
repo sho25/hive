@@ -337,7 +337,7 @@ name|SemanticException
 argument_list|(
 name|ErrorMsg
 operator|.
-name|EXIM_FOR_NON_NATIVE
+name|INCOMPATIBLE_SCHEMA
 operator|.
 name|getMsg
 argument_list|()

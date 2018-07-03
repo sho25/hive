@@ -65,6 +65,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|CommitTxnRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|LockResponse
 import|;
 end_import
@@ -299,15 +317,12 @@ parameter_list|)
 throws|throws
 name|LockException
 function_decl|;
-comment|/**    * Commit the transaction in target cluster.    * @param replPolicy Replication policy to uniquely identify the source cluster.    * @param srcTxnId The id of the transaction at the source cluster    * @throws LockException in case of failure to commit the transaction.    */
+comment|/**    * Commit the transaction in target cluster.    *    * @param rqst Commit transaction request having information related to commit txn and write events.    * @throws LockException in case of failure to commit the transaction.    */
 name|void
 name|replCommitTxn
 parameter_list|(
-name|String
-name|replPolicy
-parameter_list|,
-name|long
-name|srcTxnId
+name|CommitTxnRequest
+name|rqst
 parameter_list|)
 throws|throws
 name|LockException
@@ -596,6 +611,11 @@ function_decl|;
 comment|/**    * Should be though of more as a unique write operation ID in a given txn (at QueryPlan level).    * Each statement writing data within a multi statement txn should have a unique WriteId.    * Even a single statement, (e.g. Merge, multi-insert may generates several writes).    */
 name|int
 name|getStmtIdAndIncrement
+parameter_list|()
+function_decl|;
+comment|// Can be used by operation to set the stmt id when allocation is done somewhere else.
+name|int
+name|getCurrentStmtId
 parameter_list|()
 function_decl|;
 comment|/**    * Acquire the materialization rebuild lock for a given view. We need to specify the fully    * qualified name of the materialized view and the open transaction ID so we can identify    * uniquely the lock.    * @return the response from the metastore, where the lock id is equal to the txn id and    * the status can be either ACQUIRED or NOT ACQUIRED    */

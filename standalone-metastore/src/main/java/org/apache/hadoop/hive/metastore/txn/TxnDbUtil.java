@@ -1114,6 +1114,94 @@ operator|+
 literal|"\"NEXT_EVENT_ID\" FROM \"APP\".\"NOTIFICATION_SEQUENCE\")"
 argument_list|)
 expr_stmt|;
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"CREATE TABLE TXN_WRITE_NOTIFICATION_LOG ("
+operator|+
+literal|"WNL_ID bigint NOT NULL,"
+operator|+
+literal|"WNL_TXNID bigint NOT NULL,"
+operator|+
+literal|"WNL_WRITEID bigint NOT NULL,"
+operator|+
+literal|"WNL_DATABASE varchar(128) NOT NULL,"
+operator|+
+literal|"WNL_TABLE varchar(128) NOT NULL,"
+operator|+
+literal|"WNL_PARTITION varchar(1024) NOT NULL,"
+operator|+
+literal|"WNL_TABLE_OBJ clob NOT NULL,"
+operator|+
+literal|"WNL_PARTITION_OBJ clob,"
+operator|+
+literal|"WNL_FILES clob,"
+operator|+
+literal|"WNL_EVENT_TIME integer NOT NULL,"
+operator|+
+literal|"PRIMARY KEY (WNL_TXNID, WNL_DATABASE, WNL_TABLE, WNL_PARTITION))"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"already exists"
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"TXN_WRITE_NOTIFICATION_LOG table already exist, ignoring"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"INSERT INTO \"APP\".\"SEQUENCE_TABLE\" (\"SEQUENCE_NAME\", \"NEXT_VAL\") "
+operator|+
+literal|"SELECT * FROM (VALUES ('org.apache.hadoop.hive.metastore.model.MTxnWriteNotificationLog', "
+operator|+
+literal|"1)) tmp_table WHERE NOT EXISTS ( SELECT \"NEXT_VAL\" FROM \"APP\""
+operator|+
+literal|".\"SEQUENCE_TABLE\" WHERE \"SEQUENCE_NAME\" = 'org.apache.hadoop.hive.metastore"
+operator|+
+literal|".model.MTxnWriteNotificationLog')"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(

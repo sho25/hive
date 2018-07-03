@@ -1276,6 +1276,16 @@ name|tgtFs
 argument_list|)
 expr_stmt|;
 block|}
+comment|//For acid table incremental replication, just copy the content of staging directory to destination.
+comment|//No need to clean it.
+if|if
+condition|(
+name|work
+operator|.
+name|isNeedCleanTarget
+argument_list|()
+condition|)
+block|{
 name|Hive
 operator|.
 name|clearDestForSubDirSrc
@@ -1289,6 +1299,7 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Set isManaged to false as this is not load data operation for which it is needed.
 if|if
 condition|(
