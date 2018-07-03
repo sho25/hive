@@ -3395,13 +3395,15 @@ name|NotificationEventRequest
 name|rqst
 parameter_list|)
 function_decl|;
-comment|/**    * Add a notification entry.  This should only be called from inside the metastore    * @param event the notification to add    */
+comment|/**    * Add a notification entry.  This should only be called from inside the metastore    * @param event the notification to add    * @throws MetaException error accessing RDBMS    */
 name|void
 name|addNotificationEvent
 parameter_list|(
 name|NotificationEvent
 name|event
 parameter_list|)
+throws|throws
+name|MetaException
 function_decl|;
 comment|/**    * Remove older notification events.    * @param olderThan Remove any events older than a given number of seconds    */
 name|void

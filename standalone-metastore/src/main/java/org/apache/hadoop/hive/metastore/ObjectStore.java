@@ -58587,6 +58587,8 @@ parameter_list|(
 name|NotificationEvent
 name|entry
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|boolean
 name|commited
@@ -58725,7 +58727,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|Exception
+name|MetaException
 name|e
 parameter_list|)
 block|{
@@ -58733,11 +58735,14 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"couldnot get lock for update"
+literal|"Couldn't get lock for update"
 argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+throw|throw
+name|e
+throw|;
 block|}
 finally|finally
 block|{

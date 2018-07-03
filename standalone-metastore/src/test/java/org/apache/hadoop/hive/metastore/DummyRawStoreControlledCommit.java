@@ -5034,6 +5034,8 @@ parameter_list|(
 name|NotificationEvent
 name|event
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 name|objectStore
 operator|.
