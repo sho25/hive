@@ -81053,6 +81053,8 @@ name|TableType
 operator|.
 name|MANAGED_TABLE
 argument_list|,
+name|isTemporary
+argument_list|,
 name|tblProps
 argument_list|)
 expr_stmt|;
@@ -81226,6 +81228,8 @@ argument_list|,
 name|TableType
 operator|.
 name|MANAGED_TABLE
+argument_list|,
+name|isTemporary
 argument_list|,
 name|tblProps
 argument_list|)
@@ -81743,6 +81747,8 @@ name|TableType
 operator|.
 name|MANAGED_TABLE
 argument_list|,
+name|isTemporary
+argument_list|,
 name|tblProps
 argument_list|)
 expr_stmt|;
@@ -81902,6 +81908,9 @@ parameter_list|,
 name|TableType
 name|type
 parameter_list|,
+name|boolean
+name|isTemporary
+parameter_list|,
 name|Map
 argument_list|<
 name|String
@@ -81970,6 +81979,13 @@ operator|.
 name|setTableType
 argument_list|(
 name|type
+argument_list|)
+expr_stmt|;
+name|t
+operator|.
+name|setTemporary
+argument_list|(
+name|isTemporary
 argument_list|)
 expr_stmt|;
 name|outputs
@@ -82601,6 +82617,8 @@ name|TableType
 operator|.
 name|MATERIALIZED_VIEW
 argument_list|,
+literal|false
+argument_list|,
 name|tblProps
 argument_list|)
 expr_stmt|;
@@ -82682,6 +82700,8 @@ argument_list|,
 name|TableType
 operator|.
 name|VIRTUAL_VIEW
+argument_list|,
+literal|false
 argument_list|,
 name|tblProps
 argument_list|)
