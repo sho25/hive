@@ -2265,8 +2265,6 @@ operator|.
 name|asList
 argument_list|(
 literal|"'hive.repl.dump.metadata.only'='true'"
-argument_list|,
-literal|"'hive.repl.dump.include.acid.tables'='true'"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -2374,8 +2372,6 @@ operator|.
 name|asList
 argument_list|(
 literal|"'hive.repl.dump.metadata.only'='true'"
-argument_list|,
-literal|"'hive.repl.dump.include.acid.tables'='true'"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -3068,8 +3064,6 @@ operator|.
 name|asList
 argument_list|(
 literal|"'hive.repl.dump.metadata.only'='true'"
-argument_list|,
-literal|"'hive.repl.dump.include.acid.tables'='true'"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -3379,8 +3373,6 @@ operator|.
 name|asList
 argument_list|(
 literal|"'hive.repl.dump.metadata.only'='true'"
-argument_list|,
-literal|"'hive.repl.dump.include.acid.tables'='true'"
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -3448,8 +3440,6 @@ operator|.
 name|asList
 argument_list|(
 literal|"'hive.repl.dump.metadata.only'='true'"
-argument_list|,
-literal|"'hive.repl.dump.include.acid.tables'='true'"
 argument_list|)
 argument_list|)
 decl_stmt|;

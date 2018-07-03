@@ -235,6 +235,13 @@ name|MessageFactory
 operator|.
 name|ALTER_CATALOG_EVENT
 argument_list|)
+operator|,
+name|ACID_WRITE
+argument_list|(
+name|MessageFactory
+operator|.
+name|ACID_WRITE_EVENT
+argument_list|)
 expr_stmt|;
 end_class
 

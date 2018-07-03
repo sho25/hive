@@ -326,6 +326,8 @@ name|HiveUtils
 operator|.
 name|getReplPolicy
 argument_list|(
+name|context
+operator|.
 name|dbName
 argument_list|,
 name|context

@@ -337,6 +337,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|CommitTxnRequest
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|CompactionResponse
 import|;
 end_import
@@ -1850,6 +1868,24 @@ operator|.
 name|api
 operator|.
 name|WMValidateResourcePlanResponse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|WriteNotificationLogRequest
 import|;
 end_import
 
@@ -6344,15 +6380,12 @@ name|TxnAbortedException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param srcTxnid id of transaction at source which is committed and to be replicated.    * @param replPolicy the replication policy to identify the source cluster    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
+comment|/**    * Commit a transaction.  This will also unlock any locks associated with    * this transaction.    * @param rqst Information containing the txn info and write event information    * of transaction at source which is committed and to be replicated    * @throws NoSuchTxnException if the requested transaction does not exist.    * This can result fro the transaction having timed out and been deleted by    * the compactor.    * @throws TxnAbortedException if the requested transaction has been    * aborted.  This can result from the transaction timing out.    * @throws TException    */
 name|void
 name|replCommitTxn
 parameter_list|(
-name|long
-name|srcTxnid
-parameter_list|,
-name|String
-name|replPolicy
+name|CommitTxnRequest
+name|rqst
 parameter_list|)
 throws|throws
 name|NoSuchTxnException
@@ -6813,6 +6846,25 @@ name|fireListenerEvent
 parameter_list|(
 name|FireEventRequest
 name|request
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Add a event related to write operations in an ACID table.    * @param rqst message containing information for acid write operation.    * @throws TException    */
+annotation|@
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
+argument_list|(
+block|{
+literal|"Apache Hive, HCatalog"
+block|}
+argument_list|)
+name|void
+name|addWriteNotificationLog
+parameter_list|(
+name|WriteNotificationLogRequest
+name|rqst
 parameter_list|)
 throws|throws
 name|TException

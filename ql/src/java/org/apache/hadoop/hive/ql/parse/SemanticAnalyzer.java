@@ -44672,7 +44672,7 @@ condition|)
 block|{
 name|writeId
 operator|=
-literal|0L
+literal|null
 expr_stmt|;
 comment|// For explain plan, txn won't be opened and doesn't make sense to allocate write id
 block|}
@@ -44787,6 +44787,24 @@ argument_list|,
 name|writeId
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|writeId
+operator|!=
+literal|null
+condition|)
+block|{
+name|ltd
+operator|.
+name|setStmtId
+argument_list|(
+name|txnMgr
+operator|.
+name|getCurrentStmtId
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// For Acid table, Insert Overwrite shouldn't replace the table content. We keep the old
 comment|// deltas and base and leave them up to the cleaner to clean up
 name|boolean
@@ -45401,6 +45419,24 @@ argument_list|,
 name|writeId
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|writeId
+operator|!=
+literal|null
+condition|)
+block|{
+name|ltd
+operator|.
+name|setStmtId
+argument_list|(
+name|txnMgr
+operator|.
+name|getCurrentStmtId
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// For the current context for generating File Sink Operator, it is either INSERT INTO or INSERT OVERWRITE.
 comment|// So the next line works.
 name|boolean

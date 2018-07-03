@@ -1934,6 +1934,35 @@ name|this
 return|;
 block|}
 name|WarehouseInstance
+name|loadWithoutExplain
+parameter_list|(
+name|String
+name|replicatedDbName
+parameter_list|,
+name|String
+name|dumpLocation
+parameter_list|)
+throws|throws
+name|Throwable
+block|{
+name|run
+argument_list|(
+literal|"REPL LOAD "
+operator|+
+name|replicatedDbName
+operator|+
+literal|" FROM '"
+operator|+
+name|dumpLocation
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+name|WarehouseInstance
 name|load
 parameter_list|(
 name|String

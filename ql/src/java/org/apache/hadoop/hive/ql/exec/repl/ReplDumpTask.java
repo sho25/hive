@@ -1822,6 +1822,14 @@ operator|.
 name|getEventId
 argument_list|()
 argument_list|)
+argument_list|,
+name|work
+operator|.
+name|dbNameOrPattern
+argument_list|,
+name|work
+operator|.
+name|tableNameOrPattern
 argument_list|)
 decl_stmt|;
 name|EventHandler

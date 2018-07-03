@@ -853,6 +853,40 @@ return|return
 name|dbProduct
 return|;
 block|}
+comment|// This is required for SQL executed directly. If the SQL has double quotes then some dbs tend to
+comment|// remove the escape characters and store the variable without double quote.
+specifier|public
+name|String
+name|addEscapeCharacters
+parameter_list|(
+name|String
+name|s
+parameter_list|)
+block|{
+if|if
+condition|(
+name|dbProduct
+operator|==
+name|DatabaseProduct
+operator|.
+name|MYSQL
+condition|)
+block|{
+return|return
+name|s
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\\\"
+argument_list|,
+literal|"\\\\\\\\"
+argument_list|)
+return|;
+block|}
+return|return
+name|s
+return|;
+block|}
 block|}
 end_class
 
