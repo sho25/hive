@@ -7335,6 +7335,12 @@ condition|(
 name|stats
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|conf
+operator|.
+name|isFullAcidTable
+argument_list|()
 condition|)
 block|{
 name|prevFsp
