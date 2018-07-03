@@ -655,6 +655,23 @@ name|CASCADE
 init|=
 literal|"CASCADE"
 decl_stmt|;
+comment|// TODO: when alter calls are switched to req/resp models, replace these and the above with fields.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TXN_ID
+init|=
+literal|"WRITER_TXN_ID"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|VALID_WRITE_IDS
+init|=
+literal|"WRITER_WRITE_ID"
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final

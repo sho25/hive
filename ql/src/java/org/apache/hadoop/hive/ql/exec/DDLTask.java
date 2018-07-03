@@ -10308,7 +10308,11 @@ name|alterTable
 argument_list|(
 name|mv
 argument_list|,
+literal|false
+argument_list|,
 name|environmentContext
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 return|return
@@ -11089,7 +11093,11 @@ name|alterTable
 argument_list|(
 name|tbl
 argument_list|,
+literal|false
+argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|work
@@ -11189,7 +11197,11 @@ name|alterTable
 argument_list|(
 name|tbl
 argument_list|,
+literal|false
+argument_list|,
 name|environmentContext
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|work
@@ -11270,6 +11282,8 @@ argument_list|,
 name|part
 argument_list|,
 name|environmentContext
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -13066,6 +13080,8 @@ argument_list|,
 name|p
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -14090,6 +14106,8 @@ argument_list|,
 name|p
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -23951,6 +23969,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|parts
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|colStats
@@ -24040,6 +24060,8 @@ name|toLowerCase
 argument_list|()
 argument_list|,
 name|colNames
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -24105,6 +24127,8 @@ argument_list|,
 name|partitions
 argument_list|,
 name|colNames
+argument_list|,
+literal|false
 argument_list|)
 operator|.
 name|get
@@ -25429,6 +25453,9 @@ name|name
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Note: in the old default overloads that I've removed, "transactional" was true for tables,
+comment|//       but false for partitions. Seems to be ok here because we are not updating
+comment|//       partition-stats-related stuff from this call (alterTable).
 if|if
 condition|(
 name|allPartitions
@@ -25453,6 +25480,8 @@ name|getIsCascade
 argument_list|()
 argument_list|,
 name|environmentContext
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -25475,6 +25504,8 @@ argument_list|,
 name|allPartitions
 argument_list|,
 name|environmentContext
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -31350,7 +31381,11 @@ name|alterTable
 argument_list|(
 name|tbl
 argument_list|,
+literal|false
+argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -32774,7 +32809,11 @@ argument_list|()
 argument_list|,
 name|oldview
 argument_list|,
+literal|false
+argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|addIfAbsentByName

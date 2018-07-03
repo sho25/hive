@@ -1617,6 +1617,11 @@ argument_list|,
 name|tblName
 argument_list|,
 name|tbl
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|tbl
@@ -2458,6 +2463,11 @@ name|ptnColVal1
 argument_list|)
 argument_list|,
 name|ptn1Atl
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|ptn1Atl

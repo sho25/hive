@@ -1962,6 +1962,7 @@ name|stopTimer
 argument_list|()
 expr_stmt|;
 block|}
+comment|// TODO## should this take write ID into account? or at least cache write ID to verify?
 comment|// If the table could not cached due to memory limit, stop prewarm
 name|boolean
 name|isSuccess
@@ -3344,6 +3345,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|// TODO## should this take write ID into account? or at least cache write ID to verify?
 name|sharedCache
 operator|.
 name|refreshTableColStatsInCache
@@ -3578,6 +3580,7 @@ argument_list|(
 literal|"getPartitionColumnStatistics"
 argument_list|)
 expr_stmt|;
+comment|// TODO## should this take write ID into account? or at least cache write ID to verify?
 name|List
 argument_list|<
 name|ColumnStatistics
@@ -6191,6 +6194,12 @@ name|tblName
 parameter_list|,
 name|Table
 name|newTable
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -6208,6 +6217,10 @@ argument_list|,
 name|tblName
 argument_list|,
 name|newTable
+argument_list|,
+name|txnId
+argument_list|,
+name|validWriteIds
 argument_list|)
 expr_stmt|;
 name|catName
@@ -7296,6 +7309,12 @@ name|partVals
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|long
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -7315,6 +7334,10 @@ argument_list|,
 name|partVals
 argument_list|,
 name|newPart
+argument_list|,
+name|queryTxnId
+argument_list|,
+name|queryValidWriteIds
 argument_list|)
 expr_stmt|;
 name|catName
@@ -7400,13 +7423,13 @@ argument_list|>
 name|newParts
 parameter_list|,
 name|long
+name|writeId
+parameter_list|,
+name|long
 name|txnId
 parameter_list|,
 name|String
-name|writeIdList
-parameter_list|,
-name|long
-name|writeId
+name|validWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -7427,11 +7450,11 @@ name|partValsList
 argument_list|,
 name|newParts
 argument_list|,
+name|writeId
+argument_list|,
 name|txnId
 argument_list|,
-name|writeIdList
-argument_list|,
-name|writeId
+name|validWriteIds
 argument_list|)
 expr_stmt|;
 name|catName

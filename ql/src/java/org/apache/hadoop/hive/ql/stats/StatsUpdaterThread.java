@@ -2875,6 +2875,8 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+comment|// Note: this should NOT do txn verification - we want to get outdated stats, to
+comment|//       see if we need to update anything.
 name|existingStats
 operator|=
 name|rs

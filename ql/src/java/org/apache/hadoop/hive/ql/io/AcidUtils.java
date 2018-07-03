@@ -8101,8 +8101,6 @@ condition|(
 name|isStatsUpdater
 condition|)
 block|{
-comment|// TODO# it should be invalid to update stats without write ID...
-comment|//       Why would there be a stats updater that doesn't have a write ID?
 name|writeId
 operator|=
 name|SessionState
@@ -8139,6 +8137,33 @@ else|:
 operator|-
 literal|1
 expr_stmt|;
+if|if
+condition|(
+name|writeId
+operator|<
+literal|1
+condition|)
+block|{
+comment|// TODO: this is not ideal... stats updater that doesn't have write ID is currently
+comment|//       "create table"; writeId would be 0/-1 here. No need to call this w/true.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Stats updater for {}.{} doesn't have a write ID"
+argument_list|,
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 if|if
 condition|(

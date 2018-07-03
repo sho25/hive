@@ -6771,21 +6771,11 @@ condition|)
 block|{
 name|mtbl
 operator|.
-name|setTxnId
+name|setWriteId
 argument_list|(
 name|tbl
 operator|.
-name|getTxnId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|mtbl
-operator|.
-name|setWriteIdList
-argument_list|(
-name|tbl
-operator|.
-name|getValidWriteIdList
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -7473,6 +7463,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO## remove? unused
 name|Table
 name|table
 init|=
@@ -8265,11 +8256,6 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|false
 argument_list|)
 condition|)
 block|{
@@ -8277,9 +8263,7 @@ name|tbl
 operator|.
 name|setIsStatsCompliant
 argument_list|(
-name|IsolationLevelCompliance
-operator|.
-name|YES
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -8289,9 +8273,7 @@ name|tbl
 operator|.
 name|setIsStatsCompliant
 argument_list|(
-name|IsolationLevelCompliance
-operator|.
-name|NO
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Do not make persistent the following state since it is the query specific (not global).
@@ -11755,26 +11737,6 @@ condition|)
 block|{
 name|mtable
 operator|.
-name|setTxnId
-argument_list|(
-name|tbl
-operator|.
-name|getTxnId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|mtable
-operator|.
-name|setWriteIdList
-argument_list|(
-name|tbl
-operator|.
-name|getValidWriteIdList
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|mtable
-operator|.
 name|setWriteId
 argument_list|(
 name|tbl
@@ -14735,11 +14697,6 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|false
 argument_list|)
 condition|)
 block|{
@@ -14747,9 +14704,7 @@ name|part
 operator|.
 name|setIsStatsCompliant
 argument_list|(
-name|IsolationLevelCompliance
-operator|.
-name|YES
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -14759,9 +14714,7 @@ name|part
 operator|.
 name|setIsStatsCompliant
 argument_list|(
-name|IsolationLevelCompliance
-operator|.
-name|NO
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Do not make persistent the following state since it is query specific (not global).
@@ -15368,26 +15321,6 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|mpart
-operator|.
-name|setTxnId
-argument_list|(
-name|part
-operator|.
-name|getTxnId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|mpart
-operator|.
-name|setWriteIdList
-argument_list|(
-name|part
-operator|.
-name|getValidWriteIdList
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|mpart
 operator|.
 name|setWriteId
@@ -24402,6 +24335,12 @@ name|name
 parameter_list|,
 name|Table
 name|newTable
+parameter_list|,
+name|long
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -24678,19 +24617,16 @@ comment|// If transactional, update MTable to have txnId and the writeIdList
 comment|// for the current Stats updater query.
 if|if
 condition|(
-name|newTable
-operator|.
-name|getValidWriteIdList
-argument_list|()
-operator|!=
-literal|null
-operator|&&
 name|TxnUtils
 operator|.
 name|isTransactionalTable
 argument_list|(
 name|newTable
 argument_list|)
+operator|&&
+name|queryValidWriteIds
+operator|!=
+literal|null
 condition|)
 block|{
 comment|// Check concurrent INSERT case and set false to the flag.
@@ -24701,22 +24637,9 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|oldt
 argument_list|,
-name|newt
-operator|.
-name|getTxnId
-argument_list|()
+name|queryTxnId
 argument_list|,
-name|newt
-operator|.
-name|getWriteIdList
-argument_list|()
-argument_list|,
-name|newt
-operator|.
-name|getWriteId
-argument_list|()
-argument_list|,
-literal|true
+name|queryValidWriteIds
 argument_list|)
 condition|)
 block|{
@@ -24752,31 +24675,11 @@ expr_stmt|;
 block|}
 name|oldt
 operator|.
-name|setTxnId
-argument_list|(
-name|newTable
-operator|.
-name|getTxnId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|oldt
-operator|.
 name|setWriteId
 argument_list|(
 name|newTable
 operator|.
 name|getWriteId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|oldt
-operator|.
-name|setWriteIdList
-argument_list|(
-name|newTable
-operator|.
-name|getValidWriteIdList
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -24964,6 +24867,12 @@ name|part_vals
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|long
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -25205,10 +25114,7 @@ comment|// If transactional, add/update the MUPdaterTransaction
 comment|// for the current updater query.
 if|if
 condition|(
-name|newPart
-operator|.
-name|getValidWriteIdList
-argument_list|()
+name|queryValidWriteIds
 operator|!=
 literal|null
 operator|&&
@@ -25231,22 +25137,9 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|oldp
 argument_list|,
-name|newp
-operator|.
-name|getTxnId
-argument_list|()
+name|queryTxnId
 argument_list|,
-name|newp
-operator|.
-name|getWriteIdList
-argument_list|()
-argument_list|,
-name|newp
-operator|.
-name|getWriteId
-argument_list|()
-argument_list|,
-literal|true
+name|queryValidWriteIds
 argument_list|)
 condition|)
 block|{
@@ -25289,26 +25182,6 @@ expr_stmt|;
 block|}
 name|oldp
 operator|.
-name|setTxnId
-argument_list|(
-name|newPart
-operator|.
-name|getTxnId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|oldp
-operator|.
-name|setWriteIdList
-argument_list|(
-name|newPart
-operator|.
-name|getValidWriteIdList
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|oldp
-operator|.
 name|setWriteId
 argument_list|(
 name|newPart
@@ -25345,6 +25218,12 @@ name|part_vals
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|long
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -25366,6 +25245,22 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|newPart
+operator|.
+name|isSetWriteId
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Alter partitions with write ID called without transaction information"
+argument_list|)
+expr_stmt|;
+block|}
 name|MColumnDescriptor
 name|oldCd
 init|=
@@ -25380,6 +25275,10 @@ argument_list|,
 name|part_vals
 argument_list|,
 name|newPart
+argument_list|,
+name|queryTxnId
+argument_list|,
+name|queryValidWriteIds
 argument_list|)
 decl_stmt|;
 name|removeUnusedColumnDescriptor
@@ -25477,13 +25376,13 @@ argument_list|>
 name|newParts
 parameter_list|,
 name|long
-name|txnId
-parameter_list|,
-name|String
-name|writeIdList
+name|writeId
 parameter_list|,
 name|long
-name|writeId
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryWriteIdList
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -25549,27 +25448,14 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
+comment|// We don't reset write ID when we invalidate stats; we unset the json boolean.
 if|if
 condition|(
-name|txnId
+name|writeId
 operator|>
 literal|0
 condition|)
 block|{
-name|tmpPart
-operator|.
-name|setTxnId
-argument_list|(
-name|txnId
-argument_list|)
-expr_stmt|;
-name|tmpPart
-operator|.
-name|setValidWriteIdList
-argument_list|(
-name|writeIdList
-argument_list|)
-expr_stmt|;
 name|tmpPart
 operator|.
 name|setWriteId
@@ -25592,6 +25478,10 @@ argument_list|,
 name|tmpPartVals
 argument_list|,
 name|tmpPart
+argument_list|,
+name|queryTxnId
+argument_list|,
+name|queryWriteIdList
 argument_list|)
 decl_stmt|;
 if|if
@@ -51079,6 +50969,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
+comment|// Note: this will get stats without verifying ACID.
 return|return
 name|getTableColumnStatisticsInternal
 argument_list|(
@@ -51128,12 +51019,10 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
-name|IsolationLevelCompliance
+name|Boolean
 name|iLL
 init|=
-name|IsolationLevelCompliance
-operator|.
-name|UNKNOWN
+literal|null
 decl_stmt|;
 comment|// If the current stats in the metastore doesn't comply with
 comment|// the isolation level of the query, set No to the compliance flag.
@@ -51158,9 +51047,8 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
+name|iLL
+operator|=
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|table
@@ -51168,30 +51056,8 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|false
 argument_list|)
-condition|)
-block|{
-name|iLL
-operator|=
-name|IsolationLevelCompliance
-operator|.
-name|NO
 expr_stmt|;
-block|}
-else|else
-block|{
-name|iLL
-operator|=
-name|IsolationLevelCompliance
-operator|.
-name|YES
-expr_stmt|;
-block|}
 block|}
 name|ColumnStatistics
 name|cS
@@ -51214,6 +51080,10 @@ decl_stmt|;
 if|if
 condition|(
 name|cS
+operator|!=
+literal|null
+operator|&&
+name|iLL
 operator|!=
 literal|null
 condition|)
@@ -51534,8 +51404,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 block|{
-comment|// TODO: this will get stats without verifying ACID. Not clear when this can be valid...
-comment|//       We need to check that this is not called on a txn table.
+comment|// Note: this will get stats without verifying ACID.
 return|return
 name|getPartitionColumnStatisticsInternal
 argument_list|(
@@ -51628,6 +51497,8 @@ return|return
 literal|null
 return|;
 block|}
+comment|// TODO## this is not correct; stats updater patch will fix it to return stats for valid partitions,
+comment|//        and no stats for invalid. Remove this comment when merging that patch.
 comment|// Loop through the given "partNames" list
 comment|// checking isolation-level-compliance of each partition column stats.
 for|for
@@ -51667,11 +51538,6 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|false
 argument_list|)
 condition|)
 block|{
@@ -51679,30 +51545,34 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"The current metastore transactional partition column statistics "
+literal|"The current metastore transactional partition column statistics for {}.{}.{} "
 operator|+
-literal|"for "
-operator|+
+literal|"(write ID {}) are not valid for current query ({} {})"
+argument_list|,
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tableName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|mpart
 operator|.
 name|getPartitionName
 argument_list|()
-operator|+
-literal|" is not valid "
-operator|+
-literal|"for the current query."
+argument_list|,
+name|mpart
+operator|.
+name|getWriteId
+argument_list|()
+argument_list|,
+name|txnId
+argument_list|,
+name|writeIdList
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+name|Lists
+operator|.
+name|newArrayList
+argument_list|()
 return|;
 block|}
 block|}
@@ -52169,6 +52039,8 @@ return|return
 literal|null
 return|;
 block|}
+comment|// TODO: this should probably also return stats for partitions with valid stats,
+comment|//       and no stats for partitions with invalid stats.
 comment|// Loop through the given "partNames" list
 comment|// checking isolation-level-compliance of each partition column stats.
 for|for
@@ -52208,11 +52080,6 @@ argument_list|,
 name|txnId
 argument_list|,
 name|writeIdList
-argument_list|,
-operator|-
-literal|1
-argument_list|,
-literal|false
 argument_list|)
 condition|)
 block|{
@@ -73195,12 +73062,6 @@ name|queryTxnId
 parameter_list|,
 name|String
 name|queryValidWriteIdList
-parameter_list|,
-name|long
-name|queryWriteId
-parameter_list|,
-name|boolean
-name|checkConcurrentWrites
 parameter_list|)
 throws|throws
 name|MetaException
@@ -73210,17 +73071,20 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|tbl
 operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
 name|getParameters
-argument_list|()
-argument_list|,
-name|tbl
-operator|.
-name|getTxnId
-argument_list|()
-argument_list|,
-name|tbl
-operator|.
-name|getWriteIdList
 argument_list|()
 argument_list|,
 name|tbl
@@ -73231,10 +73095,6 @@ argument_list|,
 name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
-argument_list|,
-name|queryWriteId
-argument_list|,
-name|checkConcurrentWrites
 argument_list|)
 return|;
 block|}
@@ -73251,12 +73111,6 @@ name|queryTxnId
 parameter_list|,
 name|String
 name|queryValidWriteIdList
-parameter_list|,
-name|long
-name|queryWriteId
-parameter_list|,
-name|boolean
-name|checkConcurrentWrites
 parameter_list|)
 throws|throws
 name|MetaException
@@ -73266,17 +73120,26 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|part
 operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getDatabase
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|part
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|getTableName
+argument_list|()
+argument_list|,
+name|part
+operator|.
 name|getParameters
-argument_list|()
-argument_list|,
-name|part
-operator|.
-name|getTxnId
-argument_list|()
-argument_list|,
-name|part
-operator|.
-name|getWriteIdList
 argument_list|()
 argument_list|,
 name|part
@@ -73287,10 +73150,6 @@ argument_list|,
 name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
-argument_list|,
-name|queryWriteId
-argument_list|,
-name|checkConcurrentWrites
 argument_list|)
 return|;
 block|}
@@ -73298,6 +73157,12 @@ specifier|private
 name|boolean
 name|isCurrentStatsValidForTheQuery
 parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
 name|Map
 argument_list|<
 name|String
@@ -73307,12 +73172,6 @@ argument_list|>
 name|statsParams
 parameter_list|,
 name|long
-name|statsTxnId
-parameter_list|,
-name|String
-name|statsWriteIdList
-parameter_list|,
-name|long
 name|statsWriteId
 parameter_list|,
 name|long
@@ -73320,133 +73179,38 @@ name|queryTxnId
 parameter_list|,
 name|String
 name|queryValidWriteIdList
-parameter_list|,
-name|long
-name|queryWriteId
-parameter_list|,
-name|boolean
-name|checkConcurrentWrites
 parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|// If checkConcurrentWrites is true and
-comment|// statsWriteId or queryWriteId is -1 or 0,
-comment|// return true since -1 or 0 is not a valid writeId.
-if|if
-condition|(
-name|checkConcurrentWrites
-condition|)
-block|{
-if|if
-condition|(
-name|queryWriteId
-operator|<
-literal|1
-condition|)
-block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Cannot check for concurrent inserts without a valid query write ID"
-argument_list|)
-expr_stmt|;
-return|return
-literal|false
-return|;
-block|}
-if|if
-condition|(
-name|statsWriteId
-operator|<
-literal|1
-condition|)
-block|{
-return|return
-literal|true
-return|;
-comment|// TODO: this is questionable, too
-block|}
-block|}
 comment|// Note: can be changed to debug/info to verify the calls.
 name|LOG
 operator|.
 name|trace
 argument_list|(
-literal|"Called with stats {}, {}; query {}, {}; checkConcurrentWrites {}"
+literal|"Called with stats write ID {}; query {}, {}; params {}"
 argument_list|,
-name|statsTxnId
-argument_list|,
-name|statsWriteIdList
+name|statsWriteId
 argument_list|,
 name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
 argument_list|,
-name|checkConcurrentWrites
+name|statsParams
 argument_list|)
 expr_stmt|;
 comment|// if statsWriteIdList is null,
 comment|// return true since the stats does not seem to be transactional.
 if|if
 condition|(
-name|statsWriteIdList
-operator|==
-literal|null
+name|statsWriteId
+operator|<
+literal|1
 condition|)
 block|{
 return|return
 literal|true
 return|;
-block|}
-comment|// If the current query is a stats updater, then we can return true
-comment|// to avoid implementing a logic inside TxnIdUtils.checkEquivalentWriteIds().
-if|if
-condition|(
-name|statsTxnId
-operator|==
-name|queryTxnId
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
-comment|// If the Metastore stats's writer transaction is open or aborted
-comment|// we should return false.
-try|try
-block|{
-if|if
-condition|(
-name|TxnDbUtil
-operator|.
-name|isOpenOrAbortedTransaction
-argument_list|(
-name|conf
-argument_list|,
-name|statsTxnId
-argument_list|)
-condition|)
-block|{
-return|return
-literal|false
-return|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Cannot check transaction state."
-argument_list|)
-throw|;
 block|}
 comment|// This COLUMN_STATS_ACCURATE(CSA) state checking also includes the case that the stats is
 comment|// written by an aborted transaction but TXNS has no entry for the transaction
@@ -73466,6 +73230,7 @@ return|return
 literal|false
 return|;
 block|}
+comment|// TODO## NUM_FILES could also be set to 0 by invalid update. We need to have a negative test. Or remove this and fix stuff.
 comment|// If the NUM_FILES of the table/partition is 0, return 'true' from this method.
 comment|// Since newly initialized empty table has 0 for the parameter.
 if|if
@@ -73492,15 +73257,6 @@ literal|true
 return|;
 block|}
 name|ValidWriteIdList
-name|list4Stats
-init|=
-operator|new
-name|ValidReaderWriteIdList
-argument_list|(
-name|statsWriteIdList
-argument_list|)
-decl_stmt|;
-name|ValidWriteIdList
 name|list4TheQuery
 init|=
 operator|new
@@ -73509,32 +73265,53 @@ argument_list|(
 name|queryValidWriteIdList
 argument_list|)
 decl_stmt|;
-return|return
-operator|!
-name|checkConcurrentWrites
-condition|?
-name|TxnIdUtils
-operator|.
-name|checkEquivalentWriteIds
-argument_list|(
-name|list4Stats
-argument_list|,
+comment|// Just check if the write ID is valid. If it's valid (i.e. we are allowed to see it),
+comment|// that means it cannot possibly be a concurrent write. If it's not valid (we are not
+comment|// allowed to see it), that means it's either concurrent or aborted, same thing for us.
+if|if
+condition|(
 name|list4TheQuery
-argument_list|)
-else|:
-operator|!
-name|TxnIdUtils
 operator|.
-name|areTheseConcurrentWrites
+name|isWriteIdValid
 argument_list|(
-name|list4Stats
+name|statsWriteId
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|// This assumes that all writes within the same txn are sequential and can see each other.
+comment|// TODO## Not clear if we need this check; each next write should have the previous
+comment|//        one in its writeIdList; verify w/Eugene.
+name|long
+name|statsTxnId
+init|=
+name|HiveMetaStore
+operator|.
+name|HMSHandler
+operator|.
+name|getMsThreadTxnHandler
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|getTxnIdForWriteId
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
 argument_list|,
 name|statsWriteId
-argument_list|,
-name|list4TheQuery
-argument_list|,
-name|queryWriteId
 argument_list|)
+decl_stmt|;
+return|return
+operator|(
+name|statsTxnId
+operator|==
+name|queryTxnId
+operator|)
 return|;
 block|}
 block|}

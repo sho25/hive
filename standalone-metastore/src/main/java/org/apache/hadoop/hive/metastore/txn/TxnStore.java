@@ -408,6 +408,25 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
+name|long
+name|getTxnIdForWriteId
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|long
+name|writeId
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * Gets the list of valid write ids for the given table wrt to current txn    * @param rqst info on transaction and list of table names associated with given transaction    * @throws NoSuchTxnException    * @throws MetaException    */
 annotation|@
 name|RetrySemantics

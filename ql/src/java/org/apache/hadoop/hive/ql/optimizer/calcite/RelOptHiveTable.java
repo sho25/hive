@@ -4301,6 +4301,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
+comment|/** Note: DOES NOT CHECK txn stats. */
 specifier|public
 name|List
 argument_list|<

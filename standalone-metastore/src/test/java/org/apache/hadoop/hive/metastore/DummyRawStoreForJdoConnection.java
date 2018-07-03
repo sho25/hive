@@ -1853,6 +1853,12 @@ name|name
 parameter_list|,
 name|Table
 name|newTable
+parameter_list|,
+name|long
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -2191,6 +2197,12 @@ name|part_vals
 parameter_list|,
 name|Partition
 name|new_part
+parameter_list|,
+name|long
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
@@ -2228,19 +2240,19 @@ argument_list|>
 name|new_parts
 parameter_list|,
 name|long
-name|txnId
-parameter_list|,
-name|String
-name|writeIdList
+name|writeId
 parameter_list|,
 name|long
-name|writeId
+name|queryTxnId
+parameter_list|,
+name|String
+name|queryValidWriteIds
 parameter_list|)
 throws|throws
 name|InvalidObjectException
 throws|,
 name|MetaException
-block|{    }
+block|{   }
 annotation|@
 name|Override
 specifier|public

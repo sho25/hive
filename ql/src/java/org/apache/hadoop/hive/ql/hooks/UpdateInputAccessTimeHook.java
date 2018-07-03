@@ -302,7 +302,11 @@ name|tblName
 argument_list|,
 name|t
 argument_list|,
+literal|false
+argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 break|break;
@@ -387,6 +391,8 @@ argument_list|,
 name|p
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|t
@@ -408,7 +414,11 @@ name|tblName
 argument_list|,
 name|t
 argument_list|,
+literal|false
+argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 break|break;

@@ -925,10 +925,6 @@ argument_list|(
 literal|"Resolver returning movetask for "
 operator|+
 name|dirPath
-argument_list|,
-operator|new
-name|Exception
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|resTsks

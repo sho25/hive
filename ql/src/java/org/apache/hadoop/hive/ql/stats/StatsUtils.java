@@ -1718,7 +1718,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|/**    * Collect table, partition and column level statistics    * @param conf    *          - hive configuration    * @param partList    *          - partition list    * @param table    *          - table    * @param tableScanOperator    *          - table scan operator    * @return statistics object    * @throws HiveException    */
+comment|/**    * Collect table, partition and column level statistics    * Note: DOES NOT CHECK txn stats.    * @param conf    *          - hive configuration    * @param partList    *          - partition list    * @param table    *          - table    * @param tableScanOperator    *          - table scan operator    * @return statistics object    * @throws HiveException    */
 specifier|public
 specifier|static
 name|Statistics
@@ -2268,6 +2268,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|/** Note: DOES NOT CHECK txn stats. */
 specifier|public
 specifier|static
 name|Statistics
@@ -2510,6 +2511,9 @@ condition|(
 name|fetchColStats
 condition|)
 block|{
+comment|// Note: this is currently called from two notable places (w/false for checkTxn)
+comment|//       1) StatsRulesProcFactory.TableScanStatsRule via collectStatistics
+comment|//       2) RelOptHiveTable via getColStats and updateColStats.
 name|colStats
 operator|=
 name|getTableColumnStats
@@ -2521,6 +2525,8 @@ argument_list|,
 name|neededColumns
 argument_list|,
 name|colStatsCache
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 if|if
@@ -3220,6 +3226,9 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// Note: this is currently called from two notable places (w/false for checkTxn)
+comment|//       1) StatsRulesProcFactory.TableScanStatsRule via collectStatistics
+comment|//       2) RelOptHiveTable via getColStats and updateColStats.
 name|aggrStats
 operator|=
 name|Hive
@@ -3242,6 +3251,8 @@ argument_list|,
 name|neededColsToRetrieve
 argument_list|,
 name|partNames
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -7456,6 +7467,9 @@ name|neededColumns
 parameter_list|,
 name|ColumnStatsList
 name|colStatsCache
+parameter_list|,
+name|boolean
+name|checkTransactional
 parameter_list|)
 block|{
 if|if
@@ -7614,6 +7628,8 @@ argument_list|,
 name|tabName
 argument_list|,
 name|colStatsToRetrieve
+argument_list|,
+name|checkTransactional
 argument_list|)
 decl_stmt|;
 name|stats

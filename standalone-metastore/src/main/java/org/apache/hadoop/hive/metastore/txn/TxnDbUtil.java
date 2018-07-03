@@ -699,9 +699,9 @@ literal|" \"SD_ID\" BIGINT, \"TBL_NAME\" VARCHAR(256), \"TBL_TYPE\" VARCHAR(128)
 operator|+
 literal|" \"VIEW_EXPANDED_TEXT\" LONG VARCHAR, \"VIEW_ORIGINAL_TEXT\" LONG VARCHAR, "
 operator|+
-literal|" \"IS_REWRITE_ENABLED\" CHAR(1) NOT NULL DEFAULT \'N\', \"TXN_ID\" BIGINT DEFAULT 0, "
+literal|" \"IS_REWRITE_ENABLED\" CHAR(1) NOT NULL DEFAULT \'N\', "
 operator|+
-literal|" \"WRITE_ID\" BIGINT DEFAULT 0, \"WRITEID_LIST\" CLOB, "
+literal|" \"WRITE_ID\" BIGINT DEFAULT 0, "
 operator|+
 literal|" PRIMARY KEY (TBL_ID))"
 argument_list|)
@@ -760,9 +760,9 @@ literal|" \"PART_ID\" BIGINT NOT NULL, \"CREATE_TIME\" INTEGER NOT NULL, "
 operator|+
 literal|" \"LAST_ACCESS_TIME\" INTEGER NOT NULL, \"PART_NAME\" VARCHAR(767), "
 operator|+
-literal|" \"SD_ID\" BIGINT, \"TBL_ID\" BIGINT, \"TXN_ID\" BIGINT DEFAULT 0, "
+literal|" \"SD_ID\" BIGINT, \"TBL_ID\" BIGINT, "
 operator|+
-literal|" \"WRITE_ID\" BIGINT DEFAULT 0, \"WRITEID_LIST\" CLOB, "
+literal|" \"WRITE_ID\" BIGINT DEFAULT 0, "
 operator|+
 literal|" PRIMARY KEY (PART_ID))"
 argument_list|)

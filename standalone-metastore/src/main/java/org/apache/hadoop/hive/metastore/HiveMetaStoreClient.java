@@ -11392,7 +11392,7 @@ argument_list|)
 expr_stmt|;
 name|client
 operator|.
-name|alter_partitions_with_environment_context
+name|alter_partitions_with_environment_context_req
 argument_list|(
 name|req
 argument_list|)

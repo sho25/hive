@@ -5349,6 +5349,19 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Allocated write ID {} for {}.{}"
+argument_list|,
+name|writeId
+argument_list|,
+name|dbName
+argument_list|,
+name|tableName
+argument_list|)
+expr_stmt|;
 name|tableWriteIds
 operator|.
 name|put

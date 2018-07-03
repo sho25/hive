@@ -3304,7 +3304,11 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select tbl_id from TBLS where "
+literal|"select tbl_id from TBLS inner join DBS on TBLS.DB_ID = DBS.DB_ID "
+operator|+
+literal|"inner join TXN_TO_WRITE_ID on t2w_database = DBS.NAME and t2w_table = TBLS.TBL_NAME"
+operator|+
+literal|" and t2w_writeid = TBLS.WRITE_ID where "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -3328,7 +3332,7 @@ name|suffix
 argument_list|,
 name|txnids
 argument_list|,
-literal|"txn_id"
+literal|"t2w_txnid"
 argument_list|,
 literal|true
 argument_list|,
@@ -3488,7 +3492,15 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select part_id from PARTITIONS where "
+literal|"select part_id from PARTITIONS "
+operator|+
+literal|"inner join TBLS on PARTITIONS.TBL_ID = TBLS.TBL_ID "
+operator|+
+literal|"inner join DBS on TBLS.DB_ID = DBS.DB_ID "
+operator|+
+literal|"inner join TXN_TO_WRITE_ID on t2w_database = DBS.NAME and t2w_table = TBLS.TBL_NAME"
+operator|+
+literal|" and t2w_writeid = TBLS.WRITE_ID where "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -3512,7 +3524,7 @@ name|suffix
 argument_list|,
 name|txnids
 argument_list|,
-literal|"txn_id"
+literal|"t2w_txnid"
 argument_list|,
 literal|true
 argument_list|,
