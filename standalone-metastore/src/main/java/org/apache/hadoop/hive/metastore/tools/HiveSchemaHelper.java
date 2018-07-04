@@ -283,7 +283,11 @@ literal|"jdbc:hive2://?hive.conf.restricted.list=;hive.security.authorization.sq
 operator|+
 literal|"hive.security.authorization.sqlstd.confwhitelist.append=.*;hive.security.authorization.enabled=false;"
 operator|+
-literal|"hive.metastore.uris=;hive.security.authorization.manager=org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory"
+literal|"hive.metastore.uris=;hive.security.authorization.manager=org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory;"
+operator|+
+literal|"hive.support.concurrency=false;hive.txn.manager=org.apache.hadoop.hive.ql.lockmgr.DummyTxnManager;"
+operator|+
+literal|"hive.metastore.rawstore.impl=org.apache.hadoop.hive.metastore.ObjectStore"
 decl_stmt|;
 specifier|public
 specifier|static
