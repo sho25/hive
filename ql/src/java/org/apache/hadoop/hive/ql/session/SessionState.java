@@ -4541,6 +4541,7 @@ block|}
 block|}
 comment|/**    * Setup authentication and authorization plugins for this session.    */
 specifier|private
+specifier|synchronized
 name|void
 name|setupAuth
 parameter_list|()
