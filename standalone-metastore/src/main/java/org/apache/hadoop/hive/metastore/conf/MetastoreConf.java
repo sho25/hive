@@ -3342,6 +3342,10 @@ name|class
 operator|.
 name|getName
 argument_list|()
+operator|+
+literal|","
+operator|+
+literal|"org.apache.hadoop.hive.metastore.HiveProtoEventsCleanerTask"
 argument_list|,
 literal|"Comma separated list of tasks that will be started in separate threads.  These will "
 operator|+
