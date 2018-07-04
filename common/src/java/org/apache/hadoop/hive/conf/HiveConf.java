@@ -13656,6 +13656,19 @@ operator|+
 literal|"used to prune unnecessary partitions."
 argument_list|)
 block|,
+name|TEZ_DYNAMIC_PARTITION_PRUNING_EXTENDED
+argument_list|(
+literal|"hive.tez.dynamic.partition.pruning.extended"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether we should try to create additional opportunities for dynamic pruning, e.g., considering\n"
+operator|+
+literal|"siblings that may not be created by normal dynamic pruning logic.\n"
+operator|+
+literal|"Only works when dynamic pruning is enabled."
+argument_list|)
+block|,
 name|TEZ_DYNAMIC_PARTITION_PRUNING_MAX_EVENT_SIZE
 argument_list|(
 literal|"hive.tez.dynamic.partition.pruning.max.event.size"
