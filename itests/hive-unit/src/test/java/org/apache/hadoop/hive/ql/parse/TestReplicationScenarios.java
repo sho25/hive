@@ -3754,6 +3754,8 @@ argument_list|(
 name|ptnedTableNuller
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// The ptned table will not be dumped as getTable will return null
 name|run
 argument_list|(
@@ -3773,12 +3775,16 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetGetTableBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 name|String
 name|replDumpLocn
 init|=
@@ -4254,6 +4260,8 @@ argument_list|(
 name|listPartitionNamesNuller
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// None of the partitions will be dumped as the partitions list was empty
 name|run
 argument_list|(
@@ -4273,12 +4281,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetListPartitionNamesBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 name|String
 name|replDumpLocn
 init|=
@@ -4902,6 +4914,8 @@ argument_list|(
 name|ptnedTableRenamer
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// The intermediate rename would've failed as bootstrap dump in progress
 name|bootstrapLoadAndVerify
 argument_list|(
@@ -4919,12 +4933,16 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetGetTableBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 comment|// The ptned table should be there in both source and target as rename was not successful
 name|verifyRun
 argument_list|(
@@ -5266,6 +5284,11 @@ argument_list|(
 literal|"Exit new thread success - {}"
 argument_list|,
 name|success
+argument_list|,
+name|ret
+operator|.
+name|getException
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -5328,13 +5351,19 @@ expr_stmt|;
 name|Tuple
 name|bootstrap
 init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
+name|bootstrap
+operator|=
 name|bootstrapLoadAndVerify
 argument_list|(
 name|dbName
 argument_list|,
 name|replDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|ptnedTableRenamer
 operator|.
 name|assertInjectionsPerformed
@@ -5344,12 +5373,16 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetGetTableBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 name|incrementalLoadAndVerify
 argument_list|(
 name|dbName
@@ -6578,6 +6611,8 @@ argument_list|(
 name|eventIdSkipper
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|advanceDumpDir
 argument_list|()
 expr_stmt|;
@@ -6621,12 +6656,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetGetNextNotificationBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 block|}
 annotation|@
 name|Test
@@ -10592,6 +10631,8 @@ argument_list|(
 name|eventTypeValidator
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|incrementalLoadAndVerify
 argument_list|(
 name|dbName
@@ -10612,12 +10653,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetGetNextNotificationBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
@@ -10926,6 +10971,8 @@ argument_list|(
 name|insertEventRepeater
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|incrementalLoadAndVerify
 argument_list|(
 name|dbName
@@ -10946,12 +10993,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|InjectableBehaviourObjectStore
 operator|.
 name|resetGetNextNotificationBehaviour
 argument_list|()
 expr_stmt|;
 comment|// reset the behaviour
+block|}
 name|verifyRun
 argument_list|(
 literal|"SELECT a from "
