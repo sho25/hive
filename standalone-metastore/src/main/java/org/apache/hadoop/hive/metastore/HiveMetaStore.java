@@ -44286,6 +44286,10 @@ argument_list|(
 name|ClientCapability
 operator|.
 name|TEST_CAPABILITY
+argument_list|,
+name|ClientCapability
+operator|.
+name|INSERT_ONLY_TABLES
 argument_list|)
 argument_list|)
 argument_list|)
