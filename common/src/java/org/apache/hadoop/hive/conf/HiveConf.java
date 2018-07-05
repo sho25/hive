@@ -3567,6 +3567,58 @@ operator|+
 literal|"if query explicitly uses table alias \"select r1.x..\"."
 argument_list|)
 block|,
+name|HIVE_PROTO_EVENTS_BASE_PATH
+argument_list|(
+literal|"hive.hook.proto.base-directory"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Base directory into which the proto event messages are written by HiveProtoLoggingHook."
+argument_list|)
+block|,
+name|HIVE_PROTO_EVENTS_QUEUE_CAPACITY
+argument_list|(
+literal|"hive.hook.proto.queue.capacity"
+argument_list|,
+literal|64
+argument_list|,
+literal|"Queue capacity for the proto events logging threads."
+argument_list|)
+block|,
+name|HIVE_PROTO_EVENTS_CLEAN_FREQ
+argument_list|(
+literal|"hive.hook.proto.events.clean.freq"
+argument_list|,
+literal|"1d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|DAYS
+argument_list|)
+argument_list|,
+literal|"Frequency at which timer task runs to purge expired proto event files."
+argument_list|)
+block|,
+name|HIVE_PROTO_EVENTS_TTL
+argument_list|(
+literal|"hive.hook.proto.events.ttl"
+argument_list|,
+literal|"7d"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|DAYS
+argument_list|)
+argument_list|,
+literal|"Time-To-Live (TTL) of proto event files before cleanup."
+argument_list|)
+block|,
 comment|// Hadoop Configuration Properties
 comment|// Properties with null values are ignored and exist only for the purpose of giving us
 comment|// a symbolic name to reference in the Hive source code. Properties with non-null

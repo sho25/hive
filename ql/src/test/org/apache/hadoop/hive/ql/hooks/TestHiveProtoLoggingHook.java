@@ -511,11 +511,13 @@ argument_list|()
 expr_stmt|;
 name|conf
 operator|.
-name|set
+name|setVar
 argument_list|(
-name|HiveProtoLoggingHook
+name|HiveConf
 operator|.
-name|HIVE_EVENTS_BASE_PATH
+name|ConfVars
+operator|.
+name|HIVE_PROTO_EVENTS_BASE_PATH
 argument_list|,
 name|tmpFolder
 argument_list|)

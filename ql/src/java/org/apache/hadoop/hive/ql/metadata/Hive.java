@@ -21138,7 +21138,7 @@ operator|.
 name|getLoginUser
 argument_list|()
 operator|.
-name|getUserName
+name|getShortUserName
 argument_list|()
 decl_stmt|;
 name|boolean
