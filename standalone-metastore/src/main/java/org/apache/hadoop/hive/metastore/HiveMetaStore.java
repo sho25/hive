@@ -45,24 +45,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|ReplChangeManager
-operator|.
-name|SOURCE_OF_REPLICATION
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_COMMENT
@@ -16889,7 +16871,7 @@ name|stat
 range|:
 name|StatsSetupConst
 operator|.
-name|supportedStats
+name|SUPPORTED_STATS
 control|)
 block|{
 name|String

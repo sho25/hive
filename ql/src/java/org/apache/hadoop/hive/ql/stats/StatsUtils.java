@@ -2505,6 +2505,14 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
+name|long
+name|numErasureCodedFiles
+init|=
+name|getErasureCodedFiles
+argument_list|(
+name|table
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|fetchColStats
@@ -2603,6 +2611,8 @@ argument_list|(
 name|nr
 argument_list|,
 name|ds
+argument_list|,
+name|numErasureCodedFiles
 argument_list|)
 expr_stmt|;
 comment|// infer if any column can be primary key based on column statistics
@@ -2794,6 +2804,34 @@ operator|.
 name|getDataSize
 argument_list|()
 decl_stmt|;
+name|List
+argument_list|<
+name|Long
+argument_list|>
+name|erasureCodedFiles
+init|=
+name|getBasicStatForPartitions
+argument_list|(
+name|table
+argument_list|,
+name|partList
+operator|.
+name|getNotDeniedPartns
+argument_list|()
+argument_list|,
+name|StatsSetupConst
+operator|.
+name|NUM_ERASURE_CODED_FILES
+argument_list|)
+decl_stmt|;
+name|long
+name|numErasureCodedFiles
+init|=
+name|getSumIgnoreNegatives
+argument_list|(
+name|erasureCodedFiles
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|nr
@@ -2814,6 +2852,8 @@ argument_list|(
 name|nr
 argument_list|,
 name|ds
+argument_list|,
+name|numErasureCodedFiles
 argument_list|)
 expr_stmt|;
 name|stats
@@ -11109,6 +11149,27 @@ name|TOTAL_SIZE
 argument_list|)
 return|;
 block|}
+comment|/**    * Get number of Erasure Coded files for a table    * @return count of EC files    */
+specifier|public
+specifier|static
+name|long
+name|getErasureCodedFiles
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+block|{
+return|return
+name|getBasicStatForTable
+argument_list|(
+name|table
+argument_list|,
+name|StatsSetupConst
+operator|.
+name|NUM_ERASURE_CODED_FILES
+argument_list|)
+return|;
+block|}
 comment|/**    * Get basic stats of table    * @param table    *          - table    * @param statType    *          - type of stats    * @return value of stats    */
 annotation|@
 name|Deprecated
@@ -11771,7 +11832,7 @@ name|nonNullAndEmptyNames
 argument_list|)
 return|;
 block|}
-comment|/**    * Get qualified column name from output key column names    * @param keyExprs    *          - output key names    * @return list of qualified names    */
+comment|/**    * Get qualified column name from output key column names.    * @param keyExprs    *          - output key names    * @return list of qualified names    */
 specifier|public
 specifier|static
 name|List

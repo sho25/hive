@@ -625,6 +625,14 @@ literal|"test.tmp.dir"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|static
+specifier|final
+name|int
+name|DEFAULT_DATANODE_COUNT
+init|=
+literal|4
+decl_stmt|;
+specifier|private
 name|HiveServer2
 name|hiveServer2
 init|=
@@ -796,6 +804,13 @@ specifier|private
 name|String
 name|metastoreServerKeyTab
 decl_stmt|;
+specifier|private
+name|int
+name|dataNodes
+init|=
+name|DEFAULT_DATANODE_COUNT
+decl_stmt|;
+comment|// default number of datanodes for miniHS2
 specifier|public
 name|Builder
 parameter_list|()
@@ -989,6 +1004,25 @@ return|return
 name|this
 return|;
 block|}
+comment|/**      * Set the number of datanodes to be used by HS2.      * @param count the number of datanodes      * @return this Builder      */
+specifier|public
+name|Builder
+name|withDataNodes
+parameter_list|(
+name|int
+name|count
+parameter_list|)
+block|{
+name|this
+operator|.
+name|dataNodes
+operator|=
+name|count
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 specifier|public
 name|MiniHS2
 name|build
@@ -1075,6 +1109,8 @@ argument_list|,
 name|metastoreServerPrincipal
 argument_list|,
 name|metastoreServerKeyTab
+argument_list|,
+name|dataNodes
 argument_list|)
 return|;
 block|}
@@ -1210,6 +1246,9 @@ name|metastoreServerPrincipal
 parameter_list|,
 name|String
 name|metastoreKeyTab
+parameter_list|,
+name|int
+name|dataNodes
 parameter_list|)
 throws|throws
 name|Exception
@@ -1387,7 +1426,7 @@ name|getMiniDfs
 argument_list|(
 name|hiveConf
 argument_list|,
-literal|4
+name|dataNodes
 argument_list|,
 literal|true
 argument_list|,
@@ -2000,6 +2039,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+name|DEFAULT_DATANODE_COUNT
 argument_list|)
 expr_stmt|;
 block|}

@@ -57,20 +57,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Lists
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -3756,14 +3742,9 @@ name|excludes
 operator|.
 name|addAll
 argument_list|(
-name|Lists
-operator|.
-name|newArrayList
-argument_list|(
 name|StatsSetupConst
 operator|.
 name|TABLE_PARAMS_STATS_KEYS
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|isFirst
