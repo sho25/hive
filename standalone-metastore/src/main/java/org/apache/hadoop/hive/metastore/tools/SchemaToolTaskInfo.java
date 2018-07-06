@@ -9,11 +9,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|beeline
+name|metastore
 operator|.
-name|schematool
+name|tools
 package|;
 end_package
 
@@ -59,16 +61,16 @@ end_comment
 
 begin_class
 class|class
-name|HiveSchemaToolTaskInfo
+name|SchemaToolTaskInfo
 extends|extends
-name|HiveSchemaToolTask
+name|SchemaToolTask
 block|{
 annotation|@
 name|Override
 name|void
 name|setCommandLineArguments
 parameter_list|(
-name|HiveSchemaToolCommandLine
+name|SchemaToolCommandLine
 name|cl
 parameter_list|)
 block|{

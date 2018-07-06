@@ -312,7 +312,7 @@ name|class
 block|,
 name|HiveSchemaTool
 operator|.
-name|CommandBuilder
+name|HiveSchemaToolCommandBuilder
 operator|.
 name|class
 block|}
@@ -346,7 +346,7 @@ decl_stmt|;
 specifier|private
 name|HiveSchemaTool
 operator|.
-name|CommandBuilder
+name|HiveSchemaToolCommandBuilder
 name|builder
 decl_stmt|;
 specifier|private
@@ -454,7 +454,7 @@ operator|=
 operator|new
 name|HiveSchemaTool
 operator|.
-name|CommandBuilder
+name|HiveSchemaToolCommandBuilder
 argument_list|(
 name|hiveConf
 argument_list|,

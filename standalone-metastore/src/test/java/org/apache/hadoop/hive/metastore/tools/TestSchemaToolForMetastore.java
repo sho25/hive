@@ -115,6 +115,16 @@ name|java
 operator|.
 name|sql
 operator|.
+name|DatabaseMetaData
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|sql
+operator|.
 name|SQLException
 import|;
 end_import
@@ -137,9 +147,39 @@ name|apache
 operator|.
 name|commons
 operator|.
+name|dbcp
+operator|.
+name|DelegatingConnection
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
 name|io
 operator|.
 name|FileUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|text
+operator|.
+name|StrTokenizer
 import|;
 end_import
 
@@ -386,6 +426,14 @@ specifier|private
 name|PrintStream
 name|outStream
 decl_stmt|;
+specifier|private
+name|String
+name|argsBase
+decl_stmt|;
+specifier|private
+name|SchemaToolTaskValidate
+name|validator
+decl_stmt|;
 annotation|@
 name|Before
 specifier|public
@@ -448,6 +496,11 @@ name|schemaTool
 operator|=
 operator|new
 name|MetastoreSchemaTool
+argument_list|()
+expr_stmt|;
+name|schemaTool
+operator|.
+name|init
 argument_list|(
 name|System
 operator|.
@@ -458,15 +511,25 @@ argument_list|,
 literal|"target/tmp"
 argument_list|)
 argument_list|,
-name|conf
-argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"-dbType"
+block|,
 literal|"derby"
+block|,
+literal|"--info"
+block|}
+argument_list|,
+literal|null
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
-name|schemaTool
-operator|.
-name|setUserName
-argument_list|(
+name|String
+name|userName
+init|=
 name|MetastoreConf
 operator|.
 name|getVar
@@ -480,12 +543,10 @@ name|ConfVars
 operator|.
 name|CONNECTION_USER_NAME
 argument_list|)
-argument_list|)
-expr_stmt|;
-name|schemaTool
-operator|.
-name|setPassWord
-argument_list|(
+decl_stmt|;
+name|String
+name|passWord
+init|=
 name|MetastoreConf
 operator|.
 name|getPassword
@@ -499,7 +560,32 @@ name|ConfVars
 operator|.
 name|PWD
 argument_list|)
+decl_stmt|;
+name|schemaTool
+operator|.
+name|setUserName
+argument_list|(
+name|userName
 argument_list|)
+expr_stmt|;
+name|schemaTool
+operator|.
+name|setPassWord
+argument_list|(
+name|passWord
+argument_list|)
+expr_stmt|;
+name|argsBase
+operator|=
+literal|"-dbType derby -userName "
+operator|+
+name|userName
+operator|+
+literal|" -passWord "
+operator|+
+name|passWord
+operator|+
+literal|" "
 expr_stmt|;
 name|System
 operator|.
@@ -529,6 +615,19 @@ operator|.
 name|getConnectionToMetastore
 argument_list|(
 literal|false
+argument_list|)
+expr_stmt|;
+name|validator
+operator|=
+operator|new
+name|SchemaToolTaskValidate
+argument_list|()
+expr_stmt|;
+name|validator
+operator|.
+name|setHiveSchemaTool
+argument_list|(
+name|schemaTool
 argument_list|)
 expr_stmt|;
 block|}
@@ -596,7 +695,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|// Test the sequence validation functionality
+comment|/*    * Test the sequence validation functionality    */
 annotation|@
 name|Test
 specifier|public
@@ -606,16 +705,20 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
+argument_list|(
+operator|new
+name|SchemaToolTaskInit
 argument_list|()
+argument_list|,
+literal|"-initSchema"
+argument_list|)
 expr_stmt|;
 comment|// Test empty database
 name|boolean
 name|isValid
 init|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSequences
 argument_list|(
@@ -638,11 +741,11 @@ operator|new
 name|String
 index|[]
 block|{
+literal|"insert into CTLGS values(99, 'test_cat_1', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb');"
+block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100);"
 block|,
-literal|"insert into CTLGS values(37, 'mycat', 'my description', 'hdfs://tmp');"
-block|,
-literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'mycat');"
+literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1');"
 block|}
 decl_stmt|;
 name|File
@@ -655,7 +758,7 @@ argument_list|)
 decl_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -665,7 +768,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSequences
 argument_list|(
@@ -692,7 +795,7 @@ literal|"delete from DBS;"
 block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100);"
 block|,
-literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'mycat');"
+literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1');"
 block|}
 expr_stmt|;
 name|scriptFile
@@ -704,7 +807,7 @@ argument_list|)
 expr_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -714,7 +817,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSequences
 argument_list|(
@@ -729,7 +832,7 @@ name|isValid
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Test to validate that all tables exist in the HMS metastore.
+comment|/*    * Test to validate that all tables exist in the HMS metastore.    */
 annotation|@
 name|Test
 specifier|public
@@ -739,17 +842,19 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
 argument_list|(
-literal|"1.2.0"
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo 1.2.0"
 argument_list|)
 expr_stmt|;
 name|boolean
 name|isValid
 init|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaTables
 argument_list|(
@@ -763,17 +868,19 @@ argument_list|(
 name|isValid
 argument_list|)
 expr_stmt|;
-comment|// upgrade from 2.0.0 schema and re-validate
-name|schemaTool
-operator|.
-name|doUpgrade
+comment|// upgrade from 1.2.0 schema and re-validate
+name|execute
 argument_list|(
-literal|"1.2.0"
+operator|new
+name|SchemaToolTaskUpgrade
+argument_list|()
+argument_list|,
+literal|"-upgradeSchemaFrom 1.2.0"
 argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaTables
 argument_list|(
@@ -811,7 +918,7 @@ argument_list|)
 decl_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -821,7 +928,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaTables
 argument_list|(
@@ -856,7 +963,7 @@ argument_list|)
 expr_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -866,7 +973,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaTables
 argument_list|(
@@ -880,6 +987,108 @@ argument_list|(
 name|isValid
 argument_list|)
 expr_stmt|;
+comment|// Check that an exception from getMetaData() is reported correctly
+try|try
+block|{
+comment|// Make a Connection object that will throw an exception
+name|BadMetaDataConnection
+name|bad
+init|=
+operator|new
+name|BadMetaDataConnection
+argument_list|(
+name|conn
+argument_list|)
+decl_stmt|;
+name|validator
+operator|.
+name|validateSchemaTables
+argument_list|(
+name|bad
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"did not get expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveMetaException
+name|hme
+parameter_list|)
+block|{
+name|String
+name|message
+init|=
+name|hme
+operator|.
+name|getMessage
+argument_list|()
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"Bad HiveMetaException message :"
+operator|+
+name|message
+argument_list|,
+name|message
+operator|.
+name|contains
+argument_list|(
+literal|"Failed to retrieve schema tables from Hive Metastore DB"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Throwable
+name|cause
+init|=
+name|hme
+operator|.
+name|getCause
+argument_list|()
+decl_stmt|;
+name|Assert
+operator|.
+name|assertNotNull
+argument_list|(
+literal|"HiveMetaException did not contain a cause"
+argument_list|,
+name|cause
+argument_list|)
+expr_stmt|;
+name|String
+name|causeMessage
+init|=
+name|cause
+operator|.
+name|getMessage
+argument_list|()
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"Bad SQLException message: "
+operator|+
+name|causeMessage
+argument_list|,
+name|causeMessage
+operator|.
+name|contains
+argument_list|(
+name|BadMetaDataConnection
+operator|.
+name|FAILURE_TEXT
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// Test the validation of incorrect NULL values in the tables
 annotation|@
@@ -891,16 +1100,20 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
+argument_list|(
+operator|new
+name|SchemaToolTaskInit
 argument_list|()
+argument_list|,
+literal|"-initSchema"
+argument_list|)
 expr_stmt|;
 comment|// Test empty database
 name|boolean
 name|isValid
 init|=
-name|schemaTool
+name|validator
 operator|.
 name|validateColumnNullValues
 argument_list|(
@@ -920,7 +1133,7 @@ argument_list|()
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateColumnNullValues
 argument_list|(
@@ -949,7 +1162,7 @@ argument_list|)
 decl_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -959,7 +1172,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateColumnNullValues
 argument_list|(
@@ -991,11 +1204,13 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|schemaTool
-operator|.
-name|doInit
+name|execute
 argument_list|(
-literal|"3.0.0"
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo 1.2.0"
 argument_list|)
 expr_stmt|;
 name|schemaTool
@@ -1040,11 +1255,13 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
 argument_list|(
-literal|"1.2.0"
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo 1.2.0"
 argument_list|)
 expr_stmt|;
 name|schemaTool
@@ -1054,11 +1271,13 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|schemaTool
-operator|.
-name|doUpgrade
+name|execute
 argument_list|(
-literal|"1.2.0"
+operator|new
+name|SchemaToolTaskUpgrade
+argument_list|()
+argument_list|,
+literal|"-upgradeSchemaFrom 1.2.0"
 argument_list|)
 expr_stmt|;
 name|schemaTool
@@ -1124,17 +1343,14 @@ argument_list|,
 literal|"derby"
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|info
+name|execute
 argument_list|(
-literal|"Starting testSchemaInit"
-argument_list|)
-expr_stmt|;
-name|schemaTool
-operator|.
-name|doInit
-argument_list|(
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo "
+operator|+
 name|metastoreSchemaInfo
 operator|.
 name|getHiveSchemaVersion
@@ -1157,15 +1373,19 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
+argument_list|(
+operator|new
+name|SchemaToolTaskInit
 argument_list|()
+argument_list|,
+literal|"-initSchema"
+argument_list|)
 expr_stmt|;
 name|boolean
 name|isValid
 init|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaVersions
 argument_list|()
@@ -1192,7 +1412,7 @@ argument_list|)
 decl_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -1202,7 +1422,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaVersions
 argument_list|()
@@ -1232,7 +1452,7 @@ argument_list|)
 expr_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -1242,7 +1462,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaVersions
 argument_list|()
@@ -1273,7 +1493,7 @@ argument_list|)
 expr_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -1283,7 +1503,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateSchemaVersions
 argument_list|()
@@ -1312,11 +1532,13 @@ init|=
 literal|false
 decl_stmt|;
 comment|// Initialize 1.2.0 schema
-name|schemaTool
-operator|.
-name|doInit
+name|execute
 argument_list|(
-literal|"1.2.0"
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo 1.2.0"
 argument_list|)
 expr_stmt|;
 comment|// verify that driver fails due to older version schema
@@ -1447,70 +1669,13 @@ name|outPrintStream
 argument_list|)
 expr_stmt|;
 comment|// Upgrade schema from 0.7.0 to latest
-name|Exception
-name|caught
-init|=
-literal|null
-decl_stmt|;
-try|try
-block|{
-name|schemaTool
-operator|.
-name|doUpgrade
+name|execute
 argument_list|(
-literal|"1.2.0"
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|caught
-operator|=
-name|e
-expr_stmt|;
-block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"stdout is "
-operator|+
-name|stdout
-operator|.
-name|toString
+operator|new
+name|SchemaToolTaskUpgrade
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"stderr is "
-operator|+
-name|stderr
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|caught
-operator|!=
-literal|null
-condition|)
-name|Assert
-operator|.
-name|fail
-argument_list|(
-name|caught
-operator|.
-name|getMessage
-argument_list|()
+argument_list|,
+literal|"-upgradeSchemaFrom 1.2.0"
 argument_list|)
 expr_stmt|;
 comment|// Verify that the schemaTool ran pre-upgrade scripts and ignored errors
@@ -1621,10 +1786,14 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
+argument_list|(
+operator|new
+name|SchemaToolTaskInit
 argument_list|()
+argument_list|,
+literal|"-initSchema"
+argument_list|)
 expr_stmt|;
 name|URI
 name|defaultRoot
@@ -1648,7 +1817,7 @@ comment|//check empty DB
 name|boolean
 name|isValid
 init|=
-name|schemaTool
+name|validator
 operator|.
 name|validateLocations
 argument_list|(
@@ -1666,7 +1835,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateLocations
 argument_list|(
@@ -1698,11 +1867,11 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into CTLGS values (1, 'mycat', 'mydescription', 'hdfs://myhost.com:8020/user/hive/warehouse');"
+literal|"insert into CTLGS values(3, 'test_cat_2', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb');"
 block|,
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2');"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role', 'test_cat_2');"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
@@ -1739,7 +1908,7 @@ argument_list|)
 decl_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -1749,7 +1918,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateLocations
 argument_list|(
@@ -1767,7 +1936,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateLocations
 argument_list|(
@@ -1808,13 +1977,13 @@ literal|"delete from SDS;"
 block|,
 literal|"delete from DBS;"
 block|,
-literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2');"
 block|,
-literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role', 'test_cat_2');"
 block|,
-literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role', 'test_cat_2');"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role', 'test_cat_2');"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://yourhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
@@ -1876,7 +2045,7 @@ argument_list|)
 expr_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -1886,7 +2055,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateLocations
 argument_list|(
@@ -1904,7 +2073,7 @@ argument_list|)
 expr_stmt|;
 name|isValid
 operator|=
-name|schemaTool
+name|validator
 operator|.
 name|validateLocations
 argument_list|(
@@ -1939,11 +2108,13 @@ name|HiveMetaException
 throws|,
 name|IOException
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
 argument_list|(
-literal|"3.0.0"
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo 3.0.0"
 argument_list|)
 expr_stmt|;
 name|validateMetastoreDbPropertiesTable
@@ -1961,17 +2132,23 @@ name|HiveMetaException
 throws|,
 name|IOException
 block|{
-name|schemaTool
-operator|.
-name|doInit
+name|execute
 argument_list|(
-literal|"1.2.0"
+operator|new
+name|SchemaToolTaskInit
+argument_list|()
+argument_list|,
+literal|"-initSchemaTo 1.2.0"
 argument_list|)
 expr_stmt|;
-name|schemaTool
-operator|.
-name|doUpgrade
+name|execute
+argument_list|(
+operator|new
+name|SchemaToolTaskUpgrade
 argument_list|()
+argument_list|,
+literal|"-upgradeSchema"
+argument_list|)
 expr_stmt|;
 name|validateMetastoreDbPropertiesTable
 argument_list|()
@@ -2068,7 +2245,10 @@ block|{
 name|boolean
 name|isValid
 init|=
-name|schemaTool
+operator|(
+name|boolean
+operator|)
+name|validator
 operator|.
 name|validateSchemaTables
 argument_list|(
@@ -2113,7 +2293,7 @@ try|try
 block|{
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
@@ -2299,13 +2479,141 @@ argument_list|)
 decl_stmt|;
 name|schemaTool
 operator|.
-name|runSqlLine
+name|execSql
 argument_list|(
 name|scriptFile
 operator|.
 name|getPath
 argument_list|()
 argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * A mock Connection class that throws an exception out of getMetaData().    */
+class|class
+name|BadMetaDataConnection
+extends|extends
+name|DelegatingConnection
+block|{
+specifier|static
+specifier|final
+name|String
+name|FAILURE_TEXT
+init|=
+literal|"fault injected"
+decl_stmt|;
+name|BadMetaDataConnection
+parameter_list|(
+name|Connection
+name|connection
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|connection
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|DatabaseMetaData
+name|getMetaData
+parameter_list|()
+throws|throws
+name|SQLException
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+name|FAILURE_TEXT
+argument_list|)
+throw|;
+block|}
+block|}
+specifier|private
+name|void
+name|execute
+parameter_list|(
+name|SchemaToolTask
+name|task
+parameter_list|,
+name|String
+name|taskArgs
+parameter_list|)
+throws|throws
+name|HiveMetaException
+block|{
+try|try
+block|{
+name|StrTokenizer
+name|tokenizer
+init|=
+operator|new
+name|StrTokenizer
+argument_list|(
+name|argsBase
+operator|+
+name|taskArgs
+argument_list|,
+literal|' '
+argument_list|,
+literal|'\"'
+argument_list|)
+decl_stmt|;
+name|SchemaToolCommandLine
+name|cl
+init|=
+operator|new
+name|SchemaToolCommandLine
+argument_list|(
+name|tokenizer
+operator|.
+name|getTokenArray
+argument_list|()
+argument_list|,
+literal|null
+argument_list|)
+decl_stmt|;
+name|task
+operator|.
+name|setCommandLineArguments
+argument_list|(
+name|cl
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Could not parse comman line \n"
+operator|+
+name|argsBase
+operator|+
+name|taskArgs
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+name|task
+operator|.
+name|setHiveSchemaTool
+argument_list|(
+name|schemaTool
+argument_list|)
+expr_stmt|;
+name|task
+operator|.
+name|execute
+argument_list|()
 expr_stmt|;
 block|}
 block|}
