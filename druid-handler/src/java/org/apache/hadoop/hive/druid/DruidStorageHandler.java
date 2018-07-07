@@ -1868,16 +1868,8 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-comment|// Do safety checks
 if|if
 condition|(
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-operator|&&
 operator|!
 name|StringUtils
 operator|.
@@ -1957,72 +1949,15 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-condition|)
-block|{
-if|if
-condition|(
-name|dataSourceName
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Datasource name should be specified using [%s] for external tables "
-operator|+
-literal|"using Druid"
-argument_list|,
-name|Constants
-operator|.
-name|DRUID_DATA_SOURCE
-argument_list|)
-argument_list|)
-throw|;
-block|}
-comment|// If it is an external table, we are done
-return|return;
-block|}
-comment|// It is not an external table
-comment|// We need to check that datasource was not specified by user
-if|if
-condition|(
 name|dataSourceName
 operator|!=
 literal|null
 condition|)
 block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Datasource name cannot be specified using [%s] for managed tables "
-operator|+
-literal|"using Druid"
-argument_list|,
-name|Constants
-operator|.
-name|DRUID_DATA_SOURCE
-argument_list|)
-argument_list|)
-throw|;
+comment|// Already Existing datasource in Druid.
+return|return;
 block|}
-comment|// We need to check the Druid metadata
+comment|// create dataSourceName based on Hive Table name
 name|dataSourceName
 operator|=
 name|Warehouse
@@ -2034,6 +1969,9 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+comment|// NOTE: This just created druid_segments table in Druid metastore.
+comment|// This is needed for the case when hive is started before any of druid services
+comment|// and druid_segments table has not been created yet.
 name|getConnector
 argument_list|()
 operator|.
@@ -2093,6 +2031,7 @@ argument_list|,
 name|dataSourceName
 argument_list|)
 expr_stmt|;
+comment|// Check for existence of for the datasource we are going to create in druid_segments table.
 if|if
 condition|(
 name|existingDataSources
@@ -2143,114 +2082,9 @@ name|Table
 name|table
 parameter_list|)
 block|{
-if|if
-condition|(
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-condition|)
-block|{
-return|return;
-block|}
-specifier|final
-name|Path
-name|segmentDescriptorDir
-init|=
-name|getSegmentDescriptorDir
-argument_list|()
-decl_stmt|;
-try|try
-block|{
-name|List
-argument_list|<
-name|DataSegment
-argument_list|>
-name|dataSegmentList
-init|=
-name|DruidStorageHandlerUtils
-operator|.
-name|getCreatedSegments
-argument_list|(
-name|segmentDescriptorDir
-argument_list|,
-name|getConf
-argument_list|()
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|DataSegment
-name|dataSegment
-range|:
-name|dataSegmentList
-control|)
-block|{
-try|try
-block|{
-name|deleteSegment
-argument_list|(
-name|dataSegment
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|SegmentLoadingException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-name|String
-operator|.
-name|format
-argument_list|(
-literal|"Error while trying to clean the segment [%s]"
-argument_list|,
-name|dataSegment
-argument_list|)
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Exception while rollback"
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
-throw|throw
-name|Throwables
-operator|.
-name|propagate
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
-finally|finally
-block|{
 name|cleanWorkingDir
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Override
@@ -2266,19 +2100,6 @@ name|MetaException
 block|{
 if|if
 condition|(
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-condition|)
-block|{
-comment|// For external tables, we do not need to do anything else
-return|return;
-block|}
-if|if
-condition|(
 name|isKafkaStreamingTable
 argument_list|(
 name|table
@@ -2291,13 +2112,15 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
+comment|// For CTAS queries when user has explicitly specified the datasource.
+comment|// We will append the data to existing druid datasource.
 name|this
 operator|.
 name|commitInsertTable
 argument_list|(
 name|table
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -5114,18 +4937,6 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-condition|)
-block|{
-return|return;
-block|}
-if|if
-condition|(
 name|isKafkaStreamingTable
 argument_list|(
 name|table
@@ -5207,11 +5018,21 @@ argument_list|,
 literal|"DataSource name is null !"
 argument_list|)
 decl_stmt|;
+comment|// TODO: Move MetaStoreUtils.isExternalTablePurge(table) calls to a common place for all StorageHandlers
+comment|// deleteData flag passed down to StorageHandler should be true only if
+comment|// MetaStoreUtils.isExternalTablePurge(table) returns true.
 if|if
 condition|(
 name|deleteData
 operator|==
 literal|true
+operator|&&
+name|MetaStoreUtils
+operator|.
+name|isExternalTablePurge
+argument_list|(
+name|table
+argument_list|)
 condition|)
 block|{
 name|LOG
@@ -5361,24 +5182,6 @@ argument_list|,
 name|overwrite
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-condition|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Cannot insert data into external table backed by Druid"
-argument_list|)
-throw|;
-block|}
 try|try
 block|{
 comment|// Check if there segments to load

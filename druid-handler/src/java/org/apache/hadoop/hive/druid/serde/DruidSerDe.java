@@ -4105,15 +4105,8 @@ argument_list|>
 name|tableParams
 parameter_list|)
 block|{
-comment|// If Druid table is not an external table store the schema in metadata store.
 return|return
-operator|!
-name|MetaStoreUtils
-operator|.
-name|isExternal
-argument_list|(
-name|tableParams
-argument_list|)
+literal|true
 return|;
 block|}
 end_function
