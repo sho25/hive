@@ -822,6 +822,14 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|2000
+argument_list|)
+expr_stmt|;
+comment|// TODO Evil!  Need to figure out a way to remove this sleep.
 comment|//initial state is one connection
 name|int
 name|initialCount
@@ -903,7 +911,7 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|500
+literal|2000
 argument_list|)
 expr_stmt|;
 comment|// TODO Evil!  Need to figure out a way to remove this sleep.
@@ -944,7 +952,7 @@ name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|500
+literal|2000
 argument_list|)
 expr_stmt|;
 comment|// TODO Evil!  Need to figure out a way to remove this sleep.
