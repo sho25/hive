@@ -535,11 +535,26 @@ name|Lists
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestReplicationScenariosAcidTables - test replication for ACID tables  */
 end_comment
 
 begin_class
+annotation|@
+name|Ignore
+argument_list|(
+literal|"this is ignored as its taking more time. Need to analyze further to reduce the time"
+argument_list|)
 specifier|public
 class|class
 name|TestReplicationScenariosAcidTables
