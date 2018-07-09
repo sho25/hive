@@ -237,6 +237,26 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -298,6 +318,21 @@ name|HiveMetaHook
 implements|,
 name|Closeable
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|HBaseMetaHook
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 name|Configuration
 name|hbaseConf
@@ -561,11 +596,19 @@ name|tbl
 argument_list|)
 decl_stmt|;
 name|boolean
-name|isExternal
+name|isPurge
 init|=
+operator|!
 name|MetaStoreUtils
 operator|.
 name|isExternalTable
+argument_list|(
+name|tbl
+argument_list|)
+operator|||
+name|MetaStoreUtils
+operator|.
+name|isExternalTablePurge
 argument_list|(
 name|tbl
 argument_list|)
@@ -574,8 +617,32 @@ if|if
 condition|(
 name|deleteData
 operator|&&
-operator|!
-name|isExternal
+name|isPurge
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Dropping with purge all the data for data source {}"
+argument_list|,
+name|tableName
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|getHBaseAdmin
+argument_list|()
+operator|.
+name|tableExists
+argument_list|(
+name|TableName
+operator|.
+name|valueOf
+argument_list|(
+name|tableName
+argument_list|)
+argument_list|)
 condition|)
 block|{
 if|if
@@ -623,6 +690,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 catch|catch
 parameter_list|(
 name|IOException
@@ -655,16 +723,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|boolean
-name|isExternal
-init|=
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|tbl
-argument_list|)
-decl_stmt|;
 comment|// We'd like to move this to HiveMetaStore for any non-native table, but
 comment|// first we need to support storing NULL for location on a table
 if|if
@@ -774,14 +832,8 @@ argument_list|)
 argument_list|)
 condition|)
 block|{
-comment|// if it is not an external table then create one
-if|if
-condition|(
-operator|!
-name|isExternal
-condition|)
-block|{
-comment|// Create the column descriptors
+comment|// create table from Hive
+comment|// create the column descriptors
 name|tableDesc
 operator|=
 operator|new
@@ -878,42 +930,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// an external table
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"HBase table "
-operator|+
-name|tableName
-operator|+
-literal|" doesn't exist while the table is declared as an external table."
-argument_list|)
-throw|;
-block|}
-block|}
-else|else
-block|{
-if|if
-condition|(
-operator|!
-name|isExternal
-condition|)
-block|{
-throw|throw
-operator|new
-name|MetaException
-argument_list|(
-literal|"Table "
-operator|+
-name|tableName
-operator|+
-literal|" already exists within HBase; "
-operator|+
-literal|"use CREATE EXTERNAL TABLE instead to register it in Hive."
-argument_list|)
-throw|;
-block|}
+comment|// register table in Hive
 comment|// make sure the schema mapping is right
 name|tableDesc
 operator|=
@@ -1052,16 +1069,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|boolean
-name|isExternal
-init|=
-name|MetaStoreUtils
-operator|.
-name|isExternalTable
-argument_list|(
-name|table
-argument_list|)
-decl_stmt|;
 name|String
 name|tableName
 init|=
@@ -1070,12 +1077,29 @@ argument_list|(
 name|table
 argument_list|)
 decl_stmt|;
+name|boolean
+name|isPurge
+init|=
+operator|!
+name|MetaStoreUtils
+operator|.
+name|isExternalTable
+argument_list|(
+name|table
+argument_list|)
+operator|||
+name|MetaStoreUtils
+operator|.
+name|isExternalTablePurge
+argument_list|(
+name|table
+argument_list|)
+decl_stmt|;
 try|try
 block|{
 if|if
 condition|(
-operator|!
-name|isExternal
+name|isPurge
 operator|&&
 name|getHBaseAdmin
 argument_list|()
