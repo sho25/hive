@@ -1830,11 +1830,6 @@ name|SelectRule
 implements|implements
 name|NodeProcessor
 block|{
-name|boolean
-name|processSortCols
-init|=
-literal|false
-decl_stmt|;
 comment|// For bucket columns
 comment|// If all the columns match to the parent, put them in the bucket cols
 comment|// else, add empty list.
@@ -1861,6 +1856,9 @@ name|parentColNames
 parameter_list|,
 name|SelectOperator
 name|selOp
+parameter_list|,
+name|boolean
+name|processSortCols
 parameter_list|)
 block|{
 name|List
@@ -1877,23 +1875,6 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
-name|selOp
-operator|.
-name|getColumnExprMap
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
-if|if
-condition|(
-name|parentColNames
-operator|!=
-literal|null
-condition|)
-block|{
 for|for
 control|(
 name|List
@@ -1929,6 +1910,11 @@ range|:
 name|colNames
 control|)
 block|{
+comment|// Reset found
+name|found
+operator|=
+literal|false
+expr_stmt|;
 for|for
 control|(
 name|Entry
@@ -2043,8 +2029,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
-block|}
 return|return
 name|listBucketCols
 return|;
@@ -2153,6 +2137,8 @@ argument_list|(
 name|parentBucketColNames
 argument_list|,
 name|selOp
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -2188,10 +2174,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|processSortCols
-operator|=
-literal|true
-expr_stmt|;
 name|listSortCols
 operator|=
 name|getConvertedColNames
@@ -2199,6 +2181,8 @@ argument_list|(
 name|parentSortColNames
 argument_list|,
 name|selOp
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
