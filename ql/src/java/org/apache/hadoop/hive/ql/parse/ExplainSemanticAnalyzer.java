@@ -1376,6 +1376,11 @@ name|ctx
 operator|.
 name|getCboInfo
 argument_list|()
+argument_list|,
+name|ctx
+operator|.
+name|getOptimizedSql
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|work

@@ -4384,6 +4384,17 @@ argument_list|,
 name|schema
 argument_list|)
 expr_stmt|;
+comment|// save the optimized sql for the explain
+name|plan
+operator|.
+name|setOptimizedQueryString
+argument_list|(
+name|ctx
+operator|.
+name|getOptimizedSql
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|conf
 operator|.
 name|set
@@ -6149,6 +6160,11 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+name|plan
+operator|.
+name|getOptimizedQueryString
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|ret

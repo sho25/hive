@@ -4209,7 +4209,12 @@ name|config
 argument_list|,
 comment|// explainConfig
 literal|null
-comment|// cboInfo
+argument_list|,
+comment|// cboInfo,
+name|plan
+operator|.
+name|getOptimizedQueryString
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|ExplainTask
