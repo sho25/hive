@@ -118,7 +118,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Streaming Writer handles utf8 encoded Json (Strict syntax).  * Uses org.apache.hadoop.hive.serde2.JsonSerDe to process Json input  *  * NOTE: This record writer is NOT thread-safe. Use one record writer per streaming connection.  */
+comment|/**  * Streaming Writer handles utf8 encoded Json (Strict syntax).  * Uses {@link JsonSerDe} to process Json input  *  * NOTE: This record writer is NOT thread-safe. Use one record writer per streaming connection.  */
 end_comment
 
 begin_class
