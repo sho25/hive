@@ -6919,6 +6919,15 @@ argument_list|,
 literal|"Use schema evolution to convert self-describing file format's data to the schema desired by the reader."
 argument_list|)
 block|,
+name|HIVE_ORC_FORCE_POSITIONAL_SCHEMA_EVOLUTION
+argument_list|(
+literal|"orc.force.positional.evolution"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use column position based schema evolution or not (as opposed to column name based evolution)"
+argument_list|)
+block|,
 comment|/** Don't use this directly - use AcidUtils! */
 name|HIVE_TRANSACTIONAL_TABLE_SCAN
 argument_list|(
