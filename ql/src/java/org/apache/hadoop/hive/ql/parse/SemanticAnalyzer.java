@@ -75231,7 +75231,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-comment|// 1. Generate Resolved Parse tree from syntax tree
 name|LOG
 operator|.
 name|info
@@ -75239,6 +75238,13 @@ argument_list|(
 literal|"Starting Semantic Analysis"
 argument_list|)
 expr_stmt|;
+comment|// 1. Generate Resolved Parse tree from syntax tree
+name|boolean
+name|needsTransform
+init|=
+name|needsTransform
+argument_list|()
+decl_stmt|;
 comment|//change the location of position alias process here
 name|processPositionAlias
 argument_list|(
@@ -75320,12 +75326,6 @@ name|lookupInfo
 init|=
 literal|null
 decl_stmt|;
-name|boolean
-name|needsTransform
-init|=
-name|needsTransform
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
 name|isCacheEnabled
@@ -75355,6 +75355,64 @@ block|{
 return|return;
 block|}
 block|}
+name|ASTNode
+name|astForMasking
+decl_stmt|;
+if|if
+condition|(
+name|isCBOExecuted
+argument_list|()
+operator|&&
+name|needsTransform
+operator|&&
+operator|(
+name|qb
+operator|.
+name|isCTAS
+argument_list|()
+operator|||
+name|qb
+operator|.
+name|isView
+argument_list|()
+operator|||
+name|qb
+operator|.
+name|isMaterializedView
+argument_list|()
+operator|||
+name|qb
+operator|.
+name|isMultiDestQuery
+argument_list|()
+operator|)
+condition|)
+block|{
+comment|// If we use CBO and we may apply masking/filtering policies, we create a copy of the ast.
+comment|// The reason is that the generation of the operator tree may modify the initial ast,
+comment|// but if we need to parse for a second time, we would like to parse the unmodified ast.
+name|astForMasking
+operator|=
+operator|(
+name|ASTNode
+operator|)
+name|ParseDriver
+operator|.
+name|adaptor
+operator|.
+name|dupTree
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|astForMasking
+operator|=
+name|ast
+expr_stmt|;
+block|}
 comment|// 2. Gen OP Tree from resolved Parse Tree
 name|Operator
 name|sinkOp
@@ -75365,6 +75423,11 @@ name|ast
 argument_list|,
 name|plannerCtx
 argument_list|)
+decl_stmt|;
+name|boolean
+name|usesMasking
+init|=
+literal|false
 decl_stmt|;
 if|if
 condition|(
@@ -75388,13 +75451,13 @@ condition|)
 block|{
 comment|// Here we rewrite the * and also the masking table
 name|ASTNode
-name|tree
+name|rewrittenAST
 init|=
 name|rewriteASTWithMaskAndFilter
 argument_list|(
 name|tableMask
 argument_list|,
-name|ast
+name|astForMasking
 argument_list|,
 name|ctx
 operator|.
@@ -75412,11 +75475,15 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|tree
+name|astForMasking
 operator|!=
-name|ast
+name|rewrittenAST
 condition|)
 block|{
+name|usesMasking
+operator|=
+literal|true
+expr_stmt|;
 name|plannerCtx
 operator|=
 name|pcf
@@ -75439,12 +75506,12 @@ expr_stmt|;
 comment|//change the location of position alias process here
 name|processPositionAlias
 argument_list|(
-name|tree
+name|rewrittenAST
 argument_list|)
 expr_stmt|;
 name|genResolvedParseTree
 argument_list|(
-name|tree
+name|rewrittenAST
 argument_list|,
 name|plannerCtx
 argument_list|)
@@ -75471,7 +75538,7 @@ name|sinkOp
 operator|=
 name|genOPTree
 argument_list|(
-name|tree
+name|rewrittenAST
 argument_list|,
 name|plannerCtx
 argument_list|)
@@ -75479,13 +75546,16 @@ expr_stmt|;
 block|}
 block|}
 comment|// Check query results cache
-comment|// In the case that row or column masking/filtering was required, the cache must be checked
-comment|// here, after applying the masking/filtering rewrite rules to the AST.
+comment|// In the case that row or column masking/filtering was required, we do not support caching.
+comment|// TODO: Enable caching for queries with masking/filtering
 if|if
 condition|(
 name|isCacheEnabled
 operator|&&
 name|needsTransform
+operator|&&
+operator|!
+name|usesMasking
 operator|&&
 name|queryTypeCanUseCache
 argument_list|()
