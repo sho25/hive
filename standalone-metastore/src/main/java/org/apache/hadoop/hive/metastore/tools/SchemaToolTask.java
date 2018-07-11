@@ -9,11 +9,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|beeline
+name|metastore
 operator|.
-name|schematool
+name|tools
 package|;
 end_package
 
@@ -34,18 +36,19 @@ import|;
 end_import
 
 begin_class
+specifier|public
 specifier|abstract
 class|class
-name|HiveSchemaToolTask
+name|SchemaToolTask
 block|{
 specifier|protected
-name|HiveSchemaTool
+name|MetastoreSchemaTool
 name|schemaTool
 decl_stmt|;
 name|void
 name|setHiveSchemaTool
 parameter_list|(
-name|HiveSchemaTool
+name|MetastoreSchemaTool
 name|schemaTool
 parameter_list|)
 block|{
@@ -60,7 +63,7 @@ specifier|abstract
 name|void
 name|setCommandLineArguments
 parameter_list|(
-name|HiveSchemaToolCommandLine
+name|SchemaToolCommandLine
 name|cl
 parameter_list|)
 function_decl|;

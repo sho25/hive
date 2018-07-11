@@ -80364,6 +80364,16 @@ block|}
 block|}
 if|if
 condition|(
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_CTAS_EXTERNAL_TABLES
+argument_list|)
+operator|&&
 name|isExt
 condition|)
 block|{

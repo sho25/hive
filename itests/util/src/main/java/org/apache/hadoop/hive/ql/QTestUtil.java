@@ -1635,8 +1635,8 @@ name|TEST_HIVE_USER_PROPERTY
 init|=
 literal|"test.hive.user"
 decl_stmt|;
-comment|/**    * The Erasure Coding Policy to use in TestErasureCodingHDFSCliDriver.    */
-specifier|private
+comment|/**    * The default Erasure Coding Policy to use in Erasure Coding tests.    */
+specifier|public
 specifier|static
 specifier|final
 name|String

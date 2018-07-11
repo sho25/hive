@@ -10761,6 +10761,15 @@ operator|+
 literal|"\"insert directory '/HIVEFT25686/chinna/' from table\""
 argument_list|)
 block|,
+name|HIVE_CTAS_EXTERNAL_TABLES
+argument_list|(
+literal|"hive.ctas.external.tables"
+argument_list|,
+literal|true
+argument_list|,
+literal|"whether CTAS for external tables is allowed"
+argument_list|)
+block|,
 name|HIVE_INSERT_INTO_EXTERNAL_TABLES
 argument_list|(
 literal|"hive.insert.into.external.tables"

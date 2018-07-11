@@ -9,11 +9,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|beeline
+name|metastore
 operator|.
-name|schematool
+name|tools
 package|;
 end_package
 
@@ -109,9 +111,9 @@ end_comment
 
 begin_class
 class|class
-name|HiveSchemaToolTaskMoveDatabase
+name|SchemaToolTaskMoveDatabase
 extends|extends
-name|HiveSchemaToolTask
+name|SchemaToolTask
 block|{
 specifier|private
 specifier|static
@@ -123,7 +125,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|HiveSchemaToolTaskMoveDatabase
+name|SchemaToolTaskMoveDatabase
 operator|.
 name|class
 operator|.
@@ -148,7 +150,7 @@ name|Override
 name|void
 name|setCommandLineArguments
 parameter_list|(
-name|HiveSchemaToolCommandLine
+name|SchemaToolCommandLine
 name|cl
 parameter_list|)
 block|{

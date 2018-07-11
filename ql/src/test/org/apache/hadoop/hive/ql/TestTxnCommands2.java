@@ -4093,7 +4093,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_00000"
+literal|"bucket_0000[01]"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -4419,7 +4419,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_00000"
+literal|"bucket_0000[01]"
 argument_list|)
 argument_list|)
 expr_stmt|;

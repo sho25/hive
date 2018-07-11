@@ -4048,7 +4048,7 @@ name|stat
 range|:
 name|StatsSetupConst
 operator|.
-name|supportedStats
+name|SUPPORTED_STATS
 control|)
 block|{
 name|String

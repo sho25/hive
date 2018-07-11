@@ -1436,14 +1436,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -1451,7 +1451,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the mocked StorageDescriptor
@@ -1726,14 +1726,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -1741,7 +1741,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the mocked StorageDescriptor
@@ -2010,14 +2010,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -2025,7 +2025,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the mocked StorageDescriptor
@@ -2124,16 +2124,9 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
-name|testExternalNonExistentTableFails
+name|testExternalNonExistentTable
 parameter_list|()
 throws|throws
 name|Exception
@@ -2294,14 +2287,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Is an EXTERNAL table
+comment|// Is not marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -2309,7 +2302,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|true
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Return the mocked StorageDescriptor
@@ -2408,16 +2401,9 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
-name|testNonExternalExistentTable
+name|testExternalExistentTable
 parameter_list|()
 throws|throws
 name|Exception
@@ -2589,14 +2575,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Is not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -2604,7 +2590,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the mocked StorageDescriptor
@@ -2814,14 +2800,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Is not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -2829,7 +2815,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the MockInstance's Connector
@@ -3003,14 +2989,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Is not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -3018,7 +3004,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the MockInstance's Connector
@@ -3207,14 +3193,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Is not an EXTERNAL table
+comment|// Is not marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -3222,7 +3208,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|true
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// Return the MockInstance's Connector
@@ -3395,14 +3381,14 @@ argument_list|(
 name|tableName
 argument_list|)
 expr_stmt|;
-comment|// Is not an EXTERNAL table
+comment|// Is marked for purge
 name|Mockito
 operator|.
 name|when
 argument_list|(
 name|storageHandler
 operator|.
-name|isExternalTable
+name|isPurge
 argument_list|(
 name|table
 argument_list|)
@@ -3410,7 +3396,7 @@ argument_list|)
 operator|.
 name|thenReturn
 argument_list|(
-literal|false
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Return the MockInstance's Connector

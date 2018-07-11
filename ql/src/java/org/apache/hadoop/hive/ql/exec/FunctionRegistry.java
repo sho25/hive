@@ -2776,6 +2776,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"json_read"
+argument_list|,
+name|GenericUDFJsonRead
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"sq_count_check"
 argument_list|,
 name|GenericUDFSQCountCheck

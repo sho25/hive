@@ -99,16 +99,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -304,6 +294,16 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -1250,9 +1250,12 @@ argument_list|,
 name|s
 argument_list|)
 expr_stmt|;
-name|Object
+name|HCatRecord
 name|o1
 init|=
+operator|(
+name|HCatRecord
+operator|)
 name|hrsd
 operator|.
 name|deserialize
@@ -1276,9 +1279,6 @@ name|recordsEqual
 argument_list|(
 name|r
 argument_list|,
-operator|(
-name|HCatRecord
-operator|)
 name|o1
 argument_list|)
 decl_stmt|;
@@ -1316,9 +1316,12 @@ argument_list|,
 name|s2
 argument_list|)
 expr_stmt|;
-name|Object
+name|HCatRecord
 name|o2
 init|=
+operator|(
+name|HCatRecord
+operator|)
 name|jsde
 operator|.
 name|deserialize
@@ -1350,9 +1353,6 @@ name|recordsEqual
 argument_list|(
 name|r
 argument_list|,
-operator|(
-name|HCatRecord
-operator|)
 name|o2
 argument_list|,
 name|msg

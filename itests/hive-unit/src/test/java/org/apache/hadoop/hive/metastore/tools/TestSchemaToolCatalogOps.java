@@ -9,11 +9,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|beeline
+name|metastore
 operator|.
-name|schematool
+name|tools
 package|;
 end_package
 
@@ -492,7 +494,7 @@ name|TestSchemaToolCatalogOps
 block|{
 specifier|private
 specifier|static
-name|HiveSchemaTool
+name|MetastoreSchemaTool
 name|schemaTool
 decl_stmt|;
 specifier|private
@@ -614,7 +616,12 @@ expr_stmt|;
 name|schemaTool
 operator|=
 operator|new
-name|HiveSchemaTool
+name|MetastoreSchemaTool
+argument_list|()
+expr_stmt|;
+name|schemaTool
+operator|.
+name|init
 argument_list|(
 name|System
 operator|.
@@ -625,11 +632,20 @@ argument_list|,
 literal|"target/tmp"
 argument_list|)
 argument_list|,
-name|conf
-argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"-dbType"
+block|,
 literal|"derby"
+block|,
+literal|"--info"
+block|}
 argument_list|,
 literal|null
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|String
@@ -693,7 +709,7 @@ expr_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskInit
+name|SchemaToolTaskInit
 argument_list|()
 argument_list|,
 literal|"-initSchema"
@@ -800,7 +816,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskCreateCatalog
+name|SchemaToolTaskCreateCatalog
 argument_list|()
 argument_list|,
 name|argsCreate
@@ -884,7 +900,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskCreateCatalog
+name|SchemaToolTaskCreateCatalog
 argument_list|()
 argument_list|,
 name|argsCreate
@@ -934,7 +950,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskCreateCatalog
+name|SchemaToolTaskCreateCatalog
 argument_list|()
 argument_list|,
 name|argsCreate1
@@ -959,7 +975,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskCreateCatalog
+name|SchemaToolTaskCreateCatalog
 argument_list|()
 argument_list|,
 name|argsCreate2
@@ -1011,7 +1027,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskCreateCatalog
+name|SchemaToolTaskCreateCatalog
 argument_list|()
 argument_list|,
 name|argsCreate
@@ -1038,7 +1054,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskAlterCatalog
+name|SchemaToolTaskAlterCatalog
 argument_list|()
 argument_list|,
 name|argsAlter1
@@ -1099,7 +1115,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskAlterCatalog
+name|SchemaToolTaskAlterCatalog
 argument_list|()
 argument_list|,
 name|argsAlter2
@@ -1165,7 +1181,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskAlterCatalog
+name|SchemaToolTaskAlterCatalog
 argument_list|()
 argument_list|,
 name|argsAlter3
@@ -1255,7 +1271,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskAlterCatalog
+name|SchemaToolTaskAlterCatalog
 argument_list|()
 argument_list|,
 name|argsAlter
@@ -1312,7 +1328,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskCreateCatalog
+name|SchemaToolTaskCreateCatalog
 argument_list|()
 argument_list|,
 name|argsCreate
@@ -1333,7 +1349,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskAlterCatalog
+name|SchemaToolTaskAlterCatalog
 argument_list|()
 argument_list|,
 name|argsAlter
@@ -1523,7 +1539,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveDatabase
+name|SchemaToolTaskMoveDatabase
 argument_list|()
 argument_list|,
 name|argsMoveDB
@@ -1795,7 +1811,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveDatabase
+name|SchemaToolTaskMoveDatabase
 argument_list|()
 argument_list|,
 name|argsMoveDB
@@ -1908,7 +1924,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveDatabase
+name|SchemaToolTaskMoveDatabase
 argument_list|()
 argument_list|,
 name|argsMoveDB
@@ -1966,7 +1982,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveDatabase
+name|SchemaToolTaskMoveDatabase
 argument_list|()
 argument_list|,
 name|argsMoveDB
@@ -2171,7 +2187,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveTable
+name|SchemaToolTaskMoveTable
 argument_list|()
 argument_list|,
 name|argsMoveTable
@@ -2421,7 +2437,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveTable
+name|SchemaToolTaskMoveTable
 argument_list|()
 argument_list|,
 name|argsMoveTable
@@ -2662,7 +2678,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveTable
+name|SchemaToolTaskMoveTable
 argument_list|()
 argument_list|,
 name|argsMoveTable
@@ -2819,7 +2835,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveTable
+name|SchemaToolTaskMoveTable
 argument_list|()
 argument_list|,
 name|argsMoveTable
@@ -2888,7 +2904,7 @@ decl_stmt|;
 name|execute
 argument_list|(
 operator|new
-name|HiveSchemaToolTaskMoveTable
+name|SchemaToolTaskMoveTable
 argument_list|()
 argument_list|,
 name|argsMoveTable
@@ -2952,7 +2968,7 @@ specifier|static
 name|void
 name|execute
 parameter_list|(
-name|HiveSchemaToolTask
+name|SchemaToolTask
 name|task
 parameter_list|,
 name|String
@@ -2978,16 +2994,18 @@ argument_list|,
 literal|'\"'
 argument_list|)
 decl_stmt|;
-name|HiveSchemaToolCommandLine
+name|SchemaToolCommandLine
 name|cl
 init|=
 operator|new
-name|HiveSchemaToolCommandLine
+name|SchemaToolCommandLine
 argument_list|(
 name|tokenizer
 operator|.
 name|getTokenArray
 argument_list|()
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|task

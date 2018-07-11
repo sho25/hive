@@ -9,11 +9,13 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
-name|beeline
+name|metastore
 operator|.
-name|schematool
+name|tools
 package|;
 end_package
 
@@ -316,24 +318,6 @@ operator|.
 name|tools
 operator|.
 name|HiveSchemaHelper
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|tools
-operator|.
-name|HiveSchemaHelper
 operator|.
 name|MetaStoreConnectionInfo
 import|;
@@ -413,9 +397,9 @@ end_comment
 
 begin_class
 class|class
-name|HiveSchemaToolTaskValidate
+name|SchemaToolTaskValidate
 extends|extends
-name|HiveSchemaToolTask
+name|SchemaToolTask
 block|{
 specifier|private
 specifier|static
@@ -427,7 +411,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|HiveSchemaToolTaskValidate
+name|SchemaToolTaskValidate
 operator|.
 name|class
 operator|.
@@ -440,7 +424,7 @@ name|Override
 name|void
 name|setCommandLineArguments
 parameter_list|(
-name|HiveSchemaToolCommandLine
+name|SchemaToolCommandLine
 name|cl
 parameter_list|)
 block|{
@@ -1408,9 +1392,7 @@ name|dbTables
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|ResultSet
@@ -1584,9 +1566,7 @@ name|schemaTables
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|List
@@ -1597,9 +1577,7 @@ name|subScripts
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|String
@@ -1925,9 +1903,7 @@ name|subs
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|NestedScriptParser
@@ -1969,7 +1945,6 @@ argument_list|(
 name|path
 argument_list|)
 argument_list|)
-init|;
 init|)
 block|{
 name|String

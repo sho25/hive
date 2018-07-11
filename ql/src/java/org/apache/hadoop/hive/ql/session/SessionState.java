@@ -3080,13 +3080,6 @@ argument_list|(
 name|startSs
 argument_list|)
 expr_stmt|;
-synchronized|synchronized
-init|(
-name|SessionState
-operator|.
-name|class
-init|)
-block|{
 if|if
 condition|(
 operator|!
@@ -3103,7 +3096,6 @@ argument_list|)
 condition|)
 block|{
 return|return;
-block|}
 block|}
 if|if
 condition|(

@@ -1300,7 +1300,7 @@ name|statType
 range|:
 name|StatsSetupConst
 operator|.
-name|statsRequireCompute
+name|STATS_REQUIRE_COMPUTE
 control|)
 block|{
 name|String
@@ -2519,7 +2519,7 @@ name|statType
 range|:
 name|StatsSetupConst
 operator|.
-name|supportedStats
+name|SUPPORTED_STATS
 control|)
 block|{
 name|String

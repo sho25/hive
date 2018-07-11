@@ -21,15 +21,21 @@ end_package
 
 begin_import
 import|import
-name|com
+name|java
 operator|.
-name|google
+name|util
 operator|.
-name|common
+name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|collect
+name|util
 operator|.
-name|Lists
+name|List
 import|;
 end_import
 
@@ -253,21 +259,15 @@ end_import
 
 begin_import
 import|import
-name|java
+name|com
 operator|.
-name|util
+name|google
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|common
 operator|.
-name|util
+name|collect
 operator|.
-name|List
+name|Lists
 import|;
 end_import
 
@@ -395,6 +395,10 @@ argument_list|(
 name|ClientCapability
 operator|.
 name|TEST_CAPABILITY
+argument_list|,
+name|ClientCapability
+operator|.
+name|INSERT_ONLY_TABLES
 argument_list|)
 argument_list|)
 argument_list|)

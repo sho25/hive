@@ -91,13 +91,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|com
 operator|.
-name|codehaus
+name|fasterxml
 operator|.
 name|jackson
 operator|.
-name|annotate
+name|annotation
 operator|.
 name|JsonProperty
 import|;
@@ -414,13 +414,17 @@ name|tableType
 operator|!=
 literal|null
 condition|)
+block|{
 return|return
 name|tableType
 return|;
+block|}
 else|else
+block|{
 return|return
 literal|""
 return|;
+block|}
 block|}
 annotation|@
 name|Override

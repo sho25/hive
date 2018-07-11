@@ -2448,7 +2448,9 @@ operator|new
 name|Reader
 operator|.
 name|Options
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 operator|.
 name|range
 argument_list|(
@@ -13024,7 +13026,9 @@ operator|new
 name|Reader
 operator|.
 name|Options
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 operator|.
 name|schema
 argument_list|(
@@ -14662,7 +14666,9 @@ operator|new
 name|Reader
 operator|.
 name|Options
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 argument_list|,
 name|deltaDirectory
 argument_list|,

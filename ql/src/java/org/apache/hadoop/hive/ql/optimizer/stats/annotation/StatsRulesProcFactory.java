@@ -10473,6 +10473,8 @@ argument_list|(
 name|newNumRows
 argument_list|,
 name|newDataSize
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|wcStats

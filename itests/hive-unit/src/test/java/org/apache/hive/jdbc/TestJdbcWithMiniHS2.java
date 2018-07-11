@@ -9166,7 +9166,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Get Detailed Table Information via jdbc    */
-specifier|private
+specifier|static
 name|String
 name|getDetailedTableDescription
 parameter_list|(

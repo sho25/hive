@@ -187,7 +187,7 @@ name|LogFactory
 operator|.
 name|getLog
 argument_list|(
-name|JMXJsonServlet
+name|LlapServlet
 operator|.
 name|class
 argument_list|)

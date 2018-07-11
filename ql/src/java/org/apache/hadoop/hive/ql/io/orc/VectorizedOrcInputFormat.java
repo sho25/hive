@@ -682,7 +682,9 @@ operator|new
 name|Reader
 operator|.
 name|Options
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 operator|.
 name|schema
 argument_list|(
