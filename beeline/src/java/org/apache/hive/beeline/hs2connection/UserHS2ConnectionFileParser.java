@@ -300,6 +300,10 @@ name|add
 argument_list|(
 name|ETC_HIVE_CONF_LOCATION
 operator|+
+name|File
+operator|.
+name|separator
+operator|+
 name|DEFAULT_CONNECTION_CONFIG_FILE_NAME
 argument_list|)
 expr_stmt|;
