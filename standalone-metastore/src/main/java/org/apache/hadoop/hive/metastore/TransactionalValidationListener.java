@@ -1825,22 +1825,8 @@ name|transactional
 argument_list|)
 condition|)
 block|{
-comment|// just drop transactional=false.  For backward compatibility in case someone has scripts
-comment|// with transactional=false
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"'transactional'='false' is no longer a valid property and will be ignored: "
-operator|+
-name|Warehouse
-operator|.
-name|getQualifiedName
-argument_list|(
-name|newTable
-argument_list|)
-argument_list|)
-expr_stmt|;
+comment|// just drop transactional=false - absence of 'transactional' property is equivalent to
+comment|// transactional=false
 return|return;
 block|}
 if|if
