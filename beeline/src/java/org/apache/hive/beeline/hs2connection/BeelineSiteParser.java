@@ -318,6 +318,10 @@ name|add
 argument_list|(
 name|ETC_HIVE_CONF_LOCATION
 operator|+
+name|File
+operator|.
+name|separator
+operator|+
 name|DEFAULT_BEELINE_SITE_FILE_NAME
 argument_list|)
 expr_stmt|;
