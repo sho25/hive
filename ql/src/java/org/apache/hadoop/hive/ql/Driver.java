@@ -12475,6 +12475,14 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
+name|CacheEntry
+name|cacheEntry
+init|=
+name|cacheUsage
+operator|.
+name|getCacheEntry
+argument_list|()
+decl_stmt|;
 name|boolean
 name|savedToCache
 init|=
@@ -12485,10 +12493,7 @@ argument_list|()
 operator|.
 name|setEntryValid
 argument_list|(
-name|cacheUsage
-operator|.
-name|getCacheEntry
-argument_list|()
+name|cacheEntry
 argument_list|,
 name|plan
 operator|.
@@ -12503,9 +12508,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"savedToCache: {}"
+literal|"savedToCache: {} ({})"
 argument_list|,
 name|savedToCache
+argument_list|,
+name|cacheEntry
 argument_list|)
 expr_stmt|;
 if|if

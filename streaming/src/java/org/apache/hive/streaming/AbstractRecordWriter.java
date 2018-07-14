@@ -1069,9 +1069,17 @@ argument_list|,
 name|conf
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Created new filesystem instance: {}"
 argument_list|,
@@ -1085,6 +1093,7 @@ name|fs
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1595,7 +1604,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Memory monitorings settings - autoFlush: {} memoryUsageThreshold: {} ingestSizeThreshold: {}"
+literal|"Memory monitoring settings - autoFlush: {} memoryUsageThreshold: {} ingestSizeThreshold: {}"
 argument_list|,
 name|autoFlush
 argument_list|,
@@ -2421,11 +2430,20 @@ name|StreamingIOFailure
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|logStats
 argument_list|(
 literal|"Stats before flush:"
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|Map
@@ -2447,9 +2465,17 @@ name|entrySet
 argument_list|()
 control|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Flushing record updater for partitions: {}"
 argument_list|,
@@ -2459,6 +2485,7 @@ name|getKey
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|RecordUpdater
@@ -2489,11 +2516,20 @@ name|ingestSizeBytes
 operator|=
 literal|0
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|logStats
 argument_list|(
 literal|"Stats after flush:"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -2531,11 +2567,20 @@ name|partition
 init|=
 literal|null
 decl_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|logStats
 argument_list|(
 literal|"Stats before close:"
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|Map
@@ -2564,15 +2609,24 @@ operator|.
 name|getKey
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Closing updater for partitions: {}"
 argument_list|,
 name|partition
 argument_list|)
 expr_stmt|;
+block|}
 for|for
 control|(
 name|RecordUpdater
@@ -2647,11 +2701,20 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|logStats
 argument_list|(
 literal|"Stats after close:"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|haveError
@@ -3053,9 +3116,17 @@ operator|>
 name|ingestSizeThreshold
 condition|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Low memory canary is set and ingestion size (buffered) threshold '{}' exceeded. "
 operator|+
@@ -3069,6 +3140,7 @@ name|ingestSizeThreshold
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|flush
 argument_list|()
 expr_stmt|;
@@ -3142,6 +3214,14 @@ operator|>
 name|memoryUsageThreshold
 condition|)
 block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -3160,6 +3240,7 @@ name|ingestSizeThreshold
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|flush
 argument_list|()
 expr_stmt|;
@@ -3407,9 +3488,17 @@ name|getName
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Created partition {} for table {}"
 argument_list|,
@@ -3422,11 +3511,20 @@ name|fullyQualifiedTableName
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 else|else
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Partition {} already exists for table {}"
 argument_list|,
@@ -3438,6 +3536,7 @@ argument_list|,
 name|fullyQualifiedTableName
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|destLocation
 operator|=
@@ -3763,7 +3862,7 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"{} [record-updaters: {}, partitions: {}, buffered-records: {} total-records: {} "
 operator|+

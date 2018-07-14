@@ -1365,8 +1365,19 @@ name|toString
 parameter_list|()
 block|{
 return|return
-literal|"CacheEntry query: ["
-operator|+
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"CacheEntry#%s query: [ %s ], status: %s, location: %s, size: %d"
+argument_list|,
+name|System
+operator|.
+name|identityHashCode
+argument_list|(
+name|this
+argument_list|)
+argument_list|,
 name|getQueryInfo
 argument_list|()
 operator|.
@@ -1375,18 +1386,13 @@ argument_list|()
 operator|.
 name|getQueryText
 argument_list|()
-operator|+
-literal|"], status: "
-operator|+
+argument_list|,
 name|status
-operator|+
-literal|", location: "
-operator|+
+argument_list|,
 name|cachedResultsPath
-operator|+
-literal|", size: "
-operator|+
+argument_list|,
 name|size
+argument_list|)
 return|;
 block|}
 specifier|public
@@ -1697,7 +1703,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Waiting on pending cacheEntry"
+literal|"Waiting on pending cacheEntry: {}"
+argument_list|,
+name|this
 argument_list|)
 expr_stmt|;
 name|long

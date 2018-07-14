@@ -2733,6 +2733,14 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|LOG
+operator|.
+name|isInfoEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|info
@@ -2746,6 +2754,7 @@ name|getConnectionStats
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override
