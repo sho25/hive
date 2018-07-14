@@ -119,6 +119,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ValidWriteIdList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -2787,6 +2803,18 @@ operator|.
 name|setShared
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|output
+operator|.
+name|isTxnAnalyze
+argument_list|()
+condition|)
+block|{
+comment|// Analyze needs txn components to be present, otherwise an aborted analyze write ID
+comment|// might be rolled under the watermark by compactor while stats written by it are
+comment|// still present.
 name|compBuilder
 operator|.
 name|setOperationType
@@ -2796,6 +2824,7 @@ operator|.
 name|NO_TXN
 argument_list|)
 expr_stmt|;
+block|}
 break|break;
 case|case
 name|UPDATE

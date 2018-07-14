@@ -2023,8 +2023,17 @@ argument_list|()
 operator|.
 name|isSetWriteId
 argument_list|()
+operator|!=
+name|ft
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|isSetWriteId
+argument_list|()
 condition|)
 block|{
+comment|// No need to compare this field.
 name|ft
 operator|.
 name|getTTable
@@ -2032,13 +2041,17 @@ argument_list|()
 operator|.
 name|setWriteId
 argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
 name|tbl
 operator|.
 name|getTTable
 argument_list|()
 operator|.
-name|getWriteId
-argument_list|()
+name|setWriteId
+argument_list|(
+literal|0
 argument_list|)
 expr_stmt|;
 block|}

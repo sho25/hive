@@ -2091,11 +2091,6 @@ name|getValues
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|isThriftClient
-condition|)
-block|{
 comment|// since we are using thrift, 'part' will not have the create time and
 comment|// last DDL time set since it does not get updated in the add_partition()
 comment|// call - likewise part2 and part3 - set it correctly so that equals check
@@ -2109,6 +2104,8 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
 name|adjust
@@ -2120,6 +2117,8 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
 name|adjust
@@ -2131,9 +2130,10 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
-block|}
 name|assertTrue
 argument_list|(
 literal|"Partitions are not same"
@@ -3118,11 +3118,6 @@ name|mpart3
 argument_list|)
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isThriftClient
-condition|)
-block|{
 comment|// do DDL time munging if thrift mode
 name|adjust
 argument_list|(
@@ -3133,6 +3128,8 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
 name|adjust
@@ -3144,6 +3141,8 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
 name|adjust
@@ -3155,9 +3154,10 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
-block|}
 name|verifyPartitionsPublished
 argument_list|(
 name|client
@@ -3340,11 +3340,6 @@ name|mpart5
 argument_list|)
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isThriftClient
-condition|)
-block|{
 comment|// do DDL time munging if thrift mode
 name|adjust
 argument_list|(
@@ -3355,9 +3350,10 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
+argument_list|,
+name|isThriftClient
 argument_list|)
 expr_stmt|;
-block|}
 name|verifyPartitionsPublished
 argument_list|(
 name|client
@@ -13562,6 +13558,9 @@ name|dbName
 parameter_list|,
 name|String
 name|tblName
+parameter_list|,
+name|boolean
+name|isThriftClient
 parameter_list|)
 throws|throws
 name|TException
@@ -13583,6 +13582,11 @@ name|getValues
 argument_list|()
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|isThriftClient
+condition|)
+block|{
 name|part
 operator|.
 name|setCreateTime
@@ -13622,6 +13626,17 @@ operator|.
 name|getCreateTime
 argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+name|part
+operator|.
+name|setWriteId
+argument_list|(
+name|part_get
+operator|.
+name|getWriteId
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

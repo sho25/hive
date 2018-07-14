@@ -13908,6 +13908,15 @@ return|return
 literal|null
 return|;
 block|}
+specifier|public
+name|WriteEntity
+name|getAcidAnalyzeTable
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 block|}
 end_class
 

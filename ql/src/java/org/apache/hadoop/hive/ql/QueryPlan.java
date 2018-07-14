@@ -185,6 +185,28 @@ name|org
 operator|.
 name|apache
 operator|.
+name|curator
+operator|.
+name|shaded
+operator|.
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|collect
+operator|.
+name|Lists
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -866,6 +888,11 @@ decl_stmt|;
 comment|// Note: both full-ACID and insert-only sinks.
 specifier|private
 specifier|final
+name|WriteEntity
+name|acidAnalyzeTable
+decl_stmt|;
+specifier|private
+specifier|final
 name|DDLDesc
 operator|.
 name|DDLDescWithWriteId
@@ -927,6 +954,12 @@ expr_stmt|;
 name|this
 operator|.
 name|acidDdlDesc
+operator|=
+literal|null
+expr_stmt|;
+name|this
+operator|.
+name|acidAnalyzeTable
 operator|=
 literal|null
 expr_stmt|;
@@ -1131,6 +1164,7 @@ name|resultSchema
 operator|=
 name|resultSchema
 expr_stmt|;
+comment|// TODO: all this ACID stuff should be in some sub-object
 name|this
 operator|.
 name|acidResourcesInQuery
@@ -1158,6 +1192,15 @@ operator|.
 name|getAcidDdlDesc
 argument_list|()
 expr_stmt|;
+name|this
+operator|.
+name|acidAnalyzeTable
+operator|=
+name|sem
+operator|.
+name|getAcidAnalyzeTable
+argument_list|()
+expr_stmt|;
 block|}
 comment|/**    * @return true if any acid resources are read/written    */
 specifier|public
@@ -1167,6 +1210,15 @@ parameter_list|()
 block|{
 return|return
 name|acidResourcesInQuery
+return|;
+block|}
+specifier|public
+name|WriteEntity
+name|getAcidAnalyzeTable
+parameter_list|()
+block|{
+return|return
+name|acidAnalyzeTable
 return|;
 block|}
 comment|/**    * @return Collection of FileSinkDesc representing writes to Acid resources    */

@@ -8675,7 +8675,7 @@ block|}
 comment|// Write the current set of valid write ids for the operated acid tables into the conf file so
 comment|// that it can be read by the input format.
 specifier|private
-name|void
+name|ValidTxnWriteIdList
 name|recordValidWriteIds
 parameter_list|(
 name|HiveTxnManager
@@ -8741,6 +8741,15 @@ argument_list|(
 name|plan
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"TODO# txnTables "
+operator|+
+name|txnTables
+argument_list|)
+expr_stmt|;
 name|ValidTxnWriteIdList
 name|txnWriteIds
 init|=
@@ -8980,6 +8989,9 @@ name|getCurrentTxnId
 argument_list|()
 argument_list|)
 expr_stmt|;
+return|return
+name|txnWriteIds
+return|;
 block|}
 comment|// Make the list of transactional tables list which are getting read or written by current txn
 specifier|private
@@ -9617,8 +9629,44 @@ throw|;
 block|}
 block|}
 block|}
-comment|// Note: the sinks and DDL cannot coexist at this time; but if they could we would
-comment|//       need to make sure we don't get two write IDs for the same table.
+if|if
+condition|(
+name|plan
+operator|.
+name|getAcidAnalyzeTable
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Allocate write ID for the table being analyzed.
+name|Table
+name|t
+init|=
+name|plan
+operator|.
+name|getAcidAnalyzeTable
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
+decl_stmt|;
+name|queryTxnMgr
+operator|.
+name|getTableWriteId
+argument_list|(
+name|t
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|t
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|DDLDescWithWriteId
 name|acidDdlDesc
 init|=
@@ -9627,8 +9675,9 @@ operator|.
 name|getAcidDdlDesc
 argument_list|()
 decl_stmt|;
-if|if
-condition|(
+name|boolean
+name|hasAcidDdl
+init|=
 name|acidDdlDesc
 operator|!=
 literal|null
@@ -9637,6 +9686,10 @@ name|acidDdlDesc
 operator|.
 name|mayNeedWriteId
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|hasAcidDdl
 condition|)
 block|{
 name|String
@@ -9729,6 +9782,8 @@ name|plan
 operator|.
 name|hasAcidResourcesInQuery
 argument_list|()
+operator|||
+name|hasAcidDdl
 condition|)
 block|{
 name|recordValidWriteIds

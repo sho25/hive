@@ -1619,6 +1619,16 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+operator|+
+literal|"; expected "
+operator|+
+name|expected
+index|[
+name|i
+index|]
+index|[
+literal|0
+index|]
 argument_list|,
 name|rs
 operator|.

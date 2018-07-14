@@ -1940,6 +1940,16 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
+name|partAdded
+operator|.
+name|setWriteId
+argument_list|(
+name|part
+operator|.
+name|getWriteId
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|validateAddPartition
 argument_list|(
 name|part

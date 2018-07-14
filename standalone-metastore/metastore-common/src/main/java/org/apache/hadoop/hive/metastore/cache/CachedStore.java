@@ -3317,6 +3317,7 @@ argument_list|(
 literal|"getTableColumnStatistics"
 argument_list|)
 expr_stmt|;
+comment|// TODO## should this take write ID into account? or at least cache write ID to verify?
 name|ColumnStatistics
 name|tableColStats
 init|=
@@ -10354,6 +10355,15 @@ name|updateTableColumnStatistics
 parameter_list|(
 name|ColumnStatistics
 name|colStats
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -10372,6 +10382,12 @@ operator|.
 name|updateTableColumnStatistics
 argument_list|(
 name|colStats
+argument_list|,
+name|txnId
+argument_list|,
+name|validWriteIds
+argument_list|,
+name|writeId
 argument_list|)
 decl_stmt|;
 if|if
@@ -10902,6 +10918,15 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -10922,6 +10947,12 @@ argument_list|(
 name|colStats
 argument_list|,
 name|partVals
+argument_list|,
+name|txnId
+argument_list|,
+name|validWriteIds
+argument_list|,
+name|writeId
 argument_list|)
 decl_stmt|;
 if|if

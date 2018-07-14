@@ -3246,13 +3246,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionNullDbName
@@ -3286,6 +3279,8 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partition
@@ -3302,6 +3297,22 @@ literal|3
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -3364,13 +3375,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionNullTblName
@@ -3404,6 +3408,8 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partition
@@ -3420,6 +3426,22 @@ literal|3
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -4218,13 +4240,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionWithEnvironmentCtxNullDbName
@@ -4258,6 +4273,8 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partition
@@ -4278,6 +4295,22 @@ name|EnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -4344,13 +4377,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionWithEnvironmentCtxNullTblName
@@ -4384,6 +4410,8 @@ operator|-
 literal|1
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partition
@@ -4404,6 +4432,22 @@ name|EnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -5413,13 +5457,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionsNullDbName
@@ -5455,6 +5492,8 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partitions
@@ -5471,6 +5510,22 @@ name|part
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -6823,13 +6878,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testAlterPartitionsWithEnvironmentCtxNullDbName
@@ -6865,6 +6913,8 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|alter_partitions
@@ -6885,6 +6935,22 @@ name|EnvironmentContext
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"Expected exception"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test

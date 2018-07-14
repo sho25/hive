@@ -1863,6 +1863,15 @@ name|updateTableColumnStatistics
 parameter_list|(
 name|ColumnStatistics
 name|colStats
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -1873,7 +1882,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/** Persists the given column statistics object to the metastore    * @param statsObj object to persist    * @param partVals partition values to persist the stats for    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    */
+comment|/** Persists the given column statistics object to the metastore    * @param statsObj object to persist    * @param partVals partition values to persist the stats for    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    * @throws TException    */
 name|boolean
 name|updatePartitionColumnStatistics
 parameter_list|(
@@ -1885,6 +1894,15 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 throws|throws
 name|NoSuchObjectException

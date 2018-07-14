@@ -2621,6 +2621,33 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+name|void
+name|truncateTable
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
+parameter_list|,
+name|long
+name|writeId
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 comment|/**    * Truncate the table/partitions in the DEFAULT database.    * @param catName catalog name    * @param dbName    *          The db to which the table to be truncate belongs to    * @param tableName    *          The table to truncate    * @param partNames    *          List of partitions to truncate. NULL will truncate the whole table/all partitions    * @throws MetaException Failure in the RDBMS or storage    * @throws TException Thrift transport exception    */
 name|void
 name|truncateTable
@@ -4389,6 +4416,8 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * Alter a table.    * @param databaseName database name    * @param tblName table name    * @param table new table object, should be complete representation of the table, not just the    *              things you want to change.    * @param environmentContext options for the alter.    * @throws InvalidOperationException something is wrong with the new table object or an    * operation was attempted that is not allowed (such as changing partition columns).    * @throws MetaException something went wrong, usually in the RDBMS    * @throws TException general thrift exception    */
+annotation|@
+name|Deprecated
 name|void
 name|alter_table_with_environmentContext
 parameter_list|(
@@ -4403,6 +4432,37 @@ name|table
 parameter_list|,
 name|EnvironmentContext
 name|environmentContext
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+name|void
+name|alter_table
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|databaseName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Table
+name|table
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIdList
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -5111,6 +5171,8 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * updates a partition to new partition    * @param catName catalog name    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+annotation|@
+name|Deprecated
 specifier|default
 name|void
 name|alter_partition
@@ -5149,6 +5211,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * updates a partition to new partition    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+annotation|@
+name|Deprecated
 name|void
 name|alter_partition
 parameter_list|(
@@ -5163,6 +5227,34 @@ name|newPart
 parameter_list|,
 name|EnvironmentContext
 name|environmentContext
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+name|void
+name|alter_partition
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|Partition
+name|newPart
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|writeIdList
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -5198,6 +5290,8 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * updates a list of partitions    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+annotation|@
+name|Deprecated
 name|void
 name|alter_partitions
 parameter_list|(
@@ -5221,6 +5315,8 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * updates a list of partitions    *    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @param environmentContext key value pairs to pass to alter function.    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+annotation|@
+name|Deprecated
 name|void
 name|alter_partitions
 parameter_list|(
@@ -5281,6 +5377,8 @@ throws|,
 name|TException
 function_decl|;
 comment|/**    * updates a list of partitions    * @param catName catalog name.    * @param dbName    *          database of the old partition    * @param tblName    *          table name of the old partition    * @param newParts    *          list of partitions    * @throws InvalidOperationException    *           if the old partition does not exist    * @throws MetaException    *           if error in updating metadata    * @throws TException    *           if error in communicating with metastore server    */
+annotation|@
+name|Deprecated
 specifier|default
 name|void
 name|alter_partitions

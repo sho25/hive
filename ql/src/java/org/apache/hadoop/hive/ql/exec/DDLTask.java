@@ -25056,9 +25056,6 @@ name|name
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Note: in the old default overloads that I've removed, "transactional" was true for tables,
-comment|//       but false for partitions. Seems to be ok here because we are not updating
-comment|//       partition-stats-related stuff from this call (alterTable).
 if|if
 condition|(
 name|allPartitions
@@ -25090,6 +25087,27 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// Note: this is necessary for UPDATE_STATISTICS command, that operates via ADDPROPS (why?).
+comment|//       For any other updates, we don't want to do txn check on partitions when altering table.
+name|boolean
+name|isTxn
+init|=
+name|alterTbl
+operator|.
+name|getPartSpec
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|alterTbl
+operator|.
+name|getOp
+argument_list|()
+operator|==
+name|AlterTableTypes
+operator|.
+name|ADDPROPS
+decl_stmt|;
 name|db
 operator|.
 name|alterPartitions
@@ -25108,7 +25126,7 @@ name|allPartitions
 argument_list|,
 name|environmentContext
 argument_list|,
-literal|false
+name|isTxn
 argument_list|)
 expr_stmt|;
 block|}
