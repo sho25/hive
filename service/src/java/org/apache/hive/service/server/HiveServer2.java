@@ -599,24 +599,6 @@ name|hive
 operator|.
 name|common
 operator|.
-name|cli
-operator|.
-name|CommonCliOptions
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|metrics
 operator|.
 name|common
@@ -7504,26 +7486,59 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|propKey
+literal|"hive.log.file"
 operator|.
-name|equalsIgnoreCase
+name|equals
 argument_list|(
+name|propKey
+argument_list|)
+operator|||
+literal|"hive.log.dir"
+operator|.
+name|equals
+argument_list|(
+name|propKey
+argument_list|)
+operator|||
 literal|"hive.root.logger"
+operator|.
+name|equals
+argument_list|(
+name|propKey
 argument_list|)
 condition|)
 block|{
-name|CommonCliOptions
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Logs will be split in two "
+operator|+
+literal|"files if the commandline argument "
+operator|+
+name|propKey
+operator|+
+literal|" is "
+operator|+
+literal|"used. To prevent this use to HADOOP_CLIENT_OPTS -D"
+operator|+
+name|propKey
+operator|+
+literal|"="
+operator|+
+name|confProps
 operator|.
-name|splitAndSetLogger
+name|getProperty
 argument_list|(
 name|propKey
-argument_list|,
-name|confProps
 argument_list|)
-expr_stmt|;
+operator|+
+literal|" or use the set the value in the configuration file"
+operator|+
+literal|" (see HIVE-19886)"
+argument_list|)
+throw|;
 block|}
-else|else
-block|{
 name|System
 operator|.
 name|setProperty
@@ -7538,7 +7553,6 @@ name|propKey
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|// Process --help
 if|if
