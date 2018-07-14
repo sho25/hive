@@ -185,7 +185,7 @@ expr_stmt|;
 comment|// Allocated by caller.
 name|isUTC
 operator|=
-literal|true
+literal|false
 expr_stmt|;
 block|}
 comment|/**    * Return the number of rows.    * @return    */
