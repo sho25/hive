@@ -19,6 +19,22 @@ name|parse
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|StringInternUtils
+import|;
+end_import
+
 begin_comment
 comment|/**  * ASTNodeOrigin contains contextual information about the object from whose  * definition a particular ASTNode originated. For example, suppose a view v is  * defined as<code>select x+1 as y from t</code>, and we're processing a query  *<code>select v1.y from v as v1</code>, and there's a type-checking problem  * with the expression<code>x+1</code> due to an ALTER TABLE on t subsequent to  * the creation of v. Then, when reporting the error, we want to provide the  * parser location with respect to the definition of v (rather than with respect  * to the top-level query, since that represents a completely different  * "parser coordinate system").  *   *<p>  *   * So, when expanding the definition of v while analyzing the top-level query,  * we tag each ASTNode with a reference to an ASTNodeOrign describing v and its  * usage within the query.  */
 end_comment
@@ -88,7 +104,12 @@ name|this
 operator|.
 name|objectDefinition
 operator|=
+name|StringInternUtils
+operator|.
+name|internIfNotNull
+argument_list|(
 name|objectDefinition
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
