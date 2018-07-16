@@ -220,6 +220,30 @@ parameter_list|()
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Callback function that is invoked by the {@link org.apache.hadoop.hive.ql.Driver} when a    * query has completed.    *    * @param queryId the id of the query that completed    */
+name|void
+name|onQueryCompletion
+parameter_list|(
+name|String
+name|queryId
+parameter_list|)
+function_decl|;
+comment|/**    * Callback function that is invoked by the {@link org.apache.hadoop.hive.ql.Driver} when a    * query has been submitted.    *    * @param queryId the id of the query that completed    */
+name|void
+name|onQuerySubmission
+parameter_list|(
+name|String
+name|queryId
+parameter_list|)
+function_decl|;
+comment|/**    * Checks if a session has timed out, and closes if the session if the timeout has occurred;    * returns true if the session timed out, and false otherwise.    *    * @param sessionTimeout the session timeout    *    * @return true if the session timed out and was closed, false otherwise    */
+name|boolean
+name|triggerTimeout
+parameter_list|(
+name|long
+name|sessionTimeout
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
