@@ -2194,37 +2194,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* dateTimeStringTypeInfo "
-operator|+
-name|dateTimeStringTypeInfo1
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" dateTimeStringTypeInfo2 "
-operator|+
-name|dateTimeStringTypeInfo2
-operator|+
-literal|" dateDiffTestMode ROW_MODE"
-operator|+
-literal|" columnScalarMode "
-operator|+
-name|columnScalarMode
-operator|+
-literal|" exprDesc "
-operator|+
-name|exprDesc
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* dateTimeStringTypeInfo " + dateTimeStringTypeInfo1.toString() +         " dateTimeStringTypeInfo2 " + dateTimeStringTypeInfo2 +         " dateDiffTestMode ROW_MODE" +         " columnScalarMode " + columnScalarMode +         " exprDesc " + exprDesc.toString());     */
 name|HiveConf
 name|hiveConf
 init|=

@@ -686,6 +686,15 @@ index|[]
 name|randomRows
 parameter_list|)
 block|{
+specifier|final
+name|boolean
+name|allowNull
+init|=
+name|vectorRandomRowSource
+operator|.
+name|getAllowNull
+argument_list|()
+decl_stmt|;
 name|List
 argument_list|<
 name|VectorBatchPattern
@@ -859,12 +868,17 @@ condition|(
 literal|true
 condition|)
 block|{
-comment|// Repeated NULL permutations.
 name|long
 name|columnPermutation
 init|=
 literal|1
 decl_stmt|;
+if|if
+condition|(
+name|allowNull
+condition|)
+block|{
+comment|// Repeated NULL permutations.
 while|while
 condition|(
 literal|true
@@ -1021,6 +1035,7 @@ name|rowIndex
 operator|=
 name|rowLimit
 expr_stmt|;
+block|}
 block|}
 comment|// Repeated non-NULL permutations.
 name|columnPermutation

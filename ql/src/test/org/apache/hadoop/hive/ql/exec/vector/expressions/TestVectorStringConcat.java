@@ -1998,37 +1998,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* stringTypeInfo "
-operator|+
-name|stringTypeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" integerTypeInfo "
-operator|+
-name|integerTypeInfo
-operator|+
-literal|" stringConcatTestMode ROW_MODE"
-operator|+
-literal|" columnScalarMode "
-operator|+
-name|columnScalarMode
-operator|+
-literal|" genericUdf "
-operator|+
-name|genericUdf
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* stringTypeInfo " + stringTypeInfo.toString() +         " integerTypeInfo " + integerTypeInfo +         " stringConcatTestMode ROW_MODE" +         " columnScalarMode " + columnScalarMode +         " genericUdf " + genericUdf.toString());     */
 name|ExprNodeGenericFuncDesc
 name|exprDesc
 init|=
@@ -2516,42 +2486,7 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* stringTypeInfo1 "
-operator|+
-name|stringTypeInfo1
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" stringTypeInfo2 "
-operator|+
-name|stringTypeInfo2
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" stringConcatTestMode "
-operator|+
-name|stringConcatTestMode
-operator|+
-literal|" columnScalarMode "
-operator|+
-name|columnScalarMode
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vectorExpression
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* stringTypeInfo1 " + stringTypeInfo1.toString() +         " stringTypeInfo2 " + stringTypeInfo2.toString() +         " stringConcatTestMode " + stringConcatTestMode +         " columnScalarMode " + columnScalarMode +         " vectorExpression " + vectorExpression.toString());     */
 name|batchSource
 operator|.
 name|resetBatchIteration

@@ -2281,29 +2281,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* typeInfo "
-operator|+
-name|typeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" negativeTestMode ROW_MODE"
-operator|+
-literal|" exprDesc "
-operator|+
-name|exprDesc
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " negativeTestMode ROW_MODE" +         " exprDesc " + exprDesc.toString());     */
 name|HiveConf
 name|hiveConf
 init|=
@@ -2752,31 +2730,7 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* typeInfo "
-operator|+
-name|typeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" negativeTestMode "
-operator|+
-name|negativeTestMode
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vectorExpression
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " negativeTestMode " + negativeTestMode +         " vectorExpression " + vectorExpression.toString());     */
 name|batchSource
 operator|.
 name|resetBatchIteration

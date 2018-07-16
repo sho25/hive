@@ -881,7 +881,7 @@ return|return
 name|mergeVariance
 return|;
 block|}
-comment|/*    * Calculate the variance family {VARIANCE, VARIANCE_SAMPLE, STANDARD_DEVIATION, or    * STANDARD_DEVIATION_STAMPLE) result when count> 1.  Public so vectorization code can    * use it, etc.    */
+comment|/*    * Calculate the variance family {VARIANCE, VARIANCE_SAMPLE, STANDARD_DEVIATION, or    * STANDARD_DEVIATION_SAMPLE) result when count> 1.  Public so vectorization code can    * use it, etc.    */
 specifier|public
 specifier|static
 name|double
@@ -897,6 +897,10 @@ name|VarianceKind
 name|varianceKind
 parameter_list|)
 block|{
+specifier|final
+name|double
+name|result
+decl_stmt|;
 switch|switch
 condition|(
 name|varianceKind
@@ -905,7 +909,8 @@ block|{
 case|case
 name|VARIANCE
 case|:
-return|return
+name|result
+operator|=
 name|GenericUDAFVarianceEvaluator
 operator|.
 name|calculateVarianceResult
@@ -914,11 +919,13 @@ name|variance
 argument_list|,
 name|count
 argument_list|)
-return|;
+expr_stmt|;
+break|break;
 case|case
 name|VARIANCE_SAMPLE
 case|:
-return|return
+name|result
+operator|=
 name|GenericUDAFVarianceSampleEvaluator
 operator|.
 name|calculateVarianceSampleResult
@@ -927,11 +934,13 @@ name|variance
 argument_list|,
 name|count
 argument_list|)
-return|;
+expr_stmt|;
+break|break;
 case|case
 name|STANDARD_DEVIATION
 case|:
-return|return
+name|result
+operator|=
 name|GenericUDAFStdEvaluator
 operator|.
 name|calculateStdResult
@@ -940,11 +949,13 @@ name|variance
 argument_list|,
 name|count
 argument_list|)
-return|;
+expr_stmt|;
+break|break;
 case|case
 name|STANDARD_DEVIATION_SAMPLE
 case|:
-return|return
+name|result
+operator|=
 name|GenericUDAFStdSampleEvaluator
 operator|.
 name|calculateStdSampleResult
@@ -953,7 +964,8 @@ name|variance
 argument_list|,
 name|count
 argument_list|)
-return|;
+expr_stmt|;
+break|break;
 default|default:
 throw|throw
 operator|new
@@ -965,6 +977,9 @@ name|varianceKind
 argument_list|)
 throw|;
 block|}
+return|return
+name|result
+return|;
 block|}
 annotation|@
 name|Override
@@ -2061,10 +2076,16 @@ name|long
 name|count
 parameter_list|)
 block|{
-return|return
+specifier|final
+name|double
+name|result
+init|=
 name|variance
 operator|/
 name|count
+decl_stmt|;
+return|return
+name|result
 return|;
 block|}
 annotation|@
