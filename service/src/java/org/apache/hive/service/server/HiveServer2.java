@@ -5004,6 +5004,23 @@ block|}
 block|}
 if|if
 condition|(
+name|hiveConf
+operator|.
+name|getVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"tez"
+argument_list|)
+condition|)
+block|{
+if|if
+condition|(
 operator|!
 name|activePassiveHA
 condition|)
@@ -5054,6 +5071,7 @@ argument_list|(
 literal|"HS2 interactive HA enabled. Tez sessions will be started/reconnected by the leader."
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
