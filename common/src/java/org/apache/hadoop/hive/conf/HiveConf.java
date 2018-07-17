@@ -16010,7 +16010,7 @@ literal|"hive.druid.broker.address.default,"
 operator|+
 literal|"hive.druid.coordinator.address.default,"
 operator|+
-literal|"hikari.,"
+literal|"hikaricp.,"
 operator|+
 literal|"hadoop.bin.path,"
 operator|+

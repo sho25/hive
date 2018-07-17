@@ -592,7 +592,7 @@ argument_list|)
 expr_stmt|;
 name|addToExpectedRestrictedMap
 argument_list|(
-literal|"hikari.test"
+literal|"hikaricp.test"
 argument_list|)
 expr_stmt|;
 name|addToExpectedRestrictedMap
