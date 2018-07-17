@@ -621,8 +621,6 @@ specifier|public
 specifier|static
 name|Iterable
 argument_list|<
-name|?
-extends|extends
 name|String
 argument_list|>
 name|matchesDb
@@ -666,8 +664,6 @@ specifier|public
 specifier|static
 name|Iterable
 argument_list|<
-name|?
-extends|extends
 name|String
 argument_list|>
 name|matchesTbl
