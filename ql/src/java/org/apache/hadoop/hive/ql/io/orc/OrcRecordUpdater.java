@@ -2176,15 +2176,6 @@ condition|)
 block|{
 name|writerOptions
 operator|.
-name|compress
-argument_list|(
-name|CompressionKind
-operator|.
-name|NONE
-argument_list|)
-expr_stmt|;
-name|writerOptions
-operator|.
 name|encodingStrategy
 argument_list|(
 name|org
