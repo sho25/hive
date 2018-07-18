@@ -1816,29 +1816,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* dateTimeStringTypeInfo "
-operator|+
-name|dateTimeStringTypeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" timestampExtractTestMode ROW_MODE"
-operator|+
-literal|" exprDesc "
-operator|+
-name|exprDesc
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* dateTimeStringTypeInfo " + dateTimeStringTypeInfo.toString() +         " timestampExtractTestMode ROW_MODE" +         " exprDesc " + exprDesc.toString());     */
 name|HiveConf
 name|hiveConf
 init|=
@@ -2328,34 +2306,7 @@ operator|.
 name|transientInit
 argument_list|()
 expr_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* dateTimeStringTypeInfo "
-operator|+
-name|dateTimeStringTypeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" timestampExtractTestMode "
-operator|+
-name|timestampExtractTestMode
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vectorExpression
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getSimpleName
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* dateTimeStringTypeInfo " + dateTimeStringTypeInfo.toString() +         " timestampExtractTestMode " + timestampExtractTestMode +         " vectorExpression " + vectorExpression.getClass().getSimpleName());     */
 name|VectorRandomRowSource
 name|rowSource
 init|=

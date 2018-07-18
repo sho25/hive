@@ -8613,6 +8613,11 @@ literal|1
 index|]
 argument_list|)
 expr_stmt|;
+name|cm
+operator|.
+name|unsetMaterializationTime
+argument_list|()
+expr_stmt|;
 name|client
 operator|.
 name|updateCreationMetadata

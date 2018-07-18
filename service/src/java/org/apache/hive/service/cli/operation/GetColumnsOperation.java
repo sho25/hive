@@ -231,9 +231,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|metadata
+name|metastore
 operator|.
 name|TableIterable
 import|;

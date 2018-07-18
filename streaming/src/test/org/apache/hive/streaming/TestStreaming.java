@@ -14123,8 +14123,7 @@ name|toByteArray
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// make sure delta files are written with no indexes, no compression and no dictionary
-comment|// no compression
+comment|// make sure delta files are written with no indexes and no dictionary
 name|Assert
 operator|.
 name|assertEquals
@@ -14135,7 +14134,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Compression: NONE"
+literal|"Compression: ZLIB"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14164,7 +14163,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 1: count: 0 hasNull: false bytesOnDisk: 12 sum: 0"
+literal|"Column 1: count: 0 hasNull: false bytesOnDisk: 15 sum: 0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14178,7 +14177,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 2: count: 0 hasNull: false bytesOnDisk: 12 sum: 0"
+literal|"Column 2: count: 0 hasNull: false bytesOnDisk: 15 sum: 0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14192,7 +14191,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 3: count: 0 hasNull: false bytesOnDisk: 24 sum: 0"
+literal|"Column 3: count: 0 hasNull: false bytesOnDisk: 19 sum: 0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14206,7 +14205,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 4: count: 0 hasNull: false bytesOnDisk: 14 sum: 0"
+literal|"Column 4: count: 0 hasNull: false bytesOnDisk: 17 sum: 0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14220,7 +14219,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 5: count: 0 hasNull: false bytesOnDisk: 12 sum: 0"
+literal|"Column 5: count: 0 hasNull: false bytesOnDisk: 15 sum: 0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14248,7 +14247,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 7: count: 0 hasNull: false bytesOnDisk: 11864"
+literal|"Column 7: count: 0 hasNull: false bytesOnDisk: 3929"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14262,7 +14261,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 8: count: 0 hasNull: false bytesOnDisk: 2033 sum: 0"
+literal|"Column 8: count: 0 hasNull: false bytesOnDisk: 1484 sum: 0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14276,7 +14275,7 @@ name|outDump
 operator|.
 name|contains
 argument_list|(
-literal|"Column 9: count: 0 hasNull: false bytesOnDisk: 13629"
+literal|"Column 9: count: 0 hasNull: false bytesOnDisk: 816"
 argument_list|)
 argument_list|)
 expr_stmt|;

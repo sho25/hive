@@ -1169,29 +1169,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* typeName "
-operator|+
-name|typeName
-operator|+
-literal|" columnScalarMode "
-operator|+
-name|columnScalarMode
-operator|+
-literal|" isNullScalar1 "
-operator|+
-name|isNullScalar1
-operator|+
-literal|" isNullScalar2 "
-operator|+
-name|isNullScalar2
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println("*DEBUG* typeName " + typeName +         " columnScalarMode " + columnScalarMode +         " isNullScalar1 " + isNullScalar1 +         " isNullScalar2 " + isNullScalar2);     */
 name|TypeInfo
 name|typeInfo
 init|=
@@ -2560,38 +2538,7 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* typeInfo "
-operator|+
-name|typeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" ifStmtTestMode "
-operator|+
-name|ifStmtTestMode
-operator|+
-literal|" columnScalarMode "
-operator|+
-name|columnScalarMode
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vectorExpression
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getSimpleName
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " ifStmtTestMode " + ifStmtTestMode +         " columnScalarMode " + columnScalarMode +         " vectorExpression " + vectorExpression.getClass().getSimpleName());     */
 name|batchSource
 operator|.
 name|resetBatchIteration

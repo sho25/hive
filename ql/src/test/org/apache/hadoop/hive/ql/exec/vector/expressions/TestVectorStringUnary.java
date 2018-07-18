@@ -2178,41 +2178,7 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* typeInfo "
-operator|+
-name|typeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" targetTypeInfo "
-operator|+
-name|targetTypeInfo
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" stringUnaryTestMode "
-operator|+
-name|stringUnaryTestMode
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vectorExpression
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getSimpleName
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " targetTypeInfo " + targetTypeInfo.toString() +         " stringUnaryTestMode " + stringUnaryTestMode +         " vectorExpression " + vectorExpression.getClass().getSimpleName());     */
 name|batchSource
 operator|.
 name|resetBatchIteration

@@ -13,21 +13,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|metadata
+name|metastore
 package|;
 end_package
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
 
 begin_import
 import|import
@@ -63,15 +51,9 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
+name|junit
 operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|HiveMetaStoreClient
+name|Test
 import|;
 end_import
 
@@ -81,7 +63,29 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Test
+name|experimental
+operator|.
+name|categories
+operator|.
+name|Category
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|annotation
+operator|.
+name|MetastoreUnitTest
 import|;
 end_import
 
@@ -177,7 +181,31 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|mockito
+operator|.
+name|Matchers
+operator|.
+name|anyListOf
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|mockito
+operator|.
+name|Matchers
+operator|.
+name|anyString
 import|;
 end_import
 
@@ -189,15 +217,46 @@ name|mockito
 operator|.
 name|Mockito
 operator|.
-name|*
+name|mock
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|mockito
+operator|.
+name|Mockito
+operator|.
+name|verify
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|mockito
+operator|.
+name|Mockito
+operator|.
+name|when
 import|;
 end_import
 
 begin_comment
-comment|/**  * Unit tests for TableIterable  */
+comment|/**  * Unit tests for TableIterable.  */
 end_comment
 
 begin_class
+annotation|@
+name|Category
+argument_list|(
+name|MetastoreUnitTest
+operator|.
+name|class
+argument_list|)
 specifier|public
 class|class
 name|TestTableIterable

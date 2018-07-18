@@ -462,10 +462,7 @@ name|mode
 operator|=
 name|vecAggrDesc
 operator|.
-name|getAggrDesc
-argument_list|()
-operator|.
-name|getMode
+name|getUdafEvaluatorMode
 argument_list|()
 expr_stmt|;
 block|}

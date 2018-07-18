@@ -22923,7 +22923,7 @@ operator|.
 name|getGenericUDAFName
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -22963,17 +22963,6 @@ operator|.
 name|getGenericUDAFEvaluator
 argument_list|()
 decl_stmt|;
-name|ArrayList
-argument_list|<
-name|ExprNodeDesc
-argument_list|>
-name|parameters
-init|=
-name|aggrDesc
-operator|.
-name|getParameters
-argument_list|()
-decl_stmt|;
 name|ObjectInspector
 index|[]
 name|parameterObjectInspectors
@@ -23002,7 +22991,7 @@ block|{
 name|TypeInfo
 name|typeInfo
 init|=
-name|parameters
+name|parameterList
 operator|.
 name|get
 argument_list|(
@@ -23042,6 +23031,73 @@ argument_list|,
 name|parameterObjectInspectors
 argument_list|)
 decl_stmt|;
+specifier|final
+name|TypeInfo
+name|outputTypeInfo
+init|=
+name|TypeInfoUtils
+operator|.
+name|getTypeInfoFromTypeString
+argument_list|(
+name|returnOI
+operator|.
+name|getTypeName
+argument_list|()
+argument_list|)
+decl_stmt|;
+return|return
+name|getVectorAggregationDesc
+argument_list|(
+name|aggregateName
+argument_list|,
+name|parameterList
+argument_list|,
+name|evaluator
+argument_list|,
+name|outputTypeInfo
+argument_list|,
+name|udafEvaluatorMode
+argument_list|,
+name|vContext
+argument_list|)
+return|;
+block|}
+specifier|public
+specifier|static
+name|ImmutablePair
+argument_list|<
+name|VectorAggregationDesc
+argument_list|,
+name|String
+argument_list|>
+name|getVectorAggregationDesc
+parameter_list|(
+name|String
+name|aggregationName
+parameter_list|,
+name|List
+argument_list|<
+name|ExprNodeDesc
+argument_list|>
+name|parameterList
+parameter_list|,
+name|GenericUDAFEvaluator
+name|evaluator
+parameter_list|,
+name|TypeInfo
+name|outputTypeInfo
+parameter_list|,
+name|GenericUDAFEvaluator
+operator|.
+name|Mode
+name|udafEvaluatorMode
+parameter_list|,
+name|VectorizationContext
+name|vContext
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 name|VectorizedUDAFs
 name|annotation
 init|=
@@ -23083,7 +23139,7 @@ literal|" does not have a "
 operator|+
 literal|"vectorized UDAF annotation (aggregation: \""
 operator|+
-name|aggregateName
+name|aggregationName
 operator|+
 literal|"\"). "
 operator|+
@@ -23119,20 +23175,6 @@ operator|.
 name|value
 argument_list|()
 decl_stmt|;
-specifier|final
-name|TypeInfo
-name|outputTypeInfo
-init|=
-name|TypeInfoUtils
-operator|.
-name|getTypeInfoFromTypeString
-argument_list|(
-name|returnOI
-operator|.
-name|getTypeName
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|// Not final since it may change later due to DECIMAL_64.
 name|ColumnVector
 operator|.
@@ -23159,6 +23201,15 @@ name|ColumnVector
 operator|.
 name|Type
 name|inputColVectorType
+decl_stmt|;
+specifier|final
+name|int
+name|parameterCount
+init|=
+name|parameterList
+operator|.
+name|size
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -23218,7 +23269,7 @@ name|issue
 init|=
 literal|"Aggregations with null parameter type not supported "
 operator|+
-name|aggregateName
+name|aggregationName
 operator|+
 literal|"("
 operator|+
@@ -23279,7 +23330,7 @@ argument_list|()
 operator|+
 literal|" not supported "
 operator|+
-name|aggregateName
+name|aggregationName
 operator|+
 literal|"("
 operator|+
@@ -23327,7 +23378,7 @@ argument_list|()
 operator|+
 literal|" with null type not supported "
 operator|+
-name|aggregateName
+name|aggregationName
 operator|+
 literal|"("
 operator|+
@@ -23369,7 +23420,7 @@ name|issue
 init|=
 literal|"Aggregations with> 1 parameter are not supported "
 operator|+
-name|aggregateName
+name|aggregationName
 operator|+
 literal|"("
 operator|+
@@ -23457,7 +23508,7 @@ name|findVecAggrClass
 argument_list|(
 name|vecAggrClasses
 argument_list|,
-name|aggregateName
+name|aggregationName
 argument_list|,
 name|inputColVectorType
 argument_list|,
@@ -23484,9 +23535,11 @@ init|=
 operator|new
 name|VectorAggregationDesc
 argument_list|(
-name|aggrDesc
+name|aggregationName
 argument_list|,
 name|evaluator
+argument_list|,
+name|udafEvaluatorMode
 argument_list|,
 name|inputTypeInfo
 argument_list|,
@@ -23535,7 +23588,7 @@ name|findVecAggrClass
 argument_list|(
 name|vecAggrClasses
 argument_list|,
-name|aggregateName
+name|aggregationName
 argument_list|,
 name|inputColVectorType
 argument_list|,
@@ -23558,9 +23611,11 @@ init|=
 operator|new
 name|VectorAggregationDesc
 argument_list|(
-name|aggrDesc
+name|aggregationName
 argument_list|,
 name|evaluator
+argument_list|,
+name|udafEvaluatorMode
 argument_list|,
 name|inputTypeInfo
 argument_list|,
@@ -23626,7 +23681,7 @@ name|findVecAggrClass
 argument_list|(
 name|vecAggrClasses
 argument_list|,
-name|aggregateName
+name|aggregationName
 argument_list|,
 name|inputColVectorType
 argument_list|,
@@ -23647,7 +23702,7 @@ comment|// we have to make sure same decimal type should be used during bloom fi
 comment|// and bloom filter probing
 if|if
 condition|(
-name|aggregateName
+name|aggregationName
 operator|.
 name|equals
 argument_list|(
@@ -23680,9 +23735,11 @@ init|=
 operator|new
 name|VectorAggregationDesc
 argument_list|(
-name|aggrDesc
+name|aggregationName
 argument_list|,
 name|evaluator
+argument_list|,
+name|udafEvaluatorMode
 argument_list|,
 name|inputTypeInfo
 argument_list|,
@@ -23746,7 +23803,7 @@ name|findVecAggrClass
 argument_list|(
 name|vecAggrClasses
 argument_list|,
-name|aggregateName
+name|aggregationName
 argument_list|,
 name|inputColVectorType
 argument_list|,
@@ -23769,9 +23826,11 @@ init|=
 operator|new
 name|VectorAggregationDesc
 argument_list|(
-name|aggrDesc
+name|aggregationName
 argument_list|,
 name|evaluator
+argument_list|,
+name|udafEvaluatorMode
 argument_list|,
 name|inputTypeInfo
 argument_list|,
@@ -23807,7 +23866,7 @@ name|issue
 init|=
 literal|"Vector aggregation : \""
 operator|+
-name|aggregateName
+name|aggregationName
 operator|+
 literal|"\" "
 operator|+

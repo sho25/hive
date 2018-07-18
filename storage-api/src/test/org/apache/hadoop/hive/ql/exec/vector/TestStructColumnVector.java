@@ -685,6 +685,13 @@ operator|new
 name|TimestampColumnVector
 argument_list|()
 decl_stmt|;
+name|x2
+operator|.
+name|setIsUTC
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|StructColumnVector
 name|x
 init|=
