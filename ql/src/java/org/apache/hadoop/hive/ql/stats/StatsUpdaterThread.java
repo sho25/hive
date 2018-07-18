@@ -783,6 +783,8 @@ comment|/** Whether to only update stats that already exist and are out of date.
 specifier|private
 name|boolean
 name|isExistingOnly
+decl_stmt|,
+name|areTxnStatsEnabled
 decl_stmt|;
 specifier|private
 name|long
@@ -888,6 +890,19 @@ argument_list|,
 name|TimeUnit
 operator|.
 name|MILLISECONDS
+argument_list|)
+expr_stmt|;
+name|areTxnStatsEnabled
+operator|=
+name|MetastoreConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_TXN_STATS_ENABLED
 argument_list|)
 expr_stmt|;
 name|batchSize
@@ -1547,6 +1562,15 @@ condition|(
 name|isTxn
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|areTxnStatsEnabled
+condition|)
+return|return
+literal|null
+return|;
+comment|// Skip transactional tables.
 name|ValidReaderWriteIdList
 name|writeIds
 init|=

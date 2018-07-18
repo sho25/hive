@@ -3907,6 +3907,17 @@ operator|+
 literal|"A ZooKeeper instance must be up and running when using zookeeper Hive lock manager "
 argument_list|)
 block|,
+name|HIVE_TXN_STATS_ENABLED
+argument_list|(
+literal|"hive.txn.stats.enabled"
+argument_list|,
+literal|"hive.txn.stats.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether Hive supports transactional stats (accurate stats for transactional tables)"
+argument_list|)
+block|,
 comment|// Deprecated Hive values that we are keeping for backwards compatibility.
 annotation|@
 name|Deprecated

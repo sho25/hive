@@ -8741,15 +8741,6 @@ argument_list|(
 name|plan
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"TODO# txnTables "
-operator|+
-name|txnTables
-argument_list|)
-expr_stmt|;
 name|ValidTxnWriteIdList
 name|txnWriteIds
 init|=

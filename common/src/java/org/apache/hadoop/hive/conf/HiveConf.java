@@ -9162,6 +9162,15 @@ operator|+
 literal|"are not hidden by the INSERT OVERWRITE."
 argument_list|)
 block|,
+name|HIVE_TXN_STATS_ENABLED
+argument_list|(
+literal|"hive.txn.stats.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether Hive supports transactional stats (accurate stats for transactional tables)"
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.TXN_TIMEOUT      */
 annotation|@
 name|Deprecated
