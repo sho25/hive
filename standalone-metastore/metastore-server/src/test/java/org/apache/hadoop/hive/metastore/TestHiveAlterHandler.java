@@ -430,9 +430,6 @@ name|newTable
 argument_list|,
 literal|null
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -633,9 +630,6 @@ argument_list|,
 name|newTable
 argument_list|,
 literal|null
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -931,9 +925,6 @@ argument_list|,
 name|newTable
 argument_list|,
 literal|null
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)

@@ -2265,9 +2265,6 @@ name|TABLE1
 argument_list|,
 name|newTbl1
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -4342,9 +4339,6 @@ name|part
 operator|.
 name|getValues
 argument_list|()
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|,

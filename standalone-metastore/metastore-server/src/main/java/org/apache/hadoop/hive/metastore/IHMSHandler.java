@@ -282,10 +282,6 @@ name|String
 name|name
 parameter_list|,
 specifier|final
-name|long
-name|txnId
-parameter_list|,
-specifier|final
 name|String
 name|writeIdList
 parameter_list|)

@@ -1949,9 +1949,6 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -1968,8 +1965,6 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tableName
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -2060,9 +2055,6 @@ name|String
 argument_list|>
 name|partVals
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -2083,8 +2075,6 @@ argument_list|,
 name|tableName
 argument_list|,
 name|partVals
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -2289,9 +2279,6 @@ parameter_list|,
 name|Table
 name|newTable
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -2316,8 +2303,6 @@ argument_list|,
 name|name
 argument_list|,
 name|newTable
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
@@ -2698,9 +2683,6 @@ parameter_list|,
 name|Partition
 name|newPart
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -2727,8 +2709,6 @@ argument_list|,
 name|partVals
 argument_list|,
 name|newPart
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
@@ -2778,9 +2758,6 @@ parameter_list|,
 name|long
 name|writeId
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -2809,8 +2786,6 @@ argument_list|,
 name|newParts
 argument_list|,
 name|writeId
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
@@ -4619,9 +4594,6 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -4643,8 +4615,6 @@ name|tableName
 argument_list|,
 name|colNames
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 return|;
@@ -4755,9 +4725,6 @@ parameter_list|(
 name|ColumnStatistics
 name|statsObj
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|,
@@ -4780,8 +4747,6 @@ name|updateTableColumnStatistics
 argument_list|(
 name|statsObj
 argument_list|,
-name|txnId
-argument_list|,
 name|validWriteIds
 argument_list|,
 name|writeId
@@ -4802,9 +4767,6 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|validWriteIds
@@ -4829,8 +4791,6 @@ argument_list|(
 name|statsObj
 argument_list|,
 name|partVals
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,
@@ -5096,9 +5056,6 @@ name|String
 argument_list|>
 name|partNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -5121,8 +5078,6 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partNames
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -5562,9 +5517,6 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList

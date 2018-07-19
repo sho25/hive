@@ -1197,9 +1197,6 @@ name|String
 argument_list|>
 name|partNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|,
@@ -1254,8 +1251,6 @@ argument_list|,
 name|tableName
 argument_list|,
 name|partNames
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,
@@ -2582,9 +2577,6 @@ parameter_list|,
 name|EnvironmentContext
 name|envContext
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|)
@@ -2653,8 +2645,6 @@ argument_list|,
 name|new_tbl
 argument_list|,
 name|envContext
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|)

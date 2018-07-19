@@ -1618,9 +1618,6 @@ name|tblName
 argument_list|,
 name|tbl
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -2464,9 +2461,6 @@ argument_list|)
 argument_list|,
 name|ptn1Atl
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -3241,9 +3235,6 @@ operator|.
 name|updateTableColumnStatistics
 argument_list|(
 name|stats
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|,
@@ -5396,9 +5387,6 @@ argument_list|()
 argument_list|,
 name|partVals1
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|,
 operator|-
@@ -5415,9 +5403,6 @@ name|deepCopy
 argument_list|()
 argument_list|,
 name|partVals2
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|,
@@ -5996,9 +5981,6 @@ argument_list|()
 argument_list|,
 name|partVals1
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|,
 operator|-
@@ -6022,9 +6004,6 @@ name|deepCopy
 argument_list|()
 argument_list|,
 name|partVals2
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|,
@@ -6697,9 +6676,6 @@ argument_list|()
 argument_list|,
 name|partVals1
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|,
 operator|-
@@ -6771,9 +6747,6 @@ name|deepCopy
 argument_list|()
 argument_list|,
 name|partVals2
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|,

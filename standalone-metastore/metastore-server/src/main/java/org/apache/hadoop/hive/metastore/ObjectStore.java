@@ -8060,9 +8060,6 @@ name|dbName
 argument_list|,
 name|tableName
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -8081,9 +8078,6 @@ name|dbName
 parameter_list|,
 name|String
 name|tableName
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -8239,8 +8233,6 @@ condition|(
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|mtable
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|,
@@ -14560,9 +14552,6 @@ name|tableName
 argument_list|,
 name|part_vals
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -14587,9 +14576,6 @@ argument_list|<
 name|String
 argument_list|>
 name|part_vals
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -14730,8 +14716,6 @@ name|mpart
 operator|.
 name|getWriteId
 argument_list|()
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|,
@@ -18059,9 +18043,6 @@ name|dbName
 argument_list|,
 name|tableName
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
@@ -18778,9 +18759,6 @@ name|dbName
 argument_list|,
 name|tableName
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 operator|.
@@ -19235,9 +19213,6 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tableName
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -24373,9 +24348,6 @@ parameter_list|,
 name|Table
 name|newTable
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -24782,8 +24754,6 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|oldt
 argument_list|,
-name|queryTxnId
-argument_list|,
 name|queryValidWriteIds
 argument_list|,
 literal|true
@@ -25171,9 +25141,6 @@ parameter_list|,
 name|Partition
 name|newPart
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -25526,8 +25493,6 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|oldp
 argument_list|,
-name|queryTxnId
-argument_list|,
 name|queryValidWriteIds
 argument_list|,
 literal|true
@@ -25611,9 +25576,6 @@ parameter_list|,
 name|Partition
 name|newPart
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -25667,8 +25629,6 @@ argument_list|,
 name|part_vals
 argument_list|,
 name|newPart
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
@@ -25779,9 +25739,6 @@ parameter_list|,
 name|long
 name|writeId
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryWriteIdList
 parameter_list|)
@@ -25878,8 +25835,6 @@ argument_list|,
 name|tmpPartVals
 argument_list|,
 name|tmpPart
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryWriteIdList
 argument_list|)
@@ -37703,9 +37658,6 @@ operator|.
 name|getObjectName
 argument_list|()
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
@@ -37926,9 +37878,6 @@ name|hiveObject
 operator|.
 name|getObjectName
 argument_list|()
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -47077,9 +47026,6 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
@@ -47252,9 +47198,6 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -50217,9 +50160,6 @@ parameter_list|(
 name|ColumnStatistics
 name|colStats
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|,
@@ -50539,8 +50479,6 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|oldt
 argument_list|,
-name|txnId
-argument_list|,
 name|validWriteIds
 argument_list|,
 literal|true
@@ -50731,9 +50669,6 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|validWriteIds
@@ -51068,8 +51003,6 @@ operator|!
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|mPartition
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,
@@ -51701,9 +51634,6 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -51759,8 +51689,6 @@ operator|&&
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|table
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|,
@@ -52164,9 +52092,6 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -52291,8 +52216,6 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|mpart
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|,
 literal|false
@@ -52327,8 +52250,6 @@ name|mpart
 operator|.
 name|getWriteId
 argument_list|()
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -52759,9 +52680,6 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -52869,8 +52787,6 @@ operator|!
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|mpart
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|,
@@ -73856,9 +73772,6 @@ parameter_list|(
 name|MTable
 name|tbl
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIdList
 parameter_list|,
@@ -73895,8 +73808,6 @@ name|tbl
 operator|.
 name|getWriteId
 argument_list|()
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
 argument_list|,
@@ -73912,9 +73823,6 @@ parameter_list|(
 name|MPartition
 name|part
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIdList
 parameter_list|,
@@ -73957,8 +73865,6 @@ name|part
 operator|.
 name|getWriteId
 argument_list|()
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
 argument_list|,
@@ -73975,9 +73881,6 @@ name|part
 parameter_list|,
 name|long
 name|partWriteId
-parameter_list|,
-name|long
-name|queryTxnId
 parameter_list|,
 name|String
 name|queryValidWriteIdList
@@ -74009,8 +73912,6 @@ name|getParameters
 argument_list|()
 argument_list|,
 name|partWriteId
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
 argument_list|,
@@ -74044,9 +73945,6 @@ parameter_list|,
 name|long
 name|statsWriteId
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIdList
 parameter_list|,
@@ -74062,11 +73960,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"isCurrentStatsValidForTheQuery with stats write ID {}; query {}, {}; writer: {} params {}"
+literal|"isCurrentStatsValidForTheQuery with stats write ID {}; query {}; writer: {} params {}"
 argument_list|,
 name|statsWriteId
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIdList
 argument_list|,
@@ -74186,48 +74082,8 @@ literal|true
 return|;
 block|}
 block|}
-if|if
-condition|(
-name|queryTxnId
-operator|<
-literal|1
-condition|)
-block|{
 return|return
 literal|false
-return|;
-comment|// The caller is outside of a txn; no need to check the same-txn case.
-block|}
-comment|// This assumes that all writes within the same txn are sequential and can see each other.
-comment|// TODO## Not clear if we need this check; each next write should have the previous
-comment|//        one in its writeIdList; verify w/Eugene.
-name|long
-name|statsTxnId
-init|=
-name|HiveMetaStore
-operator|.
-name|HMSHandler
-operator|.
-name|getMsThreadTxnHandler
-argument_list|(
-name|conf
-argument_list|)
-operator|.
-name|getTxnIdForWriteId
-argument_list|(
-name|dbName
-argument_list|,
-name|tblName
-argument_list|,
-name|statsWriteId
-argument_list|)
-decl_stmt|;
-return|return
-operator|(
-name|statsTxnId
-operator|==
-name|queryTxnId
-operator|)
 return|;
 block|}
 block|}

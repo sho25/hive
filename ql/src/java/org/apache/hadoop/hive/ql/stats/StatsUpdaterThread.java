@@ -3117,8 +3117,6 @@ name|params
 argument_list|,
 name|statsWriteId
 argument_list|,
-literal|0
-argument_list|,
 name|writeIdString
 argument_list|,
 literal|false
@@ -3301,8 +3299,6 @@ argument_list|,
 name|params
 argument_list|,
 name|statsWriteId
-argument_list|,
-literal|0
 argument_list|,
 name|writeIdString
 argument_list|,

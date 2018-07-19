@@ -780,9 +780,6 @@ parameter_list|,
 name|IHMSHandler
 name|handler
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -1090,9 +1087,6 @@ name|newDbName
 argument_list|,
 name|newTblName
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 operator|!=
@@ -1138,9 +1132,6 @@ argument_list|,
 name|dbname
 argument_list|,
 name|name
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -1985,9 +1976,6 @@ name|name
 argument_list|,
 name|newt
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -2138,8 +2126,6 @@ operator|.
 name|getWriteId
 argument_list|()
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 expr_stmt|;
@@ -2203,8 +2189,6 @@ operator|.
 name|getValues
 argument_list|()
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|,
 name|newt
@@ -2226,8 +2210,6 @@ argument_list|,
 name|newt
 argument_list|,
 name|environmentContext
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -2437,8 +2419,6 @@ argument_list|()
 argument_list|,
 name|part
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 expr_stmt|;
@@ -2473,8 +2453,6 @@ argument_list|()
 argument_list|,
 name|oldPart
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 expr_stmt|;
@@ -2492,9 +2470,6 @@ argument_list|,
 name|name
 argument_list|,
 name|newt
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -2519,8 +2494,6 @@ name|newt
 argument_list|,
 name|environmentContext
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 expr_stmt|;
@@ -2537,8 +2510,6 @@ argument_list|,
 name|newt
 argument_list|,
 name|environmentContext
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -2974,9 +2945,6 @@ name|environmentContext
 argument_list|,
 literal|null
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -3017,9 +2985,6 @@ name|environmentContext
 parameter_list|,
 name|IHMSHandler
 name|handler
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|validWriteIds
@@ -3164,9 +3129,6 @@ argument_list|,
 name|dbname
 argument_list|,
 name|name
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -3327,8 +3289,6 @@ name|getValues
 argument_list|()
 argument_list|,
 name|new_part
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|)
@@ -3505,9 +3465,6 @@ argument_list|,
 name|dbname
 argument_list|,
 name|name
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -4159,8 +4116,6 @@ name|part_vals
 argument_list|,
 name|new_part
 argument_list|,
-name|txnId
-argument_list|,
 name|validWriteIds
 argument_list|)
 expr_stmt|;
@@ -4193,8 +4148,6 @@ name|new_part
 operator|.
 name|getValues
 argument_list|()
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,
@@ -4453,9 +4406,6 @@ name|new_parts
 argument_list|,
 name|environmentContext
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|,
 operator|-
@@ -4502,9 +4452,6 @@ name|new_parts
 parameter_list|,
 name|EnvironmentContext
 name|environmentContext
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -4597,9 +4544,6 @@ argument_list|,
 name|dbname
 argument_list|,
 name|name
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 literal|null
 argument_list|)
@@ -4852,8 +4796,6 @@ argument_list|,
 name|new_parts
 argument_list|,
 name|writeId
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -5187,9 +5129,6 @@ name|newTable
 parameter_list|,
 name|EnvironmentContext
 name|ec
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|validWriteIds
@@ -5614,8 +5553,6 @@ name|tableName
 argument_list|,
 name|newTable
 argument_list|,
-name|txnId
-argument_list|,
 name|validWriteIds
 argument_list|)
 expr_stmt|;
@@ -5664,8 +5601,6 @@ operator|.
 name|updateTableColumnStatistics
 argument_list|(
 name|colStats
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,

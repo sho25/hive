@@ -1171,8 +1171,6 @@ name|cols
 argument_list|,
 name|msClient
 argument_list|,
-literal|0
-argument_list|,
 name|initialWriteIds
 operator|.
 name|toString
@@ -1218,8 +1216,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|nextWriteIds
 operator|.
@@ -1317,9 +1313,6 @@ operator|new
 name|EnvironmentContext
 argument_list|()
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 name|initialWriteIds
 operator|.
 name|toString
@@ -1334,8 +1327,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1375,8 +1366,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1429,8 +1418,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1508,9 +1495,6 @@ operator|new
 name|EnvironmentContext
 argument_list|()
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 name|initialWriteIds
 operator|.
 name|toString
@@ -1525,8 +1509,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1566,8 +1548,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1615,8 +1595,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|msClient
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1845,9 +1823,6 @@ argument_list|)
 argument_list|,
 literal|null
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 name|currentWriteIds
 argument_list|,
 name|badWriteId
@@ -1869,9 +1844,6 @@ name|part2
 argument_list|)
 argument_list|,
 literal|null
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 name|currentWriteIds
 argument_list|,
@@ -1915,8 +1887,6 @@ name|newArrayList
 argument_list|(
 literal|"s"
 argument_list|)
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|)
@@ -1975,8 +1945,6 @@ argument_list|(
 literal|"s"
 argument_list|)
 argument_list|,
-literal|0
-argument_list|,
 name|currentWriteIds
 argument_list|)
 expr_stmt|;
@@ -2030,8 +1998,6 @@ name|newArrayList
 argument_list|(
 literal|"s"
 argument_list|)
-argument_list|,
-literal|0
 argument_list|,
 name|currentWriteIds
 argument_list|)
@@ -4477,9 +4443,6 @@ parameter_list|,
 name|IMetaStoreClient
 name|msClient
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|,
@@ -4498,12 +4461,15 @@ name|getTable
 argument_list|(
 name|ss
 operator|.
+name|getCurrentCatalog
+argument_list|()
+argument_list|,
+name|ss
+operator|.
 name|getCurrentDatabase
 argument_list|()
 argument_list|,
 name|tbl
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|)

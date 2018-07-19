@@ -229,9 +229,6 @@ name|envContext
 argument_list|,
 literal|null
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
@@ -263,9 +260,6 @@ name|envContext
 parameter_list|,
 name|IHMSHandler
 name|handler
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -359,9 +353,6 @@ parameter_list|,
 name|IHMSHandler
 name|handler
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|)
@@ -452,9 +443,6 @@ name|new_parts
 parameter_list|,
 name|EnvironmentContext
 name|environmentContext
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList

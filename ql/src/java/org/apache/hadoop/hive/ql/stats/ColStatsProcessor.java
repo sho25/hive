@@ -1390,16 +1390,6 @@ condition|)
 block|{
 name|request
 operator|.
-name|setTxnId
-argument_list|(
-name|txnMgr
-operator|.
-name|getCurrentTxnId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|request
-operator|.
 name|setValidWriteIdList
 argument_list|(
 name|AcidUtils

@@ -509,9 +509,6 @@ parameter_list|,
 name|EnvironmentContext
 name|environmentContext
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -529,8 +526,6 @@ argument_list|,
 name|newPart
 argument_list|,
 name|environmentContext
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)

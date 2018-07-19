@@ -4929,9 +4929,6 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -4952,9 +4949,6 @@ name|dbName
 parameter_list|,
 name|String
 name|tblName
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -5011,8 +5005,6 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 return|;
@@ -5063,8 +5055,6 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tblName
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -5473,9 +5463,6 @@ name|tblName
 argument_list|,
 name|part_vals
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -5501,9 +5488,6 @@ argument_list|<
 name|String
 argument_list|>
 name|part_vals
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -5564,8 +5548,6 @@ name|tblName
 argument_list|,
 name|part_vals
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 return|;
@@ -5610,8 +5592,6 @@ argument_list|,
 name|tblName
 argument_list|,
 name|part_vals
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -6196,9 +6176,6 @@ parameter_list|,
 name|Table
 name|newTable
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|)
@@ -6218,8 +6195,6 @@ argument_list|,
 name|tblName
 argument_list|,
 name|newTable
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|)
@@ -7311,9 +7286,6 @@ parameter_list|,
 name|Partition
 name|newPart
 parameter_list|,
-name|long
-name|queryTxnId
-parameter_list|,
 name|String
 name|queryValidWriteIds
 parameter_list|)
@@ -7335,8 +7307,6 @@ argument_list|,
 name|partVals
 argument_list|,
 name|newPart
-argument_list|,
-name|queryTxnId
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
@@ -7426,9 +7396,6 @@ parameter_list|,
 name|long
 name|writeId
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|)
@@ -7452,8 +7419,6 @@ argument_list|,
 name|newParts
 argument_list|,
 name|writeId
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|)
@@ -10356,9 +10321,6 @@ parameter_list|(
 name|ColumnStatistics
 name|colStats
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|,
@@ -10382,8 +10344,6 @@ operator|.
 name|updateTableColumnStatistics
 argument_list|(
 name|colStats
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,
@@ -10614,9 +10574,6 @@ name|tblName
 argument_list|,
 name|colNames
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -10642,9 +10599,6 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -10707,8 +10661,6 @@ name|tblName
 argument_list|,
 name|colNames
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 return|;
@@ -10751,8 +10703,6 @@ argument_list|,
 name|tblName
 argument_list|,
 name|colNames
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -10919,9 +10869,6 @@ name|String
 argument_list|>
 name|partVals
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|validWriteIds
 parameter_list|,
@@ -10947,8 +10894,6 @@ argument_list|(
 name|colStats
 argument_list|,
 name|partVals
-argument_list|,
-name|txnId
 argument_list|,
 name|validWriteIds
 argument_list|,
@@ -11217,9 +11162,6 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -11242,8 +11184,6 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
@@ -11413,9 +11353,6 @@ name|partNames
 argument_list|,
 name|colNames
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 literal|null
 argument_list|)
 return|;
@@ -11447,9 +11384,6 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
-parameter_list|,
-name|long
-name|txnId
 parameter_list|,
 name|String
 name|writeIdList
@@ -11517,8 +11451,6 @@ name|partNames
 argument_list|,
 name|colNames
 argument_list|,
-name|txnId
-argument_list|,
 name|writeIdList
 argument_list|)
 expr_stmt|;
@@ -11563,8 +11495,6 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)

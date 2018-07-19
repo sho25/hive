@@ -824,9 +824,6 @@ parameter_list|,
 name|String
 name|tableName
 parameter_list|,
-name|long
-name|txnId
-parameter_list|,
 name|String
 name|writeIdList
 parameter_list|)
@@ -847,8 +844,6 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tableName
-argument_list|,
-name|txnId
 argument_list|,
 name|writeIdList
 argument_list|)
