@@ -2754,6 +2754,7 @@ operator|.
 name|transientInit
 argument_list|()
 expr_stmt|;
+comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
 comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " targetTypeInfo " + targetTypeInfo +         " castStmtTestMode " + castStmtTestMode +         " vectorExpression " + vectorExpression.toString());     */
 name|VectorRandomRowSource
 name|rowSource

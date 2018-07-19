@@ -2306,6 +2306,7 @@ operator|.
 name|transientInit
 argument_list|()
 expr_stmt|;
+comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
 comment|/*     System.out.println(         "*DEBUG* dateTimeStringTypeInfo " + dateTimeStringTypeInfo.toString() +         " timestampExtractTestMode " + timestampExtractTestMode +         " vectorExpression " + vectorExpression.getClass().getSimpleName());     */
 name|VectorRandomRowSource
 name|rowSource

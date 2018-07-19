@@ -2584,42 +2584,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*DEBUG* dateTimeStringTypeInfo1 "
-operator|+
-name|dateTimeStringTypeInfo1
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" dateTimeStringTypeInfo2 "
-operator|+
-name|dateTimeStringTypeInfo2
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|" dateDiffTestMode "
-operator|+
-name|dateDiffTestMode
-operator|+
-literal|" columnScalarMode "
-operator|+
-name|columnScalarMode
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vectorExpression
-operator|.
-name|toString
-argument_list|()
-argument_list|)
-expr_stmt|;
+comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
+comment|/*     System.out.println(         "*DEBUG* dateTimeStringTypeInfo1 " + dateTimeStringTypeInfo1.toString() +         " dateTimeStringTypeInfo2 " + dateTimeStringTypeInfo2.toString() +         " dateDiffTestMode " + dateDiffTestMode +         " columnScalarMode " + columnScalarMode +         " vectorExpression " + vectorExpression.toString());     */
 name|batchSource
 operator|.
 name|resetBatchIteration

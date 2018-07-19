@@ -2486,6 +2486,7 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
 comment|/*     System.out.println(         "*DEBUG* stringTypeInfo1 " + stringTypeInfo1.toString() +         " stringTypeInfo2 " + stringTypeInfo2.toString() +         " stringConcatTestMode " + stringConcatTestMode +         " columnScalarMode " + columnScalarMode +         " vectorExpression " + vectorExpression.toString());     */
 name|batchSource
 operator|.
