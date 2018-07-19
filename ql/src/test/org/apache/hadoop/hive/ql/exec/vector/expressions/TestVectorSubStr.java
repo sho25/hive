@@ -2088,6 +2088,7 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
 comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " targetTypeInfo " + targetTypeInfo.toString() +         " subStrTestMode " + subStrTestMode +         " vectorExpression " + vectorExpression.getClass().getSimpleName());     */
 name|batchSource
 operator|.

@@ -1794,7 +1794,13 @@ name|config
 argument_list|,
 comment|//explainConfig
 literal|null
+argument_list|,
 comment|// cboInfo
+name|plan
+operator|.
+name|getOptimizedQueryString
+argument_list|()
+comment|// optimizedSQL
 argument_list|)
 decl_stmt|;
 annotation|@

@@ -1725,6 +1725,11 @@ argument_list|,
 name|config
 argument_list|,
 literal|null
+argument_list|,
+name|plan
+operator|.
+name|getOptimizedQueryString
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|ExplainTask

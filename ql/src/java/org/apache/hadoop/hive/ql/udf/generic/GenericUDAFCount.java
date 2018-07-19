@@ -656,7 +656,7 @@ operator|=
 name|isWindowing
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 name|void
 name|setCountAllColumns
 parameter_list|(
@@ -668,6 +668,15 @@ name|countAllColumns
 operator|=
 name|countAllCols
 expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|getCountAllColumns
+parameter_list|()
+block|{
+return|return
+name|countAllColumns
+return|;
 block|}
 specifier|private
 name|void
