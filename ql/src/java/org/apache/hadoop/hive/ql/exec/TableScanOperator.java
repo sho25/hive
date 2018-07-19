@@ -845,6 +845,15 @@ name|inputFileChanged
 operator|=
 literal|true
 expr_stmt|;
+name|updateFileId
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|updateFileId
+parameter_list|()
+block|{
 comment|// If the file name to bucket number mapping is maintained, store the bucket number
 comment|// in the execution context. This is needed for the following scenario:
 comment|// insert overwrite table T1 select * from T2;
@@ -1554,6 +1563,26 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|getExecContext
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|getExecContext
+argument_list|()
+operator|.
+name|getFileId
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
+name|updateFileId
+argument_list|()
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|conf
