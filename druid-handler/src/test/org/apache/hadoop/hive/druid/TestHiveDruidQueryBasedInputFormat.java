@@ -212,9 +212,7 @@ literal|"\"virtualColumns\":[],"
 operator|+
 literal|"\"filter\":null,"
 operator|+
-literal|"\"granularity\":{\"type\":\"period\",\"period\":\"P1D\",\"timeZone\":"
-operator|+
-literal|"\"America/Los_Angeles\",\"origin\":null},"
+literal|"\"granularity\":\"DAY\","
 operator|+
 literal|"\"aggregations\":[],"
 operator|+
@@ -354,9 +352,7 @@ literal|"\"virtualColumns\":[],"
 operator|+
 literal|"\"filter\":null,"
 operator|+
-literal|"\"granularity\":{\"type\":\"period\",\"period\":\"P1D\",\"timeZone\":"
-operator|+
-literal|"\"America/Los_Angeles\",\"origin\":null},"
+literal|"\"granularity\":\"DAY\","
 operator|+
 literal|"\"dimensions\":[{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"country\",\"outputName\":\"country\",\"outputType\":\"STRING\"},"
 operator|+
