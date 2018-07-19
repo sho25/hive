@@ -195,6 +195,11 @@ name|SPARKPRUNINGSINK
 argument_list|(
 literal|25
 argument_list|)
+block|,
+name|TOPNKEY
+argument_list|(
+literal|26
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -395,6 +400,12 @@ literal|25
 case|:
 return|return
 name|SPARKPRUNINGSINK
+return|;
+case|case
+literal|26
+case|:
+return|return
+name|TOPNKEY
 return|;
 default|default:
 return|return

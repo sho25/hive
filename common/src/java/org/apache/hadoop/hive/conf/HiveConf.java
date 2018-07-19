@@ -8388,6 +8388,15 @@ operator|+
 literal|"would change the query plan to take care of it, and hive.optimize.skewjoin will be a no-op."
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_TOPNKEY
+argument_list|(
+literal|"hive.optimize.topnkey"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable top n key optimizer."
+argument_list|)
+block|,
 name|HIVE_SHARED_WORK_OPTIMIZATION
 argument_list|(
 literal|"hive.optimize.shared.work"
