@@ -771,6 +771,63 @@ name|stmt
 operator|.
 name|execute
 argument_list|(
+literal|"CREATE TABLE \"APP\".\"DBS\" (\"DB_ID\" BIGINT NOT NULL, \"DESC\" "
+operator|+
+literal|"VARCHAR(4000), \"DB_LOCATION_URI\" VARCHAR(4000) NOT NULL, \"NAME\" VARCHAR(128), "
+operator|+
+literal|"\"OWNER_NAME\" VARCHAR(128), \"OWNER_TYPE\" VARCHAR(10), "
+operator|+
+literal|"\"CTLG_NAME\" VARCHAR(256) NOT NULL, PRIMARY KEY (DB_ID))"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"already exists"
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"TBLS table already exist, ignoring"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
 literal|"CREATE TABLE \"APP\".\"PARTITIONS\" ("
 operator|+
 literal|" \"PART_ID\" BIGINT NOT NULL, \"CREATE_TIME\" INTEGER NOT NULL, "

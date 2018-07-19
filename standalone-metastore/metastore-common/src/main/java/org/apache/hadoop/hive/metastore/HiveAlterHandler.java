@@ -3647,6 +3647,7 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+comment|// TODO: refactor this into a separate method after master merge, this one is too big.
 try|try
 block|{
 name|db
@@ -4182,8 +4183,6 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-comment|// Verifying ACID state again is not strictly needed here (alterPartition above does it),
-comment|// but we are going to use the uniform approach for simplicity.
 name|msdb
 operator|.
 name|updatePartitionColumnStatistics

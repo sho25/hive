@@ -16958,6 +16958,12 @@ name|part_vals
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|long
+name|txnId
+parameter_list|,
+name|String
+name|validWriteIds
 parameter_list|)
 throws|throws
 name|InvalidOperationException

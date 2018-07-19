@@ -7988,6 +7988,7 @@ literal|false
 argument_list|)
 return|;
 block|}
+comment|/** Note: this is generally called in Hive.java; so, the callers of Hive.java make sure    *        to set up the acid state during compile, and Hive.java retrieves it if needed. */
 specifier|public
 specifier|static
 name|TableSnapshot
@@ -8026,6 +8027,7 @@ name|isStatsUpdater
 argument_list|)
 return|;
 block|}
+comment|/** Note: this is generally called in Hive.java; so, the callers of Hive.java make sure    *        to set up the acid state during compile, and Hive.java retrieves it if needed. */
 specifier|public
 specifier|static
 name|TableSnapshot
