@@ -1570,6 +1570,21 @@ argument_list|,
 name|candidateSize
 argument_list|)
 expr_stmt|;
+name|cache
+operator|.
+name|releaseBuffer
+argument_list|(
+operator|(
+operator|(
+name|CacheChunk
+operator|)
+name|drl
+operator|)
+operator|.
+name|getBuffer
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|sizeRead
 operator|+=
 name|candidateSize
@@ -1736,6 +1751,21 @@ argument_list|,
 name|candidateSize
 argument_list|)
 expr_stmt|;
+name|cache
+operator|.
+name|releaseBuffer
+argument_list|(
+operator|(
+operator|(
+name|CacheChunk
+operator|)
+name|candidate
+operator|)
+operator|.
+name|getBuffer
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|sizeRead
 operator|+=
 name|candidateSize
@@ -1856,6 +1886,10 @@ name|chunkTo
 operator|-
 name|chunkFrom
 decl_stmt|;
+comment|// TODO: if we allow partial reads (right now we disable this), we'd have to handle it here.
+comment|//       chunksInThisRead should probably be changed to be a struct array indicating both
+comment|//       partial and full sizes for each chunk; then the partial ones could be merged
+comment|//       with the previous partial ones, and any newly-full chunks put in the cache.
 name|MemoryBuffer
 index|[]
 name|largeBuffers
@@ -2485,7 +2519,7 @@ throw|throw
 operator|new
 name|AssertionError
 argument_list|(
-literal|"No lower bound for offset "
+literal|"No lower bound for start offset "
 operator|+
 name|from
 argument_list|)
@@ -2521,7 +2555,7 @@ throw|throw
 operator|new
 name|AssertionError
 argument_list|(
-literal|"Lower bound for offset "
+literal|"Lower bound for start offset "
 operator|+
 name|from
 operator|+
@@ -2634,7 +2668,7 @@ throw|throw
 operator|new
 name|AssertionError
 argument_list|(
-literal|"Lower bound for offset "
+literal|"Lower bound for end offset "
 operator|+
 name|to
 operator|+
