@@ -805,6 +805,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|stats
+operator|.
+name|BasicStatsNoJobTask
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|serde
 operator|.
 name|serdeConstants
@@ -2960,6 +2978,8 @@ argument_list|(
 name|tableSpec
 argument_list|)
 expr_stmt|;
+comment|// Note: this should probably use BasicStatsNoJobTask.canUseFooterScan, but it doesn't check
+comment|//       Parquet for some reason. I'm keeping the existing behavior for now.
 if|if
 condition|(
 name|inputFormat
@@ -2969,6 +2989,14 @@ argument_list|(
 name|OrcInputFormat
 operator|.
 name|class
+argument_list|)
+operator|&&
+operator|!
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|table
 argument_list|)
 condition|)
 block|{
