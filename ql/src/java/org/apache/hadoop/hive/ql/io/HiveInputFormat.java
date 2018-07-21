@@ -1810,6 +1810,8 @@ argument_list|(
 name|inputFormat
 argument_list|,
 name|llapIo
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -1906,6 +1908,8 @@ argument_list|(
 name|inputFormat
 argument_list|,
 name|llapIo
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -2044,6 +2048,9 @@ argument_list|<
 name|VectorizedRowBatch
 argument_list|>
 name|llapIo
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 block|{
 name|LOG
@@ -2061,6 +2068,20 @@ name|getCanonicalName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|setInt
+argument_list|(
+literal|"parquet.read.allocation.size"
+argument_list|,
+literal|1024
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|)
+expr_stmt|;
+comment|// Disable buffer splitting for now.
 name|llapIo
 operator|.
 name|initCacheOnlyInputFormat
