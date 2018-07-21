@@ -74004,32 +74004,6 @@ return|return
 literal|false
 return|;
 block|}
-comment|// TODO## NUM_FILES could also be set to 0 by invalid update. We need to have a negative test. Or remove this and fix stuff.
-comment|// If the NUM_FILES of the table/partition is 0, return 'true' from this method.
-comment|// Since newly initialized empty table has 0 for the parameter.
-if|if
-condition|(
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|statsParams
-operator|.
-name|get
-argument_list|(
-name|StatsSetupConst
-operator|.
-name|NUM_FILES
-argument_list|)
-argument_list|)
-operator|==
-literal|0
-condition|)
-block|{
-return|return
-literal|true
-return|;
-block|}
 if|if
 condition|(
 name|queryValidWriteIdList
