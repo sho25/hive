@@ -1833,7 +1833,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Table
 name|alterTable
 parameter_list|(
 name|String
@@ -1855,7 +1855,11 @@ throws|throws
 name|InvalidObjectException
 throws|,
 name|MetaException
-block|{   }
+block|{
+return|return
+name|newTable
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -2168,7 +2172,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Partition
 name|alterPartition
 parameter_list|(
 name|String
@@ -2196,11 +2200,18 @@ throws|throws
 name|InvalidObjectException
 throws|,
 name|MetaException
-block|{   }
+block|{
+return|return
+name|new_part
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|Partition
+argument_list|>
 name|alterPartitions
 parameter_list|(
 name|String
@@ -2237,7 +2248,11 @@ throws|throws
 name|InvalidObjectException
 throws|,
 name|MetaException
-block|{   }
+block|{
+return|return
+name|new_parts
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -3827,7 +3842,12 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|updateTableColumnStatistics
 parameter_list|(
 name|ColumnStatistics
@@ -3847,13 +3867,18 @@ throws|,
 name|InvalidObjectException
 block|{
 return|return
-literal|false
+literal|null
 return|;
 block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|updatePartitionColumnStatistics
 parameter_list|(
 name|ColumnStatistics
@@ -3879,7 +3904,7 @@ throws|,
 name|InvalidObjectException
 block|{
 return|return
-literal|false
+literal|null
 return|;
 block|}
 annotation|@

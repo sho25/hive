@@ -718,8 +718,8 @@ name|int
 name|max
 parameter_list|)
 function_decl|;
-comment|/**    * Alter a table.    * @param catName catalog the table is in.    * @param dbname database the table is in.    * @param name name of the table.    * @param newTable New table object.  Which parts of the table can be altered are    *                 implementation specific.    * @throws InvalidObjectException The new table object is invalid.    * @throws MetaException something went wrong, usually in the RDBMS or storage.    */
-name|void
+comment|/**    * Alter a table.    * @param catName catalog the table is in.    * @param dbname database the table is in.    * @param name name of the table.    * @param newTable New table object.  Which parts of the table can be altered are    *                 implementation specific.    * @return    * @throws InvalidObjectException The new table object is invalid.    * @throws MetaException something went wrong, usually in the RDBMS or storage.    */
+name|Table
 name|alterTable
 parameter_list|(
 name|String
@@ -971,8 +971,8 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Alter a partition.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partition values that describe the partition.    * @param new_part new partition object.  This should be a complete copy of the old with    *                 changes values, not just the parts to update.    * @throws InvalidObjectException No such partition.    * @throws MetaException error accessing the RDBMS.    */
-name|void
+comment|/**    * Alter a partition.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals partition values that describe the partition.    * @param new_part new partition object.  This should be a complete copy of the old with    *                 changes values, not just the parts to update.    * @return    * @throws InvalidObjectException No such partition.    * @throws MetaException error accessing the RDBMS.    */
+name|Partition
 name|alterPartition
 parameter_list|(
 name|String
@@ -1001,8 +1001,11 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @param txnId transaction id of the transaction that called this method.    * @param writeIdList valid write id list of the transaction on the current table    * @param writeid write id of the transaction for the table    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
-name|void
+comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @param txnId transaction id of the transaction that called this method.    * @param writeIdList valid write id list of the transaction on the current table    * @param writeid write id of the transaction for the table    * @return    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
+name|List
+argument_list|<
+name|Partition
+argument_list|>
 name|alterPartitions
 parameter_list|(
 name|String
@@ -1843,7 +1846,12 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/** Persists the given column statistics object to the metastore    * @param colStats object to persist    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    */
-name|boolean
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|updateTableColumnStatistics
 parameter_list|(
 name|ColumnStatistics
@@ -1865,7 +1873,12 @@ throws|,
 name|InvalidInputException
 function_decl|;
 comment|/** Persists the given column statistics object to the metastore    * @param statsObj object to persist    * @param partVals partition values to persist the stats for    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    * @throws TException    */
-name|boolean
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|updatePartitionColumnStatistics
 parameter_list|(
 name|ColumnStatistics

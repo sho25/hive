@@ -35747,6 +35747,8 @@ name|validWriteIds
 argument_list|,
 name|writeId
 argument_list|)
+operator|!=
+literal|null
 expr_stmt|;
 block|}
 finally|finally
@@ -36071,6 +36073,8 @@ name|validWriteIds
 argument_list|,
 name|writeId
 argument_list|)
+operator|!=
+literal|null
 return|;
 block|}
 finally|finally
