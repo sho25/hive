@@ -8341,13 +8341,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|InvalidOperationException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testRenamePartitionNullOldPartList
@@ -8407,6 +8400,8 @@ literal|"16"
 argument_list|)
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|renamePartition
@@ -8420,6 +8415,22 @@ argument_list|,
 name|partToRename
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"should throw"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InvalidOperationException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
@@ -8516,7 +8527,7 @@ catch|catch
 parameter_list|(
 name|NullPointerException
 decl||
-name|TTransportException
+name|TProtocolException
 name|e
 parameter_list|)
 block|{     }
@@ -8815,13 +8826,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testRenamePartitionNullDbName
@@ -8890,6 +8894,8 @@ literal|"16"
 argument_list|)
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|renamePartition
@@ -8908,16 +8914,25 @@ argument_list|,
 name|partToRename
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"should throw"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|MetaException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
 name|testRenamePartitionNullTblName
@@ -8986,6 +9001,8 @@ literal|"16"
 argument_list|)
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|client
 operator|.
 name|renamePartition
@@ -9004,6 +9021,22 @@ argument_list|,
 name|partToRename
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|fail
+argument_list|(
+literal|"should throw"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+decl||
+name|TProtocolException
+name|ex
+parameter_list|)
+block|{     }
 block|}
 annotation|@
 name|Test
