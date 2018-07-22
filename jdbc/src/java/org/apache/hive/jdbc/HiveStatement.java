@@ -2031,8 +2031,10 @@ name|sql
 argument_list|)
 expr_stmt|;
 return|return
-literal|0
+name|getUpdateCount
+argument_list|()
 return|;
+comment|//return getLargeUpdateCount(); - not currently implemented... wrong type
 block|}
 comment|/*    * (non-Javadoc)    *    * @see java.sql.Statement#executeUpdate(java.lang.String, int)    */
 annotation|@
