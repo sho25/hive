@@ -2264,7 +2264,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Table
 name|alterTable
 parameter_list|(
 name|String
@@ -2292,6 +2292,7 @@ condition|(
 name|shouldEventSucceed
 condition|)
 block|{
+return|return
 name|objectStore
 operator|.
 name|alterTable
@@ -2306,7 +2307,7 @@ name|newTable
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 else|else
 block|{
@@ -2662,7 +2663,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|Partition
 name|alterPartition
 parameter_list|(
 name|String
@@ -2696,6 +2697,7 @@ condition|(
 name|shouldEventSucceed
 condition|)
 block|{
+return|return
 name|objectStore
 operator|.
 name|alterPartition
@@ -2712,7 +2714,7 @@ name|newPart
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 else|else
 block|{
@@ -2728,7 +2730,10 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|void
+name|List
+argument_list|<
+name|Partition
+argument_list|>
 name|alterPartitions
 parameter_list|(
 name|String
@@ -2771,6 +2776,7 @@ condition|(
 name|shouldEventSucceed
 condition|)
 block|{
+return|return
 name|objectStore
 operator|.
 name|alterPartitions
@@ -2789,7 +2795,7 @@ name|writeId
 argument_list|,
 name|queryValidWriteIds
 argument_list|)
-expr_stmt|;
+return|;
 block|}
 else|else
 block|{
@@ -4719,7 +4725,12 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|updateTableColumnStatistics
 parameter_list|(
 name|ColumnStatistics
@@ -4756,7 +4767,12 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|boolean
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
 name|updatePartitionColumnStatistics
 parameter_list|(
 name|ColumnStatistics

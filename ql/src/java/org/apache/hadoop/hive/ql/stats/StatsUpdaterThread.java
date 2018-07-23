@@ -3109,10 +3109,6 @@ name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|conf
 argument_list|,
-name|db
-argument_list|,
-name|tbl
-argument_list|,
 name|params
 argument_list|,
 name|statsWriteId
@@ -3291,10 +3287,6 @@ operator|.
 name|isCurrentStatsValidForTheQuery
 argument_list|(
 name|conf
-argument_list|,
-name|db
-argument_list|,
-name|tbl
 argument_list|,
 name|params
 argument_list|,
