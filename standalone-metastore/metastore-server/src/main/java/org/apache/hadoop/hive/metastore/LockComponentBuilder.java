@@ -353,6 +353,25 @@ return|return
 name|component
 return|;
 block|}
+specifier|public
+name|LockComponent
+name|setLock
+parameter_list|(
+name|LockType
+name|type
+parameter_list|)
+block|{
+name|component
+operator|.
+name|setType
+argument_list|(
+name|type
+argument_list|)
+expr_stmt|;
+return|return
+name|component
+return|;
+block|}
 block|}
 end_class
 
