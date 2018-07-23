@@ -478,6 +478,7 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+return|return
 name|super
 operator|.
 name|executeUpdate
@@ -489,9 +490,6 @@ argument_list|,
 name|parameters
 argument_list|)
 argument_list|)
-expr_stmt|;
-return|return
-literal|0
 return|;
 block|}
 comment|/**    * update the SQL string with parameters set by setXXX methods of {@link PreparedStatement}    *    * @param sql    * @param parameters    * @return updated SQL string    * @throws SQLException     */
