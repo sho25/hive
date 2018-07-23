@@ -435,7 +435,7 @@ condition|(
 operator|!
 name|conversionHelper
 operator|.
-name|update
+name|updateForComparison
 argument_list|(
 name|oi
 argument_list|)

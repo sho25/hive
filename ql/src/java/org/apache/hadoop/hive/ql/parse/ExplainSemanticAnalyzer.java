@@ -864,6 +864,24 @@ expr_stmt|;
 block|}
 block|}
 block|}
+elseif|else
+if|if
+condition|(
+name|explainOptions
+operator|==
+name|HiveParser
+operator|.
+name|KW_LOCKS
+condition|)
+block|{
+name|config
+operator|.
+name|setLocks
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 else|else
 block|{
 comment|// UNDONE: UNKNOWN OPTION?

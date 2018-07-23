@@ -5549,6 +5549,20 @@ operator|!=
 literal|null
 return|;
 block|}
+specifier|public
+name|String
+name|getCatalogName
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|tTable
+operator|.
+name|getCatName
+argument_list|()
+return|;
+block|}
 block|}
 end_class
 

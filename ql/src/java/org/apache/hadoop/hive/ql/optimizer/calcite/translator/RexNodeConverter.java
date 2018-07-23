@@ -2763,6 +2763,15 @@ name|tgtDT
 operator|!=
 literal|null
 operator|&&
+name|tgtDT
+operator|.
+name|getCategory
+argument_list|()
+operator|==
+name|Category
+operator|.
+name|PRIMITIVE
+operator|&&
 name|TypeInfoUtils
 operator|.
 name|isConversionRequiredForComparison

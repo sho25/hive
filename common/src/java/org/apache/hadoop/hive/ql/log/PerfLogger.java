@@ -572,6 +572,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|SPARK_DYNAMICALLY_PRUNE_PARTITIONS
+init|=
+literal|"SparkDynamicallyPrunePartitions."
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|FILE_MOVES
 init|=
 literal|"FileMoves"
