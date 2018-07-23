@@ -161,6 +161,13 @@ decl_stmt|;
 comment|//For partitions, flag controlling whether the current
 comment|//table specs are to be used
 specifier|private
+name|boolean
+name|inheritLocation
+init|=
+literal|false
+decl_stmt|;
+comment|// A silly setting.
+specifier|private
 name|int
 name|stmtId
 decl_stmt|;
@@ -264,6 +271,14 @@ operator|=
 name|o
 operator|.
 name|inheritTableSpecs
+expr_stmt|;
+name|this
+operator|.
+name|inheritLocation
+operator|=
+name|o
+operator|.
+name|inheritLocation
 expr_stmt|;
 name|this
 operator|.
@@ -960,6 +975,15 @@ name|inheritTableSpecs
 return|;
 block|}
 specifier|public
+name|boolean
+name|getInheritLocation
+parameter_list|()
+block|{
+return|return
+name|inheritLocation
+return|;
+block|}
+specifier|public
 name|void
 name|setInheritTableSpecs
 parameter_list|(
@@ -967,9 +991,13 @@ name|boolean
 name|inheritTableSpecs
 parameter_list|)
 block|{
+comment|// Set inheritLocation if this is set to true explicitly.
+comment|// TODO: Who actually needs this? Might just be some be pointless legacy code.
 name|this
 operator|.
 name|inheritTableSpecs
+operator|=
+name|inheritLocation
 operator|=
 name|inheritTableSpecs
 expr_stmt|;

@@ -15387,6 +15387,13 @@ argument_list|(
 name|lbCtx
 argument_list|)
 expr_stmt|;
+name|ltd
+operator|.
+name|setInheritTableSpecs
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|Task
 argument_list|<
 name|MoveWork
