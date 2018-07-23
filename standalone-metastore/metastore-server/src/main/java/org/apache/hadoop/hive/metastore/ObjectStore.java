@@ -4203,6 +4203,9 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|shutdown
+argument_list|()
+expr_stmt|;
 name|numTries
 operator|--
 expr_stmt|;
@@ -4454,6 +4457,27 @@ operator|=
 name|getPersistenceManager
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"RawStore: {}, with PersistenceManager: {}"
+operator|+
+literal|" created in the thread with id: {}"
+argument_list|,
+name|this
+argument_list|,
+name|pm
+argument_list|,
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|getId
+argument_list|()
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|String
@@ -4586,27 +4610,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"RawStore: {}, with PersistenceManager: {}"
-operator|+
-literal|" created in the thread with id: {}"
-argument_list|,
-name|this
-argument_list|,
-name|pm
-argument_list|,
-name|Thread
-operator|.
-name|currentThread
-argument_list|()
-operator|.
-name|getId
-argument_list|()
-argument_list|)
-expr_stmt|;
 block|}
 specifier|private
 name|DatabaseProduct
@@ -5610,7 +5613,7 @@ parameter_list|()
 block|{
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"RawStore: {}, with PersistenceManager: {} will be shutdown"
 argument_list|,
