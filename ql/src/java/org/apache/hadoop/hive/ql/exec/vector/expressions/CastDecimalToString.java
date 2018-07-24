@@ -264,8 +264,12 @@ name|byteIndex
 init|=
 name|decWritable
 operator|.
-name|toBytes
+name|toFormatBytes
 argument_list|(
+name|inV
+operator|.
+name|scale
+argument_list|,
 name|scratchBuffer
 argument_list|)
 decl_stmt|;

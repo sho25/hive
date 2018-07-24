@@ -3412,7 +3412,7 @@ name|v
 init|=
 name|toBytes
 argument_list|(
-literal|"1.1"
+literal|"1.10"
 argument_list|)
 decl_stmt|;
 name|assertTrue
@@ -3495,7 +3495,7 @@ name|v
 operator|=
 name|toBytes
 argument_list|(
-literal|"-2.2"
+literal|"-2.20"
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -3543,7 +3543,7 @@ name|v
 operator|=
 name|toBytes
 argument_list|(
-literal|"9999999999999999"
+literal|"9999999999999999.00"
 argument_list|)
 expr_stmt|;
 name|Assert
