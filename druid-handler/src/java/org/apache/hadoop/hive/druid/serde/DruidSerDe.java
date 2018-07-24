@@ -3140,6 +3140,10 @@ argument_list|(
 name|i
 argument_list|)
 argument_list|)
+condition|?
+literal|1L
+else|:
+literal|0L
 expr_stmt|;
 break|break;
 default|default:
