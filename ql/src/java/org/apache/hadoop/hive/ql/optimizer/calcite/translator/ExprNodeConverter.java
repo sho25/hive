@@ -461,6 +461,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|type
+operator|.
+name|TimestampTZUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -2612,6 +2630,10 @@ name|getLocalTimeZone
 argument_list|()
 argument_list|)
 argument_list|,
+name|TimestampTZUtil
+operator|.
+name|parse
+argument_list|(
 name|literal
 operator|.
 name|getValueAs
@@ -2625,6 +2647,7 @@ name|toString
 argument_list|()
 operator|+
 literal|" UTC"
+argument_list|)
 argument_list|)
 return|;
 case|case

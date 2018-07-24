@@ -2350,6 +2350,11 @@ operator|.
 name|newArrayList
 argument_list|()
 decl_stmt|;
+name|PrimitiveCategory
+name|timestampType
+init|=
+literal|null
+decl_stmt|;
 name|int
 name|timestampPos
 init|=
@@ -2428,6 +2433,24 @@ name|PRIMITIVE
 operator|&&
 operator|(
 operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|columnDesc
+operator|.
+name|getTypeInfo
+argument_list|()
+operator|)
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+operator|==
+name|PrimitiveCategory
+operator|.
+name|TIMESTAMP
+operator|||
+operator|(
+operator|(
 name|PrimitiveTypeInfo
 operator|)
 name|columnDesc
@@ -2442,6 +2465,7 @@ operator|==
 name|PrimitiveCategory
 operator|.
 name|TIMESTAMPLOCALTZ
+operator|)
 condition|)
 block|{
 if|if
@@ -2456,12 +2480,27 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"Multiple columns with timestamp with local time-zone type on query result; "
+literal|"Multiple columns with timestamp/timestamp with local time-zone type on query result; "
 operator|+
-literal|"could not resolve which one is the timestamp with local time-zone column"
+literal|"could not resolve which one is the right column"
 argument_list|)
 throw|;
 block|}
+name|timestampType
+operator|=
+operator|(
+operator|(
+name|PrimitiveTypeInfo
+operator|)
+name|columnDesc
+operator|.
+name|getTypeInfo
+argument_list|()
+operator|)
+operator|.
+name|getPrimitiveCategory
+argument_list|()
+expr_stmt|;
 name|timestampPos
 operator|=
 name|i
@@ -2635,8 +2674,8 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-comment|// Timestamp column type in Druid is timestamp with local time-zone, as it represents
-comment|// a specific instant in time. Thus, we have this value and we need to extract the
+comment|// Timestamp column type in Druid is either timestamp or timestamp with local time-zone, i.e.,
+comment|// a specific instant in time. Thus, for the latest, we have this value and we need to extract the
 comment|// granularity to split the data when we are storing it in Druid. However, Druid stores
 comment|// the data in UTC. Thus, we need to apply the following logic on the data to extract
 comment|// the granularity correctly:
@@ -2661,10 +2700,18 @@ name|timestampPos
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|timestampType
+operator|==
+name|PrimitiveCategory
+operator|.
+name|TIMESTAMPLOCALTZ
+condition|)
+block|{
 comment|// #2 - UTC epoch for instant
-name|ExprNodeGenericFuncDesc
-name|f1
-init|=
+name|expr
+operator|=
 operator|new
 name|ExprNodeGenericFuncDesc
 argument_list|(
@@ -2683,11 +2730,10 @@ argument_list|(
 name|expr
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 comment|// #3 - Cast to timestamp
-name|ExprNodeGenericFuncDesc
-name|f2
-init|=
+name|expr
+operator|=
 operator|new
 name|ExprNodeGenericFuncDesc
 argument_list|(
@@ -2703,14 +2749,14 @@ name|Lists
 operator|.
 name|newArrayList
 argument_list|(
-name|f1
+name|expr
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|// #4 - We apply the granularity function
-name|ExprNodeGenericFuncDesc
-name|f3
-init|=
+name|expr
+operator|=
 operator|new
 name|ExprNodeGenericFuncDesc
 argument_list|(
@@ -2735,15 +2781,15 @@ name|Lists
 operator|.
 name|newArrayList
 argument_list|(
-name|f2
+name|expr
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|descs
 operator|.
 name|add
 argument_list|(
-name|f3
+name|expr
 argument_list|)
 expr_stmt|;
 name|colNames

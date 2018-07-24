@@ -104,22 +104,6 @@ specifier|protected
 specifier|static
 specifier|final
 name|String
-name|ISO_TIME_FORMAT
-init|=
-literal|"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-decl_stmt|;
-specifier|protected
-specifier|static
-specifier|final
-name|String
-name|TIMESTAMP_FORMAT
-init|=
-literal|"yyyy-MM-dd HH:mm:ss"
-decl_stmt|;
-specifier|protected
-specifier|static
-specifier|final
-name|String
 name|FLOAT_TYPE
 init|=
 literal|"FLOAT"
