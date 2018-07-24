@@ -413,7 +413,9 @@ name|ql
 operator|.
 name|udf
 operator|.
-name|UDFToString
+name|generic
+operator|.
+name|GenericUDFToString
 import|;
 end_import
 
@@ -2969,31 +2971,12 @@ argument_list|)
 argument_list|)
 decl_stmt|;
 comment|// cast(.... as string)
-name|UDFToString
+name|GenericUDFToString
 name|stringCast
 init|=
 operator|new
-name|UDFToString
+name|GenericUDFToString
 argument_list|()
-decl_stmt|;
-name|GenericUDFBridge
-name|stringCastBridge
-init|=
-operator|new
-name|GenericUDFBridge
-argument_list|(
-literal|"cast"
-argument_list|,
-literal|false
-argument_list|,
-name|stringCast
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|)
 decl_stmt|;
 comment|// cast (40 + 50 as string)
 name|ExprNodeGenericFuncDesc
@@ -3006,7 +2989,7 @@ name|TypeInfoFactory
 operator|.
 name|stringTypeInfo
 argument_list|,
-name|stringCastBridge
+name|stringCast
 argument_list|,
 literal|"cast"
 argument_list|,

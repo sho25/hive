@@ -2920,6 +2920,31 @@ argument_list|,
 literal|"Replication file system operation retry expired."
 argument_list|)
 block|,
+name|SPARK_GET_STAGES_INFO_TIMEOUT
+argument_list|(
+literal|30048
+argument_list|,
+literal|"Spark job GetSparkStagesInfoJob timed out after {0} seconds."
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|SPARK_GET_STAGES_INFO_INTERRUPTED
+argument_list|(
+literal|30049
+argument_list|,
+literal|"Spark job GetSparkStagesInfoJob was interrupted."
+argument_list|)
+block|,
+name|SPARK_GET_STAGES_INFO_EXECUTIONERROR
+argument_list|(
+literal|30050
+argument_list|,
+literal|"Spark job GetSparkStagesInfoJob failed in execution while getting job info due to exception {0}"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 40000 range starts here ========================//
 name|SPARK_JOB_RUNTIME_ERROR
 argument_list|(
