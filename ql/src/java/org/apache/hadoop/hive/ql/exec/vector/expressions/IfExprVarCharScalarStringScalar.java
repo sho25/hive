@@ -146,7 +146,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|VARCHAR
 argument_list|)
 operator|.
 name|setInputExpressionTypes

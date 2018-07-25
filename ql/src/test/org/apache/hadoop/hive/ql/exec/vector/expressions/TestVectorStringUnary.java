@@ -371,11 +371,9 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|expressions
+name|udf
 operator|.
-name|TestVectorTimestampExtract
-operator|.
-name|TimestampExtractTestMode
+name|VectorUDFAdaptor
 import|;
 end_import
 
@@ -893,15 +891,6 @@ argument_list|,
 name|typeName
 argument_list|,
 literal|"initcap"
-argument_list|)
-expr_stmt|;
-name|doTests
-argument_list|(
-name|random
-argument_list|,
-name|typeName
-argument_list|,
-literal|"hex"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2131,6 +2120,45 @@ argument_list|(
 name|exprDesc
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|stringUnaryTestMode
+operator|==
+name|StringUnaryTestMode
+operator|.
+name|VECTOR_EXPRESSION
+operator|&&
+name|vectorExpression
+operator|instanceof
+name|VectorUDFAdaptor
+condition|)
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"*NO NATIVE VECTOR EXPRESSION* typeInfo "
+operator|+
+name|typeInfo
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" stringUnaryTestMode "
+operator|+
+name|stringUnaryTestMode
+operator|+
+literal|" vectorExpression "
+operator|+
+name|vectorExpression
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|VectorizedRowBatch
 name|batch
 init|=

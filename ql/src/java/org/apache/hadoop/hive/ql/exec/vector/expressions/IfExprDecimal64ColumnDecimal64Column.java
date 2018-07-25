@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *    http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -44,15 +44,15 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Compute IF(expr1, expr2, expr3) for 3 input column expressions.  * The first is always a boolean (LongColumnVector).  * The second is a string scalar.  * The third is a string scalar.  */
+comment|/**  * Compute IF(expr1, expr2, expr3) for 3 input column expressions.  * The first is always a boolean (LongColumnVector).  * The second and third are long columns or long expression results.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|IfExprCharScalarStringScalar
+name|IfExprDecimal64ColumnDecimal64Column
 extends|extends
-name|IfExprStringScalarStringScalar
+name|IfExprLongColumnLongColumn
 block|{
 specifier|private
 specifier|static
@@ -63,18 +63,16 @@ init|=
 literal|1L
 decl_stmt|;
 specifier|public
-name|IfExprCharScalarStringScalar
+name|IfExprDecimal64ColumnDecimal64Column
 parameter_list|(
 name|int
 name|arg1Column
 parameter_list|,
-name|byte
-index|[]
-name|arg2Scalar
+name|int
+name|arg2Column
 parameter_list|,
-name|byte
-index|[]
-name|arg3Scalar
+name|int
+name|arg3Column
 parameter_list|,
 name|int
 name|outputColumnNum
@@ -84,16 +82,16 @@ name|super
 argument_list|(
 name|arg1Column
 argument_list|,
-name|arg2Scalar
+name|arg2Column
 argument_list|,
-name|arg3Scalar
+name|arg3Column
 argument_list|,
 name|outputColumnNum
 argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|IfExprCharScalarStringScalar
+name|IfExprDecimal64ColumnDecimal64Column
 parameter_list|()
 block|{
 name|super
@@ -138,19 +136,22 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|INT_FAMILY
+name|getType
+argument_list|(
+literal|"long"
+argument_list|)
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|CHAR
+name|DECIMAL_64
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|CHAR
+name|DECIMAL_64
 argument_list|)
 operator|.
 name|setInputExpressionTypes
@@ -165,13 +166,13 @@ name|VectorExpressionDescriptor
 operator|.
 name|InputExpressionType
 operator|.
-name|SCALAR
+name|COLUMN
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|InputExpressionType
 operator|.
-name|SCALAR
+name|COLUMN
 argument_list|)
 operator|.
 name|build
