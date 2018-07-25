@@ -2022,6 +2022,11 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**      * @return true if if the runtime MR stat for Erasure Coding is available.      */
+name|boolean
+name|isMapReduceStatAvailable
+parameter_list|()
+function_decl|;
 block|}
 comment|/**    * This is a dummy class used when the hadoop version does not support hdfs Erasure Coding.    */
 class|class
@@ -2129,6 +2134,17 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{     }
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isMapReduceStatAvailable
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
 block|}
 comment|/**    * Returns a new instance of the HdfsErasureCoding shim.    *    * @param fs a FileSystem object    * @param conf a Configuration object    * @return a new instance of the HdfsErasureCoding shim.    * @throws IOException If an error occurred while creating the instance.    */
 name|HadoopShims

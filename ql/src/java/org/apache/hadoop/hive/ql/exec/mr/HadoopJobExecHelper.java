@@ -2439,6 +2439,8 @@ init|=
 operator|new
 name|MapRedStats
 argument_list|(
+name|job
+argument_list|,
 name|numMap
 argument_list|,
 name|numReduce
