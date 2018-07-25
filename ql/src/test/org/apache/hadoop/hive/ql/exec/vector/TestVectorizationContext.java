@@ -785,6 +785,8 @@ name|vector
 operator|.
 name|expressions
 operator|.
+name|gen
+operator|.
 name|LongColEqualLongScalar
 import|;
 end_import
@@ -806,6 +808,8 @@ operator|.
 name|vector
 operator|.
 name|expressions
+operator|.
+name|gen
 operator|.
 name|LongColGreaterLongScalar
 import|;

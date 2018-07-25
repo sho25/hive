@@ -150,7 +150,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|CHAR
 argument_list|)
 operator|.
 name|setInputExpressionTypes

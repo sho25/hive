@@ -2649,18 +2649,16 @@ throw|throw
 operator|new
 name|InvalidOperationException
 argument_list|(
-literal|"Unable to change partition or table. Database "
-operator|+
-name|dbname
-operator|+
-literal|" does not exist"
-operator|+
-literal|" Check metastore logs for detailed stack."
+literal|"Unable to change partition or table. Object "
 operator|+
 name|e
 operator|.
 name|getMessage
 argument_list|()
+operator|+
+literal|" does not exist."
+operator|+
+literal|" Check metastore logs for detailed stack."
 argument_list|)
 throw|;
 block|}

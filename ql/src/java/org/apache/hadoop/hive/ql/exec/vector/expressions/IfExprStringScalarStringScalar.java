@@ -865,13 +865,13 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|STRING_BINARY
 argument_list|,
 name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|STRING
+name|STRING_BINARY
 argument_list|)
 operator|.
 name|setInputExpressionTypes

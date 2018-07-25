@@ -4174,6 +4174,7 @@ name|isPendingUpdate
 assert|;
 if|if
 condition|(
+operator|(
 name|ti
 operator|.
 name|lastSetGuaranteed
@@ -4187,8 +4188,17 @@ operator|==
 name|ti
 operator|.
 name|isGuaranteed
+operator|)
+operator|||
+name|ti
+operator|.
+name|isGuaranteed
+operator|==
+literal|null
 condition|)
 block|{
+comment|// Nothing to do - e.g. two messages have canceled each other before we could react,
+comment|// or the task was deallocated.
 name|ti
 operator|.
 name|requestedValue
@@ -4214,7 +4224,6 @@ name|attemptId
 argument_list|)
 expr_stmt|;
 return|return;
-comment|// Nothing to do - e.g. two messages have canceled each other before we could react.
 block|}
 name|newState
 operator|=
@@ -4289,9 +4298,16 @@ operator|=
 literal|false
 expr_stmt|;
 comment|// It's ok to update metrics for two tasks in parallel, but not for the same one.
+comment|// Don't update metrics for the cancelled tasks - already taken care of during cancellation.
 if|if
 condition|(
 name|metrics
+operator|!=
+literal|null
+operator|&&
+name|ti
+operator|.
+name|requestedValue
 operator|!=
 literal|null
 condition|)

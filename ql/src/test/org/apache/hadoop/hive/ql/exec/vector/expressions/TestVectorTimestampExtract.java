@@ -201,6 +201,28 @@ name|exec
 operator|.
 name|vector
 operator|.
+name|udf
+operator|.
+name|VectorUDFAdaptor
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
 name|VectorizationContext
 import|;
 end_import
@@ -2306,6 +2328,45 @@ operator|.
 name|transientInit
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|timestampExtractTestMode
+operator|==
+name|TimestampExtractTestMode
+operator|.
+name|VECTOR_EXPRESSION
+operator|&&
+name|vectorExpression
+operator|instanceof
+name|VectorUDFAdaptor
+condition|)
+block|{
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"*NO NATIVE VECTOR EXPRESSION* dateTimeStringTypeInfo "
+operator|+
+name|dateTimeStringTypeInfo
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|" timestampExtractTestMode "
+operator|+
+name|timestampExtractTestMode
+operator|+
+literal|" vectorExpression "
+operator|+
+name|vectorExpression
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
 comment|/*     System.out.println(         "*DEBUG* dateTimeStringTypeInfo " + dateTimeStringTypeInfo.toString() +         " timestampExtractTestMode " + timestampExtractTestMode +         " vectorExpression " + vectorExpression.getClass().getSimpleName());     */
 name|VectorRandomRowSource
