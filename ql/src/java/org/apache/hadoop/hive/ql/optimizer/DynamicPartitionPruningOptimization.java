@@ -1755,8 +1755,8 @@ operator|+
 literal|" is not a partition column"
 argument_list|)
 expr_stmt|;
-name|semiJoin
-operator|=
+if|if
+condition|(
 name|semiJoin
 operator|&&
 operator|!
@@ -1771,10 +1771,6 @@ name|ts
 argument_list|,
 name|ctx
 argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|semiJoin
 operator|&&
 name|ts
 operator|.
