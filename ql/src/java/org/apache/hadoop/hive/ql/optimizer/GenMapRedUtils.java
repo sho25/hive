@@ -8924,6 +8924,16 @@ name|getLoadTableWork
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|truncate
+operator|=
+name|mvWork
+operator|.
+name|getLoadTableWork
+argument_list|()
+operator|.
+name|getReplace
+argument_list|()
+expr_stmt|;
 name|String
 name|tableName
 init|=
@@ -8938,20 +8948,31 @@ operator|.
 name|getTableName
 argument_list|()
 decl_stmt|;
-name|truncate
+try|try
+block|{
+comment|// For partitioned CTAS, the table has not been created, but we can retrieve it
+comment|// from the loadTableWork. For rest of query types, we just retrieve it from
+comment|// metastore.
+name|table
 operator|=
 name|mvWork
 operator|.
 name|getLoadTableWork
 argument_list|()
 operator|.
-name|getReplace
+name|getMdTable
 argument_list|()
-expr_stmt|;
-try|try
-block|{
-name|table
-operator|=
+operator|!=
+literal|null
+condition|?
+name|mvWork
+operator|.
+name|getLoadTableWork
+argument_list|()
+operator|.
+name|getMdTable
+argument_list|()
+else|:
 name|Hive
 operator|.
 name|get

@@ -2100,8 +2100,6 @@ init|=
 operator|new
 name|DynamicPartitionCtx
 argument_list|(
-literal|null
-argument_list|,
 name|partColMap
 argument_list|,
 literal|"Sunday"
