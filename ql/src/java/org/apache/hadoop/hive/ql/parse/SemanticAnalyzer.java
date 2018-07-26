@@ -75563,6 +75563,8 @@ condition|(
 name|checkResultsCache
 argument_list|(
 name|lookupInfo
+argument_list|,
+literal|false
 argument_list|)
 condition|)
 block|{
@@ -75787,6 +75789,8 @@ condition|(
 name|checkResultsCache
 argument_list|(
 name|lookupInfo
+argument_list|,
+literal|false
 argument_list|)
 condition|)
 block|{
@@ -76738,6 +76742,30 @@ name|queryCanBeCached
 argument_list|()
 condition|)
 block|{
+comment|// Last chance - check if the query is available in the cache.
+comment|// Since we have already generated a query plan, using a cached query result at this point
+comment|// requires SemanticAnalyzer state to be reset.
+if|if
+condition|(
+name|checkResultsCache
+argument_list|(
+name|lookupInfo
+argument_list|,
+literal|true
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Cached result found on second lookup"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+else|else
+block|{
 name|QueryResultsCache
 operator|.
 name|QueryInfo
@@ -76764,6 +76792,7 @@ name|queryInfo
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -89927,8 +89956,27 @@ name|QueryResultsCache
 operator|.
 name|CacheEntry
 name|cacheEntry
+parameter_list|,
+name|boolean
+name|needsReset
 parameter_list|)
 block|{
+if|if
+condition|(
+name|needsReset
+condition|)
+block|{
+name|reset
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|inputs
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+block|}
 comment|// Change query FetchTask to use new location specified in results cache.
 name|FetchTask
 name|fetchTask
@@ -90486,6 +90534,9 @@ name|QueryResultsCache
 operator|.
 name|LookupInfo
 name|lookupInfo
+parameter_list|,
+name|boolean
+name|needsReset
 parameter_list|)
 block|{
 if|if
@@ -90682,6 +90733,8 @@ comment|// At this point the caller should return from semantic analysis.
 name|useCachedResult
 argument_list|(
 name|cacheEntry
+argument_list|,
+name|needsReset
 argument_list|)
 expr_stmt|;
 return|return
