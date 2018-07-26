@@ -9705,6 +9705,15 @@ argument_list|,
 literal|"Arrow root allocator memory size limitation in bytes."
 argument_list|)
 block|,
+name|HIVE_ARROW_BATCH_ALLOCATOR_LIMIT
+argument_list|(
+literal|"hive.arrow.batch.allocator.limit"
+argument_list|,
+literal|10_000_000_000L
+argument_list|,
+literal|"Max bytes per arrow batch. This is a threshold, the memory is not pre-allocated."
+argument_list|)
+block|,
 name|HIVE_ARROW_BATCH_SIZE
 argument_list|(
 literal|"hive.arrow.batch.size"

@@ -897,6 +897,20 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|arrow
+operator|.
+name|memory
+operator|.
+name|BufferAllocator
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -932,6 +946,26 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVE_ARROW_BATCH_SIZE
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_ARROW_BATCH_ALLOCATOR_LIMIT
 import|;
 end_import
 
@@ -1189,6 +1223,10 @@ name|int
 name|batchSize
 decl_stmt|;
 specifier|private
+name|BufferAllocator
+name|allocator
+decl_stmt|;
+specifier|private
 specifier|final
 name|NullableMapVector
 name|rootVector
@@ -1214,6 +1252,20 @@ argument_list|,
 name|HIVE_ARROW_BATCH_SIZE
 argument_list|)
 expr_stmt|;
+name|long
+name|childAllocatorLimit
+init|=
+name|HiveConf
+operator|.
+name|getLongVar
+argument_list|(
+name|serDe
+operator|.
+name|conf
+argument_list|,
+name|HIVE_ARROW_BATCH_ALLOCATOR_LIMIT
+argument_list|)
+decl_stmt|;
 name|ArrowColumnarBatchSerDe
 operator|.
 name|LOG
@@ -1223,6 +1275,39 @@ argument_list|(
 literal|"ArrowColumnarBatchSerDe max number of buffered columns: "
 operator|+
 name|MAX_BUFFERED_ROWS
+argument_list|)
+expr_stmt|;
+name|String
+name|childAllocatorName
+init|=
+name|Thread
+operator|.
+name|currentThread
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+comment|//Use per-task allocator for accounting only, no need to reserve per-task memory
+name|long
+name|childAllocatorReservation
+init|=
+literal|0L
+decl_stmt|;
+comment|//Break out accounting of direct memory per-task, so we can check no memory is leaked when task is completed
+name|allocator
+operator|=
+name|serDe
+operator|.
+name|rootAllocator
+operator|.
+name|newChildAllocator
+argument_list|(
+name|childAllocatorName
+argument_list|,
+name|childAllocatorReservation
+argument_list|,
+name|childAllocatorLimit
 argument_list|)
 expr_stmt|;
 comment|// Schema
@@ -1265,9 +1350,7 @@ name|empty
 argument_list|(
 literal|null
 argument_list|,
-name|serDe
-operator|.
-name|rootAllocator
+name|allocator
 argument_list|)
 expr_stmt|;
 comment|// Init Hive stuffs
@@ -1522,6 +1605,10 @@ operator|new
 name|ArrowWrapperWritable
 argument_list|(
 name|vectorSchemaRoot
+argument_list|,
+name|allocator
+argument_list|,
+name|rootVector
 argument_list|)
 return|;
 block|}
