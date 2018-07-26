@@ -35,9 +35,11 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|nio
 operator|.
-name|UnsupportedEncodingException
+name|charset
+operator|.
+name|StandardCharsets
 import|;
 end_import
 
@@ -515,8 +517,6 @@ name|JobConf
 name|job
 parameter_list|)
 block|{
-try|try
-block|{
 name|String
 name|signatureString
 init|=
@@ -540,7 +540,9 @@ name|signatureString
 operator|.
 name|getBytes
 argument_list|(
-literal|"UTF-8"
+name|StandardCharsets
+operator|.
+name|UTF_8
 argument_list|)
 expr_stmt|;
 block|}
@@ -553,19 +555,6 @@ name|byte
 index|[
 literal|0
 index|]
-expr_stmt|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|UnsupportedEncodingException
-name|e
-parameter_list|)
-block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
 expr_stmt|;
 block|}
 block|}
