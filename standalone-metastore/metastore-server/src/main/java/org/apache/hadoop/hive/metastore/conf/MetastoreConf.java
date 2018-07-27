@@ -2584,6 +2584,17 @@ operator|+
 literal|"metadata being exported to the current user's home directory on HDFS."
 argument_list|)
 block|,
+name|METASTORE_MAX_EVENT_RESPONSE
+argument_list|(
+literal|"metastore.max.event.response"
+argument_list|,
+literal|"hive.metastore.max.event.response"
+argument_list|,
+literal|1000000
+argument_list|,
+literal|"The parameter will decide the maximum number of events that HMS will respond."
+argument_list|)
+block|,
 name|MOVE_EXPORTED_METADATA_TO_TRASH
 argument_list|(
 literal|"metastore.metadata.move.exported.metadata.to.trash"
