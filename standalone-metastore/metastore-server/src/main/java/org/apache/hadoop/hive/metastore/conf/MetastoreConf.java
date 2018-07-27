@@ -2824,7 +2824,7 @@ literal|"metastore.repl.cmrootdir"
 argument_list|,
 literal|"hive.repl.cmrootdir"
 argument_list|,
-literal|"/user/hive/cmroot/"
+literal|"/user/${system:user.name}/cmroot/"
 argument_list|,
 literal|"Root dir for ChangeManager, used for deleted files."
 argument_list|)
@@ -2876,7 +2876,7 @@ literal|"metastore.repl.rootdir"
 argument_list|,
 literal|"hive.repl.rootdir"
 argument_list|,
-literal|"/user/hive/repl/"
+literal|"/user/${system:user.name}/repl/"
 argument_list|,
 literal|"HDFS root dir for all replication dumps."
 argument_list|)

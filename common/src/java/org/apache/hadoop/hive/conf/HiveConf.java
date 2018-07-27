@@ -2802,7 +2802,7 @@ name|REPLDIR
 argument_list|(
 literal|"hive.repl.rootdir"
 argument_list|,
-literal|"/user/hive/repl/"
+literal|"/user/${system:user.name}/repl/"
 argument_list|,
 literal|"HDFS root dir for all replication dumps."
 argument_list|)
@@ -2820,7 +2820,7 @@ name|REPLCMDIR
 argument_list|(
 literal|"hive.repl.cmrootdir"
 argument_list|,
-literal|"/user/hive/cmroot/"
+literal|"/user/${system:user.name}/cmroot/"
 argument_list|,
 literal|"Root dir for ChangeManager, used for deleted files."
 argument_list|)
@@ -2863,7 +2863,7 @@ name|REPL_FUNCTIONS_ROOT_DIR
 argument_list|(
 literal|"hive.repl.replica.functions.root.dir"
 argument_list|,
-literal|"/user/hive/repl/functions/"
+literal|"/user/${system:user.name}/repl/functions/"
 argument_list|,
 literal|"Root directory on the replica warehouse where the repl sub-system will store jars from the primary warehouse"
 argument_list|)
