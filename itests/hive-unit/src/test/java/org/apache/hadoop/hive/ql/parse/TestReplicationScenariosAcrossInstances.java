@@ -6943,6 +6943,8 @@ argument_list|(
 literal|"'hive.repl.approx.max.load.tasks'='1'"
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|replica
 operator|.
 name|loadFailure
@@ -6956,12 +6958,6 @@ argument_list|,
 name|withConfigs
 argument_list|)
 expr_stmt|;
-name|InjectableBehaviourObjectStore
-operator|.
-name|resetCallerVerifier
-argument_list|()
-expr_stmt|;
-comment|// reset the behaviour
 name|callerVerifier
 operator|.
 name|assertInjectionsPerformed
@@ -6971,6 +6967,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|InjectableBehaviourObjectStore
+operator|.
+name|resetCallerVerifier
+argument_list|()
+expr_stmt|;
+comment|// reset the behaviour
+block|}
 name|replica
 operator|.
 name|run
@@ -7241,6 +7247,8 @@ argument_list|(
 name|callerVerifier
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// Retry with same dump with which it was already loaded should resume the bootstrap load.
 comment|// This time, it fails when try to load the foreign key constraints. All other constraints are loaded.
 name|replica
@@ -7256,12 +7264,6 @@ argument_list|,
 name|withConfigs
 argument_list|)
 expr_stmt|;
-name|InjectableBehaviourObjectStore
-operator|.
-name|resetCallerVerifier
-argument_list|()
-expr_stmt|;
-comment|// reset the behaviour
 name|callerVerifier
 operator|.
 name|assertInjectionsPerformed
@@ -7271,6 +7273,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|InjectableBehaviourObjectStore
+operator|.
+name|resetCallerVerifier
+argument_list|()
+expr_stmt|;
+comment|// reset the behaviour
+block|}
 name|replica
 operator|.
 name|run
@@ -7510,6 +7522,8 @@ argument_list|(
 name|callerVerifier
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// Retry with same dump with which it was already loaded should resume the bootstrap load.
 comment|// This time, it completes by adding just foreign key constraints for table t2.
 name|replica
@@ -7523,12 +7537,6 @@ operator|.
 name|dumpLocation
 argument_list|)
 expr_stmt|;
-name|InjectableBehaviourObjectStore
-operator|.
-name|resetCallerVerifier
-argument_list|()
-expr_stmt|;
-comment|// reset the behaviour
 name|callerVerifier
 operator|.
 name|assertInjectionsPerformed
@@ -7538,6 +7546,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|InjectableBehaviourObjectStore
+operator|.
+name|resetCallerVerifier
+argument_list|()
+expr_stmt|;
+comment|// reset the behaviour
+block|}
 name|replica
 operator|.
 name|run
@@ -8050,6 +8068,8 @@ argument_list|(
 name|callerVerifier
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 comment|// Retry with same dump with which it was already loaded should resume the bootstrap load.
 comment|// This time, it completes by adding remaining partitions.
 name|replica
@@ -8063,12 +8083,6 @@ operator|.
 name|dumpLocation
 argument_list|)
 expr_stmt|;
-name|InjectableBehaviourObjectStore
-operator|.
-name|resetCallerVerifier
-argument_list|()
-expr_stmt|;
-comment|// reset the behaviour
 name|callerVerifier
 operator|.
 name|assertInjectionsPerformed
@@ -8078,6 +8092,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|InjectableBehaviourObjectStore
+operator|.
+name|resetCallerVerifier
+argument_list|()
+expr_stmt|;
+comment|// reset the behaviour
+block|}
 name|replica
 operator|.
 name|run

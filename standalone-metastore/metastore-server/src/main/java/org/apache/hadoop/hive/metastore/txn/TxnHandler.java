@@ -4066,6 +4066,8 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+comment|// Idempotent case where txn was already closed or abort txn event received without
+comment|// corresponding open txn event.
 name|LOG
 operator|.
 name|info
@@ -4743,6 +4745,8 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+comment|// Idempotent case where txn was already closed or commit txn event received without
+comment|// corresponding open txn event.
 name|LOG
 operator|.
 name|info
@@ -7403,9 +7407,11 @@ name|size
 argument_list|()
 condition|)
 block|{
+comment|// Idempotent case where txn was already closed but gets allocate write id event.
+comment|// So, just ignore it and return empty list.
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
 literal|"Target txn id is missing for source txn id : "
 operator|+
@@ -7422,15 +7428,13 @@ name|getReplPolicy
 argument_list|()
 argument_list|)
 expr_stmt|;
-throw|throw
+return|return
 operator|new
-name|RuntimeException
+name|AllocateTableWriteIdsResponse
 argument_list|(
-literal|"This should never happen for txnIds: "
-operator|+
-name|txnIds
+name|txnToWriteIds
 argument_list|)
-throw|;
+return|;
 block|}
 block|}
 else|else

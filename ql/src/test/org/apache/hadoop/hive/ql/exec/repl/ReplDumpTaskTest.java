@@ -616,6 +616,9 @@ name|validTxnList
 parameter_list|,
 name|Path
 name|dbRoot
+parameter_list|,
+name|long
+name|lastReplId
 parameter_list|)
 throws|throws
 name|Exception

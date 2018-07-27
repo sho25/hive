@@ -653,6 +653,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|LAST_REPL_ID_KEY
+init|=
+literal|"hive.repl.last.repl.id"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|FUNCTIONS_ROOT_DIR_NAME
 init|=
 literal|"_functions"

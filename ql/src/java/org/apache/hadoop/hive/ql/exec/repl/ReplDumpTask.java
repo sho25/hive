@@ -605,6 +605,24 @@ name|ql
 operator|.
 name|parse
 operator|.
+name|ReplicationSemanticAnalyzer
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
 name|ReplicationSpec
 import|;
 end_import
@@ -1955,6 +1973,9 @@ throws|throws
 name|Exception
 block|{
 comment|// bootstrap case
+comment|// Last repl id would've been captured during compile phase in queryState configs before opening txn.
+comment|// This is needed as we dump data on ACID/MM tables based on read snapshot or else we may lose data from
+comment|// concurrent txns when bootstrap dump in progress. If it is not available, then get it from metastore.
 name|Hive
 name|hiveDb
 init|=
@@ -1964,11 +1985,28 @@ decl_stmt|;
 name|Long
 name|bootDumpBeginReplId
 init|=
-name|currentNotificationId
+name|queryState
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getLong
 argument_list|(
-name|hiveDb
+name|ReplicationSemanticAnalyzer
+operator|.
+name|LAST_REPL_ID_KEY
+argument_list|,
+operator|-
+literal|1L
 argument_list|)
 decl_stmt|;
+assert|assert
+operator|(
+name|bootDumpBeginReplId
+operator|>=
+literal|0L
+operator|)
+assert|;
 name|String
 name|validTxnList
 init|=
@@ -2125,6 +2163,8 @@ argument_list|,
 name|validTxnList
 argument_list|,
 name|dbRoot
+argument_list|,
+name|bootDumpBeginReplId
 argument_list|)
 expr_stmt|;
 name|dumpConstraintMetadata
@@ -2517,6 +2557,9 @@ name|validTxnList
 parameter_list|,
 name|Path
 name|dbRoot
+parameter_list|,
+name|long
+name|lastReplId
 parameter_list|)
 throws|throws
 name|Exception
@@ -2633,6 +2676,23 @@ argument_list|,
 name|tblName
 argument_list|,
 name|validTxnList
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// For transactional table, data would be valid snapshot for current txn and doesn't include data
+comment|// added/modified by concurrent txns which are later than current txn. So, need to set last repl Id of this table
+comment|// as bootstrap dump's last repl Id.
+name|tuple
+operator|.
+name|replicationSpec
+operator|.
+name|setCurrentReplicationState
+argument_list|(
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|lastReplId
 argument_list|)
 argument_list|)
 expr_stmt|;

@@ -13140,7 +13140,8 @@ argument_list|,
 literal|"destdb.*"
 argument_list|)
 expr_stmt|;
-comment|// Test for aborted transactions
+comment|// Test for aborted transactions. Idempotent case where allocate write id when txn is already
+comment|// aborted should do nothing.
 name|failed
 operator|=
 literal|false
@@ -13169,7 +13170,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-name|assertTrue
+name|assertFalse
 argument_list|(
 name|failed
 argument_list|)
