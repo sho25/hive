@@ -7438,15 +7438,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO## remove? unused
-name|Table
-name|table
-init|=
-name|convertToTable
-argument_list|(
-name|tbl
-argument_list|)
-decl_stmt|;
 name|List
 argument_list|<
 name|MConstraint
@@ -50470,7 +50461,7 @@ argument_list|)
 expr_stmt|;
 comment|// There is no need to add colname again, otherwise we will get duplicate colNames.
 block|}
-comment|// TODO## ideally the col stats stats should be in colstats, not in the table!
+comment|// TODO: (HIVE-20109) ideally the col stats stats should be in colstats, not in the table!
 comment|// Set the table properties
 comment|// No need to check again if it exists.
 name|String
@@ -51038,7 +51029,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO## ideally the col stats stats should be in colstats, not in the partition!
+comment|// TODO: (HIVE-20109) the col stats stats should be in colstats, not in the partition!
 name|Map
 argument_list|<
 name|String
@@ -52314,7 +52305,7 @@ block|}
 block|}
 else|else
 block|{
-comment|// TODO## this could be improved to get partitions in bulk
+comment|// TODO: this could be improved to get partitions in bulk
 for|for
 control|(
 name|ColumnStatistics
@@ -74069,10 +74060,9 @@ throws|throws
 name|MetaException
 block|{
 comment|// Note: can be changed to debug/info to verify the calls.
-comment|// TODO## change this to debug when merging
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"isCurrentStatsValidForTheQuery with stats write ID {}; query {}; writer: {} params {}"
 argument_list|,

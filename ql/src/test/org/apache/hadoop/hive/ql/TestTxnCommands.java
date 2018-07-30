@@ -3186,7 +3186,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// TODO## this test is broken; would probably be fixed by HIVE-20046
 annotation|@
 name|Test
 specifier|public
