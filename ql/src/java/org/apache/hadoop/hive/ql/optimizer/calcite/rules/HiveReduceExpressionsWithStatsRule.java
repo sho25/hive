@@ -1413,7 +1413,7 @@ name|j
 init|=
 literal|0
 init|;
-name|i
+name|j
 operator|<
 name|constStruct
 operator|.
