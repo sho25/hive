@@ -7876,6 +7876,19 @@ name|data
 operator|!=
 literal|null
 assert|;
+if|if
+condition|(
+name|buffer
+operator|!=
+literal|null
+operator|&&
+name|buffer
+operator|.
+name|byteBuffer
+operator|!=
+literal|null
+condition|)
+block|{
 name|int
 name|pos
 init|=
@@ -8000,6 +8013,7 @@ operator|.
 name|DEALLOC
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void

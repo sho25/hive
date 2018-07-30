@@ -11811,6 +11811,13 @@ block|{
 comment|// Release the unreleased buffers. See class comment about refcounts.
 try|try
 block|{
+if|if
+condition|(
+name|toRead
+operator|!=
+literal|null
+condition|)
+block|{
 name|releaseInitialRefcounts
 argument_list|(
 name|toRead
@@ -11818,6 +11825,7 @@ operator|.
 name|next
 argument_list|)
 expr_stmt|;
+block|}
 name|releaseBuffers
 argument_list|(
 name|toRelease
