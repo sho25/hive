@@ -5613,6 +5613,9 @@ argument_list|(
 literal|null
 argument_list|)
 expr_stmt|;
+operator|++
+name|decompressedIx
+expr_stmt|;
 block|}
 block|}
 comment|// 5. Release the copies we made directly to the cleaner.
