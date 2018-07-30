@@ -3019,14 +3019,6 @@ operator|++
 expr_stmt|;
 if|if
 condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
-if|if
-condition|(
 name|numRows
 operator|==
 name|cntr
@@ -3070,15 +3062,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-name|toString
-argument_list|()
-operator|+
-literal|": records written - "
-operator|+
+literal|"{}: records written - {}"
+argument_list|,
+name|this
+argument_list|,
 name|numRows
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 name|out
 operator|.
@@ -3206,27 +3196,19 @@ name|reducerHash
 operator|=
 literal|null
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isTraceEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-name|toString
-argument_list|()
-operator|+
-literal|": records written - "
-operator|+
+literal|"{}: Total records written - {}. abort - {}"
+argument_list|,
+name|this
+argument_list|,
 name|numRows
+argument_list|,
+name|abort
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|/**    * @return the name of the operator    */
 annotation|@
