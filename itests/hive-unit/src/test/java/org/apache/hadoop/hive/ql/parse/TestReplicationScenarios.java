@@ -12050,7 +12050,7 @@ literal|"USE "
 operator|+
 name|dbName
 argument_list|,
-name|driverMirror
+name|driver
 argument_list|)
 expr_stmt|;
 name|String

@@ -2954,19 +2954,11 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-if|if
-condition|(
+comment|// syncMetaStoreClient is wrapped on metaStoreClient. So, it is enough to close it once.
 name|syncMetaStoreClient
-operator|!=
+operator|=
 literal|null
-condition|)
-block|{
-name|syncMetaStoreClient
-operator|.
-name|close
-argument_list|()
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|owner
