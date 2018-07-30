@@ -997,11 +997,6 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-comment|/* If this boolean is true, we bypass the cache. */
-specifier|private
-name|boolean
-name|dummy
-decl_stmt|;
 comment|/* Whether the cache has been initialized or not. */
 specifier|private
 name|AtomicBoolean
@@ -1102,8 +1097,10 @@ name|Hive
 name|db
 parameter_list|)
 block|{
+specifier|final
+name|boolean
 name|dummy
-operator|=
+init|=
 name|db
 operator|.
 name|getConf
@@ -1124,7 +1121,7 @@ name|equals
 argument_list|(
 literal|"DUMMY"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 if|if
 condition|(
 name|dummy
@@ -1219,6 +1216,32 @@ name|getConf
 argument_list|()
 argument_list|)
 expr_stmt|;
+specifier|final
+name|boolean
+name|cache
+init|=
+operator|!
+name|db
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_MATERIALIZED_VIEWS_REGISTRY_IMPL
+operator|.
+name|varname
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"DUMMY"
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -1255,6 +1278,8 @@ argument_list|,
 name|OpType
 operator|.
 name|LOAD
+argument_list|,
+name|cache
 argument_list|)
 expr_stmt|;
 block|}
@@ -1316,6 +1341,29 @@ name|Table
 name|materializedViewTable
 parameter_list|)
 block|{
+specifier|final
+name|boolean
+name|cache
+init|=
+operator|!
+name|conf
+operator|.
+name|get
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_MATERIALIZED_VIEWS_REGISTRY_IMPL
+operator|.
+name|varname
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+literal|"DUMMY"
+argument_list|)
+decl_stmt|;
 return|return
 name|addMaterializedView
 argument_list|(
@@ -1326,6 +1374,8 @@ argument_list|,
 name|OpType
 operator|.
 name|CREATE
+argument_list|,
+name|cache
 argument_list|)
 return|;
 block|}
@@ -1342,6 +1392,9 @@ name|materializedViewTable
 parameter_list|,
 name|OpType
 name|opType
+parameter_list|,
+name|boolean
+name|cache
 parameter_list|)
 block|{
 comment|// Bail out if it is not enabled for rewriting
@@ -1392,8 +1445,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-operator|!
-name|dummy
+name|cache
 condition|)
 block|{
 comment|// If we are caching the MV, we include it in the cache
@@ -1637,14 +1689,6 @@ name|String
 name|tableName
 parameter_list|)
 block|{
-if|if
-condition|(
-name|dummy
-condition|)
-block|{
-comment|// Nothing to do
-return|return;
-block|}
 name|ConcurrentMap
 argument_list|<
 name|String
@@ -2347,6 +2391,11 @@ name|RelOptHiveTable
 argument_list|(
 literal|null
 argument_list|,
+name|cluster
+operator|.
+name|getTypeFactory
+argument_list|()
+argument_list|,
 name|fullyQualifiedTabName
 argument_list|,
 name|rowType
@@ -2497,6 +2546,11 @@ operator|new
 name|RelOptHiveTable
 argument_list|(
 literal|null
+argument_list|,
+name|cluster
+operator|.
+name|getTypeFactory
+argument_list|()
 argument_list|,
 name|fullyQualifiedTabName
 argument_list|,
