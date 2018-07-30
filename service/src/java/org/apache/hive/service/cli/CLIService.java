@@ -546,11 +546,19 @@ specifier|private
 name|int
 name|defaultFetchRows
 decl_stmt|;
+comment|// This is necessary for tests and embedded mode, where HS2 init is not executed.
+specifier|private
+name|boolean
+name|allowSessionsInitial
+decl_stmt|;
 specifier|public
 name|CLIService
 parameter_list|(
 name|HiveServer2
 name|hiveServer2
+parameter_list|,
+name|boolean
+name|allowSessions
 parameter_list|)
 block|{
 name|super
@@ -568,6 +576,12 @@ operator|.
 name|hiveServer2
 operator|=
 name|hiveServer2
+expr_stmt|;
+name|this
+operator|.
+name|allowSessionsInitial
+operator|=
+name|allowSessions
 expr_stmt|;
 block|}
 annotation|@
@@ -592,6 +606,8 @@ operator|new
 name|SessionManager
 argument_list|(
 name|hiveServer2
+argument_list|,
+name|allowSessionsInitial
 argument_list|)
 expr_stmt|;
 name|defaultFetchRows

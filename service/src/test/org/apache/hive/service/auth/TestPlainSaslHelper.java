@@ -179,6 +179,8 @@ operator|new
 name|CLIService
 argument_list|(
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|cliService

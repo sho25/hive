@@ -92,12 +92,15 @@ specifier|public
 name|EmbeddedThriftBinaryCLIService
 parameter_list|()
 block|{
+comment|// The non-test path that allows connections for the embedded service.
 name|super
 argument_list|(
 operator|new
 name|CLIService
 argument_list|(
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 argument_list|,
 literal|null

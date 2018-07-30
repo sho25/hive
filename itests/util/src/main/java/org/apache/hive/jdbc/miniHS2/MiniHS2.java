@@ -3165,6 +3165,22 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"Cannot open sessions on an inactive HS2"
+argument_list|)
+condition|)
+block|{
+comment|// Passive HS2 has started. TODO: seems fragile
+return|return;
+block|}
 comment|// service not started yet
 continue|continue;
 block|}
