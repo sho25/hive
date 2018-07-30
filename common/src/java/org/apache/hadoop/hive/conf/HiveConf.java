@@ -8899,6 +8899,22 @@ argument_list|,
 literal|"Output estimation of an IN filter can't be lower than this ratio"
 argument_list|)
 block|,
+name|HIVE_STATS_UDTF_FACTOR
+argument_list|(
+literal|"hive.stats.udtf.factor"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|1.0
+argument_list|,
+literal|"UDTFs change the number of rows of the output. A common UDTF is the explode() method that creates\n"
+operator|+
+literal|"multiple rows for each element in the input array. This factor is applied to the number of\n"
+operator|+
+literal|"output rows and output size."
+argument_list|)
+block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
