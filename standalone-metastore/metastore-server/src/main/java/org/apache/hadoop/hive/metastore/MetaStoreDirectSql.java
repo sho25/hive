@@ -5503,13 +5503,13 @@ index|[
 literal|1
 index|]
 argument_list|,
-operator|(
-name|String
-operator|)
+name|extractSqlClob
+argument_list|(
 name|fields
 index|[
 literal|2
 index|]
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
