@@ -1977,6 +1977,7 @@ index|[
 name|largeBufCount
 index|]
 expr_stmt|;
+comment|// Note: we don't use StoppableAllocator here - this is not on an IO thread.
 name|allocator
 operator|.
 name|allocateMultiple
@@ -2089,6 +2090,7 @@ index|[
 literal|1
 index|]
 expr_stmt|;
+comment|// Note: we don't use StoppableAllocator here - this is not on an IO thread.
 name|allocator
 operator|.
 name|allocateMultiple

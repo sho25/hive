@@ -45,6 +45,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -202,6 +216,13 @@ name|sargColumns
 parameter_list|)
 throws|throws
 name|IOException
+function_decl|;
+name|void
+name|setStopped
+parameter_list|(
+name|AtomicBoolean
+name|isStopped
+parameter_list|)
 function_decl|;
 block|}
 end_interface

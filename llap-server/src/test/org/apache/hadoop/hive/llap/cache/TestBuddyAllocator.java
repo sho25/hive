@@ -123,6 +123,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -385,6 +399,9 @@ name|reserveMemory
 parameter_list|(
 name|long
 name|memoryToReserve
+parameter_list|,
+name|AtomicBoolean
+name|isStopped
 parameter_list|)
 block|{     }
 annotation|@

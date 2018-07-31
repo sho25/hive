@@ -2396,6 +2396,7 @@ name|cacheKey
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Note: we don't pass in isStopped here - this is not on an IO thread.
 name|footerData
 operator|=
 name|metadataCache
@@ -2409,6 +2410,8 @@ argument_list|,
 name|stream
 argument_list|,
 name|tag
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 try|try

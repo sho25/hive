@@ -53,6 +53,20 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -102,6 +116,26 @@ operator|.
 name|io
 operator|.
 name|DiskRangeList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -379,6 +413,10 @@ name|DummyMemoryManager
 implements|implements
 name|MemoryManager
 block|{
+specifier|private
+name|int
+name|allocs
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -387,8 +425,15 @@ name|reserveMemory
 parameter_list|(
 name|long
 name|memoryToReserve
+parameter_list|,
+name|AtomicBoolean
+name|isStopped
 parameter_list|)
-block|{     }
+block|{
+operator|++
+name|allocs
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -543,6 +588,10 @@ argument_list|(
 name|fileKey1
 argument_list|,
 name|smallBuffer
+argument_list|,
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|cache
@@ -579,6 +628,10 @@ argument_list|(
 name|fileKey1
 argument_list|,
 name|smallBuffer
+argument_list|,
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|cache
@@ -704,6 +757,10 @@ argument_list|(
 name|fileKey1
 argument_list|,
 name|largeBuffer
+argument_list|,
+literal|null
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|cache
@@ -1027,6 +1084,8 @@ argument_list|)
 block|}
 argument_list|,
 literal|0
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|cp
@@ -1096,6 +1155,8 @@ argument_list|)
 block|}
 argument_list|,
 literal|0
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|cp

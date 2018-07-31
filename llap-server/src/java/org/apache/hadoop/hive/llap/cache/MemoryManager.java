@@ -19,6 +19,20 @@ name|cache
 package|;
 end_package
 
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|atomic
+operator|.
+name|AtomicBoolean
+import|;
+end_import
+
 begin_interface
 specifier|public
 interface|interface
@@ -43,6 +57,9 @@ name|reserveMemory
 parameter_list|(
 name|long
 name|memoryToReserve
+parameter_list|,
+name|AtomicBoolean
+name|isStopped
 parameter_list|)
 function_decl|;
 block|}
