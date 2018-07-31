@@ -1273,15 +1273,22 @@ index|[
 name|projectionColumnNum
 index|]
 decl_stmt|;
+specifier|final
+name|TypeInfo
+name|typeInfo
+init|=
+name|typeInfos
+index|[
+name|logicalColumnIndex
+index|]
+decl_stmt|;
+comment|// try {
 return|return
 name|extractRowColumn
 argument_list|(
 name|colVector
 argument_list|,
-name|typeInfos
-index|[
-name|logicalColumnIndex
-index|]
+name|typeInfo
 argument_list|,
 name|objectInspectors
 index|[
@@ -1291,6 +1298,10 @@ argument_list|,
 name|batchIndex
 argument_list|)
 return|;
+comment|// } catch (Exception e){
+comment|//   throw new RuntimeException("Error evaluating column number " + projectionColumnNum +
+comment|//       ", typeInfo " + typeInfo.toString() + ", batchIndex " + batchIndex);
+comment|// }
 block|}
 specifier|public
 name|Object

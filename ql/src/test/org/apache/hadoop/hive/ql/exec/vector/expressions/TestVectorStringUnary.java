@@ -1049,7 +1049,7 @@ decl_stmt|;
 name|int
 name|columnNum
 init|=
-literal|0
+literal|1
 decl_stmt|;
 name|ExprNodeDesc
 name|col1Expr

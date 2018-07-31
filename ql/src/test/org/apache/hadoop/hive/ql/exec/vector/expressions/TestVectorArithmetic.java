@@ -1149,7 +1149,7 @@ name|ConfVars
 operator|.
 name|HIVE_COMPAT
 argument_list|,
-literal|"latest"
+literal|"default"
 argument_list|)
 expr_stmt|;
 name|SessionState
@@ -2455,7 +2455,7 @@ decl_stmt|;
 name|int
 name|columnNum
 init|=
-literal|0
+literal|1
 decl_stmt|;
 name|ExprNodeDesc
 name|col1Expr

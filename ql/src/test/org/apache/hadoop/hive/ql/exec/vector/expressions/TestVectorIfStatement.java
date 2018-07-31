@@ -1459,7 +1459,7 @@ name|columns
 operator|.
 name|add
 argument_list|(
-literal|"col0"
+literal|"col1"
 argument_list|)
 expr_stmt|;
 comment|// The boolean predicate.
@@ -1473,7 +1473,7 @@ name|Boolean
 operator|.
 name|class
 argument_list|,
-literal|"col0"
+literal|"col1"
 argument_list|,
 literal|"table"
 argument_list|,
@@ -1483,7 +1483,7 @@ decl_stmt|;
 name|int
 name|columnNum
 init|=
-literal|1
+literal|2
 decl_stmt|;
 name|ExprNodeDesc
 name|col2Expr

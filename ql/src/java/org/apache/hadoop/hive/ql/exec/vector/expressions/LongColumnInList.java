@@ -154,11 +154,11 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|private
+specifier|protected
 name|int
 name|colNum
 decl_stmt|;
-specifier|private
+specifier|protected
 name|long
 index|[]
 name|inListValues
