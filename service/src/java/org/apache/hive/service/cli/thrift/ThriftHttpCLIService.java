@@ -1001,6 +1001,13 @@ argument_list|(
 name|maxIdleTime
 argument_list|)
 expr_stmt|;
+name|connector
+operator|.
+name|setAcceptQueueSize
+argument_list|(
+name|maxWorkerThreads
+argument_list|)
+expr_stmt|;
 name|server
 operator|.
 name|addConnector
