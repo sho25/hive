@@ -6436,6 +6436,20 @@ operator|.
 name|start
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Find "
+operator|+
+name|policyContainer
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" policy to synchronize, start PrivilegeSynchonizer"
+argument_list|)
+expr_stmt|;
 name|Thread
 name|privilegeSynchonizerThread
 init|=

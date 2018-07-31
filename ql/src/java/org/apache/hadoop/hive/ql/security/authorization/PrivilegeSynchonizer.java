@@ -1230,6 +1230,21 @@ range|:
 name|policyProviderContainer
 control|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Start synchronize privilege "
+operator|+
+name|policyProvider
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|String
 name|authorizer
 init|=
@@ -1256,15 +1271,24 @@ name|SECONDS
 argument_list|)
 condition|)
 block|{
-continue|continue;
-block|}
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Start synchonize privilege"
+literal|"Not selected as leader, skip"
 argument_list|)
 expr_stmt|;
+continue|continue;
+block|}
+name|int
+name|numDb
+init|=
+literal|0
+decl_stmt|,
+name|numTbl
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -1276,6 +1300,9 @@ name|getAllDatabases
 argument_list|()
 control|)
 block|{
+name|numDb
+operator|++
+expr_stmt|;
 name|HiveObjectRef
 name|dbToRefresh
 init|=
@@ -1327,6 +1354,15 @@ argument_list|,
 name|grantDatabaseBag
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"processing "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|String
@@ -1340,6 +1376,22 @@ name|dbName
 argument_list|)
 control|)
 block|{
+name|numTbl
+operator|++
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"processing "
+operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tblName
+argument_list|)
+expr_stmt|;
 name|HiveObjectRef
 name|tableToRefresh
 init|=
@@ -1508,8 +1560,44 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Wait if no exception happens, otherwise, retry immediately
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Success synchronize privilege "
+operator|+
+name|policyProvider
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|":"
+operator|+
+name|numDb
+operator|+
+literal|" databases, "
+operator|+
+name|numTbl
+operator|+
+literal|" tables"
+argument_list|)
+expr_stmt|;
 block|}
+comment|// Wait if no exception happens, otherwise, retry immediately
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Wait for "
+operator|+
+name|interval
+operator|+
+literal|" seconds"
+argument_list|)
+expr_stmt|;
 name|Thread
 operator|.
 name|sleep
@@ -1517,13 +1605,6 @@ argument_list|(
 name|interval
 operator|*
 literal|1000
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Success synchonize privilege"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1537,7 +1618,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error initializing PrivilegeSynchonizer: "
+literal|"Error initializing PrivilegeSynchronizer: "
 operator|+
 name|e
 operator|.
