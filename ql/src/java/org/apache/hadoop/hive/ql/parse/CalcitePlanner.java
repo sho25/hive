@@ -8859,12 +8859,6 @@ argument_list|)
 expr_stmt|;
 name|cte
 operator|.
-name|table
-operator|=
-name|table
-expr_stmt|;
-name|cte
-operator|.
 name|source
 operator|=
 name|analyzer
@@ -11788,8 +11782,6 @@ argument_list|(
 name|colList
 argument_list|,
 name|dest
-argument_list|,
-name|inputRR
 argument_list|,
 name|inputRR
 argument_list|,
