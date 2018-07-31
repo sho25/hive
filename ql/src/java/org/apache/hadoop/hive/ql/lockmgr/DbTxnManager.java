@@ -4021,6 +4021,13 @@ name|void
 name|initHeartbeatExecutorService
 parameter_list|()
 block|{
+synchronized|synchronized
+init|(
+name|DbTxnManager
+operator|.
+name|class
+init|)
+block|{
 if|if
 condition|(
 name|heartbeatExecutorService
@@ -4112,6 +4119,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|public
 specifier|static
