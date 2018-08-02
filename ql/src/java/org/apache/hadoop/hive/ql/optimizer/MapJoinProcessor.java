@@ -1777,11 +1777,8 @@ argument_list|(
 literal|"Failed to generate new mapJoin operator "
 operator|+
 literal|"by exception : "
-operator|+
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 throw|;
 block|}
