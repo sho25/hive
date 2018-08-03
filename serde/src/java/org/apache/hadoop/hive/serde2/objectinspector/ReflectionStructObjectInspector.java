@@ -374,6 +374,9 @@ name|ObjectInspectorFactory
 operator|.
 name|objectInspectorCache
 operator|.
+name|asMap
+argument_list|()
+operator|.
 name|get
 argument_list|(
 name|type
