@@ -143,9 +143,6 @@ block|{
 return|return
 name|writableLeft
 operator|.
-name|getHiveDecimal
-argument_list|()
-operator|.
 name|compareTo
 argument_list|(
 name|right

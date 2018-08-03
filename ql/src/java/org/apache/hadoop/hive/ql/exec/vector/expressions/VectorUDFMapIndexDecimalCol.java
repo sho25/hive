@@ -59,7 +59,7 @@ name|exec
 operator|.
 name|vector
 operator|.
-name|DoubleColumnVector
+name|DecimalColumnVector
 import|;
 end_import
 
@@ -103,6 +103,24 @@ name|VectorExpressionDescriptor
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|io
+operator|.
+name|HiveDecimalWritable
+import|;
+end_import
+
 begin_comment
 comment|/**  * Returns value of Map.  * Extends {@link VectorUDFMapIndexBaseCol}  */
 end_comment
@@ -110,12 +128,12 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|VectorUDFMapIndexDoubleCol
+name|VectorUDFMapIndexDecimalCol
 extends|extends
 name|VectorUDFMapIndexBaseCol
 block|{
 specifier|public
-name|VectorUDFMapIndexDoubleCol
+name|VectorUDFMapIndexDecimalCol
 parameter_list|()
 block|{
 name|super
@@ -123,7 +141,7 @@ argument_list|()
 expr_stmt|;
 block|}
 specifier|public
-name|VectorUDFMapIndexDoubleCol
+name|VectorUDFMapIndexDecimalCol
 parameter_list|(
 name|int
 name|mapColumnNum
@@ -216,7 +234,7 @@ name|VectorExpressionDescriptor
 operator|.
 name|ArgumentType
 operator|.
-name|FLOAT_FAMILY
+name|DECIMAL
 argument_list|)
 operator|.
 name|setInputExpressionTypes
@@ -285,13 +303,13 @@ index|[
 name|mapBatchIndex
 index|]
 decl_stmt|;
-name|double
+name|HiveDecimalWritable
 index|[]
 name|keys
 init|=
 operator|(
 operator|(
-name|DoubleColumnVector
+name|DecimalColumnVector
 operator|)
 name|mapColumnVector
 operator|.
@@ -301,12 +319,12 @@ operator|.
 name|vector
 decl_stmt|;
 specifier|final
-name|double
+name|HiveDecimalWritable
 name|index
 init|=
 operator|(
 operator|(
-name|DoubleColumnVector
+name|DecimalColumnVector
 operator|)
 name|indexColumnVector
 operator|)
@@ -334,13 +352,18 @@ block|{
 if|if
 condition|(
 name|index
-operator|==
+operator|.
+name|compareTo
+argument_list|(
 name|keys
 index|[
 name|offset
 operator|+
 name|i
 index|]
+argument_list|)
+operator|==
+literal|0
 condition|)
 block|{
 return|return

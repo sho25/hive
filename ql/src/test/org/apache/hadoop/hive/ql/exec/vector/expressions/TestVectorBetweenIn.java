@@ -2258,7 +2258,7 @@ name|valueList
 argument_list|)
 expr_stmt|;
 name|Object
-name|object
+name|exampleObject
 init|=
 name|valueList
 operator|.
@@ -2282,7 +2282,7 @@ extends|extends
 name|WritableComparable
 argument_list|>
 operator|)
-name|object
+name|exampleObject
 operator|.
 name|getClass
 argument_list|()
