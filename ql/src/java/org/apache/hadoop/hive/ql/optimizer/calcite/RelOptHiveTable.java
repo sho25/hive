@@ -5023,6 +5023,24 @@ name|hashCode
 argument_list|()
 return|;
 block|}
+specifier|public
+name|String
+name|getPartitionListKey
+parameter_list|()
+block|{
+return|return
+name|partitionList
+operator|!=
+literal|null
+condition|?
+name|partitionList
+operator|.
+name|getKey
+argument_list|()
+else|:
+literal|null
+return|;
+block|}
 block|}
 end_class
 

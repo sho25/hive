@@ -16003,6 +16003,27 @@ operator|.
 name|INSTANCE_AGGREGATE
 argument_list|)
 expr_stmt|;
+comment|// Partition pruner rule
+name|planner
+operator|.
+name|addRule
+argument_list|(
+name|HiveFilterProjectTSTransposeRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+name|planner
+operator|.
+name|addRule
+argument_list|(
+operator|new
+name|HivePartitionPruneRule
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// Optimize plan
 name|planner
 operator|.
