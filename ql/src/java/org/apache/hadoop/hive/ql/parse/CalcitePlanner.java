@@ -13089,7 +13089,107 @@ name|executorProvider
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 4. Apply join order optimizations: reordering MST algorithm
+comment|// Get rid of sq_count_check if group by key is constant
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_REMOVE_SQ_COUNT_CHECK
+argument_list|)
+condition|)
+block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
+name|calcitePreCboPlan
+operator|=
+name|hepPlan
+argument_list|(
+name|calcitePreCboPlan
+argument_list|,
+literal|false
+argument_list|,
+name|mdProvider
+operator|.
+name|getMetadataProvider
+argument_list|()
+argument_list|,
+literal|null
+argument_list|,
+name|HiveRemoveSqCountCheck
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
+name|perfLogger
+operator|.
+name|PerfLogEnd
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|,
+literal|"Calcite: Removing sq_count_check UDF "
+argument_list|)
+expr_stmt|;
+block|}
+comment|//  4.1 Remove Projects between Joins so that JoinToMultiJoinRule can merge them to MultiJoin.
+comment|//    Don't run this rule if hive is to remove sq_count_check since that rule expects to have project b/w join.
+name|calcitePreCboPlan
+operator|=
+name|hepPlan
+argument_list|(
+name|calcitePreCboPlan
+argument_list|,
+literal|true
+argument_list|,
+name|mdProvider
+operator|.
+name|getMetadataProvider
+argument_list|()
+argument_list|,
+name|executorProvider
+argument_list|,
+name|HepMatchOrder
+operator|.
+name|BOTTOM_UP
+argument_list|,
+name|HiveJoinProjectTransposeRule
+operator|.
+name|LEFF_PROJECT_BTW_JOIN
+argument_list|,
+name|HiveJoinProjectTransposeRule
+operator|.
+name|RIGHT_PROJECT_BTW_JOIN
+argument_list|)
+expr_stmt|;
+comment|// 4.2 Apply join order optimizations: reordering MST algorithm
 comment|//    If join optimizations failed because of missing stats, we continue with
 comment|//    the rest of optimizations
 if|if
@@ -13713,77 +13813,7 @@ argument_list|,
 literal|"Calcite: Removal of gby from semijoin"
 argument_list|)
 expr_stmt|;
-comment|// 9. Get rid of sq_count_check if group by key is constant (HIVE-)
-if|if
-condition|(
-name|conf
-operator|.
-name|getBoolVar
-argument_list|(
-name|ConfVars
-operator|.
-name|HIVE_REMOVE_SQ_COUNT_CHECK
-argument_list|)
-condition|)
-block|{
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|)
-expr_stmt|;
-name|calciteOptimizedPlan
-operator|=
-name|hepPlan
-argument_list|(
-name|calciteOptimizedPlan
-argument_list|,
-literal|false
-argument_list|,
-name|mdProvider
-operator|.
-name|getMetadataProvider
-argument_list|()
-argument_list|,
-literal|null
-argument_list|,
-name|HiveRemoveSqCountCheck
-operator|.
-name|INSTANCE
-argument_list|)
-expr_stmt|;
-name|perfLogger
-operator|.
-name|PerfLogEnd
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
-argument_list|,
-literal|"Calcite: Removing sq_count_check UDF "
-argument_list|)
-expr_stmt|;
-block|}
-comment|// 10. Run rule to fix windowing issue when it is done over
+comment|// 9. Run rule to fix windowing issue when it is done over
 comment|// aggregation columns (HIVE-10627)
 if|if
 condition|(
@@ -13858,7 +13888,7 @@ literal|"Calcite: Window fixing rule"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// 11. Apply Druid transformation rules
+comment|// 10. Apply Druid transformation rules
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -14031,7 +14061,7 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
-comment|// 12. Run rules to aid in translation from Calcite tree to Hive tree
+comment|// 11. Run rules to aid in translation from Calcite tree to Hive tree
 if|if
 condition|(
 name|HiveConf
@@ -14196,7 +14226,7 @@ operator|.
 name|INSTANCE
 argument_list|)
 expr_stmt|;
-comment|// 12.2.  Introduce exchange operators below join/multijoin operators
+comment|// 11.2.  Introduce exchange operators below join/multijoin operators
 name|calciteOptimizedPlan
 operator|=
 name|hepPlan
