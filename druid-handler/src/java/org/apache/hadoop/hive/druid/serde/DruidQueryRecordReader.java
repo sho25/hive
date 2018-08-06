@@ -865,7 +865,9 @@ block|{
 return|return
 operator|new
 name|DruidWritable
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 return|;
 block|}
 annotation|@

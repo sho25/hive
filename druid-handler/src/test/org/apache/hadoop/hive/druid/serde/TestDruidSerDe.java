@@ -185,6 +185,34 @@ end_import
 
 begin_import
 import|import
+name|io
+operator|.
+name|druid
+operator|.
+name|query
+operator|.
+name|scan
+operator|.
+name|ScanResultValue
+import|;
+end_import
+
+begin_import
+import|import
+name|io
+operator|.
+name|druid
+operator|.
+name|query
+operator|.
+name|select
+operator|.
+name|EventHolder
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1135,6 +1163,11 @@ specifier|private
 name|byte
 index|[]
 name|groupByMonthExtractQueryResults
+decl_stmt|;
+specifier|private
+name|byte
+index|[]
+name|scanQueryResults
 decl_stmt|;
 comment|// Timeseries query results as records
 specifier|private
@@ -3181,6 +3214,57 @@ argument_list|)
 block|}
 block|}
 decl_stmt|;
+comment|// Scan query
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|SCAN_QUERY
+init|=
+literal|"{   \"queryType\": \"scan\",  "
+operator|+
+literal|" \"dataSource\": \"wikipedia\",   \"descending\": \"false\",  "
+operator|+
+literal|" \"columns\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\",\"newpage\",\"user\",\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],  "
+operator|+
+literal|" \"granularity\": \"all\",  "
+operator|+
+literal|" \"intervals\": [     \"2013-01-01/2013-01-02\"   ],"
+operator|+
+literal|" \"resultFormat\": \"compactedList\","
+operator|+
+literal|" \"limit\": 5"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|SCAN_QUERY_RESULTS
+init|=
+literal|"[{"
+operator|+
+literal|"\"segmentId\":\"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47.830Z_v9\","
+operator|+
+literal|"\"columns\":[\"__time\",\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\","
+operator|+
+literal|"\"newpage\",\"user\",\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],"
+operator|+
+literal|"\"events\":["
+operator|+
+literal|"[\"2013-01-01T00:00:00.000Z\", 1,\"article\",\"0\",\"0\",\"11._korpus_(NOVJ)\",\"sl\",\"0\",\"EmausBot\",1.0,39.0,39.0,39.0,0.0],"
+operator|+
+literal|"[\"2013-01-01T00:00:00.000Z\", 0,\"article\",\"0\",\"0\",\"112_U.S._580\",\"en\",\"1\",\"MZMcBride\",1.0,70.0,70.0,70.0,0.0],"
+operator|+
+literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._243\",\"en\",\"1\",\"MZMcBride\",1.0,77.0,77.0,77.0,0.0],"
+operator|+
+literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._73\",\"en\",\"1\",\"MZMcBride\",1.0,70.0,70.0,70.0,0.0],"
+operator|+
+literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._756\",\"en\",\"1\",\"MZMcBride\",1.0,68.0,68.0,68.0,0.0]"
+operator|+
+literal|"]}]"
+decl_stmt|;
 annotation|@
 name|Before
 specifier|public
@@ -3366,6 +3450,35 @@ name|Result
 argument_list|<
 name|SelectResultValue
 argument_list|>
+argument_list|>
+argument_list|>
+argument_list|()
+block|{             }
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|scanQueryResults
+operator|=
+name|DruidStorageHandlerUtils
+operator|.
+name|SMILE_MAPPER
+operator|.
+name|writeValueAsBytes
+argument_list|(
+name|DruidStorageHandlerUtils
+operator|.
+name|JSON_MAPPER
+operator|.
+name|readValue
+argument_list|(
+name|SCAN_QUERY_RESULTS
+argument_list|,
+operator|new
+name|TypeReference
+argument_list|<
+name|List
+argument_list|<
+name|ScanResultValue
 argument_list|>
 argument_list|>
 argument_list|()
@@ -3692,6 +3805,52 @@ argument_list|,
 name|SELECT_QUERY_RESULTS_RECORDS
 argument_list|)
 expr_stmt|;
+comment|// Scan query -- results should be same as select query
+name|tbl
+operator|=
+name|createPropertiesQuery
+argument_list|(
+literal|"wikipedia"
+argument_list|,
+name|Query
+operator|.
+name|SCAN
+argument_list|,
+name|SCAN_QUERY
+argument_list|,
+name|SELECT_COLUMN_NAMES
+argument_list|,
+name|SELECT_COLUMN_TYPES
+argument_list|)
+expr_stmt|;
+name|SerDeUtils
+operator|.
+name|initializeSerDe
+argument_list|(
+name|serDe
+argument_list|,
+name|conf
+argument_list|,
+name|tbl
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+name|deserializeQueryResults
+argument_list|(
+name|serDe
+argument_list|,
+name|Query
+operator|.
+name|SCAN
+argument_list|,
+name|SCAN_QUERY
+argument_list|,
+name|scanQueryResults
+argument_list|,
+name|SELECT_QUERY_RESULTS_RECORDS
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 specifier|static
@@ -3970,8 +4129,9 @@ comment|// Check mapred
 name|DruidWritable
 name|writable
 init|=
-operator|new
-name|DruidWritable
+name|reader
+operator|.
+name|createValue
 argument_list|()
 decl_stmt|;
 name|int

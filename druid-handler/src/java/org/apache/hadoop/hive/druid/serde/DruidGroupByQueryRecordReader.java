@@ -412,7 +412,9 @@ name|value
 init|=
 operator|new
 name|DruidWritable
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 decl_stmt|;
 comment|// 1) The timestamp column
 name|value
