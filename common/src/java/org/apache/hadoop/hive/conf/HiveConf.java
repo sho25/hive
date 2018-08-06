@@ -13309,6 +13309,19 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_VECTORIZATION_FILESINK_ARROW_NATIVE_ENABLED
+argument_list|(
+literal|"hive.vectorized.execution.filesink.arrow.native.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This flag should be set to true to enable the native vectorization\n"
+operator|+
+literal|"of queries using the Arrow SerDe and FileSink.\n"
+operator|+
+literal|"The default value is false."
+argument_list|)
+block|,
 name|HIVE_TYPE_CHECK_ON_INSERT
 argument_list|(
 literal|"hive.typecheck.on.insert"

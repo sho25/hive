@@ -216,13 +216,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * TestJdbcWithMiniLlap for Arrow format  */
+comment|/**  * TestJdbcWithMiniLlap for Arrow format with vectorized output sink  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestJdbcWithMiniLlapArrow
+name|TestJdbcWithMiniLlapVectorArrow
 extends|extends
 name|BaseJdbcWithMiniLlap
 block|{
@@ -249,6 +249,17 @@ argument_list|(
 name|ConfVars
 operator|.
 name|LLAP_OUTPUT_FORMAT_ARROW
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_FILESINK_ARROW_NATIVE_ENABLED
 argument_list|,
 literal|true
 argument_list|)
