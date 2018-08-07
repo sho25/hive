@@ -2808,7 +2808,14 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
+name|table
+operator|.
+name|isView
+argument_list|()
+condition|?
 literal|"# View Information"
+else|:
+literal|"# Materialized View Information"
 argument_list|)
 operator|.
 name|append
@@ -2845,7 +2852,7 @@ parameter_list|)
 block|{
 name|formatOutput
 argument_list|(
-literal|"View Original Text:"
+literal|"Original Query:"
 argument_list|,
 name|tbl
 operator|.
@@ -2857,7 +2864,7 @@ argument_list|)
 expr_stmt|;
 name|formatOutput
 argument_list|(
-literal|"View Expanded Text:"
+literal|"Expanded Query:"
 argument_list|,
 name|tbl
 operator|.
@@ -2867,9 +2874,17 @@ argument_list|,
 name|tableInfo
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|tbl
+operator|.
+name|isMaterializedView
+argument_list|()
+condition|)
+block|{
 name|formatOutput
 argument_list|(
-literal|"View Rewrite Enabled:"
+literal|"Rewrite Enabled:"
 argument_list|,
 name|tbl
 operator|.
@@ -2883,6 +2898,32 @@ argument_list|,
 name|tableInfo
 argument_list|)
 expr_stmt|;
+name|formatOutput
+argument_list|(
+literal|"Outdated for Rewriting:"
+argument_list|,
+name|tbl
+operator|.
+name|isOutdatedForRewriting
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|"Unknown"
+else|:
+name|tbl
+operator|.
+name|isOutdatedForRewriting
+argument_list|()
+condition|?
+literal|"Yes"
+else|:
+literal|"No"
+argument_list|,
+name|tableInfo
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 specifier|static

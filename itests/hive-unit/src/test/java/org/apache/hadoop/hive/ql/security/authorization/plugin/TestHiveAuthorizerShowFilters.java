@@ -457,7 +457,10 @@ name|HivePrivilegeObject
 argument_list|>
 name|filterArguments
 init|=
-literal|null
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
 decl_stmt|;
 specifier|private
 specifier|static
@@ -469,9 +472,7 @@ name|filteredResults
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|HivePrivilegeObject
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 comment|/**    * This factory creates a mocked HiveAuthorizer class. The mocked class is    * used to capture the argument passed to HiveAuthorizer.filterListCmdObjects.    * It returns fileredResults object for call to    * HiveAuthorizer.filterListCmdObjects, and stores the list argument in    * filterArguments    */
@@ -514,8 +515,11 @@ name|HiveAccessControlException
 block|{
 comment|// capture arguments in static
 name|filterArguments
-operator|=
+operator|.
+name|addAll
+argument_list|(
 name|listObjs
+argument_list|)
 expr_stmt|;
 comment|// return static variable with results, if it is set to some set of
 comment|// values
@@ -799,8 +803,9 @@ name|setup
 parameter_list|()
 block|{
 name|filterArguments
-operator|=
-literal|null
+operator|.
+name|clear
+argument_list|()
 expr_stmt|;
 name|filteredResults
 operator|.

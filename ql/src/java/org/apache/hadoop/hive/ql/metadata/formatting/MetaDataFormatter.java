@@ -47,6 +47,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -68,6 +78,16 @@ operator|.
 name|util
 operator|.
 name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
 import|;
 end_import
 
@@ -440,6 +460,23 @@ argument_list|<
 name|String
 argument_list|>
 name|tables
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
+comment|/**    * Show a list of materialized views.    */
+specifier|public
+name|void
+name|showMaterializedViews
+parameter_list|(
+name|DataOutputStream
+name|out
+parameter_list|,
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|materializedViews
 parameter_list|)
 throws|throws
 name|HiveException

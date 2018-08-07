@@ -931,6 +931,12 @@ specifier|transient
 name|boolean
 name|materializedTable
 decl_stmt|;
+comment|/** Note: This is set only for describe table purposes, it cannot be used to verify whether    * a materialization is up-to-date or not. */
+specifier|private
+specifier|transient
+name|Boolean
+name|outdatedForRewritingMaterializedView
+decl_stmt|;
 comment|/**    * Used only for serialization.    */
 specifier|public
 name|Table
@@ -5561,6 +5567,31 @@ name|tTable
 operator|.
 name|getCatName
 argument_list|()
+return|;
+block|}
+specifier|public
+name|void
+name|setOutdatedForRewriting
+parameter_list|(
+name|Boolean
+name|validForRewritingMaterializedView
+parameter_list|)
+block|{
+name|this
+operator|.
+name|outdatedForRewritingMaterializedView
+operator|=
+name|validForRewritingMaterializedView
+expr_stmt|;
+block|}
+comment|/** Note: This is set only for describe table purposes, it cannot be used to verify whether    * a materialization is up-to-date or not. */
+specifier|public
+name|Boolean
+name|isOutdatedForRewriting
+parameter_list|()
+block|{
+return|return
+name|outdatedForRewritingMaterializedView
 return|;
 block|}
 block|}
