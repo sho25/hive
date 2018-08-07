@@ -729,6 +729,30 @@ argument_list|,
 literal|"druid.query.files"
 argument_list|)
 expr_stmt|;
+name|excludeQuery
+argument_list|(
+literal|"druid_timestamptz.q"
+argument_list|)
+expr_stmt|;
+comment|// Disabled in HIVE-20322
+name|excludeQuery
+argument_list|(
+literal|"druidmini_joins.q"
+argument_list|)
+expr_stmt|;
+comment|// Disabled in HIVE-20322
+name|excludeQuery
+argument_list|(
+literal|"druidmini_masking.q"
+argument_list|)
+expr_stmt|;
+comment|// Disabled in HIVE-20322
+name|excludeQuery
+argument_list|(
+literal|"druidmini_test1.q"
+argument_list|)
+expr_stmt|;
+comment|// Disabled in HIVE-20322
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/druid"
@@ -976,30 +1000,6 @@ literal|"schema_evol_orc_vec_part_llap_io.q"
 argument_list|)
 expr_stmt|;
 comment|// Disabled in HIVE-19509
-name|excludeQuery
-argument_list|(
-literal|"druid_timestamptz.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-20322
-name|excludeQuery
-argument_list|(
-literal|"druidmini_joins.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-20322
-name|excludeQuery
-argument_list|(
-literal|"druidmini_masking.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-20322
-name|excludeQuery
-argument_list|(
-literal|"druidmini_test1.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-20322
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
