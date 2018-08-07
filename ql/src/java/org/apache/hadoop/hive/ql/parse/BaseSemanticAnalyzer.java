@@ -6334,7 +6334,7 @@ init|=
 literal|null
 decl_stmt|;
 comment|//by default if user hasn't provided any optional constraint properties
-comment|// it will be considered ENABLE and NOVALIDATE and RELY=false
+comment|// it will be considered ENABLE and NOVALIDATE and RELY=true
 name|boolean
 name|enable
 init|=
@@ -6348,7 +6348,7 @@ decl_stmt|;
 name|boolean
 name|rely
 init|=
-literal|false
+literal|true
 decl_stmt|;
 name|String
 name|checkOrDefaultValue
@@ -6463,6 +6463,10 @@ literal|false
 expr_stmt|;
 comment|// validate is false by default if we disable the constraint
 name|validate
+operator|=
+literal|false
+expr_stmt|;
+name|rely
 operator|=
 literal|false
 expr_stmt|;
