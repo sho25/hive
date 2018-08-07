@@ -8449,7 +8449,7 @@ name|HIVE_REMOVE_SQ_COUNT_CHECK
 argument_list|(
 literal|"hive.optimize.remove.sq_count_check"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Whether to remove an extra join with sq_count_check for scalar subqueries "
 operator|+
