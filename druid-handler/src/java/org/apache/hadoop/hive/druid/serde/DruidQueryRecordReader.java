@@ -893,8 +893,12 @@ name|long
 name|getPos
 parameter_list|()
 block|{
+comment|// HiveContextAwareRecordReader uses this position to track the block position and check
+comment|// whether to skip header and footer. return -1 to since we need not skip any header and
+comment|// footer rows for druid.
 return|return
-literal|0
+operator|-
+literal|1
 return|;
 block|}
 annotation|@
