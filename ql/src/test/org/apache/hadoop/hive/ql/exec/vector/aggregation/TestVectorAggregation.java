@@ -2037,6 +2037,9 @@ argument_list|,
 comment|/* allowNull */
 literal|false
 argument_list|,
+comment|/* isUnicodeOk */
+literal|true
+argument_list|,
 name|mergeDataTypePhysicalVariationList
 argument_list|)
 expr_stmt|;
@@ -2636,6 +2639,9 @@ literal|0
 argument_list|,
 name|allowNull
 argument_list|,
+comment|/* isUnicodeOk */
+literal|true
+argument_list|,
 name|explicitDataTypePhysicalVariationList
 argument_list|)
 expr_stmt|;
@@ -2952,6 +2958,9 @@ comment|/* maxComplexDepth */
 literal|0
 argument_list|,
 comment|/* allowNull */
+literal|true
+argument_list|,
+comment|/* isUnicodeOk */
 literal|true
 argument_list|,
 name|explicitDataTypePhysicalVariationList

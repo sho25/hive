@@ -19255,14 +19255,13 @@ operator|==
 literal|0
 operator|)
 decl_stmt|;
-comment|// For now, we don't support joins on or using DECIMAL_64.
 name|VectorExpression
 index|[]
 name|allBigTableKeyExpressions
 init|=
 name|vContext
 operator|.
-name|getVectorExpressionsUpConvertDecimal64
+name|getVectorExpressions
 argument_list|(
 name|keyDesc
 argument_list|)
@@ -19535,14 +19534,13 @@ argument_list|(
 name|posBigTable
 argument_list|)
 decl_stmt|;
-comment|// For now, we don't support joins on or using DECIMAL_64.
 name|VectorExpression
 index|[]
 name|allBigTableValueExpressions
 init|=
 name|vContext
 operator|.
-name|getVectorExpressionsUpConvertDecimal64
+name|getVectorExpressions
 argument_list|(
 name|bigTableExprs
 argument_list|)
@@ -24389,14 +24387,13 @@ operator|.
 name|getKeys
 argument_list|()
 decl_stmt|;
-comment|// For now, we don't support group by on DECIMAL_64 keys.
 name|VectorExpression
 index|[]
 name|vecKeyExpressions
 init|=
 name|vContext
 operator|.
-name|getVectorExpressionsUpConvertDecimal64
+name|getVectorExpressions
 argument_list|(
 name|keysDesc
 argument_list|)
@@ -27547,6 +27544,27 @@ operator|.
 name|class
 expr_stmt|;
 block|}
+comment|// Wrap any DECIMAL_64 expressions with Conversion.
+name|vContext
+operator|.
+name|wrapWithDecimal64ToDecimalConversions
+argument_list|(
+name|vectorMapJoinDesc
+operator|.
+name|getAllBigTableKeyExpressions
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|vContext
+operator|.
+name|wrapWithDecimal64ToDecimalConversions
+argument_list|(
+name|vectorMapJoinDesc
+operator|.
+name|getAllBigTableValueExpressions
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|vectorOp
 operator|=
 name|OperatorFactory

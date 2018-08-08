@@ -301,6 +301,12 @@ operator|.
 name|ALL
 argument_list|,
 literal|4
+argument_list|,
+comment|/* allowNulls */
+literal|true
+argument_list|,
+comment|/* isUnicodeOk */
+literal|true
 argument_list|)
 expr_stmt|;
 name|VectorizedRowBatchCtx
