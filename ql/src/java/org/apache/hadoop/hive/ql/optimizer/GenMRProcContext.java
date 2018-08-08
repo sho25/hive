@@ -1022,6 +1022,29 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+comment|/**    * The context is reused across the rules. Reset so the following info is not    * incorrectly carried over to the following optimizations starting with the new TS.    */
+specifier|public
+name|void
+name|reset
+parameter_list|()
+block|{
+name|currTask
+operator|=
+literal|null
+expr_stmt|;
+name|currTopOp
+operator|=
+literal|null
+expr_stmt|;
+name|currUnionOp
+operator|=
+literal|null
+expr_stmt|;
+name|currAliasId
+operator|=
+literal|null
+expr_stmt|;
+block|}
 comment|/**    * @return reducer to task mapping    */
 specifier|public
 name|HashMap
