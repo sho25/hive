@@ -55,6 +55,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collections
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -85,16 +95,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -106,6 +106,20 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|StringUtils
 import|;
 end_import
 
@@ -282,7 +296,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ArchiveUtils.  *  */
+comment|/**  * ArchiveUtils.  */
 end_comment
 
 begin_class
@@ -678,7 +692,10 @@ decl_stmt|;
 name|String
 name|harHost
 init|=
-literal|null
+name|archive
+operator|.
+name|getScheme
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -688,24 +705,14 @@ literal|null
 condition|)
 block|{
 name|harHost
-operator|=
-name|archive
-operator|.
-name|getScheme
-argument_list|()
-operator|+
+operator|+=
 literal|"-localhost"
 expr_stmt|;
 block|}
 else|else
 block|{
 name|harHost
-operator|=
-name|archive
-operator|.
-name|getScheme
-argument_list|()
-operator|+
+operator|+=
 literal|"-"
 operator|+
 name|parentHost
@@ -715,12 +722,16 @@ comment|// have to make sure there's slash after .har, otherwise resolve doesn't
 name|String
 name|path
 init|=
-name|addSlash
+name|StringUtils
+operator|.
+name|appendIfMissing
 argument_list|(
 name|archive
 operator|.
 name|getPath
 argument_list|()
+argument_list|,
+literal|"/"
 argument_list|)
 decl_stmt|;
 if|if
@@ -790,7 +801,7 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Couldn't create har URI from archive URI"
+literal|"Could not create har URI from archive URI"
 argument_list|,
 name|e
 argument_list|)
@@ -829,7 +840,7 @@ throw|throw
 operator|new
 name|URISyntaxException
 argument_list|(
-literal|"Couldn't create URI for location."
+literal|"Could not create URI for location."
 argument_list|,
 literal|"Relative: "
 operator|+
@@ -854,30 +865,6 @@ name|relative
 argument_list|)
 return|;
 block|}
-block|}
-specifier|public
-specifier|static
-name|String
-name|addSlash
-parameter_list|(
-name|String
-name|s
-parameter_list|)
-block|{
-return|return
-name|s
-operator|.
-name|endsWith
-argument_list|(
-literal|"/"
-argument_list|)
-condition|?
-name|s
-else|:
-name|s
-operator|+
-literal|"/"
-return|;
 block|}
 comment|/**    * Makes sure, that URI points to directory by adding slash to it.    * Useful in relativizing URIs.    */
 specifier|public
@@ -908,8 +895,6 @@ return|return
 name|u
 return|;
 block|}
-else|else
-block|{
 try|try
 block|{
 return|return
@@ -955,12 +940,11 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Couldn't append slash to a URI"
+literal|"Could not append slash to a URI"
 argument_list|,
 name|e
 argument_list|)
 throw|;
-block|}
 block|}
 block|}
 comment|/**    * Determines whether a partition has been archived    *    * @param p    * @return is it archived?    */
@@ -1031,7 +1015,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Get a prefix of the given parition's string representation. The sencond    * argument, level, is used for the prefix length. For example, partition    * (ds='2010-01-01', hr='00', min='00'), level 1 will reture 'ds=2010-01-01',    * and level 2 will return 'ds=2010-01-01/hr=00'.    *    * @param p    *          partition object    * @param level    *          level for prefix depth    * @return prefix of partition's string representation    * @throws HiveException    */
+comment|/**    * Get a prefix of the given parition's string representation. The second    * argument, level, is used for the prefix length. For example, partition    * (ds='2010-01-01', hr='00', min='00'), level 1 will return 'ds=2010-01-01',    * and level 2 will return 'ds=2010-01-01/hr=00'.    *    * @param p    *          partition object    * @param level    *          level for prefix depth    * @return prefix of partition's string representation    * @throws HiveException    */
 specifier|public
 specifier|static
 name|String
@@ -1050,7 +1034,7 @@ name|List
 argument_list|<
 name|FieldSchema
 argument_list|>
-name|ffields
+name|fields
 init|=
 name|p
 operator|.
@@ -1059,19 +1043,11 @@ argument_list|()
 operator|.
 name|getPartCols
 argument_list|()
-decl_stmt|;
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|fields
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|FieldSchema
-argument_list|>
+operator|.
+name|subList
 argument_list|(
+literal|0
+argument_list|,
 name|level
 argument_list|)
 decl_stmt|;
@@ -1079,78 +1055,20 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|fvalues
+name|values
 init|=
 name|p
 operator|.
 name|getValues
 argument_list|()
-decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|values
-init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+operator|.
+name|subList
 argument_list|(
-name|level
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
 literal|0
-init|;
-name|i
-operator|<
+argument_list|,
 name|level
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|FieldSchema
-name|fs
-init|=
-name|ffields
-operator|.
-name|get
-argument_list|(
-name|i
 argument_list|)
 decl_stmt|;
-name|String
-name|s
-init|=
-name|fvalues
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-decl_stmt|;
-name|fields
-operator|.
-name|add
-argument_list|(
-name|fs
-argument_list|)
-expr_stmt|;
-name|values
-operator|.
-name|add
-argument_list|(
-name|s
-argument_list|)
-expr_stmt|;
-block|}
 try|try
 block|{
 return|return
@@ -1301,7 +1219,7 @@ argument_list|>
 name|reversedKeys
 init|=
 operator|new
-name|LinkedList
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -1335,8 +1253,6 @@ name|reversedKeys
 operator|.
 name|add
 argument_list|(
-literal|0
-argument_list|,
 name|fs
 operator|.
 name|getName
@@ -1345,6 +1261,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|Collections
+operator|.
+name|reverse
+argument_list|(
+name|reversedKeys
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|String
@@ -1409,7 +1332,6 @@ return|return
 literal|null
 return|;
 block|}
-elseif|else
 if|if
 condition|(
 name|getArchivingLevel
@@ -1430,8 +1352,6 @@ return|return
 literal|null
 return|;
 block|}
-else|else
-block|{
 return|return
 name|getPartialName
 argument_list|(
@@ -1443,7 +1363,6 @@ name|p
 argument_list|)
 argument_list|)
 return|;
-block|}
 block|}
 name|spec
 operator|.
