@@ -1901,6 +1901,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|MASKING_FILTERING_ON_MATERIALIZED_VIEWS_SOURCES
+argument_list|(
+literal|10288
+argument_list|,
+literal|"Querying directly materialized view contents is not supported since we detected {0}.{1} "
+operator|+
+literal|"used by materialized view has row masking/column filtering enabled"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|UPDATEDELETE_PARSE_ERROR
 argument_list|(
 literal|10290
