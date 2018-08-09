@@ -9905,11 +9905,11 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 name|startIndex
 operator|=
 name|endIndex
 expr_stmt|;
-block|}
 block|}
 if|if
 condition|(
