@@ -7413,7 +7413,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Target txn id is missing for source txn id : "
+literal|"Idempotent case: Target txn id is missing for source txn id : "
 operator|+
 name|srcTxnIds
 operator|.
@@ -7505,20 +7505,6 @@ name|txnIds
 argument_list|)
 throw|;
 block|}
-name|long
-name|writeId
-decl_stmt|;
-name|String
-name|s
-decl_stmt|;
-name|long
-name|allocatedTxnsCount
-init|=
-literal|0
-decl_stmt|;
-name|long
-name|txnId
-decl_stmt|;
 name|List
 argument_list|<
 name|String
@@ -7599,6 +7585,19 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|long
+name|allocatedTxnsCount
+init|=
+literal|0
+decl_stmt|;
+name|long
+name|txnId
+decl_stmt|;
+name|long
+name|writeId
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|String
@@ -7726,6 +7725,40 @@ name|txnToWriteIds
 argument_list|)
 return|;
 block|}
+name|long
+name|srcWriteId
+init|=
+literal|0
+decl_stmt|;
+if|if
+condition|(
+name|rqst
+operator|.
+name|isSetReplPolicy
+argument_list|()
+condition|)
+block|{
+comment|// In replication flow, we always need to allocate write ID equal to that of source.
+assert|assert
+operator|(
+name|srcTxnToWriteIds
+operator|!=
+literal|null
+operator|)
+assert|;
+name|srcWriteId
+operator|=
+name|srcTxnToWriteIds
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getWriteId
+argument_list|()
+expr_stmt|;
+block|}
 name|handle
 operator|=
 name|getMutexAPI
@@ -7744,8 +7777,9 @@ expr_stmt|;
 comment|// There are some txns in the list which does not have write id allocated and hence go ahead and do it.
 comment|// Get the next write id for the given table and update it with new next write id.
 comment|// This is select for update query which takes a lock if the table entry is already there in NEXT_WRITE_ID
+name|String
 name|s
-operator|=
+init|=
 name|sqlGenerator
 operator|.
 name|addForUpdateClause
@@ -7764,7 +7798,7 @@ argument_list|(
 name|tblName
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -7796,8 +7830,17 @@ condition|)
 block|{
 comment|// First allocation of write id should add the table to the next_write_id meta table
 comment|// The initial value for write id should be 1 and hence we add 1 with number of write ids allocated here
+comment|// For repl flow, we need to force set the incoming write id.
 name|writeId
 operator|=
+operator|(
+name|srcWriteId
+operator|>
+literal|0
+operator|)
+condition|?
+name|srcWriteId
+else|:
 literal|1
 expr_stmt|;
 name|s
@@ -7818,14 +7861,11 @@ argument_list|)
 operator|+
 literal|","
 operator|+
-name|Long
-operator|.
-name|toString
-argument_list|(
-name|numOfWriteIds
+operator|(
+name|writeId
 operator|+
-literal|1
-argument_list|)
+name|numOfWriteIds
+operator|)
 operator|+
 literal|")"
 expr_stmt|;
@@ -7850,14 +7890,27 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|writeId
-operator|=
+name|long
+name|nextWriteId
+init|=
 name|rs
 operator|.
 name|getLong
 argument_list|(
 literal|1
 argument_list|)
+decl_stmt|;
+name|writeId
+operator|=
+operator|(
+name|srcWriteId
+operator|>
+literal|0
+operator|)
+condition|?
+name|srcWriteId
+else|:
+name|nextWriteId
 expr_stmt|;
 comment|// Update the NEXT_WRITE_ID for the given table after incrementing by number of write ids allocated
 name|s
@@ -7902,6 +7955,60 @@ argument_list|(
 name|s
 argument_list|)
 expr_stmt|;
+comment|// For repl flow, if the source write id is mismatching with target next write id, then current
+comment|// metadata in TXN_TO_WRITE_ID is stale for this table and hence need to clean-up TXN_TO_WRITE_ID.
+comment|// This is possible in case of first incremental repl after bootstrap where concurrent write
+comment|// and drop table was performed at source during bootstrap dump.
+if|if
+condition|(
+operator|(
+name|srcWriteId
+operator|>
+literal|0
+operator|)
+operator|&&
+operator|(
+name|srcWriteId
+operator|!=
+name|nextWriteId
+operator|)
+condition|)
+block|{
+name|s
+operator|=
+literal|"delete from TXN_TO_WRITE_ID where t2w_database = "
+operator|+
+name|quoteString
+argument_list|(
+name|dbName
+argument_list|)
+operator|+
+literal|" and t2w_table = "
+operator|+
+name|quoteString
+argument_list|(
+name|tblName
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute delete<"
+operator|+
+name|s
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|s
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// Map the newly allocated write ids against the list of txns which doesn't have pre-allocated
 comment|// write ids
@@ -7978,93 +8085,6 @@ expr_stmt|;
 name|writeId
 operator|++
 expr_stmt|;
-block|}
-if|if
-condition|(
-name|rqst
-operator|.
-name|isSetReplPolicy
-argument_list|()
-condition|)
-block|{
-name|int
-name|lastIdx
-init|=
-name|txnToWriteIds
-operator|.
-name|size
-argument_list|()
-operator|-
-literal|1
-decl_stmt|;
-if|if
-condition|(
-operator|(
-name|txnToWriteIds
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getWriteId
-argument_list|()
-operator|!=
-name|srcTxnToWriteIds
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getWriteId
-argument_list|()
-operator|)
-operator|||
-operator|(
-name|txnToWriteIds
-operator|.
-name|get
-argument_list|(
-name|lastIdx
-argument_list|)
-operator|.
-name|getWriteId
-argument_list|()
-operator|!=
-name|srcTxnToWriteIds
-operator|.
-name|get
-argument_list|(
-name|lastIdx
-argument_list|)
-operator|.
-name|getWriteId
-argument_list|()
-operator|)
-condition|)
-block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Allocated write id range {} is not matching with the input write id range {}."
-argument_list|,
-name|txnToWriteIds
-argument_list|,
-name|srcTxnToWriteIds
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Write id allocation failed for: "
-operator|+
-name|srcTxnToWriteIds
-argument_list|)
-throw|;
-block|}
 block|}
 comment|// Insert entries to TXN_TO_WRITE_ID for newly allocated write ids
 name|List

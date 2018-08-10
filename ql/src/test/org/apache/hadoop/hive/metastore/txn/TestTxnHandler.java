@@ -13104,6 +13104,8 @@ argument_list|(
 name|srcTxnToWriteId
 argument_list|)
 expr_stmt|;
+comment|// This is an idempotent case when repl flow forcefully allocate write id if it doesn't match
+comment|// the next write id.
 try|try
 block|{
 name|txnHandler
@@ -13128,7 +13130,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-name|assertTrue
+name|assertFalse
 argument_list|(
 name|failed
 argument_list|)
