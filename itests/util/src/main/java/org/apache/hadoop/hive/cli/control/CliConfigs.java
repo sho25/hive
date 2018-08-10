@@ -747,12 +747,7 @@ literal|"druidmini_masking.q"
 argument_list|)
 expr_stmt|;
 comment|// Disabled in HIVE-20322
-name|excludeQuery
-argument_list|(
-literal|"druidmini_test1.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-20322
+comment|//excludeQuery("druidmini_test1.q"); // Disabled in HIVE-20322
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/druid"
