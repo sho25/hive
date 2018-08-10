@@ -8990,8 +8990,6 @@ name|oldPartPath
 operator|==
 literal|null
 condition|?
-name|newPartPath
-operator|=
 name|genPartPathFromTable
 argument_list|(
 name|tbl
