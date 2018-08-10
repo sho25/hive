@@ -8548,6 +8548,11 @@ argument_list|(
 literal|"insert into table t3 values (10)"
 argument_list|)
 operator|.
+name|run
+argument_list|(
+literal|"create external table t4 as select id from t3"
+argument_list|)
+operator|.
 name|dump
 argument_list|(
 literal|"repl dump "
@@ -8600,7 +8605,18 @@ name|verifyResult
 argument_list|(
 literal|"10"
 argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"select id from t4"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|null
+argument_list|)
 expr_stmt|;
+comment|// Returns null as create table event doesn't list files
 block|}
 block|}
 end_class
