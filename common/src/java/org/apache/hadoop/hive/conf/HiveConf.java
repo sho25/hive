@@ -6386,7 +6386,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|0.5
+literal|0.99
 argument_list|,
 literal|"Portion of total memory to be used by map-side group aggregation hash table"
 argument_list|)
