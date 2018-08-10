@@ -10883,6 +10883,15 @@ argument_list|,
 literal|"SSL Versions to disable for all Hive Servers"
 argument_list|)
 block|,
+name|HIVE_PRIVILEGE_SYNCHRONIZER
+argument_list|(
+literal|"hive.privilege.synchronizer"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to synchronize privileges from external authorizer periodically in HS2"
+argument_list|)
+block|,
 name|HIVE_PRIVILEGE_SYNCHRONIZER_INTERVAL
 argument_list|(
 literal|"hive.privilege.synchronizer.interval"
