@@ -8394,6 +8394,17 @@ operator|+
 literal|"number of tuples of the outer input of the join or the input of the union that you should get in order to apply the rule."
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_CONSTRAINTS_JOIN
+argument_list|(
+literal|"hive.optimize.constraints.join"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use referential constraints\n"
+operator|+
+literal|"to optimize (remove or transform) join operators"
+argument_list|)
+block|,
 name|HIVE_OPTIMIZE_REDUCE_WITH_STATS
 argument_list|(
 literal|"hive.optimize.filter.stats.reduction"
