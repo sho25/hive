@@ -307,7 +307,7 @@ operator|)
 operator|-
 literal|1
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|int

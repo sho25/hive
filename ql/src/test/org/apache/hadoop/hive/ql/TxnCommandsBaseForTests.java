@@ -368,6 +368,7 @@ operator|new
 name|TestName
 argument_list|()
 decl_stmt|;
+specifier|protected
 name|HiveConf
 name|hiveConf
 decl_stmt|;
@@ -1041,6 +1042,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|protected
 name|String
 name|getWarehouseDir
 parameter_list|()
@@ -1052,6 +1054,7 @@ operator|+
 literal|"/warehouse"
 return|;
 block|}
+specifier|protected
 specifier|abstract
 name|String
 name|getTestDataDir
@@ -1079,6 +1082,7 @@ name|rowsIn
 argument_list|)
 return|;
 block|}
+specifier|protected
 name|String
 name|makeValuesClause
 parameter_list|(
@@ -1131,6 +1135,7 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
+specifier|protected
 name|List
 argument_list|<
 name|String
@@ -1746,6 +1751,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * We have to use a different query to check results for Vectorized tests because to get the    * file name info we need to use {@link org.apache.hadoop.hive.ql.metadata.VirtualColumn#FILENAME}    * which will currently make the query non-vectorizable.  This means we can't check the file name    * for vectorized version of the test.    */
+specifier|protected
 name|void
 name|checkResult
 parameter_list|(

@@ -840,6 +840,7 @@ literal|"/warehouse"
 decl_stmt|;
 annotation|@
 name|Override
+specifier|protected
 name|String
 name|getTestDataDir
 parameter_list|()
