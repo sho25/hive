@@ -256,6 +256,11 @@ argument_list|()
 operator|.
 name|getViolationMsg
 argument_list|()
+argument_list|,
+name|sessionState
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

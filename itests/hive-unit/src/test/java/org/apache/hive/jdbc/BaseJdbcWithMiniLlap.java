@@ -982,7 +982,7 @@ decl_stmt|;
 comment|// This method should be called by sub-classes in a @BeforeClass initializer
 specifier|public
 specifier|static
-name|void
+name|MiniHS2
 name|beforeTest
 parameter_list|(
 name|HiveConf
@@ -1101,6 +1101,9 @@ literal|"/apps_staging_dir/anonymous"
 argument_list|)
 argument_list|)
 expr_stmt|;
+return|return
+name|miniHS2
+return|;
 block|}
 specifier|static
 name|HiveConf

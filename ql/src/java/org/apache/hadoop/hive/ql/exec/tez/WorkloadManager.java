@@ -2815,6 +2815,11 @@ argument_list|(
 name|queryId
 argument_list|,
 name|reason
+argument_list|,
+name|toKill
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|addKillQueryResult
