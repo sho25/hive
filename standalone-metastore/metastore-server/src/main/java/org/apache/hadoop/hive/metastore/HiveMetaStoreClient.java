@@ -926,6 +926,25 @@ name|TEST_CAPABILITY
 argument_list|)
 argument_list|)
 decl_stmt|;
+comment|// Name of the HiveMetaStore class. It is used to initialize embedded metastore
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|HIVE_METASTORE_CLASS
+init|=
+literal|"org.apache.hadoop.hive.metastore.HiveMetaStore"
+decl_stmt|;
+comment|// Method used to create Hive Metastore client. It is called as
+comment|// HiveMetaStore.newRetryingHMSHandler("hive client", this.conf, true);
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|HIVE_METASTORE_CREATE_HANDLER_METHOD
+init|=
+literal|"newRetryingHMSHandler"
+decl_stmt|;
 name|ThriftHiveMetastore
 operator|.
 name|Iface
@@ -1239,23 +1258,17 @@ literal|"]"
 argument_list|)
 throw|;
 block|}
-comment|// instantiate the metastore server handler directly instead of connecting
-comment|// through the network
 name|client
 operator|=
-name|HiveMetaStore
-operator|.
-name|newRetryingHMSHandler
+name|callEmbeddedMetastore
 argument_list|(
-literal|"hive client"
-argument_list|,
 name|this
 operator|.
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
+comment|// instantiate the metastore server handler directly instead of connecting
+comment|// through the network
 name|isConnected
 operator|=
 literal|true
@@ -1523,6 +1536,142 @@ comment|// finally open the store
 name|open
 argument_list|()
 expr_stmt|;
+block|}
+comment|/**    * Instantiate the metastore server handler directly instead of connecting    * through the network    *    * @param conf Configuration object passed to embedded metastore    * @return embedded client instance    * @throws MetaException    */
+specifier|static
+name|ThriftHiveMetastore
+operator|.
+name|Iface
+name|callEmbeddedMetastore
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+comment|// Instantiate the metastore server handler directly instead of connecting
+comment|// through the network
+comment|//
+comment|// The code below simulates the following code
+comment|//
+comment|// client = HiveMetaStore.newRetryingHMSHandler(this.conf);
+comment|//
+comment|// using reflection API. This is done to avoid dependency of MetastoreClient on Hive Metastore.
+comment|// Note that newRetryingHMSHandler is static method, so we pass null as the object reference.
+comment|//
+try|try
+block|{
+name|Class
+argument_list|<
+name|?
+argument_list|>
+name|clazz
+init|=
+name|Class
+operator|.
+name|forName
+argument_list|(
+name|HIVE_METASTORE_CLASS
+argument_list|)
+decl_stmt|;
+comment|//noinspection JavaReflectionMemberAccess
+name|Method
+name|method
+init|=
+name|clazz
+operator|.
+name|getDeclaredMethod
+argument_list|(
+name|HIVE_METASTORE_CREATE_HANDLER_METHOD
+argument_list|,
+name|Configuration
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
+name|method
+operator|.
+name|setAccessible
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+return|return
+operator|(
+name|ThriftHiveMetastore
+operator|.
+name|Iface
+operator|)
+name|method
+operator|.
+name|invoke
+argument_list|(
+literal|null
+argument_list|,
+name|conf
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|InvocationTargetException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|MetaStoreUtils
+operator|.
+name|logAndThrowMetaException
+argument_list|(
+operator|(
+name|Exception
+operator|)
+name|e
+operator|.
+name|getCause
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+name|MetaStoreUtils
+operator|.
+name|logAndThrowMetaException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ClassNotFoundException
+decl||
+name|NoSuchMethodException
+decl||
+name|IllegalAccessException
+name|e
+parameter_list|)
+block|{
+name|MetaStoreUtils
+operator|.
+name|logAndThrowMetaException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+literal|null
+return|;
 block|}
 specifier|private
 name|void

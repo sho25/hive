@@ -29,6 +29,24 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|HiveMetaStoreClient
+operator|.
+name|callEmbeddedMetastore
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|Warehouse
 operator|.
 name|DEFAULT_DATABASE_NAME
@@ -52,26 +70,6 @@ operator|.
 name|MetaStoreUtils
 operator|.
 name|getDefaultCatalog
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|utils
-operator|.
-name|MetaStoreUtils
-operator|.
-name|prependCatalogToDbName
 import|;
 end_import
 
@@ -1236,21 +1234,13 @@ literal|"]"
 argument_list|)
 throw|;
 block|}
-comment|// instantiate the metastore server handler directly instead of connecting
-comment|// through the network
 name|client
 operator|=
-name|HiveMetaStore
-operator|.
-name|newRetryingHMSHandler
+name|callEmbeddedMetastore
 argument_list|(
-literal|"hive client"
-argument_list|,
 name|this
 operator|.
 name|conf
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|isConnected

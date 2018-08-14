@@ -54489,19 +54489,17 @@ return|;
 block|}
 end_function
 
+begin_comment
+comment|/**    * Create retrying HMS handler for embedded metastore.    *    *<h1>IMPORTANT</h1>    *    * This method is called indirectly by HiveMetastoreClient and HiveMetaStoreClientPreCatalog    * using reflection. It can not be removed and its arguments can't be changed without matching    * change in HiveMetastoreClient and HiveMetaStoreClientPreCatalog.    *    * @param conf configuration to use    * @throws MetaException    */
+end_comment
+
 begin_function
 specifier|static
 name|Iface
 name|newRetryingHMSHandler
 parameter_list|(
-name|String
-name|name
-parameter_list|,
 name|Configuration
 name|conf
-parameter_list|,
-name|boolean
-name|local
 parameter_list|)
 throws|throws
 name|MetaException
@@ -54514,7 +54512,7 @@ name|HiveMetaStore
 operator|.
 name|HMSHandler
 argument_list|(
-name|name
+literal|"hive client"
 argument_list|,
 name|conf
 argument_list|,
@@ -54530,7 +54528,7 @@ name|conf
 argument_list|,
 name|baseHandler
 argument_list|,
-name|local
+literal|true
 argument_list|)
 return|;
 block|}
