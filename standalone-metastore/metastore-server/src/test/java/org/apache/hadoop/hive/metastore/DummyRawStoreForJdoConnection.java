@@ -1183,7 +1183,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -5313,7 +5313,7 @@ name|Override
 specifier|public
 name|List
 argument_list|<
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|ColStatsObjWithSourceInfo
 argument_list|>

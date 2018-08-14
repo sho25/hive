@@ -119,7 +119,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -378,7 +378,7 @@ expr_stmt|;
 name|int
 name|msPort
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|startMetaStore
 argument_list|(

@@ -2119,6 +2119,24 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreServerUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|security
 operator|.
 name|SecurityUtil
@@ -4005,7 +4023,7 @@ name|MetaException
 block|{
 name|initListeners
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(
@@ -4207,7 +4225,7 @@ expr_stmt|;
 block|}
 name|preListeners
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(
@@ -4244,7 +4262,7 @@ argument_list|)
 expr_stmt|;
 name|listeners
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(
@@ -4290,7 +4308,7 @@ argument_list|)
 expr_stmt|;
 name|transactionalListeners
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(
@@ -4336,7 +4354,7 @@ expr_stmt|;
 block|}
 name|endFunctionListeners
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(
@@ -11063,7 +11081,7 @@ block|}
 name|String
 name|validate
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validateTblColumns
 argument_list|(
@@ -11105,7 +11123,7 @@ condition|)
 block|{
 name|validate
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validateTblColumns
 argument_list|(
@@ -11153,7 +11171,7 @@ condition|)
 block|{
 name|validate
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validateSkewedColNames
 argument_list|(
@@ -11182,7 +11200,7 @@ throw|;
 block|}
 name|validate
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validateSkewedColNamesSubsetCol
 argument_list|(
@@ -11534,7 +11552,7 @@ name|STATS_AUTO_GATHER
 argument_list|)
 operator|&&
 operator|!
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|isView
 argument_list|(
@@ -11542,7 +11560,7 @@ name|tbl
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updateTableStatsSlow
 argument_list|(
@@ -19673,7 +19691,7 @@ argument_list|(
 name|part_vals
 argument_list|)
 expr_stmt|;
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validatePartitionNameCharacters
 argument_list|(
@@ -19966,7 +19984,7 @@ name|STATS_AUTO_GATHER
 argument_list|)
 operator|&&
 operator|!
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|isView
 argument_list|(
@@ -19974,7 +19992,7 @@ name|tbl
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updatePartitionStatsFast
 argument_list|(
@@ -22905,7 +22923,7 @@ parameter_list|)
 throws|throws
 name|TException
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validatePartitionNameCharacters
 argument_list|(
@@ -23262,7 +23280,7 @@ name|STATS_AUTO_GATHER
 argument_list|)
 operator|&&
 operator|!
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|isView
 argument_list|(
@@ -23270,7 +23288,7 @@ name|tbl
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updatePartitionStatsFast
 argument_list|(
@@ -30027,7 +30045,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validatePartitionNameCharacters
 argument_list|(
@@ -42818,7 +42836,7 @@ condition|(
 name|throw_exception
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validatePartitionNameCharacters
 argument_list|(
@@ -42836,7 +42854,7 @@ else|else
 block|{
 name|ret
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|partitionNameHasValidCharacters
 argument_list|(
@@ -46345,7 +46363,7 @@ name|partName
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|mergeColStats
 argument_list|(
@@ -46809,7 +46827,7 @@ block|}
 else|else
 block|{
 comment|// we first use getParameters() to prune the stats
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMergableCols
 argument_list|(
@@ -46845,7 +46863,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|mergeColStats
 argument_list|(
@@ -47153,7 +47171,7 @@ argument_list|,
 name|tableName
 argument_list|)
 decl_stmt|;
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMergableCols
 argument_list|(
@@ -47189,7 +47207,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|mergeColStats
 argument_list|(
@@ -47718,7 +47736,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|checkUserHasHostProxyPrivileges
 argument_list|(

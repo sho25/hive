@@ -1181,6 +1181,24 @@ name|metastore
 operator|.
 name|utils
 operator|.
+name|MetaStoreServerUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
 name|MetaStoreUtils
 import|;
 end_import
@@ -9852,7 +9870,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|populateQuickStats
 argument_list|(
@@ -9868,7 +9886,7 @@ block|}
 else|else
 block|{
 comment|// The ACID state is probably absent. Warning is logged in the get method.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|clearQuickStats
 argument_list|(

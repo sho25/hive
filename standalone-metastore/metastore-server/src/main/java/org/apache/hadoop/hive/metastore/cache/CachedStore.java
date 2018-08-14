@@ -613,7 +613,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -632,6 +632,24 @@ operator|.
 name|utils
 operator|.
 name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreServerUtils
 operator|.
 name|ColStatsObjWithSourceInfo
 import|;
@@ -12508,7 +12526,7 @@ return|return
 operator|new
 name|MergedColumnStatsForPartitions
 argument_list|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|aggrPartitionStats
 argument_list|(

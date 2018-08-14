@@ -191,7 +191,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|ColStatsObjWithSourceInfo
 import|;

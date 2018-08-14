@@ -1095,7 +1095,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -1114,6 +1114,24 @@ operator|.
 name|utils
 operator|.
 name|MetaStoreUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
+name|MetaStoreServerUtils
 operator|.
 name|ColStatsObjWithSourceInfo
 import|;
@@ -2845,7 +2863,7 @@ name|db
 operator|.
 name|setParameters
 argument_list|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|trimMapNulls
 argument_list|(
@@ -5532,7 +5550,7 @@ name|t
 operator|.
 name|setParameters
 argument_list|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|trimMapNulls
 argument_list|(
@@ -5750,7 +5768,7 @@ name|t
 operator|.
 name|setParameters
 argument_list|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|trimMapNulls
 argument_list|(
@@ -6737,7 +6755,7 @@ name|t
 operator|.
 name|setParameters
 argument_list|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|trimMapNulls
 argument_list|(
@@ -10893,7 +10911,7 @@ argument_list|)
 decl_stmt|;
 comment|// 2. use util function to aggr stats
 return|return
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|aggrPartitionStats
 argument_list|(

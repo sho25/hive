@@ -179,6 +179,24 @@ name|metastore
 operator|.
 name|utils
 operator|.
+name|MetaStoreServerUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|utils
+operator|.
 name|MetaStoreUtils
 import|;
 end_import
@@ -907,7 +925,7 @@ block|}
 name|String
 name|validate
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|validateTblColumns
 argument_list|(
@@ -2251,7 +2269,7 @@ name|newDbName
 argument_list|)
 decl_stmt|;
 comment|// Update table stats. For partitioned table, we update stats in alterPartition()
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updateTableStatsSlow
 argument_list|(
@@ -2278,7 +2296,7 @@ comment|//Currently only column related changes can be cascaded in alter table
 if|if
 condition|(
 operator|!
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|areSameColumns
 argument_list|(
@@ -3183,7 +3201,7 @@ block|{
 comment|// if stats are same, no need to update
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|isFastStatsSame
 argument_list|(
@@ -3193,7 +3211,7 @@ name|new_part
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updateBasicState
 argument_list|(
@@ -3208,7 +3226,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updatePartitionStatsFast
 argument_list|(
@@ -4029,7 +4047,7 @@ name|environmentContext
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updatePartitionStatsFast
 argument_list|(
@@ -4690,7 +4708,7 @@ block|{
 comment|// Check if stats are same, no need to update
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|isFastStatsSame
 argument_list|(
@@ -4700,7 +4718,7 @@ name|tmpPart
 argument_list|)
 condition|)
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updateBasicState
 argument_list|(
@@ -4715,7 +4733,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|updatePartitionStatsFast
 argument_list|(
@@ -5267,7 +5285,7 @@ name|tableName
 argument_list|)
 operator|||
 operator|!
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|columnsIncludedByNameType
 argument_list|(
@@ -5799,7 +5817,7 @@ condition|(
 operator|!
 name|rename
 operator|&&
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|columnsIncludedByNameType
 argument_list|(

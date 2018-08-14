@@ -863,7 +863,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -1713,7 +1713,7 @@ try|try
 block|{
 name|transactionalListeners
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|getMetaStoreListeners
 argument_list|(

@@ -445,7 +445,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -4160,7 +4160,7 @@ condition|)
 block|{
 name|sdHash
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|hashStorageDescriptor
 argument_list|(
@@ -4273,7 +4273,7 @@ name|byte
 index|[]
 name|sdHash
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|hashStorageDescriptor
 argument_list|(
@@ -6448,7 +6448,7 @@ name|byte
 index|[]
 name|sdHash
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|hashStorageDescriptor
 argument_list|(

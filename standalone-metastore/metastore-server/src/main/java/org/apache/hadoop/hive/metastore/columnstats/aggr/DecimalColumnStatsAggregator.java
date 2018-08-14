@@ -129,22 +129,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|StatObjectConverter
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|api
 operator|.
 name|ColumnStatisticsData
@@ -259,7 +243,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -277,7 +261,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|ColStatsObjWithSourceInfo
 import|;
@@ -667,7 +651,7 @@ expr_stmt|;
 name|densityAvgSum
 operator|+=
 operator|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -677,7 +661,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|-
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -730,7 +714,7 @@ else|else
 block|{
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -740,7 +724,7 @@ name|getLowValue
 argument_list|()
 argument_list|)
 operator|<
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -777,7 +761,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -787,7 +771,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|>
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -909,7 +893,7 @@ name|long
 call|)
 argument_list|(
 operator|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -919,7 +903,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|-
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1138,7 +1122,7 @@ block|{
 name|densityAvgSum
 operator|+=
 operator|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1148,7 +1132,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|-
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1341,7 +1325,7 @@ block|{
 name|densityAvgSum
 operator|+=
 operator|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1351,7 +1335,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|-
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1443,7 +1427,7 @@ else|else
 block|{
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1453,7 +1437,7 @@ name|getLowValue
 argument_list|()
 argument_list|)
 operator|<
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1490,7 +1474,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1500,7 +1484,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|>
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1628,7 +1612,7 @@ block|{
 name|densityAvgSum
 operator|+=
 operator|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1638,7 +1622,7 @@ name|getHighValue
 argument_list|()
 argument_list|)
 operator|-
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1963,7 +1947,7 @@ decl_stmt|;
 name|double
 name|min
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -1984,7 +1968,7 @@ decl_stmt|;
 name|double
 name|max
 init|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -2195,7 +2179,7 @@ literal|0
 decl_stmt|;
 name|min
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
@@ -2215,7 +2199,7 @@ argument_list|)
 expr_stmt|;
 name|max
 operator|=
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|decimalToDouble
 argument_list|(
