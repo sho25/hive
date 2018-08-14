@@ -267,6 +267,26 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|columnstats
+operator|.
+name|ColumnsStatsUtils
+operator|.
+name|longInspectorFromStats
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -421,16 +441,10 @@ block|}
 name|LongColumnStatsDataInspector
 name|longColumnStatsData
 init|=
-operator|(
-name|LongColumnStatsDataInspector
-operator|)
+name|longInspectorFromStats
+argument_list|(
 name|cso
-operator|.
-name|getStatsData
-argument_list|()
-operator|.
-name|getLongStats
-argument_list|()
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -588,16 +602,10 @@ decl_stmt|;
 name|LongColumnStatsDataInspector
 name|newData
 init|=
-operator|(
-name|LongColumnStatsDataInspector
-operator|)
+name|longInspectorFromStats
+argument_list|(
 name|cso
-operator|.
-name|getStatsData
-argument_list|()
-operator|.
-name|getLongStats
-argument_list|()
+argument_list|)
 decl_stmt|;
 name|lowerBound
 operator|=
@@ -1127,16 +1135,10 @@ decl_stmt|;
 name|LongColumnStatsDataInspector
 name|newData
 init|=
-operator|(
-name|LongColumnStatsDataInspector
-operator|)
+name|longInspectorFromStats
+argument_list|(
 name|cso
-operator|.
-name|getStatsData
-argument_list|()
-operator|.
-name|getLongStats
-argument_list|()
+argument_list|)
 decl_stmt|;
 comment|// newData.isSetBitVectors() should be true for sure because we
 comment|// already checked it before.
