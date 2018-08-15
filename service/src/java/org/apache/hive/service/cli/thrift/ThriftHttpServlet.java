@@ -479,6 +479,24 @@ name|hive
 operator|.
 name|service
 operator|.
+name|auth
+operator|.
+name|ldap
+operator|.
+name|HttpEmptyAuthenticationException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
 name|cli
 operator|.
 name|HiveSQLException
@@ -1381,6 +1399,18 @@ name|HttpAuthenticationException
 name|e
 parameter_list|)
 block|{
+comment|// Ignore HttpEmptyAuthenticationException, it is normal for knox
+comment|// to send a request with empty header
+if|if
+condition|(
+operator|!
+operator|(
+name|e
+operator|instanceof
+name|HttpEmptyAuthenticationException
+operator|)
+condition|)
+block|{
 name|LOG
 operator|.
 name|error
@@ -1390,6 +1420,7 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Send a 401 to the client
 name|response
 operator|.
@@ -2102,6 +2133,26 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|HttpEmptyAuthenticationException
+condition|)
+block|{
+throw|throw
+operator|(
+name|HttpEmptyAuthenticationException
+operator|)
+name|e
+operator|.
+name|getCause
+argument_list|()
+throw|;
+block|}
 name|LOG
 operator|.
 name|error
@@ -2742,7 +2793,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|HttpAuthenticationException
+name|HttpEmptyAuthenticationException
 argument_list|(
 literal|"Authorization header received "
 operator|+
