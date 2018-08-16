@@ -24467,8 +24467,27 @@ argument_list|(
 name|newTable
 argument_list|)
 decl_stmt|;
+name|boolean
+name|isToTxn
+init|=
+name|isTxn
+operator|&&
+operator|!
+name|TxnUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|oldt
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
+operator|!
+name|isToTxn
+operator|&&
 name|isTxn
 operator|&&
 name|areTxnStatsSupported
@@ -24516,22 +24535,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|boolean
-name|isToTxn
-init|=
-name|isTxn
-operator|&&
-operator|!
-name|TxnUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|oldt
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-decl_stmt|;
 name|oldt
 operator|.
 name|setParameters
@@ -24681,8 +24684,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// If transactional, update the stats state for the current Stats updater query.
-comment|// Don't update for conversion to acid - it doesn't modify stats but passes in qVWIds.
-comment|// The fact that it doesn't update stats is verified above.
+comment|// Set stats invalid for ACID conversion; it doesn't pass in the write ID.
 if|if
 condition|(
 name|isTxn
@@ -24692,6 +24694,8 @@ if|if
 condition|(
 operator|!
 name|areTxnStatsSupported
+operator|||
+name|isToTxn
 condition|)
 block|{
 name|StatsSetupConst
@@ -24716,17 +24720,12 @@ name|queryValidWriteIds
 operator|!=
 literal|null
 operator|&&
-operator|(
-operator|!
-name|isToTxn
-operator|||
 name|newTable
 operator|.
 name|getWriteId
 argument_list|()
 operator|>
 literal|0
-operator|)
 condition|)
 block|{
 comment|// Check concurrent INSERT case and set false to the flag.

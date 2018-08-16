@@ -1132,6 +1132,15 @@ operator|.
 name|getParameters
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|parameters
+operator|==
+literal|null
+condition|)
+return|return
+literal|false
+return|;
 name|String
 name|tableIsTransactional
 init|=
