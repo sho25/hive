@@ -301,6 +301,17 @@ literal|"initSchemaTo"
 argument_list|)
 decl_stmt|;
 name|Option
+name|initOrUpgradeSchemaOpt
+init|=
+operator|new
+name|Option
+argument_list|(
+literal|"initOrUpgradeSchema"
+argument_list|,
+literal|"Initialize or upgrade schema to latest version"
+argument_list|)
+decl_stmt|;
+name|Option
 name|validateOpt
 init|=
 operator|new
@@ -439,6 +450,11 @@ operator|.
 name|addOption
 argument_list|(
 name|initToOpt
+argument_list|)
+operator|.
+name|addOption
+argument_list|(
+name|initOrUpgradeSchemaOpt
 argument_list|)
 operator|.
 name|addOption
