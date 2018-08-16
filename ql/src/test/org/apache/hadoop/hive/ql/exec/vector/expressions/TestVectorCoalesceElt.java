@@ -641,20 +641,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|io
-operator|.
-name|IntWritable
-import|;
-end_import
-
-begin_import
-import|import
 name|junit
 operator|.
 name|framework
@@ -706,34 +692,9 @@ argument_list|(
 literal|5371
 argument_list|)
 decl_stmt|;
-comment|// Grind through a few more index values...
-name|int
-name|iteration
-init|=
-literal|0
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-literal|10
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|iteration
-operator|=
 name|doCoalesceElt
 argument_list|(
 name|random
-argument_list|,
-name|iteration
 argument_list|,
 comment|/* isCoalesce */
 literal|true
@@ -741,7 +702,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Test
@@ -762,11 +722,6 @@ literal|5371
 argument_list|)
 decl_stmt|;
 comment|// Grind through a few more index values...
-name|int
-name|iteration
-init|=
-literal|0
-decl_stmt|;
 for|for
 control|(
 name|int
@@ -776,19 +731,15 @@ literal|0
 init|;
 name|i
 operator|<
-literal|10
+literal|4
 condition|;
 name|i
 operator|++
 control|)
 block|{
-name|iteration
-operator|=
 name|doCoalesceElt
 argument_list|(
 name|random
-argument_list|,
-name|iteration
 argument_list|,
 comment|/* isCoalesce */
 literal|false
@@ -796,13 +747,9 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-name|iteration
-operator|=
 name|doCoalesceElt
 argument_list|(
 name|random
-argument_list|,
-name|iteration
 argument_list|,
 comment|/* isCoalesce */
 literal|false
@@ -834,14 +781,11 @@ name|length
 decl_stmt|;
 block|}
 specifier|private
-name|int
+name|void
 name|doCoalesceElt
 parameter_list|(
 name|Random
 name|random
-parameter_list|,
-name|int
-name|iteration
 parameter_list|,
 name|boolean
 name|isCoalesce
@@ -856,9 +800,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -879,9 +820,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -904,9 +842,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -928,9 +863,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -956,9 +888,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -988,9 +917,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -1017,9 +943,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -1049,9 +972,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -1079,9 +999,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -1114,9 +1031,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -1151,9 +1065,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -1176,9 +1087,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -1199,9 +1107,6 @@ expr_stmt|;
 name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
-argument_list|,
-name|iteration
-operator|++
 argument_list|,
 name|isCoalesce
 argument_list|,
@@ -1241,9 +1146,6 @@ name|doCoalesceOnRandomDataType
 argument_list|(
 name|random
 argument_list|,
-name|iteration
-operator|++
-argument_list|,
 name|isCoalesce
 argument_list|,
 name|isEltIndexConst
@@ -1278,9 +1180,6 @@ comment|/* allowNulls */
 literal|false
 argument_list|)
 expr_stmt|;
-return|return
-name|iteration
-return|;
 block|}
 specifier|private
 name|boolean
@@ -1347,9 +1246,6 @@ name|doCoalesceOnRandomDataType
 parameter_list|(
 name|Random
 name|random
-parameter_list|,
-name|int
-name|iteration
 parameter_list|,
 name|boolean
 name|isCoalesce
@@ -1590,11 +1486,7 @@ name|intValueList
 operator|.
 name|add
 argument_list|(
-operator|new
-name|IntWritable
-argument_list|(
 name|i
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -1608,7 +1500,7 @@ name|size
 argument_list|()
 decl_stmt|;
 name|ExprNodeDesc
-name|intColExpr
+name|colExpr
 decl_stmt|;
 if|if
 condition|(
@@ -1654,7 +1546,7 @@ argument_list|(
 name|columnName
 argument_list|)
 expr_stmt|;
-name|intColExpr
+name|colExpr
 operator|=
 operator|new
 name|ExprNodeColumnDesc
@@ -1709,7 +1601,7 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-name|intColExpr
+name|colExpr
 operator|=
 operator|new
 name|ExprNodeConstantDesc
@@ -1720,13 +1612,6 @@ name|scalarObject
 argument_list|)
 expr_stmt|;
 block|}
-name|children
-operator|.
-name|add
-argument_list|(
-name|intColExpr
-argument_list|)
-expr_stmt|;
 block|}
 for|for
 control|(
@@ -1886,9 +1771,6 @@ literal|0
 argument_list|,
 comment|/* allowNull */
 name|allowNulls
-argument_list|,
-comment|/* isUnicodeOk */
-literal|true
 argument_list|,
 name|explicitDataTypePhysicalVariationList
 argument_list|)
@@ -2175,8 +2057,6 @@ name|doVectorCastTest
 argument_list|(
 name|typeInfo
 argument_list|,
-name|iteration
-argument_list|,
 name|columns
 argument_list|,
 name|columnNames
@@ -2333,10 +2213,6 @@ literal|" "
 operator|+
 name|coalesceEltTestMode
 operator|+
-literal|" iteration "
-operator|+
-name|iteration
-operator|+
 literal|" result is NULL "
 operator|+
 operator|(
@@ -2363,15 +2239,13 @@ literal|null
 condition|?
 literal|"YES"
 else|:
-literal|"NO result '"
+literal|"NO result "
 operator|+
 name|expectedResult
 operator|.
 name|toString
 argument_list|()
 operator|)
-operator|+
-literal|"'"
 operator|+
 literal|" row values "
 operator|+
@@ -2424,18 +2298,12 @@ literal|" "
 operator|+
 name|coalesceEltTestMode
 operator|+
-literal|" iteration "
-operator|+
-name|iteration
-operator|+
-literal|" result '"
+literal|" result "
 operator|+
 name|vectorResult
 operator|.
 name|toString
 argument_list|()
-operator|+
-literal|"'"
 operator|+
 literal|" ("
 operator|+
@@ -2449,14 +2317,12 @@ argument_list|()
 operator|+
 literal|")"
 operator|+
-literal|" does not match row-mode expected result '"
+literal|" does not match row-mode expected result "
 operator|+
 name|expectedResult
 operator|.
 name|toString
 argument_list|()
-operator|+
-literal|"'"
 operator|+
 literal|" ("
 operator|+
@@ -2770,9 +2636,6 @@ parameter_list|(
 name|TypeInfo
 name|typeInfo
 parameter_list|,
-name|int
-name|iteration
-parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -2939,7 +2802,23 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"*VECTOR EXPRESSION* "
+operator|+
+name|vectorExpression
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " coalesceEltTestMode " + coalesceEltTestMode +         " vectorExpression " + vectorExpression.toString());     */
 name|VectorRandomRowSource
 name|rowSource
@@ -3037,6 +2916,8 @@ index|[
 literal|1
 index|]
 decl_stmt|;
+comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
+comment|/*     System.out.println(         "*DEBUG* typeInfo1 " + typeInfo1.toString() +         " typeInfo2 " + typeInfo2.toString() +         " arithmeticTestMode " + arithmeticTestMode +         " columnScalarMode " + columnScalarMode +         " vectorExpression " + vectorExpression.toString());     */
 name|batchSource
 operator|.
 name|resetBatchIteration

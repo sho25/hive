@@ -2803,9 +2803,6 @@ argument_list|,
 comment|/* allowNull */
 literal|true
 argument_list|,
-comment|/* isUnicodeOk */
-literal|true
-argument_list|,
 name|explicitDataTypePhysicalVariationList
 argument_list|)
 expr_stmt|;
@@ -3469,9 +3466,6 @@ argument_list|,
 comment|/* allowNull */
 literal|true
 argument_list|,
-comment|/* isUnicodeOk */
-literal|true
-argument_list|,
 name|structExplicitDataTypePhysicalVariationList
 argument_list|)
 expr_stmt|;
@@ -3600,9 +3594,6 @@ comment|/* maxComplexDepth */
 literal|0
 argument_list|,
 comment|/* allowNull */
-literal|true
-argument_list|,
-comment|/* isUnicodeOk */
 literal|true
 argument_list|,
 name|explicitDataTypePhysicalVariationList
@@ -4327,7 +4318,7 @@ case|:
 if|if
 condition|(
 operator|!
-name|doVectorBetweenInTest
+name|doVectorCastTest
 argument_list|(
 name|typeInfo
 argument_list|,
@@ -5016,7 +5007,7 @@ block|}
 block|}
 specifier|private
 name|boolean
-name|doVectorBetweenInTest
+name|doVectorCastTest
 parameter_list|(
 name|TypeInfo
 name|typeInfo
@@ -5182,18 +5173,7 @@ operator|==
 name|BetweenInTestMode
 operator|.
 name|VECTOR_EXPRESSION
-condition|)
-block|{
-name|String
-name|vecExprString
-init|=
-name|vectorExpression
-operator|.
-name|toString
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
+operator|&&
 name|vectorExpression
 operator|instanceof
 name|VectorUDFAdaptor
@@ -5222,74 +5202,12 @@ name|betweenInVariation
 operator|+
 literal|" vectorExpression "
 operator|+
-name|vecExprString
-argument_list|)
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-name|dataTypePhysicalVariations
-index|[
-literal|0
-index|]
-operator|==
-name|DataTypePhysicalVariation
-operator|.
-name|DECIMAL_64
-condition|)
-block|{
-specifier|final
-name|String
-name|nameToCheck
-init|=
 name|vectorExpression
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getSimpleName
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-operator|!
-name|nameToCheck
-operator|.
-name|contains
-argument_list|(
-literal|"Decimal64"
-argument_list|)
-condition|)
-block|{
-name|System
-operator|.
-name|out
-operator|.
-name|println
-argument_list|(
-literal|"*EXPECTED DECIMAL_64 VECTOR EXPRESSION* typeInfo "
-operator|+
-name|typeInfo
 operator|.
 name|toString
 argument_list|()
-operator|+
-literal|" betweenInTestMode "
-operator|+
-name|betweenInTestMode
-operator|+
-literal|" betweenInVariation "
-operator|+
-name|betweenInVariation
-operator|+
-literal|" vectorExpression "
-operator|+
-name|vecExprString
 argument_list|)
 expr_stmt|;
-block|}
-block|}
 block|}
 comment|// System.out.println("*VECTOR EXPRESSION* " + vectorExpression.getClass().getSimpleName());
 comment|/*     System.out.println(         "*DEBUG* typeInfo " + typeInfo.toString() +         " betweenInTestMode " + betweenInTestMode +         " betweenInVariation " + betweenInVariation +         " vectorExpression " + vectorExpression.toString());     */

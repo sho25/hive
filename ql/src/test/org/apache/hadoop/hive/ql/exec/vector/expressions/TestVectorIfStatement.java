@@ -1574,9 +1574,6 @@ argument_list|,
 comment|/* allowNull */
 literal|true
 argument_list|,
-comment|/* isUnicodeOk */
-literal|true
-argument_list|,
 name|explicitDataTypePhysicalVariationList
 argument_list|)
 expr_stmt|;

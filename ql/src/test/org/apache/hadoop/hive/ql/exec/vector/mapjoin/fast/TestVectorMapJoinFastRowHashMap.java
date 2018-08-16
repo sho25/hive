@@ -1003,10 +1003,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1126,10 +1122,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1243,10 +1235,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1360,10 +1348,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1479,10 +1463,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1598,10 +1578,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1725,10 +1701,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1848,10 +1820,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -1965,10 +1933,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2082,10 +2046,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2203,10 +2163,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2322,10 +2278,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2447,10 +2399,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2570,10 +2518,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2687,10 +2631,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2804,10 +2744,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2927,10 +2863,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3044,10 +2976,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3169,10 +3097,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3292,10 +3216,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3409,10 +3329,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3526,10 +3442,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3645,10 +3557,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -3766,10 +3674,6 @@ name|ALL
 argument_list|,
 literal|4
 argument_list|,
-comment|/* allowNulls */
-literal|false
-argument_list|,
-comment|/* isUnicodeOk */
 literal|false
 argument_list|)
 expr_stmt|;

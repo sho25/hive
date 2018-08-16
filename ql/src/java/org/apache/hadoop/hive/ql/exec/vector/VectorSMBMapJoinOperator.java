@@ -757,7 +757,7 @@ name|VectorExpressionWriterFactory
 operator|.
 name|getExpressionWriters
 argument_list|(
-name|keyExpressions
+name|keyDesc
 argument_list|)
 expr_stmt|;
 name|Map
