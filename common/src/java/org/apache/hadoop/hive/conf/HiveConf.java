@@ -2747,7 +2747,7 @@ return|return
 name|llapDaemonVarsSet
 return|;
 block|}
-comment|/**    * ConfVars.    *    * These are the default configuration properties for Hive. Each HiveConf    * object is initialized as follows:    *    * 1) Hadoop configuration properties are applied.    * 2) ConfVar properties with non-null values are overlayed.    * 3) hive-site.xml properties are overlayed.    *    * WARNING: think twice before adding any Hadoop configuration properties    * with non-null values to this list as they will override any values defined    * in the underlying Hadoop configuration.    */
+comment|/**    * ConfVars.    *    * These are the default configuration properties for Hive. Each HiveConf    * object is initialized as follows:    *    * 1) Hadoop configuration properties are applied.    * 2) ConfVar properties with non-null values are overlayed.    * 3) hive-site.xml properties are overlayed.    * 4) System Properties and Manual Overrides are overlayed.    *    * WARNING: think twice before adding any Hadoop configuration properties    * with non-null values to this list as they will override any values defined    * in the underlying Hadoop configuration.    */
 specifier|public
 specifier|static
 enum|enum
@@ -21214,7 +21214,7 @@ name|hiveServer2SiteUrl
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Overlay the values of any system properties whose names appear in the list of ConfVars
+comment|// Overlay the values of any system properties and manual overrides
 name|applySystemProperties
 argument_list|()
 expr_stmt|;
@@ -22331,6 +22331,28 @@ block|,
 literal|"tez\\.queue\\.name"
 block|,    }
 decl_stmt|;
+comment|//Take care of conf overrides.
+comment|//Includes values in ConfVars as well as underlying configuration properties (ie, hadoop)
+specifier|public
+specifier|static
+specifier|final
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|overrides
+init|=
+operator|new
+name|HashMap
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|()
+decl_stmt|;
 comment|/**    * Apply system properties to this object if the property name is defined in ConfVars    * and the value is non-null and not an empty string.    */
 specifier|private
 name|void
@@ -22468,6 +22490,75 @@ name|oneVar
 operator|.
 name|varname
 argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|oneVar
+range|:
+name|overrides
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+name|overrides
+operator|.
+name|get
+argument_list|(
+name|oneVar
+operator|.
+name|getKey
+argument_list|()
+argument_list|)
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|overrides
+operator|.
+name|get
+argument_list|(
+name|oneVar
+operator|.
+name|getKey
+argument_list|()
+argument_list|)
+operator|.
+name|length
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|systemProperties
+operator|.
+name|put
+argument_list|(
+name|oneVar
+operator|.
+name|getKey
+argument_list|()
+argument_list|,
+name|oneVar
+operator|.
+name|getValue
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

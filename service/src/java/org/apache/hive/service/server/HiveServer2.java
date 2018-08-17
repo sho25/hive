@@ -7572,9 +7572,11 @@ literal|" (see HIVE-19886)"
 argument_list|)
 throw|;
 block|}
-name|System
+name|HiveConf
 operator|.
-name|setProperty
+name|overrides
+operator|.
+name|put
 argument_list|(
 name|propKey
 argument_list|,
