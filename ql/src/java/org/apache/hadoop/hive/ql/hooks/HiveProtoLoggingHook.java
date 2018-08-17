@@ -4191,7 +4191,10 @@ comment|// analyzer
 name|config
 argument_list|,
 comment|// explainConfig
-literal|null
+name|plan
+operator|.
+name|getCboInfo
+argument_list|()
 argument_list|,
 comment|// cboInfo,
 name|plan

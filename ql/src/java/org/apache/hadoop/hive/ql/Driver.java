@@ -6284,6 +6284,11 @@ literal|true
 argument_list|,
 literal|true
 argument_list|,
+name|sem
+operator|.
+name|getCboInfo
+argument_list|()
+argument_list|,
 name|plan
 operator|.
 name|getOptimizedQueryString

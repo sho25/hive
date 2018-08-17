@@ -1606,6 +1606,8 @@ literal|false
 argument_list|,
 literal|false
 argument_list|,
+literal|"Plan Optimized by CBO"
+argument_list|,
 literal|null
 argument_list|)
 operator|.
@@ -1620,7 +1622,7 @@ name|objectMapper
 operator|.
 name|readTree
 argument_list|(
-literal|"{\"STAGE DEPENDENCIES\":{\"mockTaskId\":"
+literal|"{\"cboInfo\":\"Plan Optimized by CBO\", \"STAGE DEPENDENCIES\":{\"mockTaskId\":"
 operator|+
 literal|"{\"ROOT STAGE\":\"TRUE\",\"BACKUP STAGE\":\"backup-id-mock\"}},\"STAGE PLANS\":"
 operator|+
