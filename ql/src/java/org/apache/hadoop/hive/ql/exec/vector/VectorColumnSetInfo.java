@@ -121,43 +121,43 @@ block|{
 comment|// For simpler access, we make these members protected instead of
 comment|// providing get methods.
 comment|/**    * indices of LONG primitive keys.    */
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|longIndices
 decl_stmt|;
 comment|/**    * indices of DOUBLE primitive keys.    */
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|doubleIndices
 decl_stmt|;
 comment|/**    * indices of string (byte[]) primitive keys.    */
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|stringIndices
 decl_stmt|;
 comment|/**    * indices of decimal primitive keys.    */
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|decimalIndices
 decl_stmt|;
 comment|/**    * indices of TIMESTAMP primitive keys.    */
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|timestampIndices
 decl_stmt|;
 comment|/**    * indices of INTERVAL_DAY_TIME primitive keys.    */
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|intervalDayTimeIndices
 decl_stmt|;
 specifier|final
-specifier|protected
+specifier|public
 name|int
 name|keyCount
 decl_stmt|;
@@ -192,19 +192,19 @@ decl_stmt|;
 comment|// Given the keyIndex these arrays return:
 comment|//   The ColumnVector.Type,
 comment|//   The type specific index into longIndices, doubleIndices, etc...
-specifier|protected
+specifier|public
 name|TypeInfo
 index|[]
 name|typeInfos
 decl_stmt|;
-specifier|protected
+specifier|public
 name|ColumnVector
 operator|.
 name|Type
 index|[]
 name|columnVectorTypes
 decl_stmt|;
-specifier|protected
+specifier|public
 name|int
 index|[]
 name|columnTypeSpecificIndices

@@ -421,6 +421,50 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|wrapper
+operator|.
+name|VectorHashKeyWrapperBase
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|wrapper
+operator|.
+name|VectorHashKeyWrapperBatch
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -1958,7 +2002,7 @@ condition|)
 block|{
 comment|// in case the empty grouping set is preset; but no output has done
 comment|// the "summary row" still needs to be emitted
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 name|kw
 init|=
 name|keyWrappersBatch
@@ -2058,7 +2102,7 @@ return|return;
 block|}
 comment|// We now have to probe the global hash and find-or-allocate
 comment|// the aggregation buffers to use for each key present in the batch
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 index|[]
 name|keyWrappers
 init|=
@@ -2099,7 +2143,7 @@ operator|++
 name|i
 control|)
 block|{
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 name|kw
 init|=
 name|keyWrappers
@@ -2437,7 +2481,7 @@ decl_stmt|;
 name|writeSingleRow
 argument_list|(
 operator|(
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 operator|)
 name|pair
 operator|.
@@ -2751,18 +2795,18 @@ name|currentStreamingAggregators
 decl_stmt|;
 comment|/**      * The current key, used in streaming mode      */
 specifier|private
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 name|streamingKey
 decl_stmt|;
 comment|/**      * The keys that needs to be flushed at the end of the current batch      */
 specifier|private
 specifier|final
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 index|[]
 name|keysToFlush
 init|=
 operator|new
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 index|[
 name|VectorizedRowBatch
 operator|.
@@ -2961,7 +3005,7 @@ name|currentGroupingSetsOverrideIsNulls
 argument_list|)
 expr_stmt|;
 block|}
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 index|[]
 name|batchKeys
 init|=
@@ -2971,7 +3015,7 @@ name|getVectorHashKeyWrappers
 argument_list|()
 decl_stmt|;
 specifier|final
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 name|prevKey
 init|=
 name|streamingKey
@@ -3155,7 +3199,7 @@ block|{
 name|streamingKey
 operator|=
 operator|(
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 operator|)
 name|streamingKey
 operator|.
@@ -4634,7 +4678,7 @@ specifier|private
 name|void
 name|writeSingleRow
 parameter_list|(
-name|VectorHashKeyWrapper
+name|VectorHashKeyWrapperBase
 name|kw
 parameter_list|,
 name|VectorAggregationBufferRow
