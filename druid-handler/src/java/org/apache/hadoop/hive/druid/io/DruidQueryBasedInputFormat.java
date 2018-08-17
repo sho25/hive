@@ -889,7 +889,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"deprecation"
 argument_list|)
-specifier|private
+specifier|protected
 name|HiveDruidSplit
 index|[]
 name|getInputSplits
@@ -1653,6 +1653,8 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
+operator|+
+literal|1
 index|]
 decl_stmt|;
 for|for
@@ -1695,6 +1697,20 @@ name|getHost
 argument_list|()
 expr_stmt|;
 block|}
+comment|// Default to broker if all other hosts fail.
+name|hosts
+index|[
+name|locatedSD
+operator|.
+name|getLocations
+argument_list|()
+operator|.
+name|size
+argument_list|()
+index|]
+operator|=
+name|address
+expr_stmt|;
 comment|// Create partial Select query
 specifier|final
 name|SegmentDescriptor
