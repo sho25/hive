@@ -1329,6 +1329,7 @@ block|{
 comment|// expected error
 block|}
 comment|/**      * Execute a malformed async query with default config,      * to give a runtime time error.      * Also check that the sqlState and errorCode should be set      */
+comment|// TODO: this is brittle.. anything that touches this path during compile will break this test
 name|queryString
 operator|=
 literal|"CREATE TABLE NON_EXISTING_TAB (ID STRING) location 'invalid://localhost:10000/a/b/c'"
