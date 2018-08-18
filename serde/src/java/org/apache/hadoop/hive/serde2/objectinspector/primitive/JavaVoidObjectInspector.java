@@ -88,6 +88,12 @@ name|o
 parameter_list|)
 block|{
 return|return
+name|o
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|NullWritable
 operator|.
 name|get
