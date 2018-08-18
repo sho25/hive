@@ -1020,7 +1020,7 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"insert into "
+literal|"insert overwrite table "
 operator|+
 name|Table
 operator|.
