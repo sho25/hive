@@ -1756,6 +1756,7 @@ block|{
 try|try
 block|{
 comment|//so that "explain" doesn't "leak" tmp tables
+comment|// TODO: catalog
 name|db
 operator|.
 name|dropTable

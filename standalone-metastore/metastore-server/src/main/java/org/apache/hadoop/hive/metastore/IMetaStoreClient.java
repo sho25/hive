@@ -2449,6 +2449,9 @@ throws|,
 name|NoSuchObjectException
 function_decl|;
 comment|/**    * Drop the table.    *    * @param dbname    *          The database for this table    * @param tableName    *          The table to drop    * @param deleteData    *          Should we delete the underlying data    * @param ignoreUnknownTab    *          don't throw if the requested table doesn't exist    * @param ifPurge    *          completely purge the table (skipping trash) while removing data from warehouse    * @throws MetaException    *           Could not drop table properly.    * @throws NoSuchObjectException    *           The table wasn't found.    * @throws TException    *           A thrift communication error occurred    */
+annotation|@
+name|Deprecated
+comment|// TODO: deprecate all methods without a catalog here; a single layer (e.g. Hive.java) should handle current-catalog
 name|void
 name|dropTable
 parameter_list|(
@@ -5199,6 +5202,9 @@ function_decl|;
 name|void
 name|alter_partition
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
 name|String
 name|dbName
 parameter_list|,

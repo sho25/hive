@@ -17846,6 +17846,9 @@ name|void
 name|alter_partition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String

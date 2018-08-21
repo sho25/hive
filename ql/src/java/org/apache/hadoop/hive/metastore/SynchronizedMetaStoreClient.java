@@ -498,6 +498,9 @@ name|void
 name|alter_partition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -519,6 +522,8 @@ name|client
 operator|.
 name|alter_partition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName

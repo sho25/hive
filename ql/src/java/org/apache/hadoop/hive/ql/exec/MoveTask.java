@@ -5247,6 +5247,11 @@ name|alterPartition
 argument_list|(
 name|table
 operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|table
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,

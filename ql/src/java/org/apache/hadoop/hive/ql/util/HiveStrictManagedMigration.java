@@ -5220,6 +5220,11 @@ name|hive
 operator|.
 name|alterPartition
 argument_list|(
+name|table
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
 name|dbName
 argument_list|,
 name|table

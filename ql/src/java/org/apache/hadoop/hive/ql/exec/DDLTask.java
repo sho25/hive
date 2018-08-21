@@ -10768,6 +10768,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// TODO: catalog
 name|Table
 name|tbl
 init|=
@@ -10894,7 +10895,17 @@ name|db
 operator|.
 name|alterPartition
 argument_list|(
-name|touchDesc
+name|tbl
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
 operator|.
 name|getTableName
 argument_list|()
@@ -12688,6 +12699,7 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO: catalog
 name|db
 operator|.
 name|alterPartition
@@ -13714,6 +13726,7 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+comment|// TODO: catalog
 name|db
 operator|.
 name|alterPartition
@@ -30438,6 +30451,7 @@ comment|// table is newer, leave it be.
 block|}
 block|}
 comment|// drop the table
+comment|// TODO: API w/catalog name
 name|db
 operator|.
 name|dropTable

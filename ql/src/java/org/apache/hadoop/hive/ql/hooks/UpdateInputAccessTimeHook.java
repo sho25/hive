@@ -384,6 +384,8 @@ name|db
 operator|.
 name|alterPartition
 argument_list|(
+literal|null
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName

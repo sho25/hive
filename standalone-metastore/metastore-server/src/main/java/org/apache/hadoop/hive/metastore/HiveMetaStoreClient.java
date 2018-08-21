@@ -11877,6 +11877,9 @@ name|void
 name|alter_partition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -11916,6 +11919,13 @@ name|newPart
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|req
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|req
 operator|.
 name|setEnvironmentContext

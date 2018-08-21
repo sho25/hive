@@ -4028,6 +4028,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+annotation|@
+name|Deprecated
 specifier|public
 name|void
 name|alterPartition
@@ -4062,6 +4064,8 @@ argument_list|)
 decl_stmt|;
 name|alterPartition
 argument_list|(
+literal|null
+argument_list|,
 name|names
 index|[
 literal|0
@@ -4086,6 +4090,9 @@ name|void
 name|alterPartition
 parameter_list|(
 name|String
+name|catName
+parameter_list|,
+name|String
 name|dbName
 parameter_list|,
 name|String
@@ -4107,6 +4114,21 @@ name|HiveException
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|catName
+operator|==
+literal|null
+condition|)
+block|{
+name|catName
+operator|=
+name|getDefaultCatalog
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+block|}
 name|validatePartition
 argument_list|(
 name|newPart
@@ -4231,6 +4253,8 @@ argument_list|()
 operator|.
 name|alter_partition
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tblName
@@ -4957,6 +4981,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+comment|// TODO: this whole path won't work with catalogs
 specifier|public
 name|void
 name|alterDatabase
@@ -5073,6 +5098,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: from here down dozens of methods do not support catalog. I got tired marking them.
 comment|/**    * Creates the table with the given objects. It takes additional arguments for    * primary keys and foreign keys associated with the table.    *    * @param tbl    *          a table object    * @param ifNotExists    *          if true, ignore AlreadyExistsException    * @param primaryKeys    *          primary key columns associated with the table    * @param foreignKeys    *          foreign key columns associated with the table    * @param uniqueConstraints    *          UNIQUE constraints associated with the table    * @param notNullConstraints    *          NOT NULL constraints associated with the table    * @param defaultConstraints    *          DEFAULT constraints associated with the table    * @param checkConstraints    *          CHECK constraints associated with the table    * @throws HiveException    */
 specifier|public
 name|void
@@ -5857,7 +5883,6 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
-comment|// TODO: we should refactor code to make sure snapshot is always obtained in the same layer e.g. Hive.java
 name|AcidUtils
 operator|.
 name|TableSnapshot
@@ -5889,6 +5914,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+comment|// TODO: APIs with catalog names
 name|List
 argument_list|<
 name|String
@@ -6094,6 +6120,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// TODO: catalog... etc everywhere
 if|if
 condition|(
 name|tableName
@@ -10869,6 +10896,11 @@ name|alter_partition
 argument_list|(
 name|tbl
 operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
 name|getDbName
 argument_list|()
 argument_list|,
@@ -13560,6 +13592,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+comment|// TODO: catalog name everywhere in this method
 name|Table
 name|tbl
 init|=
@@ -15095,7 +15128,20 @@ expr_stmt|;
 block|}
 name|alterPartition
 argument_list|(
-name|fullName
+name|tbl
+operator|.
+name|getCatalogName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
 argument_list|,
 operator|new
 name|Partition
