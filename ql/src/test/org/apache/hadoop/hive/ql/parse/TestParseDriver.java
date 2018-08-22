@@ -37,11 +37,40 @@ name|org
 operator|.
 name|junit
 operator|.
+name|FixMethodOrder
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|runners
+operator|.
+name|MethodSorters
+import|;
+end_import
+
 begin_class
+annotation|@
+name|FixMethodOrder
+argument_list|(
+name|MethodSorters
+operator|.
+name|NAME_ASCENDING
+argument_list|)
 specifier|public
 class|class
 name|TestParseDriver
@@ -53,6 +82,24 @@ operator|new
 name|ParseDriver
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Test
+specifier|public
+name|void
+name|atFirstWarmup
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// this test method is here to do an initial call to parsedriver; and prevent any tests with timeouts to be the first.
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"select 1"
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Test
 specifier|public
@@ -1187,6 +1234,204 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|timeout
+operator|=
+literal|1000
+argument_list|)
+specifier|public
+name|void
+name|testNestedFunctionCalls
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// Expectation here is not to run into a timeout
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"select greatest(1,greatest(1,greatest(1,greatest(1,greatest(1,greatest(1,greatest(1,"
+operator|+
+literal|"greatest(1,greatest(1,greatest(1,greatest(1,greatest(1,greatest(1,greatest(1,"
+operator|+
+literal|"greatest(1,greatest(1,(greatest(1,greatest(1,2)))))))))))))))))))"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|timeout
+operator|=
+literal|1000
+argument_list|)
+specifier|public
+name|void
+name|testHIVE18624
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+comment|// Expectation here is not to run into a timeout
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"EXPLAIN\n"
+operator|+
+literal|"SELECT DISTINCT\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  IF(lower('a')<= lower('a')\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF(('a' IS NULL AND from_unixtime(UNIX_TIMESTAMP())<= 'a')\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF(if('a' = 'a', TRUE, FALSE) = 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF(('a' = 1 and lower('a') NOT IN ('a', 'a')\n"
+operator|+
+literal|"       and lower(if('a' = 'a','a','a'))<= lower('a'))\n"
+operator|+
+literal|"      OR ('a' like 'a' OR 'a' like 'a')\n"
+operator|+
+literal|"      OR 'a' in ('a','a')\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF(if(lower('a') in ('a', 'a') and 'a'='a', TRUE, FALSE) = 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a'='a' and unix_timestamp(if('a' = 'a',cast('a' as string),coalesce('a',cast('a' as string),from_unixtime(unix_timestamp()))))<= unix_timestamp(concat_ws('a',cast(lower('a') as string),'00:00:00')) + 9*3600\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,If(lower('a')<= lower('a')\n"
+operator|+
+literal|"      and if(lower('a') in ('a', 'a') and 'a'<>'a', TRUE, FALSE)<> 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a'=1 AND 'a'=1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 1 and COALESCE(cast('a' as int),0) = 0\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 'a'\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,If('a' = 'a' AND lower('a')>lower(if(lower('a')<1830,'a',cast(date_add('a',1) as timestamp)))\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,IF('a' = 1\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,IF('a' in ('a', 'a') and ((unix_timestamp('a')-unix_timestamp('a')) / 60)> 30 and 'a' = 1\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,'a', 'a')\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,IF(if('a' = 'a', FALSE, TRUE ) = 1 AND 'a' IS NULL\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 1 and 'a'>0\n"
+operator|+
+literal|"  , 'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,IF('a' = 1 AND 'a' ='a'\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' is not null and 'a' is not null and 'a'> 'a'\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,IF('a' = 'a'\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,If('a' = 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 1\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"\n"
+operator|+
+literal|"  ,IF('a' ='a' and 'a' ='a' and cast(unix_timestamp('a') as  int) + 93600< cast(unix_timestamp()  as int)\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 'a'\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 'a' and 'a' in ('a','a','a')\n"
+operator|+
+literal|"  ,'a'\n"
+operator|+
+literal|"  ,IF('a' = 'a'\n"
+operator|+
+literal|"  ,'a','a'))\n"
+operator|+
+literal|"      )))))))))))))))))))))))\n"
+operator|+
+literal|"AS test_comp_exp"
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 end_class
