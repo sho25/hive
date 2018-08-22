@@ -55465,8 +55465,6 @@ parameter_list|)
 throws|throws
 name|Throwable
 block|{
-try|try
-block|{
 name|isMetaStoreRemote
 operator|=
 literal|true
@@ -56186,7 +56184,7 @@ specifier|public
 name|void
 name|preServe
 parameter_list|()
-block|{         }
+block|{       }
 annotation|@
 name|Override
 specifier|public
@@ -56251,7 +56249,7 @@ parameter_list|,
 name|TTransport
 name|tTransport1
 parameter_list|)
-block|{         }
+block|{       }
 block|}
 decl_stmt|;
 name|tServer
@@ -56367,36 +56365,6 @@ operator|.
 name|serve
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Throwable
-name|x
-parameter_list|)
-block|{
-name|x
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
-name|HMSHandler
-operator|.
-name|LOG
-operator|.
-name|error
-argument_list|(
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|x
-argument_list|)
-argument_list|)
-expr_stmt|;
-throw|throw
-name|x
-throw|;
-block|}
 block|}
 end_function
 
