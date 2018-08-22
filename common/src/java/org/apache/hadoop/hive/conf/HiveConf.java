@@ -9191,7 +9191,7 @@ literal|"hive.txn.xlock.iow"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Ensures commands with OVERWRITE (such as INSERT OVERWRITE) acquire Exclusive locks for\b"
+literal|"Ensures commands with OVERWRITE (such as INSERT OVERWRITE) acquire Exclusive locks for\n"
 operator|+
 literal|"transactional tables.  This ensures that inserts (w/o overwrite) running concurrently\n"
 operator|+
