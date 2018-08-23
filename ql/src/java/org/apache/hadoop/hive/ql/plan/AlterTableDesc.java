@@ -532,6 +532,7 @@ argument_list|(
 literal|"rename partition"
 argument_list|)
 block|,
+comment|// Note: used in RenamePartitionDesc, not here.
 name|ADDSKEWEDBY
 argument_list|(
 literal|"add skew column"
@@ -552,6 +553,7 @@ argument_list|(
 literal|"alter partition"
 argument_list|)
 block|,
+comment|// Note: this is never used in AlterTableDesc.
 name|COMPACT
 argument_list|(
 literal|"compact"
@@ -591,7 +593,9 @@ name|UPDATESTATS
 argument_list|(
 literal|"update stats"
 argument_list|)
-block|;     ;
+block|;
+comment|// Note: used in ColumnStatsUpdateWork, not here.
+block|;
 specifier|private
 specifier|final
 name|String
@@ -3540,23 +3544,20 @@ comment|// These need write ID and stuff because they invalidate column stats.
 case|case
 name|RENAMECOLUMN
 case|:
-return|return
-literal|true
-return|;
 case|case
 name|RENAME
 case|:
-return|return
-literal|true
-return|;
 case|case
 name|REPLACECOLS
 case|:
-return|return
-literal|true
-return|;
 case|case
 name|ADDCOLS
+case|:
+case|case
+name|ALTERLOCATION
+case|:
+case|case
+name|UPDATECOLUMNS
 case|:
 return|return
 literal|true
