@@ -24162,7 +24162,7 @@ block|}
 block|}
 name|HashSet
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|committed
 init|=
@@ -24234,6 +24234,20 @@ argument_list|,
 name|nextFile
 argument_list|)
 expr_stmt|;
+name|Path
+name|path
+init|=
+name|fs
+operator|.
+name|makeQualified
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|nextFile
+argument_list|)
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -24241,7 +24255,7 @@ name|committed
 operator|.
 name|add
 argument_list|(
-name|nextFile
+name|path
 argument_list|)
 condition|)
 block|{
@@ -24583,7 +24597,7 @@ name|lbLevels
 parameter_list|,
 name|HashSet
 argument_list|<
-name|String
+name|Path
 argument_list|>
 name|committed
 parameter_list|)
@@ -24671,9 +24685,6 @@ operator|.
 name|contains
 argument_list|(
 name|childPath
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -24716,9 +24727,6 @@ operator|.
 name|remove
 argument_list|(
 name|childPath
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -24750,9 +24758,6 @@ operator|.
 name|contains
 argument_list|(
 name|childPath
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 condition|)
 block|{
