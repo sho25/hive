@@ -6309,6 +6309,8 @@ argument_list|(
 name|tTable
 argument_list|,
 name|partialPartVals
+argument_list|,
+literal|".*"
 argument_list|)
 decl_stmt|;
 name|List

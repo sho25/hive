@@ -1488,6 +1488,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
+parameter_list|,
+name|String
+name|defaultStr
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1567,7 +1570,7 @@ name|partCols
 argument_list|,
 name|partVals
 argument_list|,
-literal|".*"
+name|defaultStr
 argument_list|)
 decl_stmt|;
 comment|// add ".*" to the regex to match anything else afterwards the partial spec.
@@ -1583,7 +1586,7 @@ condition|)
 block|{
 name|partNameMatcher
 operator|+=
-literal|".*"
+name|defaultStr
 expr_stmt|;
 block|}
 return|return
