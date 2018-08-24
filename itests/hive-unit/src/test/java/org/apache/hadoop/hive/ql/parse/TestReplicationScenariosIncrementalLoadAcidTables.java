@@ -1212,7 +1212,17 @@ argument_list|,
 name|expectedValues
 argument_list|)
 expr_stmt|;
-comment|//appendLoadLocal(tableName, tableNameMM, selectStmtList, expectedValues);
+name|appendLoadLocal
+argument_list|(
+name|tableName
+argument_list|,
+name|tableNameMM
+argument_list|,
+name|selectStmtList
+argument_list|,
+name|expectedValues
+argument_list|)
+expr_stmt|;
 name|appendInsertUnion
 argument_list|(
 name|tableName
@@ -4388,7 +4398,118 @@ break|break;
 case|case
 name|REPL_TEST_ACID_INSERT_LOADLOCAL
 case|:
+comment|// For simplicity setting key and value as same value
+name|StringBuilder
+name|buf
+init|=
+operator|new
+name|StringBuilder
+argument_list|()
+decl_stmt|;
+name|boolean
+name|nextVal
+init|=
+literal|false
+decl_stmt|;
+for|for
+control|(
+name|String
+name|key
+range|:
+name|resultArray
+control|)
+block|{
+if|if
+condition|(
+name|nextVal
+condition|)
+block|{
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|','
+argument_list|)
+expr_stmt|;
+block|}
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|'('
+argument_list|)
+expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+name|key
+argument_list|)
+expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|','
+argument_list|)
+expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+name|key
+argument_list|)
+expr_stmt|;
+name|buf
+operator|.
+name|append
+argument_list|(
+literal|')'
+argument_list|)
+expr_stmt|;
+name|nextVal
+operator|=
+literal|true
+expr_stmt|;
+block|}
 name|primary
+operator|.
+name|run
+argument_list|(
+literal|"CREATE TABLE "
+operator|+
+name|tableNameOp
+operator|+
+literal|"_temp (key int, value int) STORED AS ORC"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"INSERT INTO TABLE "
+operator|+
+name|tableNameOp
+operator|+
+literal|"_temp VALUES "
+operator|+
+name|buf
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"SELECT key FROM "
+operator|+
+name|tableNameOp
+operator|+
+literal|"_temp"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+name|resultArray
+argument_list|)
 operator|.
 name|run
 argument_list|(
@@ -4421,16 +4542,16 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"INSERT OVERWRITE LOCAL DIRECTORY './test.dat' SELECT a.* FROM "
+literal|"INSERT OVERWRITE LOCAL DIRECTORY './test.dat' STORED AS ORC SELECT * FROM "
 operator|+
-name|tableName
+name|tableNameOp
 operator|+
-literal|" a"
+literal|"_temp"
 argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"LOAD DATA LOCAL INPATH './test.dat' OVERWRITE INTO TABLE "
+literal|"LOAD DATA LOCAL INPATH './test.dat/000000_0' OVERWRITE INTO TABLE "
 operator|+
 name|tableNameOp
 operator|+
@@ -4470,7 +4591,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"LOAD DATA LOCAL INPATH './test.dat' OVERWRITE INTO TABLE "
+literal|"LOAD DATA LOCAL INPATH './test.dat/000000_0' OVERWRITE INTO TABLE "
 operator|+
 name|tableNameOp
 operator|+
