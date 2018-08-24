@@ -709,6 +709,7 @@ block|}
 block|}
 specifier|public
 specifier|static
+specifier|synchronized
 name|ReplChangeManager
 name|getInstance
 parameter_list|(
