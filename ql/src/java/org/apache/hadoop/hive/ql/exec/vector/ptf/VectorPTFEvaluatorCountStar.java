@@ -148,15 +148,14 @@ name|resetEvaluator
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|evaluateGroupBatch
 parameter_list|(
 name|VectorizedRowBatch
 name|batch
-parameter_list|,
-name|boolean
-name|isLastGroupBatch
 parameter_list|)
 block|{
 comment|// No input expression for COUNT(*).
@@ -168,6 +167,18 @@ name|batch
 operator|.
 name|size
 expr_stmt|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|streamsResult
+parameter_list|()
+block|{
+comment|// We must evaluate whole group before producing a result.
+return|return
+literal|false
+return|;
 block|}
 annotation|@
 name|Override

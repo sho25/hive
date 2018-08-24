@@ -186,15 +186,14 @@ name|resetEvaluator
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|evaluateGroupBatch
 parameter_list|(
 name|VectorizedRowBatch
 name|batch
-parameter_list|,
-name|boolean
-name|isLastGroupBatch
 parameter_list|)
 throws|throws
 name|HiveException
@@ -258,6 +257,8 @@ operator|++
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|streamsResult
@@ -268,6 +269,8 @@ return|return
 literal|true
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|isGroupResultNull

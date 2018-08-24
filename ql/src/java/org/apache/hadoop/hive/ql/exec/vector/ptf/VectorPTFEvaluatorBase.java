@@ -308,24 +308,27 @@ name|evaluateGroupBatch
 parameter_list|(
 name|VectorizedRowBatch
 name|batch
-parameter_list|,
-name|boolean
-name|isLastGroupBatch
 parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|// Returns true if the aggregation result will be streamed.
+comment|// Do any work necessary after the last batch for a group has been processed.  Necessary
+comment|// for both streaming and non-streaming evaluators..
 specifier|public
+name|void
+name|doLastBatchWork
+parameter_list|()
+block|{
+comment|// By default, do nothing.
+block|}
+comment|// Returns true if the aggregation result will be streamed.
+comment|// Otherwise, we must evaluate whole group before producing a result.
+specifier|public
+specifier|abstract
 name|boolean
 name|streamsResult
 parameter_list|()
-block|{
-comment|// Assume it is not streamjng by default.
-return|return
-literal|false
-return|;
-block|}
+function_decl|;
 specifier|public
 name|int
 name|getOutputColumnNum
@@ -342,9 +345,13 @@ name|boolean
 name|isGroupResultNull
 parameter_list|()
 block|{
-return|return
-literal|false
-return|;
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Not implemented"
+argument_list|)
+throw|;
 block|}
 comment|// What is the ColumnVector type of the aggregation result?
 specifier|public
