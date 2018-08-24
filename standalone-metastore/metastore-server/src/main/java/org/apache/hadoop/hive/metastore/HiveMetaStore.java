@@ -45427,9 +45427,7 @@ name|WriteNotificationLogRequest
 name|rqst
 parameter_list|)
 throws|throws
-name|MetaException
-throws|,
-name|NoSuchObjectException
+name|TException
 block|{
 name|Table
 name|tableObj
