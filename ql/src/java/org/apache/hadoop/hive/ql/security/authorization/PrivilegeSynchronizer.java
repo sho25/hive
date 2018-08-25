@@ -436,13 +436,13 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * PrivilegeSynchonizer defines a thread to synchronize privileges from  * external authorizer to Hive metastore.  */
+comment|/**  * PrivilegeSynchronizer defines a thread to synchronize privileges from  * external authorizer to Hive metastore.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|PrivilegeSynchonizer
+name|PrivilegeSynchronizer
 implements|implements
 name|Runnable
 block|{
@@ -456,7 +456,7 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|PrivilegeSynchonizer
+name|PrivilegeSynchronizer
 operator|.
 name|class
 argument_list|)
@@ -475,7 +475,7 @@ name|hiveClient
 decl_stmt|;
 specifier|private
 name|LeaderLatch
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 decl_stmt|;
 specifier|private
 name|HiveConf
@@ -486,10 +486,10 @@ name|PolicyProviderContainer
 name|policyProviderContainer
 decl_stmt|;
 specifier|public
-name|PrivilegeSynchonizer
+name|PrivilegeSynchronizer
 parameter_list|(
 name|LeaderLatch
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 parameter_list|,
 name|PolicyProviderContainer
 name|policyProviderContainer
@@ -566,9 +566,9 @@ throw|;
 block|}
 name|this
 operator|.
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 operator|=
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 expr_stmt|;
 name|this
 operator|.
@@ -1277,7 +1277,7 @@ decl_stmt|;
 if|if
 condition|(
 operator|!
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 operator|.
 name|await
 argument_list|(
@@ -1634,27 +1634,6 @@ literal|" tables"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Wait if no exception happens, otherwise, retry immediately
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Wait for "
-operator|+
-name|interval
-operator|+
-literal|" seconds"
-argument_list|)
-expr_stmt|;
-name|Thread
-operator|.
-name|sleep
-argument_list|(
-name|interval
-operator|*
-literal|1000
-argument_list|)
-expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -1676,6 +1655,37 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
+block|}
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Wait for "
+operator|+
+name|interval
+operator|+
+literal|" seconds"
+argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+name|interval
+operator|*
+literal|1000
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|InterruptedException
+name|e
+parameter_list|)
+block|{
+comment|// do nothing
 block|}
 block|}
 block|}

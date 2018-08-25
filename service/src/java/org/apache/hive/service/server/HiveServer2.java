@@ -951,7 +951,7 @@ name|security
 operator|.
 name|authorization
 operator|.
-name|PrivilegeSynchonizer
+name|PrivilegeSynchronizer
 import|;
 end_import
 
@@ -4888,7 +4888,7 @@ block|}
 block|}
 try|try
 block|{
-name|startPrivilegeSynchonizer
+name|startPrivilegeSynchronizer
 argument_list|(
 name|hiveConf
 argument_list|)
@@ -4904,7 +4904,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Error starting priviledge synchonizer: "
+literal|"Error starting priviledge synchronizer: "
 argument_list|,
 name|e
 argument_list|)
@@ -6221,7 +6221,7 @@ block|}
 block|}
 specifier|public
 name|void
-name|startPrivilegeSynchonizer
+name|startPrivilegeSynchronizer
 parameter_list|(
 name|HiveConf
 name|hiveConf
@@ -6435,7 +6435,7 @@ operator|+
 literal|"leader"
 decl_stmt|;
 name|LeaderLatch
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 init|=
 operator|new
 name|LeaderLatch
@@ -6445,7 +6445,7 @@ argument_list|,
 name|path
 argument_list|)
 decl_stmt|;
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 operator|.
 name|start
 argument_list|()
@@ -6461,29 +6461,29 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|" policy to synchronize, start PrivilegeSynchonizer"
+literal|" policy to synchronize, start PrivilegeSynchronizer"
 argument_list|)
 expr_stmt|;
 name|Thread
-name|privilegeSynchonizerThread
+name|privilegeSynchronizerThread
 init|=
 operator|new
 name|Thread
 argument_list|(
 operator|new
-name|PrivilegeSynchonizer
+name|PrivilegeSynchronizer
 argument_list|(
-name|privilegeSynchonizerLatch
+name|privilegeSynchronizerLatch
 argument_list|,
 name|policyContainer
 argument_list|,
 name|hiveConf
 argument_list|)
 argument_list|,
-literal|"PrivilegeSynchonizer"
+literal|"PrivilegeSynchronizer"
 argument_list|)
 decl_stmt|;
-name|privilegeSynchonizerThread
+name|privilegeSynchronizerThread
 operator|.
 name|start
 argument_list|()
@@ -6495,7 +6495,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"No policy provider found, skip creating PrivilegeSynchonizer"
+literal|"No policy provider found, skip creating PrivilegeSynchronizer"
 argument_list|)
 expr_stmt|;
 block|}
