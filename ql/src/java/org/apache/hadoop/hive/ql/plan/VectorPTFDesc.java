@@ -1363,8 +1363,6 @@ name|VectorPTFEvaluatorRank
 argument_list|(
 name|windowFrameDef
 argument_list|,
-name|inputVectorExpression
-argument_list|,
 name|outputColumnNum
 argument_list|)
 expr_stmt|;
@@ -1378,8 +1376,6 @@ operator|new
 name|VectorPTFEvaluatorDenseRank
 argument_list|(
 name|windowFrameDef
-argument_list|,
-name|inputVectorExpression
 argument_list|,
 name|outputColumnNum
 argument_list|)

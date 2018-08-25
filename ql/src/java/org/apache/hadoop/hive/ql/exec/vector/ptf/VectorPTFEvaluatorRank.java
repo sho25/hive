@@ -97,28 +97,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
-operator|.
-name|vector
-operator|.
-name|expressions
-operator|.
-name|VectorExpression
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -170,9 +148,6 @@ parameter_list|(
 name|WindowFrameDef
 name|windowFrameDef
 parameter_list|,
-name|VectorExpression
-name|inputVecExpr
-parameter_list|,
 name|int
 name|outputColumnNum
 parameter_list|)
@@ -180,8 +155,6 @@ block|{
 name|super
 argument_list|(
 name|windowFrameDef
-argument_list|,
-name|inputVecExpr
 argument_list|,
 name|outputColumnNum
 argument_list|)
@@ -202,11 +175,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|evaluateInputExpr
-argument_list|(
-name|batch
-argument_list|)
-expr_stmt|;
+comment|// We don't evaluate input columns...
 comment|/*      * Do careful maintenance of the outputColVector.noNulls flag.      */
 name|LongColumnVector
 name|longColVector

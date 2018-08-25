@@ -16435,12 +16435,31 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+comment|// RANK/DENSE_RANK don't care about columns.
+if|if
+condition|(
+name|supportedFunctionType
+operator|!=
+name|SupportedFunctionType
+operator|.
+name|RANK
+operator|&&
+name|supportedFunctionType
+operator|!=
+name|SupportedFunctionType
+operator|.
+name|DENSE_RANK
+condition|)
+block|{
 if|if
 condition|(
 name|exprNodeDescList
 operator|!=
 literal|null
-operator|&&
+condition|)
+block|{
+if|if
+condition|(
 name|exprNodeDescList
 operator|.
 name|size
@@ -16460,13 +16479,6 @@ return|return
 literal|false
 return|;
 block|}
-if|if
-condition|(
-name|exprNodeDescList
-operator|!=
-literal|null
-condition|)
-block|{
 name|ExprNodeDesc
 name|exprNodeDesc
 init|=
@@ -16503,21 +16515,9 @@ operator|!=
 name|SupportedFunctionType
 operator|.
 name|COUNT
-operator|&&
-name|supportedFunctionType
-operator|!=
-name|SupportedFunctionType
-operator|.
-name|DENSE_RANK
-operator|&&
-name|supportedFunctionType
-operator|!=
-name|SupportedFunctionType
-operator|.
-name|RANK
 condition|)
 block|{
-comment|// COUNT, DENSE_RANK, and RANK do not care about column types.  The rest do.
+comment|// COUNT does not care about column types.  The rest do.
 name|TypeInfo
 name|typeInfo
 init|=
@@ -16613,6 +16613,7 @@ expr_stmt|;
 return|return
 literal|false
 return|;
+block|}
 block|}
 block|}
 block|}
