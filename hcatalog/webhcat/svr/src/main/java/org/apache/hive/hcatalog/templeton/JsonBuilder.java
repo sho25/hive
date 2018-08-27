@@ -281,7 +281,7 @@ name|put
 argument_list|(
 name|ErrorMsg
 operator|.
-name|DATABSAE_ALREADY_EXISTS
+name|DATABASE_ALREADY_EXISTS
 operator|.
 name|getErrorCode
 argument_list|()

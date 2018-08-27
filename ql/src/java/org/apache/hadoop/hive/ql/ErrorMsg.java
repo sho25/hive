@@ -1614,7 +1614,7 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
-name|DATABSAE_ALREADY_EXISTS
+name|DATABASE_ALREADY_EXISTS
 argument_list|(
 literal|10242
 argument_list|,
@@ -2381,6 +2381,24 @@ argument_list|(
 literal|10416
 argument_list|,
 literal|"Encountered parse error while parsing rewritten load data into insert query"
+argument_list|)
+block|,
+name|RESOURCE_PLAN_ALREADY_EXISTS
+argument_list|(
+literal|10417
+argument_list|,
+literal|"Resource plan {0} already exists"
+argument_list|,
+literal|true
+argument_list|)
+block|,
+name|RESOURCE_PLAN_NOT_EXISTS
+argument_list|(
+literal|10418
+argument_list|,
+literal|"Resource plan {0} does not exist"
+argument_list|,
+literal|true
 argument_list|)
 block|,
 comment|//========================== 20000 range starts here ========================//

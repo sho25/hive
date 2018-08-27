@@ -6543,6 +6543,11 @@ name|createResourcePlanDesc
 operator|.
 name|getCopyFromName
 argument_list|()
+argument_list|,
+name|createResourcePlanDesc
+operator|.
+name|getIfNotExists
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -7164,6 +7169,11 @@ argument_list|(
 name|desc
 operator|.
 name|getRpName
+argument_list|()
+argument_list|,
+name|desc
+operator|.
+name|getIfExists
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -30786,7 +30796,7 @@ name|ex
 argument_list|,
 name|ErrorMsg
 operator|.
-name|DATABSAE_ALREADY_EXISTS
+name|DATABASE_ALREADY_EXISTS
 argument_list|,
 name|crtDb
 operator|.
