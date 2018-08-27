@@ -91,16 +91,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -716,6 +706,16 @@ operator|.
 name|junit
 operator|.
 name|Test
+import|;
+end_import
+
+begin_import
+import|import
+name|junit
+operator|.
+name|framework
+operator|.
+name|TestCase
 import|;
 end_import
 
@@ -3202,6 +3202,19 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+name|hiveConf
+operator|.
+name|setLongVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVECONVERTJOINNOCONDITIONALTASKTHRESHOLD
+argument_list|,
+name|defaultNoConditionalTaskSize
+argument_list|)
+expr_stmt|;
 name|LlapClusterStateForCompile
 name|llapInfo
 init|=
@@ -3250,8 +3263,6 @@ name|convertJoinMapJoin
 operator|.
 name|getMemoryMonitorInfo
 argument_list|(
-name|defaultNoConditionalTaskSize
-argument_list|,
 name|hiveConf
 argument_list|,
 name|llapInfo
@@ -3371,8 +3382,6 @@ name|convertJoinMapJoin
 operator|.
 name|getMemoryMonitorInfo
 argument_list|(
-name|defaultNoConditionalTaskSize
-argument_list|,
 name|hiveConf
 argument_list|,
 name|llapInfo
@@ -3438,8 +3447,6 @@ name|convertJoinMapJoin
 operator|.
 name|getMemoryMonitorInfo
 argument_list|(
-name|defaultNoConditionalTaskSize
-argument_list|,
 name|hiveConf
 argument_list|,
 name|llapInfo
@@ -3471,8 +3478,6 @@ name|convertJoinMapJoin
 operator|.
 name|getMemoryMonitorInfo
 argument_list|(
-name|defaultNoConditionalTaskSize
-argument_list|,
 name|hiveConf
 argument_list|,
 name|llapInfo
@@ -3519,8 +3524,6 @@ name|convertJoinMapJoin
 operator|.
 name|getMemoryMonitorInfo
 argument_list|(
-name|defaultNoConditionalTaskSize
-argument_list|,
 name|hiveConf
 argument_list|,
 name|llapInfo
