@@ -33,35 +33,11 @@ begin_import
 import|import
 name|java
 operator|.
-name|security
-operator|.
-name|PrivilegedExceptionAction
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|concurrent
 operator|.
 name|TimeUnit
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang
-operator|.
-name|StringUtils
 import|;
 end_import
 
@@ -111,7 +87,7 @@ name|metastore
 operator|.
 name|utils
 operator|.
-name|SecurityUtils
+name|MetaStoreServerUtils
 import|;
 end_import
 
@@ -670,7 +646,7 @@ block|{
 name|String
 name|tokenStoreClassName
 init|=
-name|SecurityUtils
+name|MetaStoreServerUtils
 operator|.
 name|getTokenStoreClassName
 argument_list|(

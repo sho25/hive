@@ -2257,7 +2257,7 @@ block|{
 comment|// operations other than table rename
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|requireCalStats
 argument_list|(
@@ -3202,7 +3202,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|requireCalStats
 argument_list|(
@@ -4051,7 +4051,7 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|requireCalStats
 argument_list|(
@@ -4709,7 +4709,7 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
-name|MetaStoreUtils
+name|MetaStoreServerUtils
 operator|.
 name|requireCalStats
 argument_list|(

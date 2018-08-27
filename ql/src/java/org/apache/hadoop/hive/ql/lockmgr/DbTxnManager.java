@@ -35,20 +35,6 @@ end_import
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -106,22 +92,6 @@ operator|.
 name|common
 operator|.
 name|ValidTxnWriteIdList
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|ValidWriteIdList
 import|;
 end_import
 
@@ -349,7 +319,7 @@ name|metastore
 operator|.
 name|txn
 operator|.
-name|TxnUtils
+name|TxnCommonUtils
 import|;
 end_import
 
@@ -560,24 +530,6 @@ operator|.
 name|plan
 operator|.
 name|UnlockTableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|session
-operator|.
-name|*
 import|;
 end_import
 
@@ -3580,7 +3532,7 @@ assert|;
 try|try
 block|{
 return|return
-name|TxnUtils
+name|TxnCommonUtils
 operator|.
 name|createValidTxnWriteIdList
 argument_list|(

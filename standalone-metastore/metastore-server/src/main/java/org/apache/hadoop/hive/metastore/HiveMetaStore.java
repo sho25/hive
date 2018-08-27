@@ -11552,7 +11552,7 @@ name|STATS_AUTO_GATHER
 argument_list|)
 operator|&&
 operator|!
-name|MetaStoreServerUtils
+name|MetaStoreUtils
 operator|.
 name|isView
 argument_list|(
@@ -23275,7 +23275,7 @@ operator|.
 name|STATS_AUTO_GATHER
 argument_list|)
 operator|||
-name|MetaStoreServerUtils
+name|MetaStoreUtils
 operator|.
 name|isView
 argument_list|(

@@ -573,7 +573,7 @@ name|metastore
 operator|.
 name|txn
 operator|.
-name|TxnUtils
+name|TxnCommonUtils
 import|;
 end_import
 
@@ -15548,7 +15548,7 @@ throws|throws
 name|TException
 block|{
 return|return
-name|TxnUtils
+name|TxnCommonUtils
 operator|.
 name|createValidReadTxnList
 argument_list|(
@@ -15574,7 +15574,7 @@ throws|throws
 name|TException
 block|{
 return|return
-name|TxnUtils
+name|TxnCommonUtils
 operator|.
 name|createValidReadTxnList
 argument_list|(
@@ -15626,7 +15626,7 @@ name|rqst
 argument_list|)
 decl_stmt|;
 return|return
-name|TxnUtils
+name|TxnCommonUtils
 operator|.
 name|createValidReaderWriteIdList
 argument_list|(

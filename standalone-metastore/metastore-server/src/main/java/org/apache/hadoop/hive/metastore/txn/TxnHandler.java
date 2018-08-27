@@ -6589,7 +6589,7 @@ block|{
 comment|// Passing 0 for currentTxn means, this validTxnList is not wrt to any txn
 name|validTxnList
 operator|=
-name|TxnUtils
+name|TxnCommonUtils
 operator|.
 name|createValidReadTxnList
 argument_list|(
