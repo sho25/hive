@@ -324,11 +324,11 @@ literal|"druid/overlord"
 argument_list|,
 literal|"druid.coordinator.period"
 argument_list|,
-literal|"PT10S"
+literal|"PT2S"
 argument_list|,
 literal|"druid.manager.segments.pollDuration"
 argument_list|,
-literal|"PT10S"
+literal|"PT2S"
 argument_list|)
 decl_stmt|;
 specifier|private
