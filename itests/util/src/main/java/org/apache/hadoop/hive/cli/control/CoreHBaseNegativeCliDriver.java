@@ -160,15 +160,6 @@ specifier|private
 name|HBaseQTestUtil
 name|qt
 decl_stmt|;
-specifier|private
-specifier|static
-name|HBaseTestSetup
-name|setup
-init|=
-operator|new
-name|HBaseTestSetup
-argument_list|()
-decl_stmt|;
 specifier|public
 name|CoreHBaseNegativeCliDriver
 parameter_list|(
@@ -234,7 +225,9 @@ argument_list|()
 argument_list|,
 name|miniMR
 argument_list|,
-name|setup
+operator|new
+name|HBaseTestSetup
+argument_list|()
 argument_list|,
 name|initScript
 argument_list|,
@@ -276,12 +269,16 @@ argument_list|()
 expr_stmt|;
 name|fail
 argument_list|(
-literal|"Unexpected exception in setup"
+literal|"Unexpected exception in static initialization: "
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// hmm..this looks a bit wierd...setup boots qtestutil...this part used to be in beforeclass
 annotation|@
 name|Override
 annotation|@
@@ -452,16 +449,10 @@ argument_list|()
 expr_stmt|;
 name|fail
 argument_list|(
-literal|"Unexpected exception in tearDown"
+literal|"Unexpected exception in shutdown"
 argument_list|)
 expr_stmt|;
 block|}
-comment|// closeHBaseConnections
-name|setup
-operator|.
-name|tearDown
-argument_list|()
-expr_stmt|;
 block|}
 annotation|@
 name|Override
