@@ -1967,6 +1967,8 @@ name|FunctionResource
 modifier|...
 name|resources
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|FunctionInfo
 name|function
@@ -3792,6 +3794,8 @@ parameter_list|,
 name|FunctionInfo
 name|function
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|FunctionInfo
 name|ret
@@ -3970,7 +3974,22 @@ argument_list|(
 name|prev
 argument_list|)
 expr_stmt|;
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"Unable to load UDF class: "
+operator|+
+name|e
+operator|+
+literal|"\nPlease ensure that the JAR file containing this class has been properly installed "
+operator|+
+literal|"in the auxiliary directory or was added with ADD JAR command."
+argument_list|)
+throw|;
 block|}
+finally|finally
+block|{
 name|function
 operator|.
 name|shareStateWith
@@ -3978,6 +3997,7 @@ argument_list|(
 name|ret
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|ret
 return|;

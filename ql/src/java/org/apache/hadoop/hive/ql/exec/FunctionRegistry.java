@@ -11385,6 +11385,8 @@ name|FunctionResource
 index|[]
 name|resources
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 return|return
 name|system
