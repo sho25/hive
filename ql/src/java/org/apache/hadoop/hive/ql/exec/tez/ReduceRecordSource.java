@@ -2473,6 +2473,25 @@ argument_list|,
 name|tag
 argument_list|)
 expr_stmt|;
+comment|// Do the non-column batch reset logic.
+name|batch
+operator|.
+name|selectedInUse
+operator|=
+literal|false
+expr_stmt|;
+name|batch
+operator|.
+name|size
+operator|=
+literal|0
+expr_stmt|;
+name|batch
+operator|.
+name|endOfFile
+operator|=
+literal|false
+expr_stmt|;
 comment|// Reset just the value columns and value buffer.
 for|for
 control|(
