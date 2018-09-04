@@ -859,8 +859,6 @@ name|singletonList
 argument_list|(
 name|fullTableName
 argument_list|)
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 specifier|final

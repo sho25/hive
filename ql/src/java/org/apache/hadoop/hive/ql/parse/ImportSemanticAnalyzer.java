@@ -1302,6 +1302,8 @@ literal|null
 argument_list|,
 name|getTxnMgr
 argument_list|()
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -1544,6 +1546,10 @@ name|updatedMetadata
 parameter_list|,
 name|HiveTxnManager
 name|txnMgr
+parameter_list|,
+name|long
+name|writeId
+comment|// Initialize with 0 for non-ACID and non-MM tables.
 parameter_list|)
 throws|throws
 name|IOException
@@ -1853,6 +1859,13 @@ expr_stmt|;
 name|inReplicationScope
 operator|=
 literal|true
+expr_stmt|;
+name|tblDesc
+operator|.
+name|setReplWriteId
+argument_list|(
+name|writeId
+argument_list|)
 expr_stmt|;
 block|}
 if|if
@@ -2263,12 +2276,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|Long
-name|writeId
-init|=
-literal|0L
-decl_stmt|;
-comment|// Initialize with 0 for non-ACID and non-MM tables.
 name|int
 name|stmtId
 init|=

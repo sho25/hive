@@ -118,6 +118,12 @@ argument_list|>
 name|getKeyValues
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|Long
+name|getWriteId
+parameter_list|()
+function_decl|;
 annotation|@
 name|Override
 specifier|public

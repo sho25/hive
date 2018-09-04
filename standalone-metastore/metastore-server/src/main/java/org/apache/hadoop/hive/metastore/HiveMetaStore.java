@@ -17091,6 +17091,8 @@ literal|true
 argument_list|,
 literal|true
 argument_list|,
+name|writeId
+argument_list|,
 name|this
 argument_list|)
 argument_list|)
@@ -17127,6 +17129,8 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+name|writeId
 argument_list|,
 name|this
 argument_list|)
@@ -17316,6 +17320,8 @@ literal|true
 argument_list|,
 literal|true
 argument_list|,
+name|writeId
+argument_list|,
 name|this
 argument_list|)
 argument_list|)
@@ -17350,6 +17356,8 @@ argument_list|,
 literal|true
 argument_list|,
 literal|true
+argument_list|,
+name|writeId
 argument_list|,
 name|this
 argument_list|)
@@ -30222,6 +30230,11 @@ literal|false
 argument_list|,
 literal|true
 argument_list|,
+name|new_part
+operator|.
+name|getWriteId
+argument_list|()
+argument_list|,
 name|this
 argument_list|)
 argument_list|,
@@ -30840,6 +30853,8 @@ argument_list|,
 literal|false
 argument_list|,
 literal|true
+argument_list|,
+name|writeId
 argument_list|,
 name|this
 argument_list|)

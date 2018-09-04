@@ -120,6 +120,8 @@ annotation|@
 name|JsonProperty
 name|Long
 name|timestamp
+decl_stmt|,
+name|writeId
 decl_stmt|;
 comment|/**    * Default constructor, needed for Jackson.    */
 specifier|public
@@ -143,6 +145,9 @@ name|tableObjAfter
 parameter_list|,
 name|boolean
 name|isTruncateOp
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|,
 name|Long
 name|timestamp
@@ -203,6 +208,12 @@ operator|.
 name|timestamp
 operator|=
 name|timestamp
+expr_stmt|;
+name|this
+operator|.
+name|writeId
+operator|=
+name|writeId
 expr_stmt|;
 try|try
 block|{
@@ -411,6 +422,17 @@ parameter_list|()
 block|{
 return|return
 name|tableObjAfterJson
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|Long
+name|getWriteId
+parameter_list|()
+block|{
+return|return
+name|writeId
 return|;
 block|}
 annotation|@

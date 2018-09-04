@@ -420,6 +420,16 @@ name|eventOnlyReplicationSpec
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|truncateTableDesc
+operator|.
+name|setWriteId
+argument_list|(
+name|msg
+operator|.
+name|getWriteId
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|Task
 argument_list|<
 name|DDLWork
@@ -451,7 +461,7 @@ name|log
 operator|.
 name|debug
 argument_list|(
-literal|"Added truncate ptn task : {}:{}"
+literal|"Added truncate ptn task : {}:{}:{}"
 argument_list|,
 name|truncatePtnTask
 operator|.
@@ -461,6 +471,11 @@ argument_list|,
 name|truncateTableDesc
 operator|.
 name|getTableName
+argument_list|()
+argument_list|,
+name|truncateTableDesc
+operator|.
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;

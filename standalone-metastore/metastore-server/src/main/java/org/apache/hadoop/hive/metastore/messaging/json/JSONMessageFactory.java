@@ -1177,6 +1177,9 @@ name|after
 parameter_list|,
 name|boolean
 name|isTruncateOp
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 block|{
 return|return
@@ -1192,6 +1195,8 @@ argument_list|,
 name|after
 argument_list|,
 name|isTruncateOp
+argument_list|,
+name|writeId
 argument_list|,
 name|now
 argument_list|()
@@ -1281,6 +1286,9 @@ name|after
 parameter_list|,
 name|boolean
 name|isTruncateOp
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 block|{
 return|return
@@ -1298,6 +1306,8 @@ argument_list|,
 name|after
 argument_list|,
 name|isTruncateOp
+argument_list|,
+name|writeId
 argument_list|,
 name|now
 argument_list|()

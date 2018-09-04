@@ -6559,12 +6559,25 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a structure that details valid transactions.    * @param fullTableName full table name of format<db_name>.<table_name>    * @return list of valid write ids for the given table    * @throws TException    */
+comment|/**    * Get a structure that details valid write ids.    * @param fullTableName full table name of format<db_name>.<table_name>    * @return list of valid write ids for the given table    * @throws TException    */
 name|ValidWriteIdList
 name|getValidWriteIds
 parameter_list|(
 name|String
 name|fullTableName
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Get a structure that details valid write ids.    * @param fullTableName full table name of format<db_name>.<table_name>    * @param writeId The write id to get the corresponding txn    * @return list of valid write ids for the given table    * @throws TException    */
+name|ValidWriteIdList
+name|getValidWriteIds
+parameter_list|(
+name|String
+name|fullTableName
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 throws|throws
 name|TException

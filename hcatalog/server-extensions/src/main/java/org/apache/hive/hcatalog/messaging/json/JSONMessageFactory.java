@@ -611,6 +611,9 @@ name|before
 parameter_list|,
 name|Table
 name|after
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 block|{
 return|return
@@ -635,6 +638,8 @@ name|before
 operator|.
 name|getTableType
 argument_list|()
+argument_list|,
+name|writeId
 argument_list|,
 name|now
 argument_list|()
@@ -744,6 +749,9 @@ name|before
 parameter_list|,
 name|Partition
 name|after
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 block|{
 return|return
@@ -775,6 +783,8 @@ name|table
 argument_list|,
 name|before
 argument_list|)
+argument_list|,
+name|writeId
 argument_list|,
 name|now
 argument_list|()

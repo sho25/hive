@@ -863,6 +863,11 @@ argument_list|,
 name|before
 argument_list|,
 name|after
+argument_list|,
+name|ape
+operator|.
+name|getWriteId
+argument_list|()
 argument_list|)
 argument_list|,
 name|topicName
@@ -1424,6 +1429,11 @@ argument_list|(
 name|before
 argument_list|,
 name|after
+argument_list|,
+name|tableEvent
+operator|.
+name|getWriteId
+argument_list|()
 argument_list|)
 argument_list|,
 name|topicName

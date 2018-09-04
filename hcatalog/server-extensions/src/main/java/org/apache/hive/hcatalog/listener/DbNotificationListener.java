@@ -1727,6 +1727,11 @@ name|tableEvent
 operator|.
 name|getIsTruncateOp
 argument_list|()
+argument_list|,
+name|tableEvent
+operator|.
+name|getWriteId
+argument_list|()
 argument_list|)
 operator|.
 name|toString
@@ -2528,6 +2533,11 @@ argument_list|,
 name|partitionEvent
 operator|.
 name|getIsTruncateOp
+argument_list|()
+argument_list|,
+name|partitionEvent
+operator|.
+name|getWriteId
 argument_list|()
 argument_list|)
 operator|.

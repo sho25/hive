@@ -190,6 +190,12 @@ name|checkValid
 argument_list|()
 return|;
 block|}
+specifier|public
+specifier|abstract
+name|Long
+name|getWriteId
+parameter_list|()
+function_decl|;
 block|}
 end_class
 

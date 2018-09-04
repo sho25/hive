@@ -3443,8 +3443,6 @@ operator|.
 name|getDbTable
 argument_list|()
 argument_list|)
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 return|return

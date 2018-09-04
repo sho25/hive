@@ -826,7 +826,7 @@ argument_list|>
 name|files
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for AlterTableMessage.  Unlike most of these calls, this one can return null,    * which means no message should be sent.  This is because there are many flavors of alter    * table (add column, add partition, etc.).  Some are covered elsewhere (like add partition)    * and some are not yet supported.    * @param before The table before the alter    * @param after The table after the alter    * @param isTruncateOp Flag to denote truncate table    * @return    */
+comment|/**    * Factory method for AlterTableMessage.  Unlike most of these calls, this one can return null,    * which means no message should be sent.  This is because there are many flavors of alter    * table (add column, add partition, etc.).  Some are covered elsewhere (like add partition)    * and some are not yet supported.    * @param before The table before the alter    * @param after The table after the alter    * @param isTruncateOp Flag to denote truncate table    * @param writeId writeId under which alter is done (for ACID tables)    * @return    */
 specifier|public
 specifier|abstract
 name|AlterTableMessage
@@ -840,6 +840,9 @@ name|after
 parameter_list|,
 name|boolean
 name|isTruncateOp
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for DropTableMessage.    * @param table The Table being dropped.    * @return DropTableMessage instance.    */
@@ -874,7 +877,7 @@ argument_list|>
 name|partitionFiles
 parameter_list|)
 function_decl|;
-comment|/**    * Factory method for building AlterPartitionMessage    * @param table The table in which the partition is being altered    * @param before The partition before it was altered    * @param after The partition after it was altered    * @param isTruncateOp Flag to denote truncate partition    * @return a new AlterPartitionMessage    */
+comment|/**    * Factory method for building AlterPartitionMessage    * @param table The table in which the partition is being altered    * @param before The partition before it was altered    * @param after The partition after it was altered    * @param isTruncateOp Flag to denote truncate partition    * @param writeId writeId under which alter is done (for ACID tables)    * @return a new AlterPartitionMessage    */
 specifier|public
 specifier|abstract
 name|AlterPartitionMessage
@@ -891,6 +894,9 @@ name|after
 parameter_list|,
 name|boolean
 name|isTruncateOp
+parameter_list|,
+name|Long
+name|writeId
 parameter_list|)
 function_decl|;
 comment|/**    * Factory method for DropPartitionMessage.    * @param table The Table from which the partition is dropped.    * @param partitions The set of partitions being dropped.    * @return DropPartitionMessage instance.    */
