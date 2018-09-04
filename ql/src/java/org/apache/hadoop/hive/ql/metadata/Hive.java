@@ -20392,6 +20392,9 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+operator|!
 name|FileUtils
 operator|.
 name|copy
@@ -20412,7 +20415,29 @@ argument_list|,
 comment|// overwrite destination
 name|conf
 argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Copy failed for source: "
+operator|+
+name|sourcePath
+operator|+
+literal|" to destination: "
+operator|+
+name|destFilePath
+argument_list|)
 expr_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"File copy failed."
+argument_list|)
+throw|;
+block|}
 block|}
 return|return
 name|destFilePath

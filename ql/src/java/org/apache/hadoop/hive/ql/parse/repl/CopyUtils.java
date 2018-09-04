@@ -1616,6 +1616,9 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
 name|FileUtils
 operator|.
 name|distCp
@@ -1643,7 +1646,29 @@ operator|.
 name|getHadoopShims
 argument_list|()
 argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Distcp failed to copy files: "
+operator|+
+name|srcList
+operator|+
+literal|" to destination: "
+operator|+
+name|destination
+argument_list|)
 expr_stmt|;
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Distcp operation failed."
+argument_list|)
+throw|;
+block|}
 block|}
 specifier|private
 name|void
@@ -1934,7 +1959,6 @@ comment|/*       Check for conditions that will lead to local copy, checks are: 
 end_comment
 
 begin_function
-specifier|private
 name|boolean
 name|regularCopy
 parameter_list|(
