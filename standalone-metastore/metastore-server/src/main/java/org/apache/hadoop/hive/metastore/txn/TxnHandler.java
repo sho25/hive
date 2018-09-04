@@ -9121,11 +9121,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Deleted "
-operator|+
+literal|"Deleted {} obsolete rows from WRITE_SET"
+argument_list|,
 name|delCnt
-operator|+
-literal|" obsolete rows from WRTIE_SET"
 argument_list|)
 expr_stmt|;
 name|dbConn

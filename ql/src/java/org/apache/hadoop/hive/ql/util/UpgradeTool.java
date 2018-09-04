@@ -2468,7 +2468,7 @@ operator|++
 expr_stmt|;
 block|}
 name|int
-name|wrtieId
+name|writeId
 init|=
 name|fileId
 operator|/
@@ -2476,7 +2476,7 @@ name|numBuckets
 operator|+
 literal|1
 decl_stmt|;
-comment|//start with delta_1 (not delta_0)
+comment|// start with delta_1 (not delta_0)
 name|Path
 name|deltaDir
 init|=
@@ -2489,9 +2489,9 @@ name|AcidUtils
 operator|.
 name|deltaSubdir
 argument_list|(
-name|wrtieId
+name|writeId
 argument_list|,
-name|wrtieId
+name|writeId
 argument_list|)
 argument_list|)
 decl_stmt|;
