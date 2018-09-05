@@ -1845,7 +1845,7 @@ return|return
 name|lazyObject
 return|;
 block|}
-comment|/**    * Convert the given object to a lazy object using the given {@link ObjectInspector}    *    * @param obj Object to be converted to a {@link LazyObject}    * @param oi ObjectInspector used for the conversion    * @return the created {@link LazyObject lazy object}    * */
+comment|/**    * Convert the given object to a lazy object using the given {@link ObjectInspector}    *    * @param obj Object to be converted to a {@link LazyObject}    * @param objectInspector ObjectInspector used for the conversion    * @return the created {@link LazyObject lazy object}    * */
 specifier|private
 name|Object
 name|toLazyListObject
@@ -1959,7 +1959,7 @@ return|return
 name|retList
 return|;
 block|}
-comment|/**    * Convert the given object to a lazy object using the given {@link ObjectInspector}    *    * @param obj Object to be converted to a {@link LazyObject}    * @param oi ObjectInspector used for the conversion    * @return the created {@link LazyObject lazy object}    * */
+comment|/**    * Convert the given object to a lazy object using the given {@link ObjectInspector}    *    * @param obj Object to be converted to a {@link LazyObject}    * @param objectInspector ObjectInspector used for the conversion    * @return the created {@link LazyObject lazy object}    * */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -2099,7 +2099,7 @@ return|return
 name|lazyMap
 return|;
 block|}
-comment|/**    * Convert the given object to a lazy object using the given {@link ObjectInspector}    *    * @param obj Object to be converted to a {@link LazyObject}    * @param oi ObjectInspector used for the conversion    * @return the created {@link LazyObject lazy object}    * */
+comment|/**    * Convert the given object to a lazy object using the given {@link ObjectInspector}    *    * @param obj Object to be converted to a {@link LazyObject}    * @param objectInspector ObjectInspector used for the conversion    * @return the created {@link LazyObject lazy object}    * */
 specifier|private
 name|Object
 name|toLazyUnionObject
