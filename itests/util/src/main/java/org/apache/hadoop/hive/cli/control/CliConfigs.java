@@ -2101,6 +2101,11 @@ argument_list|(
 literal|"accumulo-handler/src/test/queries/positive"
 argument_list|)
 expr_stmt|;
+name|excludeQuery
+argument_list|(
+literal|"accumulo_joins.q"
+argument_list|)
+expr_stmt|;
 name|setResultsDir
 argument_list|(
 literal|"accumulo-handler/src/test/results/positive"

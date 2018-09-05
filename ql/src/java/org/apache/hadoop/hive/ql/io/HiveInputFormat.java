@@ -589,6 +589,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|metadata
+operator|.
+name|HiveStoragePredicateHandler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ExprNodeGenericFuncDesc
@@ -5085,7 +5103,7 @@ condition|)
 block|{
 return|return;
 block|}
-comment|// disable filter pushdown for mapreduce when there are more than one table aliases,
+comment|// disable filter pushdown for mapreduce(except for storage handlers) when there are more than one table aliases,
 comment|// since we don't clone jobConf per alias
 if|if
 condition|(
@@ -5125,6 +5143,28 @@ name|equals
 argument_list|(
 literal|"mr"
 argument_list|)
+operator|&&
+operator|(
+name|scanDesc
+operator|.
+name|getTableMetadata
+argument_list|()
+operator|==
+literal|null
+operator|||
+operator|!
+operator|(
+name|scanDesc
+operator|.
+name|getTableMetadata
+argument_list|()
+operator|.
+name|getStorageHandler
+argument_list|()
+operator|instanceof
+name|HiveStoragePredicateHandler
+operator|)
+operator|)
 condition|)
 block|{
 return|return;
