@@ -882,6 +882,24 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|explainOptions
+operator|==
+name|HiveParser
+operator|.
+name|KW_AST
+condition|)
+block|{
+name|config
+operator|.
+name|setAst
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 else|else
 block|{
 comment|// UNDONE: UNKNOWN OPTION?
@@ -1385,6 +1403,8 @@ argument_list|,
 name|tasks
 argument_list|,
 name|fetchTask
+argument_list|,
+name|input
 argument_list|,
 name|sem
 argument_list|,

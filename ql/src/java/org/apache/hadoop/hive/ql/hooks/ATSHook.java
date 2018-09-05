@@ -1789,6 +1789,8 @@ argument_list|,
 comment|// FetchTask
 literal|null
 argument_list|,
+literal|null
+argument_list|,
 comment|// analyzer
 name|config
 argument_list|,
