@@ -940,7 +940,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|public
 name|float
 name|hashTableLoadFactor
 decl_stmt|;
@@ -1820,7 +1820,7 @@ return|return
 literal|false
 return|;
 block|}
-specifier|private
+specifier|public
 name|long
 name|computeOnlineDataSize
 parameter_list|(
@@ -1828,33 +1828,105 @@ name|Statistics
 name|statistics
 parameter_list|)
 block|{
-comment|// The datastructure doing the actual storage during mapjoins has some per row overhead
+return|return
+name|computeOnlineDataSizeFast3
+argument_list|(
+name|statistics
+argument_list|)
+return|;
+block|}
+specifier|public
+name|long
+name|computeOnlineDataSizeFast2
+parameter_list|(
+name|Statistics
+name|statistics
+parameter_list|)
+block|{
+return|return
+name|computeOnlineDataSizeGeneric
+argument_list|(
+name|statistics
+argument_list|,
+operator|-
+literal|8
+argument_list|,
+comment|// the long key is stored in a slot
+literal|2
+operator|*
+literal|8
+comment|// maintenance structure consists of 2 longs
+argument_list|)
+return|;
+block|}
+specifier|public
+name|long
+name|computeOnlineDataSizeFast3
+parameter_list|(
+name|Statistics
+name|statistics
+parameter_list|)
+block|{
+comment|// The datastructure doing the actual storage during mapjoins has no per row orhead;
+comment|// but uses a 192 bit wide table
+return|return
+name|computeOnlineDataSizeGeneric
+argument_list|(
+name|statistics
+argument_list|,
+literal|0
+argument_list|,
+comment|// key is stored in a bytearray
+literal|3
+operator|*
+literal|8
+comment|// maintenance structure consists of 3 longs
+argument_list|)
+return|;
+block|}
+specifier|public
+name|long
+name|computeOnlineDataSizeOptimized
+parameter_list|(
+name|Statistics
+name|statistics
+parameter_list|)
+block|{
+comment|// BytesBytesMultiHashMap
+return|return
+name|computeOnlineDataSizeGeneric
+argument_list|(
+name|statistics
+argument_list|,
+literal|2
+operator|*
+literal|6
+argument_list|,
+comment|// 2 offsets are stored using:  LazyBinaryUtils.writeVLongToByteArray
+literal|8
+comment|// maintenance structure consists of 1 long
+argument_list|)
+return|;
+block|}
+specifier|public
+name|long
+name|computeOnlineDataSizeGeneric
+parameter_list|(
+name|Statistics
+name|statistics
+parameter_list|,
+name|long
+name|overHeadPerRow
+parameter_list|,
+name|long
+name|overHeadPerSlot
+parameter_list|)
+block|{
 name|long
 name|onlineDataSize
 init|=
 literal|0
 decl_stmt|;
-name|long
-name|memoryOverHeadPerRow
-init|=
-literal|0
-decl_stmt|;
-name|long
-name|vLongEstimatedLength
-init|=
-literal|6
-decl_stmt|;
-comment|// LazyBinaryUtils.writeVLongToByteArray
-name|memoryOverHeadPerRow
-operator|+=
-name|vLongEstimatedLength
-expr_stmt|;
-comment|// offset
-name|memoryOverHeadPerRow
-operator|+=
-name|vLongEstimatedLength
-expr_stmt|;
-comment|// length
 name|long
 name|numRows
 init|=
@@ -1902,7 +1974,7 @@ argument_list|()
 expr_stmt|;
 name|onlineDataSize
 operator|+=
-name|memoryOverHeadPerRow
+name|overHeadPerRow
 operator|*
 name|statistics
 operator|.
@@ -1911,11 +1983,10 @@ argument_list|()
 expr_stmt|;
 name|onlineDataSize
 operator|+=
-literal|8
+name|overHeadPerSlot
 operator|*
 name|worstCaseNeededSlots
 expr_stmt|;
-comment|// every slot is a long
 return|return
 name|onlineDataSize
 return|;
