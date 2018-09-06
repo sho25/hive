@@ -10197,6 +10197,15 @@ argument_list|,
 literal|"enable or disable the Hive client authorization"
 argument_list|)
 block|,
+name|HIVE_AUTHORIZATION_KERBEROS_USE_SHORTNAME
+argument_list|(
+literal|"hive.security.authorization.kerberos.use.shortname"
+argument_list|,
+literal|true
+argument_list|,
+literal|"use short name in Kerberos cluster"
+argument_list|)
+block|,
 name|HIVE_AUTHORIZATION_MANAGER
 argument_list|(
 literal|"hive.security.authorization.manager"
