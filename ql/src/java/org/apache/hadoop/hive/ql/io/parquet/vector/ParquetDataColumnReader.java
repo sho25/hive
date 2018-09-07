@@ -116,6 +116,16 @@ name|long
 name|readInteger
 parameter_list|()
 function_decl|;
+comment|/**    * @return the next SmallInt from the page    */
+name|long
+name|readSmallInt
+parameter_list|()
+function_decl|;
+comment|/**    * @return the next TinyInt from the page    */
+name|long
+name|readTinyInt
+parameter_list|()
+function_decl|;
 comment|/**    * @return the next Float from the page    */
 name|float
 name|readFloat
@@ -166,27 +176,10 @@ name|Timestamp
 name|readTimestamp
 parameter_list|()
 function_decl|;
-comment|/**    * @param value data to be checked for validity    * @return is data valid for the type    * The type of the data in Parquet files need not match the type in HMS.  In that case    * the value returned to the user will depend on the data.  If the data value is within the valid    * range accommodated by the HMS type, the data will be returned as is.  When data is not within    * the valid range, a NULL will be returned.  These functions will do the appropriate check.    */
+comment|/**    * @return is data valid    */
 name|boolean
 name|isValid
-parameter_list|(
-name|long
-name|value
-parameter_list|)
-function_decl|;
-name|boolean
-name|isValid
-parameter_list|(
-name|float
-name|value
-parameter_list|)
-function_decl|;
-name|boolean
-name|isValid
-parameter_list|(
-name|double
-name|value
-parameter_list|)
+parameter_list|()
 function_decl|;
 comment|/**    * @return the underlying dictionary if current reader is dictionary encoded    */
 name|Dictionary
@@ -229,6 +222,22 @@ function_decl|;
 comment|/**    * @param id in dictionary    * @return the Long from the dictionary by id    */
 name|long
 name|readLong
+parameter_list|(
+name|int
+name|id
+parameter_list|)
+function_decl|;
+comment|/**    * @param id in dictionary    * @return the Small Int from the dictionary by id    */
+name|long
+name|readSmallInt
+parameter_list|(
+name|int
+name|id
+parameter_list|)
+function_decl|;
+comment|/**    * @param id in dictionary    * @return the tiny int from the dictionary by id    */
+name|long
+name|readTinyInt
 parameter_list|(
 name|int
 name|id
