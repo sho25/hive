@@ -318,6 +318,12 @@ name|TableMeta
 argument_list|>
 name|filterTableMetas
 parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
 name|List
 argument_list|<
 name|TableMeta

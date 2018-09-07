@@ -11226,6 +11226,10 @@ name|filterHook
 operator|.
 name|filterTableMetas
 argument_list|(
+name|catName
+argument_list|,
+name|dbPatterns
+argument_list|,
 name|client
 operator|.
 name|get_table_meta
