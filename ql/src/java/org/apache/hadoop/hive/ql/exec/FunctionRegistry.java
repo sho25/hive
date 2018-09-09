@@ -5945,6 +5945,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"bucket_number"
+argument_list|,
+name|GenericUDFBucketNumber
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// Generic UDTF's
 name|system
 operator|.
