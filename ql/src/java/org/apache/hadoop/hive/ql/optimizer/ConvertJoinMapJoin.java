@@ -1867,20 +1867,18 @@ name|Statistics
 name|statistics
 parameter_list|)
 block|{
-comment|// The datastructure doing the actual storage during mapjoins has no per row orhead;
-comment|// but uses a 192 bit wide table
 return|return
 name|computeOnlineDataSizeGeneric
 argument_list|(
 name|statistics
 argument_list|,
-literal|0
+literal|5
+operator|+
+literal|4
 argument_list|,
-comment|// key is stored in a bytearray
-literal|3
-operator|*
+comment|// list header ; value length stored as vint
 literal|8
-comment|// maintenance structure consists of 3 longs
+comment|// maintenance structure consists of 1 long
 argument_list|)
 return|;
 block|}
