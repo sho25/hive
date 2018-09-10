@@ -6605,6 +6605,12 @@ operator|.
 name|getFilters
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|adjustParentsChildren
+condition|)
+block|{
+comment|// backtrack and update filter expressions only if RS is to be removed
 name|Map
 argument_list|<
 name|Byte
@@ -6709,6 +6715,7 @@ operator|=
 name|newFilters
 argument_list|)
 expr_stmt|;
+block|}
 comment|// create dumpfile prefix needed to create descriptor
 name|String
 name|dumpFilePrefix
