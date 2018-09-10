@@ -448,6 +448,8 @@ operator|.
 name|initialize
 argument_list|(
 name|sparkConf
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 name|inited

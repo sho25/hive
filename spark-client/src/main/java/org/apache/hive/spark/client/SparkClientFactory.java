@@ -178,6 +178,9 @@ argument_list|,
 name|String
 argument_list|>
 name|conf
+parameter_list|,
+name|HiveConf
+name|hiveConf
 parameter_list|)
 throws|throws
 name|IOException
@@ -209,6 +212,8 @@ operator|new
 name|RpcServer
 argument_list|(
 name|conf
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
