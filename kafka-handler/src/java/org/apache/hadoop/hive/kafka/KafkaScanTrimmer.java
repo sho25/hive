@@ -755,7 +755,7 @@ parameter_list|)
 lambda|->
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Topic-[{}] Partition-[{}] - Split startOffset [{}] :-> endOffset [{}]"
 argument_list|,
@@ -803,7 +803,7 @@ parameter_list|)
 lambda|->
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Topic-[{}] Partition-[{}] - Split startOffset [{}] :-> endOffset [{}]"
 argument_list|,
@@ -1299,7 +1299,12 @@ name|equals
 argument_list|(
 name|KafkaStreamingUtils
 operator|.
-name|PARTITION_COLUMN
+name|MetadataColumn
+operator|.
+name|PARTITION
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -1340,7 +1345,12 @@ name|equals
 argument_list|(
 name|KafkaStreamingUtils
 operator|.
-name|OFFSET_COLUMN
+name|MetadataColumn
+operator|.
+name|OFFSET
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 condition|)
 block|{
@@ -1381,7 +1391,12 @@ name|equals
 argument_list|(
 name|KafkaStreamingUtils
 operator|.
-name|TIMESTAMP_COLUMN
+name|MetadataColumn
+operator|.
+name|TIMESTAMP
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 condition|)
 block|{

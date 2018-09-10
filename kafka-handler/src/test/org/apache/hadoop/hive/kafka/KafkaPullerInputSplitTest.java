@@ -129,12 +129,6 @@ class|class
 name|KafkaPullerInputSplitTest
 block|{
 specifier|private
-name|String
-name|topic
-init|=
-literal|"my_topic"
-decl_stmt|;
-specifier|private
 name|KafkaPullerInputSplit
 name|expectedInputSplit
 decl_stmt|;
@@ -142,6 +136,11 @@ specifier|public
 name|KafkaPullerInputSplitTest
 parameter_list|()
 block|{
+name|String
+name|topic
+init|=
+literal|"my_topic"
+decl_stmt|;
 name|this
 operator|.
 name|expectedInputSplit
@@ -149,8 +148,6 @@ operator|=
 operator|new
 name|KafkaPullerInputSplit
 argument_list|(
-name|this
-operator|.
 name|topic
 argument_list|,
 literal|1

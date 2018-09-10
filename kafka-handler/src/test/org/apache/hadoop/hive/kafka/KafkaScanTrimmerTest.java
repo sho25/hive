@@ -439,6 +439,7 @@ literal|"/tmp"
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|zeroInt
 init|=
@@ -450,6 +451,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|threeInt
 init|=
@@ -461,6 +463,7 @@ literal|3
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|thirtyLong
 init|=
@@ -472,6 +475,7 @@ literal|30L
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|thirtyFiveLong
 init|=
@@ -483,6 +487,7 @@ literal|35L
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|seventyFiveLong
 init|=
@@ -494,6 +499,7 @@ literal|75L
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|fortyLong
 init|=
@@ -517,7 +523,12 @@ name|intTypeInfo
 argument_list|,
 name|KafkaStreamingUtils
 operator|.
-name|PARTITION_COLUMN
+name|MetadataColumn
+operator|.
+name|PARTITION
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 literal|null
 argument_list|,
@@ -537,7 +548,12 @@ name|longTypeInfo
 argument_list|,
 name|KafkaStreamingUtils
 operator|.
-name|OFFSET_COLUMN
+name|MetadataColumn
+operator|.
+name|OFFSET
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 literal|null
 argument_list|,
