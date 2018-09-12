@@ -847,12 +847,6 @@ argument_list|,
 literal|"druid.kafka.query.files"
 argument_list|)
 expr_stmt|;
-name|excludeQuery
-argument_list|(
-literal|"druidkafkamini_basic.q"
-argument_list|)
-expr_stmt|;
-comment|// HIVE-19509
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/druid"

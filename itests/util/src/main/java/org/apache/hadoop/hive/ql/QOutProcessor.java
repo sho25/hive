@@ -474,7 +474,9 @@ literal|"org\\.apache\\.hadoop\\.hive\\.metastore\\.model\\.MConstraint@([0-9]|[
 block|,
 literal|"^Repair: Added partition to metastore.*"
 block|,
-literal|"^Repair: Dropped partition from metastore.*"
+literal|"^latestOffsets.*"
+block|,
+literal|"^minimumLag.*"
 block|}
 argument_list|)
 decl_stmt|;
