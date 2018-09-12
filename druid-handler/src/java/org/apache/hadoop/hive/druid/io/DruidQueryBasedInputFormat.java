@@ -79,9 +79,13 @@ end_import
 
 begin_import
 import|import
-name|com
+name|io
 operator|.
-name|metamx
+name|druid
+operator|.
+name|java
+operator|.
+name|util
 operator|.
 name|http
 operator|.
