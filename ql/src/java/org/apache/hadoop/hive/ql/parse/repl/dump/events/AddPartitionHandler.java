@@ -591,6 +591,16 @@ operator|.
 name|iterator
 argument_list|()
 decl_stmt|;
+comment|// We expect one to one mapping between partitions and file iterators. For external table, this
+comment|// list would be empty. So, it is enough to check hasNext outside the loop.
+if|if
+condition|(
+name|partitionFilesIter
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
 for|for
 control|(
 name|Partition
@@ -654,6 +664,7 @@ operator|.
 name|newLine
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}

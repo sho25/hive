@@ -8618,6 +8618,127 @@ argument_list|)
 expr_stmt|;
 comment|// Returns null as create table event doesn't list files
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testDumpExternalTableWithAddPartitionEvent
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
+init|=
+name|primary
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+argument_list|)
+decl_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+expr_stmt|;
+name|tuple
+operator|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t1 (place string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table t1 add partition(country='india')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table t1 add partition(country='us')"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+literal|"repl dump "
+operator|+
+name|primaryDbName
+operator|+
+literal|" from "
+operator|+
+name|tuple
+operator|.
+name|lastReplicationId
+operator|+
+literal|" with ('hive.repl.include.external.tables'='true')"
+argument_list|)
+expr_stmt|;
+name|replica
+operator|.
+name|load
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|replicatedDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show tables like 't1'"
+argument_list|)
+operator|.
+name|verifyResult
+argument_list|(
+literal|"t1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show partitions t1"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"country=india"
+block|,
+literal|"country=us"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
