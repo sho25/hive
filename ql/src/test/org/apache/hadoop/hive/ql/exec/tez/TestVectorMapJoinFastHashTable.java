@@ -704,7 +704,7 @@ name|compilerEstimate
 operator|=
 name|cjm
 operator|.
-name|computeOnlineDataSizeFast3
+name|computeOnlineDataSizeFastCompositeKeyed
 argument_list|(
 name|stat
 argument_list|)
@@ -717,7 +717,7 @@ name|compilerEstimate
 operator|=
 name|cjm
 operator|.
-name|computeOnlineDataSizeFast2
+name|computeOnlineDataSizeFastLongKeyed
 argument_list|(
 name|stat
 argument_list|)
