@@ -320,6 +320,14 @@ operator|.
 name|SPARK_RPC_SERVER_ADDRESS
 operator|.
 name|varname
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|SPARK_RPC_SERVER_PORT
+operator|.
+name|varname
 argument_list|)
 decl_stmt|;
 specifier|public
