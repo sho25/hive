@@ -258,7 +258,7 @@ literal|"com.metamx"
 argument_list|,
 literal|"druid"
 argument_list|,
-literal|"io.druid"
+literal|"org.apache.druid"
 argument_list|,
 literal|"java.io.tmpdir"
 argument_list|,
@@ -575,7 +575,7 @@ name|Lists
 operator|.
 name|newArrayList
 argument_list|(
-literal|"io.druid.cli.Main"
+literal|"org.apache.druid.cli.Main"
 argument_list|,
 literal|"server"
 argument_list|,

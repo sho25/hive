@@ -21,18 +21,6 @@ end_package
 
 begin_import
 import|import
-name|io
-operator|.
-name|druid
-operator|.
-name|segment
-operator|.
-name|IndexSpec
-import|;
-end_import
-
-begin_import
-import|import
 name|com
 operator|.
 name|fasterxml
@@ -77,6 +65,52 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|druid
+operator|.
+name|segment
+operator|.
+name|IndexSpec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|druid
+operator|.
+name|segment
+operator|.
+name|indexing
+operator|.
+name|TuningConfigs
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|druid
+operator|.
+name|segment
+operator|.
+name|writeout
+operator|.
+name|SegmentWriteOutMediumFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|joda
 operator|.
 name|time
@@ -94,6 +128,16 @@ operator|.
 name|time
 operator|.
 name|Period
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
 import|;
 end_import
 
@@ -203,10 +247,26 @@ parameter_list|,
 annotation|@
 name|JsonProperty
 argument_list|(
+literal|"maxBytesInMemory"
+argument_list|)
+name|Long
+name|maxBytesInMemory
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
 literal|"maxRowsPerSegment"
 argument_list|)
 name|Integer
 name|maxRowsPerSegment
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
+literal|"maxTotalRows"
+argument_list|)
+name|Long
+name|maxTotalRows
 parameter_list|,
 annotation|@
 name|JsonProperty
@@ -265,7 +325,6 @@ argument_list|)
 name|Long
 name|handoffConditionTimeout
 parameter_list|,
-comment|// for backward compatibility
 annotation|@
 name|JsonProperty
 argument_list|(
@@ -273,6 +332,16 @@ literal|"resetOffsetAutomatically"
 argument_list|)
 name|Boolean
 name|resetOffsetAutomatically
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
+literal|"segmentWriteOutMediumFactory"
+argument_list|)
+annotation|@
+name|Nullable
+name|SegmentWriteOutMediumFactory
+name|segmentWriteOutMediumFactory
 parameter_list|,
 annotation|@
 name|JsonProperty
@@ -321,13 +390,55 @@ literal|"offsetFetchPeriod"
 argument_list|)
 name|Period
 name|offsetFetchPeriod
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
+literal|"intermediateHandoffPeriod"
+argument_list|)
+name|Period
+name|intermediateHandoffPeriod
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
+literal|"logParseExceptions"
+argument_list|)
+annotation|@
+name|Nullable
+name|Boolean
+name|logParseExceptions
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
+literal|"maxParseExceptions"
+argument_list|)
+annotation|@
+name|Nullable
+name|Integer
+name|maxParseExceptions
+parameter_list|,
+annotation|@
+name|JsonProperty
+argument_list|(
+literal|"maxSavedParseExceptions"
+argument_list|)
+annotation|@
+name|Nullable
+name|Integer
+name|maxSavedParseExceptions
 parameter_list|)
 block|{
 name|super
 argument_list|(
 name|maxRowsInMemory
 argument_list|,
+name|maxBytesInMemory
+argument_list|,
 name|maxRowsPerSegment
+argument_list|,
+name|maxTotalRows
 argument_list|,
 name|intermediatePersistPeriod
 argument_list|,
@@ -341,11 +452,19 @@ literal|true
 argument_list|,
 name|reportParseExceptions
 argument_list|,
-comment|// Supervised kafka tasks should respect KafkaSupervisorIOConfig.completionTimeout instead of
-comment|// handoffConditionTimeout
 name|handoffConditionTimeout
 argument_list|,
 name|resetOffsetAutomatically
+argument_list|,
+name|segmentWriteOutMediumFactory
+argument_list|,
+name|intermediateHandoffPeriod
+argument_list|,
+name|logParseExceptions
+argument_list|,
+name|maxParseExceptions
+argument_list|,
+name|maxSavedParseExceptions
 argument_list|)
 expr_stmt|;
 name|this
@@ -481,7 +600,6 @@ name|String
 name|toString
 parameter_list|()
 block|{
-comment|//noinspection deprecation
 return|return
 literal|"KafkaSupervisorTuningConfig{"
 operator|+
@@ -494,6 +612,21 @@ literal|", maxRowsPerSegment="
 operator|+
 name|getMaxRowsPerSegment
 argument_list|()
+operator|+
+literal|", maxTotalRows="
+operator|+
+name|getMaxTotalRows
+argument_list|()
+operator|+
+literal|", maxBytesInMemory="
+operator|+
+name|TuningConfigs
+operator|.
+name|getMaxBytesInMemoryOrDefault
+argument_list|(
+name|getMaxBytesInMemory
+argument_list|()
+argument_list|)
 operator|+
 literal|", intermediatePersistPeriod="
 operator|+
@@ -530,6 +663,11 @@ operator|+
 name|isResetOffsetAutomatically
 argument_list|()
 operator|+
+literal|", segmentWriteOutMediumFactory="
+operator|+
+name|getSegmentWriteOutMediumFactory
+argument_list|()
+operator|+
 literal|", workerThreads="
 operator|+
 name|workerThreads
@@ -553,6 +691,26 @@ operator|+
 literal|", offsetFetchPeriod="
 operator|+
 name|offsetFetchPeriod
+operator|+
+literal|", intermediateHandoffPeriod="
+operator|+
+name|getIntermediateHandoffPeriod
+argument_list|()
+operator|+
+literal|", logParseExceptions="
+operator|+
+name|isLogParseExceptions
+argument_list|()
+operator|+
+literal|", maxParseExceptions="
+operator|+
+name|getMaxParseExceptions
+argument_list|()
+operator|+
+literal|", maxSavedParseExceptions="
+operator|+
+name|getMaxSavedParseExceptions
+argument_list|()
 operator|+
 literal|'}'
 return|;

@@ -35,7 +35,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -55,7 +57,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -280,6 +284,9 @@ name|handleResponse
 parameter_list|(
 name|HttpResponse
 name|httpResponse
+parameter_list|,
+name|TrafficCop
+name|trafficCop
 parameter_list|)
 block|{
 try|try
@@ -320,6 +327,8 @@ operator|.
 name|handleResponse
 argument_list|(
 name|httpResponse
+argument_list|,
+name|trafficCop
 argument_list|)
 return|;
 block|}
@@ -364,6 +373,9 @@ name|clientResponse
 parameter_list|,
 name|HttpChunk
 name|httpChunk
+parameter_list|,
+name|long
+name|chunkNum
 parameter_list|)
 block|{
 return|return
@@ -374,6 +386,8 @@ argument_list|(
 name|clientResponse
 argument_list|,
 name|httpChunk
+argument_list|,
+name|chunkNum
 argument_list|)
 return|;
 block|}

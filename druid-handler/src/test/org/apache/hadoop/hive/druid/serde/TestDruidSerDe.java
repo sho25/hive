@@ -197,7 +197,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -215,7 +217,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -235,7 +239,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -899,7 +905,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -913,7 +921,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -925,7 +935,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -937,7 +949,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -951,7 +965,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -965,7 +981,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.

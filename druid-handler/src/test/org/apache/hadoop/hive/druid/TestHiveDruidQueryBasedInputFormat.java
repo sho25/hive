@@ -141,7 +141,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -218,6 +220,8 @@ operator|+
 literal|"\"aggregations\":[],"
 operator|+
 literal|"\"postAggregations\":[],"
+operator|+
+literal|"\"limit\":2147483647,"
 operator|+
 literal|"\"context\":{\"queryId\":\"\"}}, [localhost:8082]}]"
 decl_stmt|;

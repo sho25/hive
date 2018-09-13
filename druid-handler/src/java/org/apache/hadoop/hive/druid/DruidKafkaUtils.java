@@ -63,7 +63,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -79,7 +81,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -95,7 +99,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -111,7 +117,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -127,7 +135,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -143,7 +153,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -159,7 +171,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -175,7 +189,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -193,7 +209,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -213,7 +231,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -233,7 +253,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -245,7 +267,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -254,6 +278,22 @@ operator|.
 name|indexing
 operator|.
 name|DataSchema
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|druid
+operator|.
+name|segment
+operator|.
+name|writeout
+operator|.
+name|TmpFileSegmentWriteOutMediumFactory
 import|;
 end_import
 
@@ -633,6 +673,19 @@ argument_list|)
 argument_list|,
 name|DruidStorageHandlerUtils
 operator|.
+name|getLongProperty
+argument_list|(
+name|table
+argument_list|,
+name|DruidConstants
+operator|.
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"maxBytesInMemory"
+argument_list|)
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
 name|getIntegerProperty
 argument_list|(
 name|table
@@ -642,6 +695,19 @@ operator|.
 name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
 operator|+
 literal|"maxRowsPerSegment"
+argument_list|)
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
+name|getLongProperty
+argument_list|(
+name|table
+argument_list|,
+name|DruidConstants
+operator|.
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"maxTotalRows"
 argument_list|)
 argument_list|,
 name|DruidStorageHandlerUtils
@@ -716,6 +782,11 @@ name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
 operator|+
 literal|"resetOffsetAutomatically"
 argument_list|)
+argument_list|,
+name|TmpFileSegmentWriteOutMediumFactory
+operator|.
+name|instance
+argument_list|()
 argument_list|,
 name|DruidStorageHandlerUtils
 operator|.
@@ -793,6 +864,58 @@ operator|.
 name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
 operator|+
 literal|"offsetFetchPeriod"
+argument_list|)
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
+name|getPeriodProperty
+argument_list|(
+name|table
+argument_list|,
+name|DruidConstants
+operator|.
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"intermediateHandoffPeriod"
+argument_list|)
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
+name|getBooleanProperty
+argument_list|(
+name|table
+argument_list|,
+name|DruidConstants
+operator|.
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"logParseExceptions"
+argument_list|)
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
+name|getIntegerProperty
+argument_list|(
+name|table
+argument_list|,
+name|DruidConstants
+operator|.
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"maxParseExceptions"
+argument_list|)
+argument_list|,
+name|DruidStorageHandlerUtils
+operator|.
+name|getIntegerProperty
+argument_list|(
+name|table
+argument_list|,
+name|DruidConstants
+operator|.
+name|DRUID_KAFKA_INGESTION_PROPERTY_PREFIX
+operator|+
+literal|"maxSavedParseExceptions"
 argument_list|)
 argument_list|)
 argument_list|,

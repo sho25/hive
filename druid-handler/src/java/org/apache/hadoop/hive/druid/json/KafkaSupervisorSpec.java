@@ -21,7 +21,9 @@ end_package
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -252,6 +254,20 @@ else|:
 operator|new
 name|KafkaSupervisorTuningConfig
 argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
 literal|null
 argument_list|,
 literal|null

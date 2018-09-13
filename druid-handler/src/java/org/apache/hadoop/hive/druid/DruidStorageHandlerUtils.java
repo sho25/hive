@@ -205,7 +205,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -221,7 +223,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -237,7 +241,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -249,7 +255,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -265,7 +273,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -281,7 +291,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -297,7 +309,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -315,7 +329,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -331,7 +347,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -349,7 +367,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -367,7 +387,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -385,7 +407,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -403,7 +427,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -423,7 +449,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -443,7 +471,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -463,7 +493,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -477,7 +509,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -489,7 +523,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -501,7 +537,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -517,7 +555,23 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
+operator|.
+name|druid
+operator|.
+name|query
+operator|.
+name|DruidProcessingConfig
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -531,7 +585,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -545,7 +601,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -559,7 +617,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -573,7 +633,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -587,7 +649,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -601,7 +665,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -615,7 +681,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -629,7 +697,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -643,7 +713,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -657,7 +729,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -671,7 +745,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -685,7 +761,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -699,7 +777,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -713,7 +793,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -727,7 +809,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -741,7 +825,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -753,7 +839,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -765,7 +853,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -777,7 +867,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -791,7 +883,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -805,7 +899,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -819,7 +915,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -835,7 +933,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -851,7 +951,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -865,7 +967,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -881,7 +985,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -895,7 +1001,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -909,7 +1017,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -923,7 +1033,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -935,7 +1047,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -947,7 +1061,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -959,7 +1075,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -973,7 +1091,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -987,7 +1107,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -1001,7 +1123,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -1015,7 +1139,9 @@ end_import
 
 begin_import
 import|import
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -2246,14 +2372,22 @@ name|IndexIO
 argument_list|(
 name|JSON_MAPPER
 argument_list|,
-name|TmpFileSegmentWriteOutMediumFactory
-operator|.
-name|instance
+operator|new
+name|DruidProcessingConfig
 argument_list|()
-argument_list|,
+block|{
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getFormatString
 parameter_list|()
-lambda|->
-literal|0
+block|{
+return|return
+literal|"%s-%s"
+return|;
+block|}
+block|}
 argument_list|)
 decl_stmt|;
 comment|/**    * Used by druid to merge indexes.    */
@@ -2293,7 +2427,7 @@ operator|.
 name|newWeakInterner
 argument_list|()
 decl_stmt|;
-comment|/**    * Method that creates a request for Druid query using SMILE format.    *    * @param address of the host target.    * @param query druid query.    *    * @return Request object to be submitted.    */
+comment|/**    * Method that creates a request for Druid query using SMILE format.    *    * @param address of the host target.    * @param query   druid query.    * @return Request object to be submitted.    */
 specifier|public
 specifier|static
 name|Request
@@ -2302,7 +2436,9 @@ parameter_list|(
 name|String
 name|address
 parameter_list|,
-name|io
+name|org
+operator|.
+name|apache
 operator|.
 name|druid
 operator|.
@@ -2410,7 +2546,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Method that submits a request to an Http address and retrieves the result.    * The caller is responsible for closing the stream once it finishes consuming it.    *    * @param client Http Client will be used to submit request.    * @param request Http request to be submitted.    *    * @return response object.    *    * @throws IOException in case of request IO error.    */
+comment|/**    * Method that submits a request to an Http address and retrieves the result.    * The caller is responsible for closing the stream once it finishes consuming it.    *    * @param client  Http Client will be used to submit request.    * @param request Http request to be submitted.    * @return response object.    * @throws IOException in case of request IO error.    */
 specifier|public
 specifier|static
 name|InputStream
@@ -2667,7 +2803,7 @@ return|return
 name|req
 return|;
 block|}
-comment|/**    * @param taskDir path to the  directory containing the segments descriptor info    *                the descriptor path will be    *                ../workingPath/task_id/{@link DruidStorageHandler#SEGMENTS_DESCRIPTOR_DIR_NAME}/*.json    * @param conf    hadoop conf to get the file system    *    * @return List of DataSegments    *    * @throws IOException can be for the case we did not produce data.    */
+comment|/**    * @param taskDir path to the  directory containing the segments descriptor info    *                the descriptor path will be    *                ../workingPath/task_id/{@link DruidStorageHandler#SEGMENTS_DESCRIPTOR_DIR_NAME}/*.json    * @param conf    hadoop conf to get the file system    * @return List of DataSegments    * @throws IOException can be for the case we did not produce data.    */
 specifier|public
 specifier|static
 name|List
@@ -2770,7 +2906,7 @@ name|build
 argument_list|()
 return|;
 block|}
-comment|/**    * Writes to filesystem serialized form of segment descriptor if an existing file exists it will try to replace it.    *    * @param outputFS       filesystem.    * @param segment        DataSegment object.    * @param descriptorPath path.    *    * @throws IOException in case any IO issues occur.    */
+comment|/**    * Writes to filesystem serialized form of segment descriptor if an existing file exists it will try to replace it.    *    * @param outputFS       filesystem.    * @param segment        DataSegment object.    * @param descriptorPath path.    * @throws IOException in case any IO issues occur.    */
 specifier|public
 specifier|static
 name|void
@@ -2903,7 +3039,7 @@ name|push
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * @param connector                   SQL metadata connector to the metadata storage    * @param metadataStorageTablesConfig Table config    *    * @return all the active data sources in the metadata storage    */
+comment|/**    * @param connector                   SQL metadata connector to the metadata storage    * @param metadataStorageTablesConfig Table config    * @return all the active data sources in the metadata storage    */
 specifier|static
 name|Collection
 argument_list|<
@@ -2998,7 +3134,7 @@ end_class
 
 begin_comment
 unit|}
-comment|/**    * @param connector                   SQL connector to metadata    * @param metadataStorageTablesConfig Tables configuration    * @param dataSource                  Name of data source    *    * @return true if the data source was successfully disabled false otherwise    */
+comment|/**    * @param connector                   SQL connector to metadata    * @param metadataStorageTablesConfig Tables configuration    * @param dataSource                  Name of data source    * @return true if the data source was successfully disabled false otherwise    */
 end_comment
 
 begin_function
@@ -3114,7 +3250,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * First computes the segments timeline to accommodate new segments for insert into case.    * Then moves segments to druid deep storage with updated metadata/version.    * ALL IS DONE IN ONE TRANSACTION    *    * @param connector DBI connector to commit    * @param metadataStorageTablesConfig Druid metadata tables definitions    * @param dataSource Druid datasource name    * @param segments List of segments to move and commit to metadata    * @param overwrite if it is an insert overwrite    * @param conf Configuration    * @param dataSegmentPusher segment pusher    *    * @return List of successfully published Druid segments.    * This list has the updated versions and metadata about segments after move and timeline sorting    *    * @throws CallbackFailedException in case the connector can not add the segment to the DB.    */
+comment|/**    * First computes the segments timeline to accommodate new segments for insert into case.    * Then moves segments to druid deep storage with updated metadata/version.    * ALL IS DONE IN ONE TRANSACTION    *    * @param connector                   DBI connector to commit    * @param metadataStorageTablesConfig Druid metadata tables definitions    * @param dataSource                  Druid datasource name    * @param segments                    List of segments to move and commit to metadata    * @param overwrite                   if it is an insert overwrite    * @param conf                        Configuration    * @param dataSegmentPusher           segment pusher    * @return List of successfully published Druid segments.    * This list has the updated versions and metadata about segments after move and timeline sorting    * @throws CallbackFailedException in case the connector can not add the segment to the DB.    */
 end_comment
 
 begin_function
@@ -3796,7 +3932,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * @param connector                   SQL connector to metadata    * @param metadataStorageTablesConfig Tables configuration    * @param dataSource                  Name of data source    *    * @return List of all data segments part of the given data source    */
+comment|/**    * @param connector                   SQL connector to metadata    * @param metadataStorageTablesConfig Tables configuration    * @param dataSource                  Name of data source    * @return List of all data segments part of the given data source    */
 end_comment
 
 begin_function
@@ -3971,7 +4107,7 @@ end_empty_stmt
 
 begin_comment
 unit|}
-comment|/**    * @param connector SQL DBI connector.    *    * @return streaming fetch size.    */
+comment|/**    * @param connector SQL DBI connector.    * @return streaming fetch size.    */
 end_comment
 
 begin_function
@@ -4004,7 +4140,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * @param pushedSegment the pushed data segment object    * @param segmentsDescriptorDir actual directory path for descriptors.    *    * @return a sanitize file name    */
+comment|/**    * @param pushedSegment         the pushed data segment object    * @param segmentsDescriptorDir actual directory path for descriptors.    * @return a sanitize file name    */
 end_comment
 
 begin_function
