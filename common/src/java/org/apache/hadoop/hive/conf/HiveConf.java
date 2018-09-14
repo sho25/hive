@@ -6455,6 +6455,15 @@ operator|+
 literal|"is that it limits the number of mappers to the number of files."
 argument_list|)
 block|,
+name|HIVE_DEFAULT_NULLS_LAST
+argument_list|(
+literal|"hive.default.nulls.last"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to set NULLS LAST as the default null ordering"
+argument_list|)
+block|,
 name|HIVE_GROUPBY_POSITION_ALIAS
 argument_list|(
 literal|"hive.groupby.position.alias"

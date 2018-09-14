@@ -506,6 +506,11 @@ specifier|final
 name|ObjectInspector
 name|outputOI
 decl_stmt|;
+specifier|protected
+specifier|final
+name|boolean
+name|nullsLast
+decl_stmt|;
 comment|/**    * Internal class to represent a window range in a partition by searching the    * relative position (ROWS) or relative value (RANGE) of the current row    */
 specifier|protected
 specifier|static
@@ -1200,6 +1205,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|this
@@ -1231,6 +1239,12 @@ operator|.
 name|outputOI
 operator|=
 name|outputOI
+expr_stmt|;
+name|this
+operator|.
+name|nullsLast
+operator|=
+name|nullsLast
 expr_stmt|;
 block|}
 comment|/**    * Get the aggregation for the whole partition. Used in the case where windowing    * is unbounded or the function value is calculated based on all the rows in the    * partition such as percent_rank().    * @return the aggregated result    * @throws HiveException    */
@@ -1277,6 +1291,8 @@ argument_list|,
 name|currentRow
 argument_list|,
 name|partition
+argument_list|,
+name|nullsLast
 argument_list|)
 decl_stmt|;
 name|PTFPartitionIterator
@@ -1448,6 +1464,9 @@ name|currRow
 parameter_list|,
 name|PTFPartition
 name|p
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1516,6 +1535,8 @@ operator|.
 name|getScanner
 argument_list|(
 name|winFrame
+argument_list|,
+name|nullsLast
 argument_list|)
 decl_stmt|;
 name|start
@@ -1840,6 +1861,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -1853,6 +1877,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|sumAgg
@@ -1924,6 +1950,8 @@ argument_list|,
 name|currentRow
 argument_list|,
 name|partition
+argument_list|,
+name|nullsLast
 argument_list|)
 decl_stmt|;
 name|ResultType
@@ -2133,6 +2161,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2146,6 +2177,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this
@@ -2188,6 +2221,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2201,6 +2237,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this
@@ -2243,6 +2281,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2256,6 +2297,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this
@@ -2351,6 +2394,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2364,6 +2410,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -2594,6 +2642,8 @@ argument_list|,
 name|currentRow
 argument_list|,
 name|partition
+argument_list|,
+name|nullsLast
 argument_list|)
 decl_stmt|;
 if|if
@@ -2881,6 +2931,9 @@ name|inputOI
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2896,6 +2949,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this
@@ -2941,6 +2996,9 @@ name|inputOI
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2956,6 +3014,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this

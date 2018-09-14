@@ -8538,21 +8538,6 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|child
-operator|.
-name|getToken
-argument_list|()
-operator|.
-name|getType
-argument_list|()
-operator|==
-name|HiveParser
-operator|.
-name|TOK_NULLS_FIRST
-condition|)
-block|{
 name|colList
 operator|.
 name|add
@@ -8580,19 +8565,6 @@ name|HIVE_COLUMN_ORDER_ASC
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"create/alter table: "
-operator|+
-literal|"not supported NULLS LAST for ORDER BY in ASC order"
-argument_list|)
-throw|;
-block|}
 block|}
 else|else
 block|{

@@ -967,6 +967,8 @@ name|tResolver
 operator|.
 name|initialize
 argument_list|(
+name|hConf
+argument_list|,
 name|ptfDesc
 argument_list|,
 name|def
@@ -1288,6 +1290,8 @@ name|tResolver
 operator|.
 name|initialize
 argument_list|(
+name|hConf
+argument_list|,
 name|ptfDesc
 argument_list|,
 name|def

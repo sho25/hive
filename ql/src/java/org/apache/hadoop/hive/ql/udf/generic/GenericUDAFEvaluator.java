@@ -719,7 +719,7 @@ specifier|protected
 name|BasePartitionEvaluator
 name|partitionEvaluator
 decl_stmt|;
-comment|/**    * When evaluating an aggregates over a fixed Window, streaming is not possible    * especially for RANGE Window type. For such case, the whole partition data needs    * to be collected and then to evaluate the aggregates. The naive approach is to    * calculate a row range for each row and to perform the aggregates. For some    * functions, a better implementation can be used to reduce the calculation.    * Note: since the evaluator is reused across different partitions, AggregationBuffer    * needs reset before aggregating for the new partition in the implementation.    * @param winFrame    the Window definition in play for this evaluation.    * @param partition   the partition data    * @param parameters  the list of the expressions in the function    * @param outputOI    the output object inspector    * @return            the evaluator, default to BasePartitionEvaluator which    *                    implements the naive approach    */
+comment|/**    * When evaluating an aggregates over a fixed Window, streaming is not possible    * especially for RANGE Window type. For such case, the whole partition data needs    * to be collected and then to evaluate the aggregates. The naive approach is to    * calculate a row range for each row and to perform the aggregates. For some    * functions, a better implementation can be used to reduce the calculation.    * Note: since the evaluator is reused across different partitions, AggregationBuffer    * needs reset before aggregating for the new partition in the implementation.    * @param winFrame    the Window definition in play for this evaluation.    * @param partition   the partition data    * @param parameters  the list of the expressions in the function    * @param outputOI    the output object inspector    * @param nullsLast   the nulls last configuration    * @return            the evaluator, default to BasePartitionEvaluator which    *                    implements the naive approach    */
 specifier|public
 specifier|final
 name|BasePartitionEvaluator
@@ -739,6 +739,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 if|if
@@ -759,6 +762,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -785,6 +790,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 return|return
@@ -800,6 +808,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}

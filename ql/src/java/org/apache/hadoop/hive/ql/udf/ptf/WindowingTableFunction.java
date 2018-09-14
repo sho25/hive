@@ -1087,6 +1087,8 @@ name|wFn
 operator|.
 name|getOI
 argument_list|()
+argument_list|,
+name|nullsLast
 argument_list|)
 decl_stmt|;
 return|return
@@ -1143,6 +1145,8 @@ name|wFn
 operator|.
 name|getOI
 argument_list|()
+argument_list|,
+name|nullsLast
 argument_list|)
 decl_stmt|;
 return|return

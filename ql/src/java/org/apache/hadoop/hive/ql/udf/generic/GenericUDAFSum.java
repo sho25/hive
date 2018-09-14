@@ -2117,6 +2117,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 return|return
@@ -2134,6 +2137,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}
@@ -2801,6 +2806,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 return|return
@@ -2818,6 +2826,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}
@@ -3470,6 +3480,9 @@ name|parameters
 parameter_list|,
 name|ObjectInspector
 name|outputOI
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 return|return
@@ -3487,6 +3500,8 @@ argument_list|,
 name|parameters
 argument_list|,
 name|outputOI
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}

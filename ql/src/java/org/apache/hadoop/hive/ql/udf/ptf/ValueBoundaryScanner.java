@@ -316,6 +316,11 @@ name|start
 decl_stmt|,
 name|end
 decl_stmt|;
+specifier|protected
+specifier|final
+name|boolean
+name|nullsLast
+decl_stmt|;
 specifier|public
 name|ValueBoundaryScanner
 parameter_list|(
@@ -324,6 +329,9 @@ name|start
 parameter_list|,
 name|BoundaryDef
 name|end
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|this
@@ -337,6 +345,12 @@ operator|.
 name|end
 operator|=
 name|end
+expr_stmt|;
+name|this
+operator|.
+name|nullsLast
+operator|=
+name|nullsLast
 expr_stmt|;
 block|}
 specifier|public
@@ -374,6 +388,9 @@ name|getScanner
 parameter_list|(
 name|WindowFrameDef
 name|winFrameDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 throws|throws
 name|HiveException
@@ -419,6 +436,8 @@ name|getEnd
 argument_list|()
 argument_list|,
 name|orderDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}
@@ -440,6 +459,8 @@ name|getEnd
 argument_list|()
 argument_list|,
 name|orderDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}
@@ -472,6 +493,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -479,6 +503,8 @@ argument_list|(
 name|start
 argument_list|,
 name|end
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this
@@ -603,9 +629,11 @@ operator|==
 literal|null
 condition|)
 block|{
-comment|// Use Case 2.
+comment|// Use Case 3.
 if|if
 condition|(
+name|nullsLast
+operator|||
 name|expressionDef
 operator|.
 name|getOrder
@@ -613,16 +641,9 @@ argument_list|()
 operator|==
 name|Order
 operator|.
-name|ASC
+name|DESC
 condition|)
 block|{
-return|return
-literal|0
-return|;
-block|}
-else|else
-block|{
-comment|// Use Case 3.
 while|while
 condition|(
 name|sortKey
@@ -663,6 +684,26 @@ name|rowIdx
 operator|+
 literal|1
 return|;
+block|}
+else|else
+block|{
+comment|// Use Case 2.
+if|if
+condition|(
+name|expressionDef
+operator|.
+name|getOrder
+argument_list|()
+operator|==
+name|Order
+operator|.
+name|ASC
+condition|)
+block|{
+return|return
+literal|0
+return|;
+block|}
 block|}
 block|}
 name|Object
@@ -970,6 +1011,8 @@ block|{
 comment|// Use Case 9.
 if|if
 condition|(
+name|nullsLast
+operator|||
 name|expressionDef
 operator|.
 name|getOrder
@@ -1261,6 +1304,8 @@ block|{
 comment|// Use Case 2.
 if|if
 condition|(
+name|nullsLast
+operator|||
 name|expressionDef
 operator|.
 name|getOrder
@@ -1616,6 +1661,8 @@ block|{
 comment|// Use Case 9.
 if|if
 condition|(
+name|nullsLast
+operator|||
 name|expressionDef
 operator|.
 name|getOrder
@@ -1885,6 +1932,9 @@ name|end
 parameter_list|,
 name|OrderDef
 name|orderDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 throws|throws
 name|HiveException
@@ -1965,6 +2015,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 case|case
@@ -1979,6 +2031,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 case|case
@@ -1993,6 +2047,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 case|case
@@ -2010,6 +2066,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 case|case
@@ -2024,6 +2082,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 case|case
@@ -2038,6 +2098,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 case|case
@@ -2052,6 +2114,8 @@ argument_list|,
 name|end
 argument_list|,
 name|exprDef
+argument_list|,
+name|nullsLast
 argument_list|)
 return|;
 block|}
@@ -2093,6 +2157,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2102,6 +2169,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -2286,6 +2355,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2295,6 +2367,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -2479,6 +2553,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2488,6 +2565,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -2680,6 +2759,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2689,6 +2771,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -2885,6 +2969,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -2894,6 +2981,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -3093,6 +3182,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -3102,6 +3194,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -3304,6 +3398,9 @@ name|end
 parameter_list|,
 name|OrderExpressionDef
 name|expressionDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -3313,6 +3410,8 @@ argument_list|,
 name|end
 argument_list|,
 name|expressionDef
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 block|}
@@ -3488,6 +3587,9 @@ name|end
 parameter_list|,
 name|OrderDef
 name|orderDef
+parameter_list|,
+name|boolean
+name|nullsLast
 parameter_list|)
 block|{
 name|super
@@ -3495,6 +3597,8 @@ argument_list|(
 name|start
 argument_list|,
 name|end
+argument_list|,
+name|nullsLast
 argument_list|)
 expr_stmt|;
 name|this
