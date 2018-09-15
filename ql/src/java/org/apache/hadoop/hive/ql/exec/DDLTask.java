@@ -32613,6 +32613,12 @@ name|crtView
 operator|.
 name|isReplace
 argument_list|()
+operator|&&
+operator|!
+name|crtView
+operator|.
+name|getIfNotExists
+argument_list|()
 condition|)
 block|{
 comment|// View already exists, thus we should be replacing
