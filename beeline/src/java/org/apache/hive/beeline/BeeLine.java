@@ -5794,6 +5794,31 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|int
+name|begin
+parameter_list|(
+name|String
+index|[]
+name|args
+parameter_list|,
+name|InputStream
+name|inputStream
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+name|begin
+argument_list|(
+name|args
+argument_list|,
+name|inputStream
+argument_list|,
+literal|true
+argument_list|)
+return|;
+block|}
 comment|/**    * Start accepting input from stdin, and dispatch it    * to the appropriate {@link CommandHandler} until the    * global variable<code>exit</code> is true.    */
 specifier|public
 name|int
@@ -5805,6 +5830,9 @@ name|args
 parameter_list|,
 name|InputStream
 name|inputStream
+parameter_list|,
+name|boolean
+name|keepHistory
 parameter_list|)
 throws|throws
 name|IOException
@@ -5827,9 +5855,15 @@ parameter_list|)
 block|{
 comment|// nothing
 block|}
+if|if
+condition|(
+name|keepHistory
+condition|)
+block|{
 name|setupHistory
 argument_list|()
 expr_stmt|;
+block|}
 comment|//add shutdown hook to cleanup the beeline for smooth exit
 name|addBeelineShutdownHook
 argument_list|()
@@ -7133,6 +7167,15 @@ expr_stmt|;
 try|try
 block|{
 comment|// now set the output for the history
+if|if
+condition|(
+name|this
+operator|.
+name|history
+operator|!=
+literal|null
+condition|)
+block|{
 name|consoleReader
 operator|.
 name|setHistory
@@ -7142,6 +7185,17 @@ operator|.
 name|history
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|consoleReader
+operator|.
+name|setHistoryEnabled
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
