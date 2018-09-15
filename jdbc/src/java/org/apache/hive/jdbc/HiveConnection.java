@@ -6699,6 +6699,24 @@ literal|"Schema name is null or empty"
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|schema
+operator|.
+name|contains
+argument_list|(
+literal|";"
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"invalid schema name"
+argument_list|)
+throw|;
+block|}
 name|Statement
 name|stmt
 init|=
