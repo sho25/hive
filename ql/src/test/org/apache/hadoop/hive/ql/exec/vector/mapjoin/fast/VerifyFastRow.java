@@ -3671,12 +3671,6 @@ name|typeInfo
 argument_list|)
 return|;
 block|}
-specifier|static
-name|int
-name|fake
-init|=
-literal|0
-decl_stmt|;
 specifier|private
 specifier|static
 name|Object

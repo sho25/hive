@@ -205,6 +205,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|WriteBuffers
+operator|.
+name|ByteSegmentRef
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ObjectInspector
@@ -256,6 +274,28 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/*      * This variation is for FULL OUTER MapJoin.  It does key match tracking only if the key has      * no NULLs.      */
+name|JoinUtil
+operator|.
+name|JoinResult
+name|setFromVectorNoNulls
+parameter_list|(
+name|VectorHashKeyWrapperBase
+name|kw
+parameter_list|,
+name|VectorExpressionWriter
+index|[]
+name|keyOutputWriters
+parameter_list|,
+name|VectorHashKeyWrapperBatch
+name|keyWrapperBatch
+parameter_list|,
+name|MatchTracker
+name|matchTracker
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
 comment|/**      * Changes current rows to which adaptor is referring to the rows corresponding to      * the key represented by a row object, and fields and ois used to interpret it.      */
 name|JoinUtil
 operator|.
@@ -276,6 +316,33 @@ argument_list|<
 name|ObjectInspector
 argument_list|>
 name|ois
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
+comment|/*      * This variation is for FULL OUTER MapJoin.  It does key match tracking only if the key has      * no NULLs.      */
+name|JoinUtil
+operator|.
+name|JoinResult
+name|setFromRowNoNulls
+parameter_list|(
+name|Object
+name|row
+parameter_list|,
+name|List
+argument_list|<
+name|ExprNodeEvaluator
+argument_list|>
+name|fields
+parameter_list|,
+name|List
+argument_list|<
+name|ObjectInspector
+argument_list|>
+name|ois
+parameter_list|,
+name|MatchTracker
+name|matchTracker
 parameter_list|)
 throws|throws
 name|HiveException
@@ -333,6 +400,44 @@ name|HiveException
 throws|,
 name|IOException
 function_decl|;
+comment|/**    * For FULL OUTER MapJoin: Iterates through the Small Table hash table and returns the key and    * value rows for any non-matched keys.    */
+specifier|public
+interface|interface
+name|NonMatchedSmallTableIterator
+block|{
+comment|/**      * Return true if another non-matched key was found.      */
+name|boolean
+name|isNext
+parameter_list|()
+function_decl|;
+comment|/**      * @return The current key as a desearialized object array after a successful next() call      * that returns true.      * @throws HiveException      */
+name|List
+argument_list|<
+name|Object
+argument_list|>
+name|getCurrentKey
+parameter_list|()
+throws|throws
+name|HiveException
+function_decl|;
+comment|/**      * @return The current key as a WriteBuffers.ByteSegmentRef after a successful next() call      * that returns true.      */
+name|ByteSegmentRef
+name|getCurrentKeyAsRef
+parameter_list|()
+function_decl|;
+comment|/**      * @return The container w/the values rows for the current key after a successful next() call      * that returns true.      */
+name|MapJoinRowContainer
+name|getCurrentRows
+parameter_list|()
+function_decl|;
+comment|/**      * @return The value rows has a BytesBytesMultiHashMap result.      */
+name|BytesBytesMultiHashMap
+operator|.
+name|Result
+name|getHashMapResult
+parameter_list|()
+function_decl|;
+block|}
 comment|/**    * Indicates to the container that the puts have ended; table is now r/o.    */
 name|void
 name|seal
@@ -344,6 +449,14 @@ name|createGetter
 parameter_list|(
 name|MapJoinKey
 name|keyTypeFromLoader
+parameter_list|)
+function_decl|;
+comment|/**    * Creates an iterator for going through the hash table and returns the key and value rows for any    * non-matched keys.  Supports FULL OUTER MapJoin.    */
+name|NonMatchedSmallTableIterator
+name|createNonMatchedSmallTableIterator
+parameter_list|(
+name|MatchTracker
+name|matchTracker
 parameter_list|)
 function_decl|;
 comment|/** Clears the contents of the table. */
@@ -364,7 +477,7 @@ name|boolean
 name|hasSpill
 parameter_list|()
 function_decl|;
-comment|/**    * Return the size of the hash table    */
+comment|/**    * Return the size of the hash table.    */
 name|int
 name|size
 parameter_list|()

@@ -78,7 +78,6 @@ name|VectorMapJoinOptimizedMultiKeyHashMap
 extends|extends
 name|VectorMapJoinOptimizedHashMap
 block|{
-comment|// UNDONE: How to look for all NULLs in a multi-key?????  Let nulls through for now.
 specifier|public
 name|VectorMapJoinOptimizedMultiKeyHashMap
 parameter_list|(

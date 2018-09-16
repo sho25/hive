@@ -498,7 +498,6 @@ return|return
 name|hashTable
 return|;
 block|}
-comment|/*   @Override   public com.esotericsoftware.kryo.io.Output getHybridBigTableSpillOutput(int partitionId) {      HybridHashTableContainer ht = (HybridHashTableContainer) mapJoinTableContainer;      HashPartition hp = ht.getHashPartitions()[partitionId];      return hp.getMatchfileOutput();   }   */
 block|}
 end_class
 

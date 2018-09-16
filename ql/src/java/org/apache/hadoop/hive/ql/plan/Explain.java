@@ -68,6 +68,8 @@ block|,
 name|DEFAULT
 block|,
 name|EXTENDED
+block|,
+name|DEBUG
 block|;
 specifier|public
 name|boolean

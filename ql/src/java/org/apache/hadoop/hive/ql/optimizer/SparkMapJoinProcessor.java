@@ -312,6 +312,17 @@ argument_list|,
 name|noCheckOuterJoin
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|mapJoinOp
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// 1. remove RS as parent for the big table branch
 comment|// 2. remove old join op from child set of all the RSs
 name|List

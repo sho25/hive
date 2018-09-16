@@ -679,8 +679,6 @@ argument_list|(
 name|data
 argument_list|,
 name|rowInspector
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}

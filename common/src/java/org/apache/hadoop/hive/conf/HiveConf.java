@@ -6361,6 +6361,40 @@ operator|+
 literal|"use BloomFilter in Hybrid grace hash join to minimize unnecessary spilling."
 argument_list|)
 block|,
+name|HIVEMAPJOINFULLOUTER
+argument_list|(
+literal|"hive.mapjoin.full.outer"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to use MapJoin for FULL OUTER JOINs."
+argument_list|)
+block|,
+name|HIVE_TEST_MAPJOINFULLOUTER_OVERRIDE
+argument_list|(
+literal|"hive.test.mapjoin.full.outer.override"
+argument_list|,
+literal|"none"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"enable"
+argument_list|,
+literal|"disable"
+argument_list|)
+argument_list|,
+literal|"internal use only, used to override the hive.mapjoin.full.outer\n"
+operator|+
+literal|"setting.  Using enable will force it on and disable will force it off.\n"
+operator|+
+literal|"The default none is do nothing, of course"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|HIVESMBJOINCACHEROWS
 argument_list|(
 literal|"hive.smbjoin.cache.rows"

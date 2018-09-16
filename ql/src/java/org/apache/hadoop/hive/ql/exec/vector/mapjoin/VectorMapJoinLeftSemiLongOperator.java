@@ -445,48 +445,19 @@ comment|// Process Single-Column Long Left-Semi Join on a vectorized row batch.
 comment|//
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
-name|process
-parameter_list|(
-name|Object
-name|row
-parameter_list|,
-name|int
-name|tag
-parameter_list|)
+name|commonSetup
+parameter_list|()
 throws|throws
 name|HiveException
 block|{
-try|try
-block|{
-name|VectorizedRowBatch
-name|batch
-init|=
-operator|(
-name|VectorizedRowBatch
-operator|)
-name|row
-decl_stmt|;
-name|alias
-operator|=
-operator|(
-name|byte
-operator|)
-name|tag
-expr_stmt|;
-if|if
-condition|(
-name|needCommonSetup
-condition|)
-block|{
-comment|// Our one time process method initialization.
+name|super
+operator|.
 name|commonSetup
-argument_list|(
-name|batch
-argument_list|)
+argument_list|()
 expr_stmt|;
-comment|/*          * Initialize Single-Column Long members for this specialized class.          */
+comment|/*      * Initialize Single-Column Long members for this specialized class.      */
 name|singleJoinColumn
 operator|=
 name|bigTableKeyColumnMap
@@ -494,19 +465,22 @@ index|[
 literal|0
 index|]
 expr_stmt|;
-name|needCommonSetup
-operator|=
-literal|false
-expr_stmt|;
 block|}
-if|if
-condition|(
-name|needHashTableSetup
-condition|)
+annotation|@
+name|Override
+specifier|public
+name|void
+name|hashTableSetup
+parameter_list|()
+throws|throws
+name|HiveException
 block|{
-comment|// Setup our hash table specialization.  It will be the first time the process
-comment|// method is called, or after a Hybrid Grace reload.
-comment|/*          * Get our Single-Column Long hash set information for this specialized class.          */
+name|super
+operator|.
+name|hashTableSetup
+argument_list|()
+expr_stmt|;
+comment|/*      * Get our Single-Column Long hash set information for this specialized class.      */
 name|hashSet
 operator|=
 operator|(
@@ -541,14 +515,21 @@ name|max
 argument_list|()
 expr_stmt|;
 block|}
-name|needHashTableSetup
-operator|=
-literal|false
-expr_stmt|;
 block|}
-name|batchCounter
-operator|++
-expr_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|void
+name|processBatch
+parameter_list|(
+name|VectorizedRowBatch
+name|batch
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+try|try
+block|{
 comment|// Do the per-batch setup for an left semi join.
 comment|// (Currently none)
 comment|// leftSemiPerBatchSetup(batch);
@@ -584,28 +565,6 @@ operator|==
 literal|0
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|CLASS_NAME
-operator|+
-literal|" batch #"
-operator|+
-name|batchCounter
-operator|+
-literal|" empty"
-argument_list|)
-expr_stmt|;
-block|}
 return|return;
 block|}
 comment|// Perform any key expressions.  Results will go into scratch columns.

@@ -53,6 +53,26 @@ name|JoinUtil
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|MatchTracker
+import|;
+end_import
+
 begin_comment
 comment|/*  * The interface for a single long key hash map lookup method.  */
 end_comment
@@ -77,6 +97,24 @@ name|key
 parameter_list|,
 name|VectorMapJoinHashMapResult
 name|hashMapResult
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/*    * A version of lookup with match tracking.    * ...    * @param matchTracker    *        Optional key match tracking.    *    *        NOTE: Since the hash table can be shared, the matchTracker serves as the non-shared    *        private object for tracking our key matches in the hash table.    * ...    */
+name|JoinUtil
+operator|.
+name|JoinResult
+name|lookup
+parameter_list|(
+name|long
+name|key
+parameter_list|,
+name|VectorMapJoinHashMapResult
+name|hashMapResult
+parameter_list|,
+name|MatchTracker
+name|matchTracker
 parameter_list|)
 throws|throws
 name|IOException

@@ -654,6 +654,8 @@ operator|.
 name|length
 argument_list|,
 name|hashMapResult
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -676,6 +678,8 @@ argument_list|,
 literal|0
 argument_list|,
 name|hashMapResult
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -825,6 +829,8 @@ argument_list|,
 literal|0
 argument_list|,
 name|hashMapResult
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -980,6 +986,8 @@ operator|.
 name|length
 argument_list|,
 name|hashMapResult
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|HashSet

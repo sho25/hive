@@ -553,6 +553,9 @@ block|}
 specifier|public
 name|VectorMapJoinFastBytesHashTable
 parameter_list|(
+name|boolean
+name|isFullOuter
+parameter_list|,
 name|int
 name|initialCapacity
 parameter_list|,
@@ -568,6 +571,8 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|isFullOuter
+argument_list|,
 name|initialCapacity
 argument_list|,
 name|loadFactor

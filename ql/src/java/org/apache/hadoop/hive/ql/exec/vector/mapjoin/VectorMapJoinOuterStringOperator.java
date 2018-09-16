@@ -353,7 +353,7 @@ comment|// The above members are initialized by the constructor and must not be
 comment|// transient.
 comment|//---------------------------------------------------------------------------
 comment|// The hash map for this specialized class.
-specifier|private
+specifier|protected
 specifier|transient
 name|VectorMapJoinBytesHashMap
 name|hashMap
@@ -362,7 +362,7 @@ comment|//----------------------------------------------------------------------
 comment|// Single-Column String specific members.
 comment|//
 comment|// The column number for this one column join specialization.
-specifier|private
+specifier|protected
 specifier|transient
 name|int
 name|singleJoinColumn
@@ -427,48 +427,19 @@ comment|// Process Single-Column String Outer Join on a vectorized row batch.
 comment|//
 annotation|@
 name|Override
-specifier|public
+specifier|protected
 name|void
-name|process
-parameter_list|(
-name|Object
-name|row
-parameter_list|,
-name|int
-name|tag
-parameter_list|)
+name|commonSetup
+parameter_list|()
 throws|throws
 name|HiveException
 block|{
-try|try
-block|{
-name|VectorizedRowBatch
-name|batch
-init|=
-operator|(
-name|VectorizedRowBatch
-operator|)
-name|row
-decl_stmt|;
-name|alias
-operator|=
-operator|(
-name|byte
-operator|)
-name|tag
-expr_stmt|;
-if|if
-condition|(
-name|needCommonSetup
-condition|)
-block|{
-comment|// Our one time process method initialization.
+name|super
+operator|.
 name|commonSetup
-argument_list|(
-name|batch
-argument_list|)
+argument_list|()
 expr_stmt|;
-comment|/*          * Initialize Single-Column String members for this specialized class.          */
+comment|/*      * Initialize Single-Column String members for this specialized class.      */
 name|singleJoinColumn
 operator|=
 name|bigTableKeyColumnMap
@@ -476,19 +447,22 @@ index|[
 literal|0
 index|]
 expr_stmt|;
-name|needCommonSetup
-operator|=
-literal|false
-expr_stmt|;
 block|}
-if|if
-condition|(
-name|needHashTableSetup
-condition|)
+annotation|@
+name|Override
+specifier|public
+name|void
+name|hashTableSetup
+parameter_list|()
+throws|throws
+name|HiveException
 block|{
-comment|// Setup our hash table specialization.  It will be the first time the process
-comment|// method is called, or after a Hybrid Grace reload.
-comment|/*          * Get our Single-Column String hash map information for this specialized class.          */
+name|super
+operator|.
+name|hashTableSetup
+argument_list|()
+expr_stmt|;
+comment|/*      * Get our Single-Column String hash map information for this specialized class.      */
 name|hashMap
 operator|=
 operator|(
@@ -496,14 +470,21 @@ name|VectorMapJoinBytesHashMap
 operator|)
 name|vectorMapJoinHashTable
 expr_stmt|;
-name|needHashTableSetup
-operator|=
-literal|false
-expr_stmt|;
 block|}
-name|batchCounter
-operator|++
-expr_stmt|;
+annotation|@
+name|Override
+specifier|public
+name|void
+name|processBatch
+parameter_list|(
+name|VectorizedRowBatch
+name|batch
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+try|try
+block|{
 specifier|final
 name|int
 name|inputLogicalSize
@@ -512,37 +493,6 @@ name|batch
 operator|.
 name|size
 decl_stmt|;
-if|if
-condition|(
-name|inputLogicalSize
-operator|==
-literal|0
-condition|)
-block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|CLASS_NAME
-operator|+
-literal|" batch #"
-operator|+
-name|batchCounter
-operator|+
-literal|" empty"
-argument_list|)
-expr_stmt|;
-block|}
-return|return;
-block|}
 comment|// Do the per-batch setup for an outer join.
 name|outerPerBatchSetup
 argument_list|(
@@ -564,9 +514,6 @@ condition|(
 name|inputSelectedInUse
 condition|)
 block|{
-comment|// if (!verifyMonotonicallyIncreasing(batch.selected, batch.size)) {
-comment|//   throw new HiveException("batch.selected is not in sort order and unique");
-comment|// }
 name|System
 operator|.
 name|arraycopy
@@ -627,85 +574,6 @@ operator|!=
 name|inputLogicalSize
 operator|)
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-if|if
-condition|(
-name|batch
-operator|.
-name|selectedInUse
-condition|)
-block|{
-if|if
-condition|(
-name|inputSelectedInUse
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|CLASS_NAME
-operator|+
-literal|" inputSelected "
-operator|+
-name|intArrayToRangesString
-argument_list|(
-name|inputSelected
-argument_list|,
-name|inputLogicalSize
-argument_list|)
-operator|+
-literal|" filtered batch.selected "
-operator|+
-name|intArrayToRangesString
-argument_list|(
-name|batch
-operator|.
-name|selected
-argument_list|,
-name|batch
-operator|.
-name|size
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|CLASS_NAME
-operator|+
-literal|" inputLogicalSize "
-operator|+
-name|inputLogicalSize
-operator|+
-literal|" filtered batch.selected "
-operator|+
-name|intArrayToRangesString
-argument_list|(
-name|batch
-operator|.
-name|selected
-argument_list|,
-name|batch
-operator|.
-name|size
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-block|}
 block|}
 comment|// Perform any key expressions.  Results will go into scratch columns.
 if|if
@@ -884,6 +752,8 @@ name|hashMapResults
 index|[
 literal|0
 index|]
+argument_list|,
+name|matchTracker
 argument_list|)
 expr_stmt|;
 block|}
@@ -937,28 +807,6 @@ block|}
 else|else
 block|{
 comment|/*          * NOT Repeating.          */
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|CLASS_NAME
-operator|+
-literal|" batch #"
-operator|+
-name|batchCounter
-operator|+
-literal|" non-repeated"
-argument_list|)
-expr_stmt|;
-block|}
 name|int
 name|selected
 index|[]
@@ -1055,7 +903,6 @@ else|:
 name|logical
 operator|)
 decl_stmt|;
-comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, taskName + ", " + getOperatorId() + " candidate " + CLASS_NAME + " batch");
 comment|/*            * Single-Column String outer null detection.            */
 name|boolean
 name|isNull
@@ -1087,7 +934,6 @@ name|atLeastOneNonMatch
 operator|=
 literal|true
 expr_stmt|;
-comment|// LOG.debug(CLASS_NAME + " logical " + logical + " batchIndex " + batchIndex + " NULL");
 block|}
 else|else
 block|{
@@ -1225,6 +1071,8 @@ name|hashMapResults
 index|[
 name|hashMapResultCount
 index|]
+argument_list|,
+name|matchTracker
 argument_list|)
 expr_stmt|;
 comment|/*                * Common outer join result processing.                */
@@ -1278,7 +1126,6 @@ index|]
 operator|=
 name|batchIndex
 expr_stmt|;
-comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " MATCH isSingleValue " + equalKeySeriesIsSingleValue[equalKeySeriesCount] + " currentKey " + currentKey);
 break|break;
 case|case
 name|SPILL
@@ -1308,13 +1155,11 @@ name|atLeastOneNonMatch
 operator|=
 literal|true
 expr_stmt|;
-comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " NOMATCH" + " currentKey " + currentKey);
 break|break;
 block|}
 block|}
 else|else
 block|{
-comment|// LOG.debug(CLASS_NAME + " logical " + logical + " batchIndex " + batchIndex + " Key Continues " + saveKey + " " + saveJoinResult.name());
 comment|// Series of equal keys.
 switch|switch
 condition|(
@@ -1338,7 +1183,6 @@ index|]
 operator|=
 name|batchIndex
 expr_stmt|;
-comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " MATCH duplicate");
 break|break;
 case|case
 name|SPILL
@@ -1364,13 +1208,9 @@ break|break;
 case|case
 name|NOMATCH
 case|:
-comment|// VectorizedBatchUtil.debugDisplayOneRow(batch, batchIndex, CLASS_NAME + " NOMATCH duplicate");
 break|break;
 block|}
 block|}
-comment|// if (!verifyMonotonicallyIncreasing(allMatchs, allMatchCount)) {
-comment|//   throw new HiveException("allMatchs is not in sort order and unique");
-comment|// }
 block|}
 block|}
 if|if
@@ -1568,7 +1408,8 @@ operator|>
 literal|0
 condition|)
 block|{
-comment|// Forward any remaining selected rows.
+comment|// Forward any rows in the Big Table batch that had results added (they will be selected).
+comment|// NOTE: Other result rows may have been generated in the overflowBatch.
 name|forwardBigTableBatch
 argument_list|(
 name|batch

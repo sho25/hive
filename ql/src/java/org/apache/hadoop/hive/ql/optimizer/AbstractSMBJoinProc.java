@@ -2684,6 +2684,17 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|mapJoinOp
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// Remove the join operator from the query join context
 comment|// Data structures coming from QBJoinTree
 name|mapJoinOp

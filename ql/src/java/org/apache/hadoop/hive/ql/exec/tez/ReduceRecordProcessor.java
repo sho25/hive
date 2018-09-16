@@ -1848,7 +1848,12 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Reduce operator initialization failed"
+name|redWork
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" operator initialization failed"
 argument_list|,
 name|e
 argument_list|)

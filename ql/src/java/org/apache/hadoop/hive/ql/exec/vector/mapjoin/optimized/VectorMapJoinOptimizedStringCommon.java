@@ -100,7 +100,7 @@ import|;
 end_import
 
 begin_comment
-comment|/*  * An single byte array value hash map based on the BytesBytesMultiHashMap.  *  * Since BytesBytesMultiHashMap does not interpret the key as BinarySortable we optimize  * this case and just reference the byte array key directly for the lookup instead of serializing  * the byte array into BinarySortable. We rely on it just doing byte array equality comparisons.  */
+comment|/*  * An single byte array value hash map based on the BytesBytesMultiHashMap.  */
 end_comment
 
 begin_class
@@ -108,9 +108,6 @@ specifier|public
 class|class
 name|VectorMapJoinOptimizedStringCommon
 block|{
-comment|// private boolean isOuterJoin;
-comment|// private BinarySortableDeserializeRead keyBinarySortableDeserializeRead;
-comment|// private ReadStringResults readStringResults;
 specifier|private
 name|BinarySortableSerializeWrite
 name|keyBinarySortableSerializeWrite
@@ -193,11 +190,6 @@ name|boolean
 name|isOuterJoin
 parameter_list|)
 block|{
-comment|// this.isOuterJoin = isOuterJoin;
-comment|// PrimitiveTypeInfo[] primitiveTypeInfos = { TypeInfoFactory.stringTypeInfo };
-comment|// keyBinarySortableDeserializeRead = new BinarySortableDeserializeRead(primitiveTypeInfos);
-comment|// readStringResults = keyBinarySortableDeserializeRead.createReadStringResults();
-comment|// bytesWritable = new BytesWritable();
 name|keyBinarySortableSerializeWrite
 operator|=
 operator|new

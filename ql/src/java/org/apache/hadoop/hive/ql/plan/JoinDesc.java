@@ -1682,6 +1682,12 @@ operator|.
 name|append
 argument_list|(
 name|expr
+operator|==
+literal|null
+condition|?
+literal|"NULL"
+else|:
+name|expr
 operator|.
 name|getExprString
 argument_list|()

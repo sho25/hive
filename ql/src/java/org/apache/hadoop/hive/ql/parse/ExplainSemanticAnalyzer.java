@@ -900,6 +900,24 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|explainOptions
+operator|==
+name|HiveParser
+operator|.
+name|KW_DEBUG
+condition|)
+block|{
+name|config
+operator|.
+name|setDebug
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 else|else
 block|{
 comment|// UNDONE: UNKNOWN OPTION?

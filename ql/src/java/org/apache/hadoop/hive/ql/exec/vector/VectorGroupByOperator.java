@@ -4893,13 +4893,9 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-name|forward
+name|vectorForward
 argument_list|(
 name|outputBatch
-argument_list|,
-literal|null
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|outputBatch

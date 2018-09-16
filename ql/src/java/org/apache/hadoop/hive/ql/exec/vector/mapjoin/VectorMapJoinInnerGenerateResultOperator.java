@@ -447,19 +447,14 @@ comment|/*    * Setup our inner join specific members.    */
 specifier|protected
 name|void
 name|commonSetup
-parameter_list|(
-name|VectorizedRowBatch
-name|batch
-parameter_list|)
+parameter_list|()
 throws|throws
 name|HiveException
 block|{
 name|super
 operator|.
 name|commonSetup
-argument_list|(
-name|batch
-argument_list|)
+argument_list|()
 expr_stmt|;
 comment|// Inner join specific.
 name|VectorMapJoinHashMap
@@ -475,7 +470,7 @@ operator|=
 operator|new
 name|VectorMapJoinHashMapResult
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -513,7 +508,7 @@ operator|=
 operator|new
 name|int
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -523,7 +518,7 @@ operator|=
 operator|new
 name|int
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -533,7 +528,7 @@ operator|=
 operator|new
 name|int
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -543,7 +538,7 @@ operator|=
 operator|new
 name|boolean
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -553,7 +548,7 @@ operator|=
 operator|new
 name|int
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -563,7 +558,7 @@ operator|=
 operator|new
 name|int
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -573,7 +568,7 @@ operator|=
 operator|new
 name|int
 index|[
-name|batch
+name|VectorizedRowBatch
 operator|.
 name|DEFAULT_SIZE
 index|]
@@ -596,7 +591,7 @@ control|(
 name|int
 name|column
 range|:
-name|smallTableOutputVectorColumns
+name|smallTableValueColumnMap
 control|)
 block|{
 name|ColumnVector

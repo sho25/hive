@@ -63,10 +63,17 @@ name|BytesBytesMultiHashMap
 operator|.
 name|Result
 name|hashMapResult
+parameter_list|,
+name|MatchTracker
+name|matchTracker
 parameter_list|)
 function_decl|;
 name|int
 name|directSpillPartitionId
+parameter_list|()
+function_decl|;
+name|MatchTracker
+name|createMatchTracker
 parameter_list|()
 function_decl|;
 block|}

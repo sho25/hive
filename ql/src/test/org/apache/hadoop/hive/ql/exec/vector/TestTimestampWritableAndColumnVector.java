@@ -113,13 +113,6 @@ name|TEST_COUNT
 init|=
 literal|5000
 decl_stmt|;
-specifier|private
-specifier|static
-name|int
-name|fake
-init|=
-literal|0
-decl_stmt|;
 annotation|@
 name|Test
 specifier|public

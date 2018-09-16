@@ -177,6 +177,48 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|persistence
+operator|.
+name|MapJoinTableContainer
+operator|.
+name|NonMatchedSmallTableIterator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|MatchTracker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|vector
 operator|.
 name|mapjoin
@@ -531,10 +573,6 @@ name|estimatedKeyCount
 operator|=
 name|estimatedKeyCount
 expr_stmt|;
-comment|// LOG.info("VectorMapJoinFastTableContainer load keyCountAdj " + keyCountAdj);
-comment|// LOG.info("VectorMapJoinFastTableContainer load threshold " + threshold);
-comment|// LOG.info("VectorMapJoinFastTableContainer load loadFactor " + loadFactor);
-comment|// LOG.info("VectorMapJoinFastTableContainer load wbSize " + wbSize);
 name|int
 name|newThreshold
 init|=
@@ -579,16 +617,6 @@ name|int
 name|newThreshold
 parameter_list|)
 block|{
-name|boolean
-name|isOuterJoin
-init|=
-operator|!
-name|desc
-operator|.
-name|isNoOuterJoin
-argument_list|()
-decl_stmt|;
-comment|// UNDONE
 name|VectorMapJoinDesc
 name|vectorDesc
 init|=
@@ -622,6 +650,14 @@ init|=
 name|vectorDesc
 operator|.
 name|getHashTableKeyType
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isFullOuter
+init|=
+name|vectorDesc
+operator|.
+name|getIsFullOuter
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -686,9 +722,9 @@ operator|=
 operator|new
 name|VectorMapJoinFastLongHashMap
 argument_list|(
-name|minMaxEnabled
+name|isFullOuter
 argument_list|,
-name|isOuterJoin
+name|minMaxEnabled
 argument_list|,
 name|hashTableKeyType
 argument_list|,
@@ -710,9 +746,9 @@ operator|=
 operator|new
 name|VectorMapJoinFastLongHashMultiSet
 argument_list|(
-name|minMaxEnabled
+name|isFullOuter
 argument_list|,
-name|isOuterJoin
+name|minMaxEnabled
 argument_list|,
 name|hashTableKeyType
 argument_list|,
@@ -734,9 +770,9 @@ operator|=
 operator|new
 name|VectorMapJoinFastLongHashSet
 argument_list|(
-name|minMaxEnabled
+name|isFullOuter
 argument_list|,
-name|isOuterJoin
+name|minMaxEnabled
 argument_list|,
 name|hashTableKeyType
 argument_list|,
@@ -768,7 +804,7 @@ operator|=
 operator|new
 name|VectorMapJoinFastStringHashMap
 argument_list|(
-name|isOuterJoin
+name|isFullOuter
 argument_list|,
 name|newThreshold
 argument_list|,
@@ -788,7 +824,7 @@ operator|=
 operator|new
 name|VectorMapJoinFastStringHashMultiSet
 argument_list|(
-name|isOuterJoin
+name|isFullOuter
 argument_list|,
 name|newThreshold
 argument_list|,
@@ -808,7 +844,7 @@ operator|=
 operator|new
 name|VectorMapJoinFastStringHashSet
 argument_list|(
-name|isOuterJoin
+name|isFullOuter
 argument_list|,
 name|newThreshold
 argument_list|,
@@ -838,7 +874,7 @@ operator|=
 operator|new
 name|VectorMapJoinFastMultiKeyHashMap
 argument_list|(
-name|isOuterJoin
+name|isFullOuter
 argument_list|,
 name|newThreshold
 argument_list|,
@@ -858,7 +894,7 @@ operator|=
 operator|new
 name|VectorMapJoinFastMultiKeyHashMultiSet
 argument_list|(
-name|isOuterJoin
+name|isFullOuter
 argument_list|,
 name|newThreshold
 argument_list|,
@@ -878,7 +914,7 @@ operator|=
 operator|new
 name|VectorMapJoinFastMultiKeyHashSet
 argument_list|(
-name|isOuterJoin
+name|isFullOuter
 argument_list|,
 name|newThreshold
 argument_list|,
@@ -953,6 +989,24 @@ name|createGetter
 parameter_list|(
 name|MapJoinKey
 name|keyTypeFromLoader
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Not applicable"
+argument_list|)
+throw|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|NonMatchedSmallTableIterator
+name|createNonMatchedSmallTableIterator
+parameter_list|(
+name|MatchTracker
+name|matchTracker
 parameter_list|)
 block|{
 throw|throw
@@ -1100,7 +1154,6 @@ name|SerDeException
 block|{
 comment|// Do nothing in this case.
 block|}
-comment|/*   @Override   public com.esotericsoftware.kryo.io.Output getHybridBigTableSpillOutput(int partitionId) {     throw new RuntimeException("Not applicable");   }   */
 block|}
 end_class
 

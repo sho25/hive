@@ -53,6 +53,26 @@ name|JoinUtil
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|persistence
+operator|.
+name|MatchTracker
+import|;
+end_import
+
 begin_comment
 comment|/*  * The interface for a single byte array key hash map lookup method.  */
 end_comment
@@ -66,7 +86,7 @@ name|VectorMapJoinBytesHashTable
 extends|,
 name|VectorMapJoinHashMap
 block|{
-comment|/*    * Lookup a byte array key in the hash map.    *    * @param keyBytes    *         A byte array containing the key within a range.    * @param keyStart    *         The offset the beginning of the key.    * @param keyLength    *         The length of the key.    * @param hashMapResult    *         The object to receive small table value(s) information on a MATCH.    *         Or, for SPILL, it has information on where to spill the big table row.    *    * @return    *         Whether the lookup was a match, no match, or spill (the partition with the key    *         is currently spilled).    */
+comment|/*    * Lookup a byte array key in the hash map.    *    * @param keyBytes    *         A byte array containing the key within a range.    * @param keyStart    *         The offset the beginning of the key.    * @param keyLength    *         The length of the key.    * @param hashMapResult    *         The object to receive small table value(s) information on a MATCH.    *         Or, for SPILL, it has information on where to spill the big table row.    *    *         NOTE: Since the hash table can be shared, the hashMapResult serves as the non-shared    *         private object for our accessing the hash table lookup values, etc.    *    * @return    *         Whether the lookup was a match, no match, or spill (the partition with the key    *         is currently spilled).    */
 name|JoinUtil
 operator|.
 name|JoinResult
@@ -84,6 +104,31 @@ name|keyLength
 parameter_list|,
 name|VectorMapJoinHashMapResult
 name|hashMapResult
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/*    * A version of lookup with match tracking.    * ...    *   * @param matchTracker    *        Optional key match tracking.    *    *        NOTE: Since the hash table can be shared, the matchTracker serves as the non-shared    *        private object for tracking our key matches in the hash table.    * ...    */
+name|JoinUtil
+operator|.
+name|JoinResult
+name|lookup
+parameter_list|(
+name|byte
+index|[]
+name|keyBytes
+parameter_list|,
+name|int
+name|keyStart
+parameter_list|,
+name|int
+name|keyLength
+parameter_list|,
+name|VectorMapJoinHashMapResult
+name|hashMapResult
+parameter_list|,
+name|MatchTracker
+name|matchTracker
 parameter_list|)
 throws|throws
 name|IOException

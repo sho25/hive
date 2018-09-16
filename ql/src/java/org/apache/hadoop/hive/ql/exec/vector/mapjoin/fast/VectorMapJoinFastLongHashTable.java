@@ -355,11 +355,6 @@ name|hashTableKeyType
 decl_stmt|;
 specifier|private
 specifier|final
-name|boolean
-name|isOuterJoin
-decl_stmt|;
-specifier|private
-specifier|final
 name|BinarySortableDeserializeRead
 name|keyBinarySortableDeserializeRead
 decl_stmt|;
@@ -409,11 +404,9 @@ return|return
 name|max
 return|;
 block|}
-annotation|@
-name|Override
 specifier|public
-name|void
-name|putRow
+name|boolean
+name|adaptPutRow
 parameter_list|(
 name|BytesWritable
 name|currentKey
@@ -465,7 +458,9 @@ name|readNextField
 argument_list|()
 condition|)
 block|{
-return|return;
+return|return
+literal|false
+return|;
 block|}
 block|}
 catch|catch
@@ -513,6 +508,9 @@ argument_list|,
 name|currentValue
 argument_list|)
 expr_stmt|;
+return|return
+literal|true
+return|;
 block|}
 specifier|protected
 specifier|abstract
@@ -1046,10 +1044,9 @@ expr_stmt|;
 name|metricExpands
 operator|++
 expr_stmt|;
-comment|// LOG.debug("VectorMapJoinFastLongHashTable expandAndRehash new logicalHashBucketCount " + logicalHashBucketCount + " resizeThreshold " + resizeThreshold + " metricExpands " + metricExpands);
 block|}
 specifier|protected
-name|long
+name|int
 name|findReadSlot
 parameter_list|(
 name|long
@@ -1112,7 +1109,6 @@ literal|0
 condition|)
 block|{
 comment|// Given that we do not delete, an empty slot means no match.
-comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " empty slot (i = " + i + ")");
 return|return
 operator|-
 literal|1
@@ -1135,12 +1131,8 @@ operator|==
 name|tableKey
 condition|)
 block|{
-comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " found key (i = " + i + ")");
 return|return
-name|slotPairs
-index|[
 name|pairIndex
-index|]
 return|;
 block|}
 comment|// Some other key (collision) - keep probing.
@@ -1158,9 +1150,7 @@ operator|>
 name|largestNumberOfSteps
 condition|)
 block|{
-comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot returning not found");
 comment|// We know we never went that far when we were inserting.
-comment|// LOG.debug("VectorMapJoinFastLongHashTable findReadSlot key " + key + " slot " + slot + " pairIndex " + pairIndex + " largestNumberOfSteps " + largestNumberOfSteps + " (i = " + i + ")");
 return|return
 operator|-
 literal|1
@@ -1226,10 +1216,10 @@ specifier|public
 name|VectorMapJoinFastLongHashTable
 parameter_list|(
 name|boolean
-name|minMaxEnabled
+name|isFullOuter
 parameter_list|,
 name|boolean
-name|isOuterJoin
+name|minMaxEnabled
 parameter_list|,
 name|HashTableKeyType
 name|hashTableKeyType
@@ -1249,6 +1239,8 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
+name|isFullOuter
+argument_list|,
 name|initialCapacity
 argument_list|,
 name|loadFactor
@@ -1257,12 +1249,6 @@ name|writeBuffersSize
 argument_list|,
 name|estimatedKeyCount
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|isOuterJoin
-operator|=
-name|isOuterJoin
 expr_stmt|;
 name|this
 operator|.

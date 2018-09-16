@@ -174,7 +174,6 @@ specifier|private
 name|HashTableKeyType
 name|hashTableKeyType
 decl_stmt|;
-comment|// private BinarySortableDeserializeRead keyBinarySortableDeserializeRead;
 specifier|private
 name|BinarySortableSerializeWrite
 name|keyBinarySortableSerializeWrite

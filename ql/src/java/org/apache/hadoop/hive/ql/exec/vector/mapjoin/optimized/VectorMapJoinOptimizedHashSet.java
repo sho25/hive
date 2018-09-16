@@ -322,6 +322,8 @@ operator|(
 name|VectorMapJoinHashTableResult
 operator|)
 name|hashSetResult
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 return|return

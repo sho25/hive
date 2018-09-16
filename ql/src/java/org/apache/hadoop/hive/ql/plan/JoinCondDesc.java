@@ -472,7 +472,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"Outer Join "
+literal|"Full Outer Join "
 argument_list|)
 expr_stmt|;
 break|break;

@@ -1030,6 +1030,12 @@ name|valueFields
 operator|.
 name|add
 argument_list|(
+name|expr
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
 name|ExprNodeEvaluatorFactory
 operator|.
 name|get

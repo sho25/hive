@@ -266,6 +266,32 @@ name|HashSetResult
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|putRow
+parameter_list|(
+name|BytesWritable
+name|currentKey
+parameter_list|,
+name|BytesWritable
+name|currentValue
+parameter_list|)
+throws|throws
+name|HiveException
+throws|,
+name|IOException
+block|{
+comment|// Ignore NULL keys (HashSet not used for FULL OUTER).
+name|adaptPutRow
+argument_list|(
+name|currentKey
+argument_list|,
+name|currentValue
+argument_list|)
+expr_stmt|;
+block|}
 comment|/*    * A Unit Test convenience method for putting the key into the hash table using the    * actual type.    */
 annotation|@
 name|VisibleForTesting
@@ -380,8 +406,8 @@ argument_list|(
 name|key
 argument_list|)
 decl_stmt|;
-name|long
-name|existance
+name|int
+name|pairIndex
 init|=
 name|findReadSlot
 argument_list|(
@@ -397,7 +423,7 @@ name|joinResult
 decl_stmt|;
 if|if
 condition|(
-name|existance
+name|pairIndex
 operator|==
 operator|-
 literal|1
@@ -414,6 +440,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|/*        * NOTE: Support for trackMatched not needed yet for Set.        if (matchTracker != null) {         matchTracker.trackMatch(pairIndex / 2);       }       */
 name|joinResult
 operator|=
 name|JoinUtil
@@ -438,10 +465,10 @@ specifier|public
 name|VectorMapJoinFastLongHashSet
 parameter_list|(
 name|boolean
-name|minMaxEnabled
+name|isFullOuter
 parameter_list|,
 name|boolean
-name|isOuterJoin
+name|minMaxEnabled
 parameter_list|,
 name|HashTableKeyType
 name|hashTableKeyType
@@ -461,9 +488,9 @@ parameter_list|)
 block|{
 name|super
 argument_list|(
-name|minMaxEnabled
+name|isFullOuter
 argument_list|,
-name|isOuterJoin
+name|minMaxEnabled
 argument_list|,
 name|hashTableKeyType
 argument_list|,
