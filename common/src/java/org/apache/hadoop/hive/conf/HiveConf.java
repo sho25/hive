@@ -15030,7 +15030,8 @@ name|LLAP_MEMORY_OVERSUBSCRIPTION_MAX_EXECUTORS_PER_QUERY
 argument_list|(
 literal|"hive.llap.memory.oversubscription.max.executors.per.query"
 argument_list|,
-literal|3
+operator|-
+literal|1
 argument_list|,
 literal|"Used along with hive.llap.mapjoin.memory.oversubscribe.factor to limit the number of executors from\n"
 operator|+
