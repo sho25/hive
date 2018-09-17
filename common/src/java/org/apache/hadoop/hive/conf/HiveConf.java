@@ -13877,7 +13877,7 @@ name|TEZ_LLAP_MIN_REDUCER_PER_EXECUTOR
 argument_list|(
 literal|"hive.tez.llap.min.reducer.per.executor"
 argument_list|,
-literal|0.95f
+literal|0.33f
 argument_list|,
 literal|"If above 0, the min number of reducers for auto-parallelism for LLAP scheduling will\n"
 operator|+
