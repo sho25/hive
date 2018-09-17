@@ -7741,7 +7741,7 @@ name|HIVEHASHTABLEKEYCOUNTADJUSTMENT
 argument_list|(
 literal|"hive.hashtable.key.count.adjustment"
 argument_list|,
-literal|2.0f
+literal|0.99f
 argument_list|,
 literal|"Adjustment to mapjoin hashtable size derived from table and column statistics; the estimate"
 operator|+
