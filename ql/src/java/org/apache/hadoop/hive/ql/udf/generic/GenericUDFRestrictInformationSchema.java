@@ -654,6 +654,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 if|if
 condition|(
 name|enableHS2PolicyProvider
@@ -680,7 +681,6 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 return|return
