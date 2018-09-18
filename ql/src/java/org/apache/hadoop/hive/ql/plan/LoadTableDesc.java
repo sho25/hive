@@ -240,6 +240,9 @@ name|KEEP_EXISTING
 block|,
 comment|/**      * This corresponds to REPL LOAD where if we re-apply the same event then need to overwrite      * the file instead of making a duplicate copy.      * If any file exist while copy, then just overwrite the file      */
 name|OVERWRITE_EXISTING
+block|,
+comment|/**      * No need to move the file, used in case of replication to s3      */
+name|IGNORE
 block|}
 specifier|public
 name|LoadTableDesc

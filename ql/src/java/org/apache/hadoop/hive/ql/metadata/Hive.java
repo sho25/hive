@@ -9388,6 +9388,7 @@ comment|// Note: this assumes both paths are qualified; which they are, currentl
 if|if
 condition|(
 operator|(
+operator|(
 name|isMmTableWrite
 operator|||
 name|isFullAcidTable
@@ -9399,6 +9400,15 @@ name|equals
 argument_list|(
 name|newPartPath
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|IGNORE
+operator|)
 condition|)
 block|{
 comment|// MM insert query, move itself is a no-op.
@@ -13061,6 +13071,7 @@ comment|// Note: this assumes both paths are qualified; which they are, currentl
 if|if
 condition|(
 operator|(
+operator|(
 name|isMmTable
 operator|||
 name|isFullAcidTable
@@ -13075,6 +13086,15 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|)
+operator|)
+operator|||
+operator|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|IGNORE
+operator|)
 condition|)
 block|{
 comment|/**        * some operations on Transactional tables (e.g. Import) write directly to the final location        * and avoid the 'move' operation.  Since MoveTask does other things, setting 'loadPath' to be        * the table/partition path indicates that the 'file move' part of MoveTask is not needed.        */
@@ -24155,7 +24175,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-specifier|private
+specifier|public
 name|void
 name|cleanUpOneDirectoryForReplace
 parameter_list|(

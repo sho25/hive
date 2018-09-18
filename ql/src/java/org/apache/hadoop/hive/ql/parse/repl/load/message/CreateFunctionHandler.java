@@ -1297,6 +1297,10 @@ argument_list|,
 name|context
 operator|.
 name|hiveConf
+argument_list|,
+literal|false
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|replCopyTasks

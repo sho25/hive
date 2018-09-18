@@ -3002,6 +3002,23 @@ operator|+
 literal|" always by default."
 argument_list|)
 block|,
+name|REPL_ENABLE_MOVE_OPTIMIZATION
+argument_list|(
+literal|"hive.repl.enable.move.optimization"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If its set to true, REPL LOAD copies data files directly to the target table/partition location \n"
+operator|+
+literal|"instead of copying to staging directory first and then move to target location. This optimizes \n"
+operator|+
+literal|" the REPL LOAD on object data stores such as S3 or WASB where creating a directory and move \n"
+operator|+
+literal|" files are costly operations. In file system like HDFS where move operation is atomic, this \n"
+operator|+
+literal|" optimization should not be enabled as it may lead to inconsistent data read for non acid tables."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"

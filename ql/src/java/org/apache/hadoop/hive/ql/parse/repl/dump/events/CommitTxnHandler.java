@@ -548,13 +548,15 @@ operator|.
 name|METADATA_NAME
 argument_list|)
 decl_stmt|;
+comment|// In case of ACID operations, same directory may have many other sub directory for different write id stmt id
+comment|// combination. So we can not set isreplace to true.
 name|withinContext
 operator|.
 name|replicationSpec
 operator|.
 name|setIsReplace
 argument_list|(
-literal|true
+literal|false
 argument_list|)
 expr_stmt|;
 name|EximUtil
