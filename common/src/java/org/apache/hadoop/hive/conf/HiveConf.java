@@ -3636,6 +3636,17 @@ argument_list|,
 literal|"Time-To-Live (TTL) of proto event files before cleanup."
 argument_list|)
 block|,
+name|HIVE_PROTO_FILE_PER_EVENT
+argument_list|(
+literal|"hive.hook.proto.file.per.event"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether each proto event has to be written to separate file. "
+operator|+
+literal|"(Use this for FS that does not hflush immediately like S3A)"
+argument_list|)
+block|,
 comment|// Hadoop Configuration Properties
 comment|// Properties with null values are ignored and exist only for the purpose of giving us
 comment|// a symbolic name to reference in the Hive source code. Properties with non-null
