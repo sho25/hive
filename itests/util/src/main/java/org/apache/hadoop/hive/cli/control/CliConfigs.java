@@ -861,12 +861,6 @@ expr_stmt|;
 comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
-literal|"sysdb.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-19509
-name|excludeQuery
-argument_list|(
 literal|"tez_smb_1.q"
 argument_list|)
 expr_stmt|;
