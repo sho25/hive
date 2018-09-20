@@ -557,6 +557,7 @@ name|SERVICE_DISCOVERY_MODE_ZOOKEEPER_HA
 init|=
 literal|"zooKeeperHA"
 decl_stmt|;
+specifier|public
 specifier|static
 specifier|final
 name|String
