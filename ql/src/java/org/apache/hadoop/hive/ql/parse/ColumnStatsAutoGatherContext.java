@@ -1770,7 +1770,9 @@ case|:
 case|case
 name|DECIMAL
 case|:
-comment|// TODO: Support case DATE:
+case|case
+name|DATE
+case|:
 break|break;
 default|default:
 return|return
