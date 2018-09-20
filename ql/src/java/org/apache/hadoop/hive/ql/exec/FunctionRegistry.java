@@ -4371,6 +4371,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"surrogate_key"
+argument_list|,
+name|GenericUDFSurrogateKey
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"isnull"
 argument_list|,
 name|GenericUDFOPNull
