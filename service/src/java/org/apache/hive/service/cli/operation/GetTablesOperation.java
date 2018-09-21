@@ -749,16 +749,6 @@ name|schemaPattern
 argument_list|)
 control|)
 block|{
-name|String
-name|dbNamePattern
-init|=
-name|convertIdentifierPattern
-argument_list|(
-name|dbName
-argument_list|,
-literal|true
-argument_list|)
-decl_stmt|;
 for|for
 control|(
 name|TableMeta
@@ -768,7 +758,7 @@ name|metastoreClient
 operator|.
 name|getTableMeta
 argument_list|(
-name|dbNamePattern
+name|dbName
 argument_list|,
 name|tablePattern
 argument_list|,
