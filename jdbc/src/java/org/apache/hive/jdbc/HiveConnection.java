@@ -811,6 +811,18 @@ name|javax
 operator|.
 name|security
 operator|.
+name|auth
+operator|.
+name|Subject
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
+name|security
+operator|.
 name|sasl
 operator|.
 name|Sasl
@@ -924,6 +936,26 @@ operator|.
 name|reflect
 operator|.
 name|Proxy
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|security
+operator|.
+name|AccessControlContext
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|security
+operator|.
+name|AccessController
 import|;
 end_import
 
@@ -1396,6 +1428,10 @@ decl_stmt|;
 specifier|private
 name|Properties
 name|clientInfo
+decl_stmt|;
+specifier|private
+name|Subject
+name|loggedInSubject
 decl_stmt|;
 comment|/**    * Get all direct HiveServer2 URLs from a ZooKeeper based HiveServer2 URL    * @param zookeeperBasedHS2Url    * @return    * @throws Exception    */
 specifier|public
@@ -3422,6 +3458,46 @@ name|isKerberosAuthMode
 argument_list|()
 condition|)
 block|{
+if|if
+condition|(
+name|assumeSubject
+condition|)
+block|{
+comment|// With this option, we're assuming that the external application,
+comment|// using the JDBC driver has done a JAAS kerberos login already
+name|AccessControlContext
+name|context
+init|=
+name|AccessController
+operator|.
+name|getContext
+argument_list|()
+decl_stmt|;
+name|loggedInSubject
+operator|=
+name|Subject
+operator|.
+name|getSubject
+argument_list|(
+name|context
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|loggedInSubject
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|SQLException
+argument_list|(
+literal|"The Subject is not set"
+argument_list|)
+throw|;
+block|}
+block|}
 comment|/**        * Add an interceptor which sets the appropriate header in the request.        * It does the kerberos authentication and get the final service ticket,        * for sending to the server before every request.        * In https mode, the entire information is encrypted        */
 name|requestInterceptor
 operator|=
@@ -3444,7 +3520,7 @@ argument_list|(
 name|useSsl
 argument_list|)
 argument_list|,
-name|assumeSubject
+name|loggedInSubject
 argument_list|,
 name|cookieStore
 argument_list|,

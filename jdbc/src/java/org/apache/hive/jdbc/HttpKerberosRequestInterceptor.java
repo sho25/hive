@@ -41,6 +41,18 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|security
+operator|.
+name|auth
+operator|.
+name|Subject
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -127,8 +139,8 @@ decl_stmt|;
 name|String
 name|serverHttpUrl
 decl_stmt|;
-name|boolean
-name|assumeSubject
+name|Subject
+name|loggedInSubject
 decl_stmt|;
 comment|// A fair reentrant lock
 specifier|private
@@ -154,8 +166,8 @@ parameter_list|,
 name|String
 name|serverHttpUrl
 parameter_list|,
-name|boolean
-name|assumeSubject
+name|Subject
+name|loggedInSubject
 parameter_list|,
 name|CookieStore
 name|cs
@@ -216,9 +228,9 @@ name|serverHttpUrl
 expr_stmt|;
 name|this
 operator|.
-name|assumeSubject
+name|loggedInSubject
 operator|=
-name|assumeSubject
+name|loggedInSubject
 expr_stmt|;
 block|}
 annotation|@
@@ -258,7 +270,7 @@ name|host
 argument_list|,
 name|serverHttpUrl
 argument_list|,
-name|assumeSubject
+name|loggedInSubject
 argument_list|)
 decl_stmt|;
 comment|// Set the session key token (Base64 encoded) in the headers
