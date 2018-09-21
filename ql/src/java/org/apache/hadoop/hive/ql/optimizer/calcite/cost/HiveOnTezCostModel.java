@@ -95,7 +95,9 @@ name|calcite
 operator|.
 name|rel
 operator|.
-name|RelDistributions
+name|RelDistribution
+operator|.
+name|Type
 import|;
 end_import
 
@@ -109,9 +111,7 @@ name|calcite
 operator|.
 name|rel
 operator|.
-name|RelDistribution
-operator|.
-name|Type
+name|RelDistributions
 import|;
 end_import
 
@@ -184,26 +184,6 @@ operator|.
 name|util
 operator|.
 name|Pair
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
 import|;
 end_import
 
@@ -327,7 +307,9 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveTableScan
+name|HiveJoin
+operator|.
+name|MapJoinStreamingRelation
 import|;
 end_import
 
@@ -349,9 +331,27 @@ name|calcite
 operator|.
 name|reloperators
 operator|.
-name|HiveJoin
+name|HiveTableScan
+import|;
+end_import
+
+begin_import
+import|import
+name|org
 operator|.
-name|MapJoinStreamingRelation
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
 import|;
 end_import
 
@@ -1476,7 +1476,7 @@ specifier|final
 name|double
 name|cpuCost
 init|=
-name|HiveAlgorithmsUtil
+name|algoUtils
 operator|.
 name|computeMapJoinCPUCost
 argument_list|(
@@ -3274,7 +3274,7 @@ specifier|final
 name|double
 name|cpuCost
 init|=
-name|HiveAlgorithmsUtil
+name|algoUtils
 operator|.
 name|computeSMBMapJoinCPUCost
 argument_list|(

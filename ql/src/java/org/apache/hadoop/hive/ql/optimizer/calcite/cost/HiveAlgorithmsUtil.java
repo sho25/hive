@@ -341,7 +341,7 @@ block|{
 specifier|private
 specifier|final
 name|double
-name|cpuCost
+name|cpuUnitCost
 decl_stmt|;
 specifier|private
 specifier|final
@@ -374,7 +374,7 @@ name|HiveConf
 name|conf
 parameter_list|)
 block|{
-name|cpuCost
+name|cpuUnitCost
 operator|=
 name|Double
 operator|.
@@ -396,7 +396,7 @@ argument_list|)
 expr_stmt|;
 name|netCost
 operator|=
-name|cpuCost
+name|cpuUnitCost
 operator|*
 name|Double
 operator|.
@@ -634,7 +634,7 @@ name|cpuCost
 operator|+=
 name|cardinality
 operator|*
-name|cpuCost
+name|cpuUnitCost
 expr_stmt|;
 block|}
 return|return
@@ -659,7 +659,7 @@ argument_list|(
 name|cardinality
 argument_list|)
 operator|*
-name|cpuCost
+name|cpuUnitCost
 return|;
 block|}
 specifier|public
@@ -774,7 +774,6 @@ name|ioCost
 return|;
 block|}
 specifier|public
-specifier|static
 name|double
 name|computeMapJoinCPUCost
 parameter_list|(
@@ -842,7 +841,7 @@ name|cpuCost
 operator|+=
 name|cardinality
 operator|*
-name|cpuCost
+name|cpuUnitCost
 expr_stmt|;
 block|}
 return|return
@@ -1009,14 +1008,14 @@ name|cpuCost
 operator|+=
 name|cardinality
 operator|*
-name|cpuCost
+name|cpuUnitCost
 expr_stmt|;
 block|}
 name|cpuCost
 operator|+=
 name|cardinality
 operator|*
-name|cpuCost
+name|cpuUnitCost
 expr_stmt|;
 block|}
 return|return
@@ -1121,7 +1120,6 @@ name|ioCost
 return|;
 block|}
 specifier|public
-specifier|static
 name|double
 name|computeSMBMapJoinCPUCost
 parameter_list|(
@@ -1165,7 +1163,7 @@ argument_list|(
 name|i
 argument_list|)
 operator|*
-name|cpuCost
+name|cpuUnitCost
 expr_stmt|;
 block|}
 return|return
