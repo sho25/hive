@@ -6132,6 +6132,19 @@ argument_list|,
 literal|"Toggle display of CBO warnings like missing column stats"
 argument_list|)
 block|,
+name|HIVE_CBO_STATS_CORRELATED_MULTI_KEY_JOINS
+argument_list|(
+literal|"hive.cbo.stats.correlated.multi.key.joins"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When CBO estimates output rows for a join involving multiple columns, the default behavior assumes"
+operator|+
+literal|"the columns are independent. Setting this flag to true will cause the estimator to assume"
+operator|+
+literal|"the columns are correlated."
+argument_list|)
+block|,
 name|AGGR_JOIN_TRANSPOSE
 argument_list|(
 literal|"hive.transpose.aggr.join"

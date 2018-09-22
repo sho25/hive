@@ -5698,7 +5698,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_STATS_CORRELATED_MULTI_KEY_JOINS
+name|HIVE_CBO_STATS_CORRELATED_MULTI_KEY_JOINS
 argument_list|)
 decl_stmt|;
 name|boolean
