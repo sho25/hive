@@ -18150,9 +18150,11 @@ name|addAll
 argument_list|(
 name|db
 operator|.
-name|getAllMaterializedViewObjects
+name|getMaterializedViewObjectsByPattern
 argument_list|(
 name|dbName
+argument_list|,
+name|pattern
 argument_list|)
 argument_list|)
 expr_stmt|;
