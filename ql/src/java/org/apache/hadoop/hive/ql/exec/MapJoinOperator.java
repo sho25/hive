@@ -1441,16 +1441,46 @@ operator|.
 name|HIVEQUERYID
 argument_list|)
 decl_stmt|;
+comment|// The cacheKey may have already been defined in the MapJoin conf spec
+comment|// as part of the Shared Work Optimization if it can be reused among
+comment|// multiple mapjoin operators. In that case, we take that key from conf
+comment|// and append this.getClass().getName() to disambiguate between different
+comment|// classes that may be using the same source data, e.g.
+comment|// VectorMapJoinInnerGenerateResultOperator and VectorMapJoinLeftSemiLongOperator.
+comment|// If the cacheKey is not defined in the conf, then we generate it.
 name|cacheKey
 operator|=
-literal|"HASH_MAP_"
-operator|+
+name|conf
+operator|.
+name|getCacheKey
+argument_list|()
+operator|==
+literal|null
+condition|?
+name|MapJoinDesc
+operator|.
+name|generateCacheKey
+argument_list|(
 name|this
 operator|.
 name|getOperatorId
 argument_list|()
+argument_list|)
+else|:
+name|conf
+operator|.
+name|getCacheKey
+argument_list|()
 operator|+
-literal|"_container"
+literal|"_"
+operator|+
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
 expr_stmt|;
 name|cache
 operator|=

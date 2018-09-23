@@ -8581,6 +8581,19 @@ operator|+
 literal|"to be set to true. Tez only."
 argument_list|)
 block|,
+name|HIVE_SHARED_WORK_REUSE_MAPJOIN_CACHE
+argument_list|(
+literal|"hive.optimize.shared.work.mapjoin.cache.reuse"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When shared work optimizer is enabled, whether we should reuse the cache for the broadcast side\n"
+operator|+
+literal|"of mapjoin operators that share same broadcast input. Requires hive.optimize.shared.work\n"
+operator|+
+literal|"to be set to true. Tez only."
+argument_list|)
+block|,
 name|HIVE_COMBINE_EQUIVALENT_WORK_OPTIMIZATION
 argument_list|(
 literal|"hive.combine.equivalent.work.optimization"
