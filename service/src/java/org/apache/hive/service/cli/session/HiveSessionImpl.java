@@ -3067,6 +3067,15 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"executing "
+operator|+
+name|statement
+argument_list|)
+expr_stmt|;
 name|ExecuteStatementOperation
 name|operation
 init|=

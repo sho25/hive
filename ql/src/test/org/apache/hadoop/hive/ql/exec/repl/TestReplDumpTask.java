@@ -456,6 +456,9 @@ name|dbName
 parameter_list|,
 name|Path
 name|dumpRoot
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 block|{     }
 annotation|@
@@ -471,6 +474,9 @@ name|dumpRoot
 parameter_list|,
 name|long
 name|lastReplId
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 block|{
 return|return
@@ -497,6 +503,9 @@ name|tblName
 parameter_list|,
 name|Path
 name|dbRoot
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 block|{     }
 block|}
@@ -729,6 +738,9 @@ name|dbRoot
 parameter_list|,
 name|long
 name|lastReplId
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
@@ -815,6 +827,8 @@ name|Path
 operator|.
 name|class
 argument_list|)
+argument_list|,
+name|hive
 argument_list|)
 expr_stmt|;
 block|}

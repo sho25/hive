@@ -234,6 +234,29 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|/**    * This is an exception that can be passed to logger just for printing the stacktrace.    */
+specifier|public
+specifier|static
+class|class
+name|StackTraceLogger
+extends|extends
+name|Exception
+block|{
+specifier|public
+name|StackTraceLogger
+parameter_list|(
+specifier|final
+name|String
+name|msg
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 comment|/**    * Initialize log4j.    *    * @return an message suitable for display to the user    * @throws LogInitializationException if log4j fails to initialize correctly    */
 specifier|public
 specifier|static

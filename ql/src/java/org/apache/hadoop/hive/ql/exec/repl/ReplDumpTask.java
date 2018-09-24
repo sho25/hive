@@ -1236,6 +1236,12 @@ parameter_list|)
 block|{
 try|try
 block|{
+name|Hive
+name|hiveDb
+init|=
+name|getHive
+argument_list|()
+decl_stmt|;
 name|Path
 name|dumpRoot
 init|=
@@ -1306,6 +1312,8 @@ argument_list|,
 name|dmd
 argument_list|,
 name|cmRoot
+argument_list|,
+name|hiveDb
 argument_list|)
 expr_stmt|;
 block|}
@@ -1320,6 +1328,8 @@ argument_list|,
 name|dmd
 argument_list|,
 name|cmRoot
+argument_list|,
+name|hiveDb
 argument_list|)
 expr_stmt|;
 block|}
@@ -1496,6 +1506,9 @@ name|dmd
 parameter_list|,
 name|Path
 name|cmRoot
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
@@ -1514,8 +1527,7 @@ name|work
 operator|.
 name|overrideEventTo
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|)
 expr_stmt|;
 name|IMetaStoreClient
@@ -1573,8 +1585,7 @@ name|EventUtils
 operator|.
 name|MSClientNotificationFetcher
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|)
 decl_stmt|;
 name|EventUtils
@@ -1707,6 +1718,8 @@ argument_list|,
 name|evRoot
 argument_list|,
 name|cmRoot
+argument_list|,
+name|hiveDb
 argument_list|)
 expr_stmt|;
 block|}
@@ -1807,6 +1820,9 @@ name|evRoot
 parameter_list|,
 name|Path
 name|cmRoot
+parameter_list|,
+name|Hive
+name|db
 parameter_list|)
 throws|throws
 name|Exception
@@ -1825,8 +1841,7 @@ name|evRoot
 argument_list|,
 name|cmRoot
 argument_list|,
-name|getHive
-argument_list|()
+name|db
 argument_list|,
 name|conf
 argument_list|,
@@ -1953,6 +1968,9 @@ name|dmd
 parameter_list|,
 name|Path
 name|cmRoot
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
@@ -1961,12 +1979,6 @@ comment|// bootstrap case
 comment|// Last repl id would've been captured during compile phase in queryState configs before opening txn.
 comment|// This is needed as we dump data on ACID/MM tables based on read snapshot or else we may lose data from
 comment|// concurrent txns when bootstrap dump in progress. If it is not available, then get it from metastore.
-name|Hive
-name|hiveDb
-init|=
-name|getHive
-argument_list|()
-decl_stmt|;
 name|Long
 name|bootDumpBeginReplId
 init|=
@@ -2042,8 +2054,7 @@ name|Utils
 operator|.
 name|getAllTables
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|,
 name|dbName
 argument_list|)
@@ -2051,8 +2062,7 @@ operator|.
 name|size
 argument_list|()
 argument_list|,
-name|getHive
-argument_list|()
+name|hiveDb
 operator|.
 name|getAllFunctions
 argument_list|()
@@ -2076,6 +2086,8 @@ argument_list|,
 name|dumpRoot
 argument_list|,
 name|bootDumpBeginReplId
+argument_list|,
+name|hiveDb
 argument_list|)
 decl_stmt|;
 name|dumpFunctionMetadata
@@ -2083,6 +2095,8 @@ argument_list|(
 name|dbName
 argument_list|,
 name|dumpRoot
+argument_list|,
+name|hiveDb
 argument_list|)
 expr_stmt|;
 name|String
@@ -2150,6 +2164,8 @@ argument_list|,
 name|dbRoot
 argument_list|,
 name|bootDumpBeginReplId
+argument_list|,
+name|hiveDb
 argument_list|)
 expr_stmt|;
 name|dumpConstraintMetadata
@@ -2159,6 +2175,8 @@ argument_list|,
 name|tblName
 argument_list|,
 name|dbRoot
+argument_list|,
+name|hiveDb
 argument_list|)
 expr_stmt|;
 block|}
@@ -2333,6 +2351,9 @@ name|dumpRoot
 parameter_list|,
 name|long
 name|lastReplId
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
@@ -2383,8 +2404,7 @@ init|=
 operator|new
 name|HiveWrapper
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|,
 name|dbName
 argument_list|,
@@ -2432,18 +2452,15 @@ name|dbRoot
 parameter_list|,
 name|long
 name|lastReplId
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
 block|{
 try|try
 block|{
-name|Hive
-name|db
-init|=
-name|getHive
-argument_list|()
-decl_stmt|;
 name|HiveWrapper
 operator|.
 name|Tuple
@@ -2455,7 +2472,7 @@ init|=
 operator|new
 name|HiveWrapper
 argument_list|(
-name|db
+name|hiveDb
 argument_list|,
 name|dbName
 argument_list|)
@@ -2592,7 +2609,7 @@ name|tuple
 operator|.
 name|replicationSpec
 argument_list|,
-name|db
+name|hiveDb
 argument_list|,
 name|distCpDoAsUser
 argument_list|,
@@ -3090,6 +3107,9 @@ name|dbName
 parameter_list|,
 name|Path
 name|dumpRoot
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
@@ -3117,8 +3137,7 @@ name|String
 argument_list|>
 name|functionNames
 init|=
-name|getHive
-argument_list|()
+name|hiveDb
 operator|.
 name|getFunctions
 argument_list|(
@@ -3148,6 +3167,8 @@ argument_list|(
 name|functionName
 argument_list|,
 name|dbName
+argument_list|,
+name|hiveDb
 argument_list|)
 decl_stmt|;
 if|if
@@ -3245,6 +3266,9 @@ name|tblName
 parameter_list|,
 name|Path
 name|dbRoot
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 throws|throws
 name|Exception
@@ -3298,19 +3322,13 @@ operator|+
 name|tblName
 argument_list|)
 decl_stmt|;
-name|Hive
-name|db
-init|=
-name|getHive
-argument_list|()
-decl_stmt|;
 name|List
 argument_list|<
 name|SQLPrimaryKey
 argument_list|>
 name|pks
 init|=
-name|db
+name|hiveDb
 operator|.
 name|getPrimaryKeyList
 argument_list|(
@@ -3325,7 +3343,7 @@ name|SQLForeignKey
 argument_list|>
 name|fks
 init|=
-name|db
+name|hiveDb
 operator|.
 name|getForeignKeyList
 argument_list|(
@@ -3340,7 +3358,7 @@ name|SQLUniqueConstraint
 argument_list|>
 name|uks
 init|=
-name|db
+name|hiveDb
 operator|.
 name|getUniqueConstraintList
 argument_list|(
@@ -3355,7 +3373,7 @@ name|SQLNotNullConstraint
 argument_list|>
 name|nns
 init|=
-name|db
+name|hiveDb
 operator|.
 name|getNotNullConstraintList
 argument_list|(
@@ -3545,6 +3563,9 @@ name|functionName
 parameter_list|,
 name|String
 name|dbName
+parameter_list|,
+name|Hive
+name|hiveDb
 parameter_list|)
 block|{
 try|try
@@ -3560,8 +3581,7 @@ init|=
 operator|new
 name|HiveWrapper
 argument_list|(
-name|getHive
-argument_list|()
+name|hiveDb
 argument_list|,
 name|dbName
 argument_list|)

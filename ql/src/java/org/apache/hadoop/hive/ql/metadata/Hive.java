@@ -2930,6 +2930,19 @@ name|remove
 argument_list|()
 expr_stmt|;
 block|}
+specifier|public
+specifier|static
+name|Hive
+name|getThreadLocal
+parameter_list|()
+block|{
+return|return
+name|hiveDB
+operator|.
+name|get
+argument_list|()
+return|;
+block|}
 comment|/**    * Hive    *    * @param c    *    */
 specifier|private
 name|Hive
