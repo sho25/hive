@@ -3012,6 +3012,8 @@ name|outputClass
 decl_stmt|;
 name|String
 name|taskId
+decl_stmt|,
+name|originalTaskId
 decl_stmt|;
 specifier|protected
 name|boolean
@@ -3295,6 +3297,8 @@ argument_list|>
 argument_list|()
 expr_stmt|;
 name|taskId
+operator|=
+name|originalTaskId
 operator|=
 name|Utilities
 operator|.
@@ -8053,7 +8057,7 @@ name|specPath
 argument_list|,
 name|fs
 argument_list|,
-name|taskId
+name|originalTaskId
 argument_list|,
 name|conf
 operator|.
