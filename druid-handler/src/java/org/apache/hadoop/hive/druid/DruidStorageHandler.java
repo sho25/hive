@@ -5383,6 +5383,15 @@ name|CallbackFailedException
 name|c
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Error while committing transaction to druid metadata storage"
+argument_list|,
+name|c
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|MetaException
