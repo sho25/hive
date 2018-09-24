@@ -178,6 +178,17 @@ operator|.
 name|getUgi
 argument_list|()
 decl_stmt|;
+name|boolean
+name|isExplain
+init|=
+name|hookContext
+operator|.
+name|getQueryPlan
+argument_list|()
+operator|.
+name|isExplain
+argument_list|()
+decl_stmt|;
 name|this
 operator|.
 name|run
@@ -189,6 +200,8 @@ argument_list|,
 name|outputs
 argument_list|,
 name|ugi
+argument_list|,
+name|isExplain
 argument_list|)
 expr_stmt|;
 block|}
@@ -213,6 +226,9 @@ name|outputs
 parameter_list|,
 name|UserGroupInformation
 name|ugi
+parameter_list|,
+name|boolean
+name|isExplain
 parameter_list|)
 throws|throws
 name|Exception
@@ -336,6 +352,9 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+operator|&&
+operator|!
+name|isExplain
 condition|)
 block|{
 throw|throw
