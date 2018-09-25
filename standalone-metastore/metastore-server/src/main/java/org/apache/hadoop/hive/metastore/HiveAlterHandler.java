@@ -4949,6 +4949,8 @@ argument_list|()
 argument_list|,
 name|handler
 argument_list|)
+argument_list|,
+name|environmentContext
 argument_list|)
 expr_stmt|;
 block|}
