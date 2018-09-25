@@ -83,7 +83,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|Arrays
 import|;
 end_import
 
@@ -5018,28 +5018,13 @@ literal|"select \"WNL_FILES\", \"WNL_ID\" from"
 operator|+
 literal|" \"TXN_WRITE_NOTIFICATION_LOG\" "
 operator|+
-literal|"where \"WNL_DATABASE\" = "
+literal|"where \"WNL_DATABASE\" = ? "
 operator|+
-name|quoteString
-argument_list|(
-name|dbName
-argument_list|)
+literal|"and \"WNL_TABLE\" = ? "
 operator|+
-literal|"and \"WNL_TABLE\" = "
+literal|" and \"WNL_PARTITION\" = ? "
 operator|+
-name|quoteString
-argument_list|(
-name|tblName
-argument_list|)
-operator|+
-literal|" and \"WNL_PARTITION\" = "
-operator|+
-name|quoteString
-argument_list|(
-name|partition
-argument_list|)
-operator|+
-literal|" and \"WNL_TXNID\" = "
+literal|"and \"WNL_TXNID\" = "
 operator|+
 name|Long
 operator|.
@@ -5052,6 +5037,36 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|params
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
+argument_list|,
+name|partition
+argument_list|)
+decl_stmt|;
+name|pst
+operator|=
+name|sqlGenerator
+operator|.
+name|prepareStmtWithParameters
+argument_list|(
+name|dbConn
+argument_list|,
+name|s
+argument_list|,
+name|params
+argument_list|)
+expr_stmt|;
 name|LOG
 operator|.
 name|debug
@@ -5059,18 +5074,38 @@ argument_list|(
 literal|"Going to execute query<"
 operator|+
 name|s
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\?"
+argument_list|,
+literal|"{}"
+argument_list|)
 operator|+
 literal|">"
+argument_list|,
+name|quoteString
+argument_list|(
+name|dbName
+argument_list|)
+argument_list|,
+name|quoteString
+argument_list|(
+name|tblName
+argument_list|)
+argument_list|,
+name|quoteString
+argument_list|(
+name|partition
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|rs
 operator|=
-name|stmt
+name|pst
 operator|.
 name|executeQuery
-argument_list|(
-name|s
-argument_list|)
+argument_list|()
 expr_stmt|;
 if|if
 condition|(
@@ -5103,6 +5138,11 @@ operator|+
 literal|"\"WNL_PARTITION\", \"WNL_TABLE_OBJ\", \"WNL_PARTITION_OBJ\", "
 operator|+
 literal|"\"WNL_FILES\", \"WNL_EVENT_TIME\") VALUES (?,?,?,?,?,?,?,?,?,?)"
+expr_stmt|;
+name|closeStmt
+argument_list|(
+name|pst
+argument_list|)
 expr_stmt|;
 name|int
 name|currentTime
@@ -5374,6 +5414,11 @@ literal|" \"WNL_EVENT_TIME\" = ?"
 operator|+
 literal|" where \"WNL_ID\" = ?"
 expr_stmt|;
+name|closeStmt
+argument_list|(
+name|pst
+argument_list|)
+expr_stmt|;
 name|pst
 operator|=
 name|dbConn
@@ -5603,6 +5648,11 @@ name|stmt
 init|=
 literal|null
 decl_stmt|;
+name|PreparedStatement
+name|pst
+init|=
+literal|null
+decl_stmt|;
 name|ResultSet
 name|rs
 init|=
@@ -5749,23 +5799,11 @@ argument_list|,
 literal|"org.apache.hadoop.hive.metastore.model.MNotificationLog"
 argument_list|)
 decl_stmt|;
-name|List
-argument_list|<
 name|String
-argument_list|>
-name|insert
+name|insertVal
 init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|()
-decl_stmt|;
-name|insert
-operator|.
-name|add
-argument_list|(
-literal|0
-argument_list|,
+literal|"("
+operator|+
 name|nextNLId
 operator|+
 literal|","
@@ -5777,8 +5815,86 @@ operator|+
 name|now
 argument_list|()
 operator|+
-literal|","
+literal|", ?, ?,"
 operator|+
+name|quoteString
+argument_list|(
+literal|" "
+argument_list|)
+operator|+
+literal|",?, ?)"
+decl_stmt|;
+name|s
+operator|=
+literal|"insert into \"NOTIFICATION_LOG\" (\"NL_ID\", \"EVENT_ID\", \"EVENT_TIME\", "
+operator|+
+literal|" \"EVENT_TYPE\", \"DB_NAME\", "
+operator|+
+literal|" \"TBL_NAME\", \"MESSAGE\", \"MESSAGE_FORMAT\") VALUES "
+operator|+
+name|insertVal
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|params
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|event
+operator|.
+name|getEventType
+argument_list|()
+argument_list|,
+name|event
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|event
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|event
+operator|.
+name|getMessageFormat
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|pst
+operator|=
+name|sqlGenerator
+operator|.
+name|prepareStmtWithParameters
+argument_list|(
+name|dbConn
+argument_list|,
+name|s
+argument_list|,
+name|params
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Going to execute insert<"
+operator|+
+name|s
+operator|.
+name|replaceAll
+argument_list|(
+literal|"\\?"
+argument_list|,
+literal|"{}"
+argument_list|)
+operator|+
+literal|">"
+argument_list|,
 name|quoteString
 argument_list|(
 name|event
@@ -5786,9 +5902,7 @@ operator|.
 name|getEventType
 argument_list|()
 argument_list|)
-operator|+
-literal|","
-operator|+
+argument_list|,
 name|quoteString
 argument_list|(
 name|event
@@ -5796,16 +5910,7 @@ operator|.
 name|getDbName
 argument_list|()
 argument_list|)
-operator|+
-literal|","
-operator|+
-name|quoteString
-argument_list|(
-literal|" "
-argument_list|)
-operator|+
-literal|","
-operator|+
+argument_list|,
 name|quoteString
 argument_list|(
 name|event
@@ -5813,9 +5918,7 @@ operator|.
 name|getMessage
 argument_list|()
 argument_list|)
-operator|+
-literal|","
-operator|+
+argument_list|,
 name|quoteString
 argument_list|(
 name|event
@@ -5825,52 +5928,11 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|sql
-init|=
-name|sqlGenerator
-operator|.
-name|createInsertValuesStmt
-argument_list|(
-literal|"\"NOTIFICATION_LOG\" (\"NL_ID\", \"EVENT_ID\", \"EVENT_TIME\", "
-operator|+
-literal|" \"EVENT_TYPE\", \"DB_NAME\","
-operator|+
-literal|" \"TBL_NAME\", \"MESSAGE\", \"MESSAGE_FORMAT\")"
-argument_list|,
-name|insert
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|String
-name|q
-range|:
-name|sql
-control|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Going to execute insert<"
-operator|+
-name|q
-operator|+
-literal|">"
-argument_list|)
-expr_stmt|;
-name|stmt
+name|pst
 operator|.
 name|execute
-argument_list|(
-name|q
-argument_list|)
+argument_list|()
 expr_stmt|;
-block|}
 comment|// Set the DB_NOTIFICATION_EVENT_ID for future reference by other listeners.
 if|if
 condition|(
@@ -5928,6 +5990,11 @@ block|{
 name|closeStmt
 argument_list|(
 name|stmt
+argument_list|)
+expr_stmt|;
+name|closeStmt
+argument_list|(
+name|pst
 argument_list|)
 expr_stmt|;
 name|close

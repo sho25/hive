@@ -811,7 +811,7 @@ name|openTxn
 argument_list|(
 name|ctx
 argument_list|,
-literal|null
+literal|"fred"
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -822,7 +822,7 @@ name|qp
 argument_list|,
 name|ctx
 argument_list|,
-literal|null
+literal|"fred"
 argument_list|)
 expr_stmt|;
 name|List
