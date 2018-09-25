@@ -1613,6 +1613,11 @@ name|getParameters
 argument_list|()
 decl_stmt|;
 return|return
+operator|(
+name|params
+operator|!=
+literal|null
+operator|&&
 literal|"TRUE"
 operator|.
 name|equalsIgnoreCase
@@ -1626,6 +1631,7 @@ operator|.
 name|IS_ARCHIVED
 argument_list|)
 argument_list|)
+operator|)
 return|;
 block|}
 specifier|public

@@ -9757,10 +9757,7 @@ block|{
 name|FileSystem
 name|fs
 init|=
-name|tbl
-operator|.
-name|getDataLocation
-argument_list|()
+name|destPath
 operator|.
 name|getFileSystem
 argument_list|(
