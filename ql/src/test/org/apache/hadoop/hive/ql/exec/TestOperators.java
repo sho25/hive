@@ -2932,6 +2932,13 @@ operator|.
 name|length
 argument_list|)
 expr_stmt|;
+name|Arrays
+operator|.
+name|sort
+argument_list|(
+name|dirs
+argument_list|)
+expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|true
