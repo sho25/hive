@@ -1607,6 +1607,17 @@ operator|+
 literal|"will be running in the background."
 argument_list|)
 block|,
+name|COMPACTOR_MINOR_STATS_COMPRESSION
+argument_list|(
+literal|"metastore.compactor.enable.stats.compression"
+argument_list|,
+literal|"metastore.compactor.enable.stats.compression"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Can be used to disable compression and ORC indexes for files produced by minor compaction."
+argument_list|)
+block|,
 name|CONNECTION_DRIVER
 argument_list|(
 literal|"javax.jdo.option.ConnectionDriverName"
