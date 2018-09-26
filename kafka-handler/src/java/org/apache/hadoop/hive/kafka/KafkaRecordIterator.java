@@ -125,6 +125,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|kafka
+operator|.
+name|common
+operator|.
+name|errors
+operator|.
+name|RetriableException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -148,6 +164,16 @@ operator|.
 name|annotation
 operator|.
 name|Nullable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|Duration
 import|;
 end_import
 
@@ -194,11 +220,10 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Iterator over Kafka Records to read records from a single topic partition inclusive start, exclusive end.  */
+comment|/**  * This class implements an Iterator over a single Kafka topic partition.  *  * Notes:  * The user of this class has to provide a functional Kafka Consumer and then has to clean it afterward.  * The user of this class is responsible for thread safety if the provided consumer is shared across threads.  *  */
 end_comment
 
 begin_class
-specifier|public
 class|class
 name|KafkaRecordIterator
 implements|implements
@@ -241,9 +266,12 @@ name|format
 argument_list|(
 literal|"Try increasing poll timeout using Hive Table property [%s]"
 argument_list|,
-name|KafkaStreamingUtils
+name|KafkaTableProperties
 operator|.
-name|HIVE_KAFKA_POLL_TIMEOUT
+name|KAFKA_POLL_TIMEOUT
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -292,6 +320,11 @@ name|pollTimeoutMs
 decl_stmt|;
 specifier|private
 specifier|final
+name|Duration
+name|pollTimeoutDurationMs
+decl_stmt|;
+specifier|private
+specifier|final
 name|Stopwatch
 name|stopwatch
 init|=
@@ -311,6 +344,7 @@ index|[]
 argument_list|>
 name|records
 decl_stmt|;
+comment|/**    * Holds the kafka consumer position after the last poll() call.    */
 specifier|private
 name|long
 name|consumerPosition
@@ -332,6 +366,7 @@ name|hasMore
 init|=
 literal|true
 decl_stmt|;
+comment|/**    * On each Kafka Consumer poll() call we get a batch of records, this Iterator will be used to loop over it.    */
 specifier|private
 name|Iterator
 argument_list|<
@@ -348,7 +383,7 @@ name|consumerRecordIterator
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Iterator over Kafka Records over a single {@code topicPartition} inclusive {@code startOffset},    * up to exclusive {@code endOffset}.    *<p>    * If {@code requestedStartOffset} is not null will seek up to that offset    * Else If {@code requestedStartOffset} is null will seek to beginning see    * {@link org.apache.kafka.clients.consumer.Consumer#seekToBeginning(java.util.Collection)}    *<p>    * When provided with {@code requestedEndOffset}, will return records up to consumer position == endOffset    * Else If {@code requestedEndOffset} is null it will read up to the current end of the stream    * {@link org.apache.kafka.clients.consumer.Consumer#seekToEnd(java.util.Collection)}    *<p>    * @param consumer       functional kafka consumer.    * @param topicPartition kafka topic partition.    * @param requestedStartOffset    requested start position.    * @param requestedEndOffset      requested end position. If null will read up to current last    * @param pollTimeoutMs  poll time out in ms.    */
+comment|/**    * Kafka record Iterator pulling from a single {@code topicPartition} an inclusive {@code requestedStartOffset},    * up to exclusive {@code requestedEndOffset}.    *    * This iterator can block on polling up to a designated timeout.    *    * If no record is returned by brokers after poll timeout duration such case will be considered as an exception.    * Although the timeout exception it is a retryable exception, therefore users of this class can retry if needed.    *    * @param consumer       Functional kafka consumer, user must initialize this and close it.    * @param topicPartition Target Kafka topic partition.    * @param requestedStartOffset    Requested start offset position, if NULL iterator will seek to beginning using:    *                                {@link Consumer#seekToBeginning(java.util.Collection)}.    *    * @param requestedEndOffset      Requested end position. If null will read up to last available offset,    *                                such position is given by:    *                                {@link Consumer#seekToEnd(java.util.Collection)}.    * @param pollTimeoutMs  positive number indicating poll time out in ms.    */
 name|KafkaRecordIterator
 parameter_list|(
 name|Consumer
@@ -409,6 +444,17 @@ operator|.
 name|pollTimeoutMs
 operator|=
 name|pollTimeoutMs
+expr_stmt|;
+name|this
+operator|.
+name|pollTimeoutDurationMs
+operator|=
+name|Duration
+operator|.
+name|ofMillis
+argument_list|(
+name|pollTimeoutMs
+argument_list|)
 expr_stmt|;
 name|Preconditions
 operator|.
@@ -675,7 +721,7 @@ name|pollTimeoutMs
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @throws IllegalStateException if the kafka consumer poll call can not reach the target offset.    * @return true if has more records to be consumed.    */
+comment|/**    * Check if there is more records to be consumed and pull more from the broker if current batch of record is empty.    * This method might block up to {@link this#pollTimeoutMs} to pull records from Kafka Broker.    *    * @throws PollTimeoutException if poll returns 0 record and consumer position did not reach requested endOffset.    * Such an exception is a retryable exception, and it can be a transient exception that if retried may succeed.    *    * @return true if has more records to be consumed.    */
 annotation|@
 name|Override
 specifier|public
@@ -709,7 +755,7 @@ return|return
 name|hasMore
 return|;
 block|}
-comment|/**    * Poll more records from the Kafka Broker.    *    * @throws IllegalStateException if no records returned before consumer position reaches target end offset.    */
+comment|/**    * Poll more records from the Kafka Broker.    *    * @throws PollTimeoutException if poll returns 0 record  and consumer's position< requested endOffset.    */
 specifier|private
 name|void
 name|pollRecords
@@ -738,7 +784,7 @@ name|consumer
 operator|.
 name|poll
 argument_list|(
-name|pollTimeoutMs
+name|pollTimeoutDurationMs
 argument_list|)
 expr_stmt|;
 if|if
@@ -796,7 +842,7 @@ condition|)
 block|{
 throw|throw
 operator|new
-name|IllegalStateException
+name|PollTimeoutException
 argument_list|(
 name|String
 operator|.
@@ -927,6 +973,34 @@ expr_stmt|;
 name|nextRecord
 operator|=
 literal|null
+expr_stmt|;
+block|}
+block|}
+specifier|static
+specifier|final
+class|class
+name|PollTimeoutException
+extends|extends
+name|RetriableException
+block|{
+specifier|private
+specifier|static
+specifier|final
+name|long
+name|serialVersionUID
+init|=
+literal|1L
+decl_stmt|;
+name|PollTimeoutException
+parameter_list|(
+name|String
+name|message
+parameter_list|)
+block|{
+name|super
+argument_list|(
+name|message
+argument_list|)
 expr_stmt|;
 block|}
 block|}

@@ -826,7 +826,11 @@ comment|/**  * Basic JsonSerDe to make use of such storage handler smooth and ea
 end_comment
 
 begin_class
-specifier|public
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unused"
+argument_list|)
 class|class
 name|KafkaJsonSerDe
 extends|extends
@@ -874,7 +878,7 @@ name|TypeInfo
 argument_list|,
 name|ObjectInspector
 argument_list|>
-name|typeInfoToObjectInspector
+name|TYPEINFO_TO_OI
 init|=
 name|typeInfo
 lambda|->
@@ -1095,7 +1099,7 @@ argument_list|()
 operator|.
 name|map
 argument_list|(
-name|typeInfoToObjectInspector
+name|TYPEINFO_TO_OI
 argument_list|)
 operator|.
 name|collect

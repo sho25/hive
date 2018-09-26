@@ -511,6 +511,7 @@ literal|40L
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|partitionColumn
 init|=
@@ -521,8 +522,6 @@ name|TypeInfoFactory
 operator|.
 name|intTypeInfo
 argument_list|,
-name|KafkaStreamingUtils
-operator|.
 name|MetadataColumn
 operator|.
 name|PARTITION
@@ -536,6 +535,7 @@ literal|false
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|ExprNodeDesc
 name|offsetColumn
 init|=
@@ -546,8 +546,6 @@ name|TypeInfoFactory
 operator|.
 name|longTypeInfo
 argument_list|,
-name|KafkaStreamingUtils
-operator|.
 name|MetadataColumn
 operator|.
 name|OFFSET
@@ -561,17 +559,19 @@ literal|false
 argument_list|)
 decl_stmt|;
 specifier|private
+specifier|final
 name|String
 name|topic
 init|=
 literal|"my_topic"
 decl_stmt|;
 specifier|private
+specifier|final
 name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|fullHouse
 init|=
@@ -588,7 +588,7 @@ literal|0
 argument_list|)
 argument_list|,
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|topic
 argument_list|,
@@ -610,7 +610,7 @@ literal|1
 argument_list|)
 argument_list|,
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|topic
 argument_list|,
@@ -632,7 +632,7 @@ literal|2
 argument_list|)
 argument_list|,
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|topic
 argument_list|,
@@ -654,7 +654,7 @@ literal|3
 argument_list|)
 argument_list|,
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|topic
 argument_list|,
@@ -1390,11 +1390,11 @@ argument_list|,
 literal|3
 argument_list|)
 decl_stmt|;
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|split1
 init|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|topic
 argument_list|,
@@ -1407,11 +1407,11 @@ argument_list|,
 name|PATH
 argument_list|)
 decl_stmt|;
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|split2
 init|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|topic
 argument_list|,
@@ -2292,7 +2292,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2364,7 +2364,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2440,7 +2440,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2549,7 +2549,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2632,7 +2632,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2727,7 +2727,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2820,7 +2820,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2920,7 +2920,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -3005,7 +3005,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -3098,7 +3098,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -3193,7 +3193,7 @@ argument_list|,
 name|entry
 lambda|->
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.

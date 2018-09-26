@@ -658,7 +658,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|fullHouse
 decl_stmt|;
@@ -674,7 +674,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|fullHouse
 parameter_list|,
@@ -700,7 +700,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|computeOptimizedScan
 parameter_list|(
@@ -712,7 +712,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|optimizedScan
 init|=
@@ -849,7 +849,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|parseAndOptimize
 parameter_list|(
@@ -1071,7 +1071,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|pushLeaf
 parameter_list|(
@@ -1297,8 +1297,6 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|KafkaStreamingUtils
-operator|.
 name|MetadataColumn
 operator|.
 name|PARTITION
@@ -1343,8 +1341,6 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|KafkaStreamingUtils
-operator|.
 name|MetadataColumn
 operator|.
 name|OFFSET
@@ -1389,8 +1385,6 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|KafkaStreamingUtils
-operator|.
 name|MetadataColumn
 operator|.
 name|TIMESTAMP
@@ -1446,7 +1440,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|buildScanFromPartitionPredicate
 parameter_list|(
@@ -1454,7 +1448,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|fullScan
 parameter_list|,
@@ -1616,7 +1610,7 @@ name|Builder
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|builder
 init|=
@@ -1662,13 +1656,15 @@ operator|.
 name|getKey
 argument_list|()
 argument_list|,
+name|KafkaInputSplit
+operator|.
+name|copyOf
+argument_list|(
 name|entry
 operator|.
 name|getValue
 argument_list|()
-operator|.
-name|clone
-argument_list|()
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1687,7 +1683,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|buildScanFromOffsetPredicate
 parameter_list|(
@@ -1695,7 +1691,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|fullScan
 parameter_list|,
@@ -1855,7 +1851,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|newScan
 init|=
@@ -1876,7 +1872,7 @@ parameter_list|)
 lambda|->
 block|{
 specifier|final
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|newInputSplit
 decl_stmt|;
 if|if
@@ -1895,7 +1891,7 @@ block|{
 name|newInputSplit
 operator|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|tp
 operator|.
@@ -1949,7 +1945,7 @@ block|{
 name|newInputSplit
 operator|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|tp
 operator|.
@@ -2018,7 +2014,7 @@ block|{
 name|newInputSplit
 operator|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|tp
 operator|.
@@ -2053,7 +2049,7 @@ block|{
 name|newInputSplit
 operator|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|tp
 operator|.
@@ -2082,7 +2078,7 @@ block|{
 name|newInputSplit
 operator|=
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|tp
 operator|.
@@ -2117,7 +2113,7 @@ name|put
 argument_list|(
 name|tp
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 operator|.
 name|intersectRange
 argument_list|(
@@ -2142,7 +2138,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|buildScanForTimesPredicate
 parameter_list|(
@@ -2150,7 +2146,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|fullHouse
 parameter_list|,
@@ -2281,7 +2277,7 @@ argument_list|,
 name|tp
 lambda|->
 block|{
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|existing
 init|=
 name|fullHouse
@@ -2322,7 +2318,7 @@ argument_list|()
 decl_stmt|;
 return|return
 operator|new
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|(
 name|Objects
 operator|.
@@ -2387,7 +2383,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|pushAndOp
 parameter_list|(
@@ -2399,7 +2395,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|currentScan
 init|=
@@ -2424,7 +2420,7 @@ name|put
 argument_list|(
 name|tp
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 operator|.
 name|copyOf
 argument_list|(
@@ -2448,7 +2444,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|scan
 init|=
@@ -2487,7 +2483,7 @@ argument_list|(
 name|key
 lambda|->
 block|{
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|newSplit
 init|=
 name|scan
@@ -2497,7 +2493,7 @@ argument_list|(
 name|key
 argument_list|)
 decl_stmt|;
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|oldSplit
 init|=
 name|currentScan
@@ -2521,10 +2517,10 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|intersectionSplit
 init|=
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 operator|.
 name|intersectRange
 argument_list|(
@@ -2567,7 +2563,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|pushOrOp
 parameter_list|(
@@ -2580,7 +2576,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|currentScan
 init|=
@@ -2604,7 +2600,7 @@ name|Map
 argument_list|<
 name|TopicPartition
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 argument_list|>
 name|scan
 init|=
@@ -2636,7 +2632,7 @@ name|input
 parameter_list|)
 lambda|->
 block|{
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 name|existingSplit
 init|=
 name|currentScan
@@ -2652,7 +2648,7 @@ name|put
 argument_list|(
 name|tp
 argument_list|,
-name|KafkaPullerInputSplit
+name|KafkaInputSplit
 operator|.
 name|unionRange
 argument_list|(
