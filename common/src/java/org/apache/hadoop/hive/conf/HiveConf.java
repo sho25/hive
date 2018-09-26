@@ -7827,7 +7827,11 @@ literal|"This number means how much memory the local task can take to hold the k
 operator|+
 literal|"when this map join is followed by a group by. If the local task's memory usage is more than this number, \n"
 operator|+
-literal|"the local task will abort by itself. It means the data of the small table is too large to be held in memory."
+literal|"the local task will abort by itself. It means the data of the small table is too large "
+operator|+
+literal|"to be held in memory. Does not apply to Hive-on-Spark (replaced by "
+operator|+
+literal|"hive.mapjoin.max.gc.time.percentage)"
 argument_list|)
 block|,
 name|HIVEHASHTABLEMAXMEMORYUSAGE
@@ -7843,7 +7847,9 @@ literal|"This number means how much memory the local task can take to hold the k
 operator|+
 literal|"If the local task's memory usage is more than this number, the local task will abort by itself. \n"
 operator|+
-literal|"It means the data of the small table is too large to be held in memory."
+literal|"It means the data of the small table is too large to be held in memory. Does not apply to "
+operator|+
+literal|"Hive-on-Spark (replaced by hive.mapjoin.max.gc.time.percentage)"
 argument_list|)
 block|,
 name|HIVEHASHTABLESCALE
@@ -7856,6 +7862,32 @@ operator|)
 literal|100000
 argument_list|,
 literal|"The number means after how many rows processed it needs to check the memory usage"
+argument_list|)
+block|,
+name|HIVEHASHTABLEMAXGCTIMEPERCENTAGE
+argument_list|(
+literal|"hive.mapjoin.max.gc.time.percentage"
+argument_list|,
+operator|(
+name|float
+operator|)
+literal|0.60
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|0.0f
+argument_list|,
+literal|1.0f
+argument_list|)
+argument_list|,
+literal|"This number means how much time (what percentage, "
+operator|+
+literal|"0..1, of wallclock time) the JVM is allowed to spend in garbage collection when running "
+operator|+
+literal|"the local task. If GC time percentage exceeds this number, the local task will abort by "
+operator|+
+literal|"itself. Applies to Hive-on-Spark only"
 argument_list|)
 block|,
 name|HIVEDEBUGLOCALTASK
