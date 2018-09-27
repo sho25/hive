@@ -15499,10 +15499,7 @@ comment|// we pass 'true' for the forceMVContentsUpToDate parameter, as we canno
 comment|// materialization contents to be stale for a rebuild if we want to use it.
 name|materializations
 operator|=
-name|Hive
-operator|.
-name|get
-argument_list|()
+name|db
 operator|.
 name|getValidMaterializedView
 argument_list|(
@@ -15516,6 +15513,9 @@ name|basePlan
 argument_list|)
 argument_list|,
 literal|true
+argument_list|,
+name|getTxnMgr
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -15526,10 +15526,7 @@ comment|// to force the materialization contents to be up-to-date, as this is no
 comment|// we apply the user parameters (HIVE_MATERIALIZED_VIEW_REWRITING_TIME_WINDOW) instead.
 name|materializations
 operator|=
-name|Hive
-operator|.
-name|get
-argument_list|()
+name|db
 operator|.
 name|getAllValidMaterializedViews
 argument_list|(
@@ -15539,6 +15536,9 @@ name|basePlan
 argument_list|)
 argument_list|,
 literal|false
+argument_list|,
+name|getTxnMgr
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
