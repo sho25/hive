@@ -6730,10 +6730,10 @@ name|readsAfter
 operator|-
 name|readsBefore
 decl_stmt|;
-comment|// 16 without HIVE-19588, 8 with HIVE-19588
+comment|//HIVE-16812 adds 1 read of the footer of each file
 name|assertEquals
 argument_list|(
-literal|8
+literal|16
 argument_list|,
 name|delta
 argument_list|)

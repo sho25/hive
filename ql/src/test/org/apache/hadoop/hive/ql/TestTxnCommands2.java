@@ -1346,6 +1346,21 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+comment|//TestTxnCommands2WithSplitUpdateAndVectorization has the vectorized version
+comment|//of these tests.
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|TxnDbUtil
 operator|.
 name|setConfValues
@@ -5898,7 +5913,7 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// 2. Convert NONACIDORCTBL to ACID table with split_update enabled. (txn_props=default)
+comment|// 2. Convert NONACIDORCTBL to ACID table
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "

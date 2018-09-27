@@ -838,6 +838,7 @@ operator|.
 name|class
 condition|)
 block|{
+comment|//WTF?  assumes that other instanceof OrcRawRecordMerger.ReaderKey???
 return|return
 operator|-
 name|other
@@ -1075,71 +1076,37 @@ name|String
 name|toString
 parameter_list|()
 block|{
-name|BucketCodec
-name|codec
-init|=
-name|BucketCodec
-operator|.
-name|determineVersion
-argument_list|(
-name|bucketId
-argument_list|)
-decl_stmt|;
-name|String
-name|s
-init|=
-literal|"("
-operator|+
-name|codec
-operator|.
-name|getVersion
-argument_list|()
-operator|+
-literal|"."
-operator|+
-name|codec
-operator|.
-name|decodeWriterId
-argument_list|(
-name|bucketId
-argument_list|)
-operator|+
-literal|"."
-operator|+
-name|codec
-operator|.
-name|decodeStatementId
-argument_list|(
-name|bucketId
-argument_list|)
-operator|+
-literal|")"
-decl_stmt|;
 return|return
-literal|"{originalWriteId: "
+literal|"RecordIdentifier("
 operator|+
 name|writeId
 operator|+
 literal|", "
 operator|+
 name|bucketToString
-argument_list|()
+argument_list|(
+name|bucketId
+argument_list|)
 operator|+
-literal|", row: "
+literal|","
 operator|+
 name|getRowId
 argument_list|()
 operator|+
-literal|"}"
+literal|")"
 return|;
 block|}
 end_function
 
 begin_function
-specifier|protected
+specifier|public
+specifier|static
 name|String
 name|bucketToString
-parameter_list|()
+parameter_list|(
+name|int
+name|bucketId
+parameter_list|)
 block|{
 if|if
 condition|(
@@ -1149,11 +1116,9 @@ operator|-
 literal|1
 condition|)
 return|return
-operator|(
-literal|"bucket: "
+literal|""
 operator|+
 name|bucketId
-operator|)
 return|;
 name|BucketCodec
 name|codec
@@ -1166,8 +1131,6 @@ name|bucketId
 argument_list|)
 decl_stmt|;
 return|return
-literal|"bucket: "
-operator|+
 name|bucketId
 operator|+
 literal|"("

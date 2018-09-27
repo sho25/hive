@@ -1816,6 +1816,35 @@ name|query
 argument_list|)
 expr_stmt|;
 block|}
+name|void
+name|dropTable
+parameter_list|(
+name|String
+index|[]
+name|tabs
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+for|for
+control|(
+name|String
+name|tab
+range|:
+name|tabs
+control|)
+block|{
+name|d
+operator|.
+name|run
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|tab
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 end_class
 

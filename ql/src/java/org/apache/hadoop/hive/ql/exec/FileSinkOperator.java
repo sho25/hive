@@ -5910,7 +5910,7 @@ name|writerOffset
 decl_stmt|;
 comment|// This if/else chain looks ugly in the inner loop, but given that it will be 100% the same
 comment|// for a given operator branch prediction should work quite nicely on it.
-comment|// RecordUpdateer expects to get the actual row, not a serialized version of it.  Thus we
+comment|// RecordUpdater expects to get the actual row, not a serialized version of it.  Thus we
 comment|// pass the row rather than recordValue.
 if|if
 condition|(

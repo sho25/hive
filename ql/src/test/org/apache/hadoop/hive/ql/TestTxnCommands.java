@@ -911,6 +911,33 @@ return|return
 name|TEST_DATA_DIR
 return|;
 block|}
+annotation|@
+name|Override
+name|void
+name|initHiveConf
+parameter_list|()
+block|{
+name|super
+operator|.
+name|initHiveConf
+argument_list|()
+expr_stmt|;
+comment|//TestTxnCommandsWithSplitUpdateAndVectorization has the vectorized version
+comment|//of these tests.
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_VECTORIZATION_ENABLED
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * tests that a failing Insert Overwrite (which creates a new base_x) is properly marked as    * aborted.    */
 annotation|@
 name|Test

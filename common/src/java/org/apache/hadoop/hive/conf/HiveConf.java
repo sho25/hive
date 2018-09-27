@@ -6978,6 +6978,17 @@ operator|+
 literal|"Roughly it has been set to 10 million delete events per bucket (~160 MB).\n"
 argument_list|)
 block|,
+name|FILTER_DELETE_EVENTS
+argument_list|(
+literal|"hive.txn.filter.delete.events"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If true, VectorizedOrcAcidRowBatchReader will compute min/max "
+operator|+
+literal|"ROW__ID for the split and only load delete events in that range.\n"
+argument_list|)
+block|,
 name|HIVESAMPLERANDOMNUM
 argument_list|(
 literal|"hive.sample.seednumber"
