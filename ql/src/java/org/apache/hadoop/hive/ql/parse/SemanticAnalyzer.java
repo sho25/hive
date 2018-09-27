@@ -15207,28 +15207,6 @@ name|HiveException
 name|e
 parameter_list|)
 block|{
-comment|// Has to use full name to make sure it does not conflict with
-comment|// org.apache.commons.lang.StringUtils
-name|LOG
-operator|.
-name|error
-argument_list|(
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
-name|e
-argument_list|)
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|e
