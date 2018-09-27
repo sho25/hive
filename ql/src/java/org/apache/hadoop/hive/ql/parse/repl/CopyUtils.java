@@ -1313,6 +1313,8 @@ operator|.
 name|FileInfo
 name|srcFile
 parameter_list|)
+throws|throws
+name|IOException
 block|{
 comment|// If source is already CM path, the checksum will be always matching
 if|if
@@ -1364,10 +1366,9 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-comment|// Retry with CM path
 name|LOG
 operator|.
-name|debug
+name|info
 argument_list|(
 literal|"Unable to calculate checksum for source file: "
 operator|+
@@ -1375,11 +1376,32 @@ name|srcFile
 operator|.
 name|getSourcePath
 argument_list|()
+argument_list|,
+name|e
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|sourceFs
+operator|.
+name|exists
+argument_list|(
+name|srcFile
+operator|.
+name|getSourcePath
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// if source file is missing, then return true, so that cm path will be used for copy.
 return|return
 literal|true
 return|;
+block|}
+throw|throw
+name|e
+throw|;
 block|}
 if|if
 condition|(
