@@ -2080,6 +2080,8 @@ operator|.
 name|set
 argument_list|(
 name|parentHive
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 comment|// TODO: can this result in cross-thread reuse of session state?
