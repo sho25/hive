@@ -31788,6 +31788,8 @@ argument_list|,
 name|fileLength
 argument_list|,
 name|workDir
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|OrcInputFormat
@@ -32058,6 +32060,8 @@ argument_list|,
 name|fileLength
 argument_list|,
 name|workDir
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|inputFormat
@@ -33127,6 +33131,8 @@ argument_list|,
 name|fileLength
 argument_list|,
 name|workDir
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|OrcInputFormat
