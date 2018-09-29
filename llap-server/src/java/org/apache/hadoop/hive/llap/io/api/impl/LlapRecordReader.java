@@ -1488,24 +1488,6 @@ operator|.
 name|MAX_VALUE
 argument_list|)
 decl_stmt|;
-name|this
-operator|.
-name|includes
-operator|=
-operator|new
-name|IncludesImpl
-argument_list|(
-name|tableIncludedCols
-argument_list|,
-name|isAcidScan
-argument_list|,
-name|rbCtx
-argument_list|,
-name|schema
-argument_list|,
-name|job
-argument_list|)
-expr_stmt|;
 name|int
 name|queueLimitBase
 init|=
@@ -1683,6 +1665,31 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+name|this
+operator|.
+name|includes
+operator|=
+operator|new
+name|IncludesImpl
+argument_list|(
+name|tableIncludedCols
+argument_list|,
+name|isAcidScan
+argument_list|,
+name|rbCtx
+argument_list|,
+name|schema
+argument_list|,
+name|job
+argument_list|,
+name|isAcidScan
+operator|&&
+name|acidReader
+operator|.
+name|includeAcidColumns
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Create the consumer of encoded data; it will coordinate decoding to CVBs.
 name|feedback
 operator|=
@@ -2470,6 +2477,7 @@ name|selectedInUse
 operator|=
 literal|true
 expr_stmt|;
+comment|//why?
 if|if
 condition|(
 name|isVectorized
@@ -2478,10 +2486,16 @@ block|{
 comment|// TODO: relying everywhere on the magical constants and columns being together means ACID
 comment|//       columns are going to be super hard to change in a backward compat manner. I can
 comment|//       foresee someone cursing while refactoring all the magic for prefix schema changes.
+comment|/**          * Acid meta cols are always either all included or all excluded the          * the width of 'cvb' changes accordingly so 'acidColCount' and          * 'ixInVrb' need to be adjusted. See {@link IncludesImpl} comments.          */
 comment|// Exclude the row column.
 name|int
 name|acidColCount
 init|=
+name|acidReader
+operator|.
+name|includeAcidColumns
+argument_list|()
+condition|?
 name|OrcInputFormat
 operator|.
 name|getRootColumn
@@ -2490,6 +2504,8 @@ literal|false
 argument_list|)
 operator|-
 literal|1
+else|:
+literal|0
 decl_stmt|;
 name|VectorizedRowBatch
 name|inputVrb
@@ -2497,6 +2513,7 @@ init|=
 operator|new
 name|VectorizedRowBatch
 argument_list|(
+comment|//so +1 is the OrcRecordUpdater.ROW?
 name|acidColCount
 operator|+
 literal|1
@@ -2558,6 +2575,19 @@ name|get
 argument_list|(
 name|ixInReadSet
 argument_list|)
+operator|-
+operator|(
+name|acidReader
+operator|.
+name|includeAcidColumns
+argument_list|()
+condition|?
+literal|0
+else|:
+name|OrcRecordUpdater
+operator|.
+name|ROW
+operator|)
 decl_stmt|;
 comment|// TODO: should we create the batch from vrbctx, and reuse the vectors, like below? Future work.
 name|inputVrb
@@ -2716,6 +2746,7 @@ name|selectedInUse
 operator|=
 literal|false
 expr_stmt|;
+comment|//why?
 name|vrb
 operator|.
 name|size
@@ -3543,7 +3574,7 @@ return|return
 literal|0.0f
 return|;
 block|}
-comment|/** This class encapsulates include-related logic for LLAP readers. It is not actually specific    *  to LLAP IO but in LLAP IO in particular, I want to encapsulate all this mess for now until    *  we have smth better like Schema Evolution v2. This can also hypothetically encapsulate    *  field pruning inside structs and stuff like that. */
+comment|/** This class encapsulates include-related logic for LLAP readers. It is not actually specific    *  to LLAP IO but in LLAP IO in particular, I want to encapsulate all this mess for now until    *  we have smth better like Schema Evolution v2. This can also hypothetically encapsulate    *  field pruning inside structs and stuff like that.    *    *  There is some split brain issue between {@link SchemaEvolution} used in    *  non-LLAP path and  this class.  The file schema for acid tables looks    *  like  this and<op, owid, writerId, rowid, cwid,<f1, ... fn>> and    *  {@link SchemaEvolution#getFileIncluded()}  respects that.  So if fn=2,    *  the  type IDs are 0..8 and the fileIncluded[] has 9 bits that indicate    *  what is read.  So in particular, {@link org.apache.hadoop.hive.ql.io.orc.RecordReader}    *  produces ColumnVectorS are NULL in every row for each    *  fileIncluded[9]==false.  The fields corresponding to structs are always    *  included if any child of the struct has to be included.    *    *  LLAP only produces ColumnVectorS if they are needed so the width of    *  ColumnVectorBatch varies depending on what was projected.    *    *  See also {@link VectorizedOrcAcidRowBatchReader#includeAcidColumns()} and    *  {@link #next(NullWritable, VectorizedRowBatch)}*/
 specifier|private
 specifier|static
 class|class
@@ -3572,6 +3603,11 @@ name|Integer
 name|acidStructColumnId
 init|=
 literal|null
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|includeAcidColumns
 decl_stmt|;
 comment|// For current schema evolution.
 specifier|private
@@ -3602,6 +3638,9 @@ name|readerSchema
 parameter_list|,
 name|JobConf
 name|jobConf
+parameter_list|,
+name|boolean
+name|includeAcidColumns
 parameter_list|)
 block|{
 comment|// Note: columnIds below makes additional changes for ACID. Don't use this var directly.
@@ -3762,6 +3801,15 @@ operator|==
 name|i
 condition|)
 continue|continue;
+if|if
+condition|(
+operator|!
+name|includeAcidColumns
+condition|)
+block|{
+comment|/**              * if not including acid columns, we still want to number the              * physical columns as if acid columns are included becase              * {@link #generateFileIncludes(TypeDescription)} takes the file              * schema as input              * (eg<op, owid, writerId, rowid, cwid,<f1, ... fn>>)              */
+continue|continue;
+block|}
 name|filePhysicalColumnIds
 operator|.
 name|add
@@ -3778,6 +3826,8 @@ range|:
 name|readerLogicalColumnIds
 control|)
 block|{
+comment|//but make sure to generate correct ids in type tree in-order
+comment|//walk order
 name|filePhysicalColumnIds
 operator|.
 name|add
@@ -3788,12 +3838,19 @@ name|tableColumnId
 argument_list|)
 expr_stmt|;
 block|}
+comment|/*ok, so if filePhysicalColumnIds include acid column ids, we end up          decoding the vectors*/
 block|}
 name|this
 operator|.
 name|filePhysicalColumnIds
 operator|=
 name|filePhysicalColumnIds
+expr_stmt|;
+name|this
+operator|.
+name|includeAcidColumns
+operator|=
+name|includeAcidColumns
 expr_stmt|;
 block|}
 annotation|@
@@ -3865,6 +3922,11 @@ operator|.
 name|include
 argument_list|(
 name|readerIncludes
+argument_list|)
+operator|.
+name|includeAcidColumns
+argument_list|(
+name|includeAcidColumns
 argument_list|)
 decl_stmt|;
 return|return

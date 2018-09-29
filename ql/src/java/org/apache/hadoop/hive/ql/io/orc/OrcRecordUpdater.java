@@ -695,8 +695,9 @@ name|CURRENT_WRITEID
 init|=
 literal|4
 decl_stmt|;
-specifier|final
+specifier|public
 specifier|static
+specifier|final
 name|int
 name|ROW
 init|=

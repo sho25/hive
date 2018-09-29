@@ -4387,6 +4387,7 @@ index|]
 argument_list|)
 return|;
 block|}
+comment|/**    * This will look at a footer of one of the files in the delta to see if the    * file is in Acid format, i.e. has acid metadata columns.  The assumption is    * that for any dir, either all files are acid or all are not.    */
 specifier|public
 specifier|static
 name|ParsedDelta
@@ -4574,6 +4575,68 @@ argument_list|,
 name|fs
 argument_list|)
 decl_stmt|;
+return|return
+name|parsedDelta
+argument_list|(
+name|deltaDir
+argument_list|,
+name|isRawFormat
+argument_list|)
+return|;
+block|}
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+name|deltaDir
+operator|+
+literal|" does not start with "
+operator|+
+name|deltaPrefix
+argument_list|)
+throw|;
+block|}
+comment|/**    * This method just parses the file name.  It relies on caller to figure if    * the file is in Acid format (i.e. has acid metadata columns) or not.    * {@link #parsedDelta(Path, FileSystem)}    */
+specifier|public
+specifier|static
+name|ParsedDelta
+name|parsedDelta
+parameter_list|(
+name|Path
+name|deltaDir
+parameter_list|,
+name|boolean
+name|isRawFormat
+parameter_list|)
+block|{
+name|String
+name|filename
+init|=
+name|deltaDir
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+name|boolean
+name|isDeleteDelta
+init|=
+name|filename
+operator|.
+name|startsWith
+argument_list|(
+name|DELETE_DELTA_PREFIX
+argument_list|)
+decl_stmt|;
+comment|//make sure it's null for delete delta no matter what was passed in - this
+comment|//doesn't apply to delete deltas
+name|isRawFormat
+operator|=
+name|isDeleteDelta
+condition|?
+literal|false
+else|:
+name|isRawFormat
+expr_stmt|;
 name|String
 name|rest
 init|=
@@ -4581,7 +4644,13 @@ name|filename
 operator|.
 name|substring
 argument_list|(
-name|deltaPrefix
+operator|(
+name|isDeleteDelta
+condition|?
+name|DELETE_DELTA_PREFIX
+else|:
+name|DELTA_PREFIX
+operator|)
 operator|.
 name|length
 argument_list|()
@@ -4597,6 +4666,7 @@ argument_list|(
 literal|'_'
 argument_list|)
 decl_stmt|;
+comment|//may be -1 if no statementId
 name|int
 name|split2
 init|=
@@ -4611,7 +4681,6 @@ operator|+
 literal|1
 argument_list|)
 decl_stmt|;
-comment|//may be -1 if no statementId
 name|long
 name|min
 init|=
@@ -4725,18 +4794,6 @@ argument_list|,
 name|isRawFormat
 argument_list|)
 return|;
-block|}
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-name|deltaDir
-operator|+
-literal|" does not start with "
-operator|+
-name|deltaPrefix
-argument_list|)
-throw|;
 block|}
 comment|/**    * Is the given directory in ACID format?    * @param directory the partition directory to check    * @param conf the query configuration    * @return true, if it is an ACID directory    * @throws IOException    */
 specifier|public

@@ -9858,6 +9858,17 @@ operator|+
 literal|"table there is at most 1 matching row in the source table per SQL Specification."
 argument_list|)
 block|,
+name|OPTIMIZE_ACID_META_COLUMNS
+argument_list|(
+literal|"hive.optimize.acid.meta.columns"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If true, don't decode Acid metadata columns from storage unless"
+operator|+
+literal|" they are needed."
+argument_list|)
+block|,
 comment|// For Arrow SerDe
 name|HIVE_ARROW_ROOT_ALLOCATOR_LIMIT
 argument_list|(
