@@ -3019,23 +3019,6 @@ operator|+
 literal|" optimization should not be enabled as it may lead to inconsistent data read for non acid tables."
 argument_list|)
 block|,
-name|REPL_MOVE_OPTIMIZED_FILE_SCHEMES
-argument_list|(
-literal|"hive.repl.move.optimized.scheme"
-argument_list|,
-literal|"s3a, wasb"
-argument_list|,
-literal|"Comma separated list of schemes for which move optimization will be enabled during repl load. \n"
-operator|+
-literal|"This configuration overrides the value set using REPL_ENABLE_MOVE_OPTIMIZATION for the given schemes. \n"
-operator|+
-literal|" Schemes of the file system which does not support atomic move (rename) can be specified here to \n "
-operator|+
-literal|" speed up the repl load operation. In file system like HDFS where move operation is atomic, this \n"
-operator|+
-literal|" optimization should not be enabled as it may lead to inconsistent data read for non acid tables."
-argument_list|)
-block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"

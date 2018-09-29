@@ -1877,20 +1877,6 @@ name|?
 argument_list|>
 name|movePartitionTask
 init|=
-literal|null
-decl_stmt|;
-if|if
-condition|(
-name|loadFileType
-operator|!=
-name|LoadFileType
-operator|.
-name|IGNORE
-condition|)
-block|{
-comment|// no need to create move task, if file is moved directly to target location.
-name|movePartitionTask
-operator|=
 name|movePartitionTask
 argument_list|(
 name|table
@@ -1901,8 +1887,7 @@ name|tmpPath
 argument_list|,
 name|loadFileType
 argument_list|)
-expr_stmt|;
-block|}
+decl_stmt|;
 comment|// Set Checkpoint task as dependant to add partition tasks. So, if same dump is retried for
 comment|// bootstrap, we skip current partition update.
 name|Task
@@ -1968,13 +1953,6 @@ argument_list|(
 name|addPartTask
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|movePartitionTask
-operator|!=
-literal|null
-condition|)
-block|{
 name|addPartTask
 operator|.
 name|addDependentTask
@@ -1989,17 +1967,6 @@ argument_list|(
 name|ckptTask
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
-name|addPartTask
-operator|.
-name|addDependentTask
-argument_list|(
-name|ckptTask
-argument_list|)
-expr_stmt|;
-block|}
 return|return
 name|ptnRootTask
 return|;
