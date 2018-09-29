@@ -252,15 +252,15 @@ literal|0
 operator|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
-argument_list|(
-literal|"No data to load in path "
-operator|+
-name|loadPath
-argument_list|)
-throw|;
+name|currentIndex
+operator|=
+literal|0
+expr_stmt|;
+name|numEvents
+operator|=
+literal|0
+expr_stmt|;
+return|return;
 block|}
 comment|// For event dump, each sub-dir is an individual event dump.
 comment|// We need to guarantee that the directory listing we got is in order of event id.
