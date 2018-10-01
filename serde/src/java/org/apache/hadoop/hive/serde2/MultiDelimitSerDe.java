@@ -13,8 +13,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|contrib
-operator|.
 name|serde2
 package|;
 end_package
