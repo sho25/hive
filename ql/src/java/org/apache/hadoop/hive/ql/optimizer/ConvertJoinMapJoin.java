@@ -8062,6 +8062,9 @@ expr_stmt|;
 block|}
 if|if
 condition|(
+operator|!
+name|useOpTraits
+operator|&&
 name|parentOp
 operator|instanceof
 name|ReduceSinkOperator
