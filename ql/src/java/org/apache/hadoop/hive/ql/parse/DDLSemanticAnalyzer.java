@@ -12024,8 +12024,6 @@ name|part
 operator|.
 name|isStoredAsSubDirectories
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|isListBucketed
@@ -12104,8 +12102,6 @@ name|table
 operator|.
 name|isStoredAsSubDirectories
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|isListBucketed
@@ -15257,8 +15253,6 @@ name|part
 operator|.
 name|isStoredAsSubDirectories
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -15317,8 +15311,6 @@ name|tblObj
 operator|.
 name|isStoredAsSubDirectories
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 block|}

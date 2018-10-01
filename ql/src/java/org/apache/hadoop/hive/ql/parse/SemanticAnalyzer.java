@@ -44454,8 +44454,6 @@ name|destinationTable
 operator|.
 name|isStoredAsSubDirectories
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 comment|// Create the work for moving the table
@@ -45172,8 +45170,6 @@ name|destinationPartition
 operator|.
 name|isStoredAsSubDirectories
 argument_list|()
-argument_list|,
-name|conf
 argument_list|)
 expr_stmt|;
 name|AcidUtils
