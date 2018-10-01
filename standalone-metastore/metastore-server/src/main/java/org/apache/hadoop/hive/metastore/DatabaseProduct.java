@@ -304,6 +304,10 @@ operator|||
 name|dbType
 operator|==
 name|ORACLE
+operator|||
+name|dbType
+operator|==
+name|POSTGRES
 return|;
 block|}
 block|}
