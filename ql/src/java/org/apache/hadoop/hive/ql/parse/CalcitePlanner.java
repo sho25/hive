@@ -19789,7 +19789,9 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.table"
+name|Constants
+operator|.
+name|JDBC_TABLE
 argument_list|)
 operator|!=
 literal|null
@@ -20465,13 +20467,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"JDBC is running"
-argument_list|)
-expr_stmt|;
 specifier|final
 name|String
 name|dataBaseType
@@ -20480,7 +20475,9 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.database.type"
+name|Constants
+operator|.
+name|JDBC_DATABASE_TYPE
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -20491,7 +20488,9 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.jdbc.url"
+name|Constants
+operator|.
+name|JDBC_URL
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -20502,7 +20501,9 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.jdbc.driver"
+name|Constants
+operator|.
+name|JDBC_DRIVER
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -20513,7 +20514,9 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.dbcp.username"
+name|Constants
+operator|.
+name|JDBC_USERNAME
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -20524,10 +20527,11 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.dbcp.password"
+name|Constants
+operator|.
+name|JDBC_PASSWORD
 argument_list|)
 decl_stmt|;
-comment|//final String query = tabMetaData.getProperty("hive.sql.query");
 specifier|final
 name|String
 name|tableName
@@ -20536,10 +20540,11 @@ name|tabMetaData
 operator|.
 name|getProperty
 argument_list|(
-literal|"hive.sql.table"
+name|Constants
+operator|.
+name|JDBC_TABLE
 argument_list|)
 decl_stmt|;
-specifier|final
 name|DataSource
 name|ds
 init|=
@@ -20676,6 +20681,10 @@ argument_list|,
 name|jdbcTableRel
 argument_list|,
 name|jc
+argument_list|,
+name|url
+argument_list|,
+name|user
 argument_list|)
 expr_stmt|;
 block|}
