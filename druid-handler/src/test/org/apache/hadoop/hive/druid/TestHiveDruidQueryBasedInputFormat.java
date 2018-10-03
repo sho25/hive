@@ -218,7 +218,7 @@ literal|"\"aggregations\":[],"
 operator|+
 literal|"\"postAggregations\":[],"
 operator|+
-literal|"\"context\":null}, [localhost:8082]}]"
+literal|"\"context\":{\"queryId\":\"\"}}, [localhost:8082]}]"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -298,7 +298,7 @@ literal|"{\"type\":\"doubleSum\",\"name\":\"some_metric\",\"fieldName\":\"some_m
 operator|+
 literal|"\"postAggregations\":[],"
 operator|+
-literal|"\"context\":null,"
+literal|"\"context\":{\"queryId\":\"\"},"
 operator|+
 literal|"\"descending\":false}, [localhost:8082]}]"
 decl_stmt|;
@@ -370,7 +370,7 @@ literal|"\"limitSpec\":{\"type\":\"default\",\"columns\":[{\"dimension\":\"count
 operator|+
 literal|"{\"dimension\":\"data_transfer\",\"direction\":\"ascending\",\"dimensionOrder\":{\"type\":\"lexicographic\"}}],\"limit\":5000},"
 operator|+
-literal|"\"context\":null,"
+literal|"\"context\":{\"queryId\":\"\"},"
 operator|+
 literal|"\"descending\":false}, [localhost:8082]}]"
 decl_stmt|;
@@ -436,7 +436,7 @@ literal|"\"virtualColumns\":[],"
 operator|+
 literal|"\"pagingSpec\":{\"pagingIdentifiers\":{},\"threshold\":5,\"fromNext\":false},"
 operator|+
-literal|"\"context\":{\"druid.query.fetch\":true}}, [localhost:8082]}]"
+literal|"\"context\":{\"druid.query.fetch\":true,\"queryId\":\"\"}}, [localhost:8082]}]"
 decl_stmt|;
 annotation|@
 name|Test
