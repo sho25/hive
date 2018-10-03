@@ -2013,6 +2013,18 @@ name|ConfVars
 operator|.
 name|LLAP_CACHE_DEFAULT_FS_FILE_ID
 argument_list|)
+argument_list|,
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_IO_USE_FILEID_PATH
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|cacheTag
@@ -10714,6 +10726,9 @@ name|allowSynthetic
 parameter_list|,
 name|boolean
 name|checkDefaultFs
+parameter_list|,
+name|boolean
+name|forceSynthetic
 parameter_list|)
 throws|throws
 name|IOException
@@ -10757,6 +10772,8 @@ argument_list|,
 name|allowSynthetic
 argument_list|,
 name|checkDefaultFs
+argument_list|,
+name|forceSynthetic
 argument_list|)
 return|;
 block|}

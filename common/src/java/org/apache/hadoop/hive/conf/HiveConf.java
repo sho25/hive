@@ -14408,7 +14408,9 @@ literal|true
 argument_list|,
 literal|"Whether LLAP should use fileId (inode)-based path to ensure better consistency for the\n"
 operator|+
-literal|"cases of file overwrites. This is supported on HDFS."
+literal|"cases of file overwrites. This is supported on HDFS. Disabling this also turns off any\n"
+operator|+
+literal|"cache consistency checks based on fileid comparisons."
 argument_list|)
 block|,
 comment|// Restricted to text for now as this is a new feature; only text files can be sliced.
