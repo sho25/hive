@@ -523,6 +523,8 @@ argument_list|,
 name|metrics
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|MetadataCache
@@ -1026,6 +1028,8 @@ argument_list|,
 name|metrics
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|MetadataCache

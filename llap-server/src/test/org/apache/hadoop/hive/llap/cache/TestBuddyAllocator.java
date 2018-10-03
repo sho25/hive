@@ -534,6 +534,8 @@ literal|"1"
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 for|for
@@ -638,6 +640,8 @@ literal|"1"
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|allocSameSize
@@ -722,6 +726,8 @@ literal|"1"
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|ExecutorService
@@ -1093,6 +1099,8 @@ literal|"1"
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|ExecutorService
@@ -1338,6 +1346,8 @@ literal|"1"
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -1459,6 +1469,8 @@ literal|"1"
 argument_list|)
 argument_list|,
 literal|null
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|allocateUp

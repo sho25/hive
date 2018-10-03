@@ -14249,6 +14249,15 @@ argument_list|,
 literal|"Whether ORC low-level cache should use direct allocation."
 argument_list|)
 block|,
+name|LLAP_ALLOCATOR_PREALLOCATE
+argument_list|(
+literal|"hive.llap.io.allocator.preallocate"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to preallocate the entire IO memory at init time."
+argument_list|)
+block|,
 name|LLAP_ALLOCATOR_MAPPED
 argument_list|(
 literal|"hive.llap.io.allocator.mmap"
