@@ -3974,6 +3974,12 @@ name|createScanAllQuery
 parameter_list|(
 name|String
 name|dataSourceName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|columns
 parameter_list|)
 throws|throws
 name|JsonProcessingException
@@ -4027,6 +4033,11 @@ name|MultipleIntervalSegmentSpec
 argument_list|(
 name|intervals
 argument_list|)
+argument_list|)
+operator|.
+name|columns
+argument_list|(
+name|columns
 argument_list|)
 operator|.
 name|build

@@ -69503,6 +69503,16 @@ name|VirtualColumn
 argument_list|>
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|tab
+operator|.
+name|isNonNative
+argument_list|()
+condition|)
+block|{
+comment|// Virtual columns are only for native tables
 while|while
 condition|(
 name|vcs
@@ -69564,6 +69574,7 @@ argument_list|(
 name|vc
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Create the root of the operator tree
 name|TableScanDesc

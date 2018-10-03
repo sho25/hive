@@ -758,6 +758,9 @@ case|:
 case|case
 name|TIMESTAMP
 case|:
+case|case
+name|TIMESTAMPLOCALTZ
+case|:
 return|return
 operator|new
 name|GenericUDAFLongStatsEvaluator

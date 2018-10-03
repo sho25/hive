@@ -455,6 +455,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|shims
 operator|.
 name|ShimLoader
@@ -1021,6 +1039,13 @@ operator|.
 name|createScanAllQuery
 argument_list|(
 name|dataSource
+argument_list|,
+name|Utilities
+operator|.
+name|getColumnNames
+argument_list|(
+name|conf
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|druidQueryType
@@ -1028,6 +1053,17 @@ operator|=
 name|Query
 operator|.
 name|SCAN
+expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+name|Constants
+operator|.
+name|DRUID_QUERY_TYPE
+argument_list|,
+name|druidQueryType
+argument_list|)
 expr_stmt|;
 block|}
 else|else
@@ -2107,10 +2143,10 @@ block|{
 name|reader
 operator|=
 operator|new
-name|DruidSelectQueryRecordReader
+name|DruidScanQueryRecordReader
 argument_list|()
 expr_stmt|;
-comment|// By default
+comment|// By default we use scan query as fallback.
 name|reader
 operator|.
 name|initialize
@@ -2218,10 +2254,10 @@ condition|)
 block|{
 return|return
 operator|new
-name|DruidSelectQueryRecordReader
+name|DruidScanQueryRecordReader
 argument_list|()
 return|;
-comment|// By default
+comment|// By default, we use druid scan query as fallback.
 block|}
 specifier|final
 name|DruidQueryRecordReader
