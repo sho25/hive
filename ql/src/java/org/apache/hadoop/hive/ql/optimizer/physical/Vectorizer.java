@@ -25422,6 +25422,16 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
+comment|// Since the call to fixDecimalDataTypePhysicalVariations will be done post-vector-expression
+comment|// creation, it cannot freely use deallocated scratch columns.  Scratch column reuse assumes
+comment|// sequential execution so it can reuse freed scratch columns from earlier
+comment|// evaluations.
+comment|//
+name|vContext
+operator|.
+name|clearScratchColumnWasUsedTracking
+argument_list|()
+expr_stmt|;
 name|VectorExpression
 index|[]
 name|vectorSelectExprs
@@ -25529,6 +25539,15 @@ comment|// Fix up the case where parent expression's output data type physical v
 comment|// at least one of its children is DECIMAL_64. Some expressions like x % y for example only accepts DECIMAL
 comment|// for x and y (at this time there is only DecimalColModuloDecimalColumn so both x and y has to be DECIMAL).
 comment|// The following method introduces a cast if x or y is DECIMAL_64 and parent expression (x % y) is DECIMAL.
+name|vContext
+operator|.
+name|setDontReuseTrackedScratchColumns
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+try|try
+block|{
 name|fixDecimalDataTypePhysicalVariations
 argument_list|(
 name|vContext
@@ -25536,6 +25555,17 @@ argument_list|,
 name|vectorSelectExprs
 argument_list|)
 expr_stmt|;
+block|}
+finally|finally
+block|{
+name|vContext
+operator|.
+name|setDontReuseTrackedScratchColumns
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 name|vectorSelectDesc
 operator|.
 name|setSelectExpressions
