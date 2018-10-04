@@ -11408,6 +11408,43 @@ operator|+
 literal|" in the HS2 WebUI / Drilldown / Query Plan tab.\n"
 argument_list|)
 block|,
+name|HIVE_SERVER2_WEBUI_SHOW_GRAPH
+argument_list|(
+literal|"hive.server2.webui.show.graph"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set this to true to to display query plan as a graph instead of text in the WebUI. "
+operator|+
+literal|"Only works with hive.server2.webui.explain.output set to true."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_MAX_GRAPH_SIZE
+argument_list|(
+literal|"hive.server2.webui.max.graph.size"
+argument_list|,
+literal|25
+argument_list|,
+literal|"Max number of stages graph can display. If number of stages exceeds this, no query"
+operator|+
+literal|"plan will be shown. Only works when hive.server2.webui.show.graph and "
+operator|+
+literal|"hive.server2.webui.explain.output set to true."
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_SHOW_STATS
+argument_list|(
+literal|"hive.server2.webui.show.stats"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set this to true to to display statistics for MapReduce tasks in the WebUI. "
+operator|+
+literal|"Only works when hive.server2.webui.show.graph and hive.server2.webui.explain.output "
+operator|+
+literal|"set to true."
+argument_list|)
+block|,
 name|HIVE_SERVER2_WEBUI_ENABLE_CORS
 argument_list|(
 literal|"hive.server2.webui.enable.cors"

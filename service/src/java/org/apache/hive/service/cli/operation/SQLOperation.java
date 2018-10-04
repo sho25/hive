@@ -1496,6 +1496,24 @@ name|getQueryDisplay
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|operationLog
+operator|!=
+literal|null
+condition|)
+block|{
+name|queryInfo
+operator|.
+name|setOperationLogLocation
+argument_list|(
+name|operationLog
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 comment|// set the operation handle information in Driver, so that thrift API users
 comment|// can use the operation handle they receive, to lookup query information in
 comment|// Yarn ATS

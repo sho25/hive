@@ -847,6 +847,14 @@ argument_list|>
 implements|implements
 name|Serializable
 block|{
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|STAGE_DEPENDENCIES
+init|=
+literal|"STAGE DEPENDENCIES"
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -1962,7 +1970,7 @@ name|outJSONObject
 operator|.
 name|put
 argument_list|(
-literal|"STAGE DEPENDENCIES"
+name|STAGE_DEPENDENCIES
 argument_list|,
 name|jsonDependencies
 argument_list|)
@@ -7308,7 +7316,9 @@ name|out
 operator|.
 name|println
 argument_list|(
-literal|"STAGE DEPENDENCIES:"
+name|STAGE_DEPENDENCIES
+operator|+
+literal|":"
 argument_list|)
 expr_stmt|;
 block|}
