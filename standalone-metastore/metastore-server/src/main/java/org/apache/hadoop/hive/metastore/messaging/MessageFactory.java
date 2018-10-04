@@ -687,7 +687,9 @@ parameter_list|)
 block|{
 try|try
 block|{
-return|return
+name|MessageFactory
+name|factory
+init|=
 name|JavaUtils
 operator|.
 name|newInstance
@@ -703,6 +705,14 @@ operator|.
 name|class
 argument_list|)
 argument_list|)
+decl_stmt|;
+name|factory
+operator|.
+name|init
+argument_list|()
+expr_stmt|;
+return|return
+name|factory
 return|;
 block|}
 catch|catch
@@ -764,6 +774,13 @@ comment|// Additional note : rather than as a config parameter, does it make sen
 comment|// this use jdbc-like semantics that each MessageFactory made available register
 comment|// itself for discoverability? Might be worth pursuing.
 block|}
+specifier|public
+name|void
+name|init
+parameter_list|()
+throws|throws
+name|MetaException
+block|{}
 specifier|public
 specifier|abstract
 name|MessageDeserializer
