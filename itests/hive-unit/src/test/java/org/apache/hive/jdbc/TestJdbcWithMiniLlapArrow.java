@@ -2227,6 +2227,8 @@ operator|.
 name|join
 argument_list|()
 expr_stmt|;
+try|try
+block|{
 name|stmt
 operator|.
 name|close
@@ -2242,6 +2244,15 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// ignore error
+block|}
 name|assertNotNull
 argument_list|(
 literal|"tExecute"
