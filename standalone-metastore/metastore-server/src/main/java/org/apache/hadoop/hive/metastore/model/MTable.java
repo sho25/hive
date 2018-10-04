@@ -45,6 +45,10 @@ class|class
 name|MTable
 block|{
 specifier|private
+name|long
+name|id
+decl_stmt|;
+specifier|private
 name|String
 name|tableName
 decl_stmt|;
@@ -660,6 +664,16 @@ name|writeId
 operator|=
 name|writeId
 expr_stmt|;
+block|}
+comment|/**    * @return the id.    */
+specifier|public
+name|long
+name|getId
+parameter_list|()
+block|{
+return|return
+name|id
+return|;
 block|}
 block|}
 end_class

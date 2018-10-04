@@ -1869,6 +1869,27 @@ argument_list|,
 name|tableName
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|ft
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|isSetId
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|ft
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|unsetId
+argument_list|()
+expr_stmt|;
 name|assertNotNull
 argument_list|(
 literal|"Unable to fetch table"
@@ -2055,6 +2076,14 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|unsetId
+argument_list|()
+expr_stmt|;
 name|assertTrue
 argument_list|(
 literal|"Tables  doesn't match: "

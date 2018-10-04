@@ -303,6 +303,16 @@ name|SessionState
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestAuthorizationPreEventListener. Test case for  * {@link org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener} and  * {@link org.apache.hadoop.hive.metastore.MetaStorePreEventListener}  */
 end_comment
@@ -1154,6 +1164,21 @@ argument_list|,
 name|tblName
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|tbl
+operator|.
+name|isSetId
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|tbl
+operator|.
+name|unsetId
+argument_list|()
+expr_stmt|;
 name|validateCreateTable
 argument_list|(
 name|tbl

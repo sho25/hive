@@ -32362,6 +32362,14 @@ name|isTemporary
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|unsetId
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|crtTbl

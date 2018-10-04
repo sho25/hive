@@ -11151,6 +11151,43 @@ argument_list|)
 throw|;
 block|}
 block|}
+if|if
+condition|(
+name|tbl
+operator|.
+name|isSetId
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidObjectException
+argument_list|(
+literal|"Id shouldn't be set but table "
+operator|+
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|"has the Id set to "
+operator|+
+name|tbl
+operator|.
+name|getId
+argument_list|()
+operator|+
+literal|". It's a read-only option"
+argument_list|)
+throw|;
+block|}
 name|SkewedInfo
 name|skew
 init|=
