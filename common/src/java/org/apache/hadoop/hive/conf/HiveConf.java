@@ -10057,6 +10057,15 @@ argument_list|,
 literal|"Local temporary directory used to persist intermediate indexing state, will default to JVM system property java.io.tmpdir."
 argument_list|)
 block|,
+name|HIVE_DRUID_ROLLUP
+argument_list|(
+literal|"hive.druid.rollup"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to rollup druid rows or not."
+argument_list|)
+block|,
 name|DRUID_SEGMENT_DIRECTORY
 argument_list|(
 literal|"hive.druid.storage.storageDirectory"

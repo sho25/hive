@@ -100,6 +100,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|DRUID_ROLLUP
+init|=
+literal|"druid.rollup"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DRUID_QUERY_GRANULARITY
 init|=
 literal|"druid.query.granularity"
