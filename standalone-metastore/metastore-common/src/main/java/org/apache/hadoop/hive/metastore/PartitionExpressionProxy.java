@@ -110,14 +110,16 @@ specifier|public
 interface|interface
 name|PartitionExpressionProxy
 block|{
-comment|/**    * Converts serialized Hive expression into filter in the format suitable for Filter.g.    * @param expr Serialized expression.    * @return The filter string.    */
-specifier|public
+comment|/**    * Converts serialized Hive expression into filter in the format suitable for Filter.g.    * The isnull and isnotnull expressions are converted to = and != default partition respectively    * for push down to metastore SQL.    * @param exprBytes Serialized expression.    * @param defaultPartitionName Default partition name.    * @return Filter string.    */
 name|String
 name|convertExprToFilter
 parameter_list|(
 name|byte
 index|[]
-name|expr
+name|exprBytes
+parameter_list|,
+name|String
+name|defaultPartitionName
 parameter_list|)
 throws|throws
 name|MetaException

@@ -301,6 +301,9 @@ parameter_list|,
 name|byte
 index|[]
 name|expr
+parameter_list|,
+name|String
+name|defaultPartitionName
 parameter_list|)
 throws|throws
 name|MetaException
@@ -321,6 +324,8 @@ operator|.
 name|convertExprToFilter
 argument_list|(
 name|expr
+argument_list|,
+name|defaultPartitionName
 argument_list|)
 expr_stmt|;
 block|}

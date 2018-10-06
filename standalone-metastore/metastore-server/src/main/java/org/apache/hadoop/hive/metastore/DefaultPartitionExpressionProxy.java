@@ -121,6 +121,9 @@ parameter_list|(
 name|byte
 index|[]
 name|expr
+parameter_list|,
+name|String
+name|defaultPartitionName
 parameter_list|)
 throws|throws
 name|MetaException
