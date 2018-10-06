@@ -3517,6 +3517,17 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_IN_REPL_TEST_FILES_SORTED
+argument_list|(
+literal|"hive.in.repl.test.files.sorted"
+argument_list|,
+literal|false
+argument_list|,
+literal|"internal usage only, set to true if the file listing is required in sorted order during bootstrap load"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 name|LOCALMODEAUTO
 argument_list|(
 literal|"hive.exec.mode.local.auto"

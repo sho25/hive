@@ -1101,6 +1101,17 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+comment|// Scope might have set to database in some previous iteration of loop, so reset it to false if database
+comment|// tracker has no tasks.
+name|scope
+operator|.
+name|database
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|work
 operator|.
 name|updateDbEventState
@@ -1240,6 +1251,17 @@ operator|.
 name|table
 operator|=
 literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Scope might have set to table in some previous iteration of loop, so reset it to false if table
+comment|// tracker has no tasks.
+name|scope
+operator|.
+name|table
+operator|=
+literal|false
 expr_stmt|;
 block|}
 comment|/*             for table replication if we reach the max number of tasks then for the next run we will             try to reload the same table again, this is mainly for ease of understanding the code             as then we can avoid handling ==> loading partitions for the table given that             the creation of table lead to reaching max tasks vs,  loading next table since current             one does not have partitions.            */
