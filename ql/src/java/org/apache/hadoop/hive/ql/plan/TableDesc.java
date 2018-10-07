@@ -366,6 +366,22 @@ argument_list|>
 name|jobSecrets
 decl_stmt|;
 specifier|public
+specifier|static
+specifier|final
+name|String
+name|SECRET_PREFIX
+init|=
+literal|"TABLE_SECRET"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SECRET_DELIMIT
+init|=
+literal|"#"
+decl_stmt|;
+specifier|public
 name|TableDesc
 parameter_list|()
 block|{   }

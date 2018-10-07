@@ -2872,6 +2872,13 @@ try|try
 block|{
 name|Utilities
 operator|.
+name|copyJobSecretToTableProperties
+argument_list|(
+name|table
+argument_list|)
+expr_stmt|;
+name|Utilities
+operator|.
 name|copyTablePropertiesToConf
 argument_list|(
 name|table

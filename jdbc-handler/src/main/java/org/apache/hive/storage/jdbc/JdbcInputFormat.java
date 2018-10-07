@@ -412,13 +412,6 @@ argument_list|,
 name|numSplits
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|dbAccessor
-operator|==
-literal|null
-condition|)
-block|{
 name|dbAccessor
 operator|=
 name|DatabaseAccessorFactory
@@ -428,7 +421,6 @@ argument_list|(
 name|job
 argument_list|)
 expr_stmt|;
-block|}
 name|int
 name|numRecords
 init|=
