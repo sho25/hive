@@ -31,16 +31,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|math
-operator|.
-name|BigInteger
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|nio
 operator|.
 name|ByteBuffer
@@ -4417,7 +4407,7 @@ name|boolStats
 operator|.
 name|setNumFalses
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4429,7 +4419,7 @@ name|boolStats
 operator|.
 name|setNumTrues
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4441,7 +4431,7 @@ name|boolStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4493,7 +4483,7 @@ name|stringStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4505,7 +4495,7 @@ name|stringStats
 operator|.
 name|setAvgColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -4517,7 +4507,7 @@ name|stringStats
 operator|.
 name|setMaxColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4529,7 +4519,7 @@ name|stringStats
 operator|.
 name|setNumDVs
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4541,7 +4531,7 @@ name|stringStats
 operator|.
 name|setBitVectors
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlBlob
 argument_list|(
@@ -4579,7 +4569,7 @@ name|binaryStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4591,7 +4581,7 @@ name|binaryStats
 operator|.
 name|setAvgColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -4603,7 +4593,7 @@ name|binaryStats
 operator|.
 name|setMaxColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4669,7 +4659,7 @@ name|longStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4688,7 +4678,7 @@ name|longStats
 operator|.
 name|setHighValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4708,7 +4698,7 @@ name|longStats
 operator|.
 name|setLowValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4721,7 +4711,7 @@ name|longStats
 operator|.
 name|setNumDVs
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4733,7 +4723,7 @@ name|longStats
 operator|.
 name|setBitVectors
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlBlob
 argument_list|(
@@ -4778,7 +4768,7 @@ name|doubleStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4797,7 +4787,7 @@ name|doubleStats
 operator|.
 name|setHighValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -4817,7 +4807,7 @@ name|doubleStats
 operator|.
 name|setLowValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -4830,7 +4820,7 @@ name|doubleStats
 operator|.
 name|setNumDVs
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4842,7 +4832,7 @@ name|doubleStats
 operator|.
 name|setBitVectors
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlBlob
 argument_list|(
@@ -4880,7 +4870,7 @@ name|decimalStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4938,7 +4928,7 @@ name|decimalStats
 operator|.
 name|setNumDVs
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -4950,7 +4940,7 @@ name|decimalStats
 operator|.
 name|setBitVectors
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlBlob
 argument_list|(
@@ -4988,7 +4978,7 @@ name|dateStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5010,7 +5000,7 @@ argument_list|(
 operator|new
 name|Date
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5034,7 +5024,7 @@ argument_list|(
 operator|new
 name|Date
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5048,7 +5038,7 @@ name|dateStats
 operator|.
 name|setNumDVs
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5060,7 +5050,7 @@ name|dateStats
 operator|.
 name|setBitVectors
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlBlob
 argument_list|(
@@ -5174,7 +5164,7 @@ name|boolStats
 operator|.
 name|setNumFalses
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5186,7 +5176,7 @@ name|boolStats
 operator|.
 name|setNumTrues
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5198,7 +5188,7 @@ name|boolStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5250,7 +5240,7 @@ name|stringStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5262,7 +5252,7 @@ name|stringStats
 operator|.
 name|setAvgColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5274,7 +5264,7 @@ name|stringStats
 operator|.
 name|setMaxColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5286,7 +5276,7 @@ name|stringStats
 operator|.
 name|setNumDVs
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5324,7 +5314,7 @@ name|binaryStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5336,7 +5326,7 @@ name|binaryStats
 operator|.
 name|setAvgColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5348,7 +5338,7 @@ name|binaryStats
 operator|.
 name|setMaxColLen
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5414,7 +5404,7 @@ name|longStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5433,7 +5423,7 @@ name|longStats
 operator|.
 name|setHighValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5453,7 +5443,7 @@ name|longStats
 operator|.
 name|setLowValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5465,7 +5455,7 @@ block|}
 name|long
 name|lowerBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5475,7 +5465,7 @@ decl_stmt|;
 name|long
 name|higherBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5502,14 +5492,14 @@ condition|)
 block|{
 name|rangeBound
 operator|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 name|lhigh
 argument_list|)
 operator|-
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5538,7 +5528,7 @@ name|avgLong
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5552,19 +5542,19 @@ comment|// We have estimation, lowerbound and higherbound. We use estimation if
 comment|// it is between lowerbound and higherbound.
 name|estimation
 operator|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 operator|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 name|lhigh
 argument_list|)
 operator|-
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5572,7 +5562,7 @@ name|llow
 argument_list|)
 operator|)
 operator|/
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5674,7 +5664,7 @@ name|dateStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5696,7 +5686,7 @@ argument_list|(
 operator|new
 name|Date
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5720,7 +5710,7 @@ argument_list|(
 operator|new
 name|Date
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5733,7 +5723,7 @@ block|}
 name|long
 name|lowerBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5743,7 +5733,7 @@ decl_stmt|;
 name|long
 name|higherBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5770,14 +5760,14 @@ condition|)
 block|{
 name|rangeBound
 operator|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 name|lhigh
 argument_list|)
 operator|-
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5806,7 +5796,7 @@ name|avgLong
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5820,19 +5810,19 @@ comment|// We have estimation, lowerbound and higherbound. We use estimation if
 comment|// it is between lowerbound and higherbound.
 name|estimation
 operator|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 operator|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 name|lhigh
 argument_list|)
 operator|-
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5840,7 +5830,7 @@ name|llow
 argument_list|)
 operator|)
 operator|/
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5949,7 +5939,7 @@ name|doubleStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -5968,7 +5958,7 @@ name|doubleStats
 operator|.
 name|setHighValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -5988,7 +5978,7 @@ name|doubleStats
 operator|.
 name|setLowValue
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -6000,7 +5990,7 @@ block|}
 name|long
 name|lowerBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6010,7 +6000,7 @@ decl_stmt|;
 name|long
 name|higherBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6033,7 +6023,7 @@ name|avgDouble
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -6046,19 +6036,19 @@ block|{
 name|long
 name|estimation
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 operator|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
 name|dhigh
 argument_list|)
 operator|-
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6066,7 +6056,7 @@ name|dlow
 argument_list|)
 operator|)
 operator|/
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -6169,7 +6159,7 @@ name|decimalStats
 operator|.
 name|setNumNulls
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6364,7 +6354,7 @@ expr_stmt|;
 name|long
 name|lowerBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6374,7 +6364,7 @@ decl_stmt|;
 name|long
 name|higherBound
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6397,7 +6387,7 @@ name|avgDecimal
 operator|!=
 literal|null
 operator|&&
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(
@@ -6410,11 +6400,11 @@ block|{
 name|long
 name|estimation
 init|=
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlLong
 argument_list|(
@@ -6428,7 +6418,7 @@ operator|.
 name|floatValue
 argument_list|()
 operator|/
-name|MetaStoreDirectSql
+name|MetastoreDirectSqlUtils
 operator|.
 name|extractSqlDouble
 argument_list|(

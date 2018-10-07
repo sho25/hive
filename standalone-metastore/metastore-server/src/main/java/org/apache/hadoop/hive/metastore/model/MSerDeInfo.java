@@ -67,6 +67,12 @@ specifier|private
 name|int
 name|serdeType
 decl_stmt|;
+specifier|public
+name|MSerDeInfo
+parameter_list|()
+block|{
+comment|//default constructor used for deserialization
+block|}
 comment|/**    *    * @param name    * @param serializationLib    * @param parameters    * @param description    * @param serializerClass    * @param deserializerClass    * @param serdeType    */
 specifier|public
 name|MSerDeInfo

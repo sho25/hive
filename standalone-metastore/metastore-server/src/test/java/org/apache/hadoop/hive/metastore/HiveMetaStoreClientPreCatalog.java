@@ -17975,6 +17975,24 @@ name|UnsupportedOperationException
 argument_list|()
 throw|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|GetPartitionsResponse
+name|getPartitionsWithSpecs
+parameter_list|(
+name|GetPartitionsRequest
+name|request
+parameter_list|)
+throws|throws
+name|TException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|()
+throw|;
+block|}
 block|}
 end_class
 

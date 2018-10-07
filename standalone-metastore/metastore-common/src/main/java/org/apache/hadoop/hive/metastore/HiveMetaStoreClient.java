@@ -20767,6 +20767,27 @@ name|req
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|GetPartitionsResponse
+name|getPartitionsWithSpecs
+parameter_list|(
+name|GetPartitionsRequest
+name|request
+parameter_list|)
+throws|throws
+name|TException
+block|{
+return|return
+name|client
+operator|.
+name|get_partitions_with_specs
+argument_list|(
+name|request
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 
