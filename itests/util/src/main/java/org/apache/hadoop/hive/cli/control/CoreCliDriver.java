@@ -319,7 +319,6 @@ argument_list|(
 name|message
 argument_list|)
 expr_stmt|;
-specifier|final
 name|MiniClusterType
 name|miniMR
 init|=
@@ -328,7 +327,6 @@ operator|.
 name|getClusterType
 argument_list|()
 decl_stmt|;
-specifier|final
 name|String
 name|hiveConfDir
 init|=
@@ -337,7 +335,6 @@ operator|.
 name|getHiveConfDir
 argument_list|()
 decl_stmt|;
-specifier|final
 name|String
 name|initScript
 init|=
@@ -346,7 +343,6 @@ operator|.
 name|getInitScript
 argument_list|()
 decl_stmt|;
-specifier|final
 name|String
 name|cleanupScript
 init|=
@@ -357,15 +353,6 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-specifier|final
-name|String
-name|hadoopVer
-init|=
-name|cliConfig
-operator|.
-name|getHadoopVersion
-argument_list|()
-decl_stmt|;
 name|qt
 operator|=
 operator|new
@@ -419,11 +406,6 @@ operator|.
 name|withConfDir
 argument_list|(
 name|hiveConfDir
-argument_list|)
-operator|.
-name|withHadoopVer
-argument_list|(
-name|hadoopVer
 argument_list|)
 operator|.
 name|withInitScript
@@ -775,8 +757,6 @@ specifier|public
 name|void
 name|shutdown
 parameter_list|()
-throws|throws
-name|Exception
 block|{
 try|try
 block|{
@@ -882,8 +862,6 @@ parameter_list|,
 name|String
 name|fpath
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|Stopwatch
 name|sw

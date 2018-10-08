@@ -228,14 +228,6 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|String
-name|hadoopVer
-init|=
-name|cliConfig
-operator|.
-name|getHadoopVersion
-argument_list|()
-decl_stmt|;
 name|qt
 operator|=
 operator|new
@@ -272,11 +264,6 @@ operator|.
 name|withConfDir
 argument_list|(
 name|hiveConfDir
-argument_list|)
-operator|.
-name|withHadoopVer
-argument_list|(
-name|hadoopVer
 argument_list|)
 operator|.
 name|withInitScript
@@ -347,11 +334,15 @@ operator|.
 name|flush
 argument_list|()
 expr_stmt|;
-name|fail
+throw|throw
+operator|new
+name|RuntimeException
 argument_list|(
 literal|"Unexpected exception in static initialization"
+argument_list|,
+name|e
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 block|}
 annotation|@
@@ -465,8 +456,6 @@ specifier|public
 name|void
 name|shutdown
 parameter_list|()
-throws|throws
-name|Exception
 block|{
 try|try
 block|{
@@ -515,24 +504,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Dummy last test. This is only meant to shutdown qt    */
-specifier|public
-name|void
-name|testNegativeCliDriver_shutdown
-parameter_list|()
-block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"Cleaning up "
-operator|+
-literal|"$className"
-argument_list|)
-expr_stmt|;
-block|}
+specifier|private
 specifier|static
 name|String
 name|debugHint

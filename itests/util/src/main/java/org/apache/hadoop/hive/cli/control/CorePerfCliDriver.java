@@ -257,14 +257,6 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|String
-name|hadoopVer
-init|=
-name|cliConfig
-operator|.
-name|getHadoopVersion
-argument_list|()
-decl_stmt|;
 name|qt
 operator|=
 operator|new
@@ -301,11 +293,6 @@ operator|.
 name|withConfDir
 argument_list|(
 name|hiveConfDir
-argument_list|)
-operator|.
-name|withHadoopVer
-argument_list|(
-name|hadoopVer
 argument_list|)
 operator|.
 name|withInitScript
@@ -479,7 +466,7 @@ argument_list|()
 expr_stmt|;
 name|fail
 argument_list|(
-literal|"Unexpected exception"
+literal|"Unexpected exception in setUp"
 argument_list|)
 expr_stmt|;
 block|}
@@ -540,6 +527,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|private
 specifier|static
 name|String
 name|debugHint
@@ -563,8 +551,6 @@ parameter_list|,
 name|String
 name|fpath
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|long
 name|startTime

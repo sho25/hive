@@ -296,16 +296,15 @@ operator|.
 name|flush
 argument_list|()
 expr_stmt|;
-name|fail
+throw|throw
+operator|new
+name|RuntimeException
 argument_list|(
 literal|"Unexpected exception in static initialization: "
-operator|+
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
-expr_stmt|;
+throw|;
 block|}
 block|}
 annotation|@
@@ -433,8 +432,6 @@ specifier|public
 name|void
 name|shutdown
 parameter_list|()
-throws|throws
-name|Exception
 block|{
 try|try
 block|{
@@ -498,8 +495,6 @@ parameter_list|,
 name|String
 name|fpath
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|long
 name|startTime

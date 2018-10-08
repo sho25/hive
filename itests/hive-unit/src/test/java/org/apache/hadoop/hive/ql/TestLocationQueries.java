@@ -370,9 +370,6 @@ name|MiniClusterType
 name|miniMr
 parameter_list|,
 name|String
-name|hadoopVer
-parameter_list|,
-name|String
 name|locationSubdir
 parameter_list|)
 throws|throws
@@ -405,11 +402,6 @@ operator|.
 name|withConfDir
 argument_list|(
 literal|null
-argument_list|)
-operator|.
-name|withHadoopVer
-argument_list|(
-name|hadoopVer
 argument_list|)
 operator|.
 name|withInitScript
@@ -511,8 +503,6 @@ argument_list|,
 name|MiniClusterType
 operator|.
 name|none
-argument_list|,
-literal|"0.20"
 argument_list|,
 literal|"parta"
 argument_list|)

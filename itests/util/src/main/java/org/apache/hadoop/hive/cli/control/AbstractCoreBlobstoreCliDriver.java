@@ -357,14 +357,6 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|String
-name|hadoopVer
-init|=
-name|cliConfig
-operator|.
-name|getHadoopVersion
-argument_list|()
-decl_stmt|;
 name|qt
 operator|=
 operator|new
@@ -401,11 +393,6 @@ operator|.
 name|withConfDir
 argument_list|(
 name|hiveConfDir
-argument_list|)
-operator|.
-name|withHadoopVer
-argument_list|(
-name|hadoopVer
 argument_list|)
 operator|.
 name|withInitScript
@@ -646,8 +633,6 @@ specifier|public
 name|void
 name|shutdown
 parameter_list|()
-throws|throws
-name|Exception
 block|{
 try|try
 block|{
@@ -730,6 +715,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|private
 specifier|static
 name|String
 name|debugHint
@@ -754,8 +740,6 @@ parameter_list|,
 name|boolean
 name|expectSuccess
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|long
 name|startTime

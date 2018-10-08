@@ -289,6 +289,22 @@ name|HiveConf
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestUtil
+import|;
+end_import
+
 begin_comment
 comment|/**  * Start and stop an AccumuloMiniCluster for testing purposes  */
 end_comment
@@ -297,6 +313,10 @@ begin_class
 specifier|public
 class|class
 name|AccumuloTestSetup
+extends|extends
+name|QTestUtil
+operator|.
+name|QTestSetup
 block|{
 specifier|public
 specifier|static
@@ -314,7 +334,7 @@ name|TABLE_NAME
 init|=
 literal|"accumuloHiveTable"
 decl_stmt|;
-specifier|protected
+specifier|private
 name|MiniAccumuloCluster
 name|miniCluster
 decl_stmt|;
@@ -322,7 +342,32 @@ specifier|public
 name|AccumuloTestSetup
 parameter_list|()
 block|{   }
-specifier|protected
+annotation|@
+name|Override
+specifier|public
+name|void
+name|preTest
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|)
+throws|throws
+name|Exception
+block|{
+name|super
+operator|.
+name|preTest
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+name|setupWithHiveConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
 name|void
 name|setupWithHiveConf
 parameter_list|(
@@ -427,7 +472,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Update hiveConf with the Accumulo specific parameters    * @param conf The hiveconf to update    */
-specifier|public
+specifier|private
 name|void
 name|updateConf
 parameter_list|(
@@ -495,7 +540,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|void
 name|createAccumuloTable
 parameter_list|(
@@ -1051,6 +1096,8 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|tearDown
@@ -1075,6 +1122,11 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+name|super
+operator|.
+name|tearDown
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class

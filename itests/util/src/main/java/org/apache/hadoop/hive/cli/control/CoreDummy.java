@@ -104,8 +104,6 @@ specifier|public
 name|void
 name|shutdown
 parameter_list|()
-throws|throws
-name|Exception
 block|{   }
 annotation|@
 name|Override
@@ -122,8 +120,6 @@ parameter_list|,
 name|String
 name|absolutePath
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|List
 argument_list|<

@@ -54,8 +54,6 @@ parameter_list|,
 name|String
 name|fpath
 parameter_list|)
-throws|throws
-name|Exception
 block|{
 name|super
 operator|.
