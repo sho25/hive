@@ -1802,7 +1802,9 @@ name|plan
 operator|.
 name|getOptimizedQueryString
 argument_list|()
+argument_list|,
 comment|// optimizedSQL
+literal|null
 argument_list|)
 decl_stmt|;
 annotation|@

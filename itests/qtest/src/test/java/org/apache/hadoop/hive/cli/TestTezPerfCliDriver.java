@@ -183,7 +183,9 @@ operator|new
 name|CliConfigs
 operator|.
 name|TezPerfCliConfig
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 operator|.
 name|getCliAdapter
 argument_list|()
