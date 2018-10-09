@@ -263,6 +263,12 @@ literal|"fouter_join_ppr.q"
 argument_list|)
 expr_stmt|;
 comment|// Disabled in HIVE-19509
+name|excludeQuery
+argument_list|(
+literal|"udaf_histogram_numeric.q"
+argument_list|)
+expr_stmt|;
+comment|// disabled in HIVE-20715
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive"
