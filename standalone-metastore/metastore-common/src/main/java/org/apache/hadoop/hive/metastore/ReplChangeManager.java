@@ -1273,14 +1273,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -1293,7 +1285,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 comment|// Need to extend the tenancy if we saw a newer file with the same content
 name|fs
 operator|.
@@ -1814,14 +1805,6 @@ else|:
 literal|""
 operator|)
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -1831,7 +1814,6 @@ operator|+
 name|encodedUri
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|encodedUri
 return|;
@@ -1977,14 +1959,6 @@ literal|3
 index|]
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -2018,7 +1992,6 @@ literal|3
 index|]
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|result
 return|;
@@ -2221,14 +2194,6 @@ condition|(
 name|succ
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -2243,7 +2208,6 @@ operator|+
 literal|" to trash"
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 else|else
 block|{
@@ -2285,14 +2249,6 @@ condition|(
 name|succ
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
@@ -2305,7 +2261,6 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 else|else
 block|{
