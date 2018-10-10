@@ -211,6 +211,20 @@ name|calcite
 operator|.
 name|rex
 operator|.
+name|RexUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|calcite
+operator|.
+name|rex
+operator|.
 name|RexVisitorImpl
 import|;
 end_import
@@ -434,6 +448,8 @@ name|this
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Double
 name|visitCall
@@ -706,7 +722,7 @@ return|return
 name|selectivity
 return|;
 block|}
-comment|/**    * NDV of "f1(x, y, z) != f2(p, q, r)" ->    * "(maxNDV(x,y,z,p,q,r) - 1)/maxNDV(x,y,z,p,q,r)".    *<p>    *     * @param call    * @return    */
+comment|/**    * NDV of "f1(x, y, z) != f2(p, q, r)" ->    * "(maxNDV(x,y,z,p,q,r) - 1)/maxNDV(x,y,z,p,q,r)".    *<p>    *    * @param call    * @return    */
 specifier|private
 name|Double
 name|computeNotEqualitySelectivity
@@ -729,24 +745,25 @@ name|tmpNDV
 operator|>
 literal|1
 condition|)
+block|{
 return|return
 operator|(
 name|tmpNDV
 operator|-
-operator|(
-name|double
-operator|)
 literal|1
 operator|)
 operator|/
 name|tmpNDV
 return|;
+block|}
 else|else
+block|{
 return|return
 literal|1.0
 return|;
 block|}
-comment|/**    * Selectivity of f(X,y,z) -> 1/maxNDV(x,y,z).    *<p>    * Note that>,>=,<,<=, = ... are considered generic functions and uses    * this method to find their selectivity.    *     * @param call    * @return    */
+block|}
+comment|/**    * Selectivity of f(X,y,z) -> 1/maxNDV(x,y,z).    *<p>    * Note that>,>=,<,<=, = ... are considered generic functions and uses    * this method to find their selectivity.    *    * @param call    * @return    */
 specifier|private
 name|Double
 name|computeFunctionSelectivity
@@ -764,7 +781,7 @@ name|call
 argument_list|)
 return|;
 block|}
-comment|/**    * Disjunction Selectivity -> (1 D(1-m1/n)(1-m2/n)) where n is the total    * number of tuples from child and m1 and m2 is the expected number of tuples    * from each part of the disjunction predicate.    *<p>    * Note we compute m1. m2.. by applying selectivity of the disjunctive element    * on the cardinality from child.    *     * @param call    * @return    */
+comment|/**    * Disjunction Selectivity -> (1 D(1-m1/n)(1-m2/n)) where n is the total    * number of tuples from child and m1 and m2 is the expected number of tuples    * from each part of the disjunction predicate.    *<p>    * Note we compute m1. m2.. by applying selectivity of the disjunctive element    * on the cardinality from child.    *    * @param call    * @return    */
 specifier|private
 name|Double
 name|computeDisjunctionSelectivity
@@ -862,10 +879,12 @@ name|selectivity
 operator|<
 literal|0.0
 condition|)
+block|{
 name|selectivity
 operator|=
 literal|0.0
 expr_stmt|;
+block|}
 return|return
 operator|(
 literal|1
@@ -874,7 +893,7 @@ name|selectivity
 operator|)
 return|;
 block|}
-comment|/**    * Selectivity of conjunctive predicate -> (selectivity of conjunctive    * element1) * (selectivity of conjunctive element2)...    *     * @param call    * @return    */
+comment|/**    * Selectivity of conjunctive predicate -> (selectivity of conjunctive    * element1) * (selectivity of conjunctive element2)...    *    * @param call    * @return    */
 specifier|private
 name|Double
 name|computeConjunctionSelectivity
@@ -928,7 +947,7 @@ return|return
 name|selectivity
 return|;
 block|}
-comment|/**    * Given a RexCall& TableScan find max no of nulls. Currently it picks the    * col with max no of nulls.    *     * TODO: improve this    *     * @param call    * @param t    * @return    */
+comment|/**    * Given a RexCall& TableScan find max no of nulls. Currently it picks the    * col with max no of nulls.    *    * TODO: improve this    *    * @param call    * @param t    * @return    */
 specifier|private
 name|long
 name|getMaxNulls
@@ -1081,10 +1100,12 @@ name|tmpNDV
 operator|>
 name|maxNDV
 condition|)
+block|{
 name|maxNDV
 operator|=
 name|tmpNDV
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -1132,10 +1153,12 @@ name|tmpNDV
 operator|>
 name|maxNDV
 condition|)
+block|{
 name|maxNDV
 operator|=
 name|tmpNDV
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -1353,6 +1376,8 @@ return|return
 name|op
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Double
 name|visitLiteral
@@ -1367,6 +1392,13 @@ name|literal
 operator|.
 name|isAlwaysFalse
 argument_list|()
+operator|||
+name|RexUtil
+operator|.
+name|isNull
+argument_list|(
+name|literal
+argument_list|)
 condition|)
 block|{
 return|return
