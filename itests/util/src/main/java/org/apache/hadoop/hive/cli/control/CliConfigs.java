@@ -269,6 +269,12 @@ literal|"udaf_histogram_numeric.q"
 argument_list|)
 expr_stmt|;
 comment|// disabled in HIVE-20715
+name|excludeQuery
+argument_list|(
+literal|"stat_estimate_related_col.q"
+argument_list|)
+expr_stmt|;
+comment|// disabled in HIVE-20727
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive"
