@@ -353,6 +353,26 @@ name|FsPermission
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestJdbcWithMiniLlap for Arrow format  */
 end_comment
@@ -364,6 +384,21 @@ name|TestJdbcWithMiniLlapArrow
 extends|extends
 name|BaseJdbcWithMiniLlap
 block|{
+specifier|protected
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|TestJdbcWithMiniLlapArrow
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|static
 name|MiniHS2
@@ -2244,15 +2279,7 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-comment|// ignore error
-block|}
+comment|// We check the result
 name|assertNotNull
 argument_list|(
 literal|"tExecute"
@@ -2271,6 +2298,24 @@ operator|.
 name|throwable
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// ignore error
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Exception in testKillQuery"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 end_class
