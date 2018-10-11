@@ -86,6 +86,24 @@ operator|new
 name|LongAdder
 argument_list|()
 decl_stmt|;
+comment|/**    * Total partitions that have been affected.    */
+specifier|private
+name|LongAdder
+name|totalPartitions
+init|=
+operator|new
+name|LongAdder
+argument_list|()
+decl_stmt|;
+comment|/**    * Number of partitions that where created.    */
+specifier|private
+name|LongAdder
+name|createdPartitions
+init|=
+operator|new
+name|LongAdder
+argument_list|()
+decl_stmt|;
 specifier|public
 name|void
 name|incrementRecordsWritten
@@ -150,6 +168,40 @@ name|delta
 parameter_list|)
 block|{
 name|recordsSize
+operator|.
+name|add
+argument_list|(
+name|delta
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Increment by delta the number of created partitions.    * @param delta to increment by.    */
+specifier|public
+name|void
+name|incrementCreatedPartitions
+parameter_list|(
+name|long
+name|delta
+parameter_list|)
+block|{
+name|createdPartitions
+operator|.
+name|add
+argument_list|(
+name|delta
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Increment by delta the total partitions.    * @param delta to increment by.    */
+specifier|public
+name|void
+name|incrementTotalPartitions
+parameter_list|(
+name|long
+name|delta
+parameter_list|)
+block|{
+name|totalPartitions
 operator|.
 name|add
 argument_list|(
@@ -229,6 +281,24 @@ name|longValue
 argument_list|()
 return|;
 block|}
+specifier|public
+name|LongAdder
+name|getTotalPartitions
+parameter_list|()
+block|{
+return|return
+name|totalPartitions
+return|;
+block|}
+specifier|public
+name|LongAdder
+name|getCreatedPartitions
+parameter_list|()
+block|{
+return|return
+name|createdPartitions
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public
@@ -260,6 +330,14 @@ operator|+
 literal|", metastore-calls: "
 operator|+
 name|metastoreCalls
+operator|+
+literal|", created-partitions: "
+operator|+
+name|createdPartitions
+operator|+
+literal|", total-partitions: "
+operator|+
+name|totalPartitions
 operator|+
 literal|" }"
 return|;
