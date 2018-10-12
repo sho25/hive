@@ -2127,9 +2127,12 @@ operator|+
 literal|" ]"
 expr_stmt|;
 block|}
-throw|throw
-operator|new
-name|HiveException
+comment|// Log the contents of the row that caused exception so that it's available for debugging. But
+comment|// when exposed through an error message it can leak sensitive information, even to the
+comment|// client application.
+name|l4j
+operator|.
+name|trace
 argument_list|(
 literal|"Hive Runtime Error while processing row (tag="
 operator|+
@@ -2138,6 +2141,13 @@ operator|+
 literal|") "
 operator|+
 name|rowString
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Hive Runtime Error while processing row"
 argument_list|,
 name|e
 argument_list|)

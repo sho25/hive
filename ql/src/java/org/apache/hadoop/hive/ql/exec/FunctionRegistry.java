@@ -8965,9 +8965,11 @@ operator|.
 name|getMessage
 argument_list|()
 decl_stmt|;
-throw|throw
-operator|new
-name|HiveException
+comment|// Log the arguments into a debug message for the ease of debugging. But when exposed through
+comment|// an error message they can leak sensitive information, even to the client application.
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"Unable to execute method "
 operator|+
@@ -8976,6 +8978,15 @@ operator|+
 literal|" with arguments "
 operator|+
 name|argumentString
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Unable to execute method "
+operator|+
+name|m
 operator|+
 literal|":"
 operator|+

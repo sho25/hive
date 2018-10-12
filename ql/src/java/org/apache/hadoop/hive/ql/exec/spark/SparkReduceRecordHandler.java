@@ -1991,9 +1991,12 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|HiveException
+comment|// Log the input key which caused exception so that it's available for debugging. But when
+comment|// exposed through an error message it can leak sensitive information, even to the client
+comment|// application.
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"Hive Runtime Error: Unable to deserialize reduce input key from "
 operator|+
@@ -2020,6 +2023,13 @@ name|keyTableDesc
 operator|.
 name|getProperties
 argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Hive Runtime Error: Unable to deserialize reduce input key "
 argument_list|,
 name|e
 argument_list|)
@@ -2195,9 +2205,12 @@ name|SerDeException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|HiveException
+comment|// Log the input value which caused exception so that it's available for debugging. But when
+comment|// exposed through an error message it can leak sensitive information, even to the client
+comment|// application.
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"Hive Runtime Error: Unable to deserialize reduce input value (tag="
 operator|+
@@ -2231,6 +2244,13 @@ index|]
 operator|.
 name|getProperties
 argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Hive Runtime Error: Unable to deserialize reduce input value "
 argument_list|,
 name|e
 argument_list|)
@@ -2330,17 +2350,27 @@ operator|+
 literal|" ]"
 expr_stmt|;
 block|}
-throw|throw
-operator|new
-name|HiveException
+comment|// Log contents of the row which caused exception so that it's available for debugging. But
+comment|// when exposed through an error message it can leak sensitive information, even to the
+comment|// client application.
+name|LOG
+operator|.
+name|trace
 argument_list|(
-literal|"Error while processing row (tag="
+literal|"Hive exception while processing row (tag="
 operator|+
 name|tag
 operator|+
 literal|") "
 operator|+
 name|rowString
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Error while processing row "
 argument_list|,
 name|e
 argument_list|)
@@ -3016,9 +3046,12 @@ name|SerDeException
 name|e
 parameter_list|)
 block|{
-throw|throw
-operator|new
-name|HiveException
+comment|// Log the input value which caused exception so that it's available for debugging. But when
+comment|// exposed through an error message it can leak sensitive information, even to the client
+comment|// application.
+name|LOG
+operator|.
+name|trace
 argument_list|(
 literal|"Error: Unable to deserialize reduce input value (tag="
 operator|+
@@ -3052,6 +3085,13 @@ index|]
 operator|.
 name|getProperties
 argument_list|()
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Error: Unable to deserialize reduce input value "
 argument_list|,
 name|e
 argument_list|)
