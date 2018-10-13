@@ -11887,6 +11887,19 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|conf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|COMPACTOR_JOB_QUEUE
+argument_list|,
+literal|"root.user1"
+argument_list|)
+expr_stmt|;
 name|String
 name|tblName1
 init|=
@@ -11950,9 +11963,12 @@ comment|// 2048 MB memory for compaction map job
 literal|"'compactorthreshold.hive.compactor.delta.num.threshold'='4',"
 operator|+
 comment|// minor compaction if more than 4 delta dirs
-literal|"'compactorthreshold.hive.compactor.delta.pct.threshold'='0.47'"
+literal|"'compactorthreshold.hive.compactor.delta.pct.threshold'='0.47',"
 operator|+
 comment|// major compaction if more than 47%
+literal|"'compactor.hive.compactor.job.queue'='root.user2'"
+operator|+
+comment|// Override the system wide compactor queue for this table
 literal|")"
 argument_list|,
 name|driver
@@ -12378,6 +12394,19 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// 2048 comes from tblproperties
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"root.user2"
+argument_list|,
+name|job
+operator|.
+name|getQueueName
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Queue name comes from table properties
 comment|// Compact ttp1
 name|stop
 operator|=
@@ -12453,6 +12482,19 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// 1024 is the default value
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"root.user1"
+argument_list|,
+name|job
+operator|.
+name|getQueueName
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// The system wide compaction queue name
 comment|// Clean up
 name|runCleaner
 argument_list|(
@@ -12881,7 +12923,9 @@ literal|" with overwrite tblproperties ("
 operator|+
 literal|"'compactor.mapreduce.map.memory.mb'='3072',"
 operator|+
-literal|"'tblprops.orc.compress.size'='3141')"
+literal|"'tblprops.orc.compress.size'='3141',"
+operator|+
+literal|"'compactor.hive.compactor.job.queue'='root.user2')"
 argument_list|,
 name|driver
 argument_list|)
@@ -13064,6 +13108,18 @@ name|contains
 argument_list|(
 literal|"orc.compress.size4:3141"
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"root.user2"
+argument_list|,
+name|job
+operator|.
+name|getQueueName
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|/*createReader(FileSystem fs, Path path) throws IOException {      */
