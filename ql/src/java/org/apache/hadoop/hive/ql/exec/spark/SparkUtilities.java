@@ -660,7 +660,7 @@ return|return
 name|copy
 return|;
 block|}
-comment|/**    * Uploads a local file to HDFS    *    * @param source    * @param conf    * @return    * @throws IOException    */
+comment|/**    * Uploads a local file to HDFS    * This method is not thread safe    *    * @param source    * @param conf    * @return    * @throws IOException    */
 specifier|public
 specifier|static
 name|URI

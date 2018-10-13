@@ -592,15 +592,6 @@ specifier|volatile
 name|Path
 name|scratchDir
 decl_stmt|;
-specifier|private
-specifier|final
-name|Object
-name|dirLock
-init|=
-operator|new
-name|Object
-argument_list|()
-decl_stmt|;
 comment|/**    * The timestamp of the last completed Spark job.    */
 specifier|private
 specifier|volatile
@@ -1854,6 +1845,7 @@ return|return
 name|result
 return|;
 block|}
+comment|//This method is not thread safe
 specifier|private
 name|void
 name|cleanScratchDir
@@ -1893,6 +1885,7 @@ literal|null
 expr_stmt|;
 block|}
 block|}
+comment|/**    * Create scratch directory for spark session if it does not exist.    * This method is not thread safe.    * @return Path to Spark session scratch directory.    * @throws IOException    */
 annotation|@
 name|Override
 specifier|public
@@ -1909,25 +1902,11 @@ operator|==
 literal|null
 condition|)
 block|{
-synchronized|synchronized
-init|(
-name|dirLock
-init|)
-block|{
-if|if
-condition|(
-name|scratchDir
-operator|==
-literal|null
-condition|)
-block|{
 name|scratchDir
 operator|=
 name|createScratchDir
 argument_list|()
 expr_stmt|;
-block|}
-block|}
 block|}
 return|return
 name|scratchDir

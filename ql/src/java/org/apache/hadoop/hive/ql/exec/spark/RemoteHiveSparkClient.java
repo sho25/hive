@@ -1648,6 +1648,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
+specifier|synchronized
 name|void
 name|refreshLocalResources
 parameter_list|(
@@ -1876,6 +1877,7 @@ name|addedArchives
 argument_list|)
 expr_stmt|;
 block|}
+comment|//This method is not thread safe
 specifier|private
 name|void
 name|addResources
@@ -1991,6 +1993,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|//This method is not thread safe
 specifier|private
 name|void
 name|addJars
