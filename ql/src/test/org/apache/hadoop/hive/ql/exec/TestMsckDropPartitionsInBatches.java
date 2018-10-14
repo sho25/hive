@@ -717,6 +717,13 @@ argument_list|()
 decl_stmt|;
 name|result
 operator|.
+name|setTableName
+argument_list|(
+name|tableName
+argument_list|)
+expr_stmt|;
+name|result
+operator|.
 name|setPartitionName
 argument_list|(
 literal|"city=dummyCity_"

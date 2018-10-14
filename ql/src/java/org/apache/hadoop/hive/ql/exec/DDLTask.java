@@ -15420,7 +15420,7 @@ argument_list|>
 name|batchWork
 init|=
 operator|new
-name|HashSet
+name|TreeSet
 argument_list|<>
 argument_list|(
 name|partsNotInFs
