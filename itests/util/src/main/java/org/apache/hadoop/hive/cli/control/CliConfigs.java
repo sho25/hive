@@ -265,6 +265,18 @@ expr_stmt|;
 comment|// Disabled in HIVE-19509
 name|excludeQuery
 argument_list|(
+literal|"udaf_context_ngrams.q"
+argument_list|)
+expr_stmt|;
+comment|// disabled in HIVE-20741
+name|excludeQuery
+argument_list|(
+literal|"udaf_corr.q"
+argument_list|)
+expr_stmt|;
+comment|// disabled in HIVE-20741
+name|excludeQuery
+argument_list|(
 literal|"udaf_histogram_numeric.q"
 argument_list|)
 expr_stmt|;
