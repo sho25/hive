@@ -827,6 +827,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|QueryState
+name|getQueryState
+parameter_list|()
+block|{
+return|return
+name|queryState
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|QueryDisplay
 name|getQueryDisplay
 parameter_list|()

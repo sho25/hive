@@ -16550,6 +16550,8 @@ operator|=
 name|opId
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|QueryState
 name|getQueryState

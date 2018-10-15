@@ -2298,6 +2298,17 @@ operator|new
 name|NullKillQuery
 argument_list|()
 expr_stmt|;
+name|ShimLoader
+operator|.
+name|getHadoopShims
+argument_list|()
+operator|.
+name|setHadoopSessionContext
+argument_list|(
+name|getSessionId
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 specifier|public
 name|Map

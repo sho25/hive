@@ -198,6 +198,10 @@ name|QueryPlan
 name|getPlan
 parameter_list|()
 function_decl|;
+name|QueryState
+name|getQueryState
+parameter_list|()
+function_decl|;
 name|QueryDisplay
 name|getQueryDisplay
 parameter_list|()

@@ -643,6 +643,30 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
+comment|/**    * Set up the caller context for HDFS and Yarn.    */
+name|void
+name|setHadoopCallerContext
+parameter_list|(
+name|String
+name|callerContext
+parameter_list|)
+function_decl|;
+comment|/**    * Set up context specific caller context with query prefix.    */
+name|void
+name|setHadoopQueryContext
+parameter_list|(
+name|String
+name|queryId
+parameter_list|)
+function_decl|;
+comment|/**    * Set up context specific caller context with session prefix.    */
+name|void
+name|setHadoopSessionContext
+parameter_list|(
+name|String
+name|sessionId
+parameter_list|)
+function_decl|;
 comment|/**    * Shim for MiniMrCluster    */
 specifier|public
 interface|interface
