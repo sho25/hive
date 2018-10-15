@@ -1767,7 +1767,7 @@ block|{
 name|HiveTableScan
 name|tScan
 init|=
-name|HiveRelMdUniqueKeys
+name|EstimateUniqueKeys
 operator|.
 name|getTableScan
 argument_list|(
@@ -1827,13 +1827,16 @@ name|isKey
 init|=
 literal|false
 decl_stmt|;
+comment|//EstimateUniqueKeys doesn't go through metadata providers anymore, which means we will not be
+comment|// taking advantage of metadata caching anymore. This could potential increase query compile time
+comment|// Leaving a note here in case we see increase in timings
 name|Set
 argument_list|<
 name|ImmutableBitSet
 argument_list|>
 name|keys
 init|=
-name|mq
+name|EstimateUniqueKeys
 operator|.
 name|getUniqueKeys
 argument_list|(

@@ -1130,6 +1130,8 @@ argument_list|(
 name|joinInput
 argument_list|,
 name|belowAggregateKey
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|unique
