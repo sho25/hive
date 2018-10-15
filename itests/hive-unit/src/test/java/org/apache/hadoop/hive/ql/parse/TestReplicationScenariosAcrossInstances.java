@@ -483,6 +483,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|net
 operator|.
 name|URI
@@ -8649,7 +8659,7 @@ name|replicatedDbName_CM
 argument_list|,
 literal|"t1"
 argument_list|,
-literal|"INSERT"
+literal|"ADD_PARTITION"
 argument_list|,
 name|tuple
 argument_list|)

@@ -4386,6 +4386,64 @@ name|loadTableWork
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|loadFileType
+operator|==
+name|LoadFileType
+operator|.
+name|IGNORE
+condition|)
+block|{
+comment|// if file is coped directly to the target location, then no need of move task in case the operation getting
+comment|// replayed is add partition. As add partition will add the event for create partition. Even the statics are
+comment|// updated properly in create partition flow as the copy is done directly to the partition location. For insert
+comment|// operations, add partition task is anyways a no-op as alter partition operation does just some statistics
+comment|// update which is again done in load operations as part of move task.
+if|if
+condition|(
+name|x
+operator|.
+name|getEventType
+argument_list|()
+operator|==
+name|DumpType
+operator|.
+name|EVENT_INSERT
+condition|)
+block|{
+name|copyTask
+operator|.
+name|addDependentTask
+argument_list|(
+name|TaskFactory
+operator|.
+name|get
+argument_list|(
+name|moveWork
+argument_list|,
+name|x
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|copyTask
+operator|.
+name|addDependentTask
+argument_list|(
+name|addPartTask
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|copyTask
+return|;
+block|}
 name|Task
 argument_list|<
 name|?
