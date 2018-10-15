@@ -2715,7 +2715,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"custom.value\t "
+literal|"custom.property\tcustom.value"
 block|}
 argument_list|)
 expr_stmt|;
@@ -4227,7 +4227,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"custom.value\t "
+literal|"custom.property\tcustom.value"
 block|}
 argument_list|)
 operator|.
@@ -6009,7 +6009,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"custom.value\t "
+literal|"custom.property\tcustom.value"
 block|}
 argument_list|)
 operator|.
@@ -6121,7 +6121,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"custom.value\t "
+literal|"custom.property\tcustom.value"
 block|}
 argument_list|)
 expr_stmt|;
@@ -6406,7 +6406,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"custom.value\t "
+literal|"custom.property\tcustom.value"
 block|}
 argument_list|)
 expr_stmt|;
