@@ -230,6 +230,15 @@ name|TxnStore
 extends|extends
 name|Configurable
 block|{
+comment|/**    * Prefix for key when committing with a key/value.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|TXN_KEY_START
+init|=
+literal|"_meta"
+decl_stmt|;
 enum|enum
 name|MUTEX_KEY
 block|{
