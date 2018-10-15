@@ -7408,6 +7408,19 @@ operator|+
 literal|" based on heuristics."
 argument_list|)
 block|,
+name|HIVE_ORC_WRITER_LLAP_MEMORY_MANAGER_ENABLED
+argument_list|(
+literal|"hive.exec.orc.writer.llap.memory.manager.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether orc writers should use llap-aware memory manager. LLAP aware memory manager will use memory\n"
+operator|+
+literal|"per executor instead of entire heap memory when concurrent orc writers are involved. This will let\n"
+operator|+
+literal|"task fragments to use memory within its limit (memory per executor) when performing ETL in LLAP."
+argument_list|)
+block|,
 comment|// hive streaming ingest settings
 name|HIVE_STREAMING_AUTO_FLUSH_ENABLED
 argument_list|(
