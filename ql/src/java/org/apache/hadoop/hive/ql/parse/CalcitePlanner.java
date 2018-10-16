@@ -2093,7 +2093,7 @@ name|optimizer
 operator|.
 name|calcite
 operator|.
-name|HiveRelOpMaterializationValidator
+name|HiveRelOptMaterializationValidator
 import|;
 end_import
 
@@ -5488,8 +5488,14 @@ name|nodeOfInterest
 expr_stmt|;
 comment|// nodeOfInterest is the query
 block|}
-name|runCBO
-operator|=
+name|Pair
+argument_list|<
+name|Boolean
+argument_list|,
+name|String
+argument_list|>
+name|pairCanCBOHandleReason
+init|=
 name|canCBOHandleAst
 argument_list|(
 name|queryForCbo
@@ -5499,6 +5505,12 @@ argument_list|()
 argument_list|,
 name|cboCtx
 argument_list|)
+decl_stmt|;
+name|runCBO
+operator|=
+name|pairCanCBOHandleReason
+operator|.
+name|left
 expr_stmt|;
 if|if
 condition|(
@@ -5506,6 +5518,17 @@ operator|!
 name|runCBO
 condition|)
 block|{
+name|ctx
+operator|.
+name|setCboInfo
+argument_list|(
+literal|"Plan not optimized by CBO because the statement "
+operator|+
+name|pairCanCBOHandleReason
+operator|.
+name|right
+argument_list|)
+expr_stmt|;
 return|return
 literal|null
 return|;
@@ -5886,8 +5909,14 @@ name|nodeOfInterest
 expr_stmt|;
 comment|// nodeOfInterest is the query
 block|}
-name|runCBO
-operator|=
+name|Pair
+argument_list|<
+name|Boolean
+argument_list|,
+name|String
+argument_list|>
+name|canCBOHandleReason
+init|=
 name|canCBOHandleAst
 argument_list|(
 name|queryForCbo
@@ -5897,6 +5926,12 @@ argument_list|()
 argument_list|,
 name|cboCtx
 argument_list|)
+decl_stmt|;
+name|runCBO
+operator|=
+name|canCBOHandleReason
+operator|.
+name|left
 expr_stmt|;
 if|if
 condition|(
@@ -6771,13 +6806,41 @@ block|}
 block|}
 else|else
 block|{
+name|String
+name|msg
+decl_stmt|;
+if|if
+condition|(
+name|canCBOHandleReason
+operator|.
+name|right
+operator|!=
+literal|null
+condition|)
+block|{
+name|msg
+operator|=
+literal|"Plan not optimized by CBO because the statement "
+operator|+
+name|canCBOHandleReason
+operator|.
+name|right
+expr_stmt|;
+block|}
+else|else
+block|{
+name|msg
+operator|=
+literal|"Plan not optimized by CBO."
+expr_stmt|;
+block|}
 name|this
 operator|.
 name|ctx
 operator|.
 name|setCboInfo
 argument_list|(
-literal|"Plan not optimized by CBO."
+name|msg
 argument_list|)
 expr_stmt|;
 name|skipCalcitePlan
@@ -7869,7 +7932,12 @@ name|subq
 return|;
 block|}
 comment|/**    * Can CBO handle the given AST?    *    * @param ast    *          Top level AST    * @param qb    *          top level QB corresponding to the AST    * @param cboCtx    * @return boolean    *    *         Assumption:<br>    *         If top level QB is query then everything below it must also be    *         Query.    */
-name|boolean
+name|Pair
+argument_list|<
+name|Boolean
+argument_list|,
+name|String
+argument_list|>
 name|canCBOHandleAst
 parameter_list|(
 name|ASTNode
@@ -7986,22 +8054,17 @@ name|isSupportedType
 operator|&&
 name|noBadTokens
 decl_stmt|;
+name|String
+name|msg
+init|=
+literal|""
+decl_stmt|;
 if|if
 condition|(
 operator|!
 name|result
 condition|)
 block|{
-if|if
-condition|(
-name|needToLogMessage
-condition|)
-block|{
-name|String
-name|msg
-init|=
-literal|""
-decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -8050,12 +8113,8 @@ operator|+=
 literal|"has some unspecified limitations; "
 expr_stmt|;
 block|}
-name|STATIC_LOG
-operator|.
-name|info
-argument_list|(
-literal|"Not invoking CBO because the statement "
-operator|+
+name|msg
+operator|=
 name|msg
 operator|.
 name|substring
@@ -8069,18 +8128,37 @@ argument_list|()
 operator|-
 literal|2
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|needToLogMessage
+condition|)
+block|{
+name|STATIC_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Not invoking CBO because the statement "
+operator|+
+name|msg
 argument_list|)
 expr_stmt|;
 block|}
 return|return
+name|Pair
+operator|.
+name|of
+argument_list|(
 literal|false
+argument_list|,
+name|msg
+argument_list|)
 return|;
 block|}
 comment|// Now check QB in more detail. canHandleQbForCbo returns null if query can
 comment|// be handled.
-name|String
 name|msg
-init|=
+operator|=
 name|CalcitePlanner
 operator|.
 name|canHandleQbForCbo
@@ -8095,7 +8173,7 @@ name|needToLogMessage
 argument_list|,
 name|qb
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|msg
@@ -8104,20 +8182,18 @@ literal|null
 condition|)
 block|{
 return|return
+name|Pair
+operator|.
+name|of
+argument_list|(
 literal|true
+argument_list|,
+name|msg
+argument_list|)
 return|;
 block|}
-if|if
-condition|(
-name|needToLogMessage
-condition|)
-block|{
-name|STATIC_LOG
-operator|.
-name|info
-argument_list|(
-literal|"Not invoking CBO because the statement "
-operator|+
+name|msg
+operator|=
 name|msg
 operator|.
 name|substring
@@ -8131,11 +8207,31 @@ argument_list|()
 operator|-
 literal|2
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|needToLogMessage
+condition|)
+block|{
+name|STATIC_LOG
+operator|.
+name|info
+argument_list|(
+literal|"Not invoking CBO because the statement "
+operator|+
+name|msg
 argument_list|)
 expr_stmt|;
 block|}
 return|return
+name|Pair
+operator|.
+name|of
+argument_list|(
 literal|false
+argument_list|,
+name|msg
+argument_list|)
 return|;
 block|}
 comment|/**    * Checks whether Calcite can handle the query.    *    * @param queryProperties    * @param conf    * @param topLevelQB    *          Does QB corresponds to top most query block?    * @param verbose    *          Whether return value should be verbose in case of failure.    * @return null if the query can be handled; non-null reason string if it    *         cannot be.    *    *         Assumption:<br>    *         1. If top level QB is query then everything below it must also be    *         Query<br>    *         2. Nested Subquery will return false for qbToChk.getIsQuery()    */
@@ -12797,46 +12893,6 @@ argument_list|,
 literal|"Calcite: Plan generation"
 argument_list|)
 expr_stmt|;
-comment|// Validate query materialization (materialized views, query results caching.
-comment|// This check needs to occur before constant folding, which may remove some
-comment|// function calls from the query plan.
-name|HiveRelOpMaterializationValidator
-name|matValidator
-init|=
-operator|new
-name|HiveRelOpMaterializationValidator
-argument_list|()
-decl_stmt|;
-name|matValidator
-operator|.
-name|validateQueryMaterialization
-argument_list|(
-name|calciteGenPlan
-argument_list|)
-expr_stmt|;
-if|if
-condition|(
-operator|!
-name|matValidator
-operator|.
-name|isValidMaterialization
-argument_list|()
-condition|)
-block|{
-name|String
-name|reason
-init|=
-name|matValidator
-operator|.
-name|getInvalidMaterializationReason
-argument_list|()
-decl_stmt|;
-name|setInvalidQueryMaterializationReason
-argument_list|(
-name|reason
-argument_list|)
-expr_stmt|;
-block|}
 comment|// Create executor
 name|RexExecutor
 name|executorProvider
@@ -12995,6 +13051,43 @@ name|toString
 argument_list|(
 name|calciteGenPlan
 argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Validate query materialization for query results caching. This check needs
+comment|// to occur before constant folding, which may remove some function calls
+comment|// from the query plan.
+comment|// In addition, if it is a materialized view creation and we are enabling it
+comment|// for rewriting, it should pass all checks done for query results caching
+comment|// and on top of that we should check that it only contains operators that
+comment|// are supported by the rewriting algorithm.
+name|HiveRelOptMaterializationValidator
+name|materializationValidator
+init|=
+operator|new
+name|HiveRelOptMaterializationValidator
+argument_list|()
+decl_stmt|;
+name|materializationValidator
+operator|.
+name|validate
+argument_list|(
+name|calciteGenPlan
+argument_list|)
+expr_stmt|;
+name|setInvalidResultCacheReason
+argument_list|(
+name|materializationValidator
+operator|.
+name|getResultCacheInvalidReason
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|setInvalidAutomaticRewritingMaterializationReason
+argument_list|(
+name|materializationValidator
+operator|.
+name|getAutomaticRewritingInvalidReason
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// 2. Apply pre-join order optimizations
