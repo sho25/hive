@@ -2708,7 +2708,7 @@ name|getStoredStats
 argument_list|()
 return|;
 block|}
-comment|/**      * This method is intended for use with ACID unbucketed tables, where the DELETE ops behave as      * though they are bucketed, but without an explicit pre-specified bucket count. The bucketNum      * is read out of the middle value of the ROW__ID variable and this is written out from a single      * FileSink, in ways similar to the multi file spray, but without knowing the total number of      * buckets ahead of time.      *      * ROW__ID (1,2[0],3) => bucket_00002      * ROW__ID (1,3[0],4) => bucket_00003 etc      *      * A new FSP is created for each partition, so this only requires the bucket numbering and that      * is mapped in directly as an index.      */
+comment|/**      * This method is intended for use with ACID unbucketed tables, where the DELETE ops behave as      * though they are bucketed, but without an explicit pre-specified bucket count. The bucketNum      * is read out of the middle value of the ROW__ID variable and this is written out from a single      * FileSink, in ways similar to the multi file spray, but without knowing the total number of      * buckets ahead of time.      *      * ROW__ID (1,2[0],3) => bucket_00002      * ROW__ID (1,3[0],4) => bucket_00003 etc      *      * A new FSP is created for each partition, so this only requires the bucket numbering and that      * is mapped in directly as an index.      *      * This relies on ReduceSinkOperator to shuffle update/delete rows by      * UDFToInteger(RecordIdentifier), i.e. by writerId in ROW__ID.      * {@link org.apache.hadoop.hive.ql.parse.SemanticAnalyzer#getPartitionColsFromBucketColsForUpdateDelete(Operator, boolean)}      */
 specifier|public
 name|int
 name|createDynamicBucket

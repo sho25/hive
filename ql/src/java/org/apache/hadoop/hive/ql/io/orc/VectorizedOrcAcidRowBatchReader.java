@@ -7087,7 +7087,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**        * Whenever we are reading a batch, we must ensure that all the records in the batch        * have the same bucket id as the bucket id of the split. If not, throw exception.        * NOTE: this assertion might not hold, once virtual bucketing is in place. However,        * it should be simple to fix that case. Just replace check for bucket equality with        * a check for valid bucket mapping. Until virtual bucketing is added, it means        * either the split computation got messed up or we found some corrupted records.        */
+comment|/**        * Whenever we are reading a batch, we must ensure that all the records in the batch        * have the same bucket id as the bucket id of the split. If not, throw exception.        */
 specifier|private
 name|void
 name|checkBucketId
@@ -7098,15 +7098,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-if|if
-condition|(
-operator|!
-name|isBucketedTable
-condition|)
-block|{
-comment|/**            * in this case a file inside a delete_delta_x_y/bucketN may contain any value for            * bucketId in {@link RecordIdentifier#getBucketProperty()}            */
-return|return;
-block|}
 name|int
 name|bucketIdFromRecord
 init|=
@@ -7572,8 +7563,6 @@ name|deleteDeltaDir
 argument_list|,
 name|bucket
 argument_list|,
-name|conf
-argument_list|,
 operator|new
 name|OrcRawRecordMerger
 operator|.
@@ -7584,8 +7573,6 @@ name|isCompacting
 argument_list|(
 literal|false
 argument_list|)
-argument_list|,
-name|isBucketedTable
 argument_list|)
 decl_stmt|;
 for|for
