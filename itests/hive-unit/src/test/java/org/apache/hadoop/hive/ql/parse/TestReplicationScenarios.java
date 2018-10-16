@@ -229,7 +229,7 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|ObjectStore
+name|PersistenceManagerProvider
 import|;
 end_import
 
@@ -2005,7 +2005,7 @@ argument_list|(
 name|hconfMirror
 argument_list|)
 expr_stmt|;
-name|ObjectStore
+name|PersistenceManagerProvider
 operator|.
 name|setTwoMetastoreTesting
 argument_list|(
