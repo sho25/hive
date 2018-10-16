@@ -82039,6 +82039,13 @@ literal|0
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|addPropertyReadEntry
+argument_list|(
+name|tblProps
+argument_list|,
+name|inputs
+argument_list|)
+expr_stmt|;
 break|break;
 case|case
 name|HiveParser

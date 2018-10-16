@@ -13338,6 +13338,13 @@ block|}
 block|}
 else|else
 block|{
+name|addPropertyReadEntry
+argument_list|(
+name|mapProp
+argument_list|,
+name|inputs
+argument_list|)
+expr_stmt|;
 name|alterTblDesc
 operator|=
 operator|new
