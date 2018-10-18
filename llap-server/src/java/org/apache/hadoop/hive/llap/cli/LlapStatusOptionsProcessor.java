@@ -25,16 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Properties
 import|;
 end_import
@@ -129,6 +119,20 @@ name|ParseException
 import|;
 end_import
 
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -142,7 +146,9 @@ name|LLAPSTATUS_CONSTANT
 init|=
 literal|"llapstatus"
 decl_stmt|;
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|static
 specifier|final
 name|long
@@ -153,7 +159,9 @@ operator|*
 literal|1000l
 decl_stmt|;
 comment|// 20seconds to wait for app to be visible
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|static
 specifier|final
 name|long
@@ -164,7 +172,9 @@ operator|*
 literal|1000l
 decl_stmt|;
 comment|// 1 seconds wait until subsequent status
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|static
 specifier|final
 name|long
@@ -177,7 +187,9 @@ operator|*
 literal|1000l
 decl_stmt|;
 comment|// 5 minutes timeout for watch mode
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|static
 specifier|final
 name|float
@@ -206,7 +218,9 @@ literal|"findAppTimeout"
 argument_list|,
 literal|'f'
 argument_list|,
-literal|"Amount of time(s) that the tool will sleep to wait for the YARN application to start. negative values=wait forever, 0=Do not wait. default="
+literal|"Amount of time(s) that the tool will sleep to wait for the YARN application to start. negative values=wait "
+operator|+
+literal|"forever, 0=Do not wait. default="
 operator|+
 name|TimeUnit
 operator|.
