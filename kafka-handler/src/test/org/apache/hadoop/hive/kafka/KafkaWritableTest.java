@@ -196,10 +196,6 @@ operator|.
 name|value
 argument_list|()
 argument_list|,
-literal|0L
-argument_list|,
-literal|100L
-argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
@@ -341,10 +337,6 @@ operator|.
 name|value
 argument_list|()
 argument_list|,
-literal|0L
-argument_list|,
-literal|100L
-argument_list|,
 literal|"thisKey"
 operator|.
 name|getBytes
@@ -447,10 +439,6 @@ literal|"value"
 operator|.
 name|getBytes
 argument_list|()
-argument_list|,
-literal|0L
-argument_list|,
-literal|10000L
 argument_list|,
 literal|"key"
 operator|.

@@ -1397,10 +1397,6 @@ operator|.
 name|value
 argument_list|()
 argument_list|,
-literal|50L
-argument_list|,
-literal|100L
-argument_list|,
 name|consumerRecord
 operator|.
 name|key

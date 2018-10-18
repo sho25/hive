@@ -2079,6 +2079,8 @@ argument_list|<
 name|Text
 argument_list|>
 block|{
+specifier|final
+specifier|private
 name|Text
 name|text
 init|=
@@ -2102,7 +2104,7 @@ comment|//@FIXME this issue with CTRL-CHAR ^0 added by Text at the end of string
 try|try
 block|{
 return|return
-name|writable
+name|Text
 operator|.
 name|decode
 argument_list|(

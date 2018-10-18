@@ -333,7 +333,7 @@ operator|.
 name|getName
 argument_list|()
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -380,29 +380,6 @@ name|writeSemantic
 condition|)
 block|{
 case|case
-name|BEST_EFFORT
-case|:
-name|recordWriter
-operator|=
-operator|new
-name|SimpleKafkaWriter
-argument_list|(
-name|topic
-argument_list|,
-name|Utilities
-operator|.
-name|getTaskId
-argument_list|(
-name|jc
-argument_list|)
-argument_list|,
-literal|false
-argument_list|,
-name|producerProperties
-argument_list|)
-expr_stmt|;
-break|break;
-case|case
 name|AT_LEAST_ONCE
 case|:
 name|recordWriter
@@ -418,8 +395,6 @@ name|getTaskId
 argument_list|(
 name|jc
 argument_list|)
-argument_list|,
-literal|true
 argument_list|,
 name|producerProperties
 argument_list|)
@@ -590,9 +565,6 @@ comment|/**    * Possible write semantic supported by the Record Writer.    */
 enum|enum
 name|WriteSemantic
 block|{
-comment|/**      * Best effort delivery with no guarantees at all, user can set Producer properties as they wish,      * will carry on when possible unless it is a fatal exception.      */
-name|BEST_EFFORT
-block|,
 comment|/**      * Deliver all the record at least once unless the job fails.      * Therefore duplicates can be introduced due to lost ACKs or Tasks retries.      * Currently this is the default.      */
 name|AT_LEAST_ONCE
 block|,

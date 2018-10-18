@@ -222,28 +222,6 @@ name|TypeInfoFactory
 operator|.
 name|longTypeInfo
 argument_list|)
-block|,
-comment|/**    * Start offset given by the input split, this will reflect the actual start of TP or start given by split pruner.    */
-comment|// @TODO To be removed next PR it is here to make review easy
-name|START_OFFSET
-argument_list|(
-literal|"__start_offset"
-argument_list|,
-name|TypeInfoFactory
-operator|.
-name|longTypeInfo
-argument_list|)
-block|,
-comment|/**    * End offset given by input split at run time.    */
-comment|// @TODO To be removed next PR it is here to make review easy
-name|END_OFFSET
-argument_list|(
-literal|"__end_offset"
-argument_list|,
-name|TypeInfoFactory
-operator|.
-name|longTypeInfo
-argument_list|)
 block|;
 comment|/**    * Kafka metadata columns list that indicates the order of appearance for each column in final row.    */
 specifier|private
@@ -266,10 +244,6 @@ argument_list|,
 name|OFFSET
 argument_list|,
 name|TIMESTAMP
-argument_list|,
-name|START_OFFSET
-argument_list|,
-name|END_OFFSET
 argument_list|)
 decl_stmt|;
 specifier|static
