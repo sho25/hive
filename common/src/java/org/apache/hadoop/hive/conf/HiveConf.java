@@ -4789,7 +4789,7 @@ name|NOTIFICATION_SEQUENCE_LOCK_MAX_RETRIES
 argument_list|(
 literal|"hive.notification.sequence.lock.max.retries"
 argument_list|,
-literal|5
+literal|10
 argument_list|,
 literal|"Number of retries required to acquire a lock when getting the next notification sequential ID for entries "
 operator|+
@@ -4803,14 +4803,14 @@ name|NOTIFICATION_SEQUENCE_LOCK_RETRY_SLEEP_INTERVAL
 argument_list|(
 literal|"hive.notification.sequence.lock.retry.sleep.interval"
 argument_list|,
-literal|500L
+literal|10L
 argument_list|,
 operator|new
 name|TimeValidator
 argument_list|(
 name|TimeUnit
 operator|.
-name|MILLISECONDS
+name|SECONDS
 argument_list|)
 argument_list|,
 literal|"Sleep interval between retries to acquire a notification lock as described part of property "

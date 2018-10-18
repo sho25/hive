@@ -2655,7 +2655,7 @@ literal|"metastore.notification.sequence.lock.max.retries"
 argument_list|,
 literal|"hive.notification.sequence.lock.max.retries"
 argument_list|,
-literal|5
+literal|10
 argument_list|,
 literal|"Number of retries required to acquire a lock when getting the next notification sequential ID for entries "
 operator|+
@@ -2668,11 +2668,11 @@ literal|"metastore.notification.sequence.lock.retry.sleep.interval"
 argument_list|,
 literal|"hive.notification.sequence.lock.retry.sleep.interval"
 argument_list|,
-literal|500
+literal|10
 argument_list|,
 name|TimeUnit
 operator|.
-name|MILLISECONDS
+name|SECONDS
 argument_list|,
 literal|"Sleep interval between retries to acquire a notification lock as described part of property "
 operator|+
