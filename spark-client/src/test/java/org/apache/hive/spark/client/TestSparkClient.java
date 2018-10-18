@@ -2089,6 +2089,84 @@ block|}
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testErrorParsing
+parameter_list|()
+block|{
+name|assertTrue
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"Error.. Test"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"This line has error.."
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"Test that line has ExcePtion.."
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"Here is eRRor in line.."
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"Here is ExceptioNn in line.."
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"Here is ERROR and Exception in line.."
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertFalse
+argument_list|(
+name|SparkClientUtilities
+operator|.
+name|containsErrorKeyword
+argument_list|(
+literal|"No problems in this line"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 specifier|static
 specifier|final
