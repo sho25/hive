@@ -527,6 +527,13 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
+name|createdSessions
+operator|.
+name|add
+argument_list|(
+name|existingSession
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|existingSession
