@@ -5733,6 +5733,19 @@ argument_list|,
 literal|"ID for query being executed (might be multiple per a session)"
 argument_list|)
 block|,
+name|HIVEQUERYTAG
+argument_list|(
+literal|"hive.query.tag"
+argument_list|,
+literal|null
+argument_list|,
+literal|"Tag for the queries in the session. User can kill the queries with the tag "
+operator|+
+literal|"in another session. Currently there is no tag duplication check, user need to make sure his tag is unique. "
+operator|+
+literal|"Also 'kill query' needs to be issued to all HiveServer2 instances to proper kill the queries"
+argument_list|)
+block|,
 name|HIVESPARKJOBNAMELENGTH
 argument_list|(
 literal|"hive.spark.jobname.length"
@@ -22477,6 +22490,12 @@ block|,
 name|ConfVars
 operator|.
 name|HIVEQUERYID
+operator|.
+name|varname
+block|,
+name|ConfVars
+operator|.
+name|HIVEQUERYTAG
 operator|.
 name|varname
 block|,   }

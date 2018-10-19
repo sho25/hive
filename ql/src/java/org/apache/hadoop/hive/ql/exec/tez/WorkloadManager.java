@@ -2747,6 +2747,31 @@ argument_list|(
 parameter_list|()
 lambda|->
 block|{
+name|SessionState
+name|ss
+init|=
+operator|new
+name|SessionState
+argument_list|(
+operator|new
+name|HiveConf
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|ss
+operator|.
+name|setIsHiveServerQuery
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|SessionState
+operator|.
+name|start
+argument_list|(
+name|ss
+argument_list|)
+expr_stmt|;
 comment|// Note: we get query ID here, rather than in the caller, where it would be more correct
 comment|//       because we know which exact query we intend to kill. This is valid because we
 comment|//       are not expecting query ID to change - we never reuse the session for which a

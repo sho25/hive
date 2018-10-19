@@ -2374,7 +2374,7 @@ condition|)
 block|{
 name|QueryState
 operator|.
-name|setMapReduceJobTag
+name|setApplicationTag
 argument_list|(
 name|conf
 argument_list|,

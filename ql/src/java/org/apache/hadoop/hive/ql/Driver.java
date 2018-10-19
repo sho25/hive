@@ -4604,6 +4604,21 @@ operator|.
 name|DO_AUTHORIZATION
 argument_list|)
 expr_stmt|;
+comment|// Authorization check for kill query will be in KillQueryImpl
+comment|// As both admin or operation owner can perform the operation.
+comment|// Which is not directly supported in authorizer
+if|if
+condition|(
+name|queryState
+operator|.
+name|getHiveOperation
+argument_list|()
+operator|!=
+name|HiveOperation
+operator|.
+name|KILL_QUERY
+condition|)
+block|{
 name|doAuthorization
 argument_list|(
 name|queryState
@@ -4616,6 +4631,7 @@ argument_list|,
 name|command
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
