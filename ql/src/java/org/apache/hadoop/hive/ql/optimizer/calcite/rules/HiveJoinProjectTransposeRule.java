@@ -156,7 +156,7 @@ specifier|public
 specifier|static
 specifier|final
 name|HiveJoinProjectTransposeRule
-name|LEFF_PROJECT_BTW_JOIN
+name|LEFT_PROJECT_BTW_JOIN
 init|=
 operator|new
 name|HiveJoinProjectTransposeRule

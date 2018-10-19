@@ -13078,8 +13078,7 @@ literal|"Calcite: Removing sq_count_check UDF "
 argument_list|)
 expr_stmt|;
 block|}
-comment|//  4.1 Remove Projects between Joins so that JoinToMultiJoinRule can merge them to MultiJoin.
-comment|//    Don't run this rule if hive is to remove sq_count_check since that rule expects to have project b/w join.
+comment|//  Remove Projects between Joins so that JoinToMultiJoinRule can merge them to MultiJoin
 name|calcitePreCboPlan
 operator|=
 name|hepPlan
@@ -13101,14 +13100,18 @@ name|BOTTOM_UP
 argument_list|,
 name|HiveJoinProjectTransposeRule
 operator|.
-name|LEFF_PROJECT_BTW_JOIN
+name|LEFT_PROJECT_BTW_JOIN
 argument_list|,
 name|HiveJoinProjectTransposeRule
 operator|.
 name|RIGHT_PROJECT_BTW_JOIN
+argument_list|,
+name|HiveProjectMergeRule
+operator|.
+name|INSTANCE
 argument_list|)
 expr_stmt|;
-comment|// 4.2 Apply join order optimizations: reordering MST algorithm
+comment|// 4. Apply join order optimizations: reordering MST algorithm
 comment|//    If join optimizations failed because of missing stats, we continue with
 comment|//    the rest of optimizations
 if|if
