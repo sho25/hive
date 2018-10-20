@@ -2130,6 +2130,21 @@ argument_list|,
 literal|"time after which events will be removed from the database listener queue"
 argument_list|)
 block|,
+name|EVENT_DB_LISTENER_CLEAN_INTERVAL
+argument_list|(
+literal|"metastore.event.db.listener.clean.interval"
+argument_list|,
+literal|"hive.metastore.event.db.listener.clean.interval"
+argument_list|,
+literal|7200
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"sleep interval between each run for cleanup of events from the database listener queue"
+argument_list|)
+block|,
 name|EVENT_DB_NOTIFICATION_API_AUTH
 argument_list|(
 literal|"metastore.metastore.event.db.notification.api.auth"
