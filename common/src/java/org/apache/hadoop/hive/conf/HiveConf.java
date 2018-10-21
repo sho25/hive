@@ -8402,6 +8402,29 @@ operator|+
 literal|"in the reducer thereby reducing the memory pressure on reducers."
 argument_list|)
 block|,
+name|HIVEOPTSORTDYNAMICPARTITIONTHRESHOLD
+argument_list|(
+literal|"hive.optimize.sort.dynamic.partition.threshold"
+argument_list|,
+literal|0
+argument_list|,
+literal|"When enabled dynamic partitioning column will be globally sorted.\n"
+operator|+
+literal|"This way we can keep only one record writer open for each partition value\n"
+operator|+
+literal|"in the reducer thereby reducing the memory pressure on reducers.\n"
+operator|+
+literal|"This config has following possible values: \n"
+operator|+
+literal|"\t-1 - This completely disables the optimization. \n"
+operator|+
+literal|"\t1 - This always enable the optimization. \n"
+operator|+
+literal|"\t0 - This makes the optimization a cost based decision. \n"
+operator|+
+literal|"Setting it to any other positive integer will make Hive use this as threshold for number of writers."
+argument_list|)
+block|,
 name|HIVESAMPLINGFORORDERBY
 argument_list|(
 literal|"hive.optimize.sampling.orderby"

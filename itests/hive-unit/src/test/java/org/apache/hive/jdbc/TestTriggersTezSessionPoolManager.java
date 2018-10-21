@@ -1291,6 +1291,13 @@ argument_list|(
 literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
 argument_list|)
 expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.optimize.sort.dynamic.partition.threshold=-1"
+argument_list|)
+expr_stmt|;
 name|Expression
 name|expression
 init|=
@@ -1477,6 +1484,13 @@ operator|.
 name|add
 argument_list|(
 literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.optimize.sort.dynamic.partition.threshold=-1"
 argument_list|)
 expr_stmt|;
 comment|// query will get cancelled before creating 57 partitions
@@ -1790,6 +1804,13 @@ argument_list|(
 literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
 argument_list|)
 expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.optimize.sort.dynamic.partition.threshold=-1"
+argument_list|)
+expr_stmt|;
 name|String
 name|query
 init|=
@@ -1905,6 +1926,13 @@ operator|.
 name|add
 argument_list|(
 literal|"set hive.exec.failure.hooks=org.apache.hadoop.hive.ql.hooks.PostExecWMEventsSummaryPrinter"
+argument_list|)
+expr_stmt|;
+name|cmds
+operator|.
+name|add
+argument_list|(
+literal|"set hive.optimize.sort.dynamic.partition.threshold=-1"
 argument_list|)
 expr_stmt|;
 comment|// query will get cancelled before creating 57 partitions
