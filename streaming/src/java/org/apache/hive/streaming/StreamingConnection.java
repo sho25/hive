@@ -134,10 +134,42 @@ parameter_list|()
 throws|throws
 name|StreamingException
 function_decl|;
-comment|/**    * Commit a transaction to make the writes visible for readers. Include    * other partitions that may have been added independently.    *    * @param partitions - extra partitions to commit.    * @throws StreamingException - if there are errors when committing the open transaction.    */
+comment|/**    * Commits the transaction together with a key value atomically.    * @param partitions - extra partitions to commit.    * @param key - key to commit.    * @param value - value to commit.    * @throws StreamingException - if there are errors when committing    * the open transaction.    */
 specifier|default
 name|void
-name|commitTransactionWithPartition
+name|commitTransaction
+parameter_list|(
+annotation|@
+name|Nullable
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|partitions
+parameter_list|,
+annotation|@
+name|Nullable
+name|String
+name|key
+parameter_list|,
+annotation|@
+name|Nullable
+name|String
+name|value
+parameter_list|)
+throws|throws
+name|StreamingException
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|()
+throw|;
+block|}
+comment|/**      * Commit a transaction to make the writes visible for readers. Include      * other partitions that may have been added independently.      *      * @param partitions - extra partitions to commit.      * @throws StreamingException - if there are errors when committing the open transaction.      */
+specifier|default
+name|void
+name|commitTransaction
 parameter_list|(
 annotation|@
 name|Nullable
