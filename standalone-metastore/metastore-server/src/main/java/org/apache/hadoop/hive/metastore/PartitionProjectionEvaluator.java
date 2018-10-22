@@ -2228,9 +2228,10 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-try|try
-init|(
 name|Query
+argument_list|<
+name|?
+argument_list|>
 name|query
 init|=
 name|pm
@@ -2241,7 +2242,8 @@ literal|"javax.jdo.query.SQL"
 argument_list|,
 name|queryText
 argument_list|)
-init|)
+decl_stmt|;
+try|try
 block|{
 name|long
 name|start
@@ -2852,6 +2854,14 @@ name|getMessage
 argument_list|()
 argument_list|)
 throw|;
+block|}
+finally|finally
+block|{
+name|query
+operator|.
+name|closeAll
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 specifier|private
