@@ -91,6 +91,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|messaging
+operator|.
+name|MessageBuilder
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|thrift
 operator|.
 name|TException
@@ -259,7 +277,7 @@ name|this
 operator|.
 name|keyValues
 operator|=
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|getPartitionKeyValues
 argument_list|(
@@ -280,7 +298,7 @@ name|this
 operator|.
 name|tableObjJson
 operator|=
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|createTableObjJson
 argument_list|(
@@ -291,7 +309,7 @@ name|this
 operator|.
 name|partitionObjBeforeJson
 operator|=
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|createPartitionObjJson
 argument_list|(
@@ -302,7 +320,7 @@ name|this
 operator|.
 name|partitionObjAfterJson
 operator|=
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|createPartitionObjJson
 argument_list|(
@@ -455,7 +473,7 @@ return|return
 operator|(
 name|Table
 operator|)
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|getTObj
 argument_list|(
@@ -480,7 +498,7 @@ return|return
 operator|(
 name|Partition
 operator|)
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|getTObj
 argument_list|(
@@ -505,7 +523,7 @@ return|return
 operator|(
 name|Partition
 operator|)
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|getTObj
 argument_list|(

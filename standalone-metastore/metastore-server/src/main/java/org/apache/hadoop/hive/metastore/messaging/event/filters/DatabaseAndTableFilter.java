@@ -55,7 +55,7 @@ name|metastore
 operator|.
 name|messaging
 operator|.
-name|MessageFactory
+name|MessageBuilder
 import|;
 end_import
 
@@ -161,7 +161,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|OPEN_TXN_EVENT
 argument_list|)
@@ -175,7 +175,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|COMMIT_TXN_EVENT
 argument_list|)
@@ -189,7 +189,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ABORT_TXN_EVENT
 argument_list|)

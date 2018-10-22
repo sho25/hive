@@ -261,7 +261,9 @@ name|metastore
 operator|.
 name|messaging
 operator|.
-name|MessageFactory
+name|json
+operator|.
+name|JSONMessageEncoder
 import|;
 end_import
 
@@ -713,7 +715,7 @@ specifier|final
 name|MessageDeserializer
 name|deserializer
 init|=
-name|MessageFactory
+name|JSONMessageEncoder
 operator|.
 name|getInstance
 argument_list|()

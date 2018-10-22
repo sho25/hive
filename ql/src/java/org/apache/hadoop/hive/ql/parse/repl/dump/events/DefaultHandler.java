@@ -53,6 +53,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|messaging
+operator|.
+name|EventMessage
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|parse
@@ -105,6 +123,19 @@ expr_stmt|;
 block|}
 annotation|@
 name|Override
+name|EventMessage
+name|eventMessage
+parameter_list|(
+name|String
+name|stringRepresentation
+parameter_list|)
+block|{
+return|return
+literal|null
+return|;
+block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|handle
@@ -115,6 +146,9 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|// we specifically use the the message string from the original event since we dont know what type of message
+comment|// to convert this message to, this handler should not be called since with different message formats we need
+comment|// the ability to convert messages to a given message type.
 name|LOG
 operator|.
 name|info

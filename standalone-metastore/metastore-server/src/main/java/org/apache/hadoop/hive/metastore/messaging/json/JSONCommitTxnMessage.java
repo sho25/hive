@@ -123,6 +123,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|messaging
+operator|.
+name|MessageBuilder
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -415,7 +433,7 @@ else|:
 operator|(
 name|Table
 operator|)
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|getTObj
 argument_list|(
@@ -467,7 +485,7 @@ else|:
 operator|(
 name|Partition
 operator|)
-name|JSONMessageFactory
+name|MessageBuilder
 operator|.
 name|getTObj
 argument_list|(

@@ -57,7 +57,7 @@ name|metastore
 operator|.
 name|messaging
 operator|.
-name|MessageFactory
+name|MessageBuilder
 import|;
 end_import
 
@@ -150,7 +150,7 @@ static|static
 block|{
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ADD_PARTITION_EVENT
 argument_list|,
@@ -161,7 +161,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ALTER_DATABASE_EVENT
 argument_list|,
@@ -172,7 +172,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ALTER_PARTITION_EVENT
 argument_list|,
@@ -183,7 +183,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ALTER_TABLE_EVENT
 argument_list|,
@@ -194,7 +194,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|CREATE_FUNCTION_EVENT
 argument_list|,
@@ -205,7 +205,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|CREATE_TABLE_EVENT
 argument_list|,
@@ -216,7 +216,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|DROP_PARTITION_EVENT
 argument_list|,
@@ -227,7 +227,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|DROP_TABLE_EVENT
 argument_list|,
@@ -238,7 +238,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|INSERT_EVENT
 argument_list|,
@@ -249,7 +249,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|DROP_FUNCTION_EVENT
 argument_list|,
@@ -260,7 +260,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ADD_PRIMARYKEY_EVENT
 argument_list|,
@@ -271,7 +271,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ADD_FOREIGNKEY_EVENT
 argument_list|,
@@ -282,7 +282,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ADD_UNIQUECONSTRAINT_EVENT
 argument_list|,
@@ -293,7 +293,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ADD_NOTNULLCONSTRAINT_EVENT
 argument_list|,
@@ -304,7 +304,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|DROP_CONSTRAINT_EVENT
 argument_list|,
@@ -315,7 +315,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|CREATE_DATABASE_EVENT
 argument_list|,
@@ -326,7 +326,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|DROP_DATABASE_EVENT
 argument_list|,
@@ -337,7 +337,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|OPEN_TXN_EVENT
 argument_list|,
@@ -348,7 +348,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|COMMIT_TXN_EVENT
 argument_list|,
@@ -359,7 +359,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ABORT_TXN_EVENT
 argument_list|,
@@ -370,7 +370,7 @@ argument_list|)
 expr_stmt|;
 name|register
 argument_list|(
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|ALLOC_WRITE_ID_EVENT
 argument_list|,

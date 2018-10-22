@@ -938,7 +938,6 @@ name|overridesForHiveConf
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
 name|WarehouseInstance
 parameter_list|(
 name|Logger

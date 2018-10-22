@@ -147,7 +147,7 @@ name|metastore
 operator|.
 name|messaging
 operator|.
-name|MessageFactory
+name|MessageBuilder
 import|;
 end_import
 
@@ -335,7 +335,7 @@ condition|)
 block|{
 name|pksString
 operator|=
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|getInstance
 argument_list|()
@@ -358,7 +358,7 @@ condition|)
 block|{
 name|fksString
 operator|=
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|getInstance
 argument_list|()
@@ -381,7 +381,7 @@ condition|)
 block|{
 name|uksString
 operator|=
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|getInstance
 argument_list|()
@@ -404,7 +404,7 @@ condition|)
 block|{
 name|nnsString
 operator|=
-name|MessageFactory
+name|MessageBuilder
 operator|.
 name|getInstance
 argument_list|()
