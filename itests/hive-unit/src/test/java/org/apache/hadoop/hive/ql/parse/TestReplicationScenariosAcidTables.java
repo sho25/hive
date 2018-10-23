@@ -3206,7 +3206,6 @@ operator|.
 name|lastReplicationId
 argument_list|)
 expr_stmt|;
-comment|// create table will start and coomit the transaction
 name|primary
 operator|.
 name|run
@@ -3278,6 +3277,34 @@ operator|.
 name|lastReplicationId
 argument_list|)
 decl_stmt|;
+name|long
+name|lastReplId
+init|=
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|bootStrapDump
+operator|.
+name|lastReplicationId
+argument_list|)
+decl_stmt|;
+name|primary
+operator|.
+name|testEventCounts
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|lastReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|20
+argument_list|)
+expr_stmt|;
+comment|// Test load
 name|replica
 operator|.
 name|load

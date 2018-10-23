@@ -60920,6 +60920,39 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+name|long
+name|toEventId
+decl_stmt|;
+name|String
+name|paramSpecs
+decl_stmt|;
+name|List
+argument_list|<
+name|Object
+argument_list|>
+name|paramVals
+init|=
+operator|new
+name|ArrayList
+argument_list|<
+name|Object
+argument_list|>
+argument_list|()
+decl_stmt|;
+comment|// We store a catalog name in lower case in metastore and also use the same way everywhere in
+comment|// hive.
+assert|assert
+name|catName
+operator|.
+name|equals
+argument_list|(
+name|catName
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+assert|;
+comment|// Build the query to count events, part by part
 name|String
 name|queryStr
 init|=
@@ -60931,9 +60964,133 @@ name|class
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|" where eventId> fromEventId&& dbName == inputDbName&& catalogName == catName"
 decl_stmt|;
+comment|// count fromEventId onwards events
+name|queryStr
+operator|=
+name|queryStr
+operator|+
+literal|" where eventId> fromEventId"
+expr_stmt|;
+name|paramSpecs
+operator|=
+literal|"java.lang.Long fromEventId"
+expr_stmt|;
+name|paramVals
+operator|.
+name|add
+argument_list|(
+name|Long
+operator|.
+name|valueOf
+argument_list|(
+name|fromEventId
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// Input database name can be a database name or a *. In the first case we add a filter
+comment|// condition on dbName column, but not in the second case, since a * means all the
+comment|// databases. In case we support more elaborate database name patterns in future, we will
+comment|// have to apply a method similar to getNextNotification() method of MetaStoreClient.
+if|if
+condition|(
+operator|!
+name|inputDbName
+operator|.
+name|equals
+argument_list|(
+literal|"*"
+argument_list|)
+condition|)
+block|{
+comment|// dbName could be NULL in case of transaction related events, which also need to be
+comment|// counted.
+name|queryStr
+operator|=
+name|queryStr
+operator|+
+literal|"&& (dbName == inputDbName || dbName == null)"
+expr_stmt|;
+name|paramSpecs
+operator|=
+name|paramSpecs
+operator|+
+literal|", java.lang.String inputDbName"
+expr_stmt|;
+comment|// We store a database name in lower case in metastore.
+name|paramVals
+operator|.
+name|add
+argument_list|(
+name|inputDbName
+operator|.
+name|toLowerCase
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+comment|// catName could be NULL in case of transaction related events, which also need to be
+comment|// counted.
+name|queryStr
+operator|=
+name|queryStr
+operator|+
+literal|"&& (catalogName == catName || catalogName == null)"
+expr_stmt|;
+name|paramSpecs
+operator|=
+name|paramSpecs
+operator|+
+literal|", java.lang.String catName"
+expr_stmt|;
+name|paramVals
+operator|.
+name|add
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+comment|// count events upto toEventId if specified
+if|if
+condition|(
+name|rqst
+operator|.
+name|isSetToEventId
+argument_list|()
+condition|)
+block|{
+name|toEventId
+operator|=
+name|rqst
+operator|.
+name|getToEventId
+argument_list|()
+expr_stmt|;
+name|queryStr
+operator|=
+name|queryStr
+operator|+
+literal|"&& eventId<= toEventId"
+expr_stmt|;
+name|paramSpecs
+operator|=
+name|paramSpecs
+operator|+
+literal|", java.lang.Long toEventId"
+expr_stmt|;
+name|paramVals
+operator|.
+name|add
+argument_list|(
+name|Long
+operator|.
+name|valueOf
+argument_list|(
+name|toEventId
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 name|query
 operator|=
 name|pm
@@ -60947,9 +61104,7 @@ name|query
 operator|.
 name|declareParameters
 argument_list|(
-literal|"java.lang.Long fromEventId, java.lang.String inputDbName,"
-operator|+
-literal|" java.lang.String catName"
+name|paramSpecs
 argument_list|)
 expr_stmt|;
 name|result
@@ -60959,13 +61114,12 @@ name|Long
 operator|)
 name|query
 operator|.
-name|execute
+name|executeWithArray
 argument_list|(
-name|fromEventId
-argument_list|,
-name|inputDbName
-argument_list|,
-name|catName
+name|paramVals
+operator|.
+name|toArray
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|commited
@@ -60973,14 +61127,43 @@ operator|=
 name|commitTransaction
 argument_list|()
 expr_stmt|;
-return|return
-operator|new
-name|NotificationEventsCountResponse
-argument_list|(
+comment|// Cap the event count by limit if specified.
+name|long
+name|eventCount
+init|=
 name|result
 operator|.
 name|longValue
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|rqst
+operator|.
+name|isSetLimit
+argument_list|()
+operator|&&
+name|eventCount
+operator|>
+name|rqst
+operator|.
+name|getLimit
+argument_list|()
+condition|)
+block|{
+name|eventCount
+operator|=
+name|rqst
+operator|.
+name|getLimit
+argument_list|()
+expr_stmt|;
+block|}
+return|return
+operator|new
+name|NotificationEventsCountResponse
+argument_list|(
+name|eventCount
 argument_list|)
 return|;
 block|}

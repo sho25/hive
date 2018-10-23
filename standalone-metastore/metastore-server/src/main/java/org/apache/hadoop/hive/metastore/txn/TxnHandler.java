@@ -9101,15 +9101,9 @@ name|AllocWriteIdEvent
 argument_list|(
 name|txnToWriteIds
 argument_list|,
-name|rqst
-operator|.
-name|getDbName
-argument_list|()
+name|dbName
 argument_list|,
-name|rqst
-operator|.
-name|getTableName
-argument_list|()
+name|tblName
 argument_list|,
 literal|null
 argument_list|)

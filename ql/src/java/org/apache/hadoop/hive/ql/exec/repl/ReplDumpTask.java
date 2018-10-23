@@ -1566,6 +1566,11 @@ name|work
 operator|.
 name|eventTo
 expr_stmt|;
+comment|// Right now the only pattern allowed to be specified is *, which matches all the database
+comment|// names. So passing dbname as is works since getDbNotificationEventsCount can exclude filter
+comment|// on database name when it's *. In future, if we support more elaborate patterns, we will
+comment|// have to pass DatabaseAndTableFilter created above to getDbNotificationEventsCount() to get
+comment|// correct event count.
 name|String
 name|dbName
 init|=
@@ -1612,6 +1617,15 @@ operator|.
 name|eventFrom
 argument_list|,
 name|dbName
+argument_list|,
+name|work
+operator|.
+name|eventTo
+argument_list|,
+name|work
+operator|.
+name|maxEventLimit
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
