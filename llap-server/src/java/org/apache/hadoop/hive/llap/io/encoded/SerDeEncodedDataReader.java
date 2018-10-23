@@ -10666,7 +10666,7 @@ parameter_list|)
 block|{
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.

@@ -2453,7 +2453,7 @@ expr_stmt|;
 block|}
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.

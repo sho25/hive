@@ -122,6 +122,16 @@ name|CONSUMER_TIME_NS
 argument_list|(
 literal|false
 argument_list|)
+block|,
+name|IO_CPU_NS
+argument_list|(
+literal|false
+argument_list|)
+block|,
+name|IO_USER_NS
+argument_list|(
+literal|false
+argument_list|)
 block|;
 comment|// flag to indicate if these counters are subject to change across different test runs
 specifier|private

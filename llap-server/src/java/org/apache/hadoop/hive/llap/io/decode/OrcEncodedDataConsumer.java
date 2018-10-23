@@ -838,11 +838,6 @@ name|skipCorrupt
 decl_stmt|;
 comment|// TODO: get rid of this
 specifier|private
-specifier|final
-name|QueryFragmentCounters
-name|counters
-decl_stmt|;
-specifier|private
 name|SchemaEvolution
 name|evolution
 decl_stmt|;
@@ -899,6 +894,8 @@ name|size
 argument_list|()
 argument_list|,
 name|ioMetrics
+argument_list|,
+name|counters
 argument_list|)
 expr_stmt|;
 name|this
@@ -913,12 +910,6 @@ operator|.
 name|skipCorrupt
 operator|=
 name|skipCorrupt
-expr_stmt|;
-name|this
-operator|.
-name|counters
-operator|=
-name|counters
 expr_stmt|;
 block|}
 specifier|public
@@ -1456,7 +1447,7 @@ argument_list|)
 expr_stmt|;
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.

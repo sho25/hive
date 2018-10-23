@@ -3073,7 +3073,7 @@ parameter_list|)
 block|{
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.
@@ -3516,7 +3516,7 @@ argument_list|)
 expr_stmt|;
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.
@@ -4614,7 +4614,7 @@ decl_stmt|;
 comment|// LOG.error("Got " + RecordReaderUtils.stringifyDiskRanges(footerRange));
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.
@@ -4861,7 +4861,7 @@ argument_list|()
 expr_stmt|;
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.
@@ -4975,7 +4975,7 @@ expr_stmt|;
 block|}
 name|counters
 operator|.
-name|incrTimeCounter
+name|incrWallClockCounter
 argument_list|(
 name|LlapIOCounters
 operator|.
