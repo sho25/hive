@@ -277,7 +277,7 @@ name|ConfVars
 operator|.
 name|HIVE_SERVER2_BUILTIN_UDF_BLACKLIST
 argument_list|,
-literal|"reflect,reflect2,java_method"
+literal|"reflect,reflect2,java_method,in_file"
 argument_list|)
 expr_stmt|;
 block|}
