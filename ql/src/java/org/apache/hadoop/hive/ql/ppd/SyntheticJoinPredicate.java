@@ -2125,6 +2125,69 @@ operator|)
 name|currentOp
 decl_stmt|;
 comment|// 2. Backtrack expression to join output
+name|ExprNodeDesc
+name|expr
+init|=
+name|currentNode
+decl_stmt|;
+if|if
+condition|(
+name|currentOp
+operator|!=
+name|op
+condition|)
+block|{
+if|if
+condition|(
+name|expr
+operator|instanceof
+name|ExprNodeColumnDesc
+condition|)
+block|{
+comment|// Expression refers to output of current operator, but backtrack methods works
+comment|// from the input columns, hence we need to make resolution for current operator
+comment|// here. If the operator was already the join, there is nothing to do
+if|if
+condition|(
+name|op
+operator|.
+name|getColumnExprMap
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|expr
+operator|=
+name|op
+operator|.
+name|getColumnExprMap
+argument_list|()
+operator|.
+name|get
+argument_list|(
+operator|(
+operator|(
+name|ExprNodeColumnDesc
+operator|)
+name|expr
+operator|)
+operator|.
+name|getColumn
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+comment|// TODO: We can extend to other expression types
+comment|// We are done
+return|return
+literal|true
+return|;
+block|}
+block|}
 specifier|final
 name|ExprNodeDesc
 name|joinExprNode
@@ -2133,7 +2196,7 @@ name|ExprNodeDescUtils
 operator|.
 name|backtrack
 argument_list|(
-name|currentNode
+name|expr
 argument_list|,
 name|op
 argument_list|,
