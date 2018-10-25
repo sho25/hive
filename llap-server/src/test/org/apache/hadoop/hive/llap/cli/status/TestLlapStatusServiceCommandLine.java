@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  * http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing,  * software distributed under the License is distributed on an  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY  * KIND, either express or implied.  See the License for the  * specific language governing permissions and limitations  * under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -16,68 +16,10 @@ operator|.
 name|llap
 operator|.
 name|cli
+operator|.
+name|status
 package|;
 end_package
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|cli
-operator|.
-name|LlapStatusOptionsProcessor
-operator|.
-name|LlapStatusOptions
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|cli
-operator|.
-name|LlapStatusServiceDriver
-operator|.
-name|ExitCode
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|llap
-operator|.
-name|cli
-operator|.
-name|LlapStatusServiceDriver
-operator|.
-name|LlapStatusCliException
-import|;
-end_import
 
 begin_import
 import|import
@@ -134,13 +76,13 @@ import|;
 end_import
 
 begin_comment
-comment|// TODO: write unit tests for the main logic of this class - needs refactoring first, current design isn't testable.
+comment|/**  * Tests for LlapStatusServiceCommandLine.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
-name|TestLlapStatusServiceDriver
+name|TestLlapStatusServiceCommandLine
 block|{
 annotation|@
 name|Rule
@@ -160,21 +102,13 @@ name|void
 name|testArgumentParsingDefault
 parameter_list|()
 throws|throws
-name|LlapStatusCliException
+name|Exception
 block|{
-name|LlapStatusServiceDriver
-name|driver
+name|LlapStatusServiceCommandLine
+name|cl
 init|=
 operator|new
-name|LlapStatusServiceDriver
-argument_list|()
-decl_stmt|;
-name|LlapStatusOptions
-name|parseOptions
-init|=
-name|driver
-operator|.
-name|parseOptions
+name|LlapStatusServiceCommandLine
 argument_list|(
 operator|new
 name|String
@@ -186,26 +120,26 @@ name|assertEquals
 argument_list|(
 literal|"findAppTimeout should be the default value if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
 name|getFindAppTimeoutMs
 argument_list|()
 argument_list|,
-name|LlapStatusOptionsProcessor
+name|LlapStatusServiceCommandLine
 operator|.
-name|FIND_YARN_APP_TIMEOUT_MS
+name|DEFAULT_FIND_YARN_APP_TIMEOUT_MS
 argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
 literal|"refreshInterval should be the default value if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
 name|getRefreshIntervalMs
 argument_list|()
 argument_list|,
-name|LlapStatusOptionsProcessor
+name|LlapStatusServiceCommandLine
 operator|.
 name|DEFAULT_STATUS_REFRESH_INTERVAL_MS
 argument_list|)
@@ -214,12 +148,12 @@ name|assertEquals
 argument_list|(
 literal|"watchTimeout should be the default value if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
 name|getWatchTimeoutMs
 argument_list|()
 argument_list|,
-name|LlapStatusOptionsProcessor
+name|LlapStatusServiceCommandLine
 operator|.
 name|DEFAULT_WATCH_MODE_TIMEOUT_MS
 argument_list|)
@@ -228,12 +162,12 @@ name|assertEquals
 argument_list|(
 literal|"runningNodesThreshold should be the default value if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
 name|getRunningNodesThreshold
 argument_list|()
 argument_list|,
-name|LlapStatusOptionsProcessor
+name|LlapStatusServiceCommandLine
 operator|.
 name|DEFAULT_RUNNING_NODES_THRESHOLD
 argument_list|)
@@ -242,9 +176,9 @@ name|assertEquals
 argument_list|(
 literal|"hiveConf should be empty properties if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
-name|getConf
+name|getHiveConf
 argument_list|()
 argument_list|,
 operator|new
@@ -256,7 +190,7 @@ name|assertEquals
 argument_list|(
 literal|"isLaunched should be the true if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
 name|isLaunched
 argument_list|()
@@ -268,7 +202,7 @@ name|assertEquals
 argument_list|(
 literal|"watchMode should be the false if not specified otherwise"
 argument_list|,
-name|parseOptions
+name|cl
 operator|.
 name|isWatchMode
 argument_list|()
@@ -284,13 +218,13 @@ name|void
 name|testNegativeRefreshInterval
 parameter_list|()
 throws|throws
-name|LlapStatusCliException
+name|Exception
 block|{
 name|thrown
 operator|.
 name|expect
 argument_list|(
-name|LlapStatusCliException
+name|IllegalArgumentException
 operator|.
 name|class
 argument_list|)
@@ -299,32 +233,19 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-name|ExitCode
-operator|.
-name|INCORRECT_USAGE
-operator|.
-name|getInt
-argument_list|()
-operator|+
-literal|": Incorrect usage"
+literal|"Refresh interval should be>0"
 argument_list|)
 expr_stmt|;
-name|LlapStatusServiceDriver
-name|driver
-init|=
 operator|new
-name|LlapStatusServiceDriver
-argument_list|()
-decl_stmt|;
-name|driver
-operator|.
-name|parseOptions
+name|LlapStatusServiceCommandLine
 argument_list|(
 operator|new
 name|String
 index|[]
 block|{
-literal|"--refreshInterval -1"
+literal|"--refreshInterval"
+block|,
+literal|"-1"
 block|}
 argument_list|)
 expr_stmt|;
@@ -336,13 +257,13 @@ name|void
 name|testNegativeWatchTimeout
 parameter_list|()
 throws|throws
-name|LlapStatusCliException
+name|Exception
 block|{
 name|thrown
 operator|.
 name|expect
 argument_list|(
-name|LlapStatusCliException
+name|IllegalArgumentException
 operator|.
 name|class
 argument_list|)
@@ -351,32 +272,19 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-name|ExitCode
-operator|.
-name|INCORRECT_USAGE
-operator|.
-name|getInt
-argument_list|()
-operator|+
-literal|": Incorrect usage"
+literal|"Watch timeout should be>0"
 argument_list|)
 expr_stmt|;
-name|LlapStatusServiceDriver
-name|driver
-init|=
 operator|new
-name|LlapStatusServiceDriver
-argument_list|()
-decl_stmt|;
-name|driver
-operator|.
-name|parseOptions
+name|LlapStatusServiceCommandLine
 argument_list|(
 operator|new
 name|String
 index|[]
 block|{
-literal|"--watchTimeout -1"
+literal|"--watchTimeout"
+block|,
+literal|"-1"
 block|}
 argument_list|)
 expr_stmt|;
@@ -388,13 +296,13 @@ name|void
 name|testNegativeRunningNodesThreshold
 parameter_list|()
 throws|throws
-name|LlapStatusCliException
+name|Exception
 block|{
 name|thrown
 operator|.
 name|expect
 argument_list|(
-name|LlapStatusCliException
+name|IllegalArgumentException
 operator|.
 name|class
 argument_list|)
@@ -403,32 +311,19 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-name|ExitCode
-operator|.
-name|INCORRECT_USAGE
-operator|.
-name|getInt
-argument_list|()
-operator|+
-literal|": Incorrect usage"
+literal|"Running nodes threshold value should be between 0.0 and 1.0 (inclusive)"
 argument_list|)
 expr_stmt|;
-name|LlapStatusServiceDriver
-name|driver
-init|=
 operator|new
-name|LlapStatusServiceDriver
-argument_list|()
-decl_stmt|;
-name|driver
-operator|.
-name|parseOptions
+name|LlapStatusServiceCommandLine
 argument_list|(
 operator|new
 name|String
 index|[]
 block|{
-literal|"--runningNodesThreshold -1"
+literal|"--runningNodesThreshold"
+block|,
+literal|"-1"
 block|}
 argument_list|)
 expr_stmt|;
@@ -440,13 +335,13 @@ name|void
 name|testRunningNodesThresholdOverOne
 parameter_list|()
 throws|throws
-name|LlapStatusCliException
+name|Exception
 block|{
 name|thrown
 operator|.
 name|expect
 argument_list|(
-name|LlapStatusCliException
+name|IllegalArgumentException
 operator|.
 name|class
 argument_list|)
@@ -455,32 +350,19 @@ name|thrown
 operator|.
 name|expectMessage
 argument_list|(
-name|ExitCode
-operator|.
-name|INCORRECT_USAGE
-operator|.
-name|getInt
-argument_list|()
-operator|+
-literal|": Incorrect usage"
+literal|"Running nodes threshold value should be between 0.0 and 1.0 (inclusive)"
 argument_list|)
 expr_stmt|;
-name|LlapStatusServiceDriver
-name|driver
-init|=
 operator|new
-name|LlapStatusServiceDriver
-argument_list|()
-decl_stmt|;
-name|driver
-operator|.
-name|parseOptions
+name|LlapStatusServiceCommandLine
 argument_list|(
 operator|new
 name|String
 index|[]
 block|{
-literal|"--runningNodesThreshold 1.1"
+literal|"--runningNodesThreshold"
+block|,
+literal|"1.1"
 block|}
 argument_list|)
 expr_stmt|;
