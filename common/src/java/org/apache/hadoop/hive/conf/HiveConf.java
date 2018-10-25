@@ -3621,13 +3621,31 @@ argument_list|,
 literal|"Base directory into which the proto event messages are written by HiveProtoLoggingHook."
 argument_list|)
 block|,
-name|HIVE_PROTO_EVENTS_QUEUE_CAPACITY
+name|HIVE_PROTO_EVENTS_ROLLOVER_CHECK_INTERVAL
 argument_list|(
-literal|"hive.hook.proto.queue.capacity"
+literal|"hive.hook.proto.rollover-interval"
 argument_list|,
-literal|64
+literal|"600s"
 argument_list|,
-literal|"Queue capacity for the proto events logging threads."
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|0L
+argument_list|,
+literal|true
+argument_list|,
+literal|3600
+operator|*
+literal|24L
+argument_list|,
+literal|true
+argument_list|)
+argument_list|,
+literal|"Frequency at which the file rollover check is triggered."
 argument_list|)
 block|,
 name|HIVE_PROTO_EVENTS_CLEAN_FREQ
