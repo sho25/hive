@@ -9396,21 +9396,8 @@ name|includeStripe
 init|=
 literal|null
 decl_stmt|;
-comment|// We can't eliminate stripes if there are deltas because the
-comment|// deltas may change the rows making them match the predicate. todo: See HIVE-14516.
 if|if
 condition|(
-operator|(
-name|deltas
-operator|==
-literal|null
-operator|||
-name|deltas
-operator|.
-name|isEmpty
-argument_list|()
-operator|)
-operator|&&
 name|context
 operator|.
 name|sarg
@@ -13488,10 +13475,6 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|sarg
-operator|==
-literal|null
-operator|||
 name|stripeStats
 operator|==
 literal|null
