@@ -2322,16 +2322,6 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|work
-operator|.
-name|getParseContext
-argument_list|()
-operator|!=
-literal|null
-condition|)
-block|{
 name|List
 argument_list|<
 name|LockComponent
@@ -2468,19 +2458,6 @@ argument_list|(
 literal|"LOCK INFORMATION:"
 argument_list|,
 name|locks
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-else|else
-block|{
-name|System
-operator|.
-name|err
-operator|.
-name|println
-argument_list|(
-literal|"No parse context!"
 argument_list|)
 expr_stmt|;
 block|}

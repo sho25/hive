@@ -18,24 +18,6 @@ package|;
 end_package
 
 begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
-import|;
-end_import
-
-begin_import
 import|import static
 name|org
 operator|.
@@ -50,6 +32,24 @@ operator|.
 name|Warehouse
 operator|.
 name|DEFAULT_CATALOG_NAME
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|MetaException
 import|;
 end_import
 

@@ -327,6 +327,13 @@ name|RUNTIME_STATS_CLEANER_TASK_CLASS
 init|=
 literal|"org.apache.hadoop.hive.metastore.RuntimeStatsCleanerTask"
 decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|PARTITION_MANAGEMENT_TASK_CLASS
+init|=
+literal|"org.apache.hadoop.hive.metastore.PartitionManagementTask"
+decl_stmt|;
 annotation|@
 name|VisibleForTesting
 specifier|static
@@ -2627,6 +2634,171 @@ argument_list|,
 literal|"A comma separated list of metrics reporters to start"
 argument_list|)
 block|,
+name|MSCK_PATH_VALIDATION
+argument_list|(
+literal|"msck.path.validation"
+argument_list|,
+literal|"hive.msck.path.validation"
+argument_list|,
+literal|"throw"
+argument_list|,
+operator|new
+name|StringSetValidator
+argument_list|(
+literal|"throw"
+argument_list|,
+literal|"skip"
+argument_list|,
+literal|"ignore"
+argument_list|)
+argument_list|,
+literal|"The approach msck should take with HDFS "
+operator|+
+literal|"directories that are partition-like but contain unsupported characters. 'throw' (an "
+operator|+
+literal|"exception) is the default; 'skip' will skip the invalid directories and still repair the"
+operator|+
+literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
+argument_list|)
+block|,
+name|MSCK_REPAIR_BATCH_SIZE
+argument_list|(
+literal|"msck.repair.batch.size"
+argument_list|,
+literal|"hive.msck.repair.batch.size"
+argument_list|,
+literal|3000
+argument_list|,
+literal|"Batch size for the msck repair command. If the value is greater than zero,\n "
+operator|+
+literal|"it will execute batch wise with the configured batch size. In case of errors while\n"
+operator|+
+literal|"adding unknown partitions the batch size is automatically reduced by half in the subsequent\n"
+operator|+
+literal|"retry attempt. The default value is 3000 which means it will execute in the batches of 3000."
+argument_list|)
+block|,
+name|MSCK_REPAIR_BATCH_MAX_RETRIES
+argument_list|(
+literal|"msck.repair.batch.max.retries"
+argument_list|,
+literal|"hive.msck.repair.batch.max.retries"
+argument_list|,
+literal|4
+argument_list|,
+literal|"Maximum number of retries for the msck repair command when adding unknown partitions.\n "
+operator|+
+literal|"If the value is greater than zero it will retry adding unknown partitions until the maximum\n"
+operator|+
+literal|"number of attempts is reached or batch size is reduced to 0, whichever is earlier.\n"
+operator|+
+literal|"In each retry attempt it will reduce the batch size by a factor of 2 until it reaches zero.\n"
+operator|+
+literal|"If the value is set to zero it will retry until the batch size becomes zero as described above."
+argument_list|)
+block|,
+name|MSCK_REPAIR_ENABLE_PARTITION_RETENTION
+argument_list|(
+literal|"msck.repair.enable.partition.retention"
+argument_list|,
+literal|"msck.repair.enable.partition.retention"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If 'partition.retention.period' table property is set, this flag determines whether MSCK REPAIR\n"
+operator|+
+literal|"command should handle partition retention. If enabled, and if a specific partition's age exceeded\n"
+operator|+
+literal|"retention period the partition will be dropped along with data"
+argument_list|)
+block|,
+comment|// Partition management task params
+name|PARTITION_MANAGEMENT_TASK_FREQUENCY
+argument_list|(
+literal|"metastore.partition.management.task.frequency"
+argument_list|,
+literal|"metastore.partition.management.task.frequency"
+argument_list|,
+literal|300
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|"Frequency at which timer task runs to do automatic partition management for tables\n"
+operator|+
+literal|"with table property 'discover.partitions'='true'. Partition management include 2 pieces. One is partition\n"
+operator|+
+literal|"discovery and other is partition retention period. When 'discover.partitions'='true' is set, partition\n"
+operator|+
+literal|"management will look for partitions in table location and add partitions objects for it in metastore.\n"
+operator|+
+literal|"Similarly if partition object exists in metastore and partition location does not exist, partition object\n"
+operator|+
+literal|"will be dropped. The second piece in partition management is retention period. When 'discover.partition'\n"
+operator|+
+literal|"is set to true and if 'partition.retention.period' table property is defined, partitions that are older\n"
+operator|+
+literal|"than the specified retention period will be automatically dropped from metastore along with the data."
+argument_list|)
+block|,
+name|PARTITION_MANAGEMENT_TABLE_TYPES
+argument_list|(
+literal|"metastore.partition.management.table.types"
+argument_list|,
+literal|"metastore.partition.management.table.types"
+argument_list|,
+literal|"MANAGED_TABLE,EXTERNAL_TABLE"
+argument_list|,
+literal|"Comma separated list of table types to use for partition management"
+argument_list|)
+block|,
+name|PARTITION_MANAGEMENT_TASK_THREAD_POOL_SIZE
+argument_list|(
+literal|"metastore.partition.management.task.thread.pool.size"
+argument_list|,
+literal|"metastore.partition.management.task.thread.pool.size"
+argument_list|,
+literal|5
+argument_list|,
+literal|"Partition management uses thread pool on to which tasks are submitted for discovering and retaining the\n"
+operator|+
+literal|"partitions. This determines the size of the thread pool."
+argument_list|)
+block|,
+name|PARTITION_MANAGEMENT_CATALOG_NAME
+argument_list|(
+literal|"metastore.partition.management.catalog.name"
+argument_list|,
+literal|"metastore.partition.management.catalog.name"
+argument_list|,
+literal|"hive"
+argument_list|,
+literal|"Automatic partition management will look for tables under the specified catalog name"
+argument_list|)
+block|,
+name|PARTITION_MANAGEMENT_DATABASE_PATTERN
+argument_list|(
+literal|"metastore.partition.management.database.pattern"
+argument_list|,
+literal|"metastore.partition.management.database.pattern"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"Automatic partition management will look for tables using the specified database pattern"
+argument_list|)
+block|,
+name|PARTITION_MANAGEMENT_TABLE_PATTERN
+argument_list|(
+literal|"metastore.partition.management.table.pattern"
+argument_list|,
+literal|"metastore.partition.management.table.pattern"
+argument_list|,
+literal|"*"
+argument_list|,
+literal|"Automatic partition management will look for tables using the specified table pattern"
+argument_list|)
+block|,
 name|MULTITHREADED
 argument_list|(
 literal|"javax.jdo.option.Multithreaded"
@@ -3276,6 +3448,10 @@ operator|+
 literal|","
 operator|+
 name|MATERIALZIATIONS_REBUILD_LOCK_CLEANER_TASK_CLASS
+operator|+
+literal|","
+operator|+
+name|PARTITION_MANAGEMENT_TASK_CLASS
 argument_list|,
 literal|"Command separated list of tasks that will be started in separate threads.  These will be"
 operator|+

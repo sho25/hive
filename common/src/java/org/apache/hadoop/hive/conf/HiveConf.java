@@ -16299,6 +16299,9 @@ argument_list|,
 literal|"If value is greater than 0 logs in fixed intervals of size n rather than exponentially."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MSCK_PATH_VALIDATION      */
+annotation|@
+name|Deprecated
 name|HIVE_MSCK_PATH_VALIDATION
 argument_list|(
 literal|"hive.msck.path.validation"
@@ -16324,6 +16327,9 @@ operator|+
 literal|" others; 'ignore' will skip the validation (legacy behavior, causes bugs in many cases)"
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MSCK_REPAIR_BATCH_SIZE      */
+annotation|@
+name|Deprecated
 name|HIVE_MSCK_REPAIR_BATCH_SIZE
 argument_list|(
 literal|"hive.msck.repair.batch.size"
@@ -16339,6 +16345,9 @@ operator|+
 literal|"retry attempt. The default value is 3000 which means it will execute in the batches of 3000."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use MetastoreConf.MSCK_REPAIR_BATCH_MAX_RETRIES      */
+annotation|@
+name|Deprecated
 name|HIVE_MSCK_REPAIR_BATCH_MAX_RETRIES
 argument_list|(
 literal|"hive.msck.repair.batch.max.retries"

@@ -3923,9 +3923,7 @@ name|debugLog
 argument_list|(
 literal|"Rollback transaction, isActive: "
 operator|+
-name|currentTransaction
-operator|.
-name|isActive
+name|isActiveTransaction
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3933,9 +3931,7 @@ try|try
 block|{
 if|if
 condition|(
-name|currentTransaction
-operator|.
-name|isActive
+name|isActiveTransaction
 argument_list|()
 operator|&&
 name|transactionStatus
@@ -9957,6 +9953,13 @@ name|getTableType
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|metaData
+operator|.
+name|setCatName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
 name|metaData
 operator|.
 name|setComments

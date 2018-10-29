@@ -141,6 +141,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|PartitionManagementTask
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|TableType
 import|;
 end_import
@@ -4326,6 +4342,34 @@ operator|.
 name|EXTERNAL_TABLE
 argument_list|)
 expr_stmt|;
+comment|// only add if user have not explicit set it (user explicitly disabled for example in which case don't flip it)
+if|if
+condition|(
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+name|PartitionManagementTask
+operator|.
+name|DISCOVER_PARTITIONS_TBLPROPERTY
+argument_list|)
+operator|==
+literal|null
+condition|)
+block|{
+comment|// partition discovery is on by default if undefined
+name|tbl
+operator|.
+name|setProperty
+argument_list|(
+name|PartitionManagementTask
+operator|.
+name|DISCOVER_PARTITIONS_TBLPROPERTY
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// If the sorted columns is a superset of bucketed columns, store this fact.
 comment|// It can be later used to

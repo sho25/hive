@@ -13,9 +13,7 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
-operator|.
-name|metadata
+name|metastore
 package|;
 end_package
 
@@ -48,6 +46,7 @@ specifier|public
 class|class
 name|CheckResult
 block|{
+comment|// tree sets to preserve ordering in qfile tests
 specifier|private
 name|Set
 argument_list|<
@@ -102,6 +101,18 @@ name|TreeSet
 argument_list|<
 name|PartitionResult
 argument_list|>
+argument_list|()
+decl_stmt|;
+specifier|private
+name|Set
+argument_list|<
+name|PartitionResult
+argument_list|>
+name|expiredPartitions
+init|=
+operator|new
+name|TreeSet
+argument_list|<>
 argument_list|()
 decl_stmt|;
 comment|/**    * @return a list of tables not found on the filesystem.    */
@@ -230,6 +241,37 @@ operator|.
 name|partitionsNotInMs
 operator|=
 name|partitionsNotInMs
+expr_stmt|;
+block|}
+specifier|public
+name|Set
+argument_list|<
+name|PartitionResult
+argument_list|>
+name|getExpiredPartitions
+parameter_list|()
+block|{
+return|return
+name|expiredPartitions
+return|;
+block|}
+specifier|public
+name|void
+name|setExpiredPartitions
+parameter_list|(
+specifier|final
+name|Set
+argument_list|<
+name|PartitionResult
+argument_list|>
+name|expiredPartitions
+parameter_list|)
+block|{
+name|this
+operator|.
+name|expiredPartitions
+operator|=
+name|expiredPartitions
 expr_stmt|;
 block|}
 comment|/**    * A basic description of a partition that is missing from either the fs or    * the ms.    */

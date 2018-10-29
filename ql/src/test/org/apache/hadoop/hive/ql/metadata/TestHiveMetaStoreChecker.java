@@ -27,7 +27,31 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|*
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
 import|;
 end_import
 
@@ -147,6 +171,70 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|CheckResult
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|HiveMetaStoreChecker
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|HiveMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|IMetaStoreClient
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|AlreadyExistsException
@@ -203,25 +291,7 @@ name|metastore
 operator|.
 name|api
 operator|.
-name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|NoSuchObjectException
+name|MetastoreException
 import|;
 end_import
 
@@ -353,6 +423,10 @@ name|Hive
 name|hive
 decl_stmt|;
 specifier|private
+name|IMetaStoreClient
+name|msc
+decl_stmt|;
+specifier|private
 name|FileSystem
 name|fs
 decl_stmt|;
@@ -361,6 +435,13 @@ name|HiveMetaStoreChecker
 name|checker
 init|=
 literal|null
+decl_stmt|;
+specifier|private
+specifier|final
+name|String
+name|catName
+init|=
+literal|"hive"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -459,12 +540,28 @@ argument_list|,
 literal|"throw"
 argument_list|)
 expr_stmt|;
+name|msc
+operator|=
+operator|new
+name|HiveMetaStoreClient
+argument_list|(
+name|hive
+operator|.
+name|getConf
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|checker
 operator|=
 operator|new
 name|HiveMetaStoreChecker
 argument_list|(
+name|msc
+argument_list|,
 name|hive
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|partCols
@@ -621,10 +718,12 @@ block|{
 comment|// cleanup
 try|try
 block|{
-name|hive
+name|msc
 operator|.
 name|dropTable
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -634,10 +733,12 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|hive
+name|msc
 operator|.
 name|dropDatabase
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|true
@@ -650,15 +751,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|NoSuchObjectException
-name|e
-parameter_list|)
-block|{
-comment|// ignore
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
+name|TException
 name|e
 parameter_list|)
 block|{
@@ -692,13 +785,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 throws|,
-name|MetaException
-throws|,
 name|IOException
 throws|,
 name|TException
 throws|,
-name|AlreadyExistsException
+name|MetastoreException
 block|{
 name|CheckResult
 name|result
@@ -711,6 +802,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -758,7 +851,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -774,7 +869,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -796,6 +893,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -855,7 +954,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -871,7 +972,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -891,12 +994,19 @@ argument_list|()
 decl_stmt|;
 name|db
 operator|.
+name|setCatalogName
+argument_list|(
+name|catName
+argument_list|)
+expr_stmt|;
+name|db
+operator|.
 name|setName
 argument_list|(
 name|dbName
 argument_list|)
 expr_stmt|;
-name|hive
+name|msc
 operator|.
 name|createDatabase
 argument_list|(
@@ -979,6 +1089,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -1025,7 +1137,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1041,7 +1155,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1063,6 +1179,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -1109,7 +1227,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1125,7 +1245,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1175,6 +1297,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -1200,7 +1324,6 @@ name|getTablesNotInMs
 argument_list|()
 argument_list|)
 expr_stmt|;
-empty_stmt|;
 name|assertEquals
 argument_list|(
 literal|1
@@ -1235,7 +1358,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1251,7 +1376,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1318,6 +1445,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -1384,7 +1513,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1400,7 +1531,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1448,6 +1581,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -1494,7 +1629,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1510,7 +1647,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1535,6 +1674,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|Table
 name|table
@@ -1634,6 +1775,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -1680,7 +1823,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -1711,7 +1856,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|HiveException
+name|MetastoreException
 operator|.
 name|class
 argument_list|)
@@ -1725,6 +1870,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|Table
 name|table
@@ -1811,6 +1958,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -1836,6 +1985,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|hive
 operator|.
@@ -1860,7 +2011,12 @@ operator|=
 operator|new
 name|HiveMetaStoreChecker
 argument_list|(
+name|msc
+argument_list|,
 name|hive
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Table
@@ -1962,6 +2118,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -2008,7 +2166,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2039,9 +2199,9 @@ name|Table
 name|createTestTable
 parameter_list|()
 throws|throws
-name|AlreadyExistsException
-throws|,
 name|HiveException
+throws|,
+name|AlreadyExistsException
 block|{
 name|Database
 name|db
@@ -2062,6 +2222,8 @@ operator|.
 name|createDatabase
 argument_list|(
 name|db
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Table
@@ -2182,13 +2344,11 @@ parameter_list|()
 throws|throws
 name|HiveException
 throws|,
-name|MetaException
-throws|,
 name|IOException
 throws|,
 name|TException
 throws|,
-name|AlreadyExistsException
+name|MetastoreException
 block|{
 name|Table
 name|table
@@ -2207,6 +2367,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -2254,7 +2416,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2270,7 +2434,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2359,6 +2525,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -2466,7 +2634,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2526,6 +2696,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -2572,7 +2744,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2588,7 +2762,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2631,6 +2807,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 literal|null
@@ -2677,7 +2855,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2693,7 +2873,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -2724,15 +2906,9 @@ parameter_list|()
 throws|throws
 name|HiveException
 throws|,
-name|MetaException
-throws|,
 name|IOException
 throws|,
 name|TException
-throws|,
-name|AlreadyExistsException
-throws|,
-name|NoSuchObjectException
 block|{
 name|Database
 name|db
@@ -2947,6 +3123,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|Table
 name|testTable
@@ -2981,6 +3159,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3027,7 +3207,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -3065,6 +3247,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 comment|// set num of threads to 0 so that single-threaded checkMetastore is called
 name|hive
@@ -3116,6 +3300,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3162,7 +3348,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -3200,6 +3388,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 comment|// set num of threads to 0 so that single-threaded checkMetastore is called
 name|hive
@@ -3259,6 +3449,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3305,7 +3497,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -3343,6 +3537,8 @@ throws|,
 name|AlreadyExistsException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|hive
 operator|.
@@ -3401,6 +3597,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3447,7 +3645,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -3567,6 +3767,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3590,7 +3792,7 @@ expr_stmt|;
 block|}
 name|assertTrue
 argument_list|(
-literal|"Expected HiveException"
+literal|"Expected MetastoreException"
 argument_list|,
 name|exception
 operator|!=
@@ -3598,7 +3800,7 @@ literal|null
 operator|&&
 name|exception
 operator|instanceof
-name|HiveException
+name|MetastoreException
 argument_list|)
 expr_stmt|;
 name|createFile
@@ -3627,6 +3829,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3650,7 +3854,7 @@ expr_stmt|;
 block|}
 name|assertTrue
 argument_list|(
-literal|"Expected HiveException"
+literal|"Expected MetastoreException"
 argument_list|,
 name|exception
 operator|!=
@@ -3658,7 +3862,7 @@ literal|null
 operator|&&
 name|exception
 operator|instanceof
-name|HiveException
+name|MetastoreException
 argument_list|)
 expr_stmt|;
 block|}
@@ -3668,7 +3872,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|HiveException
+name|MetastoreException
 operator|.
 name|class
 argument_list|)
@@ -3682,6 +3886,8 @@ throws|,
 name|HiveException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|Table
 name|testTable
@@ -3716,6 +3922,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3739,6 +3947,8 @@ throws|,
 name|HiveException
 throws|,
 name|IOException
+throws|,
+name|MetastoreException
 block|{
 name|hive
 operator|.
@@ -3763,7 +3973,12 @@ operator|=
 operator|new
 name|HiveMetaStoreChecker
 argument_list|(
+name|msc
+argument_list|,
 name|hive
+operator|.
+name|getConf
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Table
@@ -3807,6 +4022,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -3853,7 +4070,9 @@ argument_list|(
 name|Collections
 operator|.
 expr|<
-name|String
+name|CheckResult
+operator|.
+name|PartitionResult
 operator|>
 name|emptySet
 argument_list|()
@@ -3991,6 +4210,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -4014,7 +4235,7 @@ expr_stmt|;
 block|}
 name|assertTrue
 argument_list|(
-literal|"Expected HiveException"
+literal|"Expected MetastoreException"
 argument_list|,
 name|exception
 operator|!=
@@ -4022,7 +4243,7 @@ literal|null
 operator|&&
 name|exception
 operator|instanceof
-name|HiveException
+name|MetastoreException
 argument_list|)
 expr_stmt|;
 name|createFile
@@ -4051,6 +4272,8 @@ name|checker
 operator|.
 name|checkMetastore
 argument_list|(
+name|catName
+argument_list|,
 name|dbName
 argument_list|,
 name|tableName
@@ -4074,7 +4297,7 @@ expr_stmt|;
 block|}
 name|assertTrue
 argument_list|(
-literal|"Expected HiveException"
+literal|"Expected MetastoreException"
 argument_list|,
 name|exception
 operator|!=
@@ -4082,7 +4305,7 @@ literal|null
 operator|&&
 name|exception
 operator|instanceof
-name|HiveException
+name|MetastoreException
 argument_list|)
 expr_stmt|;
 block|}
@@ -4127,6 +4350,8 @@ operator|.
 name|createDatabase
 argument_list|(
 name|db
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Table
@@ -4237,6 +4462,8 @@ operator|.
 name|createTable
 argument_list|(
 name|table
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|table
