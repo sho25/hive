@@ -1018,6 +1018,11 @@ argument_list|)
 operator|.
 name|getRight
 argument_list|()
+argument_list|,
+name|tablePaths
+index|[
+literal|0
+index|]
 argument_list|)
 expr_stmt|;
 block|}
