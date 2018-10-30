@@ -691,7 +691,7 @@ name|result
 init|=
 name|jdbcImplementor
 operator|.
-name|translate
+name|visit
 argument_list|(
 name|topProject
 argument_list|)
