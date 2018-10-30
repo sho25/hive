@@ -6699,6 +6699,11 @@ return|return
 literal|0
 return|;
 block|}
+comment|// Note: the resource plan operations are going to be annotated with namespace based on the config
+comment|//       inside Hive.java. We don't want HS2 to be aware of namespaces beyond that, or to even see
+comment|//       that there exist other namespaces, because one HS2 always operates inside just one and we
+comment|//       don't want this complexity to bleed everywhere. Therefore, this code doesn't care about
+comment|//       namespaces - Hive.java will transparently scope everything. That's the idea anyway.
 specifier|private
 name|int
 name|alterResourcePlan

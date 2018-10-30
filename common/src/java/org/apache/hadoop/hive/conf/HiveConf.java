@@ -11632,6 +11632,19 @@ operator|+
 literal|"workload management is enabled and used for these sessions."
 argument_list|)
 block|,
+name|HIVE_SERVER2_WM_NAMESPACE
+argument_list|(
+literal|"hive.server2.wm.namespace"
+argument_list|,
+literal|"default"
+argument_list|,
+literal|"The WM namespace to use when one metastore is used by multiple compute clusters each \n"
+operator|+
+literal|"with their own workload management. The special value 'default' (the default) will \n"
+operator|+
+literal|"also include any resource plans created before the namespaces were introduced."
+argument_list|)
+block|,
 name|HIVE_SERVER2_WM_WORKER_THREADS
 argument_list|(
 literal|"hive.server2.wm.worker.threads"

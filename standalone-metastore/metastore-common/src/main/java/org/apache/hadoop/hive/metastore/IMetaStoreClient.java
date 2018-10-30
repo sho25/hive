@@ -7868,6 +7868,9 @@ name|getResourcePlan
 parameter_list|(
 name|String
 name|resourcePlanName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -7881,7 +7884,10 @@ argument_list|<
 name|WMResourcePlan
 argument_list|>
 name|getAllResourcePlans
-parameter_list|()
+parameter_list|(
+name|String
+name|ns
+parameter_list|)
 throws|throws
 name|NoSuchObjectException
 throws|,
@@ -7894,6 +7900,9 @@ name|dropResourcePlan
 parameter_list|(
 name|String
 name|resourcePlanName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -7907,6 +7916,9 @@ name|alterResourcePlan
 parameter_list|(
 name|String
 name|resourcePlanName
+parameter_list|,
+name|String
+name|ns
 parameter_list|,
 name|WMNullableResourcePlan
 name|resourcePlan
@@ -7931,7 +7943,10 @@ name|TException
 function_decl|;
 name|WMFullResourcePlan
 name|getActiveResourcePlan
-parameter_list|()
+parameter_list|(
+name|String
+name|ns
+parameter_list|)
 throws|throws
 name|MetaException
 throws|,
@@ -7942,6 +7957,9 @@ name|validateResourcePlan
 parameter_list|(
 name|String
 name|resourcePlanName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -7988,6 +8006,9 @@ name|resourcePlanName
 parameter_list|,
 name|String
 name|triggerName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -8004,6 +8025,9 @@ name|getTriggersForResourcePlan
 parameter_list|(
 name|String
 name|resourcePlan
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -8051,6 +8075,9 @@ name|resourcePlanName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|TException
@@ -8090,6 +8117,9 @@ name|poolPath
 parameter_list|,
 name|boolean
 name|shouldDrop
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|AlreadyExistsException

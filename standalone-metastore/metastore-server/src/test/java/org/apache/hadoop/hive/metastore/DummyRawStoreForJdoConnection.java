@@ -5064,6 +5064,9 @@ name|getResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5080,7 +5083,10 @@ argument_list|<
 name|WMResourcePlan
 argument_list|>
 name|getAllResourcePlans
-parameter_list|()
+parameter_list|(
+name|String
+name|ns
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -5096,6 +5102,9 @@ name|alterResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|,
 name|WMNullableResourcePlan
 name|resourcePlan
@@ -5125,7 +5134,10 @@ name|Override
 specifier|public
 name|WMFullResourcePlan
 name|getActiveResourcePlan
-parameter_list|()
+parameter_list|(
+name|String
+name|ns
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -5141,6 +5153,9 @@ name|validateResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5161,6 +5176,9 @@ name|dropResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5206,6 +5224,9 @@ name|resourcePlanName
 parameter_list|,
 name|String
 name|triggerName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5223,6 +5244,9 @@ name|getTriggersForResourcePlan
 parameter_list|(
 name|String
 name|resourcePlanName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5283,6 +5307,9 @@ name|resourcePlanName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5342,6 +5369,9 @@ name|triggerName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
@@ -5366,6 +5396,9 @@ name|triggerName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException

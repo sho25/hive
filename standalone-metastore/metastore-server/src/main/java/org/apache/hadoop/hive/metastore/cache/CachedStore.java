@@ -14870,6 +14870,9 @@ name|getResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -14882,6 +14885,8 @@ operator|.
 name|getResourcePlan
 argument_list|(
 name|name
+argument_list|,
+name|ns
 argument_list|)
 return|;
 block|}
@@ -14893,7 +14898,10 @@ argument_list|<
 name|WMResourcePlan
 argument_list|>
 name|getAllResourcePlans
-parameter_list|()
+parameter_list|(
+name|String
+name|ns
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -14901,7 +14909,9 @@ return|return
 name|rawStore
 operator|.
 name|getAllResourcePlans
-argument_list|()
+argument_list|(
+name|ns
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -14912,6 +14922,9 @@ name|alterResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|,
 name|WMNullableResourcePlan
 name|resourcePlan
@@ -14941,6 +14954,8 @@ name|alterResourcePlan
 argument_list|(
 name|name
 argument_list|,
+name|ns
+argument_list|,
 name|resourcePlan
 argument_list|,
 name|canActivateDisabled
@@ -14956,7 +14971,10 @@ name|Override
 specifier|public
 name|WMFullResourcePlan
 name|getActiveResourcePlan
-parameter_list|()
+parameter_list|(
+name|String
+name|ns
+parameter_list|)
 throws|throws
 name|MetaException
 block|{
@@ -14964,7 +14982,9 @@ return|return
 name|rawStore
 operator|.
 name|getActiveResourcePlan
-argument_list|()
+argument_list|(
+name|ns
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -14975,6 +14995,9 @@ name|validateResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -14989,6 +15012,8 @@ operator|.
 name|validateResourcePlan
 argument_list|(
 name|name
+argument_list|,
+name|ns
 argument_list|)
 return|;
 block|}
@@ -15000,6 +15025,9 @@ name|dropResourcePlan
 parameter_list|(
 name|String
 name|name
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -15011,6 +15039,8 @@ operator|.
 name|dropResourcePlan
 argument_list|(
 name|name
+argument_list|,
+name|ns
 argument_list|)
 expr_stmt|;
 block|}
@@ -15075,6 +15105,9 @@ name|resourcePlanName
 parameter_list|,
 name|String
 name|triggerName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -15090,6 +15123,8 @@ argument_list|(
 name|resourcePlanName
 argument_list|,
 name|triggerName
+argument_list|,
+name|ns
 argument_list|)
 expr_stmt|;
 block|}
@@ -15104,6 +15139,9 @@ name|getTriggersForResourcePlan
 parameter_list|(
 name|String
 name|resourcePlanName
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -15116,6 +15154,8 @@ operator|.
 name|getTriggersForResourcePlan
 argument_list|(
 name|resourcePlanName
+argument_list|,
+name|ns
 argument_list|)
 return|;
 block|}
@@ -15187,6 +15227,9 @@ name|resourcePlanName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -15202,6 +15245,8 @@ argument_list|(
 name|resourcePlanName
 argument_list|,
 name|poolPath
+argument_list|,
+name|ns
 argument_list|)
 expr_stmt|;
 block|}
@@ -15274,6 +15319,9 @@ name|triggerName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|AlreadyExistsException
@@ -15293,6 +15341,8 @@ argument_list|,
 name|triggerName
 argument_list|,
 name|poolPath
+argument_list|,
+name|ns
 argument_list|)
 expr_stmt|;
 block|}
@@ -15310,6 +15360,9 @@ name|triggerName
 parameter_list|,
 name|String
 name|poolPath
+parameter_list|,
+name|String
+name|ns
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -15327,6 +15380,8 @@ argument_list|,
 name|triggerName
 argument_list|,
 name|poolPath
+argument_list|,
+name|ns
 argument_list|)
 expr_stmt|;
 block|}
