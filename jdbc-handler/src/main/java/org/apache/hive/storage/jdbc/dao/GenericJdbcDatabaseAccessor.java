@@ -489,6 +489,10 @@ argument_list|,
 name|Pattern
 operator|.
 name|CASE_INSENSITIVE
+operator||
+name|Pattern
+operator|.
+name|DOTALL
 argument_list|)
 decl_stmt|;
 specifier|public
