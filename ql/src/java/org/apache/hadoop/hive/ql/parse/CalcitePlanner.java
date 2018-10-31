@@ -16104,9 +16104,23 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+operator|!
+name|RelOptUtil
+operator|.
+name|toString
+argument_list|(
 name|calcitePreMVRewritingPlan
-operator|!=
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+name|RelOptUtil
+operator|.
+name|toString
+argument_list|(
 name|basePlan
+argument_list|)
+argument_list|)
 condition|)
 block|{
 comment|// A rewriting was produced, we will check whether it was part of an incremental rebuild
