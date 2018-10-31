@@ -1593,7 +1593,7 @@ name|nullable
 argument_list|(
 name|MinorType
 operator|.
-name|MAP
+name|STRUCT
 operator|.
 name|getType
 argument_list|()

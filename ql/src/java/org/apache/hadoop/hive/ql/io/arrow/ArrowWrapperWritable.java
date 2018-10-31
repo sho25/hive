@@ -75,7 +75,7 @@ name|vector
 operator|.
 name|complex
 operator|.
-name|NullableMapVector
+name|NonNullableStructVector
 import|;
 end_import
 
@@ -125,7 +125,7 @@ name|BufferAllocator
 name|allocator
 decl_stmt|;
 specifier|private
-name|NullableMapVector
+name|NonNullableStructVector
 name|rootVector
 decl_stmt|;
 specifier|public
@@ -151,7 +151,7 @@ parameter_list|,
 name|BufferAllocator
 name|allocator
 parameter_list|,
-name|NullableMapVector
+name|NonNullableStructVector
 name|rootVector
 parameter_list|)
 block|{
@@ -212,7 +212,7 @@ name|allocator
 return|;
 block|}
 specifier|public
-name|NullableMapVector
+name|NonNullableStructVector
 name|getRootVector
 parameter_list|()
 block|{

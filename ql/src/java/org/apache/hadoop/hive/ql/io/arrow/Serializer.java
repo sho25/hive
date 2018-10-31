@@ -299,7 +299,7 @@ name|vector
 operator|.
 name|complex
 operator|.
-name|MapVector
+name|NonNullableStructVector
 import|;
 end_import
 
@@ -315,7 +315,7 @@ name|vector
 operator|.
 name|complex
 operator|.
-name|NullableMapVector
+name|StructVector
 import|;
 end_import
 
@@ -1411,7 +1411,7 @@ name|fieldSize
 decl_stmt|;
 specifier|private
 specifier|final
-name|NullableMapVector
+name|StructVector
 name|rootVector
 decl_stmt|;
 specifier|private
@@ -1499,7 +1499,7 @@ argument_list|)
 expr_stmt|;
 name|rootVector
 operator|=
-name|NullableMapVector
+name|StructVector
 operator|.
 name|empty
 argument_list|(
@@ -1639,7 +1639,7 @@ expr_stmt|;
 comment|// Init Arrow stuffs
 name|rootVector
 operator|=
-name|NullableMapVector
+name|StructVector
 operator|.
 name|empty
 argument_list|(
@@ -2511,7 +2511,7 @@ case|:
 name|writeStruct
 argument_list|(
 operator|(
-name|MapVector
+name|NonNullableStructVector
 operator|)
 name|arrowVector
 argument_list|,
@@ -2817,7 +2817,7 @@ specifier|private
 name|void
 name|writeStruct
 parameter_list|(
-name|MapVector
+name|NonNullableStructVector
 name|arrowVector
 parameter_list|,
 name|StructColumnVector
