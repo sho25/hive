@@ -13711,6 +13711,10 @@ name|INSTANCE_PROJECT
 argument_list|,
 name|HiveSemiJoinRule
 operator|.
+name|INSTANCE_PROJECT_SWAPPED
+argument_list|,
+name|HiveSemiJoinRule
+operator|.
 name|INSTANCE_AGGREGATE
 argument_list|)
 expr_stmt|;
