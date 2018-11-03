@@ -528,18 +528,13 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-name|LOGGER
-operator|.
-name|error
+throw|throw
+operator|new
+name|IOException
 argument_list|(
-literal|"An error occurred while reading the next record from DB."
-argument_list|,
 name|e
 argument_list|)
-expr_stmt|;
-return|return
-literal|false
-return|;
+throw|;
 block|}
 block|}
 annotation|@

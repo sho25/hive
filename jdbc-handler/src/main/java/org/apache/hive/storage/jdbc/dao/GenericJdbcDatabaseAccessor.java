@@ -1082,7 +1082,12 @@ throw|throw
 operator|new
 name|HiveJdbcDatabaseAccessException
 argument_list|(
-literal|"Caught exception while trying to execute query"
+literal|"Caught exception while trying to execute query:"
+operator|+
+name|e
+operator|.
+name|getMessage
+argument_list|()
 argument_list|,
 name|e
 argument_list|)
