@@ -100,6 +100,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Set char value, padding or truncating the value to the size of len parameter.    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|setValue
@@ -171,6 +173,8 @@ return|return
 name|value
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|getCharacterLength
@@ -196,6 +200,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|toString
@@ -206,6 +212,8 @@ name|getPaddedValue
 argument_list|()
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compareTo
@@ -240,6 +248,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|boolean
 name|equals
@@ -298,6 +308,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|hashCode

@@ -4799,16 +4799,6 @@ end_import
 
 begin_import
 import|import
-name|javax
-operator|.
-name|sql
-operator|.
-name|DataSource
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -5070,6 +5060,16 @@ operator|.
 name|atomic
 operator|.
 name|AtomicInteger
+import|;
+end_import
+
+begin_import
+import|import
+name|javax
+operator|.
+name|sql
+operator|.
+name|DataSource
 import|;
 end_import
 
@@ -14955,6 +14955,19 @@ operator|new
 name|HivePointLookupOptimizerRule
 operator|.
 name|JoinCondition
+argument_list|(
+name|minNumORClauses
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|rules
+operator|.
+name|add
+argument_list|(
+operator|new
+name|HivePointLookupOptimizerRule
+operator|.
+name|ProjectionExpressions
 argument_list|(
 name|minNumORClauses
 argument_list|)
