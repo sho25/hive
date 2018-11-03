@@ -13134,6 +13134,38 @@ literal|"Calcite: Removing sq_count_check UDF "
 argument_list|)
 expr_stmt|;
 block|}
+comment|// 4. Apply join order optimizations: reordering MST algorithm
+comment|//    If join optimizations failed because of missing stats, we continue with
+comment|//    the rest of optimizations
+if|if
+condition|(
+name|profilesCBO
+operator|.
+name|contains
+argument_list|(
+name|ExtendedCBOProfile
+operator|.
+name|JOIN_REORDERING
+argument_list|)
+condition|)
+block|{
+name|perfLogger
+operator|.
+name|PerfLogBegin
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getName
+argument_list|()
+argument_list|,
+name|PerfLogger
+operator|.
+name|OPTIMIZER
+argument_list|)
+expr_stmt|;
 comment|//  Remove Projects between Joins so that JoinToMultiJoinRule can merge them to MultiJoin
 name|calcitePreCboPlan
 operator|=
@@ -13165,38 +13197,6 @@ argument_list|,
 name|HiveProjectMergeRule
 operator|.
 name|INSTANCE
-argument_list|)
-expr_stmt|;
-comment|// 4. Apply join order optimizations: reordering MST algorithm
-comment|//    If join optimizations failed because of missing stats, we continue with
-comment|//    the rest of optimizations
-if|if
-condition|(
-name|profilesCBO
-operator|.
-name|contains
-argument_list|(
-name|ExtendedCBOProfile
-operator|.
-name|JOIN_REORDERING
-argument_list|)
-condition|)
-block|{
-name|perfLogger
-operator|.
-name|PerfLogBegin
-argument_list|(
-name|this
-operator|.
-name|getClass
-argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|PerfLogger
-operator|.
-name|OPTIMIZER
 argument_list|)
 expr_stmt|;
 try|try
@@ -23630,6 +23630,22 @@ name|getMessage
 argument_list|()
 argument_list|)
 throw|;
+block|}
+if|if
+condition|(
+name|isSubQuery
+condition|)
+block|{
+comment|// since subqueries will later be rewritten into JOINs we want join reordering logic to trigger
+name|profilesCBO
+operator|.
+name|add
+argument_list|(
+name|ExtendedCBOProfile
+operator|.
+name|JOIN_REORDERING
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 name|isSubQuery
