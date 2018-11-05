@@ -4384,6 +4384,12 @@ operator|==
 name|MiniClusterType
 operator|.
 name|druidKafka
+operator|||
+name|clusterType
+operator|==
+name|MiniClusterType
+operator|.
+name|druidLocal
 condition|)
 block|{
 name|kafkaCluster

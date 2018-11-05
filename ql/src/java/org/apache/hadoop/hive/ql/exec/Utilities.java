@@ -13716,7 +13716,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Copies the storage handler proeprites configured for a table descriptor to a runtime job    * configuration.  This differs from {@link #copyTablePropertiesToConf(org.apache.hadoop.hive.ql.plan.TableDesc, org.apache.hadoop.mapred.JobConf)}    * in that it does not allow parameters already set in the job to override the values from the    * table.  This is important for setting the config up for reading,    * as the job may already have values in it from another table.    * @param tbl    * @param job    */
+comment|/**    * Copies the storage handler properties configured for a table descriptor to a runtime job    * configuration.  This differs from {@link #copyTablePropertiesToConf(org.apache.hadoop.hive.ql.plan.TableDesc, org.apache.hadoop.mapred.JobConf)}    * in that it does not allow parameters already set in the job to override the values from the    * table.  This is important for setting the config up for reading,    * as the job may already have values in it from another table.    * @param tbl    * @param job    */
 specifier|public
 specifier|static
 name|void

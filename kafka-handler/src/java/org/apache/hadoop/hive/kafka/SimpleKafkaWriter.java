@@ -372,14 +372,6 @@ init|=
 literal|"WriterId [{}] lost record from Topic [{}], delivery Semantic [{}] -> ACTION=ABORT, ERROR caused by [{}]"
 decl_stmt|;
 specifier|private
-specifier|static
-specifier|final
-name|String
-name|ACTION_CARRY_ON
-init|=
-literal|"WriterId [{}], lost record from Topic [{}], delivery Semantic [{}] -> ACTION=CARRY-ON"
-decl_stmt|;
-specifier|private
 specifier|final
 name|String
 name|topic
@@ -402,7 +394,6 @@ name|WriteSemantic
 operator|.
 name|AT_LEAST_ONCE
 decl_stmt|;
-empty_stmt|;
 specifier|private
 specifier|final
 name|KafkaProducer
