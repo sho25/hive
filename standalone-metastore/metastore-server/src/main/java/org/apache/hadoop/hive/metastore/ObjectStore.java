@@ -3005,6 +3005,11 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+operator|&&
 name|MetastoreConf
 operator|.
 name|isPrintable
@@ -3013,6 +3018,33 @@ name|varName
 argument_list|)
 condition|)
 block|{
+comment|// The jdbc connection url can contain sensitive information like username and password
+comment|// which should be masked out before logging.
+if|if
+condition|(
+name|varName
+operator|.
+name|equals
+argument_list|(
+name|ConfVars
+operator|.
+name|CONNECT_URL_KEY
+operator|.
+name|getVarname
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|confVal
+operator|=
+name|MetaStoreServerUtils
+operator|.
+name|anonymizeConnectionURL
+argument_list|(
+name|confVal
+argument_list|)
+expr_stmt|;
+block|}
 name|LOG
 operator|.
 name|debug
