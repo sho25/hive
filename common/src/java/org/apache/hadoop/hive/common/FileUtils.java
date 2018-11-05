@@ -3224,6 +3224,23 @@ operator|&&
 name|deleteSource
 condition|)
 block|{
+if|if
+condition|(
+name|doAsUser
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// if distcp is done using doAsUser, delete also should be done using same user.
+comment|//TODO : Need to change the delete execution within doAs if doAsUser is given.
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"Distcp is called with doAsUser and delete source set as true"
+argument_list|)
+throw|;
+block|}
 for|for
 control|(
 name|Path

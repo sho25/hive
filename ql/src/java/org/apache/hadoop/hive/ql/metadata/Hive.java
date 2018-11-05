@@ -22029,7 +22029,7 @@ name|destFs
 argument_list|,
 name|destFilePath
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 comment|// delete source
 literal|false
@@ -22059,6 +22059,60 @@ argument_list|(
 literal|"File copy failed."
 argument_list|)
 throw|;
+block|}
+comment|// Source file delete may fail because of permission issue as executing user might not
+comment|// have permission to delete the files in the source path. Ignore this failure.
+try|try
+block|{
+if|if
+condition|(
+operator|!
+name|sourceFs
+operator|.
+name|delete
+argument_list|(
+name|sourcePath
+argument_list|,
+literal|true
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Delete source failed for source: "
+operator|+
+name|sourcePath
+operator|+
+literal|" during copy to destination: "
+operator|+
+name|destFilePath
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Delete source failed for source: "
+operator|+
+name|sourcePath
+operator|+
+literal|" during copy to destination: "
+operator|+
+name|destFilePath
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 return|return
