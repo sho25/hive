@@ -2652,7 +2652,7 @@ operator|.
 name|getValue
 argument_list|()
 operator|.
-name|isSame
+name|equals
 argument_list|(
 name|source
 argument_list|)
