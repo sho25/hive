@@ -9507,7 +9507,7 @@ name|serializer
 operator|.
 name|initialize
 argument_list|(
-literal|null
+name|hconf
 argument_list|,
 name|tableInfo
 operator|.
