@@ -16931,7 +16931,7 @@ parameter_list|()
 block|{
 try|try
 block|{
-comment|// The test table has 500 rows, so total query time should be ~ 500*500ms
+comment|// The test table has 500 rows, so total query time should be ~ 500*1ms
 name|System
 operator|.
 name|out
@@ -16989,13 +16989,18 @@ name|void
 name|run
 parameter_list|()
 block|{
+while|while
+condition|(
+literal|true
+condition|)
+block|{
 try|try
 block|{
 name|Thread
 operator|.
 name|sleep
 argument_list|(
-literal|500
+literal|200
 argument_list|)
 expr_stmt|;
 block|}
@@ -17049,6 +17054,7 @@ operator|+
 name|atsGuid
 argument_list|)
 expr_stmt|;
+return|return;
 block|}
 else|else
 block|{
@@ -17059,6 +17065,16 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+literal|"No Yarn ATS GUID yet"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
@@ -17081,7 +17097,7 @@ argument_list|()
 expr_stmt|;
 name|tGuid
 operator|.
-name|join
+name|interrupt
 argument_list|()
 expr_stmt|;
 if|if
