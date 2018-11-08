@@ -2641,7 +2641,7 @@ return|return
 name|txnMgr
 return|;
 block|}
-comment|/**    * This only for testing.  It allows to switch the manager before the (test) operation so that    * it's not coupled to the executing thread.  Since tests run against Derby which often wedges    * under concurrent access, tests must use a single thead and simulate concurrent access.    * For example, {@code TestDbTxnManager2}    */
+comment|/**    * This only for testing.  It allows to switch the manager before the (test) operation so that    * it's not coupled to the executing thread.  Since tests run against Derby which often wedges    * under concurrent access, tests must use a single thead and simulate concurrent access.    * For example, {@code TestDbTxnManager2}    * @return previous {@link HiveTxnManager} or null    */
 annotation|@
 name|VisibleForTesting
 specifier|public

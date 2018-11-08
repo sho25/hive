@@ -3804,9 +3804,25 @@ argument_list|(
 name|lDrvState
 argument_list|)
 expr_stmt|;
+specifier|final
 name|String
 name|queryId
 init|=
+name|Strings
+operator|.
+name|isNullOrEmpty
+argument_list|(
+name|queryState
+operator|.
+name|getQueryId
+argument_list|()
+argument_list|)
+condition|?
+name|QueryPlan
+operator|.
+name|makeQueryId
+argument_list|()
+else|:
 name|queryState
 operator|.
 name|getQueryId
@@ -9109,7 +9125,7 @@ argument_list|(
 literal|0L
 argument_list|)
 expr_stmt|;
-comment|// No transaction for the compaction for now.
+comment|// No transaction for the compaction for now. todo: Since MM compaction is a query, a txn has been opened at this point
 name|txnWriteIds
 operator|.
 name|addTableValidWriteIdList
@@ -10071,7 +10087,7 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-literal|"calling recordValidTxn() more than once in the same "
+literal|"Need to record valid WriteID list but there is no valid TxnID list ("
 operator|+
 name|JavaUtils
 operator|.
@@ -10082,6 +10098,15 @@ operator|.
 name|getCurrentTxnId
 argument_list|()
 argument_list|)
+operator|+
+literal|", queryId:"
+operator|+
+name|plan
+operator|.
+name|getQueryId
+argument_list|()
+operator|+
+literal|")"
 argument_list|)
 throw|;
 block|}
@@ -12781,7 +12806,7 @@ decl_stmt|;
 name|String
 name|queryId
 init|=
-name|queryState
+name|plan
 operator|.
 name|getQueryId
 argument_list|()

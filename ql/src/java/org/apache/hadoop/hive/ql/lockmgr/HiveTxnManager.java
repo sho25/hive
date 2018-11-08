@@ -554,7 +554,7 @@ name|boolean
 name|supportsAcid
 parameter_list|()
 function_decl|;
-comment|/**    * For resources that support MVCC, the state of the DB must be recorded for the duration of the    * operation/transaction.  Returns {@code true} if current statment needs to do this.    */
+comment|/**    * For resources that support MVCC, the state of the DB must be recorded for the duration of the    * operation/transaction.  Returns {@code true} if current statement needs to do this.    */
 name|boolean
 name|recordSnapshot
 parameter_list|(

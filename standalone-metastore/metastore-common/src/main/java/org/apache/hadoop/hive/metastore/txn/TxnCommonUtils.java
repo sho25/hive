@@ -167,6 +167,14 @@ name|long
 name|currentTxn
 parameter_list|)
 block|{
+assert|assert
+name|currentTxn
+operator|<=
+name|txns
+operator|.
+name|getTxn_high_water_mark
+argument_list|()
+assert|;
 comment|/*      * The highWaterMark should be min(currentTxn,txns.getTxn_high_water_mark()) assuming currentTxn>0      * otherwise if currentTxn=7 and 8 commits before 7, then 7 will see result of 8 which      * doesn't make sense for Snapshot Isolation. Of course for Read Committed, the list should      * include the latest committed set.      */
 name|long
 name|highWaterMark
