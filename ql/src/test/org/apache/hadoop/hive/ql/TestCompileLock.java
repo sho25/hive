@@ -494,7 +494,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|CompileLockTest
+name|TestCompileLock
 block|{
 specifier|private
 specifier|static
