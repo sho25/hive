@@ -950,7 +950,7 @@ literal|"CREATE TABLE \"APP\".\"PARTITION_PARAMS\" ("
 operator|+
 literal|" \"PART_ID\" BIGINT NOT NULL, \"PARAM_KEY\" VARCHAR(256) NOT NULL, "
 operator|+
-literal|" \"PARAM_VALUE\" VARCHAR(4000), "
+literal|" \"PARAM_VALUE\" CLOB, "
 operator|+
 literal|" PRIMARY KEY (PART_ID, PARAM_KEY))"
 argument_list|)
