@@ -429,7 +429,10 @@ name|UDFArgumentException
 argument_list|(
 literal|"LOWER only takes primitive types, got "
 operator|+
-name|argumentOI
+name|arguments
+index|[
+literal|0
+index|]
 operator|.
 name|getTypeName
 argument_list|()
