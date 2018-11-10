@@ -9151,7 +9151,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|0.05
+literal|0.0f
 argument_list|,
 literal|"Output estimation of an IN filter can't be lower than this ratio"
 argument_list|)
