@@ -82,6 +82,15 @@ comment|/**  * BloomKFilter is variation of {@link BloomFilter}. Unlike BloomFil
 end_comment
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+block|{
+literal|"WeakerAccess"
+block|,
+literal|"unused"
+block|}
+argument_list|)
 specifier|public
 class|class
 name|BloomKFilter
@@ -151,18 +160,6 @@ literal|1
 decl_stmt|;
 specifier|private
 specifier|final
-name|long
-index|[]
-name|masks
-init|=
-operator|new
-name|long
-index|[
-name|DEFAULT_BLOCK_SIZE
-index|]
-decl_stmt|;
-specifier|private
-specifier|final
 name|BitSet
 name|bitSet
 decl_stmt|;
@@ -184,6 +181,7 @@ specifier|final
 name|int
 name|totalBlockCount
 decl_stmt|;
+specifier|private
 specifier|static
 name|void
 name|checkArgument
@@ -334,7 +332,7 @@ operator|/
 name|DEFAULT_BLOCK_SIZE
 expr_stmt|;
 block|}
-comment|/**    * A constructor to support rebuilding the BloomFilter from a serialized representation.    * @param bits    * @param numFuncs    */
+comment|/**    * A constructor to support rebuilding the BloomFilter from a serialized representation.    * @param bits BloomK sketch data in form of array of longs.    * @param numFuncs  Number of functions called as K.    */
 specifier|public
 name|BloomKFilter
 parameter_list|(
@@ -1058,6 +1056,14 @@ name|combinedHash
 operator|&
 name|DEFAULT_BLOCK_OFFSET_MASK
 decl_stmt|;
+specifier|final
+name|int
+name|absOffset
+init|=
+name|blockBaseOffset
+operator|+
+name|wordOffset
+decl_stmt|;
 comment|// Next 6 bits are used to locate offset within a long/word
 specifier|final
 name|int
@@ -1071,79 +1077,37 @@ operator|)
 operator|&
 name|DEFAULT_BIT_OFFSET_MASK
 decl_stmt|;
-name|masks
+specifier|final
+name|long
+name|bloomWord
+init|=
+name|bits
 index|[
-name|wordOffset
+name|absOffset
 index|]
-operator||=
+decl_stmt|;
+if|if
+condition|(
+literal|0
+operator|==
+operator|(
+name|bloomWord
+operator|&
 operator|(
 literal|1L
 operator|<<
 name|bitPos
 operator|)
-expr_stmt|;
-block|}
-comment|// traverse data and masks array together, check for set bits
-name|long
-name|expected
-init|=
-literal|0
-decl_stmt|;
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
-name|DEFAULT_BLOCK_SIZE
-condition|;
-name|i
-operator|++
-control|)
-block|{
-specifier|final
-name|long
-name|mask
-init|=
-name|masks
-index|[
-name|i
-index|]
-decl_stmt|;
-name|expected
-operator||=
-operator|(
-name|bits
-index|[
-name|blockBaseOffset
-operator|+
-name|i
-index|]
-operator|&
-name|mask
 operator|)
-operator|^
-name|mask
-expr_stmt|;
-block|}
-comment|// clear the mask for array reuse (this is to avoid masks array allocation in inner loop)
-name|Arrays
-operator|.
-name|fill
-argument_list|(
-name|masks
-argument_list|,
-literal|0
-argument_list|)
-expr_stmt|;
-comment|// if all bits are set, expected should be 0
+condition|)
+block|{
 return|return
-name|expected
-operator|==
-literal|0
+literal|false
+return|;
+block|}
+block|}
+return|return
+literal|true
 return|;
 block|}
 specifier|public
@@ -1424,7 +1388,7 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Serialize a bloom filter    *    * @param out         output stream to write to    * @param bloomFilter BloomKFilter that needs to be seralized    */
+comment|/**    * Serialize a bloom filter:    * Serialized BloomKFilter format:    * 1 byte for the number of hash functions.    * 1 big endian int(That is how OutputStream works) for the number of longs in the bitset    * big endian longs in the BloomKFilter bitset    *    * @param out         output stream to write to    * @param bloomFilter BloomKFilter that needs to be serialized    */
 specifier|public
 specifier|static
 name|void
@@ -1439,7 +1403,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|/**      * Serialized BloomKFilter format:      * 1 byte for the number of hash functions.      * 1 big endian int(That is how OutputStream works) for the number of longs in the bitset      * big endina longs in the BloomKFilter bitset      */
 name|DataOutputStream
 name|dataOutputStream
 init|=
@@ -1596,24 +1559,14 @@ name|RuntimeException
 name|e
 parameter_list|)
 block|{
-name|IOException
-name|io
-init|=
+throw|throw
 operator|new
 name|IOException
 argument_list|(
 literal|"Unable to deserialize BloomKFilter"
-argument_list|)
-decl_stmt|;
-name|io
-operator|.
-name|initCause
-argument_list|(
+argument_list|,
 name|e
 argument_list|)
-expr_stmt|;
-throw|throw
-name|io
 throw|;
 block|}
 block|}
@@ -1628,7 +1581,7 @@ name|START_OF_SERIALIZED_LONGS
 init|=
 literal|5
 decl_stmt|;
-comment|/**    * Merges BloomKFilter bf2 into bf1.    * Assumes 2 BloomKFilters with the same size/hash functions are serialized to byte arrays    *    * @param bf1Bytes    * @param bf1Start    * @param bf1Length    * @param bf2Bytes    * @param bf2Start    * @param bf2Length    */
+comment|/**    * Merges BloomKFilter bf2 into bf1.    * Assumes 2 BloomKFilters with the same size/hash functions are serialized to byte arrays    *    * @param bf1Bytes Data of bloom filter 1.    * @param bf1Start Start index of BF1.    * @param bf1Length BF1 length.    * @param bf2Bytes Data of bloom filter 1    * @param bf2Start Start index of BF2.    * @param bf2Length BF2 length.    */
 specifier|public
 specifier|static
 name|void
@@ -1752,6 +1705,11 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Bare metal bit set implementation. For performance reasons, this implementation does not check    * for index bounds nor expand the bit set size if the specified index is greater than the size.    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unused"
+argument_list|)
 specifier|public
 specifier|static
 class|class
