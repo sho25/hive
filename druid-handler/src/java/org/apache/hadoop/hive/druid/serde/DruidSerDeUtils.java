@@ -80,11 +80,14 @@ comment|/**  * Utils class for Druid SerDe.  */
 end_comment
 
 begin_class
-specifier|public
 specifier|final
 class|class
 name|DruidSerDeUtils
 block|{
+specifier|private
+name|DruidSerDeUtils
+parameter_list|()
+block|{   }
 specifier|private
 specifier|static
 specifier|final
@@ -100,7 +103,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -108,7 +111,7 @@ name|FLOAT_TYPE
 init|=
 literal|"FLOAT"
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -116,7 +119,7 @@ name|DOUBLE_TYPE
 init|=
 literal|"DOUBLE"
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -124,7 +127,7 @@ name|LONG_TYPE
 init|=
 literal|"LONG"
 decl_stmt|;
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|String
@@ -133,7 +136,6 @@ init|=
 literal|"STRING"
 decl_stmt|;
 comment|/* This method converts from the String representation of Druid type    * to the corresponding Hive type */
-specifier|public
 specifier|static
 name|PrimitiveTypeInfo
 name|convertDruidToHiveType

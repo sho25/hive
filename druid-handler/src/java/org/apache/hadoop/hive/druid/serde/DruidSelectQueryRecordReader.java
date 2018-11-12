@@ -145,20 +145,6 @@ name|query
 operator|.
 name|select
 operator|.
-name|SelectQuery
-import|;
-end_import
-
-begin_import
-import|import
-name|io
-operator|.
-name|druid
-operator|.
-name|query
-operator|.
-name|select
-operator|.
 name|SelectResultValue
 import|;
 end_import
@@ -174,8 +160,6 @@ name|DruidSelectQueryRecordReader
 extends|extends
 name|DruidQueryRecordReader
 argument_list|<
-name|SelectQuery
-argument_list|,
 name|Result
 argument_list|<
 name|SelectResultValue
@@ -203,14 +187,7 @@ name|SelectResultValue
 argument_list|>
 argument_list|>
 argument_list|()
-block|{           }
-decl_stmt|;
-specifier|private
-name|Result
-argument_list|<
-name|SelectResultValue
-argument_list|>
-name|current
+block|{       }
 decl_stmt|;
 specifier|private
 name|Iterator
@@ -274,13 +251,17 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
+name|Result
+argument_list|<
+name|SelectResultValue
+argument_list|>
 name|current
-operator|=
+init|=
 name|queryResultsIterator
 operator|.
 name|next
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 name|values
 operator|=
 name|current

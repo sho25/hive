@@ -231,18 +231,6 @@ name|druid
 operator|.
 name|query
 operator|.
-name|BaseQuery
-import|;
-end_import
-
-begin_import
-import|import
-name|io
-operator|.
-name|druid
-operator|.
-name|query
-operator|.
 name|Query
 import|;
 end_import
@@ -457,6 +445,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Objects
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|concurrent
 operator|.
 name|ExecutionException
@@ -485,13 +483,6 @@ specifier|abstract
 class|class
 name|DruidQueryRecordReader
 parameter_list|<
-name|T
-extends|extends
-name|BaseQuery
-parameter_list|<
-name|R
-parameter_list|>
-parameter_list|,
 name|R
 extends|extends
 name|Comparable
@@ -537,38 +528,17 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
-name|HttpClient
-name|httpClient
-decl_stmt|;
-specifier|private
-name|ObjectMapper
-name|mapper
-decl_stmt|;
-comment|// Smile mapper is used to read query results that are serialized as binary instead of json
-specifier|private
-name|ObjectMapper
-name|smileMapper
-decl_stmt|;
 comment|/**    * Query that Druid executes.    */
 specifier|protected
 name|Query
 name|query
 decl_stmt|;
 comment|/**    * Query results as a streaming iterator.    */
-specifier|protected
 name|JsonParserIterator
 argument_list|<
 name|R
 argument_list|>
 name|queryResultsIterator
-init|=
-literal|null
-decl_stmt|;
-comment|/**    * Result type definition used to read the rows, this is query dependent.    */
-specifier|protected
-name|JavaType
-name|resultsType
 init|=
 literal|null
 decl_stmt|;
@@ -637,10 +607,9 @@ argument_list|,
 literal|"input split is null ???"
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|mapper
-operator|=
+name|ObjectMapper
+name|mapper1
+init|=
 name|Preconditions
 operator|.
 name|checkNotNull
@@ -649,12 +618,12 @@ name|mapper
 argument_list|,
 literal|"object Mapper can not be null"
 argument_list|)
-expr_stmt|;
-comment|// Smile mapper is used to read query results that are serilized as binary instead of json
-name|this
-operator|.
-name|smileMapper
-operator|=
+decl_stmt|;
+comment|// Smile mapper is used to read query results that are serialized as binary instead of json
+comment|// Smile mapper is used to read query results that are serialized as binary instead of json
+name|ObjectMapper
+name|smileMapper1
+init|=
 name|Preconditions
 operator|.
 name|checkNotNull
@@ -663,15 +632,13 @@ name|smileMapper
 argument_list|,
 literal|"Smile Mapper can not be null"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|// Create query
 name|this
 operator|.
 name|query
 operator|=
-name|this
-operator|.
-name|mapper
+name|mapper1
 operator|.
 name|readValue
 argument_list|(
@@ -697,17 +664,16 @@ argument_list|(
 name|query
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
+comment|/*       Result type definition used to read the rows, this is query dependent.      */
+name|JavaType
 name|resultsType
-operator|=
+init|=
 name|getResultTypeDef
 argument_list|()
-expr_stmt|;
-name|this
-operator|.
-name|httpClient
-operator|=
+decl_stmt|;
+name|HttpClient
+name|httpClient1
+init|=
 name|Preconditions
 operator|.
 name|checkNotNull
@@ -716,7 +682,7 @@ name|httpClient
 argument_list|,
 literal|"need Http Client"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 specifier|final
 name|String
 index|[]
@@ -728,7 +694,7 @@ name|getLocations
 argument_list|()
 decl_stmt|;
 name|boolean
-name|initlialized
+name|initialized
 init|=
 literal|false
 decl_stmt|;
@@ -745,7 +711,7 @@ decl_stmt|;
 while|while
 condition|(
 operator|!
-name|initlialized
+name|initialized
 operator|&&
 name|currentLocationIndex
 operator|<
@@ -813,9 +779,7 @@ name|InputStream
 argument_list|>
 name|inputStreamFuture
 init|=
-name|this
-operator|.
-name|httpClient
+name|httpClient1
 operator|.
 name|go
 argument_list|(
@@ -826,14 +790,13 @@ name|InputStreamResponseHandler
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|//noinspection unchecked
 name|queryResultsIterator
 operator|=
 operator|new
 name|JsonParserIterator
 argument_list|(
-name|this
-operator|.
-name|smileMapper
+name|smileMapper1
 argument_list|,
 name|resultsType
 argument_list|,
@@ -855,7 +818,7 @@ operator|.
 name|init
 argument_list|()
 expr_stmt|;
-name|initlialized
+name|initialized
 operator|=
 literal|true
 expr_stmt|;
@@ -927,7 +890,7 @@ block|}
 if|if
 condition|(
 operator|!
-name|initlialized
+name|initialized
 condition|)
 block|{
 throw|throw
@@ -942,7 +905,12 @@ name|query
 argument_list|,
 name|locations
 argument_list|,
+name|Objects
+operator|.
+name|requireNonNull
+argument_list|(
 name|ex
+argument_list|)
 operator|.
 name|getMessage
 argument_list|()
@@ -1074,7 +1042,6 @@ name|InterruptedException
 function_decl|;
 annotation|@
 name|Override
-comment|// TODO: we could generate vector row batches so that vectorized execution may get triggered
 specifier|public
 specifier|abstract
 name|DruidWritable
@@ -1110,7 +1077,12 @@ name|queryResultsIterator
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * This is a helper wrapper class used to create an iterator of druid rows out of InputStream.    * The type of the rows is defined by org.apache.hadoop.hive.druid.serde.DruidQueryRecordReader.JsonParserIterator#typeRef    *    * @param<R> druid Row type returned as result    */
+comment|/**    * This is a helper wrapper class used to create an iterator of druid rows out of InputStream.    * The type of the rows is defined by    * org.apache.hadoop.hive.druid.serde.DruidQueryRecordReader.JsonParserIterator#typeRef    *    * @param<R> druid Row type returned as result    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"TypeParameterHidesVisibleType"
+argument_list|)
 specifier|protected
 class|class
 name|JsonParserIterator
@@ -1166,8 +1138,7 @@ specifier|final
 name|String
 name|url
 decl_stmt|;
-comment|/**      * @param mapper mapper used to deserialize the stream of data (we use smile factory)      * @param typeRef Type definition of the results objects      * @param future Future holding the input stream (the input stream is not owned but it will be closed when org.apache.hadoop.hive.druid.serde.DruidQueryRecordReader.JsonParserIterator#close() is called or reach the end of the steam)      * @param url URL used to fetch the data, used mostly as message with exception stack to identify the faulty stream, thus this can be empty string.      * @param query Query used to fetch the data, used mostly as message with exception stack, thus can be empty string.      */
-specifier|public
+comment|/**      * @param mapper mapper used to deserialize the stream of data (we use smile factory)      * @param typeRef Type definition of the results objects      * @param future Future holding the input stream (the input stream is not owned but it will be closed      *               when org.apache.hadoop.hive.druid.serde.DruidQueryRecordReader.JsonParserIterator#close() is called      *               or reach the end of the steam)      * @param url URL used to fetch the data, used mostly as message with exception stack to identify the faulty stream,      *           thus this can be empty string.      * @param query Query used to fetch the data, used mostly as message with exception stack, thus can be empty string.      */
 name|JsonParserIterator
 parameter_list|(
 name|ObjectMapper

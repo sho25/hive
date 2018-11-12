@@ -141,16 +141,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|Test
-import|;
-end_import
-
-begin_import
-import|import
 name|io
 operator|.
 name|druid
@@ -172,6 +162,11 @@ import|;
 end_import
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"SameParameterValue"
+argument_list|)
 specifier|public
 class|class
 name|TestHiveDruidQueryBasedInputFormat
@@ -438,8 +433,6 @@ literal|"\"pagingSpec\":{\"pagingIdentifiers\":{},\"threshold\":5,\"fromNext\":f
 operator|+
 literal|"\"context\":{\"druid.query.fetch\":true,\"queryId\":\"\"}}, [localhost:8082]}]"
 decl_stmt|;
-annotation|@
-name|Test
 specifier|public
 name|void
 name|testTimeZone

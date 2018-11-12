@@ -283,7 +283,6 @@ return|return
 name|value
 return|;
 block|}
-specifier|public
 name|List
 argument_list|<
 name|Object
@@ -309,7 +308,6 @@ return|return
 name|compactedValue
 return|;
 block|}
-specifier|public
 name|void
 name|setCompactedValue
 parameter_list|(
@@ -327,7 +325,6 @@ operator|=
 name|compactedValue
 expr_stmt|;
 block|}
-specifier|public
 name|boolean
 name|isCompacted
 parameter_list|()

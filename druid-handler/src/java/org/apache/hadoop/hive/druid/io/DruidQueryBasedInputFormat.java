@@ -635,6 +635,16 @@ end_import
 
 begin_import
 import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -739,6 +749,8 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+annotation|@
+name|Nullable
 specifier|public
 specifier|static
 name|DruidQueryRecordReader
@@ -803,10 +815,11 @@ operator|new
 name|DruidScanQueryRecordReader
 argument_list|()
 return|;
-block|}
+default|default:
 return|return
 literal|null
 return|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -859,9 +872,6 @@ block|{
 return|return
 name|Arrays
 operator|.
-expr|<
-name|InputSplit
-operator|>
 name|asList
 argument_list|(
 name|getInputSplits
@@ -1206,8 +1216,6 @@ decl_stmt|;
 return|return
 name|distributeSelectQuery
 argument_list|(
-name|conf
-argument_list|,
 name|address
 argument_list|,
 name|selectQuery
@@ -1242,8 +1250,6 @@ decl_stmt|;
 return|return
 name|distributeScanQuery
 argument_list|(
-name|conf
-argument_list|,
 name|address
 argument_list|,
 name|scanQuery
@@ -1271,9 +1277,6 @@ name|HiveDruidSplit
 index|[]
 name|distributeSelectQuery
 parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
 name|String
 name|address
 parameter_list|,
@@ -1295,7 +1298,7 @@ name|query
 operator|.
 name|getContextBoolean
 argument_list|(
-name|Constants
+name|DruidStorageHandlerUtils
 operator|.
 name|DRUID_QUERY_FETCH
 argument_list|,
@@ -1550,9 +1553,6 @@ name|HiveDruidSplit
 index|[]
 name|distributeScanQuery
 parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
 name|String
 name|address
 parameter_list|,
@@ -2122,8 +2122,6 @@ specifier|final
 name|DruidQueryRecordReader
 argument_list|<
 name|?
-argument_list|,
-name|?
 argument_list|>
 name|reader
 decl_stmt|;
@@ -2269,8 +2267,6 @@ block|}
 specifier|final
 name|DruidQueryRecordReader
 argument_list|<
-name|?
-argument_list|,
 name|?
 argument_list|>
 name|reader

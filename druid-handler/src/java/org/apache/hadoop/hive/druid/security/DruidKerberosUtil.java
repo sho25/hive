@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *      http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -235,8 +235,13 @@ name|ReentrantLock
 import|;
 end_import
 
+begin_comment
+comment|/**  * Utils class for Druid Kerberos stuff.  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|DruidKerberosUtil
 block|{
@@ -244,7 +249,7 @@ specifier|protected
 specifier|static
 specifier|final
 name|Logger
-name|log
+name|LOG
 init|=
 name|LoggerFactory
 operator|.
@@ -259,7 +264,7 @@ specifier|private
 specifier|static
 specifier|final
 name|Base64
-name|base64codec
+name|BASE_64_CODEC
 init|=
 operator|new
 name|Base64
@@ -267,11 +272,11 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-comment|// A fair reentrant lock
 specifier|private
 specifier|static
+specifier|final
 name|ReentrantLock
-name|kerberosLock
+name|KERBEROS_LOCK
 init|=
 operator|new
 name|ReentrantLock
@@ -279,8 +284,11 @@ argument_list|(
 literal|true
 argument_list|)
 decl_stmt|;
-comment|/**    * This method always needs to be called within a doAs block so that the client's TGT credentials    * can be read from the Subject.    *    * @return Kerberos Challenge String    *    * @throws Exception    */
-specifier|public
+specifier|private
+name|DruidKerberosUtil
+parameter_list|()
+block|{   }
+comment|/**    * This method always needs to be called within a doAs block so that the client's TGT credentials    * can be read from the Subject.    *    * @return Kerberos Challenge String.    *    * @throws AuthenticationException on authentication errors.    */
 specifier|static
 name|String
 name|kerberosChallenge
@@ -291,7 +299,7 @@ parameter_list|)
 throws|throws
 name|AuthenticationException
 block|{
-name|kerberosLock
+name|KERBEROS_LOCK
 operator|.
 name|lock
 argument_list|()
@@ -407,7 +415,7 @@ name|dispose
 argument_list|()
 expr_stmt|;
 comment|// Base64 encoded and stringified token for server
-name|log
+name|LOG
 operator|.
 name|debug
 argument_list|(
@@ -420,7 +428,7 @@ return|return
 operator|new
 name|String
 argument_list|(
-name|base64codec
+name|BASE_64_CODEC
 operator|.
 name|encode
 argument_list|(
@@ -455,14 +463,13 @@ throw|;
 block|}
 finally|finally
 block|{
-name|kerberosLock
+name|KERBEROS_LOCK
 operator|.
 name|unlock
 argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|public
 specifier|static
 name|HttpCookie
 name|getAuthCookie
@@ -511,35 +518,15 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|int
-name|i
-init|=
-literal|0
-init|;
-name|i
-operator|<
+name|HttpCookie
+name|c
+range|:
 name|cookies
-operator|.
-name|size
-argument_list|()
-condition|;
-name|i
-operator|++
 control|)
 block|{
 comment|// If this is a secured cookie and the current connection is non-secured,
 comment|// then, skip this cookie. We need to skip this cookie because, the cookie
 comment|// replay will not be transmitted to the server.
-name|HttpCookie
-name|c
-init|=
-name|cookies
-operator|.
-name|get
-argument_list|(
-name|i
-argument_list|)
-decl_stmt|;
 if|if
 condition|(
 name|c
@@ -577,7 +564,6 @@ return|return
 literal|null
 return|;
 block|}
-specifier|public
 specifier|static
 name|void
 name|removeAuthCookie
@@ -617,7 +603,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|public
 specifier|static
 name|boolean
 name|needToSendCredentials

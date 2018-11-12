@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *      http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -133,6 +133,10 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_comment
+comment|/**  * Class handling retry on Unauthorized responses.  *  * @param<Intermediate> Intermediate response type.  * @param<Final> final result type.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
@@ -160,7 +164,7 @@ specifier|protected
 specifier|static
 specifier|final
 name|Logger
-name|log
+name|LOG
 init|=
 name|LoggerFactory
 operator|.
@@ -216,7 +220,7 @@ name|HttpResponse
 name|httpResponse
 parameter_list|)
 block|{
-name|log
+name|LOG
 operator|.
 name|debug
 argument_list|(
@@ -244,6 +248,7 @@ argument_list|)
 condition|)
 block|{
 comment|// Drain the buffer
+comment|//noinspection ResultOfMethodCallIgnored
 name|httpResponse
 operator|.
 name|getContent
@@ -259,9 +264,6 @@ name|unfinished
 argument_list|(
 name|RetryResponseHolder
 operator|.
-expr|<
-name|Intermediate
-operator|>
 name|retry
 argument_list|()
 argument_list|)
@@ -318,6 +320,8 @@ name|shouldRetry
 argument_list|()
 condition|)
 block|{
+comment|// Drain the buffer
+comment|//noinspection ResultOfMethodCallIgnored
 name|httpChunk
 operator|.
 name|getContent
@@ -390,9 +394,6 @@ name|finished
 argument_list|(
 name|RetryResponseHolder
 operator|.
-expr|<
-name|Final
-operator|>
 name|retry
 argument_list|()
 argument_list|)
@@ -483,9 +484,7 @@ name|finished
 argument_list|(
 operator|new
 name|RetryResponseHolder
-argument_list|<
-name|T
-argument_list|>
+argument_list|<>
 argument_list|(
 literal|false
 argument_list|,
@@ -506,9 +505,7 @@ name|unfinished
 argument_list|(
 operator|new
 name|RetryResponseHolder
-argument_list|<
-name|T
-argument_list|>
+argument_list|<>
 argument_list|(
 literal|false
 argument_list|,

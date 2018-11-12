@@ -29,20 +29,6 @@ name|query
 operator|.
 name|scan
 operator|.
-name|ScanQuery
-import|;
-end_import
-
-begin_import
-import|import
-name|io
-operator|.
-name|druid
-operator|.
-name|query
-operator|.
-name|scan
-operator|.
 name|ScanResultValue
 import|;
 end_import
@@ -162,8 +148,6 @@ name|DruidScanQueryRecordReader
 extends|extends
 name|DruidQueryRecordReader
 argument_list|<
-name|ScanQuery
-argument_list|,
 name|ScanResultValue
 argument_list|>
 block|{
@@ -182,11 +166,7 @@ argument_list|<
 name|ScanResultValue
 argument_list|>
 argument_list|()
-block|{       }
-decl_stmt|;
-specifier|private
-name|ScanResultValue
-name|current
+block|{   }
 decl_stmt|;
 specifier|private
 name|Iterator
@@ -253,13 +233,14 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
+name|ScanResultValue
 name|current
-operator|=
+init|=
 name|queryResultsIterator
 operator|.
 name|next
 argument_list|()
-expr_stmt|;
+decl_stmt|;
 name|compactedValues
 operator|=
 operator|(

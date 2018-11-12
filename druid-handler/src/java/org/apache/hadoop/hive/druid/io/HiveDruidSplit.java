@@ -124,9 +124,6 @@ parameter_list|()
 block|{
 name|super
 argument_list|(
-operator|(
-name|Path
-operator|)
 literal|null
 argument_list|,
 literal|0
@@ -151,8 +148,8 @@ name|Path
 name|dummyPath
 parameter_list|,
 name|String
-name|hosts
 index|[]
+name|hosts
 parameter_list|)
 block|{
 name|super

@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *<p>  * http://www.apache.org/licenses/LICENSE-2.0  *<p>  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -18,6 +18,22 @@ operator|.
 name|io
 package|;
 end_package
+
+begin_import
+import|import
+name|com
+operator|.
+name|fasterxml
+operator|.
+name|jackson
+operator|.
+name|core
+operator|.
+name|type
+operator|.
+name|TypeReference
+import|;
+end_import
 
 begin_import
 import|import
@@ -423,6 +439,20 @@ name|hadoop
 operator|.
 name|io
 operator|.
+name|NullWritable
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|io
+operator|.
 name|Writable
 import|;
 end_import
@@ -609,24 +639,23 @@ name|Properties
 import|;
 end_import
 
+begin_comment
+comment|/**  * Druid Output format class used to write data as Native Druid Segment.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|DruidOutputFormat
-parameter_list|<
-name|K
-parameter_list|,
-name|V
-parameter_list|>
 implements|implements
 name|HiveOutputFormat
 argument_list|<
-name|K
+name|NullWritable
 argument_list|,
 name|DruidWritable
 argument_list|>
 block|{
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|Logger
@@ -763,7 +792,7 @@ name|jc
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|DruidStorageHandlerUtils
 operator|.
 name|DRUID_SEGMENT_INTERMEDIATE_DIRECTORY
 argument_list|)
@@ -924,8 +953,6 @@ name|DruidStorageHandlerUtils
 operator|.
 name|getDimensionsAndAggregates
 argument_list|(
-name|jc
-argument_list|,
 name|columnNames
 argument_list|,
 name|columnTypes
@@ -994,9 +1021,18 @@ name|convertValue
 argument_list|(
 name|inputRowParser
 argument_list|,
+operator|new
+name|TypeReference
+argument_list|<
 name|Map
-operator|.
-name|class
+argument_list|<
+name|String
+argument_list|,
+name|Object
+argument_list|>
+argument_list|>
+argument_list|()
+block|{         }
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -1038,7 +1074,7 @@ name|jc
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|DruidStorageHandlerUtils
 operator|.
 name|DRUID_JOB_WORKING_DIRECTORY
 argument_list|)
@@ -1051,7 +1087,7 @@ name|jc
 operator|.
 name|get
 argument_list|(
-name|Constants
+name|DruidStorageHandlerUtils
 operator|.
 name|DRUID_SEGMENT_VERSION
 argument_list|)
@@ -1222,7 +1258,7 @@ name|Override
 specifier|public
 name|RecordWriter
 argument_list|<
-name|K
+name|NullWritable
 argument_list|,
 name|DruidWritable
 argument_list|>

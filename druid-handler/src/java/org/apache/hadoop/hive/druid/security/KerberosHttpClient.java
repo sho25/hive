@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *      http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -272,7 +272,7 @@ operator|.
 name|slf4j
 operator|.
 name|Logger
-name|log
+name|LOG
 init|=
 name|LoggerFactory
 operator|.
@@ -356,7 +356,7 @@ operator|.
 name|create
 argument_list|()
 decl_stmt|;
-name|inner_go
+name|innerGo
 argument_list|(
 name|request
 argument_list|,
@@ -378,7 +378,7 @@ parameter_list|,
 name|Final
 parameter_list|>
 name|void
-name|inner_go
+name|innerGo
 parameter_list|(
 specifier|final
 name|Request
@@ -451,14 +451,6 @@ name|uri
 argument_list|,
 name|Collections
 operator|.
-expr|<
-name|String
-argument_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-operator|>
 name|emptyMap
 argument_list|()
 argument_list|)
@@ -502,7 +494,7 @@ expr_stmt|;
 block|}
 specifier|final
 name|boolean
-name|should_retry_on_unauthorized_response
+name|shouldRetryOnUnauthorizedResponse
 decl_stmt|;
 if|if
 condition|(
@@ -520,7 +512,7 @@ argument_list|)
 condition|)
 block|{
 comment|// No Cookies for requested URI, authenticate user and add authentication header
-name|log
+name|LOG
 operator|.
 name|debug
 argument_list|(
@@ -551,7 +543,7 @@ operator|.
 name|checkTGTAndReloginFromKeytab
 argument_list|()
 expr_stmt|;
-name|log
+name|LOG
 operator|.
 name|debug
 argument_list|(
@@ -567,32 +559,20 @@ name|currentUser
 operator|.
 name|doAs
 argument_list|(
-operator|new
+call|(
 name|PrivilegedExceptionAction
 argument_list|<
 name|String
 argument_list|>
+call|)
 argument_list|()
-block|{
-annotation|@
-name|Override
-specifier|public
-name|String
-name|run
-parameter_list|()
-throws|throws
-name|Exception
-block|{
-return|return
+operator|->
 name|DruidKerberosUtil
 operator|.
 name|kerberosChallenge
 argument_list|(
 name|host
 argument_list|)
-return|;
-block|}
-block|}
 argument_list|)
 decl_stmt|;
 name|request
@@ -611,7 +591,7 @@ name|challenge
 argument_list|)
 expr_stmt|;
 comment|/* no reason to retry if the challenge ticket is not valid. */
-name|should_retry_on_unauthorized_response
+name|shouldRetryOnUnauthorizedResponse
 operator|=
 literal|false
 expr_stmt|;
@@ -619,7 +599,7 @@ block|}
 else|else
 block|{
 comment|/* In this branch we had already a cookie that did expire         therefore we need to resend a valid Kerberos challenge*/
-name|log
+name|LOG
 operator|.
 name|debug
 argument_list|(
@@ -643,11 +623,16 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|should_retry_on_unauthorized_response
+name|shouldRetryOnUnauthorizedResponse
 operator|=
 literal|true
 expr_stmt|;
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unchecked"
+argument_list|)
 name|ListenableFuture
 argument_list|<
 name|RetryResponseHolder
@@ -704,7 +689,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|should_retry_on_unauthorized_response
+name|shouldRetryOnUnauthorizedResponse
 operator|&&
 name|responseHolder
 operator|.
@@ -712,13 +697,13 @@ name|shouldRetry
 argument_list|()
 condition|)
 block|{
-name|log
+name|LOG
 operator|.
 name|debug
 argument_list|(
 literal|"Preparing for Retry boolean {} and result {}, object{} "
 argument_list|,
-name|should_retry_on_unauthorized_response
+literal|true
 argument_list|,
 name|responseHolder
 operator|.
@@ -754,7 +739,7 @@ argument_list|,
 literal|""
 argument_list|)
 expr_stmt|;
-name|inner_go
+name|innerGo
 argument_list|(
 name|request
 operator|.
