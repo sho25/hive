@@ -902,7 +902,7 @@ expr_stmt|;
 name|String
 name|query
 init|=
-literal|"select sleep(t1.under_col, 5), t1.value from "
+literal|"select sleep(t1.under_col+t2.under_col, 5), t1.value from "
 operator|+
 name|tableName
 operator|+
@@ -1176,7 +1176,7 @@ expr_stmt|;
 name|String
 name|query
 init|=
-literal|"select sleep(t1.under_col, 1), t1.value from "
+literal|"select sleep(t1.under_col+t2.under_col, 1), t1.value from "
 operator|+
 name|tableName
 operator|+
@@ -1457,7 +1457,7 @@ expr_stmt|;
 name|String
 name|query
 init|=
-literal|"select sleep(t1.under_col, 1), t1.value from "
+literal|"select sleep(t1.under_col+t2.under_col, 1), t1.value from "
 operator|+
 name|tableName
 operator|+
@@ -1800,7 +1800,7 @@ expr_stmt|;
 name|String
 name|query
 init|=
-literal|"select sleep(t1.under_col, 5), t1.value from "
+literal|"select sleep(t1.under_col+t2.under_col, 5), t1.value from "
 operator|+
 name|tableName
 operator|+
