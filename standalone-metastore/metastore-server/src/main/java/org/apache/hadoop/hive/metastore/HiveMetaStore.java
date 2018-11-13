@@ -54829,6 +54829,21 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|//for metastore process, all metastore call should be embedded metastore call.
+name|conf
+operator|.
+name|set
+argument_list|(
+name|ConfVars
+operator|.
+name|THRIFT_URIS
+operator|.
+name|getHiveName
+argument_list|()
+argument_list|,
+literal|""
+argument_list|)
+expr_stmt|;
 comment|// Add shutdown hook.
 name|shutdownHookMgr
 operator|.
