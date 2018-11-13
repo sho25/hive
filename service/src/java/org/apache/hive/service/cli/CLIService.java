@@ -2912,9 +2912,7 @@ name|rowSet
 return|;
 block|}
 comment|// obtain delegation token for the give user from metastore
-comment|// TODO: why is this synchronized?
 specifier|public
-specifier|synchronized
 name|String
 name|getDelegationTokenFromMetaStore
 parameter_list|(
