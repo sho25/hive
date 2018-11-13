@@ -2055,6 +2055,11 @@ name|boolean
 name|asyncPrepare
 parameter_list|)
 block|{
+comment|// Note: parentHive can be shared by multiple threads and so it should be protected from any
+comment|// thread closing metastore connections when some other thread still accessing it. So, it is
+comment|// expected that allowClose flag in parentHive is set to false by caller and it will be caller's
+comment|// responsibility to close it explicitly with forceClose flag as true.
+comment|// Shall refer to sessionHive in HiveSessionImpl.java for the usage.
 name|this
 operator|.
 name|currentUGI
@@ -2109,13 +2114,20 @@ parameter_list|()
 throws|throws
 name|HiveSQLException
 block|{
+assert|assert
+operator|(
+operator|!
+name|parentHive
+operator|.
+name|allowClose
+argument_list|()
+operator|)
+assert|;
 name|Hive
 operator|.
 name|set
 argument_list|(
 name|parentHive
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// TODO: can this result in cross-thread reuse of session state?
@@ -2205,25 +2217,6 @@ operator|.
 name|unregisterLoggingContext
 argument_list|()
 expr_stmt|;
-name|Hive
-name|hiveDb
-init|=
-name|Hive
-operator|.
-name|getThreadLocal
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|hiveDb
-operator|!=
-literal|null
-operator|&&
-name|hiveDb
-operator|!=
-name|parentHive
-condition|)
-block|{
 comment|// If new hive object is created  by the child thread, then we need to close it as it might
 comment|// have created a hms connection. Call Hive.closeCurrent() that closes the HMS connection, causes
 comment|// HMS connection leaks otherwise.
@@ -2232,7 +2225,6 @@ operator|.
 name|closeCurrent
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 return|return
 literal|null

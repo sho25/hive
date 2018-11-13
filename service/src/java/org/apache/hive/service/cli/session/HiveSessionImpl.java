@@ -1463,35 +1463,10 @@ name|e
 argument_list|)
 throw|;
 block|}
-try|try
-block|{
-name|sessionHive
-operator|=
-name|Hive
-operator|.
-name|get
-argument_list|(
-name|getHiveConf
+comment|// Set sessionHive object created based on sessionConf.
+name|setSessionHive
 argument_list|()
-argument_list|)
 expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|HiveException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|HiveSQLException
-argument_list|(
-literal|"Failed to get metastore connection"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
 comment|// Process global init file: .hiverc
 name|processGlobalInitFile
 argument_list|()
@@ -1679,6 +1654,63 @@ return|return
 name|rc
 return|;
 block|}
+block|}
+comment|/**    * Sets sessionHive object created based on sessionConf.    * @throws HiveSQLException    */
+specifier|private
+name|void
+name|setSessionHive
+parameter_list|()
+throws|throws
+name|HiveSQLException
+block|{
+name|Hive
+name|newSessionHive
+decl_stmt|;
+try|try
+block|{
+name|newSessionHive
+operator|=
+name|Hive
+operator|.
+name|get
+argument_list|(
+name|getHiveConf
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// HMS connections from sessionHive shouldn't be closed by any query execution thread when it
+comment|// recreates the Hive object. It is allowed to be closed only when session is closed/released.
+name|newSessionHive
+operator|.
+name|setAllowClose
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|HiveSQLException
+argument_list|(
+literal|"Failed to get metastore connection"
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
+comment|// The previous sessionHive object might still be referred by any async query execution thread.
+comment|// So, it shouldn't be closed here explicitly. Anyways, Hive object will auto-close HMS connection
+comment|// when it is garbage collected. So, it is safe to just overwrite sessionHive here.
+name|sessionHive
+operator|=
+name|newSessionHive
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -2534,13 +2566,43 @@ operator|.
 name|updateThreadName
 argument_list|()
 expr_stmt|;
+comment|// If the thread local Hive is different from sessionHive, it means, the previous query execution in
+comment|// master thread has re-created Hive object due to changes in MS related configurations in sessionConf.
+comment|// So, it is necessary to reset sessionHive object based on new sessionConf. Here, we cannot,
+comment|// directly set sessionHive with thread local Hive because if the previous command was REPL LOAD, then
+comment|// the config changes lives only within command execution not in session level.
+comment|// So, the safer option is to invoke Hive.get() which decides if to reuse Thread local Hive or re-create it.
+if|if
+condition|(
 name|Hive
 operator|.
-name|set
-argument_list|(
+name|getThreadLocal
+argument_list|()
+operator|!=
 name|sessionHive
-argument_list|)
+condition|)
+block|{
+try|try
+block|{
+name|setSessionHive
+argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|HiveSQLException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+name|e
+argument_list|)
+throw|;
+block|}
+block|}
 block|}
 comment|/**    * 1. We'll remove the ThreadLocal SessionState as this thread might now serve    * other requests.    * 2. We'll cache the ThreadLocal RawStore object for this background thread for an orderly cleanup    * when this thread is garbage collected later.    * @see org.apache.hive.service.server.ThreadWithGarbageCleanup#finalize()    */
 specifier|protected
@@ -4213,10 +4275,12 @@ condition|)
 block|{
 try|try
 block|{
-name|Hive
+name|sessionHive
 operator|.
-name|closeCurrent
-argument_list|()
+name|close
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -4238,6 +4302,33 @@ block|}
 name|sessionHive
 operator|=
 literal|null
+expr_stmt|;
+block|}
+try|try
+block|{
+comment|// The thread local Hive in master thread can be different from sessionHive if any query
+comment|// execution from master thread resets it to new Hive object due to changes in sessionConf.
+comment|// So, need to close it as well. If it is same as sessionHive, then it is just no-op.
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|t
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Error closing thread local Hive"
+argument_list|,
+name|t
+argument_list|)
 expr_stmt|;
 block|}
 name|release

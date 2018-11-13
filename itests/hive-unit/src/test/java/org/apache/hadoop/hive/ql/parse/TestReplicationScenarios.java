@@ -3205,9 +3205,6 @@ argument_list|)
 expr_stmt|;
 name|Hive
 operator|.
-name|getThreadLocal
-argument_list|()
-operator|.
 name|closeCurrent
 argument_list|()
 expr_stmt|;
