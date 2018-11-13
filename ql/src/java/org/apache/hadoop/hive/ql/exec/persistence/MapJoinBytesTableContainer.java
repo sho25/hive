@@ -4590,6 +4590,13 @@ name|dummyRow
 init|=
 literal|null
 decl_stmt|;
+comment|// TODO: the API here is not ideal, first/next + hasRows are redundant.
+specifier|private
+name|boolean
+name|wasFirstCalledOnDummyRow
+init|=
+literal|false
+decl_stmt|;
 specifier|private
 specifier|final
 name|ByteArrayRef
@@ -4780,6 +4787,10 @@ name|dummyRow
 operator|=
 literal|null
 expr_stmt|;
+name|wasFirstCalledOnDummyRow
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|hashMapResult
@@ -4854,6 +4865,10 @@ name|dummyRow
 operator|=
 literal|null
 expr_stmt|;
+name|wasFirstCalledOnDummyRow
+operator|=
+literal|false
+expr_stmt|;
 if|if
 condition|(
 name|hashMapResult
@@ -4916,6 +4931,9 @@ operator|(
 name|dummyRow
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|wasFirstCalledOnDummyRow
 operator|)
 return|;
 block|}
@@ -5008,6 +5026,10 @@ name|dummyRow
 operator|=
 literal|null
 expr_stmt|;
+name|wasFirstCalledOnDummyRow
+operator|=
+literal|false
+expr_stmt|;
 name|aliasFilter
 operator|=
 operator|(
@@ -5056,7 +5078,6 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-comment|// A little strange that we forget the dummy row on read.
 if|if
 condition|(
 name|dummyRow
@@ -5064,20 +5085,12 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|List
-argument_list|<
-name|Object
-argument_list|>
-name|result
-init|=
-name|dummyRow
-decl_stmt|;
-name|dummyRow
+name|wasFirstCalledOnDummyRow
 operator|=
-literal|null
+literal|true
 expr_stmt|;
 return|return
-name|result
+name|dummyRow
 return|;
 block|}
 name|WriteBuffers
@@ -5123,6 +5136,32 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+if|if
+condition|(
+name|dummyRow
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// TODO: what should we do if first was never called? for now, assert for clarity
+if|if
+condition|(
+operator|!
+name|wasFirstCalledOnDummyRow
+condition|)
+block|{
+throw|throw
+operator|new
+name|AssertionError
+argument_list|(
+literal|"next called without first"
+argument_list|)
+throw|;
+block|}
+return|return
+literal|null
+return|;
+block|}
 name|WriteBuffers
 operator|.
 name|ByteSegmentRef
@@ -5292,6 +5331,10 @@ block|}
 name|dummyRow
 operator|=
 name|t
+expr_stmt|;
+name|wasFirstCalledOnDummyRow
+operator|=
+literal|false
 expr_stmt|;
 block|}
 comment|// Various unsupported methods.
