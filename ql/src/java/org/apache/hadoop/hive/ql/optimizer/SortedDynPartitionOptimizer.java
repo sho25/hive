@@ -2763,6 +2763,38 @@ return|return
 literal|false
 return|;
 block|}
+comment|// if child is select and contains expression which isn't column it shouldn't
+comment|// be removed because otherwise we will end up with different types/schema later
+comment|// while introducing select for RS
+for|for
+control|(
+name|ExprNodeDesc
+name|expr
+range|:
+name|rsChild
+operator|.
+name|getColumnExprMap
+argument_list|()
+operator|.
+name|values
+argument_list|()
+control|)
+block|{
+if|if
+condition|(
+operator|!
+operator|(
+name|expr
+operator|instanceof
+name|ExprNodeColumnDesc
+operator|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+block|}
 name|rsParent
 operator|.
 name|getChildOperators
