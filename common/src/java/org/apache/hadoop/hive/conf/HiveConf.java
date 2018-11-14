@@ -6353,6 +6353,17 @@ argument_list|,
 literal|"Default SerDe used for materialized views"
 argument_list|)
 block|,
+name|HIVE_ENABLE_JDBC_PUSHDOWN
+argument_list|(
+literal|"hive.jdbc.pushdown.enable"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Flag to control enabling pushdown of operators into JDBC connection and subsequent SQL generation\n"
+operator|+
+literal|"using Calcite."
+argument_list|)
+block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
 comment|// need to remove by hive .13. Also, do not change default (see SMB operator)
 name|HIVEMAPJOINBUCKETCACHESIZE
