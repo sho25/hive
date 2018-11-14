@@ -8294,6 +8294,17 @@ name|getTxnIds
 argument_list|()
 expr_stmt|;
 block|}
+comment|//Easiest check since we can't differentiate do we handle singleton list or list with multiple txn ids.
+if|if
+condition|(
+name|txnIds
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|1
+condition|)
+block|{
 name|Collections
 operator|.
 name|sort
@@ -8302,6 +8313,7 @@ name|txnIds
 argument_list|)
 expr_stmt|;
 comment|//easier to read logs and for assumption done in replication flow
+block|}
 comment|// Check if all the input txns are in open state. Write ID should be allocated only for open transactions.
 if|if
 condition|(
