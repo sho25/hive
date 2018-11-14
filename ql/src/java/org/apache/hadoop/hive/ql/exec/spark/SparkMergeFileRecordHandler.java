@@ -555,6 +555,9 @@ index|]
 operator|=
 name|value
 expr_stmt|;
+name|incrementRowNumber
+argument_list|()
+expr_stmt|;
 try|try
 block|{
 name|mergeOp
@@ -630,6 +633,11 @@ name|void
 name|close
 parameter_list|()
 block|{
+name|super
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 name|LOG
 operator|.
 name|info
