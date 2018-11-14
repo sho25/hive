@@ -617,6 +617,24 @@ name|hive
 operator|.
 name|druid
 operator|.
+name|conf
+operator|.
+name|DruidConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|druid
+operator|.
 name|io
 operator|.
 name|DruidRecordWriter
@@ -834,7 +852,7 @@ name|ImmutableMap
 operator|.
 name|of
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -870,7 +888,7 @@ name|ImmutableMap
 operator|.
 name|of
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -906,7 +924,7 @@ name|ImmutableMap
 operator|.
 name|of
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -952,7 +970,7 @@ name|assertEquals
 argument_list|(
 literal|"Time column name need to match to ensure serdeser compatibility"
 argument_list|,
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -1020,7 +1038,7 @@ argument_list|(
 operator|new
 name|TimestampSpec
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -1320,7 +1338,7 @@ name|input
 operator|.
 name|get
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -1637,7 +1655,7 @@ name|expected
 operator|.
 name|get
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)

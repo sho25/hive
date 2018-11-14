@@ -273,6 +273,10 @@ argument_list|,
 literal|"druid.processing.numThreads"
 argument_list|,
 literal|"2"
+argument_list|,
+literal|"druid.worker.capacity"
+argument_list|,
+literal|"4"
 argument_list|)
 decl_stmt|;
 specifier|private

@@ -315,6 +315,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|druid
+operator|.
+name|conf
+operator|.
+name|DruidConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -1709,7 +1727,7 @@ argument_list|()
 operator|.
 name|equals
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -1883,7 +1901,7 @@ name|columnNames
 operator|.
 name|contains
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -1895,7 +1913,7 @@ name|SerDeException
 argument_list|(
 literal|"Timestamp column (' "
 operator|+
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 operator|+

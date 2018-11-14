@@ -335,6 +335,24 @@ name|hive
 operator|.
 name|druid
 operator|.
+name|conf
+operator|.
+name|DruidConstants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|druid
+operator|.
 name|serde
 operator|.
 name|DruidWritable
@@ -792,7 +810,7 @@ name|jc
 operator|.
 name|get
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DRUID_SEGMENT_INTERMEDIATE_DIRECTORY
 argument_list|)
@@ -895,7 +913,7 @@ name|columnNames
 operator|.
 name|contains
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|)
@@ -907,7 +925,7 @@ name|IllegalStateException
 argument_list|(
 literal|"Timestamp column (' "
 operator|+
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 operator|+
@@ -971,7 +989,7 @@ argument_list|(
 operator|new
 name|TimestampSpec
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DEFAULT_TIMESTAMP_COLUMN
 argument_list|,
@@ -1074,7 +1092,7 @@ name|jc
 operator|.
 name|get
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DRUID_JOB_WORKING_DIRECTORY
 argument_list|)
@@ -1087,7 +1105,7 @@ name|jc
 operator|.
 name|get
 argument_list|(
-name|DruidStorageHandlerUtils
+name|DruidConstants
 operator|.
 name|DRUID_SEGMENT_VERSION
 argument_list|)
