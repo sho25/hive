@@ -7202,6 +7202,19 @@ argument_list|,
 literal|false
 argument_list|)
 block|,
+name|HIVETESTMODEACIDKEYIDXSKIP
+argument_list|(
+literal|"hive.test.acid.key.index.skip"
+argument_list|,
+literal|false
+argument_list|,
+literal|"For testing only. OrcRecordUpdater will skip "
+operator|+
+literal|"generation of the hive.acid.key.index"
+argument_list|,
+literal|false
+argument_list|)
+block|,
 name|HIVEMERGEMAPFILES
 argument_list|(
 literal|"hive.merge.mapfiles"
