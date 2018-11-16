@@ -200,7 +200,7 @@ throw|throw
 operator|new
 name|IllegalArgumentException
 argument_list|(
-literal|"Could not serialize Function object"
+literal|"Could not serialize database object"
 argument_list|,
 name|ex
 argument_list|)
