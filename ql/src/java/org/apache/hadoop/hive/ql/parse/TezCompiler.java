@@ -7792,6 +7792,11 @@ name|sjInfo
 operator|.
 name|getIsHint
 argument_list|()
+operator|&&
+name|expectedEntries
+operator|==
+operator|-
+literal|1
 condition|)
 block|{
 throw|throw
@@ -7803,6 +7808,18 @@ operator|+
 literal|" or exceeding max bloom filter entries"
 argument_list|)
 throw|;
+block|}
+elseif|else
+if|if
+condition|(
+name|sjInfo
+operator|.
+name|getIsHint
+argument_list|()
+condition|)
+block|{
+comment|// do not remove if hint is provided
+continue|continue;
 block|}
 comment|// Remove the semijoin optimization branch along with ALL the mappings
 comment|// The parent GB2 has all the branches. Collect them and remove them.

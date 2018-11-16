@@ -165,7 +165,7 @@ name|bitSet
 decl_stmt|;
 specifier|private
 specifier|final
-name|int
+name|long
 name|m
 decl_stmt|;
 specifier|private
@@ -245,11 +245,11 @@ argument_list|,
 name|numBits
 argument_list|)
 expr_stmt|;
-name|int
+name|long
 name|nLongs
 init|=
 operator|(
-name|int
+name|long
 operator|)
 name|Math
 operator|.
@@ -269,7 +269,7 @@ name|SIZE
 argument_list|)
 decl_stmt|;
 comment|// additional bits to pad long array to block size
-name|int
+name|long
 name|padLongs
 init|=
 name|DEFAULT_BLOCK_SIZE
@@ -1268,7 +1268,7 @@ name|k
 return|;
 block|}
 specifier|public
-name|int
+name|long
 name|getNumBits
 parameter_list|()
 block|{
