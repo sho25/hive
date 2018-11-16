@@ -194,6 +194,22 @@ operator|.
 name|ql
 operator|.
 name|QTestUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestUtil
 operator|.
 name|FsType
 import|;
@@ -1080,17 +1096,8 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|queryFile
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|queryFile
-operator|.
-name|equals
-argument_list|(
-literal|""
-argument_list|)
+name|isQFileSpecified
+argument_list|()
 condition|)
 block|{
 comment|// The user may have passed a list of files - comma separated
@@ -1147,6 +1154,10 @@ name|contains
 argument_list|(
 name|qFile
 argument_list|)
+operator|&&
+operator|!
+name|isQFileSpecified
+argument_list|()
 condition|)
 block|{
 name|LOG
@@ -1162,7 +1173,7 @@ literal|" is among the excluded query files for this driver."
 operator|+
 literal|" Please update CliConfigs.java or testconfiguration.properties file to"
 operator|+
-literal|" include the qfile"
+literal|" include the qfile or specify qfile through command line explicitly: -Dqfile=test.q"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1296,6 +1307,27 @@ range|:
 name|excludedQueryFileNames
 control|)
 block|{
+comment|// in case of running as ptest, exclusions should be respected,
+comment|// because test drivers receive every qfiles regardless of exclusions
+if|if
+condition|(
+literal|"hiveptest"
+operator|.
+name|equals
+argument_list|(
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"user.name"
+argument_list|)
+argument_list|)
+operator|||
+operator|!
+name|isQFileSpecified
+argument_list|()
+condition|)
+block|{
 name|testFiles
 operator|.
 name|remove
@@ -1310,8 +1342,28 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 return|return
 name|testFiles
+return|;
+block|}
+specifier|public
+name|boolean
+name|isQFileSpecified
+parameter_list|()
+block|{
+return|return
+name|queryFile
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|queryFile
+operator|.
+name|equals
+argument_list|(
+literal|""
+argument_list|)
 return|;
 block|}
 specifier|private

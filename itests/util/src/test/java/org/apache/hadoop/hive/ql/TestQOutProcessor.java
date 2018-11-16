@@ -343,11 +343,7 @@ name|processLine
 argument_list|(
 name|line
 argument_list|,
-literal|false
-argument_list|,
-literal|false
-argument_list|,
-literal|false
+literal|null
 argument_list|)
 operator|.
 name|get
