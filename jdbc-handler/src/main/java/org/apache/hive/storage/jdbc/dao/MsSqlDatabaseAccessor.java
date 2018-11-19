@@ -64,6 +64,18 @@ return|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|limit
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+name|sql
+return|;
+block|}
 comment|// Order by is not necessary, but MS SQL require it to use FETCH
 return|return
 name|sql
@@ -93,6 +105,18 @@ name|int
 name|limit
 parameter_list|)
 block|{
+if|if
+condition|(
+name|limit
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+name|sql
+return|;
+block|}
 return|return
 name|sql
 operator|+

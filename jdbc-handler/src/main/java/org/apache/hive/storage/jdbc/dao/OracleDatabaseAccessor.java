@@ -72,6 +72,18 @@ return|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+name|limit
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+name|sql
+return|;
+block|}
 comment|// A simple ROWNUM> offset and ROWNUM<= (offset + limit) won't work, it will return nothing
 return|return
 literal|"SELECT * FROM (SELECT t.*, ROWNUM AS "
@@ -117,6 +129,18 @@ name|int
 name|limit
 parameter_list|)
 block|{
+if|if
+condition|(
+name|limit
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+return|return
+name|sql
+return|;
+block|}
 return|return
 literal|"SELECT * FROM ("
 operator|+
