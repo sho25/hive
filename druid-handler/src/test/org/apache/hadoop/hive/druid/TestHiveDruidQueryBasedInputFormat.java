@@ -161,6 +161,10 @@ name|TestCase
 import|;
 end_import
 
+begin_comment
+comment|/**  * Test Class.  */
+end_comment
+
 begin_class
 annotation|@
 name|SuppressWarnings
@@ -199,7 +203,9 @@ literal|"[HiveDruidSplit{{\"queryType\":\"timeseries\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_datasource\"},"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T08:00:00.000Z/2012-01-03T08:00:00.000Z\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":"
+operator|+
+literal|"[\"2012-01-01T08:00:00.000Z/2012-01-03T08:00:00.000Z\"]},"
 operator|+
 literal|"\"descending\":true,"
 operator|+
@@ -275,13 +281,17 @@ literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_data\"},"
 operator|+
 literal|"\"virtualColumns\":[],"
 operator|+
-literal|"\"dimension\":{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"sample_dim\",\"outputName\":\"sample_dim\",\"outputType\":\"STRING\"},"
+literal|"\"dimension\":{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"sample_dim\","
+operator|+
+literal|"\"outputName\":\"sample_dim\",\"outputType\":\"STRING\"},"
 operator|+
 literal|"\"metric\":{\"type\":\"LegacyTopNMetricSpec\",\"metric\":\"count\"},"
 operator|+
 literal|"\"threshold\":5,"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-08-31T07:00:00.000Z/2013-09-03T07:00:00.000Z\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-08-31T07:00:00"
+operator|+
+literal|".000Z/2013-09-03T07:00:00.000Z\"]},"
 operator|+
 literal|"\"filter\":null,"
 operator|+
@@ -341,7 +351,9 @@ literal|"[HiveDruidSplit{{\"queryType\":\"groupBy\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"sample_datasource\"},"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T08:00:00.000Z/2012-01-03T08:00:00.000Z\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2012-01-01T08:00:00"
+operator|+
+literal|".000Z/2012-01-03T08:00:00.000Z\"]},"
 operator|+
 literal|"\"virtualColumns\":[],"
 operator|+
@@ -349,11 +361,17 @@ literal|"\"filter\":null,"
 operator|+
 literal|"\"granularity\":\"DAY\","
 operator|+
-literal|"\"dimensions\":[{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"country\",\"outputName\":\"country\",\"outputType\":\"STRING\"},"
+literal|"\"dimensions\":[{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"country\",\"outputName\":\"country\","
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"device\",\"outputName\":\"device\",\"outputType\":\"STRING\"}],"
+literal|"\"outputType\":\"STRING\"},"
 operator|+
-literal|"\"aggregations\":[{\"type\":\"longSum\",\"name\":\"total_usage\",\"fieldName\":\"user_count\",\"expression\":null},"
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"device\",\"outputName\":\"device\","
+operator|+
+literal|"\"outputType\":\"STRING\"}],"
+operator|+
+literal|"\"aggregations\":[{\"type\":\"longSum\",\"name\":\"total_usage\",\"fieldName\":\"user_count\","
+operator|+
+literal|"\"expression\":null},"
 operator|+
 literal|"{\"type\":\"doubleSum\",\"name\":\"data_transfer\",\"fieldName\":\"data_transfer\",\"expression\":null}],"
 operator|+
@@ -361,9 +379,13 @@ literal|"\"postAggregations\":[],"
 operator|+
 literal|"\"having\":null,"
 operator|+
-literal|"\"limitSpec\":{\"type\":\"default\",\"columns\":[{\"dimension\":\"country\",\"direction\":\"ascending\",\"dimensionOrder\":{\"type\":\"lexicographic\"}},"
+literal|"\"limitSpec\":{\"type\":\"default\",\"columns\":[{\"dimension\":\"country\",\"direction\":\"ascending\","
 operator|+
-literal|"{\"dimension\":\"data_transfer\",\"direction\":\"ascending\",\"dimensionOrder\":{\"type\":\"lexicographic\"}}],\"limit\":5000},"
+literal|"\"dimensionOrder\":{\"type\":\"lexicographic\"}},"
+operator|+
+literal|"{\"dimension\":\"data_transfer\",\"direction\":\"ascending\","
+operator|+
+literal|"\"dimensionOrder\":{\"type\":\"lexicographic\"}}],\"limit\":5000},"
 operator|+
 literal|"\"context\":{\"queryId\":\"\"},"
 operator|+
@@ -379,7 +401,9 @@ literal|"{   \"queryType\": \"select\",  "
 operator|+
 literal|" \"dataSource\": \"wikipedia\",   \"descending\": \"false\",  "
 operator|+
-literal|" \"dimensions\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\",\"newpage\",\"user\"],  "
+literal|" \"dimensions\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\","
+operator|+
+literal|"\"newpage\",\"user\"],  "
 operator|+
 literal|" \"metrics\":[\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],  "
 operator|+
@@ -401,7 +425,9 @@ literal|"[HiveDruidSplit{{\"queryType\":\"select\","
 operator|+
 literal|"\"dataSource\":{\"type\":\"table\",\"name\":\"wikipedia\"},"
 operator|+
-literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-01-01T08:00:00.000Z/2013-01-02T08:00:00.000Z\"]},"
+literal|"\"intervals\":{\"type\":\"LegacySegmentSpec\",\"intervals\":[\"2013-01-01T08:00:00"
+operator|+
+literal|".000Z/2013-01-02T08:00:00.000Z\"]},"
 operator|+
 literal|"\"descending\":false,"
 operator|+
@@ -409,21 +435,37 @@ literal|"\"filter\":null,"
 operator|+
 literal|"\"granularity\":{\"type\":\"all\"},"
 operator|+
-literal|"\"dimensions\":[{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"robot\",\"outputName\":\"robot\",\"outputType\":\"STRING\"},"
+literal|"\"dimensions\":[{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"robot\",\"outputName\":\"robot\","
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"namespace\",\"outputName\":\"namespace\",\"outputType\":\"STRING\"},"
+literal|"\"outputType\":\"STRING\"},"
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"anonymous\",\"outputName\":\"anonymous\",\"outputType\":\"STRING\"},"
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"namespace\",\"outputName\":\"namespace\","
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"unpatrolled\",\"outputName\":\"unpatrolled\",\"outputType\":\"STRING\"},"
+literal|"\"outputType\":\"STRING\"},"
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"page\",\"outputName\":\"page\",\"outputType\":\"STRING\"},"
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"anonymous\",\"outputName\":\"anonymous\","
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"language\",\"outputName\":\"language\",\"outputType\":\"STRING\"},"
+literal|"\"outputType\":\"STRING\"},"
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"newpage\",\"outputName\":\"newpage\",\"outputType\":\"STRING\"},"
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"unpatrolled\",\"outputName\":\"unpatrolled\","
 operator|+
-literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"user\",\"outputName\":\"user\",\"outputType\":\"STRING\"}],"
+literal|"\"outputType\":\"STRING\"},"
+operator|+
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"page\",\"outputName\":\"page\","
+operator|+
+literal|"\"outputType\":\"STRING\"},"
+operator|+
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"language\",\"outputName\":\"language\","
+operator|+
+literal|"\"outputType\":\"STRING\"},"
+operator|+
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"newpage\",\"outputName\":\"newpage\","
+operator|+
+literal|"\"outputType\":\"STRING\"},"
+operator|+
+literal|"{\"type\":\"LegacyDimensionSpec\",\"dimension\":\"user\",\"outputName\":\"user\","
+operator|+
+literal|"\"outputType\":\"STRING\"}],"
 operator|+
 literal|"\"metrics\":[\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],"
 operator|+

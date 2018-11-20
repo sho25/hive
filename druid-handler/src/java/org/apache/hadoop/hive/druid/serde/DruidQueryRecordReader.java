@@ -575,9 +575,6 @@ parameter_list|(
 name|InputSplit
 name|split
 parameter_list|,
-name|Configuration
-name|conf
-parameter_list|,
 name|ObjectMapper
 name|mapper
 parameter_list|,
@@ -607,8 +604,17 @@ argument_list|,
 literal|"input split is null ???"
 argument_list|)
 expr_stmt|;
+name|Preconditions
+operator|.
+name|checkNotNull
+argument_list|(
+name|httpClient
+argument_list|,
+literal|"need Http Client can not be null"
+argument_list|)
+expr_stmt|;
 name|ObjectMapper
-name|mapper1
+name|objectMapper
 init|=
 name|Preconditions
 operator|.
@@ -622,7 +628,7 @@ decl_stmt|;
 comment|// Smile mapper is used to read query results that are serialized as binary instead of json
 comment|// Smile mapper is used to read query results that are serialized as binary instead of json
 name|ObjectMapper
-name|smileMapper1
+name|smileObjectMapper
 init|=
 name|Preconditions
 operator|.
@@ -638,7 +644,7 @@ name|this
 operator|.
 name|query
 operator|=
-name|mapper1
+name|objectMapper
 operator|.
 name|readValue
 argument_list|(
@@ -670,18 +676,6 @@ name|resultsType
 init|=
 name|getResultTypeDef
 argument_list|()
-decl_stmt|;
-name|HttpClient
-name|httpClient1
-init|=
-name|Preconditions
-operator|.
-name|checkNotNull
-argument_list|(
-name|httpClient
-argument_list|,
-literal|"need Http Client"
-argument_list|)
 decl_stmt|;
 specifier|final
 name|String
@@ -779,7 +773,7 @@ name|InputStream
 argument_list|>
 name|inputStreamFuture
 init|=
-name|httpClient1
+name|httpClient
 operator|.
 name|go
 argument_list|(
@@ -796,7 +790,7 @@ operator|=
 operator|new
 name|JsonParserIterator
 argument_list|(
-name|smileMapper1
+name|smileObjectMapper
 argument_list|,
 name|resultsType
 argument_list|,
@@ -934,8 +928,6 @@ block|{
 name|initialize
 argument_list|(
 name|split
-argument_list|,
-name|conf
 argument_list|,
 name|DruidStorageHandlerUtils
 operator|.

@@ -88,6 +88,7 @@ specifier|public
 class|class
 name|TaskReportData
 block|{
+comment|/**    * Task type used by serializer but does not have any functionality as far i can tell.    */
 specifier|public
 enum|enum
 name|TaskType

@@ -1311,15 +1311,17 @@ decl_stmt|;
 comment|// Default case JSON
 if|if
 condition|(
+operator|(
 name|parseSpecFormat
 operator|==
 literal|null
+operator|)
 operator|||
-name|parseSpecFormat
+literal|"json"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"json"
+name|parseSpecFormat
 argument_list|)
 condition|)
 block|{
@@ -1346,11 +1348,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|parseSpecFormat
+literal|"csv"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"csv"
+name|parseSpecFormat
 argument_list|)
 condition|)
 block|{
@@ -1421,11 +1423,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|parseSpecFormat
+literal|"delimited"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"delimited"
+name|parseSpecFormat
 argument_list|)
 condition|)
 block|{
@@ -1507,11 +1509,11 @@ block|}
 elseif|else
 if|if
 condition|(
-name|parseSpecFormat
+literal|"avro"
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-literal|"avro"
+name|parseSpecFormat
 argument_list|)
 condition|)
 block|{
@@ -1565,7 +1567,7 @@ name|Object
 argument_list|>
 argument_list|>
 argument_list|()
-block|{                 }
+block|{             }
 argument_list|)
 decl_stmt|;
 return|return

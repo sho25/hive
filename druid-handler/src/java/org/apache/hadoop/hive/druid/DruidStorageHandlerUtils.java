@@ -1806,7 +1806,7 @@ block|{
 specifier|private
 name|DruidStorageHandlerUtils
 parameter_list|()
-block|{    }
+block|{   }
 specifier|private
 specifier|static
 specifier|final
@@ -3338,7 +3338,7 @@ condition|)
 block|{
 comment|// Not possible to expand since we have more than one chunk with a single segment.
 comment|// This is the case when user wants to append a segment with coarser granularity.
-comment|// e.g If metadata storage already has segments for with granularity HOUR and segments to append have DAY granularity.
+comment|// case metadata storage has segments with granularity HOUR and segments to append have DAY granularity.
 comment|// Druid shard specs does not support multiple partitions for same interval with different granularity.
 throw|throw
 operator|new
@@ -4499,9 +4499,7 @@ name|rv
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|String

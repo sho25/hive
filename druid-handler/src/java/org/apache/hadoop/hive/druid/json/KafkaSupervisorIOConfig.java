@@ -195,7 +195,11 @@ decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
+block|{
 literal|"OptionalUsedAsFieldOrParameterType"
+block|,
+literal|"Guava"
+block|}
 argument_list|)
 specifier|private
 specifier|final
@@ -208,7 +212,11 @@ decl_stmt|;
 annotation|@
 name|SuppressWarnings
 argument_list|(
+block|{
 literal|"OptionalUsedAsFieldOrParameterType"
+block|,
+literal|"Guava"
+block|}
 argument_list|)
 specifier|private
 specifier|final
@@ -457,6 +465,7 @@ argument_list|,
 literal|"PT30M"
 argument_list|)
 expr_stmt|;
+comment|//noinspection Guava
 name|this
 operator|.
 name|lateMessageRejectionPeriod
@@ -480,6 +489,7 @@ name|toStandardDuration
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//noinspection Guava
 name|this
 operator|.
 name|earlyMessageRejectionPeriod
@@ -621,6 +631,11 @@ name|completionTimeout
 return|;
 block|}
 annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"Guava"
+argument_list|)
+annotation|@
 name|JsonProperty
 specifier|public
 name|Optional
@@ -634,6 +649,11 @@ return|return
 name|earlyMessageRejectionPeriod
 return|;
 block|}
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"Guava"
+argument_list|)
 annotation|@
 name|JsonProperty
 specifier|public

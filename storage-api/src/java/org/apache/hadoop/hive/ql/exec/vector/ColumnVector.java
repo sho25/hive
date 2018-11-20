@@ -41,9 +41,8 @@ specifier|abstract
 class|class
 name|ColumnVector
 block|{
-comment|/*    * The current kinds of column vectors.    */
+comment|/**    * The current kinds of column vectors.    */
 specifier|public
-specifier|static
 enum|enum
 name|Type
 block|{
@@ -185,7 +184,7 @@ operator|=
 literal|false
 expr_stmt|;
 block|}
-comment|/**    * Sets the isRepeating flag. Recurses over structs and unions so that the    * flags are set correctly.    * @param isRepeating    */
+comment|/**    * Sets the isRepeating flag. Recurses over structs and unions so that the    * flags are set correctly.    * @param isRepeating flag for repeating value.    */
 specifier|public
 name|void
 name|setRepeating

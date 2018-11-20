@@ -776,11 +776,7 @@ name|cachedPrimitiveWritableInspectorCache
 init|=
 operator|new
 name|ConcurrentHashMap
-argument_list|<
-name|PrimitiveTypeInfo
-argument_list|,
-name|AbstractPrimitiveWritableObjectInspector
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 static|static
@@ -1066,11 +1062,7 @@ name|primitiveCategoryToWritableOI
 init|=
 operator|new
 name|EnumMap
-argument_list|<
-name|PrimitiveCategory
-argument_list|,
-name|AbstractPrimitiveWritableObjectInspector
-argument_list|>
+argument_list|<>
 argument_list|(
 name|PrimitiveCategory
 operator|.
@@ -1493,11 +1485,7 @@ name|cachedPrimitiveJavaInspectorCache
 init|=
 operator|new
 name|ConcurrentHashMap
-argument_list|<
-name|PrimitiveTypeInfo
-argument_list|,
-name|AbstractPrimitiveJavaObjectInspector
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 static|static
@@ -1512,10 +1500,10 @@ name|getPrimitiveTypeInfo
 argument_list|(
 name|serdeConstants
 operator|.
-name|BOOLEAN_TYPE_NAME
+name|TINYINT_TYPE_NAME
 argument_list|)
 argument_list|,
-name|javaBooleanObjectInspector
+name|javaByteObjectInspector
 argument_list|)
 expr_stmt|;
 name|cachedPrimitiveJavaInspectorCache
@@ -1528,10 +1516,10 @@ name|getPrimitiveTypeInfo
 argument_list|(
 name|serdeConstants
 operator|.
-name|TINYINT_TYPE_NAME
+name|BOOLEAN_TYPE_NAME
 argument_list|)
 argument_list|,
-name|javaByteObjectInspector
+name|javaBooleanObjectInspector
 argument_list|)
 expr_stmt|;
 name|cachedPrimitiveJavaInspectorCache
@@ -1783,11 +1771,7 @@ name|primitiveCategoryToJavaOI
 init|=
 operator|new
 name|EnumMap
-argument_list|<
-name|PrimitiveCategory
-argument_list|,
-name|AbstractPrimitiveJavaObjectInspector
-argument_list|>
+argument_list|<>
 argument_list|(
 name|PrimitiveCategory
 operator|.
@@ -1802,9 +1786,9 @@ name|put
 argument_list|(
 name|PrimitiveCategory
 operator|.
-name|BOOLEAN
+name|BYTE
 argument_list|,
-name|javaBooleanObjectInspector
+name|javaByteObjectInspector
 argument_list|)
 expr_stmt|;
 name|primitiveCategoryToJavaOI
@@ -1813,9 +1797,9 @@ name|put
 argument_list|(
 name|PrimitiveCategory
 operator|.
-name|BYTE
+name|BOOLEAN
 argument_list|,
-name|javaByteObjectInspector
+name|javaBooleanObjectInspector
 argument_list|)
 expr_stmt|;
 name|primitiveCategoryToJavaOI
@@ -1995,7 +1979,7 @@ name|javaHiveDecimalObjectInspector
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Returns the PrimitiveWritableObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory    */
+comment|/**    * Returns the PrimitiveWritableObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory primitive category input to be looked up.    */
 specifier|public
 specifier|static
 name|AbstractPrimitiveWritableObjectInspector
@@ -2176,7 +2160,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Returns a PrimitiveWritableObjectInspector which implements ConstantObjectInspector    * for the PrimitiveCategory.    *    * @param typeInfo    * @param value    */
+comment|/**    * Returns a PrimitiveWritableObjectInspector which implements ConstantObjectInspector    * for the PrimitiveCategory.    *    * @param typeInfo target of the output constant.    * @param value input constant value.    */
 specifier|public
 specifier|static
 name|ConstantObjectInspector
@@ -2460,7 +2444,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Returns the PrimitiveJavaObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory    */
+comment|/**    * Returns the PrimitiveJavaObjectInspector for the PrimitiveCategory.    *    * @param primitiveCategory input to be looked up.    */
 specifier|public
 specifier|static
 name|AbstractPrimitiveJavaObjectInspector

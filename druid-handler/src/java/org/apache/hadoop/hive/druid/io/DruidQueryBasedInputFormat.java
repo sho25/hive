@@ -653,16 +653,6 @@ end_import
 
 begin_import
 import|import
-name|javax
-operator|.
-name|annotation
-operator|.
-name|Nullable
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -752,7 +742,7 @@ argument_list|,
 name|DruidWritable
 argument_list|>
 block|{
-specifier|protected
+specifier|private
 specifier|static
 specifier|final
 name|Logger
@@ -767,8 +757,6 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-annotation|@
-name|Nullable
 specifier|public
 specifier|static
 name|DruidQueryRecordReader
@@ -834,9 +822,17 @@ name|DruidScanQueryRecordReader
 argument_list|()
 return|;
 default|default:
-return|return
-literal|null
-return|;
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Druid query type "
+operator|+
+name|druidQueryType
+operator|+
+literal|" not recognized"
+argument_list|)
+throw|;
 block|}
 block|}
 annotation|@
@@ -902,11 +898,6 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"deprecation"
-argument_list|)
 specifier|protected
 name|HiveDruidSplit
 index|[]
@@ -1133,8 +1124,9 @@ comment|// hive depends on FileSplits
 name|Job
 name|job
 init|=
-operator|new
 name|Job
+operator|.
+name|getInstance
 argument_list|(
 name|conf
 argument_list|)
@@ -2006,7 +1998,7 @@ name|LocatedSegmentDescriptor
 argument_list|>
 argument_list|>
 argument_list|()
-block|{}
+block|{           }
 argument_list|)
 expr_stmt|;
 block|}
@@ -2143,6 +2135,7 @@ name|?
 argument_list|>
 name|reader
 decl_stmt|;
+comment|// By default, we use druid scan query as fallback.
 specifier|final
 name|String
 name|druidQueryType
@@ -2154,38 +2147,12 @@ argument_list|(
 name|Constants
 operator|.
 name|DRUID_QUERY_TYPE
+argument_list|,
+name|Query
+operator|.
+name|SCAN
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|druidQueryType
-operator|==
-literal|null
-condition|)
-block|{
-name|reader
-operator|=
-operator|new
-name|DruidScanQueryRecordReader
-argument_list|()
-expr_stmt|;
-comment|// By default we use scan query as fallback.
-name|reader
-operator|.
-name|initialize
-argument_list|(
-operator|(
-name|HiveDruidSplit
-operator|)
-name|split
-argument_list|,
-name|job
-argument_list|)
-expr_stmt|;
-return|return
-name|reader
-return|;
-block|}
 name|reader
 operator|=
 name|getDruidQueryReader
@@ -2193,25 +2160,6 @@ argument_list|(
 name|druidQueryType
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|reader
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-literal|"Druid query type "
-operator|+
-name|druidQueryType
-operator|+
-literal|" not recognized"
-argument_list|)
-throw|;
-block|}
 name|reader
 operator|.
 name|initialize
@@ -2250,8 +2198,7 @@ name|IOException
 throws|,
 name|InterruptedException
 block|{
-comment|// We need to provide a different record reader for every type of Druid query.
-comment|// The reason is that Druid results format is different for each type.
+comment|// By default, we use druid scan query as fallback.
 specifier|final
 name|String
 name|druidQueryType
@@ -2266,55 +2213,20 @@ argument_list|(
 name|Constants
 operator|.
 name|DRUID_QUERY_TYPE
+argument_list|,
+name|Query
+operator|.
+name|SCAN
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|druidQueryType
-operator|==
-literal|null
-condition|)
-block|{
+comment|// We need to provide a different record reader for every type of Druid query.
+comment|// The reason is that Druid results format is different for each type.
+comment|//noinspection unchecked
 return|return
-operator|new
-name|DruidScanQueryRecordReader
-argument_list|()
-return|;
-comment|// By default, we use druid scan query as fallback.
-block|}
-specifier|final
-name|DruidQueryRecordReader
-argument_list|<
-name|?
-argument_list|>
-name|reader
-init|=
 name|getDruidQueryReader
 argument_list|(
 name|druidQueryType
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|reader
-operator|==
-literal|null
-condition|)
-block|{
-throw|throw
-operator|new
-name|IOException
-argument_list|(
-literal|"Druid query type "
-operator|+
-name|druidQueryType
-operator|+
-literal|" not recognized"
-argument_list|)
-throw|;
-block|}
-return|return
-name|reader
 return|;
 block|}
 block|}

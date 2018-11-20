@@ -3341,6 +3341,10 @@ return|;
 block|}
 end_function
 
+begin_comment
+comment|/**    * @param writable Druid Writable to be deserialized.    * @return List of Hive Writables.    * @throws SerDeException if there is Serde issues.    */
+end_comment
+
 begin_function
 annotation|@
 name|Override

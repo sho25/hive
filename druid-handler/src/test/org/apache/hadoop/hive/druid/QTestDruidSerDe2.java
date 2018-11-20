@@ -154,35 +154,63 @@ literal|" \"intervals\" : [ \"2010-01-01T00:00:00.000Z/2015-12-31T00:00:00.000Z\
 operator|+
 literal|" \"columns\" : {\r\n  "
 operator|+
-literal|"  \"__time\" : { \"type\" : \"LONG\", \"hasMultipleValues\" : false, \"size\" : 407240380, \"cardinality\" : null, \"errorMessage\" : null },\r\n  "
+literal|"  \"__time\" : { \"type\" : \"LONG\", \"hasMultipleValues\" : false, \"size\" : 407240380, "
 operator|+
-literal|"  \"robot\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|"\"cardinality\" : null, \"errorMessage\" : null },\r\n  "
 operator|+
-literal|"  \"namespace\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : true, \"size\" : 100000, \"cardinality\" : 1504, \"errorMessage\" : null },\r\n  "
+literal|"  \"robot\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\""
 operator|+
-literal|"  \"anonymous\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|" : 1944, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"namespace\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : true, \"size\" : 100000, "
+operator|+
+literal|"\"cardinality\" : 1504, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"anonymous\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, "
+operator|+
+literal|"\"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
 comment|// Next column has a similar name as previous, but different casing.
 comment|// This is allowed in Druid, but it should fail in Hive.
 operator|+
-literal|"  \"Anonymous\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|"  \"Anonymous\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, "
 operator|+
-literal|"  \"page\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|"\"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
 operator|+
-literal|"  \"language\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|"  \"page\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" "
 operator|+
-literal|"  \"newpage\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|": 1944, \"errorMessage\" : null },\r\n  "
 operator|+
-literal|"  \"user\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
+literal|"  \"language\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, "
 operator|+
-literal|"  \"count\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : null, \"errorMessage\" : null },\r\n  "
+literal|"\"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
 operator|+
-literal|"  \"added\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : null, \"errorMessage\" : null },\r\n  "
+literal|"  \"newpage\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, "
 operator|+
-literal|"  \"delta\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : null, \"errorMessage\" : null },\r\n  "
+literal|"\"cardinality\" : 1944, \"errorMessage\" : null },\r\n  "
 operator|+
-literal|"  \"variation\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : null, \"errorMessage\" : null },\r\n  "
+literal|"  \"user\" : { \"type\" : \"STRING\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" "
 operator|+
-literal|"  \"deleted\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" : null, \"errorMessage\" : null }\r\n "
+literal|": 1944, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"count\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" "
+operator|+
+literal|": null, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"added\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" "
+operator|+
+literal|": null, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"delta\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, \"cardinality\" "
+operator|+
+literal|": null, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"variation\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, "
+operator|+
+literal|"\"cardinality\" : null, \"errorMessage\" : null },\r\n  "
+operator|+
+literal|"  \"deleted\" : { \"type\" : \"FLOAT\", \"hasMultipleValues\" : false, \"size\" : 100000, "
+operator|+
+literal|"\"cardinality\" : null, \"errorMessage\" : null }\r\n "
 operator|+
 literal|" },\r\n "
 operator|+
@@ -194,7 +222,9 @@ literal|"  \"added\" : { \"type\" : \"doubleSum\", \"name\" : \"added\", \"field
 operator|+
 literal|"  \"delta\" : { \"type\" : \"doubleSum\", \"name\" : \"delta\", \"fieldName\" : \"delta\" },\r\n  "
 operator|+
-literal|"  \"variation\" : { \"type\" : \"doubleSum\", \"name\" : \"variation\", \"fieldName\" : \"variation\" },\r\n  "
+literal|"  \"variation\" : { \"type\" : \"doubleSum\", \"name\" : \"variation\", \"fieldName\" : \"variation\" },"
+operator|+
+literal|"\r\n  "
 operator|+
 literal|"  \"deleted\" : { \"type\" : \"doubleSum\", \"name\" : \"deleted\", \"fieldName\" : \"deleted\" }\r\n "
 operator|+
@@ -250,7 +280,7 @@ name|SegmentAnalysis
 argument_list|>
 argument_list|>
 argument_list|()
-block|{               }
+block|{           }
 argument_list|)
 expr_stmt|;
 block|}

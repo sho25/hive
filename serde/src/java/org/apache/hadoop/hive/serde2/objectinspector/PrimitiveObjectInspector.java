@@ -93,8 +93,6 @@ extends|extends
 name|ObjectInspector
 block|{
 comment|/**    * The primitive types supported by Hive.    */
-specifier|public
-specifier|static
 enum|enum
 name|PrimitiveCategory
 block|{
@@ -136,8 +134,6 @@ name|INTERVAL_DAY_TIME
 block|,
 name|UNKNOWN
 block|}
-empty_stmt|;
-specifier|public
 name|PrimitiveTypeInfo
 name|getTypeInfo
 parameter_list|()

@@ -4465,7 +4465,7 @@ argument_list|,
 literal|"DataSource name is null !"
 argument_list|)
 decl_stmt|;
-comment|// TODO: Move MetaStoreUtils.isExternalTablePurge(table) calls to a common place for all StorageHandlers
+comment|// Move MetaStoreUtils.isExternalTablePurge(table) calls to a common place for all StorageHandlers
 comment|// deleteData flag passed down to StorageHandler should be true only if
 comment|// MetaStoreUtils.isExternalTablePurge(table) returns true.
 if|if
@@ -5973,7 +5973,7 @@ return|;
 block|}
 else|else
 block|{
-comment|// TODO: Currently we do not expose any runtime info for non-streaming tables.
+comment|// Currently we do not expose any runtime info for non-streaming tables.
 comment|// In future extend this add more information regarding table status.
 comment|// e.g. Total size of segments in druid, load status of table on historical nodes etc.
 return|return

@@ -1078,7 +1078,9 @@ literal|"    \"fn\": \"/\",  "
 operator|+
 literal|"    \"fields\": [   "
 operator|+
-literal|"     { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name1\", \"fieldName\": \"sample_name1\" },   "
+literal|"     { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name1\", \"fieldName\": \"sample_name1\" "
+operator|+
+literal|"},   "
 operator|+
 literal|"     { \"type\": \"fieldAccess\", \"name\": \"postAgg__sample_name2\", \"fieldName\": \"sample_name2\" }  "
 operator|+
@@ -1998,8 +2000,8 @@ operator|+
 literal|" }]"
 decl_stmt|;
 specifier|private
-specifier|final
 specifier|static
+specifier|final
 name|String
 name|GB_MONTH_EXTRACTIONS
 init|=
@@ -2420,7 +2422,9 @@ literal|"{   \"queryType\": \"select\",  "
 operator|+
 literal|" \"dataSource\": \"wikipedia\",   \"descending\": \"false\",  "
 operator|+
-literal|" \"dimensions\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\",\"newpage\",\"user\"],  "
+literal|" \"dimensions\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\","
+operator|+
+literal|"\"newpage\",\"user\"],  "
 operator|+
 literal|" \"metrics\":[\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],  "
 operator|+
@@ -2449,7 +2453,9 @@ literal|"   \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-0
 operator|+
 literal|"   \"events\" : [ {  "
 operator|+
-literal|"    \"segmentId\" : \"wikipedia_editstream_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47.830Z_v9\",  "
+literal|"    \"segmentId\" : \"wikipedia_editstream_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00"
+operator|+
+literal|".000Z_2013-01-10T08:13:47.830Z_v9\",  "
 operator|+
 literal|"    \"offset\" : 0,  "
 operator|+
@@ -2487,7 +2493,9 @@ literal|"    } "
 operator|+
 literal|"   }, {  "
 operator|+
-literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47.830Z_v9\",  "
+literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47"
+operator|+
+literal|".830Z_v9\",  "
 operator|+
 literal|"    \"offset\" : 1,  "
 operator|+
@@ -2525,7 +2533,9 @@ literal|"    } "
 operator|+
 literal|"   }, {  "
 operator|+
-literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47.830Z_v9\",  "
+literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47"
+operator|+
+literal|".830Z_v9\",  "
 operator|+
 literal|"    \"offset\" : 2,  "
 operator|+
@@ -2563,7 +2573,9 @@ literal|"    } "
 operator|+
 literal|"   }, {  "
 operator|+
-literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47.830Z_v9\",  "
+literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47"
+operator|+
+literal|".830Z_v9\",  "
 operator|+
 literal|"    \"offset\" : 3,  "
 operator|+
@@ -2601,7 +2613,9 @@ literal|"    } "
 operator|+
 literal|"   }, {  "
 operator|+
-literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47.830Z_v9\",  "
+literal|"    \"segmentId\" : \"wikipedia_2012-12-29T00:00:00.000Z_2013-01-10T08:00:00.000Z_2013-01-10T08:13:47"
+operator|+
+literal|".830Z_v9\",  "
 operator|+
 literal|"    \"offset\" : 4,  "
 operator|+
@@ -2654,7 +2668,9 @@ specifier|final
 name|String
 name|SELECT_COLUMN_TYPES
 init|=
-literal|"timestamp with local time zone,boolean,string,string,string,string,string,string,string,double,double,float,float,float"
+literal|"timestamp with local time zone,boolean,string,string,string,string,string,string,string,double,double,float,"
+operator|+
+literal|"float,float"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -3206,7 +3222,9 @@ literal|"{   \"queryType\": \"scan\",  "
 operator|+
 literal|" \"dataSource\": \"wikipedia\",   \"descending\": \"false\",  "
 operator|+
-literal|" \"columns\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\",\"newpage\",\"user\",\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],  "
+literal|" \"columns\":[\"robot\",\"namespace\",\"anonymous\",\"unpatrolled\",\"page\",\"language\","
+operator|+
+literal|"\"newpage\",\"user\",\"count\",\"added\",\"delta\",\"variation\",\"deleted\"],  "
 operator|+
 literal|" \"granularity\": \"all\",  "
 operator|+
@@ -3234,15 +3252,25 @@ literal|"\"newpage\",\"user\",\"count\",\"added\",\"delta\",\"variation\",\"dele
 operator|+
 literal|"\"events\":["
 operator|+
-literal|"[\"2013-01-01T00:00:00.000Z\", 1,\"article\",\"0\",\"0\",\"11._korpus_(NOVJ)\",\"sl\",\"0\",\"EmausBot\",1.0,39.0,39.0,39.0,0.0],"
+literal|"[\"2013-01-01T00:00:00.000Z\", 1,\"article\",\"0\",\"0\",\"11._korpus_(NOVJ)\",\"sl\",\"0\","
 operator|+
-literal|"[\"2013-01-01T00:00:00.000Z\", 0,\"article\",\"0\",\"0\",\"112_U.S._580\",\"en\",\"1\",\"MZMcBride\",1.0,70.0,70.0,70.0,0.0],"
+literal|"\"EmausBot\",1.0,39.0,39.0,39.0,0.0],"
 operator|+
-literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._243\",\"en\",\"1\",\"MZMcBride\",1.0,77.0,77.0,77.0,0.0],"
+literal|"[\"2013-01-01T00:00:00.000Z\", 0,\"article\",\"0\",\"0\",\"112_U.S._580\",\"en\",\"1\",\"MZMcBride\",1"
 operator|+
-literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._73\",\"en\",\"1\",\"MZMcBride\",1.0,70.0,70.0,70.0,0.0],"
+literal|".0,70.0,70.0,70.0,0.0],"
 operator|+
-literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._756\",\"en\",\"1\",\"MZMcBride\",1.0,68.0,68.0,68.0,0.0]"
+literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._243\",\"en\",\"1\",\"MZMcBride\",1"
+operator|+
+literal|".0,77.0,77.0,77.0,0.0],"
+operator|+
+literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._73\",\"en\",\"1\",\"MZMcBride\",1.0,"
+operator|+
+literal|"70.0,70.0,70.0,0.0],"
+operator|+
+literal|"[\"2013-01-01T00:00:12.000Z\", 0,\"article\",\"0\",\"0\",\"113_U.S._756\",\"en\",\"1\",\"MZMcBride\",1"
+operator|+
+literal|".0,68.0,68.0,68.0,0.0]"
 operator|+
 literal|"]}]"
 decl_stmt|;
@@ -4069,10 +4097,6 @@ name|initialize
 argument_list|(
 name|split
 argument_list|,
-operator|new
-name|Configuration
-argument_list|()
-argument_list|,
 name|DruidStorageHandlerUtils
 operator|.
 name|JSON_MAPPER
@@ -4328,10 +4352,6 @@ operator|.
 name|initialize
 argument_list|(
 name|split
-argument_list|,
-operator|new
-name|Configuration
-argument_list|()
 argument_list|,
 name|DruidStorageHandlerUtils
 operator|.

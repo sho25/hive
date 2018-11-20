@@ -1234,7 +1234,7 @@ name|get
 argument_list|()
 decl_stmt|;
 specifier|final
-name|HashSet
+name|Set
 argument_list|<
 name|String
 argument_list|>

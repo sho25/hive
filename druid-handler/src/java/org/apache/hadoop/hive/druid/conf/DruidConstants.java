@@ -19,11 +19,20 @@ name|conf
 package|;
 end_package
 
+begin_comment
+comment|/**  * Utility class for Druid Constants.  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|DruidConstants
 block|{
+specifier|private
+name|DruidConstants
+parameter_list|()
+block|{   }
 specifier|public
 specifier|static
 specifier|final
