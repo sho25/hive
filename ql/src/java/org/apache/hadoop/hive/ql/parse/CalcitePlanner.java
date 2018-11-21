@@ -23523,6 +23523,16 @@ argument_list|,
 literal|true
 argument_list|)
 decl_stmt|;
+name|qbSQ
+operator|.
+name|setInsideView
+argument_list|(
+name|qb
+operator|.
+name|isInsideView
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|Phase1Ctx
 name|ctx1
 init|=

@@ -838,6 +838,485 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Verify that the parent entities are captured correctly for view in subquery with WHERE    * subquery referencing a view. Optimizer: Cost-based    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testViewInSubQueryWithWhereClauseCbo
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|driver
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CBO_ENABLED
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|testViewInSubQueryWithWhereClause
+argument_list|()
+expr_stmt|;
+block|}
+comment|/**    * Verify that the parent entities are captured correctly for view in subquery with WHERE    * subquery referencing a view. Optimizer: Rule-based    *    * @throws Exception    */
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testViewInSubQueryWithWhereClauseRbo
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|driver
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_CBO_ENABLED
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|testViewInSubQueryWithWhereClause
+argument_list|()
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|testViewInSubQueryWithWhereClause
+parameter_list|()
+block|{
+name|String
+name|prefix
+init|=
+literal|"tvsubquerywithwhereclause"
+operator|+
+name|NAME_PREFIX
+decl_stmt|;
+specifier|final
+name|String
+name|tab1
+init|=
+name|prefix
+operator|+
+literal|"t"
+decl_stmt|;
+specifier|final
+name|String
+name|view1
+init|=
+name|prefix
+operator|+
+literal|"v"
+decl_stmt|;
+specifier|final
+name|String
+name|view2
+init|=
+name|prefix
+operator|+
+literal|"v2"
+decl_stmt|;
+specifier|final
+name|String
+name|tab1row1
+init|=
+literal|"'x','y','z'"
+decl_stmt|;
+specifier|final
+name|String
+name|tab1row2
+init|=
+literal|"'a','b','c'"
+decl_stmt|;
+comment|//drop all if exists
+name|int
+name|ret
+init|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"drop table if exists "
+operator|+
+name|tab1
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"drop view if exists "
+operator|+
+name|view1
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"drop view if exists "
+operator|+
+name|view2
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+comment|//create tab1
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create table "
+operator|+
+name|tab1
+operator|+
+literal|"(col1 string, col2 string, col3 string)"
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|tab1
+operator|+
+literal|" values ("
+operator|+
+name|tab1row1
+operator|+
+literal|")"
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+comment|//create view1
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create view "
+operator|+
+name|view1
+operator|+
+literal|" as select "
+operator|+
+name|tab1
+operator|+
+literal|".col1, "
+operator|+
+name|tab1
+operator|+
+literal|".col2, "
+operator|+
+name|tab1
+operator|+
+literal|".col3 "
+operator|+
+literal|" from "
+operator|+
+name|tab1
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|tab1
+operator|+
+literal|" values ("
+operator|+
+name|tab1row2
+operator|+
+literal|")"
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+comment|//create view2
+name|ret
+operator|=
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create view "
+operator|+
+name|view2
+operator|+
+literal|" as select "
+operator|+
+name|tab1
+operator|+
+literal|".col1, "
+operator|+
+name|tab1
+operator|+
+literal|".col2, "
+operator|+
+name|tab1
+operator|+
+literal|".col3 "
+operator|+
+literal|" from "
+operator|+
+name|tab1
+operator|+
+literal|" where "
+operator|+
+name|tab1
+operator|+
+literal|".col1 NOT IN ("
+operator|+
+literal|"SELECT "
+operator|+
+name|view1
+operator|+
+literal|".col1 FROM "
+operator|+
+name|view1
+operator|+
+literal|")"
+argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Checking command success"
+argument_list|,
+literal|0
+argument_list|,
+name|ret
+argument_list|)
+expr_stmt|;
+comment|//select from view2
+name|driver
+operator|.
+name|compile
+argument_list|(
+literal|"select * from "
+operator|+
+name|view2
+argument_list|)
+expr_stmt|;
+comment|//verify that only view2 is direct input in above query
+name|ReadEntity
+index|[]
+name|readEntities
+init|=
+name|CheckInputReadEntity
+operator|.
+name|readEntities
+decl_stmt|;
+for|for
+control|(
+name|ReadEntity
+name|readEntity
+range|:
+name|readEntities
+control|)
+block|{
+name|String
+name|name
+init|=
+name|readEntity
+operator|.
+name|getName
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|name
+operator|.
+name|equals
+argument_list|(
+literal|"default@"
+operator|+
+name|tab1
+argument_list|)
+condition|)
+block|{
+name|assertFalse
+argument_list|(
+literal|"Table should not be direct input"
+argument_list|,
+name|readEntity
+operator|.
+name|isDirect
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|name
+operator|.
+name|equals
+argument_list|(
+literal|"default@"
+operator|+
+name|view1
+argument_list|)
+condition|)
+block|{
+name|assertFalse
+argument_list|(
+literal|"View1 should not be direct input"
+argument_list|,
+name|readEntity
+operator|.
+name|isDirect
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+name|name
+operator|.
+name|equals
+argument_list|(
+literal|"default@"
+operator|+
+name|view2
+argument_list|)
+condition|)
+block|{
+name|assertTrue
+argument_list|(
+literal|"View2 should be direct input"
+argument_list|,
+name|readEntity
+operator|.
+name|isDirect
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|fail
+argument_list|(
+literal|"Unrecognized ReadEntity input"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
 comment|/**    * Verify that the the query with the subquery inside a view will have the correct    * direct and indirect inputs.    * @throws Exception    */
 annotation|@
 name|Test
