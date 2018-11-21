@@ -4724,6 +4724,20 @@ argument_list|,
 literal|"nonstrict"
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setIntVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEOPTSORTDYNAMICPARTITIONTHRESHOLD
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"drop table if exists T"

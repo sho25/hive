@@ -1456,6 +1456,12 @@ argument_list|(
 name|procCtx
 argument_list|)
 expr_stmt|;
+comment|// Run Dynamic Partitioning sort Optimization.
+name|runDynPartitionSortOptimizations
+argument_list|(
+name|procCtx
+argument_list|)
+expr_stmt|;
 comment|// Set reducer parallelism
 name|runSetReducerParallelism
 argument_list|(
@@ -2886,6 +2892,41 @@ argument_list|(
 name|topNodes
 argument_list|,
 literal|null
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|runDynPartitionSortOptimizations
+parameter_list|(
+name|OptimizeSparkProcContext
+name|procCtx
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+comment|// run Sorted dynamic partition optimization
+name|HiveConf
+name|hConf
+init|=
+name|procCtx
+operator|.
+name|getConf
+argument_list|()
+decl_stmt|;
+name|ParseContext
+name|parseContext
+init|=
+name|procCtx
+operator|.
+name|getParseContext
+argument_list|()
+decl_stmt|;
+name|runDynPartitionSortOptimizations
+argument_list|(
+name|parseContext
+argument_list|,
+name|hConf
 argument_list|)
 expr_stmt|;
 block|}
