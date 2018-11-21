@@ -3283,7 +3283,7 @@ name|neededColsToRetrieve
 argument_list|,
 name|partNames
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -7657,7 +7657,7 @@ name|tabName
 argument_list|,
 name|colStatsToRetrieve
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 decl_stmt|;
 name|stats
