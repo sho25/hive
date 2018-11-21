@@ -490,6 +490,8 @@ literal|98
 argument_list|,
 literal|99
 argument_list|)
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|assertThat
@@ -675,6 +677,8 @@ argument_list|,
 literal|2001L
 argument_list|,
 name|statementIds
+argument_list|,
+literal|0
 argument_list|)
 decl_stmt|;
 name|deltaMetaData

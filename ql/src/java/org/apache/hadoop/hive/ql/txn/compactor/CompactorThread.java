@@ -438,6 +438,7 @@ comment|/**  * Superclass for all threads in the compactor.  */
 end_comment
 
 begin_class
+specifier|public
 specifier|abstract
 class|class
 name|CompactorThread
@@ -509,19 +510,10 @@ block|{
 comment|// TODO MS-SPLIT for now, keep a copy of HiveConf around as we need to call other methods with
 comment|// it. This should be changed to Configuration once everything that this calls that requires
 comment|// HiveConf is moved to the standalone metastore.
+comment|//clone the conf - compactor needs to set properties in it which we don't
+comment|// want to bleed into the caller
 name|conf
 operator|=
-operator|(
-name|configuration
-operator|instanceof
-name|HiveConf
-operator|)
-condition|?
-operator|(
-name|HiveConf
-operator|)
-name|configuration
-else|:
 operator|new
 name|HiveConf
 argument_list|(

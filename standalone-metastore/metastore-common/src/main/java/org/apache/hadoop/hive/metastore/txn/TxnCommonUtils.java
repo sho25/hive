@@ -384,7 +384,7 @@ name|minOpenTxnId
 argument_list|)
 return|;
 block|}
-comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetValidWriteIdsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnWriteIdList}.  This assumes that the caller intends to    * read the files, and thus treats both open and aborted transactions as invalid.    * @param currentTxnId current txn ID for which we get the valid write ids list    * @param list valid write ids list from the metastore    * @return a valid write IDs list for the whole transaction.    */
+comment|/**    * Transform a {@link org.apache.hadoop.hive.metastore.api.GetValidWriteIdsResponse} to a    * {@link org.apache.hadoop.hive.common.ValidTxnWriteIdList}.  This assumes that the caller intends to    * read the files, and thus treats both open and aborted transactions as invalid.    * @param currentTxnId current txn ID for which we get the valid write ids list    * @param validIds valid write ids list from the metastore    * @return a valid write IDs list for the whole transaction.    */
 specifier|public
 specifier|static
 name|ValidTxnWriteIdList

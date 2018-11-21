@@ -313,7 +313,23 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ValidReaderWriteIdList
+name|ValidReadTxnList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|ValidTxnList
 import|;
 end_import
 
@@ -418,24 +434,6 @@ operator|.
 name|api
 operator|.
 name|FieldSchema
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
 import|;
 end_import
 
@@ -611,59 +609,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|txn
-operator|.
-name|TxnUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|Driver
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|DriverUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|QueryState
 import|;
 end_import
 
@@ -866,42 +814,6 @@ operator|.
 name|parse
 operator|.
 name|BaseSemanticAnalyzer
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|SemanticException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|processors
-operator|.
-name|CommandProcessorResponse
 import|;
 end_import
 
@@ -1258,6 +1170,18 @@ operator|.
 name|util
 operator|.
 name|Ref
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|parquet
+operator|.
+name|Strings
 import|;
 end_import
 
@@ -2826,6 +2750,16 @@ argument_list|,
 literal|"column"
 argument_list|)
 expr_stmt|;
+name|conf
+operator|.
+name|unset
+argument_list|(
+name|ValidTxnList
+operator|.
+name|VALID_TXNS_KEY
+argument_list|)
+expr_stmt|;
+comment|//so Driver doesn't get confused
 name|String
 name|user
 init|=
@@ -4649,7 +4583,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Set the column names and types into the job conf for the input format    * to use.    * @param job the job to update    * @param cols the columns of the table    * @param map    */
+comment|/**    * Set the column names and types into the job conf for the input format    * to use.    * @param job the job to update    * @param cols the columns of the table    */
 specifier|private
 name|void
 name|setColumnTypes
@@ -6926,6 +6860,74 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
+name|long
+name|getCompactorTxnId
+parameter_list|()
+block|{
+name|String
+name|snapshot
+init|=
+name|jobConf
+operator|.
+name|get
+argument_list|(
+name|ValidTxnList
+operator|.
+name|VALID_TXNS_KEY
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|Strings
+operator|.
+name|isNullOrEmpty
+argument_list|(
+name|snapshot
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+name|ValidTxnList
+operator|.
+name|VALID_TXNS_KEY
+operator|+
+literal|" not found for writing to "
+operator|+
+name|jobConf
+operator|.
+name|get
+argument_list|(
+name|FINAL_LOCATION
+argument_list|)
+argument_list|)
+throw|;
+block|}
+name|ValidTxnList
+name|validTxnList
+init|=
+operator|new
+name|ValidReadTxnList
+argument_list|()
+decl_stmt|;
+name|validTxnList
+operator|.
+name|readFromString
+argument_list|(
+name|snapshot
+argument_list|)
+expr_stmt|;
+comment|//this is id of the current txn
+return|return
+name|validTxnList
+operator|.
+name|getHighWatermark
+argument_list|()
+return|;
+block|}
+specifier|private
 name|void
 name|getWriter
 parameter_list|(
@@ -7052,8 +7054,14 @@ argument_list|(
 operator|-
 literal|1
 argument_list|)
-expr_stmt|;
 comment|//setting statementId == -1 makes compacted delta files use
+operator|.
+name|visibilityTxnId
+argument_list|(
+name|getCompactorTxnId
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|//delta_xxxx_yyyy format
 comment|// Instantiate the underlying output format
 annotation|@
@@ -7232,9 +7240,15 @@ argument_list|(
 operator|-
 literal|1
 argument_list|)
-expr_stmt|;
 comment|//setting statementId == -1 makes compacted delta files use
-comment|//delta_xxxx_yyyy format
+comment|// delta_xxxx_yyyy format
+operator|.
+name|visibilityTxnId
+argument_list|(
+name|getCompactorTxnId
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Instantiate the underlying output format
 annotation|@
 name|SuppressWarnings
@@ -8004,7 +8018,7 @@ decl_stmt|;
 comment|//expect 1 base or delta dir in this list
 comment|//we have MIN_TXN, MAX_TXN and IS_MAJOR in JobConf so we could figure out exactly what the dir
 comment|//name is that we want to rename; leave it for another day
-comment|// TODO: if we expect one dir why don't we enforce it?
+comment|//todo: may actually have delta_x_y and delete_delta_x_y
 for|for
 control|(
 name|FileStatus
@@ -8238,6 +8252,8 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+comment|//todo: is that true?  can it be aborted? does it matter for compaction? probably OK since
+comment|//getAcidState() doesn't check if X is valid in base_X_cY for compacted base dirs.
 comment|// Assume the high watermark can be used as maximum transaction ID.
 name|long
 name|maxTxn

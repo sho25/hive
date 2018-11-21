@@ -251,6 +251,7 @@ specifier|private
 name|long
 name|maximumWriteId
 decl_stmt|;
+comment|/**      * actual bucketId (as opposed to bucket property via BucketCodec)      */
 specifier|private
 name|int
 name|bucketId
@@ -283,6 +284,7 @@ literal|1
 decl_stmt|;
 comment|// Column the record identifier is in, -1 indicates no record id
 comment|//unique within a transaction
+comment|/**      * todo: Link to AcidUtils?      */
 specifier|private
 name|int
 name|statementId
@@ -292,6 +294,13 @@ decl_stmt|;
 specifier|private
 name|Path
 name|finalDestination
+decl_stmt|;
+comment|/**      * todo: link to AcidUtils?      */
+specifier|private
+name|long
+name|visibilityTxnId
+init|=
+literal|0
 decl_stmt|;
 comment|/**      * Create the options object.      * @param conf Use the given configuration      */
 specifier|public
@@ -689,6 +698,24 @@ name|this
 return|;
 block|}
 specifier|public
+name|Options
+name|visibilityTxnId
+parameter_list|(
+name|long
+name|visibilityTxnId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|visibilityTxnId
+operator|=
+name|visibilityTxnId
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
+specifier|public
 name|Configuration
 name|getConfiguration
 parameter_list|()
@@ -838,6 +865,15 @@ parameter_list|()
 block|{
 return|return
 name|finalDestination
+return|;
+block|}
+specifier|public
+name|long
+name|getVisibilityTxnId
+parameter_list|()
+block|{
+return|return
+name|visibilityTxnId
 return|;
 block|}
 block|}

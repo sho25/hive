@@ -4201,7 +4201,7 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// There should be 3 delta directories. The new one is the aborted one.
+comment|/**      * There should be 3 delta directories. The new one is the aborted one.      *      * target/tmp/org.apache.hadoop.hive.ql.TestTxnCommands-1541637725613/warehouse/mmtbl/      ├── delta_0000001_0000001_0000      │   └── 000000_0      ├── delta_0000002_0000002_0000      │   └── 000000_0      └── delta_0000003_0000003_0000          └── 000000_0       */
 name|verifyDirAndResult
 argument_list|(
 literal|3
@@ -4261,12 +4261,9 @@ name|rs
 argument_list|)
 expr_stmt|;
 comment|// Run Cleaner.
-comment|// This run doesn't do anything for the above aborted transaction since
-comment|// the current compaction request entry in the compaction queue is updated
-comment|// to have highest_write_id when the worker is run before the aborted
-comment|// transaction. Specifically the id is 2 for the entry but the aborted
-comment|// transaction has 3 as writeId. This run does transition the entry
-comment|// "successful".
+comment|// delta_0000003_0000003_0000 produced by the aborted txn is removed even though it is
+comment|// above COMPACTION_QUEUE.CQ_HIGHEST_WRITE_ID since all data in it is aborted
+comment|// This run does transition the entry "successful".
 name|runCleaner
 argument_list|(
 name|hiveConf
@@ -4274,7 +4271,7 @@ argument_list|)
 expr_stmt|;
 name|verifyDirAndResult
 argument_list|(
-literal|3
+literal|2
 argument_list|)
 expr_stmt|;
 comment|// Execute SELECT and verify that aborted operation is not counted for MM table.
@@ -4329,63 +4326,18 @@ literal|"select count(*) from TXNS"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Initiator
-name|i
-init|=
-operator|new
-name|Initiator
-argument_list|()
-decl_stmt|;
-name|i
+name|TestTxnCommands2
 operator|.
-name|setThreadId
-argument_list|(
-operator|(
-name|int
-operator|)
-name|i
-operator|.
-name|getId
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|i
-operator|.
-name|setConf
+name|runInitiator
 argument_list|(
 name|hiveConf
 argument_list|)
-expr_stmt|;
-name|AtomicBoolean
-name|stop
-init|=
-operator|new
-name|AtomicBoolean
-argument_list|(
-literal|true
-argument_list|)
-decl_stmt|;
-name|i
-operator|.
-name|init
-argument_list|(
-name|stop
-argument_list|,
-operator|new
-name|AtomicBoolean
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|i
-operator|.
-name|run
-argument_list|()
 expr_stmt|;
 comment|// This run of Initiator doesn't add any compaction_queue entry
 comment|// since we only have one MM table with data - we don't compact MM tables.
 name|verifyDirAndResult
 argument_list|(
-literal|3
+literal|2
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -4520,10 +4472,12 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 comment|// Run initiator to clean the row fro the aborted transaction from TXNS.
-name|i
+name|TestTxnCommands2
 operator|.
-name|run
-argument_list|()
+name|runInitiator
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 name|Assert
 operator|.

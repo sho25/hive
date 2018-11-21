@@ -840,6 +840,17 @@ parameter_list|()
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Returns the smallest txnid that could be seen in open state across all active transactions in    * the system or {@code NEXT_TXN_ID.NTXN_NEXT} if there are no active transactions, i.e. the    * smallest txnid that can be seen as unresolved in the whole system.  Even if a transaction    * is opened concurrently with this call it cannot have an id less than what this method returns.    * @return transaction ID    */
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
+name|long
+name|findMinOpenTxnId
+parameter_list|()
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * This will remove an entry from the queue after    * it has been compacted.    *     * @param info info on the compaction entry to remove    */
 annotation|@
 name|RetrySemantics

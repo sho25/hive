@@ -4417,6 +4417,8 @@ name|mergerOptions
 argument_list|,
 name|AcidUtils
 operator|.
+name|ParsedBase
+operator|.
 name|parseBase
 argument_list|(
 name|mergerOptions
@@ -4424,6 +4426,9 @@ operator|.
 name|getBaseDir
 argument_list|()
 argument_list|)
+operator|.
+name|getWriteId
+argument_list|()
 argument_list|,
 name|mergerOptions
 operator|.
@@ -5568,10 +5573,15 @@ name|TransactionMetaData
 argument_list|(
 name|AcidUtils
 operator|.
+name|ParsedBase
+operator|.
 name|parseBase
 argument_list|(
 name|parent
 argument_list|)
+operator|.
+name|getWriteId
+argument_list|()
 argument_list|,
 name|parent
 argument_list|)

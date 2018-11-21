@@ -3048,6 +3048,7 @@ argument_list|(
 name|numRecords
 argument_list|)
 expr_stmt|;
+comment|//hmm - length files should store length in bytes...
 block|}
 else|else
 block|{

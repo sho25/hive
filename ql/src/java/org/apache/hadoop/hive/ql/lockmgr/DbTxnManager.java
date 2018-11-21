@@ -1856,7 +1856,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"No locks needed for queryId"
+literal|"No locks needed for queryId="
 operator|+
 name|queryId
 argument_list|)
@@ -1901,7 +1901,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"No locks needed for queryId"
+literal|"No locks needed for queryId="
 operator|+
 name|queryId
 argument_list|)

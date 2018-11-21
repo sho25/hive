@@ -2518,6 +2518,15 @@ name|tuple
 operator|.
 name|replicationSpec
 operator|.
+name|setValidTxnList
+argument_list|(
+name|validTxnList
+argument_list|)
+expr_stmt|;
+name|tuple
+operator|.
+name|replicationSpec
+operator|.
 name|setValidWriteIdList
 argument_list|(
 name|getValidWriteIdList

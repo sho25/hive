@@ -76,6 +76,7 @@ specifier|protected
 name|long
 name|highWatermark
 decl_stmt|;
+comment|/**    * This seems like a bad c'tor.  It doesn't even have a table name in it and it's used every time    * ValidWriteIdList.VALID_WRITEIDS_KEY is not found in Configuration.    * But, if anything, that would indicate a bug if was done for an acid read since it    * considers everything valid - this should not be assumed.    */
 specifier|public
 name|ValidReaderWriteIdList
 parameter_list|()
