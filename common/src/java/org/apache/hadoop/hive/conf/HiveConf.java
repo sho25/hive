@@ -11380,7 +11380,7 @@ literal|1
 argument_list|,
 literal|"Determines the "
 operator|+
-literal|"degree of parallelism for compilation queries between sessions on HiveServer2. The default is -1."
+literal|"degree of parallelism for queries compilation between sessions on HiveServer2. The default is -1."
 argument_list|)
 block|,
 name|HIVE_SERVER2_COMPILE_LOCK_TIMEOUT
@@ -16526,7 +16526,9 @@ literal|"hadoop.bin.path,"
 operator|+
 literal|"yarn.bin.path,"
 operator|+
-literal|"spark.home"
+literal|"spark.home,"
+operator|+
+literal|"hive.driver.parallel.compilation.global.limit"
 argument_list|,
 literal|"Comma separated list of configuration options which are immutable at runtime"
 argument_list|)
@@ -16569,8 +16571,6 @@ operator|+
 literal|",dfs.adls.oauth2.credential"
 operator|+
 literal|",fs.adl.oauth2.credential"
-operator|+
-literal|",hive.driver.parallel.compilation.global.limit"
 argument_list|,
 literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
 argument_list|)
