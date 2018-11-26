@@ -656,6 +656,12 @@ argument_list|,
 literal|"minillap.shared.query.files"
 argument_list|)
 expr_stmt|;
+name|excludeQuery
+argument_list|(
+literal|"cbo_limit.q"
+argument_list|)
+expr_stmt|;
+comment|//Disabled in HIVE-20860
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
