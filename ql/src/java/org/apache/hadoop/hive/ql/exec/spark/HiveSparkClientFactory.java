@@ -584,10 +584,6 @@ name|hiveconf
 argument_list|,
 name|sparkConf
 argument_list|,
-name|hiveSessionId
-operator|+
-literal|"_"
-operator|+
 name|sparkSessionId
 argument_list|)
 return|;

@@ -9673,6 +9673,11 @@ name|getNewSparkSessionId
 parameter_list|()
 block|{
 return|return
+name|getSessionId
+argument_list|()
+operator|+
+literal|"_"
+operator|+
 name|Long
 operator|.
 name|toString
