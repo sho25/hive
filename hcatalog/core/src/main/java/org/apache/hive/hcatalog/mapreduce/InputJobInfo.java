@@ -67,6 +67,26 @@ name|java
 operator|.
 name|io
 operator|.
+name|ByteArrayInputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
+name|ByteArrayOutputStream
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -408,7 +428,7 @@ return|return
 name|properties
 return|;
 block|}
-comment|/**    * Serialize this object, compressing the partitions which can exceed the    * allowed jobConf size.    * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>    */
+comment|/**    * Serialize this object, compressing the partitions which can exceed the    * allowed jobConf size.    * Partitions will be compressed and put into a byte array which then we have to write into the    * ObjectOutputStream this method is given.    * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>    */
 specifier|private
 name|void
 name|writeObject
@@ -424,6 +444,22 @@ operator|.
 name|defaultWriteObject
 argument_list|()
 expr_stmt|;
+name|ByteArrayOutputStream
+name|serialObj
+init|=
+operator|new
+name|ByteArrayOutputStream
+argument_list|()
+decl_stmt|;
+name|ObjectOutputStream
+name|objStream
+init|=
+operator|new
+name|ObjectOutputStream
+argument_list|(
+name|serialObj
+argument_list|)
+decl_stmt|;
 name|Deflater
 name|def
 init|=
@@ -444,7 +480,7 @@ argument_list|(
 operator|new
 name|DeflaterOutputStream
 argument_list|(
-name|oos
+name|objStream
 argument_list|,
 name|def
 argument_list|)
@@ -457,10 +493,22 @@ argument_list|(
 name|partitions
 argument_list|)
 expr_stmt|;
+comment|//Closing only the writer used for compression byte stream
 name|partInfoWriter
 operator|.
 name|close
 argument_list|()
+expr_stmt|;
+comment|//Appending the compressed partition information
+name|oos
+operator|.
+name|writeObject
+argument_list|(
+name|serialObj
+operator|.
+name|toByteArray
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Deserialize this object, decompressing the partitions which can exceed the    * allowed jobConf size.    * @see<a href="https://issues.apache.org/jira/browse/HCATALOG-453">HCATALOG-453</a>    */
@@ -486,6 +534,27 @@ operator|.
 name|defaultReadObject
 argument_list|()
 expr_stmt|;
+comment|//Next object in the stream will be a byte array of partition information which is compressed
+name|ObjectInputStream
+name|pis
+init|=
+operator|new
+name|ObjectInputStream
+argument_list|(
+operator|new
+name|ByteArrayInputStream
+argument_list|(
+operator|(
+name|byte
+index|[]
+operator|)
+name|ois
+operator|.
+name|readObject
+argument_list|()
+argument_list|)
+argument_list|)
+decl_stmt|;
 name|ObjectInputStream
 name|partInfoReader
 init|=
@@ -495,7 +564,7 @@ argument_list|(
 operator|new
 name|InflaterInputStream
 argument_list|(
-name|ois
+name|pis
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -549,6 +618,12 @@ expr_stmt|;
 block|}
 block|}
 block|}
+comment|//Closing only the reader used for decompression byte stream
+name|partInfoReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 end_class

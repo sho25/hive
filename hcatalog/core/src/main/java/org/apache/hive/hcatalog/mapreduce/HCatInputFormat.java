@@ -119,22 +119,6 @@ name|hcatalog
 operator|.
 name|common
 operator|.
-name|HCatConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|hcatalog
-operator|.
-name|common
-operator|.
 name|HCatUtil
 import|;
 end_import
@@ -537,7 +521,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Return partitioning columns for this input, can only be called after setInput is called.    * @return partitioning columns of the table specified by the job.    * @throws IOException    */
+comment|/**    * Return partitioning columns for this input, can only be called after setInput is called,    * since that takes care of adding a populated InputJobInfo object to its list in this job conf.    * @return partitioning columns of the table specified by the job.    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -552,21 +536,11 @@ block|{
 name|InputJobInfo
 name|inputInfo
 init|=
-operator|(
-name|InputJobInfo
-operator|)
 name|HCatUtil
 operator|.
-name|deserialize
+name|getLastInputJobInfosFromConf
 argument_list|(
 name|conf
-operator|.
-name|get
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_KEY_JOB_INFO
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|Preconditions
@@ -588,7 +562,7 @@ name|getPartitionColumns
 argument_list|()
 return|;
 block|}
-comment|/**    * Return data columns for this input, can only be called after setInput is called.    * @return data columns of the table specified by the job.    * @throws IOException    */
+comment|/**    * Return data columns for this input, can only be called after setInput is called,    * since that takes care of adding a populated InputJobInfo object to its list in this job conf.    * @return data columns of the table specified by the job.    * @throws IOException    */
 specifier|public
 specifier|static
 name|HCatSchema
@@ -603,21 +577,11 @@ block|{
 name|InputJobInfo
 name|inputInfo
 init|=
-operator|(
-name|InputJobInfo
-operator|)
 name|HCatUtil
 operator|.
-name|deserialize
+name|getLastInputJobInfosFromConf
 argument_list|(
 name|conf
-operator|.
-name|get
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_KEY_JOB_INFO
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|Preconditions

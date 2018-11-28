@@ -237,22 +237,6 @@ name|hcatalog
 operator|.
 name|common
 operator|.
-name|HCatConstants
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|hcatalog
-operator|.
-name|common
-operator|.
 name|HCatException
 import|;
 end_import
@@ -360,7 +344,7 @@ name|theirInputJobInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Set the input to use for the Job. This queries the metadata server with the specified    * partition predicates, gets the matching partitions, and puts the information in the job    * configuration object.    *    * To ensure a known InputJobInfo state, only the database name, table name, filter, and    * properties are preserved. All other modification from the given InputJobInfo are discarded.    *    * After calling setInput, InputJobInfo can be retrieved from the job configuration as follows:    * {code}    * InputJobInfo inputInfo = (InputJobInfo) HCatUtil.deserialize(    *     job.getConfiguration().get(HCatConstants.HCAT_KEY_JOB_INFO));    * {code}    *    * @param conf the job Configuration object    * @param theirInputJobInfo information on the Input to read    * @throws Exception    */
+comment|/**    * Set the input to use for the Job. This queries the metadata server with the specified    * partition predicates, gets the matching partitions, and puts the information in the job    * configuration object.    *    * To ensure a known InputJobInfo state, only the database name, table name, filter, and    * properties are preserved. All other modification from the given InputJobInfo are discarded.    *    * After calling setInput, InputJobInfo can be retrieved from the job configuration as follows:    * {code}    * LinkedList&lt;InputJobInfo&gt; inputInfo = (LinkedList&lt;InputJobInfo&gt;) HCatUtil    * .deserialize(job.getConfiguration().get(HCatConstants.HCAT_KEY_JOB_INFO));    * {code}    *    * @param conf the job Configuration object    * @param theirInputJobInfo information on the Input to read    * @throws Exception    */
 specifier|public
 specifier|static
 name|void
@@ -403,19 +387,7 @@ name|getProperties
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-name|HCatConstants
-operator|.
-name|HCAT_KEY_JOB_INFO
-argument_list|,
-name|HCatUtil
-operator|.
-name|serialize
-argument_list|(
-name|getInputJobInfo
+name|populateInputJobInfo
 argument_list|(
 name|conf
 argument_list|,
@@ -423,15 +395,22 @@ name|inputJobInfo
 argument_list|,
 literal|null
 argument_list|)
-argument_list|)
+expr_stmt|;
+name|HCatUtil
+operator|.
+name|putInputJobInfoToConf
+argument_list|(
+name|inputJobInfo
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Returns the given InputJobInfo after populating with data queried from the metadata service.    */
 specifier|private
 specifier|static
-name|InputJobInfo
-name|getInputJobInfo
+name|void
+name|populateInputJobInfo
 parameter_list|(
 name|Configuration
 name|conf
@@ -635,6 +614,13 @@ argument_list|)
 throw|;
 block|}
 comment|// populate partition info
+if|if
+condition|(
+name|parts
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|Partition
@@ -716,6 +702,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 else|else
 block|{
 comment|//Non partitioned table
@@ -783,9 +770,6 @@ argument_list|(
 name|partInfoList
 argument_list|)
 expr_stmt|;
-return|return
-name|inputJobInfo
-return|;
 block|}
 finally|finally
 block|{
