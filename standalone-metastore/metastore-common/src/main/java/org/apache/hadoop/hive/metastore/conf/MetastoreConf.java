@@ -57,6 +57,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ZooKeeperHiveHelper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|utils
@@ -648,6 +664,18 @@ block|,
 name|ConfVars
 operator|.
 name|SERVER_PORT
+block|,
+name|ConfVars
+operator|.
+name|THRIFT_BIND_HOST
+block|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_CLIENT_PORT
+block|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_NAMESPACE
 block|,
 name|ConfVars
 operator|.
@@ -3508,6 +3536,17 @@ argument_list|,
 literal|"Number of retries upon failure of Thrift metastore calls"
 argument_list|)
 block|,
+name|THRIFT_BIND_HOST
+argument_list|(
+literal|"metastore.thrift.bind.host"
+argument_list|,
+literal|"hive.metastore.thrift.bind.host"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Bind host on which to run the metastore thrift service."
+argument_list|)
+block|,
 name|THRIFT_URIS
 argument_list|(
 literal|"metastore.thrift.uris"
@@ -3516,7 +3555,140 @@ literal|"hive.metastore.uris"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore."
+literal|"URIs Used by metastore client to connect to remotemetastore\n."
+operator|+
+literal|"If dynamic service discovery mode is set, the URIs are used to connect to the"
+operator|+
+literal|" corresponding service discovery servers e.g. a zookeeper. Otherwise they are "
+operator|+
+literal|"used as URIs for remote metastore."
+argument_list|)
+block|,
+name|THRIFT_SERVICE_DISCOVERY_MODE
+argument_list|(
+literal|"metastore.service.discovery.mode"
+argument_list|,
+literal|"hive.metastore.service.discovery.mode"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Specifies which dynamic service discovery method to use. Currently we support only "
+operator|+
+literal|"\"zookeeper\" to specify ZooKeeper based service discovery."
+argument_list|)
+block|,
+name|THRIFT_ZOOKEEPER_CLIENT_PORT
+argument_list|(
+literal|"metastore.zookeeper.client.port"
+argument_list|,
+literal|"hive.metastore.zookeeper.client.port"
+argument_list|,
+literal|"2181"
+argument_list|,
+literal|"The port of ZooKeeper servers to talk to.\n"
+operator|+
+literal|"If the list of Zookeeper servers specified in hive.metastore.thrift.uris"
+operator|+
+literal|" does not contain port numbers, this value is used."
+argument_list|)
+block|,
+name|THRIFT_ZOOKEEPER_SESSION_TIMEOUT
+argument_list|(
+literal|"metastore.zookeeper.session.timeout"
+argument_list|,
+literal|"hive.metastore.zookeeper.session.timeout"
+argument_list|,
+literal|120000L
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper client's session timeout (in milliseconds). The client is disconnected\n"
+operator|+
+literal|"if a heartbeat is not sent in the timeout."
+argument_list|)
+block|,
+name|THRIFT_ZOOKEEPER_CONNECTION_TIMEOUT
+argument_list|(
+literal|"metastore.zookeeper.connection.timeout"
+argument_list|,
+literal|"hive.metastore.zookeeper.connection.timeout"
+argument_list|,
+literal|15L
+argument_list|,
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"ZooKeeper client's connection timeout in seconds. "
+operator|+
+literal|"Connection timeout * hive.metastore.zookeeper.connection.max.retries\n"
+operator|+
+literal|"with exponential backoff is when curator client deems connection is lost to zookeeper."
+argument_list|)
+block|,
+name|THRIFT_ZOOKEEPER_NAMESPACE
+argument_list|(
+literal|"metastore.zookeeper.namespace"
+argument_list|,
+literal|"hive.metastore.zookeeper.namespace"
+argument_list|,
+literal|"hive_metastore"
+argument_list|,
+literal|"The parent node under which all ZooKeeper nodes for metastores are created."
+argument_list|)
+block|,
+name|THRIFT_ZOOKEEPER_CONNECTION_MAX_RETRIES
+argument_list|(
+literal|"metastore.zookeeper.connection.max.retries"
+argument_list|,
+literal|"hive.metastore.zookeeper.connection.max.retries"
+argument_list|,
+literal|3
+argument_list|,
+literal|"Max number of times to retry when connecting to the ZooKeeper server."
+argument_list|)
+block|,
+name|THRIFT_ZOOKEEPER_CONNECTION_BASESLEEPTIME
+argument_list|(
+literal|"metastore.zookeeper.connection.basesleeptime"
+argument_list|,
+literal|"hive.metastore.zookeeper.connection.basesleeptime"
+argument_list|,
+literal|1000L
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Initial amount of time (in milliseconds) to wait between retries\n"
+operator|+
+literal|"when connecting to the ZooKeeper server when using ExponentialBackoffRetry policy."
 argument_list|)
 block|,
 name|THRIFT_URI_SELECTION
@@ -3539,7 +3711,7 @@ literal|"Determines the selection mechanism used by metastore client to connect 
 operator|+
 literal|"metastore.  SEQUENTIAL implies that the first valid metastore from the URIs specified "
 operator|+
-literal|"as part of hive.metastore.uris will be picked.  RANDOM implies that the metastore "
+literal|"through hive.metastore.uris will be picked.  RANDOM implies that the metastore "
 operator|+
 literal|"will be picked randomly"
 argument_list|)
@@ -7805,6 +7977,104 @@ argument_list|()
 operator|.
 name|isEmpty
 argument_list|()
+return|;
+block|}
+end_function
+
+begin_function
+specifier|public
+specifier|static
+name|ZooKeeperHiveHelper
+name|getZKConfig
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
+block|{
+return|return
+operator|new
+name|ZooKeeperHiveHelper
+argument_list|(
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_URIS
+argument_list|)
+argument_list|,
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_CLIENT_PORT
+argument_list|)
+argument_list|,
+name|MetastoreConf
+operator|.
+name|getVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_NAMESPACE
+argument_list|)
+argument_list|,
+operator|(
+name|int
+operator|)
+name|MetastoreConf
+operator|.
+name|getTimeVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_SESSION_TIMEOUT
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+operator|(
+name|int
+operator|)
+name|MetastoreConf
+operator|.
+name|getTimeVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_CONNECTION_BASESLEEPTIME
+argument_list|,
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+name|MetastoreConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|THRIFT_ZOOKEEPER_CONNECTION_MAX_RETRIES
+argument_list|)
+argument_list|)
 return|;
 block|}
 end_function
