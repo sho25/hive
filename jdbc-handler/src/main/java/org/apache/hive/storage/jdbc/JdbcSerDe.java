@@ -954,6 +954,40 @@ name|e
 argument_list|)
 throw|;
 block|}
+if|if
+condition|(
+name|LOGGER
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOGGER
+operator|.
+name|debug
+argument_list|(
+literal|"JdbcSerDe initialized with\n"
+operator|+
+literal|"\t columns: "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|hiveColumnNames
+argument_list|)
+operator|+
+literal|"\n\t types: "
+operator|+
+name|Arrays
+operator|.
+name|toString
+argument_list|(
+name|hiveColumnTypes
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Override

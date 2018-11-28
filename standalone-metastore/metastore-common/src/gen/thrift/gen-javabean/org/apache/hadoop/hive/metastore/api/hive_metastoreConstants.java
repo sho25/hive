@@ -549,6 +549,22 @@ name|TABLE_BUCKETING_VERSION
 init|=
 literal|"bucketing_version"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DRUID_CONFIG_PREFIX
+init|=
+literal|"druid."
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|JDBC_CONFIG_PREFIX
+init|=
+literal|"hive.sql."
+decl_stmt|;
 block|}
 end_class
 

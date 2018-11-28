@@ -2932,6 +2932,7 @@ operator|!=
 literal|null
 operator|&&
 operator|(
+operator|(
 name|key
 operator|.
 name|equals
@@ -2953,14 +2954,50 @@ argument_list|(
 name|parts
 argument_list|)
 operator|||
-comment|// skip Druid properties which are used in DruidSerde, since they are also updated
-comment|// after SerDeInfo properties are copied.
+comment|// Skip Druid and JDBC properties which are used in respective SerDes,
+comment|// since they are also updated after SerDeInfo properties are copied.
 name|key
 operator|.
 name|startsWith
 argument_list|(
-literal|"druid."
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|hive_metastoreConstants
+operator|.
+name|DRUID_CONFIG_PREFIX
 argument_list|)
+operator|||
+name|key
+operator|.
+name|startsWith
+argument_list|(
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|hive_metastoreConstants
+operator|.
+name|JDBC_CONFIG_PREFIX
+argument_list|)
+operator|)
 operator|)
 condition|)
 block|{
