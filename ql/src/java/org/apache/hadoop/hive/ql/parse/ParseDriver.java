@@ -222,7 +222,9 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-literal|"hive.ql.parse.ParseDriver"
+name|ParseDriver
+operator|.
+name|class
 argument_list|)
 decl_stmt|;
 comment|/**    * ANTLRNoCaseStringStream.    *    */
@@ -887,11 +889,6 @@ name|RecognitionException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|ParseException
@@ -1002,10 +999,10 @@ name|ParseException
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Parsing hint: "
-operator|+
+literal|"Parsing hint: {}"
+argument_list|,
 name|command
 argument_list|)
 expr_stmt|;
@@ -1070,11 +1067,6 @@ name|RecognitionException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|ParseException
@@ -1109,7 +1101,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Parse Completed"
 argument_list|)
@@ -1176,24 +1168,15 @@ parameter_list|)
 throws|throws
 name|ParseException
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Parsing command: "
-operator|+
+literal|"Parsing command: {}"
+argument_list|,
 name|command
 argument_list|)
 expr_stmt|;
-block|}
 name|HiveLexerX
 name|lexer
 init|=
@@ -1270,11 +1253,6 @@ name|RecognitionException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|ParseException
@@ -1371,10 +1349,10 @@ name|ParseException
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
-literal|"Parsing expression: "
-operator|+
+literal|"Parsing expression: {}"
+argument_list|,
 name|command
 argument_list|)
 expr_stmt|;
@@ -1439,11 +1417,6 @@ name|RecognitionException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|ParseException
@@ -1478,7 +1451,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Parse Completed"
 argument_list|)
@@ -1604,11 +1577,6 @@ name|RecognitionException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|ParseException
@@ -1746,11 +1714,6 @@ name|RecognitionException
 name|e
 parameter_list|)
 block|{
-name|e
-operator|.
-name|printStackTrace
-argument_list|()
-expr_stmt|;
 throw|throw
 operator|new
 name|ParseException
