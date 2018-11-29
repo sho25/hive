@@ -2637,6 +2637,11 @@ parameter_list|()
 throws|throws
 name|StreamingIOFailure
 block|{
+name|heapMemoryMonitor
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
 name|boolean
 name|haveError
 init|=
