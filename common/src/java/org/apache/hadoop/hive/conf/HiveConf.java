@@ -22730,6 +22730,8 @@ literal|"hive\\.index\\..*"
 block|,
 literal|"hive\\.intermediate\\..*"
 block|,
+literal|"hive\\.jdbc\\..*"
+block|,
 literal|"hive\\.join\\..*"
 block|,
 literal|"hive\\.limit\\..*"
