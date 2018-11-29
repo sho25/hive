@@ -16698,7 +16698,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"pattern: {}"
 argument_list|,
@@ -17552,7 +17552,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"pattern: {}"
 argument_list|,
@@ -21013,7 +21013,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"pattern: {}"
 argument_list|,
