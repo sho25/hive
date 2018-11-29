@@ -3648,7 +3648,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|logInfo
+name|logAndAudit
 argument_list|(
 literal|"Meta listeners shutdown notification completed."
 argument_list|)
@@ -6078,26 +6078,24 @@ block|}
 specifier|private
 specifier|static
 name|void
-name|logInfo
+name|logAndAudit
 parameter_list|(
+specifier|final
 name|String
 name|m
 parameter_list|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
+literal|"{}: {}"
+argument_list|,
 name|threadLocalId
 operator|.
 name|get
 argument_list|()
-operator|.
-name|toString
-argument_list|()
-operator|+
-literal|": "
-operator|+
+argument_list|,
 name|m
 argument_list|)
 expr_stmt|;
@@ -6123,7 +6121,7 @@ argument_list|(
 name|function
 argument_list|)
 expr_stmt|;
-name|logInfo
+name|logAndAudit
 argument_list|(
 operator|(
 name|getThreadLocalIpAddress
@@ -20768,7 +20766,7 @@ parameter_list|)
 throws|throws
 name|TException
 block|{
-name|logInfo
+name|logAndAudit
 argument_list|(
 literal|"add_partitions"
 argument_list|)
@@ -22395,7 +22393,7 @@ parameter_list|)
 throws|throws
 name|TException
 block|{
-name|logInfo
+name|logAndAudit
 argument_list|(
 literal|"add_partitions_pspec"
 argument_list|)
@@ -56418,7 +56416,7 @@ condition|)
 block|{
 name|HMSHandler
 operator|.
-name|logInfo
+name|logAndAudit
 argument_list|(
 literal|"Cleaning up thread local RawStore..."
 argument_list|)
@@ -56483,7 +56481,7 @@ argument_list|()
 expr_stmt|;
 name|HMSHandler
 operator|.
-name|logInfo
+name|logAndAudit
 argument_list|(
 literal|"Done cleaning up thread local RawStore"
 argument_list|)
