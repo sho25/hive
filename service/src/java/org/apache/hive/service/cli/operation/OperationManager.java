@@ -1280,11 +1280,19 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Adding operation: "
-operator|+
+literal|"Adding operation: {} {}"
+argument_list|,
 name|operation
 operator|.
 name|getHandle
+argument_list|()
+argument_list|,
+name|operation
+operator|.
+name|getParentSession
+argument_list|()
+operator|.
+name|getSessionHandle
 argument_list|()
 argument_list|)
 expr_stmt|;
