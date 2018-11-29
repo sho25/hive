@@ -135,9 +135,6 @@ argument_list|(
 name|SmallTableCache
 operator|.
 name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|private
@@ -256,24 +253,15 @@ operator|.
 name|clear
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cleaned up small table cache for query "
-operator|+
+literal|"Cleaned up small table cache for query {}"
+argument_list|,
 name|queryId
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 block|}
@@ -307,23 +295,16 @@ name|tableContainer
 argument_list|)
 operator|==
 literal|null
-operator|&&
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
 condition|)
 block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Cached small table file "
-operator|+
+literal|"Cached small table file {} for query {}"
+argument_list|,
 name|path
-operator|+
-literal|" for query "
-operator|+
+argument_list|,
 name|queryId
 argument_list|)
 expr_stmt|;
@@ -348,32 +329,17 @@ argument_list|(
 name|path
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|tableContainer
-operator|!=
-literal|null
-operator|&&
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Loaded small table file "
-operator|+
+literal|"Loaded small table file {} from cache for query {}"
+argument_list|,
 name|path
-operator|+
-literal|" from cache for query "
-operator|+
+argument_list|,
 name|queryId
 argument_list|)
 expr_stmt|;
-block|}
 return|return
 name|tableContainer
 return|;
