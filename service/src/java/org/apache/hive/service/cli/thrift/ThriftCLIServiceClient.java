@@ -2786,8 +2786,15 @@ argument_list|()
 argument_list|,
 name|resp
 operator|.
+name|isSetHasResultSet
+argument_list|()
+condition|?
+name|resp
+operator|.
 name|isHasResultSet
 argument_list|()
+else|:
+literal|null
 argument_list|,
 name|opException
 argument_list|)

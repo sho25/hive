@@ -590,8 +590,10 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|protected
-name|boolean
+name|Boolean
 name|hasResultSet
+init|=
+literal|null
 decl_stmt|;
 specifier|protected
 specifier|volatile
@@ -960,6 +962,12 @@ name|hasResultSet
 parameter_list|()
 block|{
 return|return
+name|hasResultSet
+operator|==
+literal|null
+condition|?
+literal|false
+else|:
 name|hasResultSet
 return|;
 block|}

@@ -4828,6 +4828,14 @@ name|getOperationCompleted
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|operationStatus
+operator|.
+name|isHasResultSetIsSet
+argument_list|()
+condition|)
+block|{
 name|resp
 operator|.
 name|setHasResultSet
@@ -4838,6 +4846,7 @@ name|getHasResultSet
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 name|JobProgressUpdate
 name|progressUpdate
 init|=
