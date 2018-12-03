@@ -670,12 +670,6 @@ argument_list|,
 literal|"minillap.shared.query.files"
 argument_list|)
 expr_stmt|;
-name|excludeQuery
-argument_list|(
-literal|"cbo_limit.q"
-argument_list|)
-expr_stmt|;
-comment|//Disabled in HIVE-20860
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
@@ -1121,6 +1115,12 @@ literal|"load_dyn_part3.q"
 argument_list|)
 expr_stmt|;
 comment|// Disabled in HIVE-20662. Enable in HIVE-20663.
+name|excludeQuery
+argument_list|(
+literal|"cbo_limit.q"
+argument_list|)
+expr_stmt|;
+comment|//Disabled in HIVE-20860. Enable in HIVE-20972
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
