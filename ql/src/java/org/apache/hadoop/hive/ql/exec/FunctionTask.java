@@ -1337,6 +1337,8 @@ argument_list|,
 name|resources
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|db
 operator|.
 name|createFunction
@@ -1344,6 +1346,46 @@ argument_list|(
 name|func
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// Addition to metastore failed, remove the function from the registry.
+name|FunctionRegistry
+operator|.
+name|unregisterPermanentFunction
+argument_list|(
+name|registeredName
+argument_list|)
+expr_stmt|;
+name|setException
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Failed to add function "
+operator|+
+name|createFunctionDesc
+operator|.
+name|getFunctionName
+argument_list|()
+operator|+
+literal|" to the metastore."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|1
+return|;
+block|}
 return|return
 literal|0
 return|;
