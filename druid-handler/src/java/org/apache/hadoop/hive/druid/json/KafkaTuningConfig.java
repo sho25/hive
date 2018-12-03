@@ -526,6 +526,11 @@ return|;
 block|}
 comment|/**    * Always returns true, doesn't affect the version being built.    */
 annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"SameReturnValue"
+argument_list|)
+annotation|@
 name|Deprecated
 annotation|@
 name|JsonProperty

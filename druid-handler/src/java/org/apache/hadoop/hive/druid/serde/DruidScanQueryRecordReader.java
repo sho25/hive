@@ -241,6 +241,7 @@ operator|.
 name|next
 argument_list|()
 decl_stmt|;
+comment|//noinspection unchecked
 name|compactedValues
 operator|=
 operator|(

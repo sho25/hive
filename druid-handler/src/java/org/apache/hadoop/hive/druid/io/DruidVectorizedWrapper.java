@@ -293,22 +293,12 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Properties
 import|;
 end_import
 
 begin_comment
-comment|/**  * A Wrapper class that takes a row-by-row Druid Record Reader and provides a Vectorized one.  * @param<T> type of the Druid query.  */
+comment|/**  * A Wrapper class that consumes row-by-row from base Druid Record Reader and provides a Vectorized one.  * @param<T> type of the Druid query.  */
 end_comment
 
 begin_class
@@ -354,6 +344,12 @@ specifier|private
 specifier|final
 name|DruidSerDe
 name|serDe
+decl_stmt|;
+specifier|private
+specifier|final
+name|Object
+index|[]
+name|rowBoat
 decl_stmt|;
 comment|/**    * Actual projected columns needed by the query, this can be empty in case of query like: select count(*) from src.    */
 specifier|private
@@ -506,6 +502,16 @@ operator|.
 name|createValue
 argument_list|()
 expr_stmt|;
+name|rowBoat
+operator|=
+operator|new
+name|Object
+index|[
+name|projectedColumns
+operator|.
+name|length
+index|]
+expr_stmt|;
 block|}
 annotation|@
 name|Override
@@ -527,12 +533,6 @@ operator|.
 name|reset
 argument_list|()
 expr_stmt|;
-name|ArrayList
-argument_list|<
-name|Object
-argument_list|>
-name|row
-decl_stmt|;
 name|int
 name|rowsCount
 init|=
@@ -568,13 +568,13 @@ condition|)
 block|{
 try|try
 block|{
-name|row
-operator|=
 name|serDe
 operator|.
 name|deserializeAsPrimitive
 argument_list|(
 name|druidWritable
+argument_list|,
+name|rowBoat
 argument_list|)
 expr_stmt|;
 block|}
@@ -610,12 +610,10 @@ name|rowsCount
 argument_list|,
 name|i
 argument_list|,
-name|row
-operator|.
-name|get
-argument_list|(
+name|rowBoat
+index|[
 name|i
-argument_list|)
+index|]
 argument_list|)
 expr_stmt|;
 block|}

@@ -1250,7 +1250,7 @@ name|objectMapper
 argument_list|)
 decl_stmt|;
 name|Path
-name|segmentDescriptroPath
+name|segmentDescriptorPath
 init|=
 operator|new
 name|Path
@@ -1279,7 +1279,7 @@ name|dataSegmentPusher
 argument_list|,
 literal|20
 argument_list|,
-name|segmentDescriptroPath
+name|segmentDescriptorPath
 argument_list|,
 name|localFileSystem
 argument_list|)
@@ -1395,7 +1395,7 @@ name|DruidStorageHandlerUtils
 operator|.
 name|getCreatedSegments
 argument_list|(
-name|segmentDescriptroPath
+name|segmentDescriptorPath
 argument_list|,
 name|config
 argument_list|)

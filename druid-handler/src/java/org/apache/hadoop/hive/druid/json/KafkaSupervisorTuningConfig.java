@@ -113,6 +113,11 @@ end_comment
 
 begin_class
 annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"ALL"
+argument_list|)
+annotation|@
 name|JsonTypeInfo
 argument_list|(
 name|use

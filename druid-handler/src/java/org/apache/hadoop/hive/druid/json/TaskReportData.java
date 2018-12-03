@@ -84,11 +84,21 @@ comment|/**  * This class is copied from druid source code  * in order to avoid 
 end_comment
 
 begin_class
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unused"
+argument_list|)
 specifier|public
 class|class
 name|TaskReportData
 block|{
 comment|/**    * Task type used by serializer but does not have any functionality as far i can tell.    */
+annotation|@
+name|SuppressWarnings
+argument_list|(
+literal|"unused"
+argument_list|)
 specifier|public
 enum|enum
 name|TaskType

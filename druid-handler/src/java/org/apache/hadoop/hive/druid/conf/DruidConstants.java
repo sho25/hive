@@ -194,7 +194,7 @@ name|DRUID_PARSE_SPEC_DELIMITER
 init|=
 literal|"druid.parseSpec.delimiter"
 decl_stmt|;
-comment|// list demiliter for multi-valued columns
+comment|// list delimiter for multi-valued columns
 specifier|public
 specifier|static
 specifier|final
