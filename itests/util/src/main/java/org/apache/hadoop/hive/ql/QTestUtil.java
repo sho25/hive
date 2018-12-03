@@ -1628,7 +1628,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * QTestUtil.  *  */
+comment|/**  * QTestUtil.  */
 end_comment
 
 begin_class
@@ -2169,7 +2169,7 @@ return|return
 name|cliDriver
 return|;
 block|}
-comment|/**    * Returns the default UDF names which should not be removed when resetting the test database    * @return The list of the UDF names not to remove    */
+comment|/**    * Returns the default UDF names which should not be removed when resetting the test database    *    * @return The list of the UDF names not to remove    */
 specifier|private
 name|Set
 argument_list|<
@@ -2505,6 +2505,18 @@ argument_list|,
 name|druidCluster
 operator|.
 name|getOverlordURI
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"hive.druid.broker.address.default"
+argument_list|,
+name|druidCluster
+operator|.
+name|getBrokerURI
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -3091,6 +3103,17 @@ operator|.
 name|local
 argument_list|)
 operator|,
+name|druid
+argument_list|(
+name|CoreClusterType
+operator|.
+name|TEZ
+argument_list|,
+name|FsType
+operator|.
+name|hdfs
+argument_list|)
+operator|,
 name|druidKafka
 argument_list|(
 name|CoreClusterType
@@ -3313,12 +3336,42 @@ name|type
 operator|.
 name|equals
 argument_list|(
+literal|"druid"
+argument_list|)
+condition|)
+block|{
+return|return
+name|druid
+return|;
+block|}
+elseif|else
+if|if
+condition|(
+name|type
+operator|.
+name|equals
+argument_list|(
 literal|"druid-kafka"
 argument_list|)
 condition|)
 block|{
 return|return
 name|druidKafka
+return|;
+block|}
+elseif|else
+if|if
+condition|(
+name|type
+operator|.
+name|equals
+argument_list|(
+literal|"kafka"
+argument_list|)
+condition|)
+block|{
+return|return
+name|kafka
 return|;
 block|}
 else|else
@@ -4177,6 +4230,12 @@ operator|==
 name|MiniClusterType
 operator|.
 name|druidLocal
+operator|||
+name|clusterType
+operator|==
+name|MiniClusterType
+operator|.
+name|druid
 condition|)
 block|{
 specifier|final
@@ -4195,7 +4254,15 @@ operator|=
 operator|new
 name|MiniDruidCluster
 argument_list|(
+name|clusterType
+operator|==
+name|MiniClusterType
+operator|.
+name|druid
+condition|?
 literal|"mini-druid"
+else|:
+literal|"mini-druid-kafka"
 argument_list|,
 name|logDir
 argument_list|,
@@ -4238,42 +4305,6 @@ operator|.
 name|mkdirs
 argument_list|(
 name|druidDeepStorage
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"hive.druid.storage.storageDirectory"
-argument_list|,
-name|druidDeepStorage
-operator|.
-name|toUri
-argument_list|()
-operator|.
-name|getPath
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"hive.druid.metadata.db.type"
-argument_list|,
-literal|"derby"
-argument_list|)
-expr_stmt|;
-name|conf
-operator|.
-name|set
-argument_list|(
-literal|"hive.druid.metadata.uri"
-argument_list|,
-name|druidCluster
-operator|.
-name|getMetadataURI
-argument_list|()
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -4346,12 +4377,6 @@ operator|==
 name|MiniClusterType
 operator|.
 name|druidKafka
-operator|||
-name|clusterType
-operator|==
-name|MiniClusterType
-operator|.
-name|druidLocal
 condition|)
 block|{
 name|kafkaCluster
@@ -4361,13 +4386,28 @@ name|SingleNodeKafkaCluster
 argument_list|(
 literal|"kafka"
 argument_list|,
-name|logDir
+name|System
+operator|.
+name|getProperty
+argument_list|(
+literal|"test.tmp.dir"
+argument_list|)
 operator|+
 literal|"/kafka-cluster"
 argument_list|,
 name|setup
 operator|.
 name|zkPort
+argument_list|,
+name|clusterType
+operator|==
+name|MiniClusterType
+operator|.
+name|kafka
+condition|?
+literal|9093
+else|:
+literal|9092
 argument_list|)
 expr_stmt|;
 name|kafkaCluster
@@ -4502,6 +4542,14 @@ argument_list|,
 name|MiniClusterType
 operator|.
 name|druidKafka
+argument_list|,
+name|MiniClusterType
+operator|.
+name|druid
+argument_list|,
+name|MiniClusterType
+operator|.
+name|kafka
 argument_list|)
 operator|.
 name|contains
@@ -4602,6 +4650,14 @@ argument_list|,
 name|MiniClusterType
 operator|.
 name|druidKafka
+argument_list|,
+name|MiniClusterType
+operator|.
+name|druid
+argument_list|,
+name|MiniClusterType
+operator|.
+name|kafka
 argument_list|)
 operator|.
 name|contains
@@ -4926,7 +4982,7 @@ name|out
 argument_list|,
 literal|null
 argument_list|)
-argument_list|;               try
+argument_list|;       try
 block|{
 name|writer
 operator|.
@@ -9256,7 +9312,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Given the current configurations (e.g., hadoop version and execution mode), return    * the correct file name to compare with the current test run output.    * @param outDir The directory where the reference log files are stored.    * @param testName The test file name (terminated by ".out").    * @return The file name appended with the configuration values if it exists.    */
+comment|/**    * Given the current configurations (e.g., hadoop version and execution mode), return    * the correct file name to compare with the current test run output.    *    * @param outDir   The directory where the reference log files are stored.    * @param testName The test file name (terminated by ".out").    * @return The file name appended with the configuration values if it exists.    */
 end_comment
 
 begin_function
@@ -10027,7 +10083,7 @@ name|getQuotedString
 argument_list|(
 name|in
 argument_list|)
-block|,     }
+block|, }
 argument_list|,
 name|out
 argument_list|,
@@ -10808,7 +10864,7 @@ block|}
 end_class
 
 begin_comment
-comment|/**    * QTRunner: Runnable class for running a single query file.    *    **/
+comment|/**    * QTRunner: Runnable class for running a single query file.    **/
 end_comment
 
 begin_class
@@ -10929,7 +10985,7 @@ block|}
 end_class
 
 begin_comment
-comment|/**    * Setup to execute a set of query files. Uses QTestUtil to do so.    *    * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param resDir    *          output directory    * @param logDir    *          log directory    * @return one QTestUtil for each query file    */
+comment|/**    * Setup to execute a set of query files. Uses QTestUtil to do so.    *    * @param qfiles array of input query files containing arbitrary number of hive    *               queries    * @param resDir output directory    * @param logDir log directory    * @return one QTestUtil for each query file    */
 end_comment
 
 begin_function
@@ -11086,7 +11142,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Executes a set of query files in sequence.    *    * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param qt    *          array of QTestUtils, one per qfile    * @return true if all queries passed, false otw    */
+comment|/**    * Executes a set of query files in sequence.    *    * @param qfiles array of input query files containing arbitrary number of hive    *               queries    * @param qt     array of QTestUtils, one per qfile    * @return true if all queries passed, false otw    */
 end_comment
 
 begin_function
@@ -11319,7 +11375,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Executes a set of query files parallel.    *    * Each query file is run in a separate thread. The caller has to arrange    * that different query files do not collide (in terms of destination tables)    *    * @param qfiles    *          array of input query files containing arbitrary number of hive    *          queries    * @param qt    *          array of QTestUtils, one per qfile    * @return true if all queries passed, false otw    *    */
+comment|/**    * Executes a set of query files parallel.    *<p>    * Each query file is run in a separate thread. The caller has to arrange    * that different query files do not collide (in terms of destination tables)    *    * @param qfiles array of input query files containing arbitrary number of hive    *               queries    * @param qt     array of QTestUtils, one per qfile    * @return true if all queries passed, false otw    */
 end_comment
 
 begin_function
@@ -12390,7 +12446,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Should deleted test tables have their data purged.    * @return true if data should be purged    */
+comment|/**    * Should deleted test tables have their data purged.    *    * @return true if data should be purged    */
 end_comment
 
 begin_function
