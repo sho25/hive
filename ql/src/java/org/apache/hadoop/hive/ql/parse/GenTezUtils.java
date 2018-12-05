@@ -3164,7 +3164,10 @@ block|}
 comment|/**    * Remove an operator branch. When we see a fork, we know it's time to do the removal.    * @param event the leaf node of which branch to be removed    */
 specifier|public
 specifier|static
-name|void
+name|Operator
+argument_list|<
+name|?
+argument_list|>
 name|removeBranch
 parameter_list|(
 name|Operator
@@ -3227,6 +3230,9 @@ argument_list|(
 name|child
 argument_list|)
 expr_stmt|;
+return|return
+name|child
+return|;
 block|}
 specifier|public
 specifier|static

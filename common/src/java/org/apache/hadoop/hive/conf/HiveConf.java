@@ -8705,6 +8705,19 @@ operator|+
 literal|"to be set to true. Tez only."
 argument_list|)
 block|,
+name|HIVE_SHARED_WORK_SEMIJOIN_OPTIMIZATION
+argument_list|(
+literal|"hive.optimize.shared.work.semijoin"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable shared work extended optimizer for semijoins. The optimizer tries to merge\n"
+operator|+
+literal|"scan operators if one of them reads the full table, even if the other one is the target for\n"
+operator|+
+literal|"one or more semijoin edges. Tez only."
+argument_list|)
+block|,
 name|HIVE_SHARED_WORK_REUSE_MAPJOIN_CACHE
 argument_list|(
 literal|"hive.optimize.shared.work.mapjoin.cache.reuse"
