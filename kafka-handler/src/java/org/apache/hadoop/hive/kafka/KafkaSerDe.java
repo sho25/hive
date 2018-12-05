@@ -1317,44 +1317,47 @@ parameter_list|)
 throws|throws
 name|SerDeException
 block|{
-return|return
+name|Object
+index|[]
+name|rowBoat
+init|=
+operator|new
+name|Object
+index|[
+name|columnNames
+operator|.
+name|size
+argument_list|()
+index|]
+decl_stmt|;
 name|deserializeKWritable
 argument_list|(
 operator|(
 name|KafkaWritable
 operator|)
 name|blob
+argument_list|,
+name|rowBoat
 argument_list|)
+expr_stmt|;
+return|return
+name|rowBoat
 return|;
 block|}
-name|ArrayList
-argument_list|<
-name|Object
-argument_list|>
+comment|/**    * @param kafkaWritable Kafka writable object containing the row plus kafka metadata    * @param rowBoat Boat sized to width of the kafka row plus metadata to carry the row to operator upstream.    *    * @throws SerDeException in case of any serde issue.    */
+name|void
 name|deserializeKWritable
 parameter_list|(
 name|KafkaWritable
 name|kafkaWritable
+parameter_list|,
+name|Object
+index|[]
+name|rowBoat
 parameter_list|)
 throws|throws
 name|SerDeException
 block|{
-name|ArrayList
-argument_list|<
-name|Object
-argument_list|>
-name|resultRow
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|columnNames
-operator|.
-name|size
-argument_list|()
-argument_list|)
-decl_stmt|;
 specifier|final
 name|Object
 name|row
@@ -1390,10 +1393,11 @@ name|i
 operator|++
 control|)
 block|{
-name|resultRow
-operator|.
-name|add
-argument_list|(
+name|rowBoat
+index|[
+name|i
+index|]
+operator|=
 name|delegateDeserializerOI
 operator|.
 name|getStructFieldData
@@ -1409,7 +1413,6 @@ operator|.
 name|get
 argument_list|(
 name|i
-argument_list|)
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1450,22 +1453,21 @@ name|i
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|resultRow
-operator|.
-name|add
-argument_list|(
+name|rowBoat
+index|[
+name|i
+index|]
+operator|=
+operator|(
 name|kafkaWritable
 operator|.
 name|getHiveWritable
 argument_list|(
 name|metadataColumn
 argument_list|)
-argument_list|)
+operator|)
 expr_stmt|;
 block|}
-return|return
-name|resultRow
-return|;
 block|}
 annotation|@
 name|Override
@@ -1502,7 +1504,7 @@ name|StructField
 argument_list|>
 name|structFields
 decl_stmt|;
-comment|/**      * Returns a live view of the base Object inspector starting form 0 to {@code toIndex} exclusive.      * @param baseOI base Object Inspector.      * @param toIndex toIndex.      */
+comment|/**      * Returns a live view of the base Object inspector starting form 0 to {@code toIndex} exclusive.      *      * @param baseOI  base Object Inspector.      * @param toIndex toIndex.      */
 specifier|private
 name|SubStructObjectInspector
 parameter_list|(
@@ -1551,7 +1553,7 @@ return|return
 name|structFields
 return|;
 block|}
-comment|/**      * Look up a field.      * @param fieldName fieldName to be looked up.      */
+comment|/**      * Look up a field.      *      * @param fieldName fieldName to be looked up.      */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1598,7 +1600,7 @@ name|get
 argument_list|()
 return|;
 block|}
-comment|/**      * returns null for data = null.      * @param data input.      * @param fieldRef field to extract.      */
+comment|/**      * returns null for data = null.      *      * @param data     input.      * @param fieldRef field to extract.      */
 annotation|@
 name|Override
 specifier|public
@@ -1623,7 +1625,7 @@ name|fieldRef
 argument_list|)
 return|;
 block|}
-comment|/**      * returns null for data = null.      * @param data input data.      */
+comment|/**      * returns null for data = null.      *      * @param data input data.      */
 annotation|@
 name|Override
 specifier|public
@@ -1710,7 +1712,7 @@ return|return
 name|res
 return|;
 block|}
-comment|/**      * Returns the name of the data type that is inspected by this      * ObjectInspector. This is used to display the type information to the user.      *      * For primitive types, the type name is standardized. For other types, the      * type name can be something like "list&lt;int&gt;", "map&lt;int,string&gt;", java class      * names, or user-defined type names similar to typedef.      */
+comment|/**      * Returns the name of the data type that is inspected by this      * ObjectInspector. This is used to display the type information to the user.      *<p>      * For primitive types, the type name is standardized. For other types, the      * type name can be something like "list&lt;int&gt;", "map&lt;int,string&gt;", java class      * names, or user-defined type names similar to typedef.      */
 annotation|@
 name|Override
 specifier|public
@@ -1741,7 +1743,7 @@ argument_list|()
 return|;
 block|}
 block|}
-comment|/**    * Class that encapsulate the logic of serialize and deserialize bytes array to/from the delegate writable format.    * @param<K> delegate writable class.    */
+comment|/**    * Class that encapsulate the logic of serialize and deserialize bytes array to/from the delegate writable format.    *    * @param<K> delegate writable class.    */
 specifier|private
 interface|interface
 name|BytesConverter
