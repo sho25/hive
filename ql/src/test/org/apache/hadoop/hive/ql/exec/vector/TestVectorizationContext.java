@@ -3874,9 +3874,11 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// TODO: HIVE-20985 disabled output column reuse
+comment|//assertEquals(6, ve.getOutputColumnNum());
 name|assertEquals
 argument_list|(
-literal|6
+literal|10
 argument_list|,
 name|ve
 operator|.
@@ -3974,9 +3976,12 @@ operator|instanceof
 name|LongColModuloLongColumn
 argument_list|)
 expr_stmt|;
+comment|// TODO: HIVE-20985 disabled output column reuse
+comment|//assertEquals(8, childExpr2.getOutputColumnNum());
+comment|//assertEquals(6, childExpr2.getChildExpressions()[0].getOutputColumnNum());
 name|assertEquals
 argument_list|(
-literal|8
+literal|9
 argument_list|,
 name|childExpr2
 operator|.
@@ -3986,7 +3991,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|6
+literal|8
 argument_list|,
 name|childExpr2
 operator|.
@@ -7397,9 +7402,11 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+comment|// TODO: HIVE-20985 disabled output column reuse
+comment|//assertEquals(3, ve.getOutputColumnNum());
 name|assertEquals
 argument_list|(
-literal|3
+literal|4
 argument_list|,
 name|ve
 operator|.
