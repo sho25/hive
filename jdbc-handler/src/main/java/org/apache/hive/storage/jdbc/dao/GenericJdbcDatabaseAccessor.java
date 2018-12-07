@@ -1379,12 +1379,16 @@ decl_stmt|;
 name|String
 name|queryAfterFrom
 init|=
+literal|" "
+operator|+
 name|m
 operator|.
 name|group
 argument_list|(
 literal|2
 argument_list|)
+operator|+
+literal|" "
 decl_stmt|;
 name|Character
 index|[]
