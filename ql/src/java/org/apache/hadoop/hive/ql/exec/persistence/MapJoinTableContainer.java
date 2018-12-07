@@ -494,6 +494,19 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
+comment|/**    * Assign a key to the container, which can be used to cache it.    */
+name|void
+name|setKey
+parameter_list|(
+name|String
+name|key
+parameter_list|)
+function_decl|;
+comment|/**    * Return the assigned key.    */
+name|String
+name|getKey
+parameter_list|()
+function_decl|;
 block|}
 end_interface
 
