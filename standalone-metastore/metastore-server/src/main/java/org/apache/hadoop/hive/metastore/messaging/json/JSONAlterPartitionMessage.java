@@ -571,6 +571,12 @@ parameter_list|()
 block|{
 return|return
 name|writeId
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
+name|writeId
 return|;
 block|}
 annotation|@

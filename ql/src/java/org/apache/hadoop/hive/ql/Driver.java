@@ -11670,6 +11670,33 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+operator|!
+name|queryTxnMgr
+operator|.
+name|isTxnOpen
+argument_list|()
+operator|&&
+name|queryState
+operator|.
+name|getHiveOperation
+argument_list|()
+operator|==
+name|HiveOperation
+operator|.
+name|REPLLOAD
+condition|)
+block|{
+comment|// repl load during migration, commits the explicit txn and start some internal txns. Call
+comment|// releaseLocksAndCommitOrRollback to do the clean up.
+name|releaseLocksAndCommitOrRollback
+argument_list|(
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
 else|else
 block|{
 comment|//txn (if there is one started) is not finished

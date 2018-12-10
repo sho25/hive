@@ -16078,9 +16078,15 @@ argument_list|(
 name|user
 argument_list|,
 name|srcTxnIds
+operator|!=
+literal|null
+condition|?
+name|srcTxnIds
 operator|.
 name|size
 argument_list|()
+else|:
+literal|1
 argument_list|,
 name|replPolicy
 argument_list|,

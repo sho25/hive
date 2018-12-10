@@ -191,6 +191,12 @@ operator|.
 name|DEFAULT
 decl_stmt|;
 comment|// DEFAULT means REPL_LOAD or BOOTSTRAP_DUMP or EXPORT
+specifier|private
+name|boolean
+name|isMigratingToTxnTable
+init|=
+literal|false
+decl_stmt|;
 comment|// Key definitions related to replication
 specifier|public
 enum|enum
@@ -1526,6 +1532,25 @@ operator|.
 name|NO_REPL
 return|;
 block|}
+block|}
+specifier|public
+name|boolean
+name|isMigratingToTxnTable
+parameter_list|()
+block|{
+return|return
+name|isMigratingToTxnTable
+return|;
+block|}
+specifier|public
+name|void
+name|setMigratingToTxnTable
+parameter_list|()
+block|{
+name|isMigratingToTxnTable
+operator|=
+literal|true
+expr_stmt|;
 block|}
 block|}
 end_class

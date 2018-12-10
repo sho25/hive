@@ -5942,7 +5942,7 @@ name|HIVESCRIPT_ENV_BLACKLIST
 argument_list|(
 literal|"hive.script.operator.env.blacklist"
 argument_list|,
-literal|"hive.txn.valid.txns,hive.txn.tables.valid.writeids,hive.txn.valid.writeids,hive.script.operator.env.blacklist"
+literal|"hive.txn.valid.txns,hive.txn.tables.valid.writeids,hive.txn.valid.writeids,hive.script.operator.env.blacklist,hive.repl.current.table.write.id"
 argument_list|,
 literal|"Comma separated list of keys from the configuration file not to convert to environment "
 operator|+
@@ -10724,6 +10724,17 @@ operator|+
 literal|" on the assumption that data changes by external applications may have negative effects"
 operator|+
 literal|" on these operations."
+argument_list|)
+block|,
+name|HIVE_STRICT_MANAGED_TABLES
+argument_list|(
+literal|"hive.strict.managed.tables"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether strict managed tables mode is enabled. With this mode enabled, "
+operator|+
+literal|"only transactional tables (both full and insert-only) are allowed to be created as managed tables"
 argument_list|)
 block|,
 name|HIVE_EXTERNALTABLE_PURGE_DEFAULT
