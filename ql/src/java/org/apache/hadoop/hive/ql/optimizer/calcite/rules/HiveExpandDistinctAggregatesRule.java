@@ -1158,6 +1158,9 @@ operator|.
 name|getColumnOrigins
 argument_list|(
 name|aggregate
+operator|.
+name|getInput
+argument_list|()
 argument_list|,
 name|arg
 argument_list|)

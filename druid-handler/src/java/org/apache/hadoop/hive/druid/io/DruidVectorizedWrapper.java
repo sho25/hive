@@ -507,9 +507,10 @@ operator|=
 operator|new
 name|Object
 index|[
-name|projectedColumns
+name|rbCtx
 operator|.
-name|length
+name|getDataColumnCount
+argument_list|()
 index|]
 expr_stmt|;
 block|}
