@@ -738,6 +738,10 @@ name|Long
 name|tableId
 decl_stmt|;
 specifier|private
+name|Runnable
+name|onShutdownRunner
+decl_stmt|;
+specifier|private
 name|HiveStreamingConnection
 parameter_list|(
 name|Builder
@@ -1583,6 +1587,14 @@ argument_list|(
 name|this
 argument_list|)
 decl_stmt|;
+name|streamingConnection
+operator|.
+name|onShutdownRunner
+operator|=
+name|streamingConnection
+operator|::
+name|close
+expr_stmt|;
 comment|// assigning higher priority than FileSystem shutdown hook so that streaming connection gets closed first before
 comment|// filesystem close (to avoid ClosedChannelException)
 name|ShutdownHookManager
@@ -1590,8 +1602,8 @@ operator|.
 name|addShutdownHook
 argument_list|(
 name|streamingConnection
-operator|::
-name|close
+operator|.
+name|onShutdownRunner
 argument_list|,
 name|FileSystem
 operator|.
@@ -2815,6 +2827,26 @@ argument_list|()
 operator|.
 name|close
 argument_list|()
+expr_stmt|;
+block|}
+comment|//remove shutdown hook entry added while creating this connection via HiveStreamingConnection.Builder#connect()
+if|if
+condition|(
+operator|!
+name|ShutdownHookManager
+operator|.
+name|isShutdownInProgress
+argument_list|()
+condition|)
+block|{
+name|ShutdownHookManager
+operator|.
+name|removeShutdownHook
+argument_list|(
+name|this
+operator|.
+name|onShutdownRunner
+argument_list|)
 expr_stmt|;
 block|}
 block|}
