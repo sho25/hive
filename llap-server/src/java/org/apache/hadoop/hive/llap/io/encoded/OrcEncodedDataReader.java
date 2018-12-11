@@ -3010,6 +3010,30 @@ block|{
 name|ensureOrcReader
 argument_list|()
 expr_stmt|;
+if|if
+condition|(
+name|stripeReader
+operator|!=
+literal|null
+condition|)
+block|{
+try|try
+block|{
+name|stripeReader
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IOException
+name|ex
+parameter_list|)
+block|{
+comment|// Ignore.
+block|}
+block|}
 comment|// Reader creation updates HDFS counters, don't do it here.
 name|DataWrapperForOrc
 name|dw
