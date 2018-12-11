@@ -729,7 +729,7 @@ name|Exception
 block|{
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 name|tablename
 argument_list|,

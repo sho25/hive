@@ -363,11 +363,15 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 name|tblName2
 argument_list|,
-literal|"my_small_int smallint, my_tiny_int tinyint"
+literal|"my_small_int smallint, "
+operator|+
+literal|"my_tiny_int "
+operator|+
+literal|"tinyint"
 argument_list|,
 literal|null
 argument_list|,

@@ -1911,7 +1911,7 @@ literal|"f1"
 decl_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 name|tblName
 argument_list|,
@@ -2432,7 +2432,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 name|tblName
 argument_list|,
@@ -2885,7 +2885,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -3106,7 +3106,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"employee"
 argument_list|,
@@ -3481,7 +3481,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -3749,13 +3749,15 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_parted"
 argument_list|,
 literal|"a int, b string"
 argument_list|,
-literal|"ds string"
+literal|"ds "
+operator|+
+literal|"string"
 argument_list|,
 name|driver
 argument_list|,
@@ -4017,7 +4019,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -4041,7 +4043,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted2"
 argument_list|,
@@ -4357,7 +4359,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -4602,7 +4604,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -4847,7 +4849,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -5068,7 +5070,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -5246,7 +5248,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -5632,7 +5634,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"junit_unparted"
 argument_list|,
@@ -5899,7 +5901,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"employee"
 argument_list|,
@@ -6121,7 +6123,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"employee"
 argument_list|,
@@ -6343,7 +6345,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"employee"
 argument_list|,
@@ -6490,7 +6492,7 @@ argument_list|)
 expr_stmt|;
 name|AbstractHCatLoaderTest
 operator|.
-name|createTable
+name|createTableDefaultDB
 argument_list|(
 literal|"ptn_fail"
 argument_list|,

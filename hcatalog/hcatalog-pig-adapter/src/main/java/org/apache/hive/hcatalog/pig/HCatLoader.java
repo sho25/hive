@@ -1654,6 +1654,27 @@ name|IOException
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|dbName
+operator|==
+literal|null
+operator|||
+name|tableName
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IOException
+argument_list|(
+literal|"DB or table name unset. setLocation() must be invoked on this "
+operator|+
+literal|"loader to set them"
+argument_list|)
+throw|;
+block|}
 name|ResourceStatistics
 name|stats
 init|=
@@ -1693,7 +1714,17 @@ control|)
 block|{
 if|if
 condition|(
-name|location
+name|dbName
+operator|.
+name|equals
+argument_list|(
+name|inputJobInfo
+operator|.
+name|getDatabaseName
+argument_list|()
+argument_list|)
+operator|&&
+name|tableName
 operator|.
 name|equals
 argument_list|(
@@ -1726,7 +1757,17 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Could not calculate input size for location (table) "
+literal|"Could not calculate input size for database: "
+operator|+
+name|dbName
+operator|+
+literal|", "
+operator|+
+literal|"table: "
+operator|+
+name|tableName
+operator|+
+literal|". Requested location:"
 operator|+
 name|location
 argument_list|)
