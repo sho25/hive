@@ -95,6 +95,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+operator|.
+name|ConfVars
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -204,6 +222,42 @@ operator|.
 name|exec
 operator|.
 name|SelectOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|UDTFOperator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|Utilities
 import|;
 end_import
 
@@ -426,7 +480,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ColumnStatsAutoGatherContext: This is passed to the compiler when set  * hive.stats.autogather=true during the INSERT OVERWRITE command.  *  **/
+comment|/**  * ColumnStatsAutoGatherContext: This is passed to the compiler when set  * hive.stats.autogather=true during the INSERT, INSERT OVERWRITE, or CTAS  * commands.  */
 end_comment
 
 begin_class
@@ -641,6 +695,7 @@ operator|=
 name|analyzeRewrite
 expr_stmt|;
 block|}
+comment|/**    * Generate the statement of analyze table [tablename] compute statistics for columns    * In non-partitioned table case, it will generate TS-SEL-GBY-RS-GBY-SEL-FS operator    * In static-partitioned table case, it will generate TS-FIL(partitionKey)-SEL-GBY(partitionKey)-RS-GBY-SEL-FS operator    * In dynamic-partitioned table case, it will generate TS-SEL-GBY(partitionKey)-RS-GBY-SEL-FS operator    * However, we do not need to specify the partition-spec because (1) the data is going to be inserted to that specific partition    * (2) we can compose the static/dynamic partition using a select operator in replaceSelectOperatorProcess.    */
 specifier|public
 name|void
 name|insertAnalyzePipeline
@@ -648,12 +703,6 @@ parameter_list|()
 throws|throws
 name|SemanticException
 block|{
-comment|// 1. Generate the statement of analyze table [tablename] compute statistics for columns
-comment|// In non-partitioned table case, it will generate TS-SEL-GBY-RS-GBY-SEL-FS operator
-comment|// In static-partitioned table case, it will generate TS-FIL(partitionKey)-SEL-GBY(partitionKey)-RS-GBY-SEL-FS operator
-comment|// In dynamic-partitioned table case, it will generate TS-SEL-GBY(partitionKey)-RS-GBY-SEL-FS operator
-comment|// However, we do not need to specify the partition-spec because (1) the data is going to be inserted to that specific partition
-comment|// (2) we can compose the static/dynamic partition using a select operator in replaceSelectOperatorProcess..
 name|String
 name|analyzeCommand
 init|=
@@ -675,7 +724,137 @@ literal|"`"
 operator|+
 literal|" compute statistics for columns "
 decl_stmt|;
-comment|// 2. Based on the statement, generate the selectOperator
+name|insertAnalyzePipeline
+argument_list|(
+name|analyzeCommand
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+comment|/**    * Generate the statement of SELECT compute_stats(col1) compute_stats(col2),...,    * similar to the one generated from ANALYZE TABLE t1 COMPUTE STATISTICS FOR COLUMNS,    * but t1 is replaced by a TABLE(VALUES(cast(null as int),cast(null as string))) AS t1(col1,col2).    *    * We use TABLE-VALUES statement for computing stats for CTAS statement because in those cases    * the table has not been created yet. Once the plan for the SELECT statement is generated,    * we connect it to the existing CTAS plan as we do for INSERT or INSERT OVERWRITE.    */
+specifier|public
+name|void
+name|insertTableValuesAnalyzePipeline
+parameter_list|()
+throws|throws
+name|SemanticException
+block|{
+comment|// Instead of starting from analyze statement, we just generate the Select plan
+name|boolean
+name|isPartitionStats
+init|=
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_STATS_COLLECT_PART_LEVEL_STATS
+argument_list|)
+operator|&&
+name|tbl
+operator|.
+name|isPartitioned
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|isPartitionStats
+condition|)
+block|{
+name|partSpec
+operator|=
+operator|new
+name|HashMap
+argument_list|<>
+argument_list|()
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partKeys
+init|=
+name|Utilities
+operator|.
+name|getColumnNamesFromFieldSchema
+argument_list|(
+name|tbl
+operator|.
+name|getPartitionKeys
+argument_list|()
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|String
+name|partKey
+range|:
+name|partKeys
+control|)
+block|{
+name|partSpec
+operator|.
+name|put
+argument_list|(
+name|partKey
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+name|String
+name|command
+init|=
+name|ColumnStatsSemanticAnalyzer
+operator|.
+name|genRewrittenQuery
+argument_list|(
+name|tbl
+argument_list|,
+name|Utilities
+operator|.
+name|getColumnNamesFromFieldSchema
+argument_list|(
+name|tbl
+operator|.
+name|getCols
+argument_list|()
+argument_list|)
+argument_list|,
+name|conf
+argument_list|,
+name|partSpec
+argument_list|,
+name|isPartitionStats
+argument_list|,
+literal|true
+argument_list|)
+decl_stmt|;
+name|insertAnalyzePipeline
+argument_list|(
+name|command
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|insertAnalyzePipeline
+parameter_list|(
+name|String
+name|command
+parameter_list|,
+name|boolean
+name|rewritten
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+comment|// 1. Based on the statement, generate the selectOperator
 name|Operator
 argument_list|<
 name|?
@@ -688,9 +867,11 @@ try|try
 block|{
 name|selOp
 operator|=
-name|genSelOpForAnalyze
+name|genSelOp
 argument_list|(
-name|analyzeCommand
+name|command
+argument_list|,
+name|rewritten
 argument_list|,
 name|origCtx
 argument_list|)
@@ -712,7 +893,7 @@ name|e
 argument_list|)
 throw|;
 block|}
-comment|// 3. attach this SEL to the operator right before FS
+comment|// 2. attach this SEL to the operator right before FS
 name|op
 operator|.
 name|getChildOperators
@@ -741,7 +922,7 @@ argument_list|(
 name|op
 argument_list|)
 expr_stmt|;
-comment|// 4. address the colExp, colList, etc for the SEL
+comment|// 3. address the colExp, colList, etc for the SEL
 try|try
 block|{
 name|replaceSelectOperatorProcess
@@ -770,17 +951,15 @@ argument_list|)
 throw|;
 block|}
 block|}
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"rawtypes"
-argument_list|)
 specifier|private
 name|Operator
-name|genSelOpForAnalyze
+name|genSelOp
 parameter_list|(
 name|String
-name|analyzeCommand
+name|command
+parameter_list|,
+name|boolean
+name|rewritten
 parameter_list|,
 name|Context
 name|origCtx
@@ -792,7 +971,7 @@ name|ParseException
 throws|,
 name|SemanticException
 block|{
-comment|//0. initialization
+comment|// 1. initialization
 name|Context
 name|ctx
 init|=
@@ -822,19 +1001,17 @@ name|getExplainConfig
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// 2. parse tree and create semantic analyzer. if we need to rewrite the analyze
+comment|// statement, we do it now
+specifier|final
 name|ASTNode
-name|tree
-init|=
-name|ParseUtils
-operator|.
-name|parse
-argument_list|(
-name|analyzeCommand
-argument_list|,
-name|ctx
-argument_list|)
+name|ast
 decl_stmt|;
-comment|//1. get the ColumnStatsSemanticAnalyzer
+specifier|final
+name|SemanticAnalyzer
+name|sem
+decl_stmt|;
+specifier|final
 name|QueryState
 name|queryState
 init|=
@@ -852,6 +1029,38 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|rewritten
+condition|)
+block|{
+comment|// Create the context object that is needed to store the column stats
+name|this
+operator|.
+name|analyzeRewrite
+operator|=
+name|ColumnStatsSemanticAnalyzer
+operator|.
+name|genAnalyzeRewriteContext
+argument_list|(
+name|conf
+argument_list|,
+name|tbl
+argument_list|)
+expr_stmt|;
+comment|// The analyze statement has already been rewritten, we just need to create the AST
+comment|// and the corresponding semantic analyzer
+name|ast
+operator|=
+name|ParseUtils
+operator|.
+name|parse
+argument_list|(
+name|command
+argument_list|,
+name|ctx
+argument_list|)
+expr_stmt|;
 name|BaseSemanticAnalyzer
 name|baseSem
 init|=
@@ -861,7 +1070,42 @@ name|get
 argument_list|(
 name|queryState
 argument_list|,
-name|tree
+name|ast
+argument_list|)
+decl_stmt|;
+name|sem
+operator|=
+operator|(
+name|SemanticAnalyzer
+operator|)
+name|baseSem
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// We need to rewrite the analyze command and get the rewritten AST
+name|ASTNode
+name|analyzeTree
+init|=
+name|ParseUtils
+operator|.
+name|parse
+argument_list|(
+name|command
+argument_list|,
+name|ctx
+argument_list|)
+decl_stmt|;
+name|BaseSemanticAnalyzer
+name|baseSem
+init|=
+name|SemanticAnalyzerFactory
+operator|.
+name|get
+argument_list|(
+name|queryState
+argument_list|,
+name|analyzeTree
 argument_list|)
 decl_stmt|;
 name|ColumnStatsSemanticAnalyzer
@@ -872,19 +1116,28 @@ name|ColumnStatsSemanticAnalyzer
 operator|)
 name|baseSem
 decl_stmt|;
-comment|//2. get the rewritten AST
-name|ASTNode
 name|ast
-init|=
+operator|=
 name|colSem
 operator|.
 name|rewriteAST
 argument_list|(
-name|tree
+name|analyzeTree
 argument_list|,
 name|this
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+comment|// Obtain the context object that is needed to store the column stats
+name|this
+operator|.
+name|analyzeRewrite
+operator|=
+name|colSem
+operator|.
+name|getAnalyzeRewriteContext
+argument_list|()
+expr_stmt|;
+comment|// Analyze the rewritten statement
 name|baseSem
 operator|=
 name|SemanticAnalyzerFactory
@@ -896,14 +1149,14 @@ argument_list|,
 name|ast
 argument_list|)
 expr_stmt|;
-name|SemanticAnalyzer
 name|sem
-init|=
+operator|=
 operator|(
 name|SemanticAnalyzer
 operator|)
 name|baseSem
-decl_stmt|;
+expr_stmt|;
+block|}
 name|QB
 name|qb
 init|=
@@ -925,12 +1178,7 @@ decl_stmt|;
 name|ParseContext
 name|subPCtx
 init|=
-operator|(
-operator|(
-name|SemanticAnalyzer
-operator|)
 name|sem
-operator|)
 operator|.
 name|getParseContext
 argument_list|()
@@ -942,12 +1190,7 @@ argument_list|(
 name|ctx
 argument_list|)
 expr_stmt|;
-operator|(
-operator|(
-name|SemanticAnalyzer
-operator|)
 name|sem
-operator|)
 operator|.
 name|initParseCtx
 argument_list|(
@@ -979,20 +1222,14 @@ argument_list|(
 name|qb
 argument_list|)
 expr_stmt|;
-name|Operator
-argument_list|<
-name|?
-argument_list|>
-name|operator
-init|=
 name|sem
 operator|.
 name|genPlan
 argument_list|(
 name|qb
 argument_list|)
-decl_stmt|;
-comment|//3. populate the load file work so that ColumnStatsTask can work
+expr_stmt|;
+comment|// 3. populate the load file work so that ColumnStatsTask can work
 name|loadFileWork
 operator|.
 name|addAll
@@ -1003,7 +1240,7 @@ name|getLoadFileWork
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//4. because there is only one TS for analyze statement, we can get it.
+comment|// 4. because there is only one TS for analyze statement, we can get it.
 if|if
 condition|(
 name|sem
@@ -1037,8 +1274,12 @@ argument_list|()
 argument_list|)
 throw|;
 block|}
+name|Operator
+argument_list|<
+name|?
+argument_list|>
 name|operator
-operator|=
+init|=
 name|sem
 operator|.
 name|topOps
@@ -1051,8 +1292,52 @@ argument_list|()
 operator|.
 name|next
 argument_list|()
+decl_stmt|;
+comment|// 5. if this has been rewritten, get the SEL after UDTF;
+comment|// otherwise, get the first SEL after TS
+if|if
+condition|(
+name|rewritten
+condition|)
+block|{
+while|while
+condition|(
+operator|!
+operator|(
+name|operator
+operator|instanceof
+name|UDTFOperator
+operator|)
+condition|)
+block|{
+name|operator
+operator|=
+name|operator
+operator|.
+name|getChildOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
 expr_stmt|;
-comment|//5. get the first SEL after TS
+block|}
+name|operator
+operator|=
+name|operator
+operator|.
+name|getChildOperators
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 while|while
 condition|(
 operator|!
@@ -1075,6 +1360,7 @@ argument_list|(
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|operator

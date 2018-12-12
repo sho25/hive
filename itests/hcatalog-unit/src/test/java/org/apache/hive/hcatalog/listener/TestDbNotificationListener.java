@@ -9898,7 +9898,7 @@ operator|+
 literal|" values (1)"
 argument_list|)
 expr_stmt|;
-comment|// Event 5, 6 (alter: stats update event)
+comment|// Event 5, 6 (alter), 7 (alter: stats update event)
 name|driver
 operator|.
 name|run
@@ -9929,7 +9929,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|7
+literal|8
 argument_list|,
 name|rsp
 operator|.
@@ -10075,7 +10075,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|7
+literal|8
 argument_list|)
 expr_stmt|;
 block|}

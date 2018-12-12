@@ -864,6 +864,17 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVESTATSCOLAUTOGATHER
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|hiveServer2
 operator|=
 operator|new
