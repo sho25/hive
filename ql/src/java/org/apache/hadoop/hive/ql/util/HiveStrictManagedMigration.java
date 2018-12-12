@@ -2445,26 +2445,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|// The table processing needs the db location at the old location, so clone the DB object
-comment|// when updating the location.
-name|Database
-name|modifiedDb
-init|=
-name|dbObj
-operator|.
-name|deepCopy
-argument_list|()
-decl_stmt|;
-name|getHiveUpdater
-argument_list|()
-operator|.
-name|updateDbLocation
-argument_list|(
-name|modifiedDb
-argument_list|,
-name|newDefaultDbLocation
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 if|if
@@ -2478,6 +2458,11 @@ name|dbObj
 argument_list|)
 expr_stmt|;
 block|}
+name|boolean
+name|errorsInThisDb
+init|=
+literal|false
+decl_stmt|;
 name|List
 argument_list|<
 name|String
@@ -2544,6 +2529,60 @@ expr_stmt|;
 name|failuresEncountered
 operator|=
 literal|true
+expr_stmt|;
+name|errorsInThisDb
+operator|=
+literal|true
+expr_stmt|;
+block|}
+block|}
+comment|// Finally update the DB location. This would prevent subsequent runs of the migration from processing this DB.
+if|if
+condition|(
+name|modifyDefaultManagedLocation
+condition|)
+block|{
+if|if
+condition|(
+name|errorsInThisDb
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Not updating database location for {} since an error was encountered. The migration must be run again for this database."
+argument_list|,
+name|dbObj
+operator|.
+name|getName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|Path
+name|newDefaultDbLocation
+init|=
+name|wh
+operator|.
+name|getDefaultDatabasePath
+argument_list|(
+name|dbName
+argument_list|)
+decl_stmt|;
+comment|// dbObj after this call would have the new DB location.
+comment|// Keep that in mind if anything below this requires the old DB path.
+name|getHiveUpdater
+argument_list|()
+operator|.
+name|updateDbLocation
+argument_list|(
+name|dbObj
+argument_list|,
+name|newDefaultDbLocation
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -3507,6 +3546,7 @@ argument_list|,
 name|newTablePath
 argument_list|)
 expr_stmt|;
+comment|// Move table directory.
 if|if
 condition|(
 operator|!
@@ -3582,25 +3622,11 @@ throw|;
 block|}
 block|}
 block|}
-if|if
-condition|(
-operator|!
-name|runOptions
-operator|.
-name|dryRun
-condition|)
-block|{
-name|getHiveUpdater
-argument_list|()
-operator|.
-name|updateTableLocation
-argument_list|(
-name|tableObj
-argument_list|,
-name|newTablePath
-argument_list|)
-expr_stmt|;
-block|}
+comment|// An error occurring between here and before updating the table's location in the metastore
+comment|// may potentially cause the data to reside in the new location, while the
+comment|// table/partitions point to the old paths.
+comment|// The migration would be _REQUIRED_ to run again (and pass) for the data and table/partition
+comment|// locations to be in sync.
 if|if
 condition|(
 name|isPartitionedTable
@@ -3730,6 +3756,27 @@ expr_stmt|;
 block|}
 block|}
 block|}
+block|}
+comment|// Finally update the table location. This would prevent this tool from processing this table again
+comment|// on subsequent runs of the migration.
+if|if
+condition|(
+operator|!
+name|runOptions
+operator|.
+name|dryRun
+condition|)
+block|{
+name|getHiveUpdater
+argument_list|()
+operator|.
+name|updateTableLocation
+argument_list|(
+name|tableObj
+argument_list|,
+name|newTablePath
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 specifier|static
