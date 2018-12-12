@@ -895,7 +895,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFIn
+name|GenericUDFCoalesce
 import|;
 end_import
 
@@ -915,7 +915,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFNvl
+name|GenericUDFIn
 import|;
 end_import
 
@@ -7984,7 +7984,7 @@ operator|.
 name|isFoldExpr
 argument_list|()
 operator|&&
-name|canConvertIntoNvl
+name|canConvertIntoCoalesce
 argument_list|(
 name|genericUDF
 argument_list|,
@@ -7992,7 +7992,7 @@ name|children
 argument_list|)
 condition|)
 block|{
-comment|// Rewrite CASE into NVL
+comment|// Rewrite CASE into COALESCE
 name|desc
 operator|=
 name|ExprNodeGenericFuncDesc
@@ -8000,7 +8000,7 @@ operator|.
 name|newInstance
 argument_list|(
 operator|new
-name|GenericUDFNvl
+name|GenericUDFCoalesce
 argument_list|()
 argument_list|,
 name|Lists
@@ -9199,7 +9199,7 @@ return|;
 block|}
 specifier|private
 name|boolean
-name|canConvertIntoNvl
+name|canConvertIntoCoalesce
 parameter_list|(
 name|GenericUDF
 name|genericUDF

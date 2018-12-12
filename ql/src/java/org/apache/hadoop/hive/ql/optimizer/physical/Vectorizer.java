@@ -5417,15 +5417,6 @@ name|supportedGenericUDFs
 operator|.
 name|add
 argument_list|(
-name|GenericUDFNvl
-operator|.
-name|class
-argument_list|)
-expr_stmt|;
-name|supportedGenericUDFs
-operator|.
-name|add
-argument_list|(
 name|GenericUDFElt
 operator|.
 name|class

@@ -9285,10 +9285,6 @@ name|GenericUDFCoalesce
 operator|||
 name|udf
 operator|instanceof
-name|GenericUDFNvl
-operator|||
-name|udf
-operator|instanceof
 name|GenericUDFElt
 operator|||
 name|udf
@@ -14432,14 +14428,8 @@ condition|(
 name|udf
 operator|instanceof
 name|GenericUDFCoalesce
-operator|||
-name|udf
-operator|instanceof
-name|GenericUDFNvl
 condition|)
 block|{
-comment|// Coalesce is a special case because it can take variable number of arguments.
-comment|// Nvl is a specialization of the Coalesce.
 name|ve
 operator|=
 name|getCoalesceExpression

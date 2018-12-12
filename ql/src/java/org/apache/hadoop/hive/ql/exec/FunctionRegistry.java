@@ -3566,11 +3566,12 @@ name|registerGenericUDF
 argument_list|(
 literal|"nvl"
 argument_list|,
-name|GenericUDFNvl
+name|GenericUDFCoalesce
 operator|.
 name|class
 argument_list|)
 expr_stmt|;
+comment|//HIVE-20961
 name|system
 operator|.
 name|registerGenericUDF

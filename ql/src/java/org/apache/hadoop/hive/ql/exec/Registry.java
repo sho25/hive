@@ -3137,17 +3137,35 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
+name|String
+name|message
+init|=
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"Function (%s / %s) is hive builtin function, which cannot be overridden."
+argument_list|,
+name|functionName
+argument_list|,
+name|prev
+operator|.
+name|getFunctionClass
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|message
+argument_list|)
+expr_stmt|;
 throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-literal|"Function "
-operator|+
-name|functionName
-operator|+
-literal|" is hive builtin function, "
-operator|+
-literal|"which cannot be overridden."
+name|message
 argument_list|)
 throw|;
 block|}

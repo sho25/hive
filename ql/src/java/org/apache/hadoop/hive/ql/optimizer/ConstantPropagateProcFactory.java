@@ -885,7 +885,7 @@ name|udf
 operator|.
 name|generic
 operator|.
-name|GenericUDFNvl
+name|GenericUDFCoalesce
 import|;
 end_import
 
@@ -5189,7 +5189,7 @@ operator|.
 name|newInstance
 argument_list|(
 operator|new
-name|GenericUDFNvl
+name|GenericUDFCoalesce
 argument_list|()
 argument_list|,
 name|children
@@ -5589,7 +5589,7 @@ operator|.
 name|newInstance
 argument_list|(
 operator|new
-name|GenericUDFNvl
+name|GenericUDFCoalesce
 argument_list|()
 argument_list|,
 name|children
