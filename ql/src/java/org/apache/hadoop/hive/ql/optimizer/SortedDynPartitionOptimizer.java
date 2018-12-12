@@ -1494,8 +1494,10 @@ operator|.
 name|getChildOperators
 argument_list|()
 operator|.
-name|clear
-argument_list|()
+name|remove
+argument_list|(
+name|fsOp
+argument_list|)
 expr_stmt|;
 comment|// if enforce bucketing/sorting is disabled numBuckets will not be set.
 comment|// set the number of buckets here to ensure creation of empty buckets
@@ -2836,8 +2838,10 @@ operator|.
 name|getChildOperators
 argument_list|()
 operator|.
-name|clear
-argument_list|()
+name|remove
+argument_list|(
+name|rsToRemove
+argument_list|)
 expr_stmt|;
 name|rsParent
 operator|.
