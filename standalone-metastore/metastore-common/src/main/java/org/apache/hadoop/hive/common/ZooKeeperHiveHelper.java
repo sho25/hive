@@ -843,7 +843,7 @@ literal|"Created the root name space: "
 operator|+
 name|rootNamespace
 operator|+
-literal|" on ZooKeeper for HiveServer2"
+literal|" on ZooKeeper"
 argument_list|)
 expr_stmt|;
 block|}
@@ -871,7 +871,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to create HiveServer2 namespace: "
+literal|"Unable to create namespace: "
 operator|+
 name|rootNamespace
 operator|+

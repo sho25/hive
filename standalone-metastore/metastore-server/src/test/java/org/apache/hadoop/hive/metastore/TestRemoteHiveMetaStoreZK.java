@@ -93,16 +93,6 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Ignore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
 name|Before
 import|;
 end_import
@@ -123,11 +113,6 @@ end_import
 
 begin_class
 annotation|@
-name|Ignore
-argument_list|(
-literal|"HIVE-21022: disabled until fixed"
-argument_list|)
-annotation|@
 name|Category
 argument_list|(
 name|MetastoreCheckinTest
@@ -146,14 +131,6 @@ name|TestingServer
 name|zkServer
 init|=
 literal|null
-decl_stmt|;
-specifier|private
-specifier|final
-specifier|static
-name|String
-name|zkRootNamespace
-init|=
-literal|"hs2mszktest"
 decl_stmt|;
 annotation|@
 name|Before
@@ -206,7 +183,13 @@ name|ConfVars
 operator|.
 name|THRIFT_ZOOKEEPER_NAMESPACE
 argument_list|,
-name|zkRootNamespace
+name|this
+operator|.
+name|getClass
+argument_list|()
+operator|.
+name|getSimpleName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|MetastoreConf
