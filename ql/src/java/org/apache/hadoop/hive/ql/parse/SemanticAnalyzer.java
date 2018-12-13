@@ -91555,7 +91555,7 @@ operator|.
 name|getQueryCurrentTimestamp
 argument_list|()
 operator|.
-name|getTime
+name|toEpochMilli
 argument_list|()
 decl_stmt|;
 return|return
