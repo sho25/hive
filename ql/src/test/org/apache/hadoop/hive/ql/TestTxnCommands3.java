@@ -1944,8 +1944,8 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-comment|//makes delta_1_2& delete_delta_1_2
-comment|/* Now we should have      target/warehouse/t/      ├── delete_delta_0000001_0000002_v0000019      │   ├── _orc_acid_version      │   └── bucket_00000      ├── delta_0000001_0000001_0000      │   ├── _orc_acid_version      │   └── bucket_00000      ├── delta_0000001_0000002_v0000019      │   ├── _orc_acid_version      │   └── bucket_00000      └── delta_0000002_0000002_0000          ├── _orc_acid_version          └── bucket_00000*/
+comment|//makes delta_1_2
+comment|/* Now we should have      target/warehouse/t/      ├── delta_0000001_0000001_0000      │   ├── _orc_acid_version      │   └── bucket_00000      ├── delta_0000001_0000002_v0000019      │   ├── _orc_acid_version      │   └── bucket_00000      └── delta_0000002_0000002_0000          ├── _orc_acid_version          └── bucket_00000*/
 name|FileSystem
 name|fs
 init|=
@@ -1995,8 +1995,6 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"/t/delete_delta_0000001_0000002_v0000019"
-block|,
 literal|"/t/delta_0000001_0000002_v0000019"
 block|,
 literal|"/t/delta_0000001_0000001_0000"
@@ -2075,8 +2073,7 @@ literal|"commit"
 argument_list|)
 expr_stmt|;
 comment|//commits T3
-comment|//so now cleaner should be able to delete delta_0000001_0000001_0000
-comment|//& delta_0000002_0000002_0000
+comment|//so now cleaner should be able to delete delta_0000002_0000002_0000
 comment|//insert a row so that compactor makes a new delta (due to HIVE-20901)
 name|runStatementOnDriver
 argument_list|(
@@ -2096,7 +2093,7 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-comment|/*     at this point delete|delta_0000001_0000003_v0000022 are visible to everyone     so cleaner removes all files shadowed by them (which is everything in this case)     */
+comment|/*     at this point delta_0000001_0000003_v0000022 is visible to everyone     so cleaner removes all files shadowed by it (which is everything in this case)     */
 name|TestTxnCommands2
 operator|.
 name|runCleaner
@@ -2110,8 +2107,6 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"/t/delete_delta_0000001_0000003_v0000022"
-block|,
 literal|"/t/delta_0000001_0000003_v0000022"
 block|}
 expr_stmt|;

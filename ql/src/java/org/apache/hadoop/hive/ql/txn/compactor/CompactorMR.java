@@ -6703,37 +6703,6 @@ argument_list|(
 name|jobConf
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|isMajor
-operator|&&
-name|acidOperationalProperties
-operator|.
-name|isSplitUpdate
-argument_list|()
-condition|)
-block|{
-comment|// When split-update is enabled for ACID, we initialize a separate deleteEventWriter
-comment|// that is used to write all the delete events (in case of minor compaction only). For major
-comment|// compaction, history is not required to be maintained hence the delete events are processed
-comment|// but not re-written separately.
-name|getDeleteEventWriter
-argument_list|(
-name|reporter
-argument_list|,
-name|reader
-operator|.
-name|getObjectInspector
-argument_list|()
-argument_list|,
-name|split
-operator|.
-name|getBucket
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 while|while
 condition|(
 name|reader
@@ -6762,18 +6731,42 @@ name|isMajor
 operator|&&
 name|sawDeleteRecord
 condition|)
+block|{
 continue|continue;
+block|}
 if|if
 condition|(
 name|sawDeleteRecord
 operator|&&
+name|acidOperationalProperties
+operator|.
+name|isSplitUpdate
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
 name|deleteEventWriter
-operator|!=
+operator|==
 literal|null
 condition|)
 block|{
-comment|// When minor compacting, write delete events to a separate file when split-update is
-comment|// turned on.
+name|getDeleteEventWriter
+argument_list|(
+name|reporter
+argument_list|,
+name|reader
+operator|.
+name|getObjectInspector
+argument_list|()
+argument_list|,
+name|split
+operator|.
+name|getBucket
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|deleteEventWriter
 operator|.
 name|write
@@ -7130,13 +7123,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-if|if
-condition|(
-name|deleteEventWriter
-operator|==
-literal|null
-condition|)
-block|{
 name|AcidOutputFormat
 operator|.
 name|Options
@@ -7298,7 +7284,6 @@ argument_list|,
 name|options
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 block|}
 specifier|static
