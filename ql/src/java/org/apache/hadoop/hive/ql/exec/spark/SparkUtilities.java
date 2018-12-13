@@ -1,6 +1,6 @@
 begin_unit|revision:0.9.5;language:Java;cregit-version:0.0.1
 begin_comment
-comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *    http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
+comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or more contributor license agreements.  See the NOTICE file  * distributed with this work for additional information  * regarding copyright ownership.  The ASF licenses this file  * to you under the Apache License, Version 2.0 (the  * "License"); you may not use this file except in compliance  * with the License.  You may obtain a copy of the License at  *  *     http://www.apache.org/licenses/LICENSE-2.0  *  * Unless required by applicable law or agreed to in writing, software  * distributed under the License is distributed on an "AS IS" BASIS,  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  * See the License for the specific language governing permissions and  * limitations under the License.  */
 end_comment
 
 begin_package
@@ -922,13 +922,23 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|SparkSession
-name|sparkSession
+name|SessionState
+name|sessionState
 init|=
 name|SessionState
 operator|.
 name|get
 argument_list|()
+decl_stmt|;
+synchronized|synchronized
+init|(
+name|sessionState
+init|)
+block|{
+name|SparkSession
+name|sparkSession
+init|=
+name|sessionState
 operator|.
 name|getSparkSession
 argument_list|()
@@ -936,10 +946,7 @@ decl_stmt|;
 name|HiveConf
 name|sessionConf
 init|=
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|sessionState
 operator|.
 name|getConf
 argument_list|()
@@ -999,10 +1006,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|SessionState
-operator|.
-name|get
-argument_list|()
+name|sessionState
 operator|.
 name|setSparkSession
 argument_list|(
@@ -1012,6 +1016,7 @@ expr_stmt|;
 return|return
 name|sparkSession
 return|;
+block|}
 block|}
 comment|/**    * Generate a temporary path for dynamic partition pruning in Spark branch    * TODO: no longer need this if we use accumulator!    * @param basePath    * @param id    * @return    */
 specifier|public
