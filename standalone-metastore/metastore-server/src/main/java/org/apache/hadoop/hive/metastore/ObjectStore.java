@@ -8583,6 +8583,24 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Add the fetch group here which retrieves the database object along with the MTable
+comment|// objects. If we don't prefetch the database object, we could end up in a situation where
+comment|// the database gets dropped while we are looping through the tables throwing a
+comment|// JDOObjectNotFoundException. This causes HMS to go into a retry loop which greatly degrades
+comment|// performance of this function when called with dbNames="*" and tableNames="*" (fetch all
+comment|// tables in all databases, essentially a full dump)
+name|pm
+operator|.
+name|getFetchPlan
+argument_list|()
+operator|.
+name|addGroup
+argument_list|(
+name|FetchGroups
+operator|.
+name|FETCH_DATABASE_ON_MTABLE
+argument_list|)
+expr_stmt|;
 name|query
 operator|=
 name|pm
@@ -8701,6 +8719,18 @@ expr_stmt|;
 block|}
 finally|finally
 block|{
+name|pm
+operator|.
+name|getFetchPlan
+argument_list|()
+operator|.
+name|removeGroup
+argument_list|(
+name|FetchGroups
+operator|.
+name|FETCH_DATABASE_ON_MTABLE
+argument_list|)
+expr_stmt|;
 name|rollbackAndCleanup
 argument_list|(
 name|commited
