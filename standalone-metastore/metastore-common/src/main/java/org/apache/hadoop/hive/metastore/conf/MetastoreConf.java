@@ -1061,6 +1061,18 @@ operator|.
 name|SSL_TRUSTSTORE_PASSWORD
 operator|.
 name|hiveName
+argument_list|,
+name|ConfVars
+operator|.
+name|DBACCESS_SSL_TRUSTSTORE_PASSWORD
+operator|.
+name|varname
+argument_list|,
+name|ConfVars
+operator|.
+name|DBACCESS_SSL_TRUSTSTORE_PASSWORD
+operator|.
+name|hiveName
 argument_list|)
 decl_stmt|;
 specifier|public
@@ -1856,17 +1868,78 @@ argument_list|,
 literal|""
 argument_list|)
 block|,
-name|DBACCESS_SSL_PROPS
+comment|// Parameters for configuring SSL encryption to the database store
+comment|// If DBACCESS_USE_SSL is false, then all other DBACCESS_SSL_* properties will be ignored
+name|DBACCESS_SSL_TRUSTSTORE_PASSWORD
 argument_list|(
-literal|"metastore.dbaccess.ssl.properties"
+literal|"metastore.dbaccess.ssl.truststore.password"
 argument_list|,
-literal|"hive.metastore.dbaccess.ssl.properties"
+literal|"hive.metastore.dbaccess.ssl.truststore.password"
 argument_list|,
 literal|""
 argument_list|,
-literal|"Comma-separated SSL properties for metastore to access database when JDO connection URL\n"
+literal|"Password for the Java truststore file that is used when encrypting the connection to the database store. \n"
 operator|+
-literal|"enables SSL access. e.g. javax.net.ssl.trustStore=/tmp/truststore,javax.net.ssl.trustStorePassword=pwd."
+literal|"This directly maps to the javax.net.ssl.trustStorePassword Java system property. \n"
+operator|+
+literal|"While Java does allow an empty truststore password, we highly recommend against this. \n"
+operator|+
+literal|"An empty password can compromise the integrity of the truststore file."
+argument_list|)
+block|,
+name|DBACCESS_SSL_TRUSTSTORE_PATH
+argument_list|(
+literal|"metastore.dbaccess.ssl.truststore.path"
+argument_list|,
+literal|"hive.metastore.dbaccess.ssl.truststore.path"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Location on disk of the Java truststore file to use when encrypting the connection to the database store. \n"
+operator|+
+literal|"This directly maps to the javax.net.ssl.trustStore Java system property. \n"
+operator|+
+literal|"This file consists of a collection of certificates trusted by the metastore server.\n"
+argument_list|)
+block|,
+name|DBACCESS_SSL_TRUSTSTORE_TYPE
+argument_list|(
+literal|"metastore.dbaccess.ssl.truststore.type"
+argument_list|,
+literal|"hive.metastore.dbaccess.ssl.truststore.type"
+argument_list|,
+literal|"jks"
+argument_list|,
+operator|new
+name|StringSetValidator
+argument_list|(
+literal|"jceks"
+argument_list|,
+literal|"jks"
+argument_list|,
+literal|"dks"
+argument_list|,
+literal|"pkcs11"
+argument_list|,
+literal|"pkcs12"
+argument_list|)
+argument_list|,
+literal|"File type for the Java truststore file that is used when encrypting the connection to the database store. \n"
+operator|+
+literal|"This directly maps to the javax.net.ssl.trustStoreType Java system property. \n"
+operator|+
+literal|"Types jceks, jks, dks, pkcs11, and pkcs12 can be read from Java 8 and beyond. We default to jks. \n"
+argument_list|)
+block|,
+name|DBACCESS_USE_SSL
+argument_list|(
+literal|"metastore.dbaccess.ssl.use.SSL"
+argument_list|,
+literal|"hive.metastore.dbaccess.ssl.use.SSL"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Set this to true to use SSL encryption to the database store."
 argument_list|)
 block|,
 name|DEFAULTPARTITIONNAME
@@ -4210,6 +4283,28 @@ operator|+
 literal|" overridden by HIVE_CODAHALE_METRICS_REPORTER_CLASSES and METRICS_REPORTERS if "
 operator|+
 literal|"present. Comma separated list of JMX, CONSOLE, JSON_FILE, HADOOP2"
+argument_list|)
+block|,
+comment|// Planned to be removed in HIVE-21024
+annotation|@
+name|Deprecated
+name|DBACCESS_SSL_PROPS
+argument_list|(
+literal|"metastore.dbaccess.ssl.properties"
+argument_list|,
+literal|"hive.metastore.dbaccess.ssl.properties"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Deprecated. Use the metastore.dbaccess.ssl.* properties instead. Comma-separated SSL properties for "
+operator|+
+literal|"metastore to access database when JDO connection URL enables SSL access. \n"
+operator|+
+literal|"e.g. javax.net.ssl.trustStore=/tmp/truststore,javax.net.ssl.trustStorePassword=pwd.\n "
+operator|+
+literal|"If both this and the metastore.dbaccess.ssl.* properties are set, then the latter properties \n"
+operator|+
+literal|"will overwrite what was set in the deprecated property."
 argument_list|)
 block|,
 comment|// These are all values that we put here just for testing
