@@ -2353,7 +2353,7 @@ name|LOAD_DATA_ACID_FILE
 argument_list|(
 literal|10413
 argument_list|,
-literal|"\"{0}\" was created created by Acid write - it cannot be loaded into anther Acid table"
+literal|"\"{0}\" was created by Acid write - it cannot be loaded into anther Acid table"
 argument_list|,
 literal|true
 argument_list|)

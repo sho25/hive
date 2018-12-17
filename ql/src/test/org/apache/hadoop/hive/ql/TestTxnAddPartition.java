@@ -177,6 +177,18 @@ name|junit
 operator|.
 name|rules
 operator|.
+name|ExpectedException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|rules
+operator|.
 name|TemporaryFolder
 import|;
 end_import
@@ -300,6 +312,17 @@ name|folder
 init|=
 operator|new
 name|TemporaryFolder
+argument_list|()
+decl_stmt|;
+annotation|@
+name|Rule
+specifier|public
+name|ExpectedException
+name|exception
+init|=
+name|ExpectedException
+operator|.
+name|none
 argument_list|()
 decl_stmt|;
 annotation|@
@@ -1294,6 +1317,71 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{   }
+annotation|@
+name|Test
+specifier|public
+name|void
+name|addPartitionTransactional
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|exception
+operator|.
+name|expect
+argument_list|(
+name|RuntimeException
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|exception
+operator|.
+name|expectMessage
+argument_list|(
+literal|"was created by Acid write"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists T"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists Tstage"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table T (a int, b int) partitioned by (p int) "
+operator|+
+literal|"clustered by (a) into 2 buckets stored as orc tblproperties('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table Tstage (a int, b int)  partitioned by (p int) clustered by (a) into 2 "
+operator|+
+literal|"buckets stored as orc tblproperties('transactional'='true')"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into Tstage partition(p=1) values(0,2),(1,4)"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"ALTER TABLE T ADD PARTITION (p=0) location '"
+operator|+
+name|getWarehouseDir
+argument_list|()
+operator|+
+literal|"/tstage/p=1/delta_0000001_0000001_0000/bucket_00001'"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
