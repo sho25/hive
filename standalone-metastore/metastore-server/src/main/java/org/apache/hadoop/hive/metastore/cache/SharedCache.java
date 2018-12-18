@@ -1375,7 +1375,7 @@ block|}
 name|boolean
 name|cachePartitions
 parameter_list|(
-name|List
+name|Iterable
 argument_list|<
 name|Partition
 argument_list|>
@@ -1838,6 +1838,17 @@ name|partVal
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|wrapper
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|isPartitionCacheDirty
 operator|.
 name|set
@@ -6608,6 +6619,16 @@ name|tblName
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|tblWrapper
+operator|==
+literal|null
+condition|)
+block|{
+comment|//in case of retry, ignore second try.
+return|return;
+block|}
 name|byte
 index|[]
 name|sdHash
@@ -8098,7 +8119,7 @@ parameter_list|,
 name|String
 name|tblName
 parameter_list|,
-name|List
+name|Iterable
 argument_list|<
 name|Partition
 argument_list|>

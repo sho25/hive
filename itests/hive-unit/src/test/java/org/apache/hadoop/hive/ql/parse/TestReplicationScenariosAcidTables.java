@@ -3301,7 +3301,7 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|21
+literal|22
 argument_list|)
 expr_stmt|;
 comment|// Test load

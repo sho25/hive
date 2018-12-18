@@ -3830,6 +3830,17 @@ argument_list|,
 literal|"The delegation token service name to match when selecting a token from the current user's tokens."
 argument_list|)
 block|,
+name|METASTORE_CACHE_CAN_USE_EVENT
+argument_list|(
+literal|"metastore.cache.can.use.event"
+argument_list|,
+literal|"hive.metastore.cache.can.use.event"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Can notification events from notification log table be used for updating the metastore cache."
+argument_list|)
+block|,
 name|TRANSACTIONAL_EVENT_LISTENERS
 argument_list|(
 literal|"metastore.transactional.event.listeners"

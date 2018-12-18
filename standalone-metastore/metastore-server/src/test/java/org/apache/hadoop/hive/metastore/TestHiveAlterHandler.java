@@ -431,6 +431,10 @@ argument_list|,
 literal|null
 argument_list|,
 literal|null
+argument_list|,
+name|conf
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -628,6 +632,10 @@ argument_list|,
 name|newTable
 argument_list|,
 literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|conf
 argument_list|,
 literal|null
 argument_list|)
@@ -952,6 +960,10 @@ argument_list|,
 name|newTable
 argument_list|,
 literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|conf
 argument_list|,
 literal|null
 argument_list|)
