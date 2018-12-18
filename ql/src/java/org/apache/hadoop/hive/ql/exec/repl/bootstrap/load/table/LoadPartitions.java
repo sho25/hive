@@ -1792,15 +1792,6 @@ operator|.
 name|isInReplicationScope
 argument_list|()
 operator|&&
-operator|!
-name|event
-operator|.
-name|replicationSpec
-argument_list|()
-operator|.
-name|isMigratingToTxnTable
-argument_list|()
-operator|&&
 name|context
 operator|.
 name|hiveConf
@@ -1817,23 +1808,8 @@ name|LoadFileType
 operator|.
 name|IGNORE
 expr_stmt|;
-block|}
-else|else
-block|{
-name|loadFileType
-operator|=
-name|event
-operator|.
-name|replicationSpec
-argument_list|()
-operator|.
-name|isReplace
-argument_list|()
-condition|?
-name|LoadFileType
-operator|.
-name|REPLACE_ALL
-else|:
+if|if
+condition|(
 name|event
 operator|.
 name|replicationSpec
@@ -1841,10 +1817,55 @@ argument_list|()
 operator|.
 name|isMigratingToTxnTable
 argument_list|()
+condition|)
+block|{
+comment|// Migrating to transactional tables in bootstrap load phase.
+comment|// It is enough to copy all the original files under base_1 dir and so write-id is hardcoded to 1.
+comment|// ReplTxnTask added earlier in the DAG ensure that the write-id=1 is made valid in HMS metadata.
+name|tmpPath
+operator|=
+operator|new
+name|Path
+argument_list|(
+name|tmpPath
+argument_list|,
+name|AcidUtils
+operator|.
+name|baseDir
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+else|else
+block|{
+name|loadFileType
+operator|=
+operator|(
+name|event
+operator|.
+name|replicationSpec
+argument_list|()
+operator|.
+name|isReplace
+argument_list|()
+operator|||
+name|event
+operator|.
+name|replicationSpec
+argument_list|()
+operator|.
+name|isMigratingToTxnTable
+argument_list|()
+operator|)
 condition|?
 name|LoadFileType
 operator|.
-name|KEEP_EXISTING
+name|REPLACE_ALL
 else|:
 name|LoadFileType
 operator|.
@@ -1886,10 +1907,6 @@ argument_list|,
 name|context
 operator|.
 name|hiveConf
-argument_list|,
-literal|false
-argument_list|,
-literal|false
 argument_list|)
 decl_stmt|;
 name|Task
@@ -2092,8 +2109,7 @@ name|isMigratingToTxnTable
 argument_list|()
 condition|)
 block|{
-comment|// Write-id is hardcoded to 1 so that for migration, we just move all original files under delta_1_1 dir.
-comment|// It is used only for transactional tables created after migrating from non-ACID table.
+comment|// Write-id is hardcoded to 1 so that for migration, we just move all original files under base_1 dir.
 comment|// ReplTxnTask added earlier in the DAG ensure that the write-id is made valid in HMS metadata.
 name|LoadTableDesc
 name|loadTableWork
@@ -2117,7 +2133,9 @@ argument_list|()
 argument_list|,
 name|loadFileType
 argument_list|,
-literal|1L
+name|ReplUtils
+operator|.
+name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
 argument_list|)
 decl_stmt|;
 name|loadTableWork
@@ -2125,6 +2143,21 @@ operator|.
 name|setInheritTableSpecs
 argument_list|(
 literal|false
+argument_list|)
+expr_stmt|;
+name|loadTableWork
+operator|.
+name|setStmtId
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+comment|// Need to set insertOverwrite so base_1 is created instead of delta_1_1_0.
+name|loadTableWork
+operator|.
+name|setInsertOverwrite
+argument_list|(
+literal|true
 argument_list|)
 expr_stmt|;
 name|moveWork

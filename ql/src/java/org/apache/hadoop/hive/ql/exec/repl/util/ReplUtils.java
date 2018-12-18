@@ -584,6 +584,16 @@ name|REPL_CURRENT_TBL_WRITE_ID
 init|=
 literal|"hive.repl.current.table.write.id"
 decl_stmt|;
+comment|// Migrating to transactional tables in bootstrap load phase.
+comment|// It is enough to copy all the original files under base_1 dir and so write-id is hardcoded to 1.
+specifier|public
+specifier|static
+specifier|final
+name|Long
+name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
+init|=
+literal|1L
+decl_stmt|;
 comment|/**    * Bootstrap REPL LOAD operation type on the examined object based on ckpt state.    */
 specifier|public
 enum|enum
