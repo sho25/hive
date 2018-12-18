@@ -383,6 +383,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -2462,6 +2476,20 @@ name|pd
 operator|.
 name|depth
 decl_stmt|;
+if|if
+condition|(
+name|currentDepth
+operator|==
+name|partColNames
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+return|return
+name|currentPath
+return|;
+block|}
 name|FileStatus
 index|[]
 name|fileStatuses
@@ -2490,13 +2518,6 @@ operator|&&
 name|currentDepth
 operator|>
 literal|0
-operator|&&
-name|currentDepth
-operator|<
-name|partColNames
-operator|.
-name|size
-argument_list|()
 condition|)
 block|{
 comment|// since maxDepth is not yet reached, we are missing partition
@@ -2530,13 +2551,6 @@ name|fileStatus
 operator|.
 name|isDirectory
 argument_list|()
-operator|&&
-name|currentDepth
-operator|<
-name|partColNames
-operator|.
-name|size
-argument_list|()
 condition|)
 block|{
 comment|// found a file at depth which is less than number of partition keys
@@ -2554,21 +2568,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-elseif|else
-if|if
-condition|(
-name|fileStatus
-operator|.
-name|isDirectory
-argument_list|()
-operator|&&
-name|currentDepth
-operator|<
-name|partColNames
-operator|.
-name|size
-argument_list|()
-condition|)
+else|else
 block|{
 comment|// found a sub-directory at a depth less than number of partition keys
 comment|// validate if the partition directory name matches with the corresponding
@@ -2668,20 +2668,6 @@ expr_stmt|;
 block|}
 block|}
 block|}
-if|if
-condition|(
-name|currentDepth
-operator|==
-name|partColNames
-operator|.
-name|size
-argument_list|()
-condition|)
-block|{
-return|return
-name|currentPath
-return|;
-block|}
 block|}
 return|return
 literal|null
@@ -2760,7 +2746,8 @@ name|depth
 expr_stmt|;
 block|}
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
 name|void
 name|checkPartitionDirs
 parameter_list|(
@@ -2956,10 +2943,9 @@ name|LOG
 operator|.
 name|error
 argument_list|(
+literal|"Exception received while listing partition directories"
+argument_list|,
 name|e
-operator|.
-name|getMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|executor
