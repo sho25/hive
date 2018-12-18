@@ -355,7 +355,7 @@ argument_list|)
 operator|.
 name|addPrimitiveColumn
 argument_list|(
-literal|"KEQ_SEQ"
+literal|"KEY_SEQ"
 argument_list|,
 name|Type
 operator|.
