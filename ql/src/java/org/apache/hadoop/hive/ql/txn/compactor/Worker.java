@@ -307,24 +307,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lockmgr
-operator|.
-name|HiveTxnManager
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|mapred
 operator|.
 name|JobConf
@@ -1011,17 +993,6 @@ argument_list|)
 expr_stmt|;
 continue|continue;
 block|}
-specifier|final
-name|boolean
-name|isMajor
-init|=
-name|ci
-operator|.
-name|isMajorCompaction
-argument_list|()
-decl_stmt|;
-comment|// Compaction doesn't work under a transaction and hence pass 0 for current txn Id
-comment|// The response will have one entry per table and hence we get only one OpenWriteIds
 name|String
 name|fullTableName
 init|=
@@ -1040,10 +1011,6 @@ name|getTableName
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// Determine who to run as
-name|String
-name|runAs
-decl_stmt|;
 if|if
 condition|(
 name|ci
@@ -1053,6 +1020,8 @@ operator|==
 literal|null
 condition|)
 block|{
+name|ci
+operator|.
 name|runAs
 operator|=
 name|findUserToRunAs
@@ -1065,28 +1034,7 @@ argument_list|,
 name|t
 argument_list|)
 expr_stmt|;
-name|txnHandler
-operator|.
-name|setRunAs
-argument_list|(
-name|ci
-operator|.
-name|id
-argument_list|,
-name|runAs
-argument_list|)
-expr_stmt|;
 block|}
-else|else
-block|{
-name|runAs
-operator|=
-name|ci
-operator|.
-name|runAs
-expr_stmt|;
-block|}
-comment|/**          * HIVE-20942: We need a transaction.  could call txnHandler directly but then we'd have to set up a hearbeat          * but using {@link HiveTxnManager} creates a Thrift connection to the HMS          * will this cause security checks that could fail?          * on the other hand we run SQL via Driver which certainly uses {@link HiveTxnManager}          final HiveTxnManager txnMgr = TxnManagerFactory.getTxnManagerFactory().getTxnManager(conf);          * openTxn requires Context() which is set up based on query parse/plan....          long txnid = txnMgr.openTxn(null, null);          */
 name|OpenTxnRequest
 name|otReq
 init|=
@@ -1095,6 +1043,8 @@ name|OpenTxnRequest
 argument_list|(
 literal|1
 argument_list|,
+name|ci
+operator|.
 name|runAs
 argument_list|,
 name|hostname
@@ -1128,8 +1078,6 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-comment|//todo: now we can update compaction_queue entry with this id
-comment|//also make sure to write to TXN_COMPONENTS so that if txn aborts, we don't delete the metadata about it from TXNS!!!!
 name|heartbeater
 operator|=
 operator|new
@@ -1239,17 +1187,24 @@ name|writeToString
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|//todo: this is a RDBMS call - so is setRunAs() above - could combine into 1
-name|txnHandler
-operator|.
-name|setCompactionHighestWriteId
-argument_list|(
 name|ci
-argument_list|,
+operator|.
+name|highestWriteId
+operator|=
 name|tblValidWriteIds
 operator|.
 name|getHighWatermark
 argument_list|()
+expr_stmt|;
+comment|//this writes TXN_COMPONENTS to ensure that if compactorTxnId fails, we keep metadata about
+comment|//it until after any data written by it are physically removed
+name|txnHandler
+operator|.
+name|updateCompactorState
+argument_list|(
+name|ci
+argument_list|,
+name|compactorTxnId
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -1330,9 +1285,13 @@ name|conf
 argument_list|,
 name|runJobAsSelf
 argument_list|(
+name|ci
+operator|.
 name|runAs
 argument_list|)
 condition|?
+name|ci
+operator|.
 name|runAs
 else|:
 name|t
@@ -1359,6 +1318,8 @@ if|if
 condition|(
 name|runJobAsSelf
 argument_list|(
+name|ci
+operator|.
 name|runAs
 argument_list|)
 condition|)

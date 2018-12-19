@@ -123,16 +123,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|sql
-operator|.
-name|PreparedStatement
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|time
 operator|.
 name|Instant
@@ -1111,7 +1101,7 @@ name|TXN_OPEN
 init|=
 literal|'o'
 decl_stmt|;
-comment|//todo: make these like OperationType and remove above char constatns
+comment|//todo: make these like OperationType and remove above char constants
 enum|enum
 name|TxnStatus
 block|{
@@ -1262,9 +1252,9 @@ name|TransactionalMetaStoreEventListener
 argument_list|>
 name|transactionalListeners
 decl_stmt|;
-specifier|private
+comment|/**    * These are the valid values for TXN_COMPONENTS.TC_OPERATION_TYPE    */
 enum|enum
-name|OpertaionType
+name|OperationType
 block|{
 name|SELECT
 argument_list|(
@@ -1285,13 +1275,18 @@ name|DELETE
 argument_list|(
 literal|'d'
 argument_list|)
+block|,
+name|COMPACT
+argument_list|(
+literal|'c'
+argument_list|)
 block|;
 specifier|private
 specifier|final
 name|char
 name|sqlConst
 decl_stmt|;
-name|OpertaionType
+name|OperationType
 parameter_list|(
 name|char
 name|sqlConst
@@ -1320,7 +1315,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|OpertaionType
+name|OperationType
 name|fromString
 parameter_list|(
 name|char
@@ -1356,6 +1351,12 @@ case|:
 return|return
 name|DELETE
 return|;
+case|case
+literal|'c'
+case|:
+return|return
+name|COMPACT
+return|;
 default|default:
 throw|throw
 operator|new
@@ -1371,7 +1372,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|OpertaionType
+name|OperationType
 name|fromDataOperationType
 parameter_list|(
 name|DataOperationType
@@ -1387,7 +1388,7 @@ case|case
 name|SELECT
 case|:
 return|return
-name|OpertaionType
+name|OperationType
 operator|.
 name|SELECT
 return|;
@@ -1395,7 +1396,7 @@ case|case
 name|INSERT
 case|:
 return|return
-name|OpertaionType
+name|OperationType
 operator|.
 name|INSERT
 return|;
@@ -1403,7 +1404,7 @@ case|case
 name|UPDATE
 case|:
 return|return
-name|OpertaionType
+name|OperationType
 operator|.
 name|UPDATE
 return|;
@@ -1411,7 +1412,7 @@ case|case
 name|DELETE
 case|:
 return|return
-name|OpertaionType
+name|OperationType
 operator|.
 name|DELETE
 return|;
@@ -1426,6 +1427,14 @@ name|dop
 argument_list|)
 throw|;
 block|}
+block|}
+name|char
+name|getSqlConst
+parameter_list|()
+block|{
+return|return
+name|sqlConst
+return|;
 block|}
 block|}
 comment|// Maximum number of open transactions that's allowed
@@ -6226,7 +6235,7 @@ literal|" and tc_operation_type IN("
 operator|+
 name|quoteChar
 argument_list|(
-name|OpertaionType
+name|OperationType
 operator|.
 name|UPDATE
 operator|.
@@ -6237,7 +6246,7 @@ literal|","
 operator|+
 name|quoteChar
 argument_list|(
-name|OpertaionType
+name|OperationType
 operator|.
 name|DELETE
 operator|.
@@ -6404,7 +6413,7 @@ literal|" and (committed.ws_operation_type="
 operator|+
 name|quoteChar
 argument_list|(
-name|OpertaionType
+name|OperationType
 operator|.
 name|UPDATE
 operator|.
@@ -6415,7 +6424,7 @@ literal|" OR cur.ws_operation_type="
 operator|+
 name|quoteChar
 argument_list|(
-name|OpertaionType
+name|OperationType
 operator|.
 name|UPDATE
 operator|.
@@ -6670,15 +6679,28 @@ name|s
 operator|=
 literal|"insert into COMPLETED_TXN_COMPONENTS (ctc_txnid, ctc_database, "
 operator|+
-literal|"ctc_table, ctc_partition, ctc_writeid, ctc_update_delete) select tc_txnid, tc_database, tc_table, "
+literal|"ctc_table, ctc_partition, ctc_writeid, ctc_update_delete) select tc_txnid,"
 operator|+
-literal|"tc_partition, tc_writeid, '"
+literal|" tc_database, tc_table, tc_partition, tc_writeid, '"
 operator|+
 name|isUpdateDelete
 operator|+
 literal|"' from TXN_COMPONENTS where tc_txnid = "
 operator|+
 name|txnid
+operator|+
+comment|//we only track compactor activity in TXN_COMPONENTS to handle the case where the
+comment|//compactor txn aborts - so don't bother copying it to COMPLETED_TXN_COMPONENTS
+literal|" AND tc_operation_type<> "
+operator|+
+name|quoteChar
+argument_list|(
+name|OperationType
+operator|.
+name|COMPACT
+operator|.
+name|sqlConst
+argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
@@ -13259,7 +13281,7 @@ literal|","
 operator|+
 name|quoteString
 argument_list|(
-name|OpertaionType
+name|OperationType
 operator|.
 name|fromDataOperationType
 argument_list|(
@@ -17318,6 +17340,7 @@ literal|"select cc_database, cc_table, cc_partition, cc_state, cc_type, cc_worke
 operator|+
 literal|"cc_start, cc_end, cc_run_as, cc_hadoop_job_id, cc_id from COMPLETED_COMPACTIONS"
 decl_stmt|;
+comment|//todo: sort by cq_id?
 comment|//what I want is order by cc_end desc, cc_start asc (but derby has a bug https://issues.apache.org/jira/browse/DERBY-6013)
 comment|//to sort so that currently running jobs are at the end of the list (bottom of screen)
 comment|//and currently running ones are in sorted by start time
@@ -17835,10 +17858,10 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|//for RU this may be null so we should default it to 'u' which is most restrictive
-name|OpertaionType
+name|OperationType
 name|ot
 init|=
-name|OpertaionType
+name|OperationType
 operator|.
 name|UPDATE
 decl_stmt|;
@@ -17852,7 +17875,7 @@ condition|)
 block|{
 name|ot
 operator|=
-name|OpertaionType
+name|OperationType
 operator|.
 name|fromDataOperationType
 argument_list|(
