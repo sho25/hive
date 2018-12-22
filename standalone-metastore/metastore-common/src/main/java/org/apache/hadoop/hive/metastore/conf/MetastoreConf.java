@@ -4143,6 +4143,27 @@ operator|+
 literal|"too large. Use this parameter to break the query into multiple batches. -1 means no batching."
 argument_list|)
 block|,
+name|HIVE_METASTORE_RUNWORKER_IN
+argument_list|(
+literal|"hive.metastore.runworker.in"
+argument_list|,
+literal|"hive.metastore.runworker.in"
+argument_list|,
+literal|"metastore"
+argument_list|,
+operator|new
+name|StringSetValidator
+argument_list|(
+literal|"metastore"
+argument_list|,
+literal|"hs2"
+argument_list|)
+argument_list|,
+literal|"Chooses where the compactor worker threads should run, Only possible values"
+operator|+
+literal|" are \"metastore\" and \"hs2\""
+argument_list|)
+block|,
 comment|// Hive values we have copied and use as is
 comment|// These two are used to indicate that we are running tests
 name|HIVE_IN_TEST

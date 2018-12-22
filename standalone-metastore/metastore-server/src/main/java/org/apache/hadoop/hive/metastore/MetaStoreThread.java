@@ -47,24 +47,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|MetaException
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -108,7 +90,7 @@ name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws
-name|MetaException
+name|Exception
 function_decl|;
 comment|/**    * Run the thread in the background.  This must not be called until    * {@link MetaStoreThread#init(java.util.concurrent.atomic.AtomicBoolean,java.util.concurrent.atomic.AtomicBoolean)} has    * been called.    */
 name|void

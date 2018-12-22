@@ -8176,7 +8176,7 @@ modifier|...
 name|partNames
 parameter_list|)
 throws|throws
-name|MetaException
+name|Exception
 block|{
 name|TxnStore
 name|txnHandler

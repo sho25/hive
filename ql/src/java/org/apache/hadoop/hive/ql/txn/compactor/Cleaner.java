@@ -576,7 +576,7 @@ specifier|public
 class|class
 name|Cleaner
 extends|extends
-name|CompactorThread
+name|MetaStoreCompactorThread
 block|{
 specifier|static
 specifier|final
@@ -627,7 +627,7 @@ name|AtomicBoolean
 name|looped
 parameter_list|)
 throws|throws
-name|MetaException
+name|Exception
 block|{
 name|super
 operator|.

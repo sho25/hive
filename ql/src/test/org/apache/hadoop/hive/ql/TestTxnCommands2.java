@@ -10238,7 +10238,7 @@ name|HiveConf
 name|hiveConf
 parameter_list|)
 throws|throws
-name|MetaException
+name|Exception
 block|{
 name|TxnCommandsBaseForTests
 operator|.
@@ -10257,7 +10257,7 @@ name|HiveConf
 name|hiveConf
 parameter_list|)
 throws|throws
-name|MetaException
+name|Exception
 block|{
 name|TxnCommandsBaseForTests
 operator|.
@@ -10276,7 +10276,7 @@ name|HiveConf
 name|hiveConf
 parameter_list|)
 throws|throws
-name|MetaException
+name|Exception
 block|{
 name|TxnCommandsBaseForTests
 operator|.
