@@ -2713,7 +2713,7 @@ literal|"select "
 operator|+
 literal|"\"DB_ID\", \"NAME\", \"DB_LOCATION_URI\", \"DESC\", "
 operator|+
-literal|"\"OWNER_NAME\", \"OWNER_TYPE\", \"CTLG_NAME\" "
+literal|"\"OWNER_NAME\", \"OWNER_TYPE\", \"CTLG_NAME\" , \"CREATE_TIME\""
 operator|+
 literal|"FROM "
 operator|+
@@ -3118,6 +3118,21 @@ argument_list|(
 name|dbline
 index|[
 literal|6
+index|]
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|db
+operator|.
+name|setCreateTime
+argument_list|(
+name|MetastoreDirectSqlUtils
+operator|.
+name|extractSqlInt
+argument_list|(
+name|dbline
+index|[
+literal|7
 index|]
 argument_list|)
 argument_list|)
