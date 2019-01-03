@@ -2712,6 +2712,46 @@ operator|+
 literal|"This file will get overwritten at every interval."
 argument_list|)
 block|,
+name|METRICS_SLF4J_LOG_FREQUENCY_MINS
+argument_list|(
+literal|"metastore.metrics.slf4j.frequency"
+argument_list|,
+literal|"hive.service.metrics.slf4j.frequency"
+argument_list|,
+literal|5
+argument_list|,
+name|TimeUnit
+operator|.
+name|MINUTES
+argument_list|,
+literal|"For SLF4J metric reporter, the frequency of logging metrics events. The default value is 5 mins."
+argument_list|)
+block|,
+name|METRICS_SLF4J_LOG_LEVEL
+argument_list|(
+literal|"metastore.metrics.slf4j.logging.level"
+argument_list|,
+literal|"hive.service.metrics.slf4j.logging.level"
+argument_list|,
+literal|"INFO"
+argument_list|,
+operator|new
+name|StringSetValidator
+argument_list|(
+literal|"TRACE"
+argument_list|,
+literal|"DEBUG"
+argument_list|,
+literal|"INFO"
+argument_list|,
+literal|"WARN"
+argument_list|,
+literal|"ERROR"
+argument_list|)
+argument_list|,
+literal|"For SLF4J metric reporter, the logging level to be used for metrics event logs. The default level is INFO."
+argument_list|)
+block|,
 name|METRICS_REPORTERS
 argument_list|(
 literal|"metastore.metrics.reporters"
@@ -2730,6 +2770,8 @@ argument_list|,
 literal|"console"
 argument_list|,
 literal|"hadoop"
+argument_list|,
+literal|"slf4j"
 argument_list|)
 argument_list|,
 literal|"A comma separated list of metrics reporters to start"
