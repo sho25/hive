@@ -732,6 +732,21 @@ argument_list|(
 name|isValid
 argument_list|)
 expr_stmt|;
+name|String
+name|time
+init|=
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|/
+literal|1000
+argument_list|)
+decl_stmt|;
 comment|// Test valid case
 name|String
 index|[]
@@ -741,11 +756,19 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into CTLGS values(99, 'test_cat_1', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb');"
+literal|"insert into CTLGS values(99, 'test_cat_1', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100);"
 block|,
-literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1');"
+literal|"insert into DBS values(99, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|}
 decl_stmt|;
 name|File
@@ -795,7 +818,11 @@ literal|"delete from DBS;"
 block|,
 literal|"insert into SEQUENCE_TABLE values('org.apache.hadoop.hive.metastore.model.MDatabase', 100);"
 block|,
-literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1');"
+literal|"insert into DBS values(102, 'test db1', 'hdfs:///tmp', 'db1', 'test', 'test', 'test_cat_1', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|}
 expr_stmt|;
 name|scriptFile
@@ -1950,6 +1977,21 @@ argument_list|(
 name|isValid
 argument_list|)
 expr_stmt|;
+name|String
+name|time
+init|=
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|/
+literal|1000
+argument_list|)
+decl_stmt|;
 comment|// Test valid case
 name|String
 index|[]
@@ -1959,11 +2001,23 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into CTLGS values(3, 'test_cat_2', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb');"
+literal|"insert into CTLGS values(3, 'test_cat_2', 'description', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2');"
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role', 'test_cat_2');"
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://myhost.com:8020/', 'haDB', 'public', 'role', 'test_cat_2', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
@@ -2069,13 +2123,29 @@ literal|"delete from SDS;"
 block|,
 literal|"delete from DBS;"
 block|,
-literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2');"
+literal|"insert into DBS values(2, 'my db', '/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'test_cat_2', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
-literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role', 'test_cat_2');"
+literal|"insert into DBS values(4, 'my db2', 'hdfs://myhost.com:8020', '', 'public', 'role', 'test_cat_2', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
-literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role', 'test_cat_2');"
+literal|"insert into DBS values(6, 'db with bad port', 'hdfs://myhost.com:8020:', 'zDB', 'public', 'role', 'test_cat_2', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
-literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role', 'test_cat_2');"
+literal|"insert into DBS values(7, 'db with bad port', 'hdfs://mynameservice.com/', 'haDB', 'public', 'role', 'test_cat_2', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://yourhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
@@ -2539,6 +2609,21 @@ throws|throws
 name|IOException
 block|{
 name|String
+name|time
+init|=
+name|String
+operator|.
+name|valueOf
+argument_list|(
+name|System
+operator|.
+name|currentTimeMillis
+argument_list|()
+operator|/
+literal|1000
+argument_list|)
+decl_stmt|;
+name|String
 index|[]
 name|scripts
 init|=
@@ -2546,9 +2631,17 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into CTLGS values (1, 'mycat', 'my description', 'hdfs://myhost.com:8020/user/hive/warehouse');"
+literal|"insert into CTLGS values (1, 'mycat', 'my description', 'hdfs://myhost.com:8020/user/hive/warehouse', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
-literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat');"
+literal|"insert into DBS values(2, 'my db', 'hdfs://myhost.com:8020/user/hive/warehouse/mydb', 'mydb', 'public', 'role', 'mycat', "
+operator|+
+name|time
+operator|+
+literal|");"
 block|,
 literal|"insert into SDS(SD_ID,CD_ID,INPUT_FORMAT,IS_COMPRESSED,IS_STOREDASSUBDIRECTORIES,LOCATION,NUM_BUCKETS,OUTPUT_FORMAT,SERDE_ID) values (1,null,'org.apache.hadoop.mapred.TextInputFormat','N','N','hdfs://myhost.com:8020/user/hive/warehouse/mydb',-1,'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat',null);"
 block|,
