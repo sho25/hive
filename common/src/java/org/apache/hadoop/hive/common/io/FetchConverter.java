@@ -35,16 +35,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|PrintStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|UnsupportedEncodingException
 import|;
 end_import
@@ -55,7 +45,7 @@ specifier|abstract
 class|class
 name|FetchConverter
 extends|extends
-name|PrintStream
+name|SessionStream
 block|{
 specifier|protected
 specifier|volatile

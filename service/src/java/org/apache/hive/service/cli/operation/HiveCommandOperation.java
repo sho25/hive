@@ -85,16 +85,6 @@ name|java
 operator|.
 name|io
 operator|.
-name|PrintStream
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|io
-operator|.
 name|UnsupportedEncodingException
 import|;
 end_import
@@ -140,6 +130,24 @@ operator|.
 name|lang3
 operator|.
 name|CharEncoding
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|SessionStream
 import|;
 end_import
 
@@ -365,13 +373,6 @@ name|resultSchema
 init|=
 literal|null
 decl_stmt|;
-specifier|private
-name|boolean
-name|closeSessionStreams
-init|=
-literal|true
-decl_stmt|;
-comment|// Only close file based streams, not System.out and System.err.
 comment|/**    * For processors other than Hive queries (Driver), they output to session.out (a temp file)    * first and the fetchOne/fetchN/fetchAll functions get the output from pipeIn.    */
 specifier|private
 name|BufferedReader
@@ -472,7 +473,7 @@ operator|.
 name|out
 operator|=
 operator|new
-name|PrintStream
+name|SessionStream
 argument_list|(
 operator|new
 name|FileOutputStream
@@ -495,7 +496,7 @@ operator|.
 name|err
 operator|=
 operator|new
-name|PrintStream
+name|SessionStream
 argument_list|(
 operator|new
 name|FileOutputStream
@@ -551,10 +552,6 @@ operator|.
 name|err
 argument_list|)
 expr_stmt|;
-name|closeSessionStreams
-operator|=
-literal|false
-expr_stmt|;
 try|try
 block|{
 name|sessionState
@@ -568,7 +565,7 @@ operator|.
 name|out
 operator|=
 operator|new
-name|PrintStream
+name|SessionStream
 argument_list|(
 name|System
 operator|.
@@ -586,7 +583,7 @@ operator|.
 name|err
 operator|=
 operator|new
-name|PrintStream
+name|SessionStream
 argument_list|(
 name|System
 operator|.
@@ -640,11 +637,6 @@ name|void
 name|tearDownSessionIO
 parameter_list|()
 block|{
-if|if
-condition|(
-name|closeSessionStreams
-condition|)
-block|{
 name|ServiceUtils
 operator|.
 name|cleanup
@@ -666,7 +658,6 @@ operator|.
 name|err
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Override
