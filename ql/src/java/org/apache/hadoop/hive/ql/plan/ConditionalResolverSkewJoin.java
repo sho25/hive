@@ -195,6 +195,26 @@ name|Utilities
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * ConditionalResolverSkewJoin.  *  */
 end_comment
@@ -215,6 +235,21 @@ name|long
 name|serialVersionUID
 init|=
 literal|1L
+decl_stmt|;
+specifier|static
+specifier|final
+specifier|protected
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|ConditionalResolverSkewJoin
+operator|.
+name|class
+argument_list|)
 decl_stmt|;
 comment|/**    * ConditionalResolverSkewJoinCtx.    *    */
 specifier|public
@@ -644,10 +679,14 @@ name|IOException
 name|e
 parameter_list|)
 block|{
-name|e
+name|LOG
 operator|.
-name|printStackTrace
-argument_list|()
+name|warn
+argument_list|(
+literal|"Exception while getting tasks"
+argument_list|,
+name|e
+argument_list|)
 expr_stmt|;
 block|}
 if|if
