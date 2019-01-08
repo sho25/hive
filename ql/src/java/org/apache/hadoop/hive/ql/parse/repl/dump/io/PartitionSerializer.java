@@ -329,23 +329,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|isPartitionExternal
-argument_list|()
-condition|)
-block|{
-comment|// Replication destination will not be external
-name|partition
-operator|.
-name|putToParameters
-argument_list|(
-literal|"EXTERNAL"
-argument_list|,
-literal|"FALSE"
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 name|writer
 operator|.

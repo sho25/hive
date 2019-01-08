@@ -35,6 +35,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|UnsupportedEncodingException
 import|;
 end_import
@@ -1441,6 +1451,8 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
+extends|extends
+name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks

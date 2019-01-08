@@ -106,24 +106,6 @@ import|;
 end_import
 
 begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|WarehouseInstance
-import|;
-end_import
-
-begin_import
 import|import static
 name|org
 operator|.
@@ -138,24 +120,6 @@ operator|.
 name|ReplChangeManager
 operator|.
 name|SOURCE_OF_REPLICATION
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|ReplicationTestUtils
 import|;
 end_import
 

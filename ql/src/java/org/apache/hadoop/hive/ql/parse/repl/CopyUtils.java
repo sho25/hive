@@ -366,7 +366,7 @@ name|class
 argument_list|)
 decl_stmt|;
 comment|// https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/TransparentEncryption.html#Running_as_the_superuser
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String

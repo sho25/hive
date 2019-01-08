@@ -3199,6 +3199,12 @@ operator|.
 name|setLocation
 argument_list|(
 name|path
+operator|==
+literal|null
+condition|?
+literal|null
+else|:
+name|path
 operator|.
 name|toString
 argument_list|()

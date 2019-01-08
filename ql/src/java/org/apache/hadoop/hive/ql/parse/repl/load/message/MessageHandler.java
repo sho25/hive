@@ -569,6 +569,7 @@ name|dbName
 argument_list|)
 return|;
 block|}
+comment|/**      * not sure why we have this, this should always be read from the _metadata file via the      * {@link org.apache.hadoop.hive.ql.parse.repl.load.MetadataJson#readReplicationSpec}      */
 name|ReplicationSpec
 name|eventOnlyReplicationSpec
 parameter_list|()

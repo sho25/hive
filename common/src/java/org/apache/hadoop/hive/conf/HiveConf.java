@@ -3052,6 +3052,19 @@ operator|+
 literal|" optimization should not be enabled as it may lead to inconsistent data read for non acid tables."
 argument_list|)
 block|,
+name|REPL_EXTERNAL_TABLE_BASE_DIR
+argument_list|(
+literal|"hive.repl.replica.external.table.base.dir"
+argument_list|,
+literal|"/"
+argument_list|,
+literal|"This is the base directory on the target/replica warehouse under which data for "
+operator|+
+literal|"external tables is stored. This is relative base path and hence prefixed to the source "
+operator|+
+literal|"external table path on target cluster."
+argument_list|)
+block|,
 name|LOCALSCRATCHDIR
 argument_list|(
 literal|"hive.exec.local.scratchdir"
