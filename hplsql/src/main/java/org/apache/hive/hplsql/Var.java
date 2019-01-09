@@ -1741,6 +1741,13 @@ name|equalsIgnoreCase
 argument_list|(
 literal|"XML"
 argument_list|)
+operator|||
+name|type
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"CHARACTER"
+argument_list|)
 condition|)
 block|{
 return|return
