@@ -785,7 +785,7 @@ decl_stmt|;
 name|String
 name|serdeName
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2397,7 +2397,7 @@ operator|=
 literal|"properties"
 argument_list|)
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2415,7 +2415,7 @@ specifier|public
 name|void
 name|setProps
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

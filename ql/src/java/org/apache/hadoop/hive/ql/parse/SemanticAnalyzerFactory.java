@@ -2035,7 +2035,7 @@ name|TOK_EXPORT
 case|:
 if|if
 condition|(
-name|UpdateDeleteSemanticAnalyzer
+name|AcidExportSemanticAnalyzer
 operator|.
 name|isAcidExport
 argument_list|(
@@ -2045,7 +2045,7 @@ condition|)
 block|{
 return|return
 operator|new
-name|UpdateDeleteSemanticAnalyzer
+name|AcidExportSemanticAnalyzer
 argument_list|(
 name|queryState
 argument_list|)
@@ -2867,6 +2867,13 @@ name|HiveParser
 operator|.
 name|TOK_DELETE_FROM
 case|:
+return|return
+operator|new
+name|UpdateDeleteSemanticAnalyzer
+argument_list|(
+name|queryState
+argument_list|)
+return|;
 case|case
 name|HiveParser
 operator|.
@@ -2874,7 +2881,7 @@ name|TOK_MERGE
 case|:
 return|return
 operator|new
-name|UpdateDeleteSemanticAnalyzer
+name|MergeSemanticAnalyzer
 argument_list|(
 name|queryState
 argument_list|)
