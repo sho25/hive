@@ -12094,6 +12094,54 @@ name|blackListStr
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**    * Function to invert non-equi function texts    * @param funcText    */
+specifier|public
+specifier|static
+name|String
+name|invertFuncText
+parameter_list|(
+specifier|final
+name|String
+name|funcText
+parameter_list|)
+block|{
+comment|// Reverse the text
+switch|switch
+condition|(
+name|funcText
+condition|)
+block|{
+case|case
+literal|"<"
+case|:
+return|return
+literal|">"
+return|;
+case|case
+literal|"<="
+case|:
+return|return
+literal|">="
+return|;
+case|case
+literal|">"
+case|:
+return|return
+literal|"<"
+return|;
+case|case
+literal|">="
+case|:
+return|return
+literal|"<="
+return|;
+default|default:
+return|return
+literal|null
+return|;
+comment|// helps identify unsupported functions
+block|}
+block|}
 block|}
 end_class
 
