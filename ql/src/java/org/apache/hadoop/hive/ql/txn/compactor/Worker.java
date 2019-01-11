@@ -93,6 +93,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|ValidWriteIdList
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|HiveMetaStoreUtils
@@ -1043,6 +1059,7 @@ name|t
 argument_list|)
 expr_stmt|;
 block|}
+comment|/**          * we cannot have Worker use HiveTxnManager (which is on ThreadLocal) since          * then the Driver would already have the an open txn but then this txn would have          * multiple statements in it (for query based compactor) which is not supported (and since          * this case some of the statements are DDL, even in the future will not be allowed in a          * multi-stmt txn. {@link Driver#setCompactionWriteIds(ValidWriteIdList, long)} */
 name|long
 name|compactorTxnId
 init|=

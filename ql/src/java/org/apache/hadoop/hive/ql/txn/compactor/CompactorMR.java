@@ -2739,15 +2739,16 @@ literal|"_base"
 argument_list|)
 decl_stmt|;
 comment|// Set up the session for driver.
-name|conf
-operator|=
+name|HiveConf
+name|driverConf
+init|=
 operator|new
 name|HiveConf
 argument_list|(
 name|conf
 argument_list|)
-expr_stmt|;
-name|conf
+decl_stmt|;
+name|driverConf
 operator|.
 name|set
 argument_list|(
@@ -2760,7 +2761,7 @@ argument_list|,
 literal|"column"
 argument_list|)
 expr_stmt|;
-name|conf
+name|driverConf
 operator|.
 name|unset
 argument_list|(
@@ -2770,6 +2771,7 @@ name|VALID_TXNS_KEY
 argument_list|)
 expr_stmt|;
 comment|//so Driver doesn't get confused
+comment|//thinking it already has a txn opened
 name|String
 name|user
 init|=
@@ -2788,7 +2790,7 @@ name|DriverUtils
 operator|.
 name|setUpSessionState
 argument_list|(
-name|conf
+name|driverConf
 argument_list|,
 name|user
 argument_list|,
@@ -2877,15 +2879,13 @@ name|DriverUtils
 operator|.
 name|runOnDriver
 argument_list|(
-name|conf
+name|driverConf
 argument_list|,
 name|user
 argument_list|,
 name|sessionState
 argument_list|,
 name|query
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 break|break;
@@ -2945,7 +2945,7 @@ name|query
 init|=
 name|buildMmCompactionQuery
 argument_list|(
-name|conf
+name|driverConf
 argument_list|,
 name|t
 argument_list|,
@@ -2963,11 +2963,21 @@ operator|+
 name|query
 argument_list|)
 expr_stmt|;
+name|long
+name|compactorTxnId
+init|=
+name|CompactorMap
+operator|.
+name|getCompactorTxnId
+argument_list|(
+name|conf
+argument_list|)
+decl_stmt|;
 name|DriverUtils
 operator|.
 name|runOnDriver
 argument_list|(
-name|conf
+name|driverConf
 argument_list|,
 name|user
 argument_list|,
@@ -2976,6 +2986,8 @@ argument_list|,
 name|query
 argument_list|,
 name|writeIds
+argument_list|,
+name|compactorTxnId
 argument_list|)
 expr_stmt|;
 name|commitMmCompaction
@@ -2990,13 +3002,15 @@ argument_list|,
 name|conf
 argument_list|,
 name|writeIds
+argument_list|,
+name|compactorTxnId
 argument_list|)
 expr_stmt|;
 name|DriverUtils
 operator|.
 name|runOnDriver
 argument_list|(
-name|conf
+name|driverConf
 argument_list|,
 name|user
 argument_list|,
@@ -3005,8 +3019,6 @@ argument_list|,
 literal|"drop table if exists "
 operator|+
 name|tmpTableName
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -6894,9 +6906,13 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
+specifier|static
 name|long
 name|getCompactorTxnId
-parameter_list|()
+parameter_list|(
+name|Configuration
+name|jobConf
+parameter_list|)
 block|{
 name|String
 name|snapshot
@@ -6953,7 +6969,7 @@ argument_list|(
 name|snapshot
 argument_list|)
 expr_stmt|;
-comment|//this is id of the current txn
+comment|//this is id of the current (compactor) txn
 return|return
 name|validTxnList
 operator|.
@@ -7093,7 +7109,9 @@ operator|.
 name|visibilityTxnId
 argument_list|(
 name|getCompactorTxnId
-argument_list|()
+argument_list|(
+name|jobConf
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//delta_xxxx_yyyy format
@@ -7273,7 +7291,9 @@ operator|.
 name|visibilityTxnId
 argument_list|(
 name|getCompactorTxnId
-argument_list|()
+argument_list|(
+name|jobConf
+argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Instantiate the underlying output format
@@ -7967,6 +7987,16 @@ argument_list|(
 operator|-
 literal|1
 argument_list|)
+operator|.
+name|visibilityTxnId
+argument_list|(
+name|CompactorMap
+operator|.
+name|getCompactorTxnId
+argument_list|(
+name|conf
+argument_list|)
+argument_list|)
 decl_stmt|;
 name|Path
 name|newDeltaDir
@@ -8008,15 +8038,6 @@ argument_list|(
 name|newDeltaDir
 argument_list|)
 expr_stmt|;
-name|createCompactorMarker
-argument_list|(
-name|conf
-argument_list|,
-name|newDeltaDir
-argument_list|,
-name|fs
-argument_list|)
-expr_stmt|;
 name|AcidUtils
 operator|.
 name|OrcAcidVersion
@@ -8041,10 +8062,7 @@ argument_list|(
 name|tmpLocation
 argument_list|)
 decl_stmt|;
-comment|//expect 1 base or delta dir in this list
-comment|//we have MIN_TXN, MAX_TXN and IS_MAJOR in JobConf so we could figure out exactly what the dir
-comment|//name is that we want to rename; leave it for another day
-comment|//todo: may actually have delta_x_y and delete_delta_x_y
+comment|//minor compaction may actually have delta_x_y and delete_delta_x_y
 for|for
 control|(
 name|FileStatus
@@ -8095,15 +8113,6 @@ argument_list|,
 name|fs
 argument_list|)
 expr_stmt|;
-name|createCompactorMarker
-argument_list|(
-name|conf
-argument_list|,
-name|newPath
-argument_list|,
-name|fs
-argument_list|)
-expr_stmt|;
 block|}
 name|fs
 operator|.
@@ -8114,47 +8123,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-block|}
-specifier|private
-name|void
-name|createCompactorMarker
-parameter_list|(
-name|JobConf
-name|conf
-parameter_list|,
-name|Path
-name|finalLocation
-parameter_list|,
-name|FileSystem
-name|fs
-parameter_list|)
-throws|throws
-name|IOException
-block|{
-if|if
-condition|(
-name|conf
-operator|.
-name|getBoolean
-argument_list|(
-name|IS_MAJOR
-argument_list|,
-literal|false
-argument_list|)
-condition|)
-block|{
-name|AcidUtils
-operator|.
-name|MetaDataFile
-operator|.
-name|createCompactorMarker
-argument_list|(
-name|finalLocation
-argument_list|,
-name|fs
-argument_list|)
-expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Override
@@ -8231,7 +8199,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Note: similar logic to the main committer; however, no ORC versions and stuff like that.    * @param from The temp directory used for compactor output. Not the actual base/delta.    * @param to The final directory; basically a SD directory. Not the actual base/delta.    */
+comment|/**    * Note: similar logic to the main committer; however, no ORC versions and stuff like that.    * @param from The temp directory used for compactor output. Not the actual base/delta.    * @param to The final directory; basically a SD directory. Not the actual base/delta.    * @param compactorTxnId txn that the compactor started    */
 specifier|private
 name|void
 name|commitMmCompaction
@@ -8247,6 +8215,9 @@ name|conf
 parameter_list|,
 name|ValidWriteIdList
 name|actualWriteIds
+parameter_list|,
+name|long
+name|compactorTxnId
 parameter_list|)
 throws|throws
 name|IOException
@@ -8278,9 +8249,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-comment|//todo: is that true?  can it be aborted? does it matter for compaction? probably OK since
-comment|//getAcidState() doesn't check if X is valid in base_X_cY for compacted base dirs.
 comment|// Assume the high watermark can be used as maximum transaction ID.
+comment|//todo: is that true?  can it be aborted? does it matter for compaction? probably OK since
+comment|//getAcidState() doesn't check if X is valid in base_X_vY for compacted base dirs.
 name|long
 name|maxTxn
 init|=
@@ -8327,6 +8298,11 @@ argument_list|(
 operator|-
 literal|1
 argument_list|)
+operator|.
+name|visibilityTxnId
+argument_list|(
+name|compactorTxnId
+argument_list|)
 decl_stmt|;
 name|Path
 name|newBaseDir
@@ -8370,17 +8346,6 @@ operator|.
 name|mkdirs
 argument_list|(
 name|newBaseDir
-argument_list|)
-expr_stmt|;
-name|AcidUtils
-operator|.
-name|MetaDataFile
-operator|.
-name|createCompactorMarker
-argument_list|(
-name|toPath
-argument_list|,
-name|fs
 argument_list|)
 expr_stmt|;
 return|return;
@@ -8451,17 +8416,6 @@ name|getPath
 argument_list|()
 argument_list|,
 name|newBaseDir
-argument_list|)
-expr_stmt|;
-name|AcidUtils
-operator|.
-name|MetaDataFile
-operator|.
-name|createCompactorMarker
-argument_list|(
-name|newBaseDir
-argument_list|,
-name|fs
 argument_list|)
 expr_stmt|;
 name|fs

@@ -960,7 +960,7 @@ argument_list|,
 name|LOG
 argument_list|)
 expr_stmt|;
-comment|/*in UTs, there is no standalone HMS running to kick off compaction so it's done via runWorker()      but in normal usage 'concatenate' is blocking, */
+comment|/*in UTs, there is no standalone HMS running to kick off compaction so it's done via runWorker()       but in normal usage 'concatenate' is blocking, */
 name|hiveConf
 operator|.
 name|setBoolVar
@@ -1098,25 +1098,25 @@ block|{
 block|{
 literal|"1\t2"
 block|,
-literal|"t/base_0000002/000000_0"
+literal|"t/base_0000002_v0000020/000000_0"
 block|}
 block|,
 block|{
 literal|"4\t5"
 block|,
-literal|"t/base_0000002/000000_0"
+literal|"t/base_0000002_v0000020/000000_0"
 block|}
 block|,
 block|{
 literal|"5\t6"
 block|,
-literal|"t/base_0000002/000000_0"
+literal|"t/base_0000002_v0000020/000000_0"
 block|}
 block|,
 block|{
 literal|"8\t8"
 block|,
-literal|"t/base_0000002/000000_0"
+literal|"t/base_0000002_v0000020/000000_0"
 block|}
 block|}
 decl_stmt|;

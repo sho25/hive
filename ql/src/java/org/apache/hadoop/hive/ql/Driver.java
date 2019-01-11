@@ -2513,6 +2513,12 @@ init|=
 literal|null
 decl_stmt|;
 specifier|private
+name|long
+name|compactorTxnId
+init|=
+literal|0
+decl_stmt|;
+specifier|private
 name|Context
 name|backupContext
 init|=
@@ -9087,6 +9093,7 @@ operator|!=
 literal|null
 condition|)
 block|{
+comment|/**        * This is kludgy: here we need to read with Compactor's snapshot/txn        * rather than the snapshot of the current {@code txnMgr}, in effect        * simulating a "flashback query" but can't actually share compactor's        * txn since it would run multiple statements.  See more comments in        * {@link org.apache.hadoop.hive.ql.txn.compactor.Worker} where it start        * the compactor txn*/
 if|if
 condition|(
 name|txnTables
@@ -9122,10 +9129,9 @@ operator|=
 operator|new
 name|ValidTxnWriteIdList
 argument_list|(
-literal|0L
+name|compactorTxnId
 argument_list|)
 expr_stmt|;
-comment|// No transaction for the compaction for now. todo: Since MM compaction is a query, a txn has been opened at this point
 name|txnWriteIds
 operator|.
 name|addTableValidWriteIdList
@@ -16724,6 +16730,9 @@ name|setCompactionWriteIds
 parameter_list|(
 name|ValidWriteIdList
 name|val
+parameter_list|,
+name|long
+name|compactorTxnId
 parameter_list|)
 block|{
 name|this
@@ -16731,6 +16740,12 @@ operator|.
 name|compactionWriteIds
 operator|=
 name|val
+expr_stmt|;
+name|this
+operator|.
+name|compactorTxnId
+operator|=
+name|compactorTxnId
 expr_stmt|;
 block|}
 block|}
