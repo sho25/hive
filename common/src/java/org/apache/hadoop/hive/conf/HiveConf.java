@@ -9238,15 +9238,6 @@ operator|+
 literal|"output rows and output size."
 argument_list|)
 block|,
-name|HIVE_STATS_USE_NDV_ADJUSTMENT
-argument_list|(
-literal|"hive.stats.use.ndv.adjustment"
-argument_list|,
-literal|false
-argument_list|,
-literal|"Use nDV adjustment for other columns in join"
-argument_list|)
-block|,
 comment|// Concurrency
 name|HIVE_SUPPORT_CONCURRENCY
 argument_list|(
