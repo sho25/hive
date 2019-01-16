@@ -923,32 +923,6 @@ name|getLocationUri
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-literal|"Create time of catalog should be set"
-argument_list|,
-name|cat
-operator|.
-name|isSetCreateTime
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-literal|"Create time of catalog should be non-zero"
-argument_list|,
-name|cat
-operator|.
-name|getCreateTime
-argument_list|()
-operator|>
-literal|0
-argument_list|)
-expr_stmt|;
 name|File
 name|dir
 init|=
