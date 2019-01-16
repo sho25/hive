@@ -2179,6 +2179,25 @@ argument_list|(
 name|row
 argument_list|)
 expr_stmt|;
+comment|//Get back converted row
+name|row
+operator|=
+name|streamingState
+operator|.
+name|rollingPart
+operator|.
+name|getAt
+argument_list|(
+name|streamingState
+operator|.
+name|rollingPart
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
+argument_list|)
+expr_stmt|;
 name|WindowTableFunctionDef
 name|tabDef
 init|=
