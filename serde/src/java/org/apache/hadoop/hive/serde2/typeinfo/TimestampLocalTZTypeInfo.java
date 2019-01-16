@@ -247,7 +247,9 @@ parameter_list|()
 block|{
 return|return
 name|getQualifiedName
-argument_list|()
+argument_list|(
+name|timeZone
+argument_list|)
 return|;
 block|}
 annotation|@
@@ -260,7 +262,7 @@ block|{
 return|return
 name|getQualifiedName
 argument_list|(
-name|timeZone
+literal|null
 argument_list|)
 return|;
 block|}
@@ -284,6 +286,13 @@ operator|.
 name|TIMESTAMPLOCALTZ_TYPE_NAME
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|timeZone
+operator|!=
+literal|null
+condition|)
+block|{
 name|sb
 operator|.
 name|append
@@ -305,6 +314,7 @@ argument_list|(
 literal|"')"
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|sb
 operator|.
