@@ -2259,7 +2259,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Loading uri resolver"
+literal|"Loading uri resolver : "
 operator|+
 name|uriResolverClassName
 argument_list|)
@@ -3217,9 +3217,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Trying to connect to metastore with URI "
+literal|"Trying to connect to metastore with URI ("
 operator|+
 name|store
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 try|try
@@ -3313,7 +3315,7 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Opened an SSL connection to metastore, current connections: "
 operator|+
@@ -3471,7 +3473,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"HMSC::open(): Found delegation token. Creating DIGEST-based thrift connection."
 argument_list|)
@@ -3511,7 +3513,7 @@ else|else
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"HMSC::open(): Could not find delegation token. Creating KERBEROS-based thrift connection."
 argument_list|)
@@ -3664,7 +3666,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Opened a connection to metastore, current connections: "
+literal|"Opened a connection to metastore, URI ("
+operator|+
+name|store
+operator|+
+literal|") current connections: "
 operator|+
 name|connCount
 operator|.
@@ -3731,7 +3737,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to connect to the MetaStore Server..."
+literal|"Failed to connect to the MetaStore Server URI ("
+operator|+
+name|store
+operator|+
+literal|")"
 argument_list|,
 name|e
 argument_list|)
@@ -3744,7 +3754,11 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Failed to connect to the MetaStore Server..."
+literal|"Failed to connect to the MetaStore Server URI ("
+operator|+
+name|store
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}
@@ -3866,11 +3880,11 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Unable to connect to metastore with URI "
+literal|"Failed to connect to metastore with URI ("
 operator|+
 name|store
 operator|+
-literal|" in attempt "
+literal|") in attempt "
 operator|+
 name|attempt
 argument_list|,
