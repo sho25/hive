@@ -419,22 +419,6 @@ name|byte
 operator|)
 name|tag
 expr_stmt|;
-if|if
-condition|(
-operator|!
-name|alias
-operator|.
-name|equals
-argument_list|(
-name|lastAlias
-argument_list|)
-condition|)
-block|{
-name|nextSz
-operator|=
-name|joinEmitInterval
-expr_stmt|;
-block|}
 name|List
 argument_list|<
 name|Object
@@ -462,6 +446,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// number of rows for the key in the given table
+specifier|final
 name|long
 name|sz
 init|=
@@ -594,39 +579,44 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-else|else
-block|{
+comment|// The input is sorted by alias, so when an alias change is detected,
+comment|// reset the counter for the next join key in the stream
 if|if
 condition|(
-name|LOG
+operator|!
+name|alias
 operator|.
-name|isInfoEnabled
-argument_list|()
-operator|&&
-operator|(
+name|equals
+argument_list|(
+name|lastAlias
+argument_list|)
+condition|)
+block|{
+name|nextSz
+operator|=
+name|getNextSize
+argument_list|(
+literal|0L
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
 name|sz
 operator|==
 name|nextSz
-operator|)
 condition|)
 block|{
-comment|// Print a message if we reached at least 1000 rows for a join operand
-comment|// We won't print a message for the last join operand since the size
-comment|// will never goes to joinEmitInterval.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"table "
-operator|+
+literal|"Table {} has {} rows for join key {}"
+argument_list|,
 name|alias
-operator|+
-literal|" has "
-operator|+
+argument_list|,
 name|sz
-operator|+
-literal|" rows for join key "
-operator|+
+argument_list|,
 name|keyObject
 argument_list|)
 expr_stmt|;
@@ -637,7 +627,6 @@ argument_list|(
 name|nextSz
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|// Add the value to the vector
 comment|// if join-key is null, process each row in different group.
