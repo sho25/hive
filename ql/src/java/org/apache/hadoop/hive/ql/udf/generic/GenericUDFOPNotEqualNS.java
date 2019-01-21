@@ -33,6 +33,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -50,6 +68,36 @@ name|GenericUDFOPNotEqualNS
 extends|extends
 name|GenericUDFOPNotEqual
 block|{
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"IS DISTINCT FROM"
+argument_list|,
+name|value
+operator|=
+literal|"a _FUNC_ b - Returns same result with NOTEQUALNS (IS DISTINCT "
+operator|+
+literal|"FROM) operator for non-null operands, but returns FALSE if both are NULL, TRUE if one of the them is NULL"
+argument_list|)
+specifier|public
+name|GenericUDFOPNotEqualNS
+parameter_list|()
+block|{
+name|this
+operator|.
+name|opName
+operator|=
+literal|"NOTEQUALNS"
+expr_stmt|;
+name|this
+operator|.
+name|opDisplayName
+operator|=
+literal|"IS DISTINCT FROM"
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public

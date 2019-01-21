@@ -57,19 +57,23 @@ name|HiveException
 import|;
 end_import
 
+begin_comment
+comment|/**  * GenericUDF Class for operation EQUALNS.  */
+end_comment
+
 begin_class
 annotation|@
 name|Description
 argument_list|(
 name|name
 operator|=
-literal|"<=>"
+literal|"IS NOT DISTINCT FROM"
 argument_list|,
 name|value
 operator|=
-literal|"a _FUNC_ b - Returns same result with EQUAL(=) operator "
+literal|"a _FUNC_ b - Returns same result with EQUALNS (IS NOT DISTINCT "
 operator|+
-literal|"for non-null operands, but returns TRUE if both are NULL, FALSE if one of the them is NULL"
+literal|"FROM) operator for non-null operands, but returns TRUE if both are NULL, FALSE if one of the them is NULL"
 argument_list|)
 annotation|@
 name|NDV
@@ -84,6 +88,23 @@ name|GenericUDFOPEqualNS
 extends|extends
 name|GenericUDFOPEqual
 block|{
+specifier|public
+name|GenericUDFOPEqualNS
+parameter_list|()
+block|{
+name|this
+operator|.
+name|opName
+operator|=
+literal|"EQUALNS"
+expr_stmt|;
+name|this
+operator|.
+name|opDisplayName
+operator|=
+literal|"IS NOT DISTINCT FROM"
+expr_stmt|;
+block|}
 annotation|@
 name|Override
 specifier|public
