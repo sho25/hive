@@ -186,6 +186,10 @@ name|isInputFileFormatSelfDescribing
 parameter_list|,
 name|VectorMapOperatorReadType
 name|vectorMapOperatorReadType
+parameter_list|,
+name|TypeInfo
+index|[]
+name|dataTypeInfos
 parameter_list|)
 block|{
 name|this
@@ -218,9 +222,11 @@ name|isInputFileFormatSelfDescribing
 operator|=
 name|isInputFileFormatSelfDescribing
 expr_stmt|;
+name|this
+operator|.
 name|dataTypeInfos
 operator|=
-literal|null
+name|dataTypeInfos
 expr_stmt|;
 block|}
 comment|/**    * Create a VECTOR_DESERIALIZE flavor object.    * @param vectorMapOperatorReadType    * @param vectorDeserializeType    * @param needsDataTypeConversionCheck    */
@@ -232,6 +238,10 @@ name|inputFileFormatClassName
 parameter_list|,
 name|VectorDeserializeType
 name|vectorDeserializeType
+parameter_list|,
+name|TypeInfo
+index|[]
+name|dataTypeInfos
 parameter_list|)
 block|{
 name|this
@@ -262,9 +272,11 @@ name|isInputFileFormatSelfDescribing
 operator|=
 literal|false
 expr_stmt|;
+name|this
+operator|.
 name|dataTypeInfos
 operator|=
-literal|null
+name|dataTypeInfos
 expr_stmt|;
 block|}
 comment|/**    * Create a ROW_DESERIALIZE flavor object.    * @param rowDeserializerClassName    * @param inputFileFormatClassName    */
@@ -279,6 +291,10 @@ name|isInputFileFormatSelfDescribing
 parameter_list|,
 name|String
 name|rowDeserializerClassName
+parameter_list|,
+name|TypeInfo
+index|[]
+name|dataTypeInfos
 parameter_list|)
 block|{
 name|this
@@ -315,9 +331,11 @@ name|isInputFileFormatSelfDescribing
 operator|=
 name|isInputFileFormatSelfDescribing
 expr_stmt|;
+name|this
+operator|.
 name|dataTypeInfos
 operator|=
-literal|null
+name|dataTypeInfos
 expr_stmt|;
 block|}
 specifier|public
@@ -330,6 +348,10 @@ name|inputFileFormatClassName
 parameter_list|,
 name|boolean
 name|isInputFileFormatSelfDescribing
+parameter_list|,
+name|TypeInfo
+index|[]
+name|dataTypeInfos
 parameter_list|)
 block|{
 return|return
@@ -343,6 +365,8 @@ argument_list|,
 name|VectorMapOperatorReadType
 operator|.
 name|VECTORIZED_INPUT_FILE_FORMAT
+argument_list|,
+name|dataTypeInfos
 argument_list|)
 return|;
 block|}
@@ -356,6 +380,10 @@ name|inputFileFormatClassName
 parameter_list|,
 name|VectorDeserializeType
 name|vectorDeserializeType
+parameter_list|,
+name|TypeInfo
+index|[]
+name|dataTypeInfos
 parameter_list|)
 block|{
 return|return
@@ -365,6 +393,8 @@ argument_list|(
 name|inputFileFormatClassName
 argument_list|,
 name|vectorDeserializeType
+argument_list|,
+name|dataTypeInfos
 argument_list|)
 return|;
 block|}
@@ -381,6 +411,10 @@ name|isInputFileFormatSelfDescribing
 parameter_list|,
 name|String
 name|rowDeserializerClassName
+parameter_list|,
+name|TypeInfo
+index|[]
+name|dataTypeInfos
 parameter_list|)
 block|{
 return|return
@@ -392,6 +426,8 @@ argument_list|,
 name|isInputFileFormatSelfDescribing
 argument_list|,
 name|inputFileFormatClassName
+argument_list|,
+name|dataTypeInfos
 argument_list|)
 return|;
 block|}
@@ -423,6 +459,8 @@ argument_list|,
 name|isInputFileFormatSelfDescribing
 argument_list|,
 name|vectorMapOperatorReadType
+argument_list|,
+name|dataTypeInfos
 argument_list|)
 expr_stmt|;
 break|break;
@@ -437,6 +475,8 @@ argument_list|(
 name|inputFileFormatClassName
 argument_list|,
 name|vectorDeserializeType
+argument_list|,
+name|dataTypeInfos
 argument_list|)
 expr_stmt|;
 break|break;
@@ -453,6 +493,8 @@ argument_list|,
 name|isInputFileFormatSelfDescribing
 argument_list|,
 name|rowDeserializerClassName
+argument_list|,
+name|dataTypeInfos
 argument_list|)
 expr_stmt|;
 break|break;
