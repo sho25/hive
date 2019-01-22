@@ -940,6 +940,14 @@ block|,
 name|ConfVars
 operator|.
 name|FILE_METADATA_THREADS
+block|,
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_FILTER_ENABLED
+block|,
+name|ConfVars
+operator|.
+name|METASTORE_SERVER_FILTER_ENABLED
 block|}
 decl_stmt|;
 comment|/**    * User configurable Metastore vars    */
@@ -2645,6 +2653,28 @@ argument_list|,
 literal|1000000
 argument_list|,
 literal|"The parameter will decide the maximum number of events that HMS will respond."
+argument_list|)
+block|,
+name|METASTORE_CLIENT_FILTER_ENABLED
+argument_list|(
+literal|"metastore.client.filter.enabled"
+argument_list|,
+literal|"hive.metastore.client.filter.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable filtering the metadata read results at HMS client. Default is true."
+argument_list|)
+block|,
+name|METASTORE_SERVER_FILTER_ENABLED
+argument_list|(
+literal|"metastore.server.filter.enabled"
+argument_list|,
+literal|"hive.metastore.server.filter.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable filtering the metadata read results at HMS server. Default is false."
 argument_list|)
 block|,
 name|MOVE_EXPORTED_METADATA_TO_TRASH

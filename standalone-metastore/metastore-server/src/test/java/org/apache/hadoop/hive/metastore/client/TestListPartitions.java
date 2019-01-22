@@ -8635,7 +8635,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|MetaException
+name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
@@ -8708,7 +8708,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|MetaException
+name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
