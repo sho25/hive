@@ -9124,7 +9124,7 @@ name|HIVE_STATS_FETCH_COLUMN_STATS
 argument_list|(
 literal|"hive.stats.fetch.column.stats"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Annotation of operator tree with statistics information requires column statistics.\n"
 operator|+
