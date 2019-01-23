@@ -1703,6 +1703,8 @@ parameter_list|(
 name|ASTNode
 name|fromClause
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|List
 argument_list|<
@@ -1750,6 +1752,8 @@ name|String
 argument_list|>
 name|aliases
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 if|if
 condition|(
@@ -2907,7 +2911,7 @@ return|return
 name|check
 return|;
 block|}
-comment|/*    * Set of functions to create the Null Check Query for Not-In SubQuery predicates.    * For a SubQuery predicate like:    *   a not in (select b from R2 where R2.y> 5)    * The Not In null check query is:    *   (select count(*) as c from R2 where R2.y> 5 and b is null)    * This Subquery is joined with the Outer Query plan on the join condition 'c = 0'.    * The join condition ensures that in case there are null values in the joining column    * the Query returns no rows.    *     * The AST tree for this is:    *     * ^(TOK_QUERY    *    ^(TOK FROM    *        ^(TOK_SUBQUERY    *            {the input SubQuery, with correlation removed}    *            subQueryAlias     *          )     *     )    *     ^(TOK_INSERT    *         ^(TOK_DESTINATION...)    *         ^(TOK_SELECT    *             ^(TOK_SELECTEXPR {ast tree for count *}    *          )    *          ^(TOK_WHERE    *             {is null check for joining column}     *           )    *      )    * )    */
+comment|/*    * Set of functions to create the Null Check Query for Not-In SubQuery predicates.    * For a SubQuery predicate like:    *   a not in (select b from R2 where R2.y> 5)    * The Not In null check query is:    *   (select count(*) as c from R2 where R2.y> 5 and b is null)    * This Subquery is joined with the Outer Query plan on the join condition 'c = 0'.    * The join condition ensures that in case there are null values in the joining column    * the Query returns no rows.    *    * The AST tree for this is:    *    * ^(TOK_QUERY    *    ^(TOK FROM    *        ^(TOK_SUBQUERY    *            {the input SubQuery, with correlation removed}    *            subQueryAlias    *          )    *     )    *     ^(TOK_INSERT    *         ^(TOK_DESTINATION...)    *         ^(TOK_SELECT    *             ^(TOK_SELECTEXPR {ast tree for count *}    *          )    *          ^(TOK_WHERE    *             {is null check for joining column}    *           )    *      )    * )    */
 specifier|static
 name|ASTNode
 name|buildNotInNullCheckQuery
@@ -3019,7 +3023,7 @@ return|return
 name|qry
 return|;
 block|}
-comment|/*    * build:    *    ^(TOK FROM    *        ^(TOK_SUBQUERY    *            {the input SubQuery, with correlation removed}    *            subQueryAlias     *          )     *     )     */
+comment|/*    * build:    *    ^(TOK FROM    *        ^(TOK_SUBQUERY    *            {the input SubQuery, with correlation removed}    *            subQueryAlias    *          )    *     )     */
 specifier|static
 name|ASTNode
 name|buildNotInNullCheckFrom
@@ -3326,7 +3330,7 @@ return|return
 name|select
 return|;
 block|}
-comment|/*    * build:    *          ^(TOK_WHERE    *             {is null check for joining column}     *           )    */
+comment|/*    * build:    *          ^(TOK_WHERE    *             {is null check for joining column}    *           )    */
 specifier|static
 name|ASTNode
 name|buildNotInNullCheckWhere

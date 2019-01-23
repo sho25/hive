@@ -2410,6 +2410,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|OBJECTNAME_CONTAINS_DOT
+argument_list|(
+literal|10420
+argument_list|,
+literal|"Table or database name may not contain dot(.) character"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(

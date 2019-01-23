@@ -8745,6 +8745,8 @@ parameter_list|,
 name|int
 name|aliasIndex
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 assert|assert
 name|tabref
@@ -73602,6 +73604,8 @@ parameter_list|,
 name|UnparseTranslator
 name|unparseTranslator
 parameter_list|)
+throws|throws
+name|SemanticException
 block|{
 name|Queue
 argument_list|<
