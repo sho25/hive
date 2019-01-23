@@ -489,9 +489,11 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|nio
 operator|.
-name|UnsupportedEncodingException
+name|charset
+operator|.
+name|StandardCharsets
 import|;
 end_import
 
@@ -976,8 +978,6 @@ parameter_list|(
 name|String
 name|value
 parameter_list|)
-throws|throws
-name|UnsupportedEncodingException
 block|{
 return|return
 operator|new
@@ -987,7 +987,9 @@ name|value
 operator|.
 name|getBytes
 argument_list|(
-literal|"UTF-8"
+name|StandardCharsets
+operator|.
+name|UTF_8
 argument_list|)
 argument_list|)
 return|;

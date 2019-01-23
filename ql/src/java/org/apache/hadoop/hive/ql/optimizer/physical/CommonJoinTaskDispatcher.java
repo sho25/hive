@@ -35,16 +35,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|UnsupportedEncodingException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -899,8 +889,6 @@ name|int
 name|bigTablePosition
 parameter_list|)
 throws|throws
-name|UnsupportedEncodingException
-throws|,
 name|SemanticException
 block|{
 comment|// create a mapred task for this work

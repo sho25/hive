@@ -29,9 +29,11 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|nio
 operator|.
-name|UnsupportedEncodingException
+name|charset
+operator|.
+name|CharacterCodingException
 import|;
 end_import
 
@@ -43,7 +45,7 @@ name|nio
 operator|.
 name|charset
 operator|.
-name|CharacterCodingException
+name|StandardCharsets
 import|;
 end_import
 
@@ -610,8 +612,6 @@ name|String
 name|string
 parameter_list|)
 block|{
-try|try
-block|{
 return|return
 operator|new
 name|BytesWritable
@@ -626,27 +626,12 @@ name|string
 operator|.
 name|getBytes
 argument_list|(
-literal|"UTF-8"
+name|StandardCharsets
+operator|.
+name|UTF_8
 argument_list|)
 argument_list|)
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|UnsupportedEncodingException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Failed to encode string in UTF-8"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 annotation|@
 name|Override

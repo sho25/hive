@@ -35,16 +35,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|UnsupportedEncodingException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -1208,8 +1198,6 @@ name|SMBMapJoinOperator
 name|smbJoinOp
 parameter_list|)
 throws|throws
-name|UnsupportedEncodingException
-throws|,
 name|SemanticException
 block|{
 comment|// deep copy a new mapred work

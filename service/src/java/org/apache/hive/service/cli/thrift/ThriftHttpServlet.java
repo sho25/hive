@@ -33,16 +33,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|UnsupportedEncodingException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|net
 operator|.
 name|InetAddress
@@ -1673,7 +1663,7 @@ return|return
 name|cookieStr
 return|;
 block|}
-comment|/**    * Validate the request cookie. This function iterates over the request cookie headers    * and finds a cookie that represents a valid client/server session. If it finds one, it    * returns the client name associated with the session. Else, it returns null.    * @param request The HTTP Servlet Request send by the client    * @return Client Username if the request has valid HS2 cookie, else returns null    * @throws UnsupportedEncodingException    */
+comment|/**    * Validate the request cookie. This function iterates over the request cookie headers    * and finds a cookie that represents a valid client/server session. If it finds one, it    * returns the client name associated with the session. Else, it returns null.    * @param request The HTTP Servlet Request send by the client    * @return Client Username if the request has valid HS2 cookie, else returns null    */
 specifier|private
 name|String
 name|validateCookie
@@ -1681,8 +1671,6 @@ parameter_list|(
 name|HttpServletRequest
 name|request
 parameter_list|)
-throws|throws
-name|UnsupportedEncodingException
 block|{
 comment|// Find all the valid cookies associated with the request.
 name|Cookie
@@ -1751,7 +1739,7 @@ name|cookies
 argument_list|)
 return|;
 block|}
-comment|/**    * Generate a server side cookie given the cookie value as the input.    * @param str Input string token.    * @return The generated cookie.    * @throws UnsupportedEncodingException    */
+comment|/**    * Generate a server side cookie given the cookie value as the input.    * @param str Input string token.    * @return The generated cookie.    */
 specifier|private
 name|Cookie
 name|createCookie
@@ -1759,8 +1747,6 @@ parameter_list|(
 name|String
 name|str
 parameter_list|)
-throws|throws
-name|UnsupportedEncodingException
 block|{
 if|if
 condition|(

@@ -405,16 +405,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|UnsupportedEncodingException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|nio
 operator|.
 name|ByteBuffer
@@ -428,6 +418,18 @@ operator|.
 name|nio
 operator|.
 name|ByteOrder
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|nio
+operator|.
+name|charset
+operator|.
+name|StandardCharsets
 import|;
 end_import
 
@@ -1244,34 +1246,16 @@ name|String
 name|value
 parameter_list|)
 block|{
-try|try
-block|{
-comment|// convert integer to string
 return|return
 name|value
 operator|.
 name|getBytes
 argument_list|(
-literal|"UTF-8"
+name|StandardCharsets
+operator|.
+name|UTF_8
 argument_list|)
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|UnsupportedEncodingException
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Failed to encode string in UTF-8"
-argument_list|,
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 comment|/**      * Helper function to validate long data.  Sets the isValid to true if the data is valid      * for the type it will be read in, otherwise false.      * @param longValue input value of long type to be validated.      * @param typeName the hivetype to be used to read the longValue      * @param isUnSigned true when longValue is unsigned parquet type      * @return 0 if the data is invalid, other longValue      */
 name|long
