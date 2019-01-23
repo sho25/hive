@@ -2265,6 +2265,16 @@ name|loadTableWork
 argument_list|)
 expr_stmt|;
 block|}
+name|moveWork
+operator|.
+name|setIsInReplicationScope
+argument_list|(
+name|replicationSpec
+operator|.
+name|isInReplicationScope
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|Task
 argument_list|<
 name|?

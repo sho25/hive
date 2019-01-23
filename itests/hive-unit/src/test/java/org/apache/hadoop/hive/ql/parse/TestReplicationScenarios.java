@@ -4613,6 +4613,18 @@ name|Table
 name|table
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Performing injection on table "
+operator|+
+name|table
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|table

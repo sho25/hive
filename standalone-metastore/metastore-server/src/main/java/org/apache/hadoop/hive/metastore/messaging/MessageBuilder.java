@@ -2365,6 +2365,9 @@ parameter_list|(
 name|ColumnStatistics
 name|colStats
 parameter_list|,
+name|Table
+name|tableObj
+parameter_list|,
 name|Map
 argument_list|<
 name|String
@@ -2392,6 +2395,8 @@ name|now
 argument_list|()
 argument_list|,
 name|colStats
+argument_list|,
+name|tableObj
 argument_list|,
 name|parameters
 argument_list|,

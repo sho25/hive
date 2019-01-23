@@ -30319,6 +30319,11 @@ name|writeId
 init|=
 literal|0
 decl_stmt|;
+name|EnvironmentContext
+name|environmentContext
+init|=
+literal|null
+decl_stmt|;
 if|if
 condition|(
 name|replicationSpec
@@ -30387,6 +30392,40 @@ name|getReplWriteId
 argument_list|()
 expr_stmt|;
 block|}
+comment|// In case of replication statistics is obtained from the source, so do not update those
+comment|// on replica. Since we are not replicating statisics for transactional tables, do not do
+comment|// so for transactional tables right now.
+if|if
+condition|(
+operator|!
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|crtTbl
+argument_list|)
+condition|)
+block|{
+name|environmentContext
+operator|=
+operator|new
+name|EnvironmentContext
+argument_list|()
+expr_stmt|;
+name|environmentContext
+operator|.
+name|putToProperties
+argument_list|(
+name|StatsSetupConst
+operator|.
+name|DO_NOT_UPDATE_STATS
+argument_list|,
+name|StatsSetupConst
+operator|.
+name|TRUE
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 comment|// replace-mode creates are really alters using CreateTableDesc.
 name|db
@@ -30412,7 +30451,7 @@ name|tbl
 argument_list|,
 literal|false
 argument_list|,
-literal|null
+name|environmentContext
 argument_list|,
 literal|true
 argument_list|,

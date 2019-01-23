@@ -754,6 +754,18 @@ operator|.
 name|setMigratingToTxnTable
 argument_list|()
 expr_stmt|;
+comment|// There won't be any writeId associated with statistics on source non-transactional
+comment|// table. We will need to associate a cooked up writeId on target for those. But that's
+comment|// not done yet. Till then we don't replicate statistics for ACID table even if it's
+comment|// available on the source.
+name|table
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|unsetColStats
+argument_list|()
+expr_stmt|;
 block|}
 if|if
 condition|(

@@ -83,6 +83,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -141,12 +159,19 @@ name|String
 argument_list|>
 name|parameters
 decl_stmt|;
+specifier|private
+name|Table
+name|tableObj
+decl_stmt|;
 comment|/**    * @param colStats Columns statistics Info.    * @param parameters table parameters to be updated after stats are updated.    * @param validWriteIds valid write id list for the query.    * @param colStats writeId for the query.    * @param handler handler that is firing the event    */
 specifier|public
 name|UpdateTableColumnStatEvent
 parameter_list|(
 name|ColumnStatistics
 name|colStats
+parameter_list|,
+name|Table
+name|tableObj
 parameter_list|,
 name|Map
 argument_list|<
@@ -196,6 +221,12 @@ operator|.
 name|parameters
 operator|=
 name|parameters
+expr_stmt|;
+name|this
+operator|.
+name|tableObj
+operator|=
+name|tableObj
 expr_stmt|;
 block|}
 comment|/**    * @param colStats Columns statistics Info.    * @param handler handler that is firing the event    */
@@ -240,6 +271,12 @@ name|parameters
 operator|=
 literal|null
 expr_stmt|;
+name|this
+operator|.
+name|tableObj
+operator|=
+literal|null
+expr_stmt|;
 block|}
 specifier|public
 name|ColumnStatistics
@@ -280,6 +317,15 @@ parameter_list|()
 block|{
 return|return
 name|parameters
+return|;
+block|}
+specifier|public
+name|Table
+name|getTableObj
+parameter_list|()
+block|{
+return|return
+name|tableObj
 return|;
 block|}
 block|}

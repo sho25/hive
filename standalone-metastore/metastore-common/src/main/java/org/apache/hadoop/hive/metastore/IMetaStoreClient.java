@@ -2859,6 +2859,26 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
+comment|/**    * Get a table object in the default catalog.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @param getColumnStats    *          get the column stats, if available, when true    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
+name|Table
+name|getTable
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|getColumnStats
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|NoSuchObjectException
+function_decl|;
 comment|/**    * Get a table object.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @return table object.    * @throws MetaException Something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
 name|Table
 name|getTable
@@ -2877,6 +2897,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Get a table object.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @param validWriteIdList applicable snapshot    * @return table object.    * @throws MetaException Something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
 name|Table
 name|getTable
 parameter_list|(
@@ -2891,6 +2912,28 @@ name|tableName
 parameter_list|,
 name|String
 name|validWriteIdList
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Get a table object.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @param validWriteIdList applicable snapshot    * @param getColumnStats get the column stats, if available, when true    * @return table object.    * @throws MetaException Something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
+name|Table
+name|getTable
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|String
+name|validWriteIdList
+parameter_list|,
+name|boolean
+name|getColumnStats
 parameter_list|)
 throws|throws
 name|TException

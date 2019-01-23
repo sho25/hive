@@ -648,6 +648,15 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|tableSpec
+operator|.
+name|tableHandle
+operator|.
+name|setStatsStateLikeNewTable
+argument_list|()
+expr_stmt|;
 block|}
 name|this
 operator|.

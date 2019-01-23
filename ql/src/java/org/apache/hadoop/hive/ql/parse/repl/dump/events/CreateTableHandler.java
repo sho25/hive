@@ -63,6 +63,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -345,6 +361,31 @@ name|setIsMetadataOnly
 argument_list|(
 literal|true
 argument_list|)
+expr_stmt|;
+block|}
+comment|// If we are not dumping data about a table, we shouldn't be dumping basic statistics
+comment|// as well, since that won't be accurate. So reset them to what they would look like for an
+comment|// empty table.
+if|if
+condition|(
+name|withinContext
+operator|.
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_DUMP_METADATA_ONLY
+argument_list|)
+condition|)
+block|{
+name|qlMdTable
+operator|.
+name|setStatsStateLikeNewTable
+argument_list|()
 expr_stmt|;
 block|}
 name|Path

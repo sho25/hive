@@ -2224,6 +2224,15 @@ operator|.
 name|setMigratingToTxnTable
 argument_list|()
 expr_stmt|;
+comment|// There won't be any writeId associated with statistics on source non-transactional
+comment|// table. We will need to associate a cooked up writeId on target for those. But that's
+comment|// not done yet. Till then we don't replicate statistics for ACID table even if it's
+comment|// available on the source.
+name|tblObj
+operator|.
+name|unsetColStats
+argument_list|()
+expr_stmt|;
 block|}
 name|tblDesc
 operator|=
@@ -2326,6 +2335,21 @@ argument_list|(
 name|replicationSpec
 argument_list|)
 expr_stmt|;
+comment|// Statistics for a non-transactional table will be replicated separately. Don't bother
+comment|// with it here.
+if|if
+condition|(
+name|TxnUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|tblDesc
+operator|.
+name|getTblProps
+argument_list|()
+argument_list|)
+condition|)
+block|{
 name|StatsSetupConst
 operator|.
 name|setBasicStatsState
@@ -2340,6 +2364,7 @@ operator|.
 name|FALSE
 argument_list|)
 expr_stmt|;
+block|}
 name|inReplicationScope
 operator|=
 literal|true

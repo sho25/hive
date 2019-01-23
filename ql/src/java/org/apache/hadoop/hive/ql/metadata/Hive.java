@@ -6537,6 +6537,46 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+return|return
+name|getTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tableName
+argument_list|,
+name|throwException
+argument_list|,
+name|checkTransactional
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+comment|/**    * Returns metadata of the table.    *    * @param dbName    *          the name of the database    * @param tableName    *          the name of the table    * @param throwException    *          controls whether an exception is thrown or a returns a null    * @param checkTransactional    *          checks whether the metadata table stats are valid (or    *          compilant with the snapshot isolation of) for the current transaction.    * @param getColumnStats    *          get column statistics if available    * @return the table or if throwException is false a null value.    * @throws HiveException    */
+specifier|public
+name|Table
+name|getTable
+parameter_list|(
+specifier|final
+name|String
+name|dbName
+parameter_list|,
+specifier|final
+name|String
+name|tableName
+parameter_list|,
+name|boolean
+name|throwException
+parameter_list|,
+name|boolean
+name|checkTransactional
+parameter_list|,
+name|boolean
+name|getColumnStats
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 if|if
 condition|(
 name|tableName
@@ -6663,6 +6703,8 @@ name|toString
 argument_list|()
 else|:
 literal|null
+argument_list|,
+name|getColumnStats
 argument_list|)
 expr_stmt|;
 block|}
@@ -6678,6 +6720,8 @@ argument_list|(
 name|dbName
 argument_list|,
 name|tableName
+argument_list|,
+name|getColumnStats
 argument_list|)
 expr_stmt|;
 block|}
@@ -14341,7 +14385,7 @@ end_try
 
 begin_comment
 unit|}
-comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param hasFollowingStatsTask    *          if there is any following stats task    * @param isAcidIUDoperation true if this is an ACID based Insert [overwrite]/update/delete    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    */
+comment|/**    * Load a directory into a Hive Table. - Alters existing content of table with    * the contents of loadPath. - If table does not exist - an exception is    * thrown - files in loadPath are moved into Hive. But the directory itself is    * not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tableName    *          name of table to be loaded.    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isSkewedStoreAsSubdir    *          if list bucketing enabled    * @param isAcidIUDoperation true if this is an ACID based Insert [overwrite]/update/delete    * @param resetStatistics should reset statistics as part of move.    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    */
 end_comment
 
 begin_function
@@ -14368,7 +14412,7 @@ name|boolean
 name|isAcidIUDoperation
 parameter_list|,
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Long
 name|writeId
@@ -14889,6 +14933,25 @@ name|HIVESTATSAUTOGATHER
 argument_list|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"setting table statistics false for "
+operator|+
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|StatsSetupConst
 operator|.
 name|setBasicStatsState
@@ -14907,10 +14970,28 @@ block|}
 comment|//column stats will be inaccurate
 if|if
 condition|(
-operator|!
-name|hasFollowingStatsTask
+name|resetStatistics
 condition|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Clearing table statistics for "
+operator|+
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+operator|+
+literal|"."
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|StatsSetupConst
 operator|.
 name|clearColumnStatsState
@@ -15002,7 +15083,8 @@ literal|null
 decl_stmt|;
 if|if
 condition|(
-name|hasFollowingStatsTask
+operator|!
+name|resetStatistics
 condition|)
 block|{
 name|environmentContext

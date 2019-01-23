@@ -2244,6 +2244,8 @@ operator|.
 name|table
 argument_list|(
 name|tblName
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|boolean
@@ -2757,6 +2759,17 @@ argument_list|(
 name|lastReplId
 argument_list|)
 argument_list|)
+expr_stmt|;
+comment|// For now we do not replicate stats for ACID table. So, wipe out column stats if any.
+name|tableSpec
+operator|.
+name|tableHandle
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|unsetColStats
+argument_list|()
 expr_stmt|;
 block|}
 name|MmContext

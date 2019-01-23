@@ -2064,6 +2064,11 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
+literal|"insert into t1 values (1), (2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
 literal|"create table t2 (place string) partitioned by (country string)"
 argument_list|)
 operator|.

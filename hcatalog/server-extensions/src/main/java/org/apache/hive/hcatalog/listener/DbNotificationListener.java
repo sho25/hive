@@ -5557,6 +5557,11 @@ argument_list|()
 argument_list|,
 name|updateTableColumnStatEvent
 operator|.
+name|getTableObj
+argument_list|()
+argument_list|,
+name|updateTableColumnStatEvent
+operator|.
 name|getTableParameters
 argument_list|()
 argument_list|,
