@@ -283,6 +283,42 @@ name|Stream
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HiveStringUtils
+operator|.
+name|COMMA
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HiveStringUtils
+operator|.
+name|EQUALS
+import|;
+end_import
+
 begin_comment
 comment|/**  * Hive Configuration utils  */
 end_comment
@@ -1132,7 +1168,9 @@ name|JobConf
 operator|.
 name|MAPRED_REDUCE_TASK_ENV
 argument_list|,
-literal|"yarn.app.mapreduce.am.admin.user.env"
+name|MRJobConfig
+operator|.
+name|MR_AM_ADMIN_USER_ENV
 argument_list|)
 operator|.
 name|forEach
@@ -1178,7 +1216,7 @@ name|join
 argument_list|(
 name|redactedProperties
 argument_list|,
-literal|","
+name|COMMA
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1311,9 +1349,12 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|StringUtils
+operator|.
+name|isBlank
+argument_list|(
 name|existingValue
-operator|==
-literal|null
+argument_list|)
 condition|)
 block|{
 name|jobConf
@@ -1325,7 +1366,7 @@ argument_list|,
 operator|(
 name|keyName
 operator|+
-literal|"="
+name|EQUALS
 operator|+
 name|newKeyValue
 operator|)
