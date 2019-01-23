@@ -2431,12 +2431,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Only TS operator
-name|ExprNodeGenericFuncDesc
-name|exprNode
-init|=
-literal|null
-decl_stmt|;
 if|if
 condition|(
 name|retainableTsOp
@@ -2450,27 +2444,13 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// Push filter on top of children
+comment|// Push filter on top of children for retainable
 name|pushFilterToTopOfTableScan
 argument_list|(
 name|optimizerCache
 argument_list|,
 name|retainableTsOp
 argument_list|)
-expr_stmt|;
-comment|// Clone to push to table scan
-name|exprNode
-operator|=
-operator|(
-name|ExprNodeGenericFuncDesc
-operator|)
-name|retainableTsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getFilterExpr
-argument_list|()
 expr_stmt|;
 block|}
 if|if
@@ -2486,13 +2466,54 @@ operator|!=
 literal|null
 condition|)
 block|{
-comment|// Push filter on top
+comment|// Push filter on top of children for discardable
 name|pushFilterToTopOfTableScan
 argument_list|(
 name|optimizerCache
 argument_list|,
 name|discardableTsOp
 argument_list|)
+expr_stmt|;
+block|}
+comment|// Obtain filter for shared TS operator
+name|ExprNodeGenericFuncDesc
+name|exprNode
+init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|retainableTsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getFilterExpr
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|discardableTsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getFilterExpr
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Combine
+name|exprNode
+operator|=
+name|retainableTsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|getFilterExpr
+argument_list|()
 expr_stmt|;
 name|ExprNodeGenericFuncDesc
 name|tsExprNode
@@ -2507,10 +2528,6 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|exprNode
-operator|!=
-literal|null
-operator|&&
 operator|!
 name|exprNode
 operator|.
