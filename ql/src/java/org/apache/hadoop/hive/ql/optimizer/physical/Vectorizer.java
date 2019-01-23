@@ -14641,10 +14641,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|physicalContext
-operator|=
-name|physicalContext
-expr_stmt|;
 name|hiveConf
 operator|=
 name|physicalContext

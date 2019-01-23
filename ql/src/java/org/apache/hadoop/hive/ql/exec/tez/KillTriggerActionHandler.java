@@ -335,6 +335,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"Unable to kill query {} for trigger violation"
+argument_list|,
+name|queryId
 argument_list|)
 expr_stmt|;
 block|}

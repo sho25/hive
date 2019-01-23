@@ -2296,6 +2296,8 @@ operator|.
 name|debug
 argument_list|(
 literal|"adding table {} to external tables list"
+argument_list|,
+name|tblName
 argument_list|)
 expr_stmt|;
 name|writer

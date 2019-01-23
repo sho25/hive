@@ -1385,6 +1385,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"Adding key [{}] even though it is not in the set of known llap-server keys"
+argument_list|,
+name|key
 argument_list|)
 expr_stmt|;
 name|conf

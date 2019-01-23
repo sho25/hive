@@ -292,6 +292,9 @@ operator|.
 name|debug
 argument_list|(
 literal|"Event#{} was a CREATE_TABLE_EVENT with no table listed"
+argument_list|,
+name|fromEventId
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return;

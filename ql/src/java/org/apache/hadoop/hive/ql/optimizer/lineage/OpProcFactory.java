@@ -1965,7 +1965,7 @@ condition|(
 name|joinKeys
 operator|.
 name|length
-operator|<
+operator|<=
 name|left
 operator|||
 name|joinKeys
@@ -1980,7 +1980,7 @@ operator|||
 name|joinKeys
 operator|.
 name|length
-operator|<
+operator|<=
 name|right
 operator|||
 name|joinKeys

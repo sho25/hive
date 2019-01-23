@@ -404,6 +404,9 @@ operator|.
 name|debug
 argument_list|(
 literal|"Event#{} was a ADD_PTN_EVENT with no table listed"
+argument_list|,
+name|fromEventId
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return;
@@ -487,6 +490,9 @@ operator|.
 name|debug
 argument_list|(
 literal|"Event#{} was an ADD_PTN_EVENT with no partitions"
+argument_list|,
+name|fromEventId
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return;

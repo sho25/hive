@@ -11282,6 +11282,8 @@ operator|.
 name|warn
 argument_list|(
 literal|"ValidWriteIdList for table {} not present in creation metadata, this should not happen"
+argument_list|,
+name|fullyQualifiedName
 argument_list|)
 expr_stmt|;
 return|return

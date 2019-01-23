@@ -52700,7 +52700,7 @@ condition|(
 name|partNames
 operator|==
 literal|null
-operator|&&
+operator|||
 name|partNames
 operator|.
 name|isEmpty
@@ -53297,7 +53297,7 @@ condition|(
 name|partNames
 operator|==
 literal|null
-operator|&&
+operator|||
 name|partNames
 operator|.
 name|isEmpty

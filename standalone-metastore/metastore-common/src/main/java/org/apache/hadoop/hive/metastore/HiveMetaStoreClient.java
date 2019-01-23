@@ -5408,6 +5408,17 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partNames
+operator|==
+literal|null
+condition|?
+operator|new
+name|ArrayList
+argument_list|<
+name|String
+argument_list|>
+argument_list|()
+else|:
+name|partNames
 argument_list|)
 decl_stmt|;
 name|rqst
