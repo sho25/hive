@@ -44,6 +44,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|TOTAL_API_CALLS
+init|=
+literal|"total_api_calls"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|CREATE_TOTAL_DATABASES
 init|=
 literal|"create_total_count_dbs"

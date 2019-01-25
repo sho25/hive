@@ -27496,7 +27496,7 @@ name|dsp
 init|=
 name|DataSourceProviderFactory
 operator|.
-name|getDataSourceProvider
+name|tryGetDataSourceProviderOrNull
 argument_list|(
 name|conf
 argument_list|)
