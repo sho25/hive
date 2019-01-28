@@ -1518,21 +1518,27 @@ name|System
 operator|.
 name|clearProperty
 argument_list|(
-literal|"javax.net.ssl.trustStore"
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_PATH_KEY
 argument_list|)
 expr_stmt|;
 name|System
 operator|.
 name|clearProperty
 argument_list|(
-literal|"javax.net.ssl.trustStorePassword"
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_PASSWORD_KEY
 argument_list|)
 expr_stmt|;
 name|System
 operator|.
 name|clearProperty
 argument_list|(
-literal|"javax.net.ssl.trustStoreType"
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_TYPE_KEY
 argument_list|)
 expr_stmt|;
 block|}
@@ -7311,7 +7317,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Test the property metastore.dbaccess.use.SSL (hive.metastore.dbaccess.use.SSL) to ensure that it correctly    * toggles whether or not the SSL configuration parameters will be set. Effectively, this is testing whether    * SSL can be turned on/off correctly.    */
+comment|/**    * Test the property {@link MetastoreConf.ConfVars#DBACCESS_USE_SSL} to ensure that it correctly    * toggles whether or not the SSL configuration parameters will be set. Effectively, this is testing whether    * SSL can be turned on/off correctly.    */
 end_comment
 
 begin_function
@@ -7337,7 +7343,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Test that the deprecated property metastore.dbaccess.ssl.properties is overwritten by the javax.net.ssl.* properties    * if both are set.    *    * This is not an ideal scenario. It is highly recommend to only set the javax.net.ssl.* properties.    */
+comment|/**    * Test that the deprecated property {@link MetastoreConf.ConfVars#DBACCESS_SSL_PROPS} is overwritten by the    * MetastoreConf.ConfVars#DBACCESS_SSL_* properties if both are set.    *    * This is not an ideal scenario. It is highly recommend to only set the MetastoreConf#ConfVars.DBACCESS_SSL_* properties.    */
 end_comment
 
 begin_function
@@ -7361,7 +7367,23 @@ name|ConfVars
 operator|.
 name|DBACCESS_SSL_PROPS
 argument_list|,
-literal|"javax.net.ssl.trustStore=/tmp/truststore.p12,javax.net.ssl.trustStorePassword=pwd,javax.net.ssl.trustStoreType=pkcs12"
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_PATH_KEY
+operator|+
+literal|"=/tmp/truststore.p12,"
+operator|+
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_PASSWORD_KEY
+operator|+
+literal|"=pwd,"
+operator|+
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_TYPE_KEY
+operator|+
+literal|"=pkcs12"
 argument_list|)
 expr_stmt|;
 comment|// Safe config
@@ -7380,22 +7402,15 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Ensure that an empty trustStore path in metastore.dbaccess.ssl.truststore.path (hive.metastore.dbaccess.ssl.truststore.path)    * throws an IllegalArgumentException.    */
+comment|/**    * Test that providing an empty truststore path and truststore password will not throw an exception.    */
 end_comment
 
 begin_function
 annotation|@
 name|Test
-argument_list|(
-name|expected
-operator|=
-name|IllegalArgumentException
-operator|.
-name|class
-argument_list|)
 specifier|public
 name|void
-name|testEmptyTrustStorePath
+name|testEmptyTrustStoreProps
 parameter_list|()
 block|{
 name|setAndCheckSSLProperties
@@ -7404,7 +7419,7 @@ literal|true
 argument_list|,
 literal|""
 argument_list|,
-literal|"password"
+literal|""
 argument_list|,
 literal|"jks"
 argument_list|)
@@ -7413,7 +7428,7 @@ block|}
 end_function
 
 begin_comment
-comment|/**    * Helper method for setting and checking the SSL configuration parameters.    */
+comment|/**    * Helper method for setting and checking the SSL configuration parameters.    * @param useSSL whether or not SSL is enabled    * @param trustStorePath truststore path, corresponding to the value for {@link MetastoreConf.ConfVars#DBACCESS_SSL_TRUSTSTORE_PATH}    * @param trustStorePassword truststore password, corresponding to the value for {@link MetastoreConf.ConfVars#DBACCESS_SSL_TRUSTSTORE_PASSWORD}    * @param trustStoreType truststore type, corresponding to the value for {@link MetastoreConf.ConfVars#DBACCESS_SSL_TRUSTSTORE_TYPE}    */
 end_comment
 
 begin_function
@@ -7502,51 +7517,84 @@ name|conf
 argument_list|)
 expr_stmt|;
 comment|// Calls configureSSL()
-comment|// Check that the Java system values correspond to the values that we set
+comment|// Check that the properties were set correctly
+name|checkSSLProperty
+argument_list|(
+name|useSSL
+argument_list|,
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_PATH_KEY
+argument_list|,
+name|trustStorePath
+argument_list|)
+expr_stmt|;
+name|checkSSLProperty
+argument_list|(
+name|useSSL
+argument_list|,
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_PASSWORD_KEY
+argument_list|,
+name|trustStorePassword
+argument_list|)
+expr_stmt|;
+name|checkSSLProperty
+argument_list|(
+name|useSSL
+argument_list|,
+name|ObjectStore
+operator|.
+name|TRUSTSTORE_TYPE_KEY
+argument_list|,
+name|trustStoreType
+argument_list|)
+expr_stmt|;
+block|}
+end_function
+
+begin_comment
+comment|/**    * Helper method to check whether the Java system properties were set correctly in {@link ObjectStore#configureSSL(Configuration)}    * @param useSSL whether or not SSL is enabled    * @param key Java system property key    * @param value Java system property value indicated by the key    */
+end_comment
+
+begin_function
+specifier|private
+name|void
+name|checkSSLProperty
+parameter_list|(
+name|boolean
+name|useSSL
+parameter_list|,
+name|String
+name|key
+parameter_list|,
+name|String
+name|value
+parameter_list|)
+block|{
 if|if
 condition|(
 name|useSSL
+operator|&&
+operator|!
+name|value
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-name|trustStorePath
+name|value
 argument_list|,
 name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"javax.net.ssl.trustStore"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-name|trustStorePassword
-argument_list|,
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"javax.net.ssl.trustStorePassword"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-name|trustStoreType
-argument_list|,
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"javax.net.ssl.trustStoreType"
+name|key
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7561,31 +7609,7 @@ name|System
 operator|.
 name|getProperty
 argument_list|(
-literal|"javax.net.ssl.trustStore"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertNull
-argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"javax.net.ssl.trustStorePassword"
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|Assert
-operator|.
-name|assertNull
-argument_list|(
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"javax.net.ssl.trustStoreType"
+name|key
 argument_list|)
 argument_list|)
 expr_stmt|;

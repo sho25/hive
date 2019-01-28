@@ -1180,7 +1180,7 @@ block|,
 name|ROLLBACK
 block|}
 comment|/**    * Java system properties for configuring SSL to the database store    */
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -1188,7 +1188,7 @@ name|TRUSTSTORE_PATH_KEY
 init|=
 literal|"javax.net.ssl.trustStore"
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -1196,7 +1196,7 @@ name|TRUSTSTORE_PASSWORD_KEY
 init|=
 literal|"javax.net.ssl.trustStorePassword"
 decl_stmt|;
-specifier|private
+specifier|public
 specifier|static
 specifier|final
 name|String
@@ -2172,7 +2172,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Configure SSL encryption to the database store.    *    * The following properties must be set correctly to enable encryption:    *    * 1. metastore.dbaccess.ssl.use.SSL    * 2. javax.jdo.option.ConnectionURL    * 3. metastore.dbaccess.ssl.truststore.path    * 4. metastore.dbaccess.ssl.truststore.password    * 5. metastore.dbaccess.ssl.truststore.type    *    * The last three properties directly map to JSSE (Java) system properties. The Java layer will handle enabling    * encryption once these properties are set.    *    * Additionally, javax.jdo.option.ConnectionURL must have the database-specific SSL flag in the connection URL.    *    * @param conf    */
+comment|/**    * Configure SSL encryption to the database store.    *    * The following properties must be set correctly to enable encryption:    *    * 1. {@link MetastoreConf.ConfVars#DBACCESS_USE_SSL}    * 2. {@link MetastoreConf.ConfVars#CONNECT_URL_KEY}    * 3. {@link MetastoreConf.ConfVars#DBACCESS_SSL_TRUSTSTORE_PATH}    * 4. {@link MetastoreConf.ConfVars#DBACCESS_SSL_TRUSTSTORE_PASSWORD}    * 5. {@link MetastoreConf.ConfVars#DBACCESS_SSL_TRUSTSTORE_TYPE}    *    * The last three properties directly map to JSSE (Java) system properties. The Java layer will handle enabling    * encryption once these properties are set.    *    * Additionally, {@link MetastoreConf.ConfVars#CONNECT_URL_KEY} must have the database-specific SSL flag in the connection URL.    *    * @param conf configuration values    */
 specifier|private
 specifier|static
 name|void
@@ -2233,20 +2233,32 @@ operator|.
 name|trim
 argument_list|()
 decl_stmt|;
+comment|// Specifying a truststore path is not necessary. If one is not provided, then the default Java truststore path will be used instead.
 if|if
 condition|(
+operator|!
 name|trustStorePath
 operator|.
 name|isEmpty
 argument_list|()
 condition|)
 block|{
-throw|throw
-operator|new
-name|IllegalArgumentException
+name|System
+operator|.
+name|setProperty
 argument_list|(
-literal|"SSL to the database store has been enabled but "
-operator|+
+name|TRUSTSTORE_PATH_KEY
+argument_list|,
+name|trustStorePath
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
 name|ConfVars
 operator|.
 name|DBACCESS_SSL_TRUSTSTORE_PATH
@@ -2254,11 +2266,9 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|" is empty. "
-operator|+
-literal|"Set this property to enable SSL."
+literal|" has not been set. Defaulting to jssecacerts, if it exists. Otherwise, cacerts."
 argument_list|)
-throw|;
+expr_stmt|;
 block|}
 comment|// If the truststore password has been configured and redacted properly using the Hadoop CredentialProvider API, then
 comment|// MetastoreConf.getPassword() will securely decrypt it. Otherwise, it will default to being read in from the
@@ -2279,18 +2289,29 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+operator|!
 name|trustStorePassword
 operator|.
 name|isEmpty
 argument_list|()
 condition|)
 block|{
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|TRUSTSTORE_PASSWORD_KEY
+argument_list|,
+name|trustStorePassword
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
-literal|"SSL has been enabled but "
-operator|+
 name|ConfVars
 operator|.
 name|DBACCESS_SSL_TRUSTSTORE_PASSWORD
@@ -2298,13 +2319,7 @@ operator|.
 name|toString
 argument_list|()
 operator|+
-literal|" is empty. "
-operator|+
-literal|"It is highly recommended to set this property. An empty truststore password could compromise the integrity of the truststore file. "
-operator|+
-literal|"Arbitrary certificates could be placed into the truststore, thereby potentially exposing an attack vector to this application."
-operator|+
-literal|"Continuing with SSL enabled."
+literal|" has not been set. Using default Java truststore password."
 argument_list|)
 expr_stmt|;
 block|}
@@ -2323,24 +2338,6 @@ operator|.
 name|DBACCESS_SSL_TRUSTSTORE_TYPE
 argument_list|)
 decl_stmt|;
-name|System
-operator|.
-name|setProperty
-argument_list|(
-name|TRUSTSTORE_PATH_KEY
-argument_list|,
-name|trustStorePath
-argument_list|)
-expr_stmt|;
-name|System
-operator|.
-name|setProperty
-argument_list|(
-name|TRUSTSTORE_PASSWORD_KEY
-argument_list|,
-name|trustStorePassword
-argument_list|)
-expr_stmt|;
 name|System
 operator|.
 name|setProperty
@@ -2369,7 +2366,7 @@ throw|;
 block|}
 block|}
 block|}
-comment|/**    * Configure the SSL properties of the connection from provided config    *    * This method was kept for backwards compatibility purposes.    *    * The property metastore.dbaccess.ssl.properties (hive.metastore.dbaccess.ssl.properties) was deprecated in    * HIVE-20992 in favor of more transparent and user-friendly properties.    *    * Please use the javax.net.ssl.* properties instead. Setting those properties will overwrite the values    * of the deprecated property.    *    * The process of completely removing this property and its functionality is being tracked in HIVE-21024.    *    * @param conf Configuration    */
+comment|/**    * Configure the SSL properties of the connection from provided config    *    * This method was kept for backwards compatibility purposes.    *    * The property {@link MetastoreConf.ConfVars#DBACCESS_SSL_PROPS} was deprecated in HIVE-20992 in favor of more    * transparent and user-friendly properties.    *    * Please use the MetastoreConf.ConfVars#DBACCESS_SSL_* instead. Setting those properties will overwrite the values    * of the deprecated property.    *    * The process of completely removing this property and its functionality is being tracked in HIVE-21024.    *    * @param conf configuration values    */
 annotation|@
 name|Deprecated
 specifier|private
