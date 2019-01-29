@@ -49,6 +49,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|conf
+operator|.
+name|HiveConf
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|api
@@ -546,6 +562,27 @@ argument_list|,
 name|eventMessageAsJSON
 argument_list|)
 expr_stmt|;
+comment|// We do not dump partitions during metadata only bootstrap dump (See TableExport
+comment|// .getPartitions(), for bootstrap dump we pass tableSpec with TABLE_ONLY set.). So don't
+comment|// dump partition related events for metadata-only dump.
+if|if
+condition|(
+name|withinContext
+operator|.
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_DUMP_METADATA_ONLY
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
 name|Table
 name|qlMdTable
 init|=

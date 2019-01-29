@@ -83,6 +83,24 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Table
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -148,6 +166,10 @@ name|String
 argument_list|>
 name|partVals
 decl_stmt|;
+specifier|private
+name|Table
+name|tableObj
+decl_stmt|;
 comment|/**    * @param statsObj Columns statistics Info.    * @param partVals partition names    * @param parameters table parameters to be updated after stats are updated.    * @param validWriteIds valid write id list for the query.    * @param writeId writeId for the query.    * @param handler handler that is firing the event    */
 specifier|public
 name|UpdatePartitionColumnStatEvent
@@ -168,6 +190,9 @@ argument_list|,
 name|String
 argument_list|>
 name|parameters
+parameter_list|,
+name|Table
+name|tableObj
 parameter_list|,
 name|String
 name|validWriteIds
@@ -216,6 +241,12 @@ name|partVals
 operator|=
 name|partVals
 expr_stmt|;
+name|this
+operator|.
+name|tableObj
+operator|=
+name|tableObj
+expr_stmt|;
 block|}
 comment|/**    * @param statsObj Columns statistics Info.    * @param partVals partition names    * @param handler handler that is firing the event    */
 specifier|public
@@ -229,6 +260,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partVals
+parameter_list|,
+name|Table
+name|tableObj
 parameter_list|,
 name|IHMSHandler
 name|handler
@@ -270,6 +304,12 @@ operator|.
 name|parameters
 operator|=
 literal|null
+expr_stmt|;
+name|this
+operator|.
+name|tableObj
+operator|=
+name|tableObj
 expr_stmt|;
 block|}
 specifier|public
@@ -323,6 +363,15 @@ parameter_list|()
 block|{
 return|return
 name|partVals
+return|;
+block|}
+specifier|public
+name|Table
+name|getTableObj
+parameter_list|()
+block|{
+return|return
+name|tableObj
 return|;
 block|}
 block|}

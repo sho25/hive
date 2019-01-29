@@ -212,6 +212,18 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Processing#{} UpdateTableColumnStat message : {}"
+argument_list|,
+name|fromEventId
+argument_list|()
+argument_list|,
+name|eventMessageAsJSON
+argument_list|)
+expr_stmt|;
 name|Table
 name|qlMdTable
 init|=
@@ -271,18 +283,6 @@ condition|)
 block|{
 return|return;
 block|}
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Processing#{} UpdateTableColumnStat message : {}"
-argument_list|,
-name|fromEventId
-argument_list|()
-argument_list|,
-name|eventMessageAsJSON
-argument_list|)
-expr_stmt|;
 name|DumpMetaData
 name|dmd
 init|=

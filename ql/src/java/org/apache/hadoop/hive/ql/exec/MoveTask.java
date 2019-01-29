@@ -1964,6 +1964,57 @@ return|return
 literal|false
 return|;
 block|}
+comment|// Whether statistics need to be reset as part of MoveTask execution.
+specifier|private
+name|boolean
+name|resetStatisticsProps
+parameter_list|(
+name|Table
+name|table
+parameter_list|)
+block|{
+if|if
+condition|(
+name|hasFollowingStatsTask
+argument_list|()
+condition|)
+block|{
+comment|// If there's a follow-on stats task then the stats will be correct after load, so don't
+comment|// need to reset the statistics.
+return|return
+literal|false
+return|;
+block|}
+if|if
+condition|(
+operator|!
+name|work
+operator|.
+name|getIsInReplicationScope
+argument_list|()
+condition|)
+block|{
+comment|// If the load is not happening during replication and there is not follow-on stats
+comment|// task, stats will be inaccurate after load and so need to be reset.
+return|return
+literal|true
+return|;
+block|}
+comment|// If we are loading a table during replication, the stats will also be replicated
+comment|// and hence accurate if it's a non-transactional table. For transactional table we
+comment|// do not replicate stats yet.
+return|return
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|table
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+return|;
+block|}
 specifier|private
 specifier|final
 specifier|static
@@ -2834,57 +2885,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|boolean
-name|resetStatistics
-decl_stmt|;
-if|if
-condition|(
-name|hasFollowingStatsTask
-argument_list|()
-condition|)
-block|{
-comment|// If there's a follow-on stats task then the stats will be correct after load, so don't
-comment|// need to reset the statistics.
-name|resetStatistics
-operator|=
-literal|false
-expr_stmt|;
-block|}
-elseif|else
-if|if
-condition|(
-operator|!
-name|work
-operator|.
-name|getIsInReplicationScope
-argument_list|()
-condition|)
-block|{
-comment|// If the load is not happening during replication and there is not follow-on stats
-comment|// task, stats will be inaccurate after load and so need to be reset.
-name|resetStatistics
-operator|=
-literal|true
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// If we are loading a table during replication, the stats will also be replicated
-comment|// and hence accurate if it's a non-transactional table. For transactional table we
-comment|// do not replicate stats yet.
-name|resetStatistics
-operator|=
-name|AcidUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|table
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|db
 operator|.
 name|loadTable
@@ -2919,7 +2919,10 @@ argument_list|)
 argument_list|,
 name|isFullAcidOp
 argument_list|,
-name|resetStatistics
+name|resetStatisticsProps
+argument_list|(
+name|table
+argument_list|)
 argument_list|,
 name|tbd
 operator|.
@@ -3642,8 +3645,10 @@ operator|.
 name|isMmTable
 argument_list|()
 argument_list|,
-name|hasFollowingStatsTask
-argument_list|()
+name|resetStatisticsProps
+argument_list|(
+name|table
+argument_list|)
 argument_list|,
 name|tbd
 operator|.
@@ -3959,8 +3964,10 @@ operator|.
 name|getStmtId
 argument_list|()
 argument_list|,
-name|hasFollowingStatsTask
-argument_list|()
+name|resetStatisticsProps
+argument_list|(
+name|table
+argument_list|)
 argument_list|,
 name|work
 operator|.

@@ -3433,7 +3433,8 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-comment|//no partition task should be added as the operation is inserting into an existing partition
+comment|// Partition level statistics gets updated as part of the INSERT above. So we see a partition
+comment|// task corresponding to an ALTER_PARTITION event.
 name|task
 operator|=
 name|getReplLoadRootTask
@@ -3457,7 +3458,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|false
+literal|true
 argument_list|,
 name|hasPartitionTask
 argument_list|(

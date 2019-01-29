@@ -77,6 +77,42 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|api
+operator|.
+name|Partition
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|ColumnStatisticsObj
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|conf
 operator|.
 name|MetastoreConf
@@ -102,26 +138,6 @@ operator|.
 name|gzip
 operator|.
 name|GzipJSONMessageEncoder
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|repl
-operator|.
-name|PathBuilder
 import|;
 end_import
 
@@ -761,11 +777,7 @@ name|statsParams
 init|=
 operator|new
 name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|List
@@ -840,7 +852,7 @@ name|String
 name|tableName
 parameter_list|)
 throws|throws
-name|Exception
+name|Throwable
 block|{
 comment|// Test column stats
 name|Assert
@@ -922,6 +934,144 @@ argument_list|,
 name|rParams
 argument_list|)
 expr_stmt|;
+name|verifyReplicatedStatsForPartitionsOfTable
+argument_list|(
+name|tableName
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|verifyReplicatedStatsForPartitionsOfTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|Throwable
+block|{
+comment|// Test partition level stats
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|pParts
+init|=
+name|primary
+operator|.
+name|getAllPartitions
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|tableName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|pParts
+operator|==
+literal|null
+operator|||
+name|pParts
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// Not a partitioned table, nothing to verify.
+return|return;
+block|}
+for|for
+control|(
+name|Partition
+name|pPart
+range|:
+name|pParts
+control|)
+block|{
+name|Partition
+name|rPart
+init|=
+name|replica
+operator|.
+name|getPartition
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tableName
+argument_list|,
+name|pPart
+operator|.
+name|getValues
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|rParams
+init|=
+name|collectStatsParams
+argument_list|(
+name|rPart
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|pParams
+init|=
+name|collectStatsParams
+argument_list|(
+name|pPart
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|pParams
+argument_list|,
+name|rParams
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Test partition column stats for all partitions
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|primary
+operator|.
+name|getAllPartitionColumnStatistics
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|tableName
+argument_list|)
+argument_list|,
+name|replica
+operator|.
+name|getAllPartitionColumnStatistics
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tableName
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -975,21 +1125,6 @@ argument_list|)
 operator|.
 name|getParameters
 argument_list|()
-argument_list|)
-decl_stmt|;
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|params
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|StatsSetupConst
-operator|.
-name|SUPPORTED_STATS
 argument_list|)
 decl_stmt|;
 name|Map
@@ -1077,6 +1212,151 @@ name|expectedTrueParams
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|verifyNoPartitionStatsReplicationForMetadataOnly
+argument_list|(
+name|tableName
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|verifyNoPartitionStatsReplicationForMetadataOnly
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|Throwable
+block|{
+comment|// Test partition level stats
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|pParts
+init|=
+name|primary
+operator|.
+name|getAllPartitions
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|tableName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|pParts
+operator|==
+literal|null
+operator|||
+name|pParts
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+comment|// Not a partitioned table, nothing to verify.
+return|return;
+block|}
+comment|// Partitions are not replicated in metadata only replication.
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|rParts
+init|=
+name|replica
+operator|.
+name|getAllPartitions
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tableName
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|rParts
+operator|==
+literal|null
+operator|||
+name|rParts
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Test partition column stats for all partitions
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|>
+name|rPartColStats
+init|=
+name|replica
+operator|.
+name|getAllPartitionColumnStatistics
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tableName
+argument_list|)
+decl_stmt|;
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|>
+name|entry
+range|:
+name|rPartColStats
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|colStats
+init|=
+name|entry
+operator|.
+name|getValue
+argument_list|()
+decl_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+name|colStats
+operator|==
+literal|null
+operator|||
+name|colStats
+operator|.
+name|isEmpty
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|List
@@ -1088,20 +1368,29 @@ parameter_list|()
 throws|throws
 name|Throwable
 block|{
+comment|// Unpartitioned table with data
 name|String
 name|simpleTableName
 init|=
 literal|"sTable"
 decl_stmt|;
+comment|// partitioned table with data
 name|String
 name|partTableName
 init|=
 literal|"pTable"
 decl_stmt|;
+comment|// Unpartitioned table without data during bootstrap and hence no stats
 name|String
 name|ndTableName
 init|=
 literal|"ndTable"
+decl_stmt|;
+comment|// Partitioned table without data during bootstrap and hence no stats.
+name|String
+name|ndPartTableName
+init|=
+literal|"ndPTable"
 decl_stmt|;
 name|primary
 operator|.
@@ -1141,7 +1430,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into table "
+literal|"insert into "
 operator|+
 name|partTableName
 operator|+
@@ -1150,7 +1439,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into table "
+literal|"insert into "
 operator|+
 name|partTableName
 operator|+
@@ -1159,7 +1448,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into table "
+literal|"insert into "
 operator|+
 name|partTableName
 operator|+
@@ -1174,6 +1463,15 @@ name|ndTableName
 operator|+
 literal|" (str string)"
 argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table "
+operator|+
+name|ndPartTableName
+operator|+
+literal|" (val string) partitioned by (pk int)"
+argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
@@ -1183,9 +1481,7 @@ name|tableNames
 init|=
 operator|new
 name|ArrayList
-argument_list|<
-name|String
-argument_list|>
+argument_list|<>
 argument_list|(
 name|Arrays
 operator|.
@@ -1196,6 +1492,8 @@ argument_list|,
 name|partTableName
 argument_list|,
 name|ndTableName
+argument_list|,
+name|ndPartTableName
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -1349,10 +1647,6 @@ comment|// Load, if necessary changing configuration.
 if|if
 condition|(
 name|parallelLoad
-operator|&&
-name|lastReplicationId
-operator|==
-literal|null
 condition|)
 block|{
 name|replica
@@ -1501,6 +1795,7 @@ parameter_list|)
 throws|throws
 name|Throwable
 block|{
+comment|// Annotations for this table are same as createBootStrapData
 name|String
 name|simpleTableName
 init|=
@@ -1515,6 +1810,11 @@ name|String
 name|ndTableName
 init|=
 literal|"ndTable"
+decl_stmt|;
+name|String
+name|ndPartTableName
+init|=
+literal|"ndPTable"
 decl_stmt|;
 name|Assert
 operator|.
@@ -1533,16 +1833,26 @@ argument_list|,
 name|partTableName
 argument_list|,
 name|ndTableName
+argument_list|,
+name|ndPartTableName
 argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
+comment|// New tables created during incremental phase and thus loaded with data and stats during
+comment|// incremental phase.
 name|String
 name|incTableName
 init|=
 literal|"iTable"
 decl_stmt|;
 comment|// New table
+name|String
+name|incPartTableName
+init|=
+literal|"ipTable"
+decl_stmt|;
+comment|// New partitioned table
 name|primary
 operator|.
 name|run
@@ -1574,30 +1884,30 @@ comment|// two partitions changed and one unchanged
 operator|.
 name|run
 argument_list|(
-literal|"insert into table "
+literal|"insert into "
 operator|+
 name|partTableName
 operator|+
-literal|" values ('india', 'pune')"
+literal|"(country, place) values ('india', 'pune')"
 argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into table "
+literal|"insert into "
 operator|+
 name|partTableName
 operator|+
-literal|" values ('us', 'chicago')"
+literal|"(country, place) values ('us', 'chicago')"
 argument_list|)
 comment|// new partition
 operator|.
 name|run
 argument_list|(
-literal|"insert into table "
+literal|"insert into "
 operator|+
 name|partTableName
 operator|+
-literal|" values ('australia', 'perth')"
+literal|"(country, place) values ('australia', 'perth')"
 argument_list|)
 operator|.
 name|run
@@ -1626,12 +1936,73 @@ name|incTableName
 operator|+
 literal|" values ('conf2', false)"
 argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|ndPartTableName
+operator|+
+literal|"(pk, val) values (1, 'one')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|ndPartTableName
+operator|+
+literal|"(pk, val) values (1, 'another one')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|ndPartTableName
+operator|+
+literal|"(pk, val) values (2, 'two')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table "
+operator|+
+name|incPartTableName
+operator|+
+literal|"(val string) partitioned by (tvalue boolean)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|incPartTableName
+operator|+
+literal|"(tvalue, val) values (true, 'true')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into "
+operator|+
+name|incPartTableName
+operator|+
+literal|"(tvalue, val) values (false, 'false')"
+argument_list|)
 expr_stmt|;
 name|tableNames
 operator|.
 name|add
 argument_list|(
 name|incTableName
+argument_list|)
+expr_stmt|;
+name|tableNames
+operator|.
+name|add
+argument_list|(
+name|incPartTableName
 argument_list|)
 expr_stmt|;
 comment|// Run analyze on each of the tables, if they are not being gathered automatically.
@@ -1670,7 +2041,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-specifier|public
+specifier|private
 name|void
 name|testStatsReplicationCommon
 parameter_list|(

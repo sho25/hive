@@ -9275,7 +9275,7 @@ name|currentDb
 argument_list|)
 return|;
 block|}
-comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    * @param isInsertOverwrite    * @return Partition object being loaded with data    */
+comment|/**    * Load a directory into a Hive Table Partition - Alters existing content of    * the partition with the contents of loadPath. - If the partition does not    * exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param  tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param resetStatistics    *          if true, reset the statistics. If false, do not reset statistics.    * @param writeId write ID allocated for the current load operation    * @param stmtId statement ID of the current load statement    * @param isInsertOverwrite    * @return Partition object being loaded with data    */
 specifier|public
 name|Partition
 name|loadPartition
@@ -9313,7 +9313,7 @@ name|boolean
 name|isAcidIUDoperation
 parameter_list|,
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Long
 name|writeId
@@ -9413,7 +9413,7 @@ name|isSrcLocal
 argument_list|,
 name|isAcidIUDoperation
 argument_list|,
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|writeId
 argument_list|,
@@ -9547,7 +9547,7 @@ name|addPartitionToMetastore
 argument_list|(
 name|newTPart
 argument_list|,
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|tbl
 argument_list|,
@@ -9586,7 +9586,7 @@ try|try
 block|{
 name|setStatsPropAndAlterPartition
 argument_list|(
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|tbl
 argument_list|,
@@ -9638,7 +9638,7 @@ return|return
 name|newTPart
 return|;
 block|}
-comment|/**    * Move all the files from loadPath into Hive. If the partition    * does not exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param oldPart    *          already existing partition object, can be null    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param inheritLocation    *          if true, partition path is generated from table    * @param isSkewedStoreAsSubdir    *          if true, skewed is stored as sub-directory    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param hasFollowingStatsTask    *          true if there is a following task which updates the stats, so, this method need not update.    * @param writeId    *          write ID allocated for the current load operation    * @param stmtId    *          statement ID of the current load statement    * @param isInsertOverwrite    * @param isTxnTable    *    * @return Partition object being loaded with data    * @throws HiveException    */
+comment|/**    * Move all the files from loadPath into Hive. If the partition    * does not exist - one is created - files in loadPath are moved into Hive. But the    * directory itself is not removed.    *    * @param loadPath    *          Directory containing files to load into Table    * @param tbl    *          name of table to be loaded.    * @param partSpec    *          defines which partition needs to be loaded    * @param oldPart    *          already existing partition object, can be null    * @param loadFileType    *          if REPLACE_ALL - replace files in the table,    *          otherwise add files to table (KEEP_EXISTING, OVERWRITE_EXISTING)    * @param inheritTableSpecs if true, on [re]creating the partition, take the    *          location/inputformat/outputformat/serde details from table spec    * @param inheritLocation    *          if true, partition path is generated from table    * @param isSkewedStoreAsSubdir    *          if true, skewed is stored as sub-directory    * @param isSrcLocal    *          If the source directory is LOCAL    * @param isAcidIUDoperation    *          true if this is an ACID operation Insert/Update/Delete operation    * @param resetStatistics    *          if true, reset the statistics. Do not reset statistics if false.    * @param writeId    *          write ID allocated for the current load operation    * @param stmtId    *          statement ID of the current load statement    * @param isInsertOverwrite    * @param isTxnTable    *    * @return Partition object being loaded with data    * @throws HiveException    */
 specifier|private
 name|Partition
 name|loadPartitionInternal
@@ -9679,7 +9679,7 @@ name|boolean
 name|isAcidIUDoperation
 parameter_list|,
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Long
 name|writeId
@@ -10381,8 +10381,7 @@ block|}
 comment|// column stats will be inaccurate
 if|if
 condition|(
-operator|!
-name|hasFollowingStatsTask
+name|resetStatistics
 condition|)
 block|{
 name|StatsSetupConst
@@ -10703,7 +10702,7 @@ name|Partition
 name|newTPart
 parameter_list|,
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Table
 name|tbl
@@ -10768,7 +10767,7 @@ try|try
 block|{
 name|setStatsPropAndAlterPartition
 argument_list|(
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|tbl
 argument_list|,
@@ -10929,7 +10928,7 @@ argument_list|>
 name|partitions
 parameter_list|,
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Table
 name|tbl
@@ -11098,7 +11097,7 @@ argument_list|(
 name|i
 argument_list|)
 argument_list|,
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|tbl
 argument_list|,
@@ -11742,7 +11741,7 @@ name|void
 name|setStatsPropAndAlterPartition
 parameter_list|(
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Table
 name|tbl
@@ -11765,7 +11764,8 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|hasFollowingStatsTask
+operator|!
+name|resetStatistics
 condition|)
 block|{
 name|ec
@@ -11841,7 +11841,7 @@ name|void
 name|setStatsPropAndAlterPartitions
 parameter_list|(
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 name|Table
 name|tbl
@@ -11877,7 +11877,8 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|hasFollowingStatsTask
+operator|!
+name|resetStatistics
 condition|)
 block|{
 name|ec
@@ -12888,7 +12889,7 @@ return|return
 name|validPartitions
 return|;
 block|}
-comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param numDP number of dynamic partitions    * @param isAcid true if this is an ACID operation    * @param writeId writeId, can be 0 unless isAcid == true    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
+comment|/**    * Given a source directory name of the load path, load all dynamically generated partitions    * into the specified table and return a list of strings that represent the dynamic partition    * paths.    * @param loadPath    * @param tableName    * @param partSpec    * @param loadFileType    * @param numDP number of dynamic partitions    * @param isAcid true if this is an ACID operation    * @param writeId writeId, can be 0 unless isAcid == true    * @param resetStatistics if true, reset statistics. Do not reset statistics otherwise.    * @return partition map details (PartitionSpec and Partition)    * @throws HiveException    */
 specifier|public
 name|Map
 argument_list|<
@@ -12946,7 +12947,7 @@ name|stmtId
 parameter_list|,
 specifier|final
 name|boolean
-name|hasFollowingStatsTask
+name|resetStatistics
 parameter_list|,
 specifier|final
 name|AcidUtils
@@ -13501,7 +13502,7 @@ literal|false
 argument_list|,
 name|isAcid
 argument_list|,
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|writeId
 argument_list|,
@@ -13687,9 +13688,9 @@ name|isAcid
 operator|+
 literal|", "
 operator|+
-literal|" hasFollowingStatsTask="
+literal|" resetStatistics="
 operator|+
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|e
 argument_list|)
@@ -13891,7 +13892,7 @@ name|toList
 argument_list|()
 argument_list|)
 argument_list|,
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|tbl
 argument_list|,
@@ -13993,7 +13994,7 @@ block|}
 block|}
 name|setStatsPropAndAlterPartitions
 argument_list|(
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|,
 name|tbl
 argument_list|,
@@ -14197,9 +14198,9 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|"hasFollowingStatsTask="
+literal|"resetStatistics="
 operator|+
-name|hasFollowingStatsTask
+name|resetStatistics
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -15856,6 +15857,41 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+name|EnvironmentContext
+name|ec
+init|=
+operator|new
+name|EnvironmentContext
+argument_list|()
+decl_stmt|;
+comment|// In case of replication statistics is obtained from the source, so do not update those
+comment|// on replica. Since we are not replicating statistics for transactional tables, do not do
+comment|// so for a partition of a transactional table right now.
+if|if
+condition|(
+operator|!
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|tbl
+argument_list|)
+condition|)
+block|{
+name|ec
+operator|.
+name|putToProperties
+argument_list|(
+name|StatsSetupConst
+operator|.
+name|DO_NOT_UPDATE_STATS
+argument_list|,
+name|StatsSetupConst
+operator|.
+name|TRUE
+argument_list|)
+expr_stmt|;
+block|}
 name|getMSC
 argument_list|()
 operator|.
@@ -15873,9 +15909,7 @@ argument_list|()
 argument_list|,
 name|partsToAlter
 argument_list|,
-operator|new
-name|EnvironmentContext
-argument_list|()
+name|ec
 argument_list|,
 name|validWriteIdList
 argument_list|,
@@ -16294,6 +16328,27 @@ argument_list|(
 name|addSpec
 operator|.
 name|getSortCols
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|addSpec
+operator|.
+name|getColStats
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
+name|part
+operator|.
+name|setColStats
+argument_list|(
+name|addSpec
+operator|.
+name|getColStats
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -19884,6 +19939,46 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+return|return
+name|getPartitionsByNames
+argument_list|(
+name|tbl
+argument_list|,
+name|partNames
+argument_list|,
+literal|false
+argument_list|)
+return|;
+block|}
+end_function
+
+begin_comment
+comment|/**    * Get all partitions of the table that matches the list of given partition names.    *    * @param tbl    *          object for which partition is needed. Must be partitioned.    * @param partNames    *          list of partition names    * @param getColStats    *          if true, Partition object includes column statistics for that partition.    * @return list of partition objects    * @throws HiveException    */
+end_comment
+
+begin_function
+specifier|public
+name|List
+argument_list|<
+name|Partition
+argument_list|>
+name|getPartitionsByNames
+parameter_list|(
+name|Table
+name|tbl
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|boolean
+name|getColStats
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
 if|if
 condition|(
 operator|!
@@ -20024,6 +20119,8 @@ operator|)
 operator|*
 name|batchSize
 argument_list|)
+argument_list|,
+name|getColStats
 argument_list|)
 decl_stmt|;
 if|if
@@ -20121,6 +20218,8 @@ name|batchSize
 argument_list|,
 name|nParts
 argument_list|)
+argument_list|,
+name|getColStats
 argument_list|)
 decl_stmt|;
 if|if
