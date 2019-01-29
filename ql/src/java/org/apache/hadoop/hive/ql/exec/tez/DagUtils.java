@@ -9599,6 +9599,21 @@ argument_list|(
 name|scratchDir
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_RPC_QUERY_PLAN
+argument_list|)
+condition|)
+block|{
 name|FileSystem
 name|fs
 init|=
@@ -9624,6 +9639,7 @@ argument_list|)
 expr_stmt|;
 comment|// since we are adding the user name to the scratch dir, we do not
 comment|// need to give more permissions here
+comment|// Since we are doing RPC creating a dir is not necessary
 name|fs
 operator|.
 name|mkdirs
@@ -9631,6 +9647,7 @@ argument_list|(
 name|tezDir
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|tezDir
 return|;
