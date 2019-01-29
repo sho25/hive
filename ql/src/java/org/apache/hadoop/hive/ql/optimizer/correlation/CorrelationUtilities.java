@@ -2592,11 +2592,10 @@ argument_list|)
 decl_stmt|;
 name|parent
 operator|.
-name|getChildOperators
-argument_list|()
-operator|.
-name|clear
-argument_list|()
+name|removeChild
+argument_list|(
+name|childRS
+argument_list|)
 expr_stmt|;
 name|SelectOperator
 name|sel
