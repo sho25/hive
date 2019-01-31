@@ -16404,7 +16404,7 @@ name|HIVE_MERGE_NWAY_JOINS
 argument_list|(
 literal|"hive.merge.nway.joins"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Merge adjacent joins into a single n-way join"
 argument_list|)
