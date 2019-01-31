@@ -388,6 +388,8 @@ name|additionalPropertiesProvider
 argument_list|,
 name|tableHandle
 argument_list|,
+literal|false
+argument_list|,
 name|hiveConf
 argument_list|)
 condition|)

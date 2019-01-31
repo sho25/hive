@@ -1148,7 +1148,7 @@ block|}
 comment|/**    * validates if a table can be exported, similar to EximUtil.shouldExport with few replication    * specific checks.    */
 specifier|public
 specifier|static
-name|Boolean
+name|boolean
 name|shouldReplicate
 parameter_list|(
 name|ReplicationSpec
@@ -1156,6 +1156,9 @@ name|replicationSpec
 parameter_list|,
 name|Table
 name|tableHandle
+parameter_list|,
+name|boolean
+name|isEventDump
 parameter_list|,
 name|HiveConf
 name|hiveConf
@@ -1243,7 +1246,9 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-return|return
+name|boolean
+name|shouldReplicateExternalTables
+init|=
 name|hiveConf
 operator|.
 name|getBoolVar
@@ -1259,6 +1264,32 @@ name|replicationSpec
 operator|.
 name|isMetadataOnly
 argument_list|()
+decl_stmt|;
+if|if
+condition|(
+name|isEventDump
+condition|)
+block|{
+comment|// Skip dumping of events related to external tables if bootstrap is enabled on it.
+name|shouldReplicateExternalTables
+operator|=
+name|shouldReplicateExternalTables
+operator|&&
+operator|!
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_BOOTSTRAP_EXTERNAL_TABLES
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|shouldReplicateExternalTables
 return|;
 block|}
 block|}
@@ -1279,6 +1310,9 @@ name|replicationSpec
 parameter_list|,
 name|Hive
 name|db
+parameter_list|,
+name|boolean
+name|isEventDump
 parameter_list|,
 name|HiveConf
 name|hiveConf
@@ -1344,6 +1378,8 @@ argument_list|(
 name|replicationSpec
 argument_list|,
 name|table
+argument_list|,
+name|isEventDump
 argument_list|,
 name|hiveConf
 argument_list|)

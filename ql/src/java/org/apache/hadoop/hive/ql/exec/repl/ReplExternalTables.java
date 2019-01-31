@@ -590,9 +590,12 @@ name|writePath
 decl_stmt|;
 specifier|private
 specifier|final
-name|Boolean
-name|excludeExternalTables
-decl_stmt|,
+name|boolean
+name|includeExternalTables
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
 name|dumpMetadataOnly
 decl_stmt|;
 specifier|private
@@ -626,9 +629,8 @@ argument_list|,
 name|FILE_NAME
 argument_list|)
 expr_stmt|;
-name|excludeExternalTables
+name|includeExternalTables
 operator|=
-operator|!
 name|hiveConf
 operator|.
 name|getBoolVar
@@ -686,8 +688,7 @@ return|return
 operator|!
 name|dumpMetadataOnly
 operator|&&
-operator|!
-name|excludeExternalTables
+name|includeExternalTables
 return|;
 block|}
 comment|/**      * this will dump a single line per external table. it can include additional lines for the same      * table if the table is partitioned and the partition location is outside the table.      */

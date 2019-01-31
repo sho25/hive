@@ -1177,6 +1177,8 @@ name|tableSpec
 operator|.
 name|tableHandle
 argument_list|,
+literal|false
+argument_list|,
 name|conf
 argument_list|)
 return|;

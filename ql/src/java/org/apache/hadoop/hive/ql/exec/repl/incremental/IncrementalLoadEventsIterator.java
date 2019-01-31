@@ -93,9 +93,13 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|exec
 operator|.
-name|EximUtil
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
 import|;
 end_import
 
@@ -227,9 +231,9 @@ name|listStatus
 argument_list|(
 name|eventPath
 argument_list|,
-name|EximUtil
+name|ReplUtils
 operator|.
-name|getDirectoryFilter
+name|getEventsDirectoryFilter
 argument_list|(
 name|fs
 argument_list|)

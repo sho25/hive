@@ -249,6 +249,8 @@ name|replicationSpec
 argument_list|,
 name|qlMdTable
 argument_list|,
+literal|true
+argument_list|,
 name|withinContext
 operator|.
 name|hiveConf

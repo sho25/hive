@@ -312,6 +312,8 @@ argument_list|(
 name|tableObj
 argument_list|)
 argument_list|,
+literal|true
+argument_list|,
 name|withinContext
 operator|.
 name|hiveConf

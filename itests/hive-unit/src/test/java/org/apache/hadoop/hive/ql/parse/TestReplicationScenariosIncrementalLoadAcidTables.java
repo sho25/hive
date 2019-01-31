@@ -567,6 +567,13 @@ argument_list|,
 literal|"false"
 argument_list|)
 expr_stmt|;
+name|put
+argument_list|(
+literal|"hive.stats.autogather"
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 decl_stmt|;
@@ -652,6 +659,13 @@ expr_stmt|;
 name|put
 argument_list|(
 literal|"hive.metastore.client.capability.check"
+argument_list|,
+literal|"false"
+argument_list|)
+expr_stmt|;
+name|put
+argument_list|(
+literal|"hive.stats.autogather"
 argument_list|,
 literal|"false"
 argument_list|)

@@ -595,6 +595,24 @@ name|ql
 operator|.
 name|parse
 operator|.
+name|ReplicationSpec
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
 name|SemanticException
 import|;
 end_import
@@ -675,7 +693,27 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -743,6 +781,28 @@ literal|"REPL_INCREMENTAL_LOAD"
 else|:
 literal|"REPL_BOOTSTRAP_LOAD"
 operator|)
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|StageType
+name|getType
+parameter_list|()
+block|{
+return|return
+name|work
+operator|.
+name|isIncrementalLoad
+argument_list|()
+condition|?
+name|StageType
+operator|.
+name|REPL_INCREMENTAL_LOAD
+else|:
+name|StageType
+operator|.
+name|REPL_BOOTSTRAP_LOAD
 return|;
 block|}
 comment|/**    * Provides the root Tasks created as a result of this loadTask run which will be executed    * by the driver. It does not track details across multiple runs of LoadTask.    */
@@ -921,7 +981,7 @@ name|iterator
 init|=
 name|work
 operator|.
-name|iterator
+name|bootstrapIterator
 argument_list|()
 decl_stmt|;
 name|ConstraintEventsIterator
@@ -929,7 +989,7 @@ name|constraintIterator
 init|=
 name|work
 operator|.
-name|constraintIterator
+name|constraintsIterator
 argument_list|()
 decl_stmt|;
 comment|/*       This is used to get hold of a reference during the current creation of tasks and is initialized       with "0" tasks such that it will be non consequential in any operations done with task tracker       compositions.        */
@@ -1658,6 +1718,9 @@ name|rootTasks
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Update last repl ID of the database only if the current dump is not incremental. If bootstrap
+comment|// is combined with incremental dump, it contains only tables to bootstrap. So, needn't change
+comment|// last repl ID of the database.
 if|if
 condition|(
 operator|!
@@ -1670,6 +1733,12 @@ operator|!
 name|constraintIterator
 operator|.
 name|hasNext
+argument_list|()
+operator|&&
+operator|!
+name|work
+operator|.
+name|isIncrementalLoad
 argument_list|()
 condition|)
 block|{
@@ -1827,6 +1896,57 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|dbProps
+decl_stmt|;
+if|if
+condition|(
+name|work
+operator|.
+name|isIncrementalLoad
+argument_list|()
+condition|)
+block|{
+name|dbProps
+operator|=
+operator|new
+name|HashMap
+argument_list|<>
+argument_list|()
+expr_stmt|;
+name|dbProps
+operator|.
+name|put
+argument_list|(
+name|ReplicationSpec
+operator|.
+name|KEY
+operator|.
+name|CURR_STATE_ID
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+name|work
+operator|.
+name|incrementalLoadTasksBuilder
+argument_list|()
+operator|.
+name|eventTo
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|Database
 name|dbInMetadata
 init|=
@@ -1846,6 +1966,14 @@ operator|.
 name|dbNameToLoadIn
 argument_list|)
 decl_stmt|;
+name|dbProps
+operator|=
+name|dbInMetadata
+operator|.
+name|getParameters
+argument_list|()
+expr_stmt|;
+block|}
 name|ReplStateLogWork
 name|replLogWork
 init|=
@@ -1854,10 +1982,7 @@ name|ReplStateLogWork
 argument_list|(
 name|replLogger
 argument_list|,
-name|dbInMetadata
-operator|.
-name|getParameters
-argument_list|()
+name|dbProps
 argument_list|)
 decl_stmt|;
 name|Task
@@ -2222,28 +2347,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|Override
-specifier|public
-name|StageType
-name|getType
-parameter_list|()
-block|{
-return|return
-name|work
-operator|.
-name|isIncrementalLoad
-argument_list|()
-condition|?
-name|StageType
-operator|.
-name|REPL_INCREMENTAL_LOAD
-else|:
-name|StageType
-operator|.
-name|REPL_BOOTSTRAP_LOAD
-return|;
-block|}
 specifier|private
 name|int
 name|executeIncrementalLoad
@@ -2254,6 +2357,58 @@ parameter_list|)
 block|{
 try|try
 block|{
+name|IncrementalLoadTasksBuilder
+name|builder
+init|=
+name|work
+operator|.
+name|incrementalLoadTasksBuilder
+argument_list|()
+decl_stmt|;
+comment|// If incremental events are already applied, then check and perform if need to bootstrap any tables.
+if|if
+condition|(
+operator|!
+name|builder
+operator|.
+name|hasMoreWork
+argument_list|()
+operator|&&
+operator|!
+name|work
+operator|.
+name|getPathsToCopyIterator
+argument_list|()
+operator|.
+name|hasNext
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
+name|work
+operator|.
+name|hasBootstrapLoadTasks
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Current incremental dump have tables to be bootstrapped. Switching to bootstrap "
+operator|+
+literal|"mode after applying all events."
+argument_list|)
+expr_stmt|;
+return|return
+name|executeBootStrapLoad
+argument_list|(
+name|driverContext
+argument_list|)
+return|;
+block|}
+block|}
 name|List
 argument_list|<
 name|Task
@@ -2285,7 +2440,7 @@ name|EXECPARALLETHREADNUMBER
 argument_list|)
 decl_stmt|;
 comment|// during incremental we will have no parallelism from replication tasks since they are event based
-comment|// and hence are linear. To achieve prallelism we have to use copy tasks(which have no DAG) for
+comment|// and hence are linear. To achieve parallelism we have to use copy tasks(which have no DAG) for
 comment|// all threads except one, in execution phase.
 name|int
 name|maxTasks
@@ -2300,14 +2455,6 @@ name|ConfVars
 operator|.
 name|REPL_APPROX_MAX_LOAD_TASKS
 argument_list|)
-decl_stmt|;
-name|IncrementalLoadTasksBuilder
-name|builder
-init|=
-name|work
-operator|.
-name|getIncrementalLoadTaskBuilder
-argument_list|()
 decl_stmt|;
 comment|// If the total number of tasks that can be created are less than the parallelism we can achieve
 comment|// do nothing since someone is working on 1950's machine. else try to achieve max parallelism
@@ -2393,8 +2540,6 @@ argument_list|()
 argument_list|,
 name|LOG
 argument_list|,
-name|work
-argument_list|,
 name|trackerForReplIncremental
 argument_list|)
 decl_stmt|;
@@ -2434,7 +2579,9 @@ name|trackerForCopy
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// either the incremental has more work or the external table file copy has more paths to process
+comment|// Either the incremental has more work or the external table file copy has more paths to process.
+comment|// Once all the incremental events are applied and external tables file copies are done, enable
+comment|// bootstrap of tables if exist.
 if|if
 condition|(
 name|builder
@@ -2448,6 +2595,11 @@ name|getPathsToCopyIterator
 argument_list|()
 operator|.
 name|hasNext
+argument_list|()
+operator|||
+name|work
+operator|.
+name|hasBootstrapLoadTasks
 argument_list|()
 condition|)
 block|{

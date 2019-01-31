@@ -163,9 +163,13 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|exec
 operator|.
-name|EximUtil
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
 import|;
 end_import
 
@@ -183,7 +187,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ReplicationSemanticAnalyzer
+name|EximUtil
 import|;
 end_import
 
@@ -290,7 +294,7 @@ name|Path
 argument_list|(
 name|dbDir
 argument_list|,
-name|ReplicationSemanticAnalyzer
+name|ReplUtils
 operator|.
 name|CONSTRAINTS_ROOT_DIR_NAME
 argument_list|)

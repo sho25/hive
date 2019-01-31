@@ -3029,7 +3029,30 @@ literal|"used in conjunction with 'hive.repl.dump.metadata.only' set to false. i
 operator|+
 literal|" is set to true then this config parameter has no effect as external table meta data is flushed \n"
 operator|+
-literal|" always by default."
+literal|" always by default. If this config parameter is enabled on an on-going replication policy which is in\n"
+operator|+
+literal|" incremental phase, then need to set 'hive.repl.bootstrap.external.tables' to true for the first \n"
+operator|+
+literal|" repl dump to bootstrap all external tables."
+argument_list|)
+block|,
+name|REPL_BOOTSTRAP_EXTERNAL_TABLES
+argument_list|(
+literal|"hive.repl.bootstrap.external.tables"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Indicates if repl dump should bootstrap the information about external tables along with incremental \n"
+operator|+
+literal|"dump for replication. It is recommended to keep this config parameter as false always and should be \n"
+operator|+
+literal|"set to true only via WITH clause of REPL DUMP command. It should be used in conjunction with \n"
+operator|+
+literal|"'hive.repl.include.external.tables' when sets to true. If 'hive.repl.include.external.tables' is \n"
+operator|+
+literal|"set to false, then this config parameter has no effect. It should be set to true only once for \n"
+operator|+
+literal|"incremental repl dump on each existing replication policy after enabling external tables replication."
 argument_list|)
 block|,
 name|REPL_ENABLE_MOVE_OPTIMIZATION

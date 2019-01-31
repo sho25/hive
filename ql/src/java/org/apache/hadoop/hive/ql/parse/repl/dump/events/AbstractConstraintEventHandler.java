@@ -132,6 +132,8 @@ name|withinContext
 operator|.
 name|db
 argument_list|,
+literal|true
+argument_list|,
 name|withinContext
 operator|.
 name|hiveConf

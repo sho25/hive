@@ -329,9 +329,13 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|exec
 operator|.
-name|ReplicationSemanticAnalyzer
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
 operator|.
 name|FUNCTIONS_ROOT_DIR_NAME
 import|;
@@ -793,7 +797,7 @@ name|next
 argument_list|()
 decl_stmt|;
 comment|// we want to skip this file, this also means there cant be a table with name represented
-comment|// by constantReplExternalTables.FILE_NAME
+comment|// by constant ReplExternalTables.FILE_NAME
 if|if
 condition|(
 name|next
