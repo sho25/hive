@@ -4532,7 +4532,17 @@ argument_list|,
 name|schema
 argument_list|)
 expr_stmt|;
-comment|// save the optimized sql for the explain
+comment|// save the optimized plan and sql for the explain
+name|plan
+operator|.
+name|setOptimizedCBOPlan
+argument_list|(
+name|ctx
+operator|.
+name|getCalcitePlan
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|plan
 operator|.
 name|setOptimizedQueryString

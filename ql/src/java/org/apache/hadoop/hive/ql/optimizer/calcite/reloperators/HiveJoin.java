@@ -1457,6 +1457,9 @@ condition|?
 literal|"none"
 else|:
 name|joinAlgorithm
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 operator|.
 name|item
@@ -1470,6 +1473,9 @@ condition|?
 literal|"not available"
 else|:
 name|joinCost
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 return|;
 block|}

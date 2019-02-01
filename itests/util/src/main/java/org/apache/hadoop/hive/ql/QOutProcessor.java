@@ -1490,6 +1490,24 @@ literal|"#SPARK_SESSION_ID#:"
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|ppm
+operator|.
+name|add
+argument_list|(
+operator|new
+name|PatternReplacementPair
+argument_list|(
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"rowcount = [0-9]+(\\.[0-9]+(E[0-9]+)?)?, cumulative cost = \\{.*\\}, id = [0-9]*"
+argument_list|)
+argument_list|,
+literal|"rowcount = ###Masked###, cumulative cost = ###Masked###, id = ###Masked###"
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|partialPlanMask
 operator|=
 name|ppm
