@@ -75,7 +75,31 @@ name|java
 operator|.
 name|util
 operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Stack
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|collections
+operator|.
+name|CollectionUtils
 import|;
 end_import
 
@@ -147,7 +171,7 @@ block|{
 comment|// Only specified nodes of these types will be walked.
 comment|// Empty set means all the nodes will be walked.
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|Class
 argument_list|<
@@ -160,14 +184,7 @@ name|nodeTypes
 init|=
 operator|new
 name|HashSet
-argument_list|<
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|Node
-argument_list|>
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 comment|// How many levels of ancestors to keep in the stack during dispatching
@@ -176,7 +193,7 @@ specifier|final
 name|int
 name|numLevels
 decl_stmt|;
-comment|/**    * Constructor with keeping all the ancestors in the operator stack during dispatching.    * @param disp Dispatcher to call for each op encountered    */
+comment|/**    * Constructor with keeping all the ancestors in the operator stack during    * dispatching.    *    * @param disp Dispatcher to call for each op encountered    */
 specifier|public
 name|LevelOrderWalker
 parameter_list|(
@@ -198,7 +215,7 @@ operator|.
 name|MAX_VALUE
 expr_stmt|;
 block|}
-comment|/**    * Constructor with specified number of ancestor levels to keep in the operator    * stack during dispatching.    * @param disp      Dispatcher to call for each op encountered    * @param numLevels Number of ancestor levels    */
+comment|/**    * Constructor with specified number of ancestor levels to keep in the    * operator stack during dispatching.    *    * @param disp Dispatcher to call for each op encountered    * @param numLevels Number of ancestor levels    */
 specifier|public
 name|LevelOrderWalker
 parameter_list|(
@@ -293,7 +310,7 @@ argument_list|)
 expr_stmt|;
 comment|// Starting from the startNodes, add the children whose parents have been
 comment|// included in the list.
-name|HashSet
+name|Set
 argument_list|<
 name|Node
 argument_list|>
@@ -301,27 +318,11 @@ name|addedNodes
 init|=
 operator|new
 name|HashSet
-argument_list|<
-name|Node
-argument_list|>
-argument_list|()
-decl_stmt|;
-for|for
-control|(
-name|Node
-name|node
-range|:
-name|startNodes
-control|)
-block|{
-name|addedNodes
-operator|.
-name|add
+argument_list|<>
 argument_list|(
-name|node
+name|startNodes
 argument_list|)
-expr_stmt|;
-block|}
+decl_stmt|;
 name|int
 name|index
 init|=
@@ -337,8 +338,14 @@ name|size
 argument_list|()
 condition|)
 block|{
-if|if
-condition|(
+name|List
+argument_list|<
+name|?
+extends|extends
+name|Node
+argument_list|>
+name|children
+init|=
 name|toWalk
 operator|.
 name|get
@@ -348,8 +355,15 @@ argument_list|)
 operator|.
 name|getChildren
 argument_list|()
-operator|!=
-literal|null
+decl_stmt|;
+if|if
+condition|(
+name|CollectionUtils
+operator|.
+name|isNotEmpty
+argument_list|(
+name|children
+argument_list|)
 condition|)
 block|{
 for|for
@@ -357,15 +371,7 @@ control|(
 name|Node
 name|child
 range|:
-name|toWalk
-operator|.
-name|get
-argument_list|(
-name|index
-argument_list|)
-operator|.
-name|getChildren
-argument_list|()
+name|children
 control|)
 block|{
 name|Operator
@@ -520,7 +526,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Enumerate numLevels of ancestors by putting them in the stack and dispatch    * the current node.    * @param nd current operator in the ancestor tree    * @param level how many level of ancestors included in the stack    * @param stack operator stack    * @throws SemanticException    */
+comment|/**    * Enumerate numLevels of ancestors by putting them in the stack and dispatch    * the current node.    *    * @param nd current operator in the ancestor tree    * @param level how many level of ancestors included in the stack    * @param stack operator stack    * @throws SemanticException    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -577,14 +583,12 @@ name|level
 operator|>=
 name|numLevels
 operator|||
-name|parents
-operator|==
-literal|null
-operator|||
-name|parents
+name|CollectionUtils
 operator|.
 name|isEmpty
-argument_list|()
+argument_list|(
+name|parents
+argument_list|)
 condition|)
 block|{
 name|dispatch
