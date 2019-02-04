@@ -1216,7 +1216,7 @@ name|trim
 argument_list|()
 return|;
 block|}
-comment|/**    * The suffix is always relative to a given ASTNode    */
+comment|/**    * The suffix is always relative to a given ASTNode.    * We need this so that FileSinkOperatorS corresponding to different branches of a multi-insert    * statement which represents a SQL Merge statement get marked correctly with    * {@link org.apache.hadoop.hive.ql.io.AcidUtils.Operation}.  See usages    * of {@link #getDestNamePrefix(ASTNode, QB)} and    * {@link org.apache.hadoop.hive.ql.parse.SemanticAnalyzer#updating(String)} and    * {@link org.apache.hadoop.hive.ql.parse.SemanticAnalyzer#deleting(String)}.    */
 specifier|public
 name|DestClausePrefix
 name|getDestNamePrefix
@@ -1446,7 +1446,7 @@ return|;
 case|case
 name|MERGE
 case|:
-comment|/* This is the structrue expected here         HiveParser.TOK_QUERY;           HiveParser.TOK_FROM           HiveParser.TOK_INSERT;             HiveParser.TOK_INSERT_INTO;           HiveParser.TOK_INSERT;             HiveParser.TOK_INSERT_INTO;           .....*/
+comment|/* This is the structure expected here         HiveParser.TOK_QUERY;           HiveParser.TOK_FROM           HiveParser.TOK_INSERT;             HiveParser.TOK_INSERT_INTO;           HiveParser.TOK_INSERT;             HiveParser.TOK_INSERT_INTO;           .....*/
 name|ASTNode
 name|insert
 init|=

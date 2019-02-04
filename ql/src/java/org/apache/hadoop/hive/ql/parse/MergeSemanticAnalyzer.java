@@ -434,7 +434,7 @@ literal|"  "
 decl_stmt|;
 specifier|private
 name|IdentifierQuoter
-name|quotedIdenfierHelper
+name|quotedIdentifierHelper
 decl_stmt|;
 comment|/**    * This allows us to take an arbitrary ASTNode and turn it back into SQL that produced it.    * Since HiveLexer.g is written such that it strips away any ` (back ticks) around    * quoted identifiers we need to add those back to generated SQL.    * Additionally, the parser only produces tokens of type Identifier and never    * QuotedIdentifier (HIVE-6013).  So here we just quote all identifiers.    * (') around String literals are retained w/o issues    */
 specifier|private
@@ -600,7 +600,7 @@ name|ASTNode
 name|n
 parameter_list|)
 block|{
-name|quotedIdenfierHelper
+name|quotedIdentifierHelper
 operator|.
 name|visit
 argument_list|(
@@ -643,7 +643,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|quotedIdenfierHelper
+name|quotedIdentifierHelper
 operator|=
 operator|new
 name|IdentifierQuoter
@@ -655,7 +655,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|/*      * See org.apache.hadoop.hive.ql.parse.TestMergeStatement for some examples of the merge AST       For example, given:       MERGE INTO acidTbl USING nonAcidPart2 source ON acidTbl.a = source.a2       WHEN MATCHED THEN UPDATE SET b = source.b2       WHEN NOT MATCHED THEN INSERT VALUES (source.a2, source.b2)        We get AST like this:       "(tok_merge " +         "(tok_tabname acidtbl) (tok_tabref (tok_tabname nonacidpart2) source) " +         "(= (. (tok_table_or_col acidtbl) a) (. (tok_table_or_col source) a2)) " +         "(tok_matched " +         "(tok_update " +         "(tok_set_columns_clause (= (tok_table_or_col b) (. (tok_table_or_col source) b2))))) " +         "(tok_not_matched " +         "tok_insert " +         "(tok_value_row (. (tok_table_or_col source) a2) (. (tok_table_or_col source) b2))))");          And need to produce a multi-insert like this to execute:         FROM acidTbl RIGHT OUTER JOIN nonAcidPart2 ON acidTbl.a = source.a2         INSERT INTO TABLE acidTbl SELECT nonAcidPart2.a2, nonAcidPart2.b2 WHERE acidTbl.a IS null         INSERT INTO TABLE acidTbl SELECT target.ROW__ID, nonAcidPart2.a2, nonAcidPart2.b2         WHERE nonAcidPart2.a2=acidTbl.a SORT BY acidTbl.ROW__ID     */
-comment|/*todo: we need some sort of validation phase over original AST to make things user friendly; for example, if      original command refers to a column that doesn't exist, this will be caught when processing the rewritten query but      the errors will point at locations that the user can't map to anything      - VALUES clause must have the same number of values as target table (including partition cols).  Part cols go last      in Select clause of Insert as Select      todo: do we care to preserve comments in original SQL?      todo: check if identifiers are propertly escaped/quoted in the generated SQL - it's currently inconsistent       Look at UnparseTranslator.addIdentifierTranslation() - it does unescape + unparse...      todo: consider "WHEN NOT MATCHED BY SOURCE THEN UPDATE SET TargetTable.Col1 = SourceTable.Col1 "; what happens when      source is empty?  This should be a runtime error - maybe not the outer side of ROJ is empty => the join produces 0      rows. If supporting WHEN NOT MATCHED BY SOURCE, then this should be a runtime error     */
+comment|/*todo: we need some sort of validation phase over original AST to make things user friendly; for example, if      original command refers to a column that doesn't exist, this will be caught when processing the rewritten query but      the errors will point at locations that the user can't map to anything      - VALUES clause must have the same number of values as target table (including partition cols).  Part cols go last      in Select clause of Insert as Select      todo: do we care to preserve comments in original SQL?      todo: check if identifiers are properly escaped/quoted in the generated SQL - it's currently inconsistent       Look at UnparseTranslator.addIdentifierTranslation() - it does unescape + unparse...      todo: consider "WHEN NOT MATCHED BY SOURCE THEN UPDATE SET TargetTable.Col1 = SourceTable.Col1 "; what happens when      source is empty?  This should be a runtime error - maybe not the outer side of ROJ is empty => the join produces 0      rows. If supporting WHEN NOT MATCHED BY SOURCE, then this should be a runtime error     */
 name|ASTNode
 name|target
 init|=
@@ -981,6 +981,23 @@ operator|+
 literal|" */ "
 expr_stmt|;
 block|}
+specifier|final
+name|boolean
+name|splitUpdateEarly
+init|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|MERGE_SPLIT_UPDATE
+argument_list|)
+decl_stmt|;
 comment|/**      * We allow at most 2 WHEN MATCHED clause, in which case 1 must be Update the other Delete      * If we have both update and delete, the 1st one (in SQL code) must have "AND<extra predicate>"      * so that the 2nd can ensure not to process the same rows.      * Update and Delete may be in any order.  (Insert is always last)      */
 name|String
 name|extraPredicate
@@ -1091,6 +1108,8 @@ condition|?
 literal|null
 else|:
 name|hintStr
+argument_list|,
+name|splitUpdateEarly
 argument_list|)
 decl_stmt|;
 name|hintProcessed
@@ -1143,6 +1162,8 @@ condition|?
 literal|null
 else|:
 name|hintStr
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|hintProcessed
@@ -1324,7 +1345,7 @@ operator|.
 name|MERGE
 argument_list|)
 expr_stmt|;
-comment|//set dest name mapping on new context; 1st chid is TOK_FROM
+comment|//set dest name mapping on new context; 1st child is TOK_FROM
 for|for
 control|(
 name|int
@@ -1400,6 +1421,12 @@ name|HiveParser
 operator|.
 name|TOK_UPDATE
 case|:
+if|if
+condition|(
+operator|!
+name|splitUpdateEarly
+condition|)
+block|{
 name|rewrittenCtx
 operator|.
 name|addDestNamePrefix
@@ -1413,6 +1440,38 @@ operator|.
 name|UPDATE
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|/* With 2 branches for the update, the 1st branch is the INSERT part           and the next one is the DELETE.  WriteSet tracking treats 2 concurrent DELETES           as in conflict so Lost Update is still prevented since the delete event lands in the           partition/bucket where the original version of the row was so any concurrent update/delete           of the same row will land in the same partition/bucket.            If the insert part lands in a different partition, it should not conflict with another           Update of that partition since that update by definition cannot be of the same row.           If we ever enforce unique constraints we may have to have I+I be in conflict*/
+name|rewrittenCtx
+operator|.
+name|addDestNamePrefix
+argument_list|(
+name|insClauseIdx
+argument_list|,
+name|Context
+operator|.
+name|DestClausePrefix
+operator|.
+name|INSERT
+argument_list|)
+expr_stmt|;
+name|rewrittenCtx
+operator|.
+name|addDestNamePrefix
+argument_list|(
+operator|++
+name|insClauseIdx
+argument_list|,
+name|Context
+operator|.
+name|DestClausePrefix
+operator|.
+name|DELETE
+argument_list|)
+expr_stmt|;
+block|}
 break|break;
 case|case
 name|HiveParser
@@ -1615,7 +1674,7 @@ name|rewrittenQueryStr
 operator|.
 name|append
 argument_list|(
-literal|"\nINSERT INTO "
+literal|"INSERT INTO "
 argument_list|)
 operator|.
 name|append
@@ -1916,6 +1975,9 @@ name|deleteExtraPredicate
 parameter_list|,
 name|String
 name|hintStr
+parameter_list|,
+name|boolean
+name|splitUpdateEarly
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -1980,7 +2042,21 @@ name|rewrittenQueryStr
 operator|.
 name|append
 argument_list|(
-literal|"    -- update clause\n SELECT "
+literal|"    -- update clause"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|splitUpdateEarly
+condition|?
+literal|"(insert part)"
+else|:
+literal|""
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|"\n SELECT "
 argument_list|)
 expr_stmt|;
 if|if
@@ -1998,6 +2074,12 @@ name|hintStr
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|splitUpdateEarly
+condition|)
+block|{
 name|rewrittenQueryStr
 operator|.
 name|append
@@ -2007,9 +2089,10 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|".ROW__ID"
+literal|".ROW__ID, "
 argument_list|)
 expr_stmt|;
+block|}
 name|ASTNode
 name|setClause
 init|=
@@ -2027,7 +2110,7 @@ literal|0
 argument_list|)
 decl_stmt|;
 comment|//columns being updated -> update expressions; "setRCols" (last param) is null because we use actual expressions
-comment|//before reparsing, i.e. they are known to SemanticAnalyzer logic
+comment|//before re-parsing, i.e. they are known to SemanticAnalyzer logic
 name|Map
 argument_list|<
 name|String
@@ -2063,11 +2146,38 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+name|nonPartCols
+operator|.
+name|size
+argument_list|()
+condition|;
+name|i
+operator|++
+control|)
+block|{
 name|FieldSchema
 name|fs
-range|:
+init|=
 name|nonPartCols
-control|)
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|i
+operator|>
+literal|0
+condition|)
 block|{
 name|rewrittenQueryStr
 operator|.
@@ -2076,6 +2186,7 @@ argument_list|(
 literal|", "
 argument_list|)
 expr_stmt|;
+block|}
 name|String
 name|name
 init|=
@@ -2268,6 +2379,12 @@ literal|")"
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+operator|!
+name|splitUpdateEarly
+condition|)
+block|{
 name|rewrittenQueryStr
 operator|.
 name|append
@@ -2284,7 +2401,15 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|".ROW__ID \n"
+literal|".ROW__ID "
+argument_list|)
+expr_stmt|;
+block|}
+name|rewrittenQueryStr
+operator|.
+name|append
+argument_list|(
+literal|"\n"
 argument_list|)
 expr_stmt|;
 name|setUpAccessControlInfoForUpdate
@@ -2295,8 +2420,34 @@ name|setColsExprs
 argument_list|)
 expr_stmt|;
 comment|//we don't deal with columns on RHS of SET expression since the whole expr is part of the
-comment|//rewritten SQL statement and is thus handled by SemanticAnalzyer.  Nor do we have to
+comment|//rewritten SQL statement and is thus handled by SemanticAnalyzer.  Nor do we have to
 comment|//figure which cols on RHS are from source and which from target
+if|if
+condition|(
+name|splitUpdateEarly
+condition|)
+block|{
+comment|/**        * this is part of the WHEN MATCHED UPDATE, so we ignore any 'extra predicate' generated        * by this call to handleDelete()        */
+name|handleDelete
+argument_list|(
+name|whenMatchedUpdateClause
+argument_list|,
+name|rewrittenQueryStr
+argument_list|,
+name|target
+argument_list|,
+name|onClauseAsString
+argument_list|,
+name|targetTable
+argument_list|,
+name|deleteExtraPredicate
+argument_list|,
+name|hintStr
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|extraPredicate
 return|;
@@ -2326,6 +2477,9 @@ name|updateExtraPredicate
 parameter_list|,
 name|String
 name|hintStr
+parameter_list|,
+name|boolean
+name|splitUpdateEarly
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -2341,6 +2495,22 @@ operator|.
 name|TOK_MATCHED
 assert|;
 assert|assert
+operator|(
+name|splitUpdateEarly
+operator|&&
+name|getWhenClauseOperation
+argument_list|(
+name|whenMatchedDeleteClause
+argument_list|)
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|HiveParser
+operator|.
+name|TOK_UPDATE
+operator|)
+operator|||
 name|getWhenClauseOperation
 argument_list|(
 name|whenMatchedDeleteClause
@@ -2394,6 +2564,21 @@ argument_list|,
 name|rewrittenQueryStr
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|splitUpdateEarly
+condition|)
+block|{
+name|rewrittenQueryStr
+operator|.
+name|append
+argument_list|(
+literal|"    -- update clause (delete part)\n SELECT "
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|rewrittenQueryStr
 operator|.
 name|append
@@ -2401,6 +2586,7 @@ argument_list|(
 literal|"    -- delete clause\n SELECT "
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|hintStr
@@ -3252,13 +3438,15 @@ argument_list|)
 operator|)
 argument_list|)
 argument_list|)
+expr_stmt|;
+block|}
+name|rewrittenQueryStr
 operator|.
 name|append
 argument_list|(
 literal|'\n'
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 specifier|private
 name|String

@@ -10069,6 +10069,21 @@ operator|+
 literal|"table there is at most 1 matching row in the source table per SQL Specification."
 argument_list|)
 block|,
+name|MERGE_SPLIT_UPDATE
+argument_list|(
+literal|"hive.merge.split.update"
+argument_list|,
+literal|false
+argument_list|,
+literal|"If true, SQL Merge statement will handle WHEN MATCHED UPDATE by splitting it into 2\n"
+operator|+
+literal|"branches of a multi-insert, representing delete of existing row and an insert of\n"
+operator|+
+literal|"the new version of the row.  Updating bucketing and partitioning columns should\n"
+operator|+
+literal|"only be permitted if this is true."
+argument_list|)
+block|,
 name|OPTIMIZE_ACID_META_COLUMNS
 argument_list|(
 literal|"hive.optimize.acid.meta.columns"

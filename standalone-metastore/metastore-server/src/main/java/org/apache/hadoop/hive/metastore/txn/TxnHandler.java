@@ -6361,8 +6361,14 @@ operator|+
 name|txnid
 operator|+
 comment|//and LHS only has committed txns
-comment|//U+U and U+D is a conflict but D+D is not and we don't currently track I in WRITE_SET at all
-literal|" and (committed.ws_operation_type="
+comment|//U+U and U+D and D+D is a conflict and we don't currently track I in WRITE_SET at all
+comment|//it may seem like D+D should not be in conflict but consider 2 multi-stmt txns
+comment|//where each does "delete X + insert X, where X is a row with the same PK.  This is
+comment|//equivalent to an update of X but won't be in conflict unless D+D is in conflict.
+comment|//The same happens when Hive splits U=I+D early so it looks like 2 branches of a
+comment|//multi-insert stmt (an Insert and a Delete branch).  It also 'feels'
+comment|// un-serializable to allow concurrent deletes
+literal|" and (committed.ws_operation_type IN("
 operator|+
 name|quoteChar
 argument_list|(
@@ -6373,7 +6379,18 @@ operator|.
 name|sqlConst
 argument_list|)
 operator|+
-literal|" OR cur.ws_operation_type="
+literal|", "
+operator|+
+name|quoteChar
+argument_list|(
+name|OperationType
+operator|.
+name|DELETE
+operator|.
+name|sqlConst
+argument_list|)
+operator|+
+literal|") AND cur.ws_operation_type IN("
 operator|+
 name|quoteChar
 argument_list|(
@@ -6384,7 +6401,18 @@ operator|.
 name|sqlConst
 argument_list|)
 operator|+
-literal|")"
+literal|", "
+operator|+
+name|quoteChar
+argument_list|(
+name|OperationType
+operator|.
+name|DELETE
+operator|.
+name|sqlConst
+argument_list|)
+operator|+
+literal|"))"
 argument_list|)
 argument_list|)
 expr_stmt|;

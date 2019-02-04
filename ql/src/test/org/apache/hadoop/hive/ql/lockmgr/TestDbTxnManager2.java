@@ -517,6 +517,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|ComparisonFailure
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -13261,7 +13271,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Concurrent delete/detele of same partition - should pass    */
+comment|/**    * Concurrent delete/delete of same partition - should NOT pass    */
 annotation|@
 name|Test
 specifier|public
@@ -13845,68 +13855,54 @@ argument_list|(
 name|adp
 argument_list|)
 expr_stmt|;
+name|LockException
+name|expectedException
+init|=
+literal|null
+decl_stmt|;
+try|try
+block|{
 name|txnMgr
 operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
 comment|//"select * from tab1" txn
+block|}
+catch|catch
+parameter_list|(
+name|LockException
+name|ex
+parameter_list|)
+block|{
+name|expectedException
+operator|=
+name|ex
+expr_stmt|;
+block|}
 name|Assert
 operator|.
-name|assertEquals
+name|assertNotNull
 argument_list|(
-literal|"WRITE_SET mismatch: "
-operator|+
-name|TxnDbUtil
-operator|.
-name|queryToString
-argument_list|(
-name|conf
+literal|"Didn't get expected d/d conflict"
 argument_list|,
-literal|"select * from WRITE_SET"
-argument_list|)
-argument_list|,
-literal|1
-argument_list|,
-name|TxnDbUtil
-operator|.
-name|countQueryAgent
-argument_list|(
-name|conf
-argument_list|,
-literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
-operator|+
-name|txnIdDelete
-argument_list|)
+name|expectedException
 argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"WRITE_SET mismatch: "
+literal|"Transaction manager has aborted the transaction txnid:5.  "
 operator|+
-name|TxnDbUtil
-operator|.
-name|queryToString
-argument_list|(
-name|conf
-argument_list|,
-literal|"select * from WRITE_SET"
-argument_list|)
-argument_list|,
-literal|1
-argument_list|,
-name|TxnDbUtil
-operator|.
-name|countQueryAgent
-argument_list|(
-name|conf
-argument_list|,
-literal|"select count(*) from WRITE_SET where ws_partition='p=two' and ws_operation_type='d' and ws_table='tab1' and ws_txnid="
+literal|"Reason: Aborting [txnid:5,5] due to a write conflict on default/tab1/p=two "
 operator|+
-name|txnIdSelect
-argument_list|)
+literal|"committed by [txnid:4,5] d/d"
+argument_list|,
+name|expectedException
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -13953,7 +13949,7 @@ argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
-literal|1
+literal|0
 argument_list|,
 name|TxnDbUtil
 operator|.
@@ -13982,7 +13978,7 @@ argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
-literal|4
+literal|3
 argument_list|,
 name|TxnDbUtil
 operator|.
@@ -14734,8 +14730,8 @@ name|run
 argument_list|(
 literal|"insert into source2 values "
 operator|+
-comment|//cc ? -:U-(1/2)     D-(1/2)         cc ? U-(1/3):-             D-(2/2)       I-(1/1) - new part 2
-literal|"(9,100,1,2),      (3,4,1,2),               (5,13,1,3),       (7,8,2,2), (14,15,2,1)"
+comment|//cc ? -:U-(1/2)     D-(1/2)         cc ? U-(1/3):-       D-(2/2)       I-(1/1) - new part 2
+literal|"(9,100,1,2),      (3,4,1,2),         (5,13,1,3),       (7,8,2,2), (14,15,2,1)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -14943,9 +14939,19 @@ operator|+
 literal|" then update set b=s.b "
 operator|+
 comment|//if conflict updates p=1/q=3 else update p=1/q=2
-literal|"when matched and t.a in (3,7) then delete "
+literal|"when matched and t.a in ("
 operator|+
-comment|//deletes from p=1/q=2, p=2/q=2
+operator|(
+name|cc
+condition|?
+literal|"3,7"
+else|:
+literal|"11, 13"
+operator|)
+operator|+
+literal|") then delete "
+operator|+
+comment|//if cc deletes from p=1/q=2, p=2/q=2, else delete nothing
 literal|"when not matched and t.a>= 8 then insert values(s.a, s.b, s.p, s.q)"
 argument_list|,
 literal|true
@@ -15830,6 +15836,11 @@ argument_list|(
 name|adp
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|cc
+condition|)
+block|{
 name|adp
 operator|=
 operator|new
@@ -15870,6 +15881,7 @@ argument_list|(
 name|adp
 argument_list|)
 expr_stmt|;
+block|}
 name|adp
 operator|=
 operator|new
@@ -15976,7 +15988,13 @@ argument_list|,
 literal|"select * from TXN_COMPONENTS"
 argument_list|)
 argument_list|,
+operator|(
+name|cc
+condition|?
 literal|2
+else|:
+literal|0
+operator|)
 argument_list|,
 name|TxnDbUtil
 operator|.
@@ -16071,6 +16089,8 @@ argument_list|,
 name|expectedException
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|Assert
 operator|.
 name|assertEquals
@@ -16087,6 +16107,32 @@ name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|ComparisonFailure
+name|ex
+parameter_list|)
+block|{
+comment|//the 2 txns have 2 conflicts between them so check for either failure since which one is
+comment|//reported (among the 2) is not deterministic
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Transaction manager has aborted the transaction txnid:11.  Reason: "
+operator|+
+literal|"Aborting [txnid:11,11] due to a write conflict on default/target/p=1/q=2 "
+operator|+
+literal|"committed by [txnid:10,11] d/d"
+argument_list|,
+name|expectedException
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -16201,7 +16247,7 @@ argument_list|,
 literal|"select * from COMPLETED_TXN_COMPONENTS"
 argument_list|)
 argument_list|,
-literal|6
+literal|4
 argument_list|,
 name|TxnDbUtil
 operator|.
@@ -16279,7 +16325,7 @@ argument_list|,
 literal|"select * from WRITE_SET"
 argument_list|)
 argument_list|,
-literal|2
+literal|0
 argument_list|,
 name|TxnDbUtil
 operator|.

@@ -48949,6 +48949,28 @@ name|output
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+operator|(
+operator|(
+name|this
+operator|instanceof
+name|MergeSemanticAnalyzer
+operator|)
+operator|&&
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|MERGE_SPLIT_UPDATE
+argument_list|)
+operator|)
+condition|)
+block|{
+comment|/**            * Merge stmt with early split update may create several (2) writes to the same            * table with the same {@link WriteType}, e.g. if original Merge stmt has both update and            * delete clauses, and update is split into insert + delete, in which case it's not an            * error*/
 throw|throw
 operator|new
 name|SemanticException
@@ -48966,6 +48988,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 if|if

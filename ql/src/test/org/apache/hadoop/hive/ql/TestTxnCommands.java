@@ -7789,6 +7789,7 @@ operator|+
 name|sb
 argument_list|)
 expr_stmt|;
+comment|/*      Edges:      Reducer 2<- Map 1 (SIMPLE_EDGE), Map 8 (SIMPLE_EDGE)      Reducer 3<- Reducer 2 (SIMPLE_EDGE)      Reducer 4<- Reducer 2 (SIMPLE_EDGE)      Reducer 5<- Reducer 2 (CUSTOM_SIMPLE_EDGE)      Reducer 6<- Reducer 2 (SIMPLE_EDGE)      Reducer 7<- Reducer 2 (CUSTOM_SIMPLE_EDGE)      */
 for|for
 control|(
 name|int
@@ -7854,7 +7855,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 2<- Map 1 (SIMPLE_EDGE), Map 7 (SIMPLE_EDGE)"
+literal|"Reducer 2<- Map 1 (SIMPLE_EDGE), Map 8 (SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7962,7 +7963,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 5<- Reducer 2 (SIMPLE_EDGE)"
+literal|"Reducer 5<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -7998,7 +7999,43 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 6<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
+literal|"Reducer 6<- Reducer 2 (SIMPLE_EDGE)"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertTrue
+argument_list|(
+literal|"At i+1="
+operator|+
+operator|(
+name|i
+operator|+
+literal|5
+operator|)
+operator|+
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|5
+argument_list|)
+argument_list|,
+name|explain
+operator|.
+name|get
+argument_list|(
+name|i
+operator|+
+literal|6
+argument_list|)
+operator|.
+name|contains
+argument_list|(
+literal|"Reducer 7<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;

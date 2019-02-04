@@ -1285,7 +1285,7 @@ comment|//input.noLockNeeded()?
 block|}
 block|}
 block|}
-comment|/**    *  For updates, we need to set the column access info so that it contains information on    *  the columns we are updating.    *  (But not all the columns of the target table even though the rewritten query writes    *  all columns of target table since that is an implmentation detail).    */
+comment|/**    *  For updates, we need to set the column access info so that it contains information on    *  the columns we are updating.    *  (But not all the columns of the target table even though the rewritten query writes    *  all columns of target table since that is an implementation detail).    */
 specifier|protected
 name|void
 name|setUpAccessControlInfoForUpdate
