@@ -1205,11 +1205,6 @@ argument_list|(
 name|client
 argument_list|)
 operator|.
-name|setSessionHandle
-argument_list|(
-name|sessHandle
-argument_list|)
-operator|.
 name|setStmtHandle
 argument_list|(
 name|stmtHandle
@@ -1285,11 +1280,6 @@ operator|.
 name|setClient
 argument_list|(
 name|client
-argument_list|)
-operator|.
-name|setSessionHandle
-argument_list|(
-name|sessHandle
 argument_list|)
 operator|.
 name|setStmtHandle
