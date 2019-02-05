@@ -9912,6 +9912,38 @@ argument_list|,
 literal|"Whether the compactor should compact insert-only tables. A safety switch."
 argument_list|)
 block|,
+name|COMPACTOR_CRUD_QUERY_BASED
+argument_list|(
+literal|"hive.compactor.crud.query.based"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Means Major compaction on full CRUD tables is done as a query, "
+operator|+
+literal|"and minor compaction will be disabled."
+argument_list|)
+block|,
+name|SPLIT_GROUPING_MODE
+argument_list|(
+literal|"hive.split.grouping.mode"
+argument_list|,
+literal|"query"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"query"
+argument_list|,
+literal|"compactor"
+argument_list|)
+argument_list|,
+literal|"This is set to compactor from within the query based compactor. This enables the Tez SplitGrouper "
+operator|+
+literal|"to group splits based on their bucket number, so that all rows from different bucket files "
+operator|+
+literal|" for the same bucket number can end up in the same bucket file after the compaction."
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_HISTORY_RETENTION_SUCCEEDED      */
 annotation|@
 name|Deprecated

@@ -3627,6 +3627,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"validate_acid_sort_order"
+argument_list|,
+name|GenericUDFValidateAcidSortOrder
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 name|UNARY_PLUS_FUNC_NAME
 argument_list|,
 name|GenericUDFOPPositive

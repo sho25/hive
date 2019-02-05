@@ -766,6 +766,47 @@ range|:
 name|potentials
 control|)
 block|{
+comment|// Disable minor compaction for query based compactor
+if|if
+condition|(
+operator|!
+name|ci
+operator|.
+name|isMajorCompaction
+argument_list|()
+operator|&&
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|COMPACTOR_CRUD_QUERY_BASED
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Not compacting: "
+operator|+
+name|ci
+operator|.
+name|getFullPartitionName
+argument_list|()
+operator|+
+literal|", as query based compaction currently does not "
+operator|+
+literal|"support minor compactions."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 name|LOG
 operator|.
 name|info

@@ -5612,21 +5612,6 @@ name|conf
 argument_list|)
 argument_list|)
 decl_stmt|;
-assert|assert
-name|pd
-operator|.
-name|getMinWriteId
-argument_list|()
-operator|==
-name|pd
-operator|.
-name|getMaxWriteId
-argument_list|()
-operator|:
-literal|"This a delta with raw non acid schema, must be result of single write, no compaction: "
-operator|+
-name|splitPath
-assert|;
 return|return
 operator|new
 name|TransactionMetaData

@@ -7801,9 +7801,11 @@ operator|.
 name|HIVE_TRANSACTIONAL_TABLE_SCAN
 argument_list|)
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|int
 name|propInt
 init|=
@@ -7828,9 +7830,11 @@ operator|==
 operator|-
 literal|1
 condition|)
+block|{
 return|return
 literal|true
 return|;
+block|}
 name|AcidOperationalProperties
 name|props
 init|=
