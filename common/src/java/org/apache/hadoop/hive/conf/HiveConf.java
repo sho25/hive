@@ -12767,6 +12767,36 @@ operator|+
 literal|"(memberOf=CN=Administrators,CN=Builtin,DC=domain,DC=com))))"
 argument_list|)
 block|,
+name|HIVE_SERVER2_PLAIN_LDAP_BIND_USER
+argument_list|(
+literal|"hive.server2.authentication.ldap.binddn"
+argument_list|,
+literal|null
+argument_list|,
+literal|"The user with which to bind to the LDAP server, and search for the full domain name "
+operator|+
+literal|"of the user being authenticated.\n"
+operator|+
+literal|"This should be the full domain name of the user, and should have search access across all "
+operator|+
+literal|"users in the LDAP tree.\n"
+operator|+
+literal|"If not specified, then the user being authenticated will be used as the bind user.\n"
+operator|+
+literal|"For example: CN=bindUser,CN=Users,DC=subdomain,DC=domain,DC=com"
+argument_list|)
+block|,
+name|HIVE_SERVER2_PLAIN_LDAP_BIND_PASSWORD
+argument_list|(
+literal|"hive.server2.authentication.ldap.bindpw"
+argument_list|,
+literal|null
+argument_list|,
+literal|"The password for the bind user, to be used to search for the full name of the user being authenticated.\n"
+operator|+
+literal|"If the username is specified, this parameter must also be specified."
+argument_list|)
+block|,
 name|HIVE_SERVER2_CUSTOM_AUTHENTICATION_CLASS
 argument_list|(
 literal|"hive.server2.custom.authentication.class"
