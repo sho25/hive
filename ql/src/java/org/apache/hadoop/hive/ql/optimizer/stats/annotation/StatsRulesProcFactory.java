@@ -4146,8 +4146,9 @@ block|{
 name|byte
 name|value
 init|=
-operator|new
 name|Byte
+operator|.
+name|parseByte
 argument_list|(
 name|stringVal
 argument_list|)
@@ -6200,8 +6201,9 @@ block|{
 name|byte
 name|value
 init|=
-operator|new
 name|Byte
+operator|.
+name|parseByte
 argument_list|(
 name|boundValue
 argument_list|)

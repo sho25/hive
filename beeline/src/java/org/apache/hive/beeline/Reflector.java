@@ -584,8 +584,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.

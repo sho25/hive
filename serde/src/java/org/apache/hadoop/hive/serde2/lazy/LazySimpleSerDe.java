@@ -1953,8 +1953,9 @@ name|writePrimitiveUTF8
 argument_list|(
 name|out
 argument_list|,
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 name|uoi
 operator|.

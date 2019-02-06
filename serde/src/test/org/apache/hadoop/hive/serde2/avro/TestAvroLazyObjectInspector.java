@@ -244,8 +244,9 @@ name|getLazyStringObjectInspector
 argument_list|(
 literal|false
 argument_list|,
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte
@@ -395,8 +396,9 @@ name|getLazyStringObjectInspector
 argument_list|(
 literal|false
 argument_list|,
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|byte

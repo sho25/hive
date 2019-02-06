@@ -920,8 +920,9 @@ init|=
 operator|new
 name|DeferredJavaObject
 argument_list|(
-operator|new
 name|Byte
+operator|.
+name|valueOf
 argument_list|(
 literal|"4"
 argument_list|)
