@@ -7426,12 +7426,7 @@ name|findOriginals
 argument_list|(
 name|fs
 argument_list|,
-name|fs
-operator|.
-name|getFileStatus
-argument_list|(
 name|dir
-argument_list|)
 argument_list|,
 name|originals
 argument_list|,

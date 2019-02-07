@@ -897,7 +897,7 @@ init|=
 operator|new
 name|Path
 argument_list|(
-literal|"/tmp/tbl"
+literal|"mock:/tmp/"
 argument_list|)
 decl_stmt|;
 name|AcidOutputFormat
@@ -1829,7 +1829,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -1859,9 +1859,6 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -1876,9 +1873,6 @@ name|get
 argument_list|(
 literal|1
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -2337,7 +2331,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -2367,9 +2361,6 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -2384,9 +2375,6 @@ name|get
 argument_list|(
 literal|1
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -2403,9 +2391,6 @@ argument_list|(
 literal|2
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -2421,9 +2406,6 @@ argument_list|(
 literal|3
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -2438,9 +2420,6 @@ name|get
 argument_list|(
 literal|4
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -2681,7 +2660,7 @@ decl_stmt|;
 comment|// Obsolete list should include the two original bucket files, and the old base dir
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -2710,9 +2689,6 @@ name|get
 argument_list|(
 literal|0
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -2939,7 +2915,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -2969,9 +2945,6 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -2986,9 +2959,6 @@ name|get
 argument_list|(
 literal|1
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -3354,7 +3324,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -3384,9 +3354,6 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -3401,9 +3368,6 @@ name|get
 argument_list|(
 literal|1
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -3420,9 +3384,6 @@ argument_list|(
 literal|2
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -3438,9 +3399,6 @@ argument_list|(
 literal|3
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -3455,9 +3413,6 @@ name|get
 argument_list|(
 literal|4
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -4607,7 +4562,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -4637,9 +4592,6 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -4654,9 +4606,6 @@ name|get
 argument_list|(
 literal|1
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -4673,9 +4622,6 @@ argument_list|(
 literal|2
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -4690,9 +4636,6 @@ name|get
 argument_list|(
 literal|3
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -4709,9 +4652,6 @@ argument_list|(
 literal|4
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -4727,9 +4667,6 @@ argument_list|(
 literal|5
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -4744,9 +4681,6 @@ name|get
 argument_list|(
 literal|6
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -5096,7 +5030,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -5126,9 +5060,6 @@ argument_list|(
 literal|0
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -5144,9 +5075,6 @@ argument_list|(
 literal|1
 argument_list|)
 operator|.
-name|getPath
-argument_list|()
-operator|.
 name|toString
 argument_list|()
 argument_list|)
@@ -5161,9 +5089,6 @@ name|get
 argument_list|(
 literal|2
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()
@@ -5450,7 +5375,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsolete
 init|=
@@ -5479,9 +5404,6 @@ name|get
 argument_list|(
 literal|0
 argument_list|)
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|toString
 argument_list|()

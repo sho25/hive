@@ -1378,7 +1378,7 @@ argument_list|)
 decl_stmt|;
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
 name|obsoleteDirs
 init|=
@@ -1425,7 +1425,7 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|FileStatus
+name|Path
 name|stat
 range|:
 name|obsoleteDirs
@@ -1436,9 +1436,6 @@ operator|.
 name|add
 argument_list|(
 name|stat
-operator|.
-name|getPath
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|extraDebugInfo
@@ -1446,9 +1443,6 @@ operator|.
 name|append
 argument_list|(
 name|stat
-operator|.
-name|getPath
-argument_list|()
 operator|.
 name|getName
 argument_list|()
@@ -1467,9 +1461,6 @@ operator|.
 name|isPathWithinSubtree
 argument_list|(
 name|stat
-operator|.
-name|getPath
-argument_list|()
 argument_list|,
 name|locPath
 argument_list|)
@@ -1487,9 +1478,6 @@ operator|+
 literal|" found unexpected file: "
 operator|+
 name|stat
-operator|.
-name|getPath
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

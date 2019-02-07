@@ -2639,7 +2639,7 @@ name|gatherStats
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    *     * @param conf    * @param t    * @param p    * @param sd (this is the resolved StorageDescriptor, i.e. resolved to table or partition)    * @param writeIds (valid write ids used to filter rows while they're being read for compaction)    * @param ci    * @throws IOException    */
+comment|/**    * @param sd (this is the resolved StorageDescriptor, i.e. resolved to table or partition)    * @param writeIds (valid write ids used to filter rows while they're being read for compaction)    * @throws IOException    */
 specifier|private
 name|void
 name|runCrudCompaction
@@ -3699,7 +3699,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Note on ordering of rows in the temp table:    * We need each final bucket file soreted by original write id (ascending), bucket (ascending) and row id (ascending).     * (current write id will be the same as original write id).     * We will be achieving the ordering via a custom split grouper for compactor.    * See {@link org.apache.hadoop.hive.conf.HiveConf.ConfVars.SPLIT_GROUPING_MODE} for the config description.    * See {@link org.apache.hadoop.hive.ql.exec.tez.SplitGrouper#getCompactorGroups} for details on the mechanism.    */
+comment|/**    * Note on ordering of rows in the temp table:    * We need each final bucket file soreted by original write id (ascending), bucket (ascending) and row id (ascending).     * (current write id will be the same as original write id).     * We will be achieving the ordering via a custom split grouper for compactor.    * See {@link org.apache.hadoop.hive.conf.HiveConf.ConfVars#SPLIT_GROUPING_MODE} for the config description.    * See {@link org.apache.hadoop.hive.ql.exec.tez.SplitGrouper#getCompactorSplitGroups(InputSplit[], Configuration)}    *  for details on the mechanism.    */
 specifier|private
 name|String
 name|buildCrudMajorCompactionCreateTableQuery
@@ -4081,7 +4081,7 @@ return|return
 name|query
 return|;
 block|}
-comment|/**    * Move and rename bucket files from the temp table (tmpTableName), to the new base path under the source table/ptn.    * Since the temp table is a non-transactional table, it has file names in the "original" format.    * Also, due to split grouping in {@link org.apache.hadoop.hive.ql.exec.tez.SplitGrouper#getCompactorGroups},     * we will end up with one file per bucket.    */
+comment|/**    * Move and rename bucket files from the temp table (tmpTableName), to the new base path under the source table/ptn.    * Since the temp table is a non-transactional table, it has file names in the "original" format.    * Also, due to split grouping in    * {@link org.apache.hadoop.hive.ql.exec.tez.SplitGrouper#getCompactorSplitGroups(InputSplit[], Configuration)},    * we will end up with one file per bucket.    */
 specifier|private
 name|void
 name|commitCrudMajorCompaction
@@ -6110,50 +6110,15 @@ block|{
 comment|// For MM table, we only want to delete delta dirs for aborted txns.
 name|List
 argument_list|<
-name|FileStatus
+name|Path
 argument_list|>
-name|abortedDirs
+name|filesToDelete
 init|=
 name|dir
 operator|.
 name|getAbortedDirectories
 argument_list|()
 decl_stmt|;
-name|List
-argument_list|<
-name|Path
-argument_list|>
-name|filesToDelete
-init|=
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|abortedDirs
-operator|.
-name|size
-argument_list|()
-argument_list|)
-decl_stmt|;
-for|for
-control|(
-name|FileStatus
-name|stat
-range|:
-name|abortedDirs
-control|)
-block|{
-name|filesToDelete
-operator|.
-name|add
-argument_list|(
-name|stat
-operator|.
-name|getPath
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 if|if
 condition|(
 name|filesToDelete

@@ -4909,6 +4909,8 @@ operator|new
 name|ReaderKey
 argument_list|()
 decl_stmt|;
+comment|//todo: only need to know isRawFormat if compacting for acid V2 and V2 should normally run
+comment|//in vectorized mode - i.e. this is not a significant perf overhead vs ParsedDeltaLight
 name|AcidUtils
 operator|.
 name|ParsedDelta
@@ -5591,25 +5593,16 @@ else|else
 block|{
 name|AcidUtils
 operator|.
-name|ParsedDelta
+name|ParsedDeltaLight
 name|pd
 init|=
 name|AcidUtils
 operator|.
-name|parsedDelta
+name|ParsedDeltaLight
+operator|.
+name|parse
 argument_list|(
 name|parent
-argument_list|,
-name|AcidUtils
-operator|.
-name|DELTA_PREFIX
-argument_list|,
-name|parent
-operator|.
-name|getFileSystem
-argument_list|(
-name|conf
-argument_list|)
 argument_list|)
 decl_stmt|;
 return|return

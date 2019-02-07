@@ -4897,7 +4897,7 @@ argument_list|)
 operator|.
 name|maximumWriteId
 argument_list|(
-literal|1
+literal|2
 argument_list|)
 operator|.
 name|finalDestination
@@ -4906,7 +4906,7 @@ name|root
 argument_list|)
 decl_stmt|;
 name|Path
-name|delta1_1_0
+name|delta1_2_0
 init|=
 operator|new
 name|Path
@@ -4941,7 +4941,7 @@ name|AcidUtils
 operator|.
 name|createBucketFile
 argument_list|(
-name|delta1_1_0
+name|delta1_2_0
 argument_list|,
 name|BUCKET
 argument_list|)
