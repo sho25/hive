@@ -14759,11 +14759,14 @@ name|NoSuchObjectException
 throws|,
 name|MetaException
 block|{
+comment|// HIVE-20776 causes view access regression
+comment|// Therefore, do not do filtering here. Call following function only to check
+comment|// if dbName and tblName is valid
 name|FilterUtils
 operator|.
 name|checkDbAndTableFilters
 argument_list|(
-name|isClientFilterEnabled
+literal|false
 argument_list|,
 name|filterHook
 argument_list|,

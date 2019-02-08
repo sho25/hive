@@ -1580,7 +1580,9 @@ literal|true
 argument_list|)
 expr_stmt|;
 name|testFilterForPartition
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Disable filtering at HMS client    * By default, the HMS server side filtering is diabled, so we can see HMS client filtering behavior    * @throws Exception    */
@@ -1821,7 +1823,9 @@ literal|false
 argument_list|)
 expr_stmt|;
 name|testFilterForPartition
-argument_list|()
+argument_list|(
+literal|false
+argument_list|)
 expr_stmt|;
 block|}
 specifier|protected
@@ -2010,7 +2014,10 @@ block|}
 specifier|protected
 name|void
 name|testFilterForPartition
-parameter_list|()
+parameter_list|(
+name|boolean
+name|filterAtServer
+parameter_list|)
 throws|throws
 name|Exception
 block|{
@@ -2044,6 +2051,13 @@ parameter_list|)
 block|{
 comment|// Excepted
 block|}
+if|if
+condition|(
+name|filterAtServer
+condition|)
+block|{
+comment|// at HMS server, the table of the partitions should be filtered out and result in
+comment|// NoSuchObjectException
 try|try
 block|{
 name|client
@@ -2065,6 +2079,11 @@ operator|.
 name|size
 argument_list|()
 expr_stmt|;
+name|fail
+argument_list|(
+literal|"getPartitionsByNames() should fail with blocking mode at server side"
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -2073,6 +2092,36 @@ name|e
 parameter_list|)
 block|{
 comment|// Excepted
+block|}
+block|}
+else|else
+block|{
+comment|// at HMS client, we cannot filter the table of the partitions due to
+comment|// HIVE-21227: HIVE-20776 causes view access regression
+name|assertEquals
+argument_list|(
+literal|0
+argument_list|,
+name|client
+operator|.
+name|getPartitionsByNames
+argument_list|(
+name|DBNAME1
+argument_list|,
+name|TAB2
+argument_list|,
+name|Lists
+operator|.
+name|newArrayList
+argument_list|(
+literal|"name=value1"
+argument_list|)
+argument_list|)
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 block|}
