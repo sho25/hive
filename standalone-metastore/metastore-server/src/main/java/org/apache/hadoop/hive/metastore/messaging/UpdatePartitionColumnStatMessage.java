@@ -107,12 +107,6 @@ parameter_list|()
 function_decl|;
 specifier|public
 specifier|abstract
-name|String
-name|getValidWriteIds
-parameter_list|()
-function_decl|;
-specifier|public
-specifier|abstract
 name|Long
 name|getWriteId
 parameter_list|()

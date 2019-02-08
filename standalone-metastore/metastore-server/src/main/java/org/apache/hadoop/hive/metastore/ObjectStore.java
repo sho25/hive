@@ -74265,8 +74265,6 @@ block|{
 return|return
 name|isCurrentStatsValidForTheQuery
 argument_list|(
-name|conf
-argument_list|,
 name|tbl
 operator|.
 name|getParameters
@@ -74303,8 +74301,6 @@ block|{
 return|return
 name|isCurrentStatsValidForTheQuery
 argument_list|(
-name|conf
-argument_list|,
 name|part
 operator|.
 name|getParameters
@@ -74343,8 +74339,6 @@ block|{
 return|return
 name|isCurrentStatsValidForTheQuery
 argument_list|(
-name|conf
-argument_list|,
 name|part
 operator|.
 name|getParameters
@@ -74364,9 +74358,6 @@ specifier|static
 name|boolean
 name|isCurrentStatsValidForTheQuery
 parameter_list|(
-name|Configuration
-name|conf
-parameter_list|,
 name|Map
 argument_list|<
 name|String

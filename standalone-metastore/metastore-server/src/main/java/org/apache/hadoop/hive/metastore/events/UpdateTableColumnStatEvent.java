@@ -143,10 +143,6 @@ name|ColumnStatistics
 name|colStats
 decl_stmt|;
 specifier|private
-name|String
-name|validWriteIds
-decl_stmt|;
-specifier|private
 name|long
 name|writeId
 decl_stmt|;
@@ -163,7 +159,7 @@ specifier|private
 name|Table
 name|tableObj
 decl_stmt|;
-comment|/**    * @param colStats Columns statistics Info.    * @param parameters table parameters to be updated after stats are updated.    * @param validWriteIds valid write id list for the query.    * @param colStats writeId for the query.    * @param handler handler that is firing the event    */
+comment|/**    * @param colStats Columns statistics Info.    * @param tableObj table object    * @param parameters table parameters to be updated after stats are updated.    * @param writeId writeId for the query.    * @param handler handler that is firing the event    */
 specifier|public
 name|UpdateTableColumnStatEvent
 parameter_list|(
@@ -180,9 +176,6 @@ argument_list|,
 name|String
 argument_list|>
 name|parameters
-parameter_list|,
-name|String
-name|validWriteIds
 parameter_list|,
 name|long
 name|writeId
@@ -203,12 +196,6 @@ operator|.
 name|colStats
 operator|=
 name|colStats
-expr_stmt|;
-name|this
-operator|.
-name|validWriteIds
-operator|=
-name|validWriteIds
 expr_stmt|;
 name|this
 operator|.
@@ -255,12 +242,6 @@ name|colStats
 expr_stmt|;
 name|this
 operator|.
-name|validWriteIds
-operator|=
-literal|null
-expr_stmt|;
-name|this
-operator|.
 name|writeId
 operator|=
 literal|0
@@ -285,15 +266,6 @@ parameter_list|()
 block|{
 return|return
 name|colStats
-return|;
-block|}
-specifier|public
-name|String
-name|getValidWriteIds
-parameter_list|()
-block|{
-return|return
-name|validWriteIds
 return|;
 block|}
 specifier|public

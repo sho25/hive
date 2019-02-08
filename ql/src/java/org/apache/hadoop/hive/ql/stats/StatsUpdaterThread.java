@@ -3125,8 +3125,6 @@ name|ObjectStore
 operator|.
 name|isCurrentStatsValidForTheQuery
 argument_list|(
-name|conf
-argument_list|,
 name|params
 argument_list|,
 name|statsWriteId
@@ -3304,8 +3302,6 @@ name|ObjectStore
 operator|.
 name|isCurrentStatsValidForTheQuery
 argument_list|(
-name|conf
-argument_list|,
 name|params
 argument_list|,
 name|statsWriteId

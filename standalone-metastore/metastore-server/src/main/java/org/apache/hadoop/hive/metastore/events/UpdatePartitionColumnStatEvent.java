@@ -143,10 +143,6 @@ name|ColumnStatistics
 name|partColStats
 decl_stmt|;
 specifier|private
-name|String
-name|validWriteIds
-decl_stmt|;
-specifier|private
 name|long
 name|writeId
 decl_stmt|;
@@ -170,7 +166,7 @@ specifier|private
 name|Table
 name|tableObj
 decl_stmt|;
-comment|/**    * @param statsObj Columns statistics Info.    * @param partVals partition names    * @param parameters table parameters to be updated after stats are updated.    * @param validWriteIds valid write id list for the query.    * @param writeId writeId for the query.    * @param handler handler that is firing the event    */
+comment|/**    * @param statsObj Columns statistics Info.    * @param partVals partition names    * @param parameters table parameters to be updated after stats are updated.    * @param tableObj table object    * @param writeId writeId for the query.    * @param handler handler that is firing the event    */
 specifier|public
 name|UpdatePartitionColumnStatEvent
 parameter_list|(
@@ -194,9 +190,6 @@ parameter_list|,
 name|Table
 name|tableObj
 parameter_list|,
-name|String
-name|validWriteIds
-parameter_list|,
 name|long
 name|writeId
 parameter_list|,
@@ -216,12 +209,6 @@ operator|.
 name|partColStats
 operator|=
 name|statsObj
-expr_stmt|;
-name|this
-operator|.
-name|validWriteIds
-operator|=
-name|validWriteIds
 expr_stmt|;
 name|this
 operator|.
@@ -289,12 +276,6 @@ name|partVals
 expr_stmt|;
 name|this
 operator|.
-name|validWriteIds
-operator|=
-literal|null
-expr_stmt|;
-name|this
-operator|.
 name|writeId
 operator|=
 literal|0
@@ -319,15 +300,6 @@ parameter_list|()
 block|{
 return|return
 name|partColStats
-return|;
-block|}
-specifier|public
-name|String
-name|getValidWriteIds
-parameter_list|()
-block|{
-return|return
-name|validWriteIds
 return|;
 block|}
 specifier|public

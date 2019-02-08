@@ -2376,9 +2376,6 @@ name|String
 argument_list|>
 name|parameters
 parameter_list|,
-name|String
-name|validWriteIds
-parameter_list|,
 name|long
 name|writeId
 parameter_list|)
@@ -2399,8 +2396,6 @@ argument_list|,
 name|tableObj
 argument_list|,
 name|parameters
-argument_list|,
-name|validWriteIds
 argument_list|,
 name|writeId
 argument_list|)
@@ -2458,9 +2453,6 @@ parameter_list|,
 name|Table
 name|tableObj
 parameter_list|,
-name|String
-name|validWriteIds
-parameter_list|,
 name|long
 name|writeId
 parameter_list|)
@@ -2483,8 +2475,6 @@ argument_list|,
 name|parameters
 argument_list|,
 name|tableObj
-argument_list|,
-name|validWriteIds
 argument_list|,
 name|writeId
 argument_list|)

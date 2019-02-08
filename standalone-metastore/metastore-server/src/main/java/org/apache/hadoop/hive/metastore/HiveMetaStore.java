@@ -22585,6 +22585,8 @@ argument_list|,
 name|partition
 argument_list|,
 name|madeDir
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 block|}
@@ -24183,6 +24185,9 @@ name|part
 parameter_list|,
 name|boolean
 name|madeDir
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
 parameter_list|)
 throws|throws
 name|MetaException
@@ -24200,6 +24205,8 @@ name|part
 argument_list|)
 argument_list|,
 name|madeDir
+argument_list|,
+name|environmentContext
 argument_list|)
 expr_stmt|;
 block|}
@@ -24222,6 +24229,9 @@ name|part
 parameter_list|,
 name|boolean
 name|madeDir
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
 parameter_list|)
 throws|throws
 name|MetaException
@@ -24248,7 +24258,7 @@ name|madeDir
 argument_list|,
 literal|false
 argument_list|,
-literal|null
+name|environmentContext
 argument_list|,
 literal|true
 argument_list|)
@@ -24671,6 +24681,8 @@ argument_list|,
 name|part
 argument_list|,
 name|madeDir
+argument_list|,
+name|envContext
 argument_list|)
 expr_stmt|;
 name|initializePartitionParameters
@@ -36795,8 +36807,6 @@ name|tableObj
 argument_list|,
 name|parameters
 argument_list|,
-name|validWriteIds
-argument_list|,
 name|writeId
 argument_list|,
 name|this
@@ -36831,8 +36841,6 @@ argument_list|,
 name|tableObj
 argument_list|,
 name|parameters
-argument_list|,
-name|validWriteIds
 argument_list|,
 name|writeId
 argument_list|,
@@ -37252,8 +37260,6 @@ name|parameters
 argument_list|,
 name|tbl
 argument_list|,
-name|validWriteIds
-argument_list|,
 name|writeId
 argument_list|,
 name|this
@@ -37290,8 +37296,6 @@ argument_list|,
 name|parameters
 argument_list|,
 name|tbl
-argument_list|,
-name|validWriteIds
 argument_list|,
 name|writeId
 argument_list|,

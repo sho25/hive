@@ -5567,11 +5567,6 @@ argument_list|()
 argument_list|,
 name|updateTableColumnStatEvent
 operator|.
-name|getValidWriteIds
-argument_list|()
-argument_list|,
-name|updateTableColumnStatEvent
-operator|.
 name|getWriteId
 argument_list|()
 argument_list|)
@@ -5801,11 +5796,6 @@ argument_list|,
 name|updatePartColStatEvent
 operator|.
 name|getTableObj
-argument_list|()
-argument_list|,
-name|updatePartColStatEvent
-operator|.
-name|getValidWriteIds
 argument_list|()
 argument_list|,
 name|updatePartColStatEvent
