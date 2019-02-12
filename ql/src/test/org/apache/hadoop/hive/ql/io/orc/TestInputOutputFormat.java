@@ -6852,10 +6852,10 @@ name|readsAfter
 operator|-
 name|readsBefore
 decl_stmt|;
-comment|//HIVE-16812 adds 1 read of the footer of each file
+comment|//HIVE-16812 adds 1 read of the footer of each file (only if delete delta exists)
 name|assertEquals
 argument_list|(
-literal|16
+literal|8
 argument_list|,
 name|delta
 argument_list|)
