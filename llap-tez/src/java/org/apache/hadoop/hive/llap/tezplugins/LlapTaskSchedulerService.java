@@ -2622,6 +2622,17 @@ name|LLAP_PLUGIN_RPC_NUM_HANDLERS
 argument_list|)
 argument_list|,
 name|this
+argument_list|,
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_PLUGIN_RPC_PORT
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

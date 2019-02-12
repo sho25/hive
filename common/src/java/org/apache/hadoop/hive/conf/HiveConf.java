@@ -15294,6 +15294,15 @@ argument_list|,
 literal|"llap.daemon.rpc.num.handlers"
 argument_list|)
 block|,
+name|LLAP_PLUGIN_RPC_PORT
+argument_list|(
+literal|"hive.llap.plugin.rpc.port"
+argument_list|,
+literal|0
+argument_list|,
+literal|"Port to use for LLAP plugin rpc server"
+argument_list|)
+block|,
 name|LLAP_PLUGIN_RPC_NUM_HANDLERS
 argument_list|(
 literal|"hive.llap.plugin.rpc.num.handlers"
@@ -15926,6 +15935,15 @@ operator|+
 literal|"connection to LLAP daemon from Tez AM."
 argument_list|,
 literal|"llap.task.communicator.connection.sleep-between-retries-millis"
+argument_list|)
+block|,
+name|LLAP_TASK_UMBILICAL_SERVER_PORT
+argument_list|(
+literal|"hive.llap.daemon.umbilical.port"
+argument_list|,
+literal|0
+argument_list|,
+literal|"LLAP task umbilical server RPC port"
 argument_list|)
 block|,
 name|LLAP_DAEMON_WEB_PORT
