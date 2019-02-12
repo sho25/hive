@@ -60,6 +60,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|LLAP_LOG4J2_PROPERTIES_FILE_NAME_ENV
+init|=
+literal|"LLAP_LOG4J2_PROPERTIES_FILE_NAME"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|LLAP_HADOOP_METRICS2_PROPERTIES_FILE
 init|=
 literal|"hadoop-metrics2-llapdaemon.properties"
