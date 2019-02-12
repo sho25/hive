@@ -966,10 +966,12 @@ parameter_list|()
 block|{
 try|try
 block|{
+comment|// Hive.getWithFastCheck shouldn't be used here as it always re-opens metastore connection.
+comment|// The conf object in HMS client is always different from the one used here.
 return|return
 name|Hive
 operator|.
-name|getWithFastCheck
+name|get
 argument_list|(
 name|conf
 argument_list|)

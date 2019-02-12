@@ -121,24 +121,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
-operator|.
-name|Hive
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|parse
 operator|.
 name|EximUtil
@@ -552,12 +534,6 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-name|Hive
-name|hiveDb
-init|=
-name|getHive
-argument_list|()
-decl_stmt|;
 comment|// Note: CopyWork supports copying multiple files, but ReplCopyWork doesn't.
 comment|//       Not clear of ReplCopyWork should inherit from CopyWork.
 if|if
@@ -1185,7 +1161,8 @@ operator|+
 literal|" is cleaned before renaming"
 argument_list|)
 expr_stmt|;
-name|hiveDb
+name|getHive
+argument_list|()
 operator|.
 name|cleanUpOneDirectoryForReplace
 argument_list|(

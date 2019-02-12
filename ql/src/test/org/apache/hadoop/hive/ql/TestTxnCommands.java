@@ -727,6 +727,24 @@ name|ql
 operator|.
 name|metadata
 operator|.
+name|Hive
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
 name|HiveException
 import|;
 end_import
@@ -2955,6 +2973,12 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+comment|// Need to close the thread local Hive object so that configuration change is reflected to HMS.
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
+expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"drop table if exists "
@@ -3372,6 +3396,12 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+comment|// Need to close the thread local Hive object so that configuration change is reflected to HMS.
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
+expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
 literal|"drop table if exists "
@@ -3594,6 +3624,12 @@ argument_list|()
 argument_list|,
 literal|false
 argument_list|)
+expr_stmt|;
+comment|// Need to close the thread local Hive object so that configuration change is reflected to HMS.
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
 expr_stmt|;
 comment|// Running the query with stats disabled will cause stats in metastore itself to become invalid.
 name|runStatementOnDriver
@@ -9757,6 +9793,12 @@ argument_list|()
 argument_list|,
 literal|"true"
 argument_list|)
+expr_stmt|;
+comment|// Need to close the thread local Hive object so that configuration change is reflected to HMS.
+name|Hive
+operator|.
+name|closeCurrent
+argument_list|()
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
