@@ -2938,11 +2938,13 @@ literal|"metastore.partition.management.task.thread.pool.size"
 argument_list|,
 literal|"metastore.partition.management.task.thread.pool.size"
 argument_list|,
-literal|5
+literal|3
 argument_list|,
 literal|"Partition management uses thread pool on to which tasks are submitted for discovering and retaining the\n"
 operator|+
-literal|"partitions. This determines the size of the thread pool."
+literal|"partitions. This determines the size of the thread pool. Note: Increasing the thread pool size will cause\n"
+operator|+
+literal|"threadPoolSize * maxConnectionPoolSize connections to backend db"
 argument_list|)
 block|,
 name|PARTITION_MANAGEMENT_CATALOG_NAME

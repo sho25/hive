@@ -1146,24 +1146,6 @@ argument_list|,
 literal|"skip"
 argument_list|)
 expr_stmt|;
-comment|// since msck runs in thread pool and each of them create their own metastore client, we don't want explosion of
-comment|// connections to metastore for embedded mode. Also we don't need too many db connections anyway.
-name|conf
-operator|.
-name|setInt
-argument_list|(
-name|MetastoreConf
-operator|.
-name|ConfVars
-operator|.
-name|CONNECTION_POOLING_MAX_CONNECTIONS
-operator|.
-name|getVarname
-argument_list|()
-argument_list|,
-literal|2
-argument_list|)
-expr_stmt|;
 block|}
 specifier|private
 specifier|static
