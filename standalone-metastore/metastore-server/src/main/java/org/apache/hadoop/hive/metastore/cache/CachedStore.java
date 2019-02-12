@@ -12331,6 +12331,21 @@ name|privs
 argument_list|)
 expr_stmt|;
 block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|NoSuchObjectException
+argument_list|(
+literal|"partition values="
+operator|+
+name|partVals
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+throw|;
+block|}
 return|return
 name|p
 return|;
