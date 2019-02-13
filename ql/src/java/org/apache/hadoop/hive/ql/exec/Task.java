@@ -2051,6 +2051,17 @@ name|conf
 expr_stmt|;
 block|}
 specifier|public
+name|HiveConf
+name|getConf
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|conf
+return|;
+block|}
+specifier|public
 name|void
 name|setWork
 parameter_list|(

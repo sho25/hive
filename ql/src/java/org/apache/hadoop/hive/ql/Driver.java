@@ -15452,7 +15452,10 @@ name|HiveConf
 operator|.
 name|getBoolVar
 argument_list|(
-name|conf
+name|tsk
+operator|.
+name|getConf
+argument_list|()
 argument_list|,
 name|HiveConf
 operator|.
