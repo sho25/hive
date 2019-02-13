@@ -6737,26 +6737,6 @@ condition|(
 name|throwException
 condition|)
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"Table "
-operator|+
-name|dbName
-operator|+
-literal|"."
-operator|+
-name|tableName
-operator|+
-literal|" not found: "
-operator|+
-name|e
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
 throw|throw
 operator|new
 name|InvalidTableException
