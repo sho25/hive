@@ -2904,18 +2904,6 @@ condition|(
 name|eventPerFile
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Event per file enabled. Closing proto event file: {}"
-argument_list|,
-name|writer
-operator|.
-name|getPath
-argument_list|()
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 operator|!
@@ -2938,6 +2926,18 @@ name|logFileCount
 argument_list|)
 expr_stmt|;
 block|}
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Event per file enabled. New proto event file: {}"
+argument_list|,
+name|writer
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+expr_stmt|;
 name|writer
 operator|.
 name|writeProto
