@@ -3923,8 +3923,9 @@ expr_stmt|;
 name|Integer
 name|typeNumInteger
 init|=
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|typeNum
 argument_list|)
@@ -5264,9 +5265,6 @@ name|randomPrimitiveObject
 argument_list|(
 name|r
 argument_list|,
-operator|(
-name|PrimitiveTypeInfo
-operator|)
 name|TypeInfoFactory
 operator|.
 name|longTypeInfo

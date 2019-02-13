@@ -469,8 +469,9 @@ index|[
 literal|0
 index|]
 operator|=
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|i
 argument_list|)

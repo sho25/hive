@@ -612,8 +612,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Character
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.
@@ -644,8 +645,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Short
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.
@@ -671,8 +673,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.
@@ -698,8 +701,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.
@@ -725,8 +729,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.
@@ -752,8 +757,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Float
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.
@@ -779,8 +785,9 @@ name|class
 condition|)
 block|{
 return|return
-operator|new
 name|Boolean
+operator|.
+name|valueOf
 argument_list|(
 name|ob
 operator|.

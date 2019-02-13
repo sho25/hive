@@ -298,8 +298,9 @@ init|=
 operator|new
 name|DeferredJavaObject
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|"2"
 argument_list|)
@@ -516,8 +517,9 @@ init|=
 operator|new
 name|DeferredJavaObject
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|"3"
 argument_list|)
@@ -718,8 +720,9 @@ init|=
 operator|new
 name|DeferredJavaObject
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|"4"
 argument_list|)
@@ -1037,8 +1040,9 @@ init|=
 operator|new
 name|DeferredJavaObject
 argument_list|(
-operator|new
 name|Short
+operator|.
+name|valueOf
 argument_list|(
 literal|"4"
 argument_list|)

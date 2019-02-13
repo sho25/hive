@@ -2056,17 +2056,13 @@ argument_list|,
 name|pGraphContext
 argument_list|)
 decl_stmt|;
-name|Integer
+name|int
 name|num
 init|=
-operator|new
-name|Integer
-argument_list|(
 name|tbl
 operator|.
 name|getNumBuckets
 argument_list|()
-argument_list|)
 decl_stmt|;
 comment|// The number of files for the table should be same as number of buckets.
 if|if
@@ -2173,7 +2169,12 @@ name|Arrays
 operator|.
 name|asList
 argument_list|(
+name|Integer
+operator|.
+name|valueOf
+argument_list|(
 name|num
+argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;

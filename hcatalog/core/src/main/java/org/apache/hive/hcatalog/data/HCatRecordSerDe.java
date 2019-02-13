@@ -1860,8 +1860,9 @@ argument_list|)
 condition|)
 block|{
 return|return
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|Short
@@ -1892,8 +1893,9 @@ argument_list|)
 condition|)
 block|{
 return|return
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|Byte

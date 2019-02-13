@@ -3468,8 +3468,9 @@ argument_list|()
 operator|.
 name|setNumReduceTasks
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|desc
 operator|.

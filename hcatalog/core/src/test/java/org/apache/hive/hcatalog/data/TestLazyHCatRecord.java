@@ -294,9 +294,6 @@ name|assertEquals
 argument_list|(
 name|STRING_CONST
 argument_list|,
-operator|(
-name|String
-operator|)
 name|r
 operator|.
 name|get
@@ -434,9 +431,6 @@ name|assertEquals
 argument_list|(
 name|STRING_CONST
 argument_list|,
-operator|(
-name|String
-operator|)
 name|r
 operator|.
 name|get
@@ -555,9 +549,6 @@ name|assertEquals
 argument_list|(
 name|STRING_CONST
 argument_list|,
-operator|(
-name|String
-operator|)
 name|list
 operator|.
 name|get
@@ -1043,9 +1034,6 @@ name|assertEquals
 argument_list|(
 name|STRING_CONST
 argument_list|,
-operator|(
-name|String
-operator|)
 name|r
 operator|.
 name|get
@@ -1096,8 +1084,9 @@ name|rec_1
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|INT_CONST
 argument_list|)
@@ -1107,8 +1096,9 @@ name|rec_1
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|LONG_CONST
 argument_list|)
@@ -1118,8 +1108,9 @@ name|rec_1
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 name|DOUBLE_CONST
 argument_list|)
@@ -1129,11 +1120,7 @@ name|rec_1
 operator|.
 name|add
 argument_list|(
-operator|new
-name|String
-argument_list|(
 name|STRING_CONST
-argument_list|)
 argument_list|)
 expr_stmt|;
 return|return

@@ -3105,8 +3105,9 @@ operator|new
 name|Object
 index|[]
 block|{
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|param
 argument_list|)
@@ -10635,8 +10636,9 @@ operator|.
 name|trim
 argument_list|()
 block|,
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|e
 operator|.

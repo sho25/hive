@@ -30509,6 +30509,8 @@ block|}
 end_function
 
 begin_function
+annotation|@
+name|Override
 specifier|public
 name|RenamePartitionResponse
 name|rename_partition_req
@@ -56753,8 +56755,9 @@ name|this
 operator|.
 name|port
 operator|=
-operator|new
 name|Integer
+operator|.
+name|parseInt
 argument_list|(
 name|args
 index|[

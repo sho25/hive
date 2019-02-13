@@ -73,9 +73,9 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 import|;
@@ -1079,8 +1079,9 @@ init|=
 operator|new
 name|ExprNodeConstantDesc
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 literal|10
 argument_list|)

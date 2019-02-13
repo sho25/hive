@@ -891,8 +891,9 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|Short
 operator|.
@@ -911,8 +912,9 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|Byte
 operator|.
@@ -938,8 +940,9 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|Short
 operator|.
@@ -958,8 +961,9 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-operator|new
 name|Integer
+operator|.
+name|valueOf
 argument_list|(
 name|Byte
 operator|.
