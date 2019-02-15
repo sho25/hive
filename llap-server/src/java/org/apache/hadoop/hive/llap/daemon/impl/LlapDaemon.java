@@ -2678,6 +2678,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+comment|// disable web UI in test mode until a specific port was configured
 if|if
 condition|(
 name|HiveConf
@@ -2692,8 +2693,33 @@ name|ConfVars
 operator|.
 name|HIVE_IN_TEST
 argument_list|)
+operator|&&
+name|Integer
+operator|.
+name|parseInt
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_WEB_PORT
+operator|.
+name|getDefaultValue
+argument_list|()
+argument_list|)
+operator|==
+name|webPort
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Web UI was disabled in test mode because hive.llap.daemon.web.port was not "
+operator|+
+literal|"specified or has default value ({})"
+argument_list|,
+name|webPort
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|webServices
