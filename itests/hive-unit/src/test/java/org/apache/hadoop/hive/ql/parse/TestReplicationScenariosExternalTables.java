@@ -3499,11 +3499,11 @@ expr_stmt|;
 block|}
 name|assertTrue
 argument_list|(
-name|expected
+name|tableNames
 operator|.
 name|containsAll
 argument_list|(
-name|tableNames
+name|expected
 argument_list|)
 argument_list|)
 expr_stmt|;

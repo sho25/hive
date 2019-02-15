@@ -1837,7 +1837,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * The same code is used from both the "repl load" as well as "import".    * Given that "repl load" now supports two modes "repl load dbName [location]" and    * "repl load [location]" in which case the database name has to be taken from the table metadata    * by default and then over-ridden if something specified on the command line.    *    * hence for import to work correctly we have to pass in the sessionState default Db via the    * parsedDbName parameter    */
+comment|/**    * The same code is used from both the "repl load" as well as "import".    * Given that "repl load" now supports two modes "repl load dbName [location]" and    * "repl load [location]" in which case the database name has to be taken from the table metadata    * by default and then over-ridden if something specified on the command line.    *<p>    * hence for import to work correctly we have to pass in the sessionState default Db via the    * parsedDbName parameter    */
 specifier|public
 specifier|static
 name|boolean
@@ -4349,6 +4349,14 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
+name|shouldSkipDataCopyInReplScope
+argument_list|(
+name|tblDesc
+argument_list|,
+name|replicationSpec
+argument_list|)
+operator|||
+operator|(
 name|tblDesc
 operator|.
 name|isExternal
@@ -4360,6 +4368,7 @@ name|getLocation
 argument_list|()
 operator|==
 literal|null
+operator|)
 condition|)
 block|{
 name|x
@@ -4369,7 +4378,7 @@ argument_list|()
 operator|.
 name|debug
 argument_list|(
-literal|"Importing in-place: adding AddPart for partition "
+literal|"Adding AddPart and skipped data copy for partition "
 operator|+
 name|partSpecToString
 argument_list|(
@@ -5139,6 +5148,45 @@ return|return
 name|addPartTask
 return|;
 block|}
+block|}
+comment|/**    * In REPL LOAD flow, the data copy is done separately for external tables using data locations    * dumped in file {@link ReplExternalTables#FILE_NAME}. So, we can skip copying it here.    * In case of migrating from managed to external table, the data path won't be listed in this    * file and so need to copy data while applying the event.    */
+specifier|private
+specifier|static
+name|boolean
+name|shouldSkipDataCopyInReplScope
+parameter_list|(
+name|ImportTableDesc
+name|tblDesc
+parameter_list|,
+name|ReplicationSpec
+name|replicationSpec
+parameter_list|)
+block|{
+return|return
+operator|(
+operator|(
+name|replicationSpec
+operator|!=
+literal|null
+operator|)
+operator|&&
+name|replicationSpec
+operator|.
+name|isInReplicationScope
+argument_list|()
+operator|&&
+name|tblDesc
+operator|.
+name|isExternal
+argument_list|()
+operator|&&
+operator|!
+name|replicationSpec
+operator|.
+name|isMigratingToExternalTable
+argument_list|()
+operator|)
+return|;
 block|}
 comment|/**    * Helper method to set location properly in partSpec    */
 specifier|private
@@ -8008,6 +8056,14 @@ name|replicationSpec
 operator|.
 name|isMetadataOnly
 argument_list|()
+operator|&&
+operator|!
+name|shouldSkipDataCopyInReplScope
+argument_list|(
+name|tblDesc
+argument_list|,
+name|replicationSpec
+argument_list|)
 condition|)
 block|{
 name|x
