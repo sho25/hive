@@ -167,12 +167,24 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|4
+literal|5
 argument_list|,
 name|paramsDefault
 operator|.
 name|size
 argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -pbx set by default"
+argument_list|,
+name|paramsDefault
+operator|.
+name|contains
+argument_list|(
+literal|"-pbx"
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertTrue
@@ -189,13 +201,13 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-literal|"Distcp -pbx set by default"
+literal|"Distcp -delete set by default"
 argument_list|,
 name|paramsDefault
 operator|.
 name|contains
 argument_list|(
-literal|"-pbx"
+literal|"-delete"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -210,7 +222,7 @@ name|paramsDefault
 operator|.
 name|get
 argument_list|(
-literal|2
+literal|3
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -225,7 +237,7 @@ name|paramsDefault
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|4
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -249,6 +261,16 @@ literal|""
 argument_list|)
 expr_stmt|;
 comment|// should set "-blah"
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"distcp.options.pug"
+argument_list|,
+literal|""
+argument_list|)
+expr_stmt|;
+comment|// should set "-pug"
 name|conf
 operator|.
 name|set
@@ -283,7 +305,7 @@ argument_list|)
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|5
+literal|8
 argument_list|,
 name|paramsWithCustomParamInjection
 operator|.
@@ -291,17 +313,77 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// check that the defaults did not remain.
+comment|// check that the mandatory ones remain along with user passed ones.
 name|assertTrue
 argument_list|(
-literal|"Distcp -update not set if not requested"
+literal|"Distcp -update set even if not requested"
+argument_list|,
+name|paramsWithCustomParamInjection
+operator|.
+name|contains
+argument_list|(
+literal|"-update"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -delete set even if not requested"
+argument_list|,
+name|paramsWithCustomParamInjection
+operator|.
+name|contains
+argument_list|(
+literal|"-delete"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -foo is set as passes"
+argument_list|,
+name|paramsWithCustomParamInjection
+operator|.
+name|contains
+argument_list|(
+literal|"-foo"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -blah is set as passes"
+argument_list|,
+name|paramsWithCustomParamInjection
+operator|.
+name|contains
+argument_list|(
+literal|"-blah"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -pug is set as passes"
+argument_list|,
+name|paramsWithCustomParamInjection
+operator|.
+name|contains
+argument_list|(
+literal|"-pug"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Distcp -pbx not set as overridden"
 argument_list|,
 operator|!
 name|paramsWithCustomParamInjection
 operator|.
 name|contains
 argument_list|(
-literal|"-update"
+literal|"-pbx"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -318,41 +400,17 @@ literal|"-skipcrccheck"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertTrue
-argument_list|(
-literal|"Distcp -pbx not set if not requested"
-argument_list|,
-operator|!
-name|paramsWithCustomParamInjection
-operator|.
-name|contains
-argument_list|(
-literal|"-pbx"
-argument_list|)
-argument_list|)
-expr_stmt|;
-comment|// the "-foo bar" and "-blah" params order is not guaranteed
-name|String
-name|firstParam
+comment|// the "-foo bar" order is guaranteed
+name|int
+name|idx
 init|=
 name|paramsWithCustomParamInjection
 operator|.
-name|get
+name|indexOf
 argument_list|(
-literal|0
+literal|"-foo"
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|firstParam
-operator|.
-name|equals
-argument_list|(
-literal|"-foo"
-argument_list|)
-condition|)
-block|{
-comment|// "-foo bar -blah"  form
 name|assertEquals
 argument_list|(
 literal|"bar"
@@ -361,63 +419,12 @@ name|paramsWithCustomParamInjection
 operator|.
 name|get
 argument_list|(
+name|idx
+operator|+
 literal|1
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"-blah"
-argument_list|,
-name|paramsWithCustomParamInjection
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// "-blah -foo bar" form
-name|assertEquals
-argument_list|(
-literal|"-blah"
-argument_list|,
-name|paramsWithCustomParamInjection
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"-foo"
-argument_list|,
-name|paramsWithCustomParamInjection
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"bar"
-argument_list|,
-name|paramsWithCustomParamInjection
-operator|.
-name|get
-argument_list|(
-literal|2
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 comment|// the dummy option should not have made it either - only options
 comment|// beginning with distcp.options. should be honoured
 name|assertTrue
@@ -475,7 +482,7 @@ name|paramsWithCustomParamInjection
 operator|.
 name|get
 argument_list|(
-literal|3
+literal|6
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -490,7 +497,7 @@ name|paramsWithCustomParamInjection
 operator|.
 name|get
 argument_list|(
-literal|4
+literal|7
 argument_list|)
 argument_list|)
 expr_stmt|;
