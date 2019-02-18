@@ -2252,6 +2252,21 @@ argument_list|,
 literal|"time after which events will be removed from the database listener queue"
 argument_list|)
 block|,
+name|EVENT_CLEAN_MAX_EVENTS
+argument_list|(
+literal|"metastore.event.db.clean.maxevents"
+argument_list|,
+literal|"hive.metastore.event.db.clean.maxevents"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"Limit on number events to be cleaned at a time in metastore cleanNotificationEvents "
+operator|+
+literal|"call, to avoid OOM. The configuration is not effective when set to zero or "
+operator|+
+literal|"a negative value."
+argument_list|)
+block|,
 name|EVENT_DB_LISTENER_CLEAN_INTERVAL
 argument_list|(
 literal|"metastore.event.db.listener.clean.interval"

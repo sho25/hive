@@ -7841,22 +7841,7 @@ name|LOG
 operator|.
 name|warn
 argument_list|(
-literal|"Exception received while cleaning notifications. More details can be found in debug mode"
-operator|+
-name|ex
-operator|.
-name|getMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-name|ex
-operator|.
-name|getMessage
-argument_list|()
+literal|"Exception received while cleaning notifications: "
 argument_list|,
 name|ex
 argument_list|)
