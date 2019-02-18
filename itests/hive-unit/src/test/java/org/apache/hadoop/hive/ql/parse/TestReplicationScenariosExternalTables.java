@@ -1047,6 +1047,18 @@ argument_list|(
 literal|"france"
 argument_list|)
 expr_stmt|;
+comment|// Ckpt should be set on bootstrapped db.
+name|replica
+operator|.
+name|verifyIfCkptSet
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+expr_stmt|;
 name|assertTablePartitionLocation
 argument_list|(
 name|primaryDbName
@@ -3525,6 +3537,27 @@ operator|.
 name|verifyResult
 argument_list|(
 literal|"t4"
+argument_list|)
+expr_stmt|;
+comment|// Ckpt should be set on bootstrapped tables.
+name|replica
+operator|.
+name|verifyIfCkptSetForTables
+argument_list|(
+name|replicatedDbName
+argument_list|,
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"t2"
+argument_list|,
+literal|"t3"
+argument_list|)
+argument_list|,
+name|tuple
+operator|.
+name|dumpLocation
 argument_list|)
 expr_stmt|;
 comment|// Drop source tables to see if target points to correct data or not after bootstrap load.
