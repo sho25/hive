@@ -30275,6 +30275,21 @@ literal|true
 argument_list|)
 expr_stmt|;
 comment|// we replace existing table.
+name|ReplicationSpec
+operator|.
+name|copyLastReplId
+argument_list|(
+name|existingTable
+operator|.
+name|getParameters
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 else|else
 block|{
