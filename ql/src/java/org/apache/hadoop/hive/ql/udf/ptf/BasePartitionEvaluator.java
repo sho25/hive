@@ -1539,6 +1539,15 @@ argument_list|,
 name|nullsLast
 argument_list|)
 decl_stmt|;
+name|vbs
+operator|.
+name|handleCache
+argument_list|(
+name|currRow
+argument_list|,
+name|p
+argument_list|)
+expr_stmt|;
 name|start
 operator|=
 name|vbs

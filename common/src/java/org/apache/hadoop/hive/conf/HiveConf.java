@@ -6140,6 +6140,19 @@ operator|+
 literal|"enabling it is only recommended when vectorization is disabled."
 argument_list|)
 block|,
+name|HIVE_PTF_RANGECACHE_SIZE
+argument_list|(
+literal|"hive.ptf.rangecache.size"
+argument_list|,
+literal|10000
+argument_list|,
+literal|"Size of the cache used on reducer side, that stores boundaries of ranges within a PTF "
+operator|+
+literal|"partition. Used if a query specifies a RANGE type window including an orderby clause."
+operator|+
+literal|"Set this to 0 to disable this cache."
+argument_list|)
+block|,
 comment|// CBO related
 name|HIVE_CBO_ENABLED
 argument_list|(
