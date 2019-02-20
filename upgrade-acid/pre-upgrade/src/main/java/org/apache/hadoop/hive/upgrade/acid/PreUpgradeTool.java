@@ -137,6 +137,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|exception
+operator|.
+name|ExceptionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -614,6 +630,20 @@ operator|.
 name|shims
 operator|.
 name|HadoopShims
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|AccessControlException
 import|;
 end_import
 
@@ -1493,32 +1523,17 @@ argument_list|(
 literal|"Looking for databases"
 argument_list|)
 expr_stmt|;
+name|String
+name|exceptionMsg
+init|=
+literal|null
+decl_stmt|;
 name|List
 argument_list|<
 name|String
 argument_list|>
 name|databases
-init|=
-name|hms
-operator|.
-name|getAllDatabases
-argument_list|()
 decl_stmt|;
-comment|//TException
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Found "
-operator|+
-name|databases
-operator|.
-name|size
-argument_list|()
-operator|+
-literal|" databases to process"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|String
@@ -1548,6 +1563,30 @@ name|db
 init|=
 literal|null
 decl_stmt|;
+try|try
+block|{
+name|databases
+operator|=
+name|hms
+operator|.
+name|getAllDatabases
+argument_list|()
+expr_stmt|;
+comment|//TException
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Found "
+operator|+
+name|databases
+operator|.
+name|size
+argument_list|()
+operator|+
+literal|" databases to process"
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|execute
@@ -1570,6 +1609,8 @@ name|dbName
 range|:
 name|databases
 control|)
+block|{
+try|try
 block|{
 name|List
 argument_list|<
@@ -1607,6 +1648,8 @@ name|tableName
 range|:
 name|tables
 control|)
+block|{
+try|try
 block|{
 name|Table
 name|t
@@ -1704,6 +1747,154 @@ expr_stmt|;
 block|}
 comment|/*todo: handle renaming files somewhere*/
 block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|isAccessControlException
+argument_list|(
+name|e
+argument_list|)
+condition|)
+block|{
+comment|// this could be external table with 0 permission for hive user
+name|exceptionMsg
+operator|=
+literal|"Unable to access "
+operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tableName
+operator|+
+literal|". Pre-upgrade tool requires read-access "
+operator|+
+literal|"to databases and tables to determine if a table has to be compacted. "
+operator|+
+literal|"Set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+operator|.
+name|varname
+operator|+
+literal|" config to "
+operator|+
+literal|"false to allow read-access to databases and tables and retry the pre-upgrade tool again.."
+expr_stmt|;
+block|}
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|exceptionMsg
+operator|==
+literal|null
+operator|&&
+name|isAccessControlException
+argument_list|(
+name|e
+argument_list|)
+condition|)
+block|{
+comment|// we may not have access to read all tables from this db
+name|exceptionMsg
+operator|=
+literal|"Unable to access "
+operator|+
+name|dbName
+operator|+
+literal|". Pre-upgrade tool requires read-access "
+operator|+
+literal|"to databases and tables to determine if a table has to be compacted. "
+operator|+
+literal|"Set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+operator|.
+name|varname
+operator|+
+literal|" config to "
+operator|+
+literal|"false to allow read-access to databases and tables and retry the pre-upgrade tool again.."
+expr_stmt|;
+block|}
+throw|throw
+name|e
+throw|;
+block|}
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|exceptionMsg
+operator|==
+literal|null
+operator|&&
+name|isAccessControlException
+argument_list|(
+name|e
+argument_list|)
+condition|)
+block|{
+name|exceptionMsg
+operator|=
+literal|"Unable to get databases. Pre-upgrade tool requires read-access "
+operator|+
+literal|"to databases and tables to determine if a table has to be compacted. "
+operator|+
+literal|"Set "
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_METASTORE_AUTHORIZATION_AUTH_READS
+operator|.
+name|varname
+operator|+
+literal|" config to "
+operator|+
+literal|"false to allow read-access to databases and tables and retry the pre-upgrade tool again.."
+expr_stmt|;
+block|}
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|exceptionMsg
+argument_list|,
+name|e
+argument_list|)
+throw|;
 block|}
 name|makeCompactionScript
 argument_list|(
@@ -1958,6 +2149,100 @@ block|}
 block|}
 block|}
 block|}
+block|}
+specifier|private
+name|boolean
+name|isAccessControlException
+parameter_list|(
+specifier|final
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// hadoop security AccessControlException
+if|if
+condition|(
+operator|(
+name|e
+operator|instanceof
+name|MetaException
+operator|&&
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|AccessControlException
+operator|)
+operator|||
+name|ExceptionUtils
+operator|.
+name|getRootCause
+argument_list|(
+name|e
+argument_list|)
+operator|instanceof
+name|AccessControlException
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|// java security AccessControlException
+if|if
+condition|(
+operator|(
+name|e
+operator|instanceof
+name|MetaException
+operator|&&
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|java
+operator|.
+name|security
+operator|.
+name|AccessControlException
+operator|)
+operator|||
+name|ExceptionUtils
+operator|.
+name|getRootCause
+argument_list|(
+name|e
+argument_list|)
+operator|instanceof
+name|java
+operator|.
+name|security
+operator|.
+name|AccessControlException
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|// metastore in some cases sets the AccessControlException as message instead of wrapping the exception
+return|return
+name|e
+operator|instanceof
+name|MetaException
+operator|&&
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|startsWith
+argument_list|(
+literal|"java.security.AccessControlException: Permission denied"
+argument_list|)
+return|;
 block|}
 comment|/**    * Generates a set compaction commands to run on pre Hive 3 cluster    */
 specifier|private
