@@ -5072,9 +5072,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select PARAM_VALUE from DATABASE_PARAMS where PARAM_KEY = "
+literal|"select \"PARAM_VALUE\" from \"DATABASE_PARAMS\" where \"PARAM_KEY\" = "
 operator|+
-literal|"'repl.last.id' and DB_ID = "
+literal|"'repl.last.id' and \"DB_ID\" = "
 operator|+
 name|dbId
 argument_list|)
@@ -5090,7 +5090,7 @@ condition|)
 block|{
 name|query
 operator|=
-literal|"insert into DATABASE_PARAMS values ( "
+literal|"insert into \"DATABASE_PARAMS\" values ( "
 operator|+
 name|dbId
 operator|+
@@ -5101,11 +5101,11 @@ else|else
 block|{
 name|query
 operator|=
-literal|"update DATABASE_PARAMS set PARAM_VALUE = ? where DB_ID = "
+literal|"update \"DATABASE_PARAMS\" set \"PARAM_VALUE\" = ? where \"DB_ID\" = "
 operator|+
 name|dbId
 operator|+
-literal|" and PARAM_KEY = 'repl.last.id'"
+literal|" and \"PARAM_KEY\" = 'repl.last.id'"
 expr_stmt|;
 block|}
 name|close
@@ -5304,9 +5304,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select PARAM_VALUE from TABLE_PARAMS where PARAM_KEY = "
+literal|"select \"PARAM_VALUE\" from \"TABLE_PARAMS\" where \"PARAM_KEY\" = "
 operator|+
-literal|"'repl.last.id' and TBL_ID = "
+literal|"'repl.last.id' and \"TBL_ID\" = "
 operator|+
 name|tblId
 argument_list|)
@@ -5322,7 +5322,7 @@ condition|)
 block|{
 name|query
 operator|=
-literal|"insert into TABLE_PARAMS values ( "
+literal|"insert into \"TABLE_PARAMS\" values ( "
 operator|+
 name|tblId
 operator|+
@@ -5333,11 +5333,11 @@ else|else
 block|{
 name|query
 operator|=
-literal|"update TABLE_PARAMS set PARAM_VALUE = ? where TBL_ID = "
+literal|"update \"TABLE_PARAMS\" set \"PARAM_VALUE\" = ? where \"TBL_ID\" = "
 operator|+
 name|tblId
 operator|+
-literal|" and PARAM_KEY = 'repl.last.id'"
+literal|" and \"PARAM_KEY\" = 'repl.last.id'"
 expr_stmt|;
 block|}
 name|rs
@@ -5692,9 +5692,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select PARAM_VALUE from PARTITION_PARAMS where PARAM_KEY "
+literal|"select \"PARAM_VALUE\" from \"PARTITION_PARAMS\" where \"PARAM_KEY\" "
 operator|+
-literal|" = 'repl.last.id' and PART_ID = "
+literal|" = 'repl.last.id' and \"PART_ID\" = "
 operator|+
 name|partId
 argument_list|)
@@ -5710,7 +5710,7 @@ condition|)
 block|{
 name|query
 operator|=
-literal|"insert into PARTITION_PARAMS values ( "
+literal|"insert into \"PARTITION_PARAMS\" values ( "
 operator|+
 name|partId
 operator|+
@@ -5721,13 +5721,13 @@ else|else
 block|{
 name|query
 operator|=
-literal|"update PARTITION_PARAMS set PARAM_VALUE = ? "
+literal|"update \"PARTITION_PARAMS\" set \"PARAM_VALUE\" = ? "
 operator|+
-literal|" where PART_ID = "
+literal|" where \"PART_ID\" = "
 operator|+
 name|partId
 operator|+
-literal|" and PARAM_KEY = 'repl.last.id'"
+literal|" and \"PARAM_KEY\" = 'repl.last.id'"
 expr_stmt|;
 block|}
 name|rs

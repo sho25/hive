@@ -1472,6 +1472,11 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+comment|// Add the below mentioned dependency in metastore/pom.xml file. For postgres need to copy postgresql-42.2.1.jar to
+comment|// .m2//repository/postgresql/postgresql/9.3-1102.jdbc41/postgresql-9.3-1102.jdbc41.jar.
+comment|/*<dependency><groupId>mysql</groupId><artifactId>mysql-connector-java</artifactId><version>8.0.15</version></dependency><dependency><groupId>postgresql</groupId><artifactId>postgresql</artifactId><version>9.3-1102.jdbc41</version></dependency>     */
+comment|/*hiveConf.setVar(HiveConf.ConfVars.METASTORECONNECTURLKEY, "jdbc:mysql://localhost:3306/APP");     hiveConf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_DRIVER, "com.mysql.jdbc.Driver");     hiveConf.setVar(HiveConf.ConfVars.METASTOREPWD, "hivepassword");     hiveConf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_USER_NAME, "hiveuser");*/
+comment|/*hiveConf.setVar(HiveConf.ConfVars.METASTORECONNECTURLKEY,"jdbc:postgresql://localhost/app");     hiveConf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_DRIVER, "org.postgresql.Driver");     hiveConf.setVar(HiveConf.ConfVars.METASTOREPWD, "password");     hiveConf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_USER_NAME, "postgres");*/
 name|driver
 operator|=
 name|DriverFactory
