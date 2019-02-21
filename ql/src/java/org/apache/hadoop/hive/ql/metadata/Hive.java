@@ -7093,6 +7093,37 @@ literal|null
 argument_list|)
 return|;
 block|}
+comment|/**    * Get tables for the specified database that match the provided regex pattern and table type.    * @param dbName    * @param pattern    * @param tableType    * @return List of table objects    * @throws HiveException    */
+specifier|public
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|getTableObjectsByType
+parameter_list|(
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|pattern
+parameter_list|,
+name|TableType
+name|tableType
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+return|return
+name|getTableObjects
+argument_list|(
+name|dbName
+argument_list|,
+name|pattern
+argument_list|,
+name|tableType
+argument_list|)
+return|;
+block|}
 comment|/**    * Get all materialized view names for the specified database.    * @param dbName    * @return List of materialized view table names    * @throws HiveException    */
 specifier|public
 name|List

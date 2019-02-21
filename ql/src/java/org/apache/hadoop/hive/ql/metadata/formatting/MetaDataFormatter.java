@@ -464,6 +464,23 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
+comment|/**    * Show a list of tables including table types.    */
+specifier|public
+name|void
+name|showTablesExtended
+parameter_list|(
+name|DataOutputStream
+name|out
+parameter_list|,
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|tables
+parameter_list|)
+throws|throws
+name|HiveException
+function_decl|;
 comment|/**    * Show a list of materialized views.    */
 specifier|public
 name|void
