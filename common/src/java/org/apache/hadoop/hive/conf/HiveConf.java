@@ -15989,11 +15989,11 @@ literal|true
 argument_list|,
 literal|"Whether to setup split locations to match nodes on which llap daemons are running, "
 operator|+
-literal|"instead of using the locations provided by the split itself. If there is no llap daemon "
+literal|"preferring one of the locations provided by the split itself. If there is no llap daemon "
 operator|+
-literal|"running, fall back to locations provided by the split. This is effective only if "
+literal|"running on any of those locations (or on the cloud), fall back to a cache affinity to"
 operator|+
-literal|"hive.execution.mode is llap"
+literal|" an LLAP node. This is effective only if hive.execution.mode is llap."
 argument_list|)
 block|,
 name|LLAP_VALIDATE_ACLS
