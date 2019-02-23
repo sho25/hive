@@ -3941,9 +3941,6 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
-name|runTimeNumRows
-operator|++
-expr_stmt|;
 if|if
 condition|(
 name|getDone
@@ -3961,6 +3958,10 @@ name|batch
 operator|.
 name|size
 decl_stmt|;
+name|runTimeNumRows
+operator|+=
+name|size
+expr_stmt|;
 specifier|final
 name|boolean
 name|selectedInUse

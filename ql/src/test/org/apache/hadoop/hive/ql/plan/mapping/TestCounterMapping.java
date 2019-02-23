@@ -1004,7 +1004,7 @@ name|assertEquals
 argument_list|(
 literal|"optimized check"
 argument_list|,
-literal|1
+literal|6
 argument_list|,
 name|filter2
 operator|.
