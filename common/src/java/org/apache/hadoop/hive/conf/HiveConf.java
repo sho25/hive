@@ -5019,7 +5019,7 @@ name|METASTORE_EVENT_MESSAGE_FACTORY
 argument_list|(
 literal|"hive.metastore.event.message.factory"
 argument_list|,
-literal|"org.apache.hadoop.hive.metastore.messaging.json.JSONMessageEncoder"
+literal|"org.apache.hadoop.hive.metastore.messaging.json.gzip.GzipJSONMessageEncoder"
 argument_list|,
 literal|"Factory class for making encoding and decoding messages in the events generated."
 argument_list|)
