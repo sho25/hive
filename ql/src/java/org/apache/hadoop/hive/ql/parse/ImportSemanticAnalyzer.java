@@ -921,6 +921,28 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|io
@@ -3391,7 +3413,10 @@ decl_stmt|;
 name|boolean
 name|copyToMigratedTxnTable
 init|=
-literal|false
+name|replicationSpec
+operator|.
+name|isMigratingToTxnTable
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -3400,6 +3425,9 @@ operator|.
 name|isInReplicationScope
 argument_list|()
 operator|&&
+operator|(
+name|copyToMigratedTxnTable
+operator|||
 name|x
 operator|.
 name|getCtx
@@ -3416,6 +3444,7 @@ name|varname
 argument_list|,
 literal|false
 argument_list|)
+operator|)
 condition|)
 block|{
 name|lft
@@ -3501,13 +3530,6 @@ name|db
 argument_list|)
 expr_stmt|;
 block|}
-name|copyToMigratedTxnTable
-operator|=
-name|replicationSpec
-operator|.
-name|isMigratingToTxnTable
-argument_list|()
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -3775,12 +3797,6 @@ name|isTransactionalTable
 argument_list|(
 name|table
 argument_list|)
-operator|&&
-operator|!
-name|replicationSpec
-operator|.
-name|isMigratingToTxnTable
-argument_list|()
 condition|)
 block|{
 name|LoadMultiFilesDesc
@@ -4345,7 +4361,10 @@ decl_stmt|;
 name|boolean
 name|copyToMigratedTxnTable
 init|=
-literal|false
+name|replicationSpec
+operator|.
+name|isMigratingToTxnTable
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -4503,6 +4522,9 @@ operator|.
 name|isInReplicationScope
 argument_list|()
 operator|&&
+operator|(
+name|copyToMigratedTxnTable
+operator|||
 name|x
 operator|.
 name|getCtx
@@ -4519,6 +4541,7 @@ name|varname
 argument_list|,
 literal|false
 argument_list|)
+operator|)
 condition|)
 block|{
 name|loadFileType
@@ -4602,13 +4625,6 @@ name|db
 argument_list|)
 expr_stmt|;
 block|}
-name|copyToMigratedTxnTable
-operator|=
-name|replicationSpec
-operator|.
-name|isMigratingToTxnTable
-argument_list|()
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -4923,12 +4939,6 @@ operator|.
 name|getTblProps
 argument_list|()
 argument_list|)
-operator|&&
-operator|!
-name|replicationSpec
-operator|.
-name|isMigratingToTxnTable
-argument_list|()
 condition|)
 block|{
 name|LoadMultiFilesDesc
@@ -7545,6 +7555,9 @@ name|WriteType
 operator|.
 name|DDL_NO_LOCK
 decl_stmt|;
+name|boolean
+name|firstIncPending
+decl_stmt|;
 comment|// Normally, on import, trying to create a table or a partition in a db that does not yet exist
 comment|// is a error condition. However, in the case of a REPL LOAD, it is possible that we are trying
 comment|// to create tasks to create a table inside a db that as-of-now does not exist, but there is
@@ -7597,6 +7610,28 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
+comment|// For warehouse level replication, if the database itself is getting created in this load, then no need to
+comment|// check for duplicate copy. Check HIVE-21197 for more detail.
+name|firstIncPending
+operator|=
+literal|false
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// For database replication, get the flag from database parameter. Check HIVE-21197 for more detail.
+name|firstIncPending
+operator|=
+name|ReplUtils
+operator|.
+name|isFirstIncPending
+argument_list|(
+name|parentDb
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 if|if
 condition|(
@@ -7674,6 +7709,28 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+operator|!
+name|firstIncPending
+condition|)
+block|{
+comment|//If in db pending flag is not set then check in table parameter for table level load.
+comment|// Check HIVE-21197 for more detail.
+name|firstIncPending
+operator|=
+name|ReplUtils
+operator|.
+name|isFirstIncPending
+argument_list|(
+name|table
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -7724,6 +7781,15 @@ expr_stmt|;
 return|return;
 block|}
 block|}
+comment|// For first incremental load just after bootstrap, we need to check for duplicate copy.
+comment|// Check HIVE-21197 for more detail.
+name|replicationSpec
+operator|.
+name|setNeedDupCopyCheck
+argument_list|(
+name|firstIncPending
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|updatedMetadata

@@ -203,6 +203,12 @@ name|isMigratingToExternalTable
 init|=
 literal|false
 decl_stmt|;
+specifier|private
+name|boolean
+name|needDupCopyCheck
+init|=
+literal|false
+decl_stmt|;
 comment|// Key definitions related to replication
 specifier|public
 enum|enum
@@ -1640,6 +1646,32 @@ name|lastReplId
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+specifier|public
+name|boolean
+name|needDupCopyCheck
+parameter_list|()
+block|{
+return|return
+name|needDupCopyCheck
+return|;
+block|}
+specifier|public
+name|void
+name|setNeedDupCopyCheck
+parameter_list|(
+name|boolean
+name|isFirstIncPending
+parameter_list|)
+block|{
+comment|// Duplicate file check during copy is required until after first successful incremental load.
+comment|// Check HIVE-21197 for more detail.
+name|this
+operator|.
+name|needDupCopyCheck
+operator|=
+name|isFirstIncPending
+expr_stmt|;
 block|}
 block|}
 end_class

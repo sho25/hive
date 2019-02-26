@@ -610,6 +610,14 @@ name|REPL_CHECKPOINT_KEY
 init|=
 literal|"hive.repl.ckpt.key"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|REPL_FIRST_INC_PENDING_FLAG
+init|=
+literal|"hive.repl.first.inc.pending"
+decl_stmt|;
 comment|// write id allocated in the current execution context which will be passed through config to be used by different
 comment|// tasks.
 specifier|public
@@ -654,6 +662,16 @@ name|Long
 name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
 init|=
 literal|1L
+decl_stmt|;
+comment|// we keep the statement id as 0 so that the base directory is created with 0 and is easy to find out during
+comment|// duplicate check. Note : Stmt id is not used for base directory now, but to avoid misuse later, its maintained.
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|REPL_BOOTSTRAP_MIGRATION_BASE_STMT_ID
+init|=
+literal|0
 decl_stmt|;
 comment|/**    * Bootstrap REPL LOAD operation type on the examined object based on ckpt state.    */
 specifier|public
@@ -1476,6 +1494,64 @@ argument_list|)
 throw|;
 block|}
 block|}
+return|;
+block|}
+specifier|public
+specifier|static
+name|boolean
+name|isFirstIncPending
+parameter_list|(
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|parameters
+parameter_list|)
+block|{
+if|if
+condition|(
+name|parameters
+operator|==
+literal|null
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+name|String
+name|firstIncPendFlag
+init|=
+name|parameters
+operator|.
+name|get
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_FIRST_INC_PENDING_FLAG
+argument_list|)
+decl_stmt|;
+comment|// If flag is not set, then we assume first incremental load is done as the database/table may be created by user
+comment|// and not through replication.
+return|return
+name|firstIncPendFlag
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|firstIncPendFlag
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|firstIncPendFlag
+argument_list|)
 return|;
 block|}
 block|}

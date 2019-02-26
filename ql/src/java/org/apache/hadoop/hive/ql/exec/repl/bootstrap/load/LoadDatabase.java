@@ -430,6 +430,11 @@ specifier|final
 name|String
 name|dbNameToLoadIn
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isTableLevelLoad
+decl_stmt|;
 specifier|public
 name|LoadDatabase
 parameter_list|(
@@ -441,6 +446,9 @@ name|event
 parameter_list|,
 name|String
 name|dbNameToLoadIn
+parameter_list|,
+name|String
+name|tblNameToLoadIn
 parameter_list|,
 name|TaskTracker
 name|loadTaskTracker
@@ -473,6 +481,19 @@ name|TaskTracker
 argument_list|(
 name|loadTaskTracker
 argument_list|)
+expr_stmt|;
+comment|//TODO : Load database should not be called for table level load.
+name|isTableLevelLoad
+operator|=
+name|tblNameToLoadIn
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|tblNameToLoadIn
+operator|.
+name|isEmpty
+argument_list|()
 expr_stmt|;
 block|}
 specifier|public
@@ -886,6 +907,9 @@ argument_list|,
 name|context
 operator|.
 name|dumpDirectory
+argument_list|,
+operator|!
+name|isTableLevelLoad
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -960,6 +984,9 @@ argument_list|,
 name|context
 operator|.
 name|dumpDirectory
+argument_list|,
+operator|!
+name|isTableLevelLoad
 argument_list|)
 argument_list|,
 name|context
@@ -1056,6 +1083,9 @@ name|dbObj
 parameter_list|,
 name|String
 name|dumpDirectory
+parameter_list|,
+name|boolean
+name|needSetIncFlag
 parameter_list|)
 block|{
 comment|/*     explicitly remove the setting of last.repl.id from the db object parameters as loadTask is going     to run multiple times and explicit logic is in place which prevents updates to tables when db level     last repl id is set and we create a AlterDatabaseTask at the end of processing a database.      */
@@ -1104,6 +1134,27 @@ argument_list|,
 name|dumpDirectory
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|needSetIncFlag
+condition|)
+block|{
+comment|// This flag will be set to false after first incremental load is done. This flag is used by repl copy task to
+comment|// check if duplicate file check is required or not. This flag is used by compaction to check if compaction can be
+comment|// done for this database or not. If compaction is done before first incremental then duplicate check will fail as
+comment|// compaction may change the directory structure.
+name|parameters
+operator|.
+name|put
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_FIRST_INC_PENDING_FLAG
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+block|}
 return|return
 name|parameters
 return|;
@@ -1206,6 +1257,8 @@ argument_list|,
 name|event
 argument_list|,
 name|dbNameToLoadIn
+argument_list|,
+literal|null
 argument_list|,
 name|loadTaskTracker
 argument_list|)

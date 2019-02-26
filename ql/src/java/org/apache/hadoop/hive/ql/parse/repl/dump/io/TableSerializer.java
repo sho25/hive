@@ -524,6 +524,7 @@ name|removeIf
 argument_list|(
 name|e
 lambda|->
+operator|(
 name|e
 operator|.
 name|getKey
@@ -535,6 +536,19 @@ name|ReplUtils
 operator|.
 name|REPL_CHECKPOINT_KEY
 argument_list|)
+operator|||
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_FIRST_INC_PENDING_FLAG
+argument_list|)
+operator|)
 argument_list|)
 expr_stmt|;
 block|}

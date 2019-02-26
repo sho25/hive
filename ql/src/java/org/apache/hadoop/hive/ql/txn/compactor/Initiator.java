@@ -821,6 +821,30 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+if|if
+condition|(
+name|replIsCompactionDisabledForDatabase
+argument_list|(
+name|ci
+operator|.
+name|dbname
+argument_list|)
+condition|)
+block|{
+comment|// Compaction is disabled for replicated database until after first successful incremental load.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Compaction is disabled for database "
+operator|+
+name|ci
+operator|.
+name|dbname
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
 name|Table
 name|t
 init|=
@@ -882,6 +906,29 @@ operator|.
 name|TABLE_NO_AUTO_COMPACT
 operator|+
 literal|"=true so we will not compact it."
+argument_list|)
+expr_stmt|;
+continue|continue;
+block|}
+if|if
+condition|(
+name|replIsCompactionDisabledForTable
+argument_list|(
+name|t
+argument_list|)
+condition|)
+block|{
+comment|// Compaction is disabled for replicated table until after first successful incremental load.
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Compaction is disabled for table "
+operator|+
+name|ci
+operator|.
+name|getFullTableName
+argument_list|()
 argument_list|)
 expr_stmt|;
 continue|continue;

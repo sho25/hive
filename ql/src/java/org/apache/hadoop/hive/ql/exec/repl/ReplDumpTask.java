@@ -2175,6 +2175,21 @@ operator|>=
 literal|0L
 operator|)
 assert|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Bootstrap Dump for db {} and table {}"
+argument_list|,
+name|work
+operator|.
+name|dbNameOrPattern
+argument_list|,
+name|work
+operator|.
+name|tableNameOrPattern
+argument_list|)
+expr_stmt|;
 name|String
 name|validTxnList
 init|=
@@ -2209,6 +2224,51 @@ operator|+
 name|dbName
 argument_list|)
 expr_stmt|;
+name|Database
+name|db
+init|=
+name|hiveDb
+operator|.
+name|getDatabase
+argument_list|(
+name|dbName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|(
+name|db
+operator|!=
+literal|null
+operator|)
+operator|&&
+operator|(
+name|ReplUtils
+operator|.
+name|isFirstIncPending
+argument_list|(
+name|db
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+operator|)
+condition|)
+block|{
+comment|// For replicated (target) database, until after first successful incremental load, the database will not be
+comment|// in a consistent state. Avoid allowing replicating this database to a new target.
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Replication dump not allowed for replicated database"
+operator|+
+literal|" with first incremental dump pending : "
+operator|+
+name|dbName
+argument_list|)
+throw|;
+block|}
 name|replLogger
 operator|=
 operator|new
@@ -2387,6 +2447,50 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+name|Table
+name|table
+init|=
+name|tableTuple
+operator|!=
+literal|null
+condition|?
+name|tableTuple
+operator|.
+name|object
+else|:
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|table
+operator|!=
+literal|null
+operator|&&
+name|ReplUtils
+operator|.
+name|isFirstIncPending
+argument_list|(
+name|table
+operator|.
+name|getParameters
+argument_list|()
+argument_list|)
+condition|)
+block|{
+comment|// For replicated (target) table, until after first successful incremental load, the table will not be
+comment|// in a consistent state. Avoid allowing replicating this table to a new target.
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Replication dump not allowed for replicated table"
+operator|+
+literal|" with first incremental dump pending : "
+operator|+
+name|tblName
+argument_list|)
+throw|;
+block|}
 if|if
 condition|(
 name|shouldWriteExternalTableLocationInfo

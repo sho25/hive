@@ -522,6 +522,15 @@ name|ReplChangeManager
 operator|.
 name|SOURCE_OF_REPLICATION
 argument_list|)
+operator|||
+name|key
+operator|.
+name|equals
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_FIRST_INC_PENDING_FLAG
+argument_list|)
 condition|)
 block|{
 continue|continue;

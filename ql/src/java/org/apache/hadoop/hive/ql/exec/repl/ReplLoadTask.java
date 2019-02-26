@@ -1125,6 +1125,10 @@ name|work
 operator|.
 name|dbNameToLoadIn
 argument_list|,
+name|work
+operator|.
+name|tableNameToLoadIn
+argument_list|,
 name|loadTaskTracker
 argument_list|)
 operator|.
@@ -2384,6 +2388,9 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
+comment|// No need to set incremental load pending flag for external tables as the files will be copied to the same path
+comment|// for external table unlike migrated txn tables. Currently bootstrap during incremental is done only for
+comment|// external tables.
 if|if
 condition|(
 name|work

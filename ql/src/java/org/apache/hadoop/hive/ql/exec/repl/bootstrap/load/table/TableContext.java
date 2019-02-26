@@ -99,6 +99,28 @@ name|ImportTableDesc
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -186,6 +208,26 @@ operator|.
 name|setTableName
 argument_list|(
 name|tableNameToLoadIn
+argument_list|)
+expr_stmt|;
+comment|//For table level load, add this property to avoid duplicate copy.
+comment|// This flag will be set to false after first incremental load is done. This flag is used by
+comment|// repl copy task to check if duplicate file check is required or not. This flag is used by
+comment|// compaction to check if compaction can be done for this database or not. If compaction is
+comment|// done before first incremental then duplicate check will fail as compaction may change
+comment|// the directory structure.
+name|importTableDesc
+operator|.
+name|getTblProps
+argument_list|()
+operator|.
+name|put
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_FIRST_INC_PENDING_FLAG
+argument_list|,
+literal|"true"
 argument_list|)
 expr_stmt|;
 block|}
