@@ -997,26 +997,6 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"size correct after deserialization"
-argument_list|,
-name|serDe
-operator|.
-name|getSerDeStats
-argument_list|()
-operator|.
-name|getRawDataSize
-argument_list|()
-argument_list|,
-name|t
-operator|.
-name|get
-argument_list|()
-operator|.
-name|length
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
 literal|"deserialization gives the wrong object"
 argument_list|,
 name|t
@@ -1041,34 +1021,6 @@ argument_list|,
 name|oi
 argument_list|)
 decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|"size correct after serialization"
-argument_list|,
-name|serDe
-operator|.
-name|getSerDeStats
-argument_list|()
-operator|.
-name|getRawDataSize
-argument_list|()
-argument_list|,
-operator|(
-operator|(
-name|ArrayWritable
-operator|)
-name|serializedArr
-operator|.
-name|getObject
-argument_list|()
-operator|)
-operator|.
-name|get
-argument_list|()
-operator|.
-name|length
-argument_list|)
-expr_stmt|;
 name|assertTrue
 argument_list|(
 literal|"serialized object should be equal to starting object"
@@ -1085,6 +1037,18 @@ operator|.
 name|getObject
 argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|"Stats are not collected during serialization and deserialization"
+argument_list|,
+literal|null
+argument_list|,
+name|serDe
+operator|.
+name|getSerDeStats
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
