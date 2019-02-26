@@ -2774,13 +2774,9 @@ name|empty
 condition|?
 literal|null
 else|:
-operator|new
-name|Double
-argument_list|(
 name|myagg
 operator|.
 name|sum
-argument_list|)
 return|;
 block|}
 block|}
@@ -3448,13 +3444,9 @@ name|empty
 condition|?
 literal|null
 else|:
-operator|new
-name|Long
-argument_list|(
 name|myagg
 operator|.
 name|sum
-argument_list|)
 return|;
 block|}
 block|}

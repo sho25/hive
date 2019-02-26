@@ -843,8 +843,9 @@ name|put
 argument_list|(
 name|method
 argument_list|,
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|startTime
 argument_list|)
@@ -942,8 +943,9 @@ name|put
 argument_list|(
 name|method
 argument_list|,
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|endTime
 argument_list|)

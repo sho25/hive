@@ -610,8 +610,9 @@ name|struct2
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 literal|111
 argument_list|)

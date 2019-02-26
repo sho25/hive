@@ -2597,10 +2597,11 @@ name|field
 operator|==
 literal|null
 condition|?
-literal|0
+literal|0.0
 else|:
-operator|new
 name|Double
+operator|.
+name|parseDouble
 argument_list|(
 name|field
 operator|.

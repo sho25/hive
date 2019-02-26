@@ -759,14 +759,6 @@ literal|"userArgs"
 argument_list|)
 decl_stmt|;
 return|return
-operator|(
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|Object
-argument_list|>
-operator|)
 name|JsonBuilder
 operator|.
 name|jsonToMap
@@ -949,8 +941,9 @@ block|{
 try|try
 block|{
 return|return
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|s
 argument_list|)

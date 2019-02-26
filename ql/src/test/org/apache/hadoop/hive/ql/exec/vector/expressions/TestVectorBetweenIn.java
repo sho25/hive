@@ -2883,8 +2883,9 @@ argument_list|(
 operator|new
 name|ExprNodeConstantDesc
 argument_list|(
-operator|new
 name|Boolean
+operator|.
+name|valueOf
 argument_list|(
 name|isInvert
 argument_list|)

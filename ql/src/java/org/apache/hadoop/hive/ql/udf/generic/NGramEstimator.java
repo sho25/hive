@@ -419,6 +419,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -775,8 +777,9 @@ block|{
 comment|// new n-gram
 name|curFreq
 operator|=
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 literal|1.0
 argument_list|)
@@ -941,6 +944,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compare
@@ -1333,8 +1338,9 @@ condition|)
 block|{
 name|myval
 operator|=
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 name|val
 argument_list|)

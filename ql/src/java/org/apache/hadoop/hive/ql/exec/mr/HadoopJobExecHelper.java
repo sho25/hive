@@ -3552,8 +3552,9 @@ operator|.
 name|getName
 argument_list|()
 argument_list|,
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 name|c
 operator|.

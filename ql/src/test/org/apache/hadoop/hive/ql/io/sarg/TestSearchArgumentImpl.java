@@ -3231,8 +3231,9 @@ name|Type
 operator|.
 name|FLOAT
 argument_list|,
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 literal|0.22
 argument_list|)
@@ -3248,8 +3249,9 @@ name|Type
 operator|.
 name|FLOAT
 argument_list|,
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 literal|0.22
 argument_list|)

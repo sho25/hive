@@ -3067,8 +3067,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Float
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)
@@ -3078,8 +3079,9 @@ name|c
 operator|.
 name|isInstance
 argument_list|(
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)

@@ -505,8 +505,9 @@ name|list
 operator|.
 name|add
 argument_list|(
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)

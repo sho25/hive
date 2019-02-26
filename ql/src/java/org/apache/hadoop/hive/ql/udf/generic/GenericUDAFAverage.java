@@ -1084,8 +1084,9 @@ name|aggregation
 operator|.
 name|sum
 operator|=
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)
@@ -1656,13 +1657,9 @@ operator|new
 name|Object
 index|[]
 block|{
-operator|new
-name|Double
-argument_list|(
 name|myagg
 operator|.
 name|sum
-argument_list|)
 block|,
 name|myagg
 operator|.

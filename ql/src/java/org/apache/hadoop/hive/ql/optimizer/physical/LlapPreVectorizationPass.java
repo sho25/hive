@@ -840,11 +840,9 @@ argument_list|)
 expr_stmt|;
 block|}
 return|return
-operator|new
 name|Boolean
-argument_list|(
-literal|true
-argument_list|)
+operator|.
+name|TRUE
 return|;
 block|}
 block|}

@@ -457,6 +457,8 @@ block|}
 block|}
 block|}
 comment|/**    * Resets a distinctValueEstimator object to its original state.    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|reset
@@ -874,6 +876,8 @@ return|return
 name|hash
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|addToEstimator
@@ -1030,6 +1034,8 @@ name|index
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|addToEstimator
@@ -1041,14 +1047,12 @@ block|{
 name|int
 name|v
 init|=
-operator|new
 name|Double
+operator|.
+name|hashCode
 argument_list|(
 name|d
 argument_list|)
-operator|.
-name|hashCode
-argument_list|()
 decl_stmt|;
 name|addToEstimator
 argument_list|(
@@ -1067,14 +1071,12 @@ block|{
 name|int
 name|v
 init|=
-operator|new
 name|Double
+operator|.
+name|hashCode
 argument_list|(
 name|d
 argument_list|)
-operator|.
-name|hashCode
-argument_list|()
 decl_stmt|;
 name|addToEstimatorPCSA
 argument_list|(
@@ -1082,6 +1084,8 @@ name|v
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|addToEstimator
@@ -1264,6 +1268,8 @@ operator|)
 return|;
 block|}
 comment|/* We use the Flajolet-Martin estimator to estimate the number of distinct values.FM uses the    * location of the least significant zero as an estimate of log2(phi*ndvs).    */
+annotation|@
+name|Override
 specifier|public
 name|long
 name|estimateNumDistinctValues
@@ -1493,6 +1499,8 @@ return|return
 name|length
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|lengthFor

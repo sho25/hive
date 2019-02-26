@@ -969,8 +969,9 @@ condition|)
 block|{
 name|value
 operator|=
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 name|String
@@ -1354,8 +1355,9 @@ argument_list|(
 operator|new
 name|Var
 argument_list|(
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|rs
 operator|.
@@ -1436,8 +1438,9 @@ argument_list|(
 operator|new
 name|Var
 argument_list|(
-operator|new
 name|Double
+operator|.
+name|valueOf
 argument_list|(
 name|rs
 operator|.
@@ -2274,9 +2277,6 @@ operator|)
 operator|.
 name|equals
 argument_list|(
-operator|(
-name|String
-operator|)
 name|var
 operator|.
 name|value
@@ -2683,7 +2683,7 @@ specifier|public
 name|Var
 name|increment
 parameter_list|(
-name|Long
+name|long
 name|i
 parameter_list|)
 block|{
@@ -2698,8 +2698,9 @@ condition|)
 block|{
 name|value
 operator|=
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 operator|(
@@ -2724,7 +2725,7 @@ specifier|public
 name|Var
 name|decrement
 parameter_list|(
-name|Long
+name|long
 name|i
 parameter_list|)
 block|{
@@ -2739,8 +2740,9 @@ condition|)
 block|{
 name|value
 operator|=
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 operator|(
 operator|(

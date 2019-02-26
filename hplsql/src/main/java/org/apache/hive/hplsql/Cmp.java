@@ -572,6 +572,8 @@ literal|0
 return|;
 block|}
 comment|/**    * Get data for comparison from the source    */
+annotation|@
+name|Override
 specifier|public
 name|void
 name|run
@@ -1040,8 +1042,9 @@ literal|null
 return|;
 block|}
 return|return
-operator|new
 name|Boolean
+operator|.
+name|valueOf
 argument_list|(
 name|equal
 argument_list|)

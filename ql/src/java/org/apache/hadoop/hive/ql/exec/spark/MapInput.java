@@ -514,8 +514,9 @@ name|isCacheEnable
 parameter_list|()
 block|{
 return|return
-operator|new
 name|Boolean
+operator|.
+name|valueOf
 argument_list|(
 name|toCache
 argument_list|)

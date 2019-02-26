@@ -691,6 +691,8 @@ name|super
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Double
 name|getRowCount
@@ -1140,16 +1142,12 @@ name|fetch
 argument_list|)
 decl_stmt|;
 specifier|final
-name|Double
+name|int
 name|offsetLimit
 init|=
-operator|new
-name|Double
-argument_list|(
 name|offset
 operator|+
 name|limit
-argument_list|)
 decl_stmt|;
 comment|// offsetLimit is smaller than rowCount of the input operator
 comment|// thus, we return the offsetLimit
@@ -1161,7 +1159,12 @@ name|rowCount
 condition|)
 block|{
 return|return
+name|Double
+operator|.
+name|valueOf
+argument_list|(
 name|offsetLimit
+argument_list|)
 return|;
 block|}
 block|}

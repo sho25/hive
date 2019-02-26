@@ -6308,8 +6308,9 @@ operator|.
 name|getText
 argument_list|()
 argument_list|,
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|start
 argument_list|)
@@ -6328,8 +6329,9 @@ operator|.
 name|getText
 argument_list|()
 argument_list|,
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 name|end
 argument_list|)
@@ -6366,11 +6368,7 @@ name|index
 operator|.
 name|increment
 argument_list|(
-operator|new
-name|Long
-argument_list|(
 name|step
-argument_list|)
 argument_list|)
 expr_stmt|;
 else|else
@@ -6378,11 +6376,7 @@ name|index
 operator|.
 name|decrement
 argument_list|(
-operator|new
-name|Long
-argument_list|(
 name|step
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}

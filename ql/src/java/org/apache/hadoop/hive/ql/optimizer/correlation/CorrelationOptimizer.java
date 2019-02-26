@@ -1230,8 +1230,9 @@ condition|)
 block|{
 name|es
 operator|=
-operator|new
 name|Long
+operator|.
+name|valueOf
 argument_list|(
 literal|0
 argument_list|)
@@ -1467,6 +1468,8 @@ block|}
 block|}
 block|}
 comment|/**    * Detect correlations and transform the query tree.    *    * @param pactx    *          current parse context    * @throws SemanticException    */
+annotation|@
+name|Override
 specifier|public
 name|ParseContext
 name|transform
@@ -1750,9 +1753,6 @@ name|correlatedRsOps
 operator|.
 name|contains
 argument_list|(
-operator|(
-name|ReduceSinkOperator
-operator|)
 name|curentRsOp
 argument_list|)
 condition|)
@@ -3532,6 +3532,8 @@ return|return
 name|reduceSinkOperators
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|Object
 name|process
