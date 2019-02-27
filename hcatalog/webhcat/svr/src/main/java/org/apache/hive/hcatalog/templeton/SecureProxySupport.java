@@ -330,14 +330,6 @@ name|HCAT_SERVICE
 init|=
 literal|"hcat"
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|HIVE_SERVICE
-init|=
-literal|"hive"
-decl_stmt|;
 specifier|private
 specifier|final
 name|boolean
