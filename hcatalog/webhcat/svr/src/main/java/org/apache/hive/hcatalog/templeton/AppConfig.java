@@ -599,6 +599,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|HIVE_SERVER2_URL
+init|=
+literal|"templeton.hive.hs2.url"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|SQOOP_ARCHIVE_NAME
 init|=
 literal|"templeton.sqoop.archive"
