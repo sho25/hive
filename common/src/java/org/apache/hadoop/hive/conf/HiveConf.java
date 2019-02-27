@@ -14468,6 +14468,18 @@ argument_list|,
 literal|"Use Tez cartesian product edge to speed up cross product"
 argument_list|)
 block|,
+name|TEZ_SIMPLE_CUSTOM_EDGE_TINY_BUFFER_SIZE_MB
+argument_list|(
+literal|"hive.tez.unordered.output.buffer.size.mb"
+argument_list|,
+operator|-
+literal|1
+argument_list|,
+literal|"When we have an operation that does not need a large buffer, we use this buffer size for simple custom edge.\n"
+operator|+
+literal|"Value is an integer. Default value is -1, which means that we will estimate this value from operators in the plan."
+argument_list|)
+block|,
 comment|// The default is different on the client and server, so it's null here.
 name|LLAP_IO_ENABLED
 argument_list|(
