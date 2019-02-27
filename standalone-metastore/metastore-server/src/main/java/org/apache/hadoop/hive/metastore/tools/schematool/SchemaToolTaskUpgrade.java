@@ -16,6 +16,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 package|;
 end_package
 
@@ -78,6 +80,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 operator|.
 name|HiveSchemaHelper
 operator|.

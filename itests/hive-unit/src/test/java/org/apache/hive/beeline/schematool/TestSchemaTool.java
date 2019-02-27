@@ -85,6 +85,8 @@ name|metastore
 operator|.
 name|tools
 operator|.
+name|schematool
+operator|.
 name|HiveSchemaHelper
 import|;
 end_import
@@ -102,6 +104,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 operator|.
 name|HiveSchemaHelper
 operator|.
@@ -122,6 +126,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 operator|.
 name|HiveSchemaHelper
 operator|.

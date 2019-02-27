@@ -65,6 +65,8 @@ name|metastore
 operator|.
 name|tools
 operator|.
+name|schematool
+operator|.
 name|HiveSchemaHelper
 import|;
 end_import

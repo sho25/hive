@@ -16,6 +16,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 package|;
 end_package
 
@@ -355,26 +357,6 @@ name|Category
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
-import|;
-end_import
-
 begin_class
 annotation|@
 name|Category
@@ -387,21 +369,6 @@ specifier|public
 class|class
 name|TestSchemaToolForMetastore
 block|{
-specifier|private
-specifier|static
-specifier|final
-name|Logger
-name|LOG
-init|=
-name|LoggerFactory
-operator|.
-name|getLogger
-argument_list|(
-name|TestMetastoreSchemaTool
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 specifier|private
 name|MetastoreSchemaTool
 name|schemaTool

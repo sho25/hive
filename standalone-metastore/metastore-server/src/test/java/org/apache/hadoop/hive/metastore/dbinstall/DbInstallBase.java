@@ -63,6 +63,8 @@ name|metastore
 operator|.
 name|tools
 operator|.
+name|schematool
+operator|.
 name|MetastoreSchemaTool
 import|;
 end_import

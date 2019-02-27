@@ -16,6 +16,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 package|;
 end_package
 

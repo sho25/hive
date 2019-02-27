@@ -16,6 +16,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 package|;
 end_package
 
@@ -686,7 +688,7 @@ name|DEFAULT_QUOTE
 init|=
 literal|"\""
 decl_stmt|;
-comment|/**      * Find the type of given command      *      * @param dbCommand      * @return      */
+comment|/**      * Find the type of given command      */
 name|boolean
 name|isPartialCommand
 parameter_list|(
@@ -696,7 +698,7 @@ parameter_list|)
 throws|throws
 name|IllegalArgumentException
 function_decl|;
-comment|/**      * Parse the DB specific nesting format and extract the inner script name if any      *      * @param dbCommand command from parent script      * @return      * @throws IllegalFormatException      */
+comment|/**      * Parse the DB specific nesting format and extract the inner script name if any      *      * @param dbCommand command from parent script      * @throws IllegalFormatException      */
 name|String
 name|getScriptName
 parameter_list|(
@@ -706,7 +708,7 @@ parameter_list|)
 throws|throws
 name|IllegalArgumentException
 function_decl|;
-comment|/**      * Find if the given command is a nested script execution      *      * @param dbCommand      * @return      */
+comment|/**      * Find if the given command is a nested script execution      */
 name|boolean
 name|isNestedScript
 parameter_list|(
@@ -714,7 +716,7 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
-comment|/**      * Find if the given command should not be passed to DB      *      * @param dbCommand      * @return      */
+comment|/**      * Find if the given command should not be passed to DB      */
 name|boolean
 name|isNonExecCommand
 parameter_list|(
@@ -722,17 +724,17 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
-comment|/**      * Get the SQL statement delimiter      *      * @return      */
+comment|/**      * Get the SQL statement delimiter      */
 name|String
 name|getDelimiter
 parameter_list|()
 function_decl|;
-comment|/**      * Get the SQL indentifier quotation character      *      * @return      */
+comment|/**      * Get the SQL indentifier quotation character      */
 name|String
 name|getQuoteCharacter
 parameter_list|()
 function_decl|;
-comment|/**      * Clear any client specific tags      *      * @return      */
+comment|/**      * Clear any client specific tags      */
 name|String
 name|cleanseCommand
 parameter_list|(
@@ -740,7 +742,7 @@ name|String
 name|dbCommand
 parameter_list|)
 function_decl|;
-comment|/**      * Does the DB required table/column names quoted      *      * @return      */
+comment|/**      * Does the DB required table/column names quoted      */
 name|boolean
 name|needsQuotedIdentifier
 parameter_list|()
@@ -779,7 +781,7 @@ throws|,
 name|IOException
 function_decl|;
 block|}
-comment|/***    * Base implementation of NestedScriptParser    * abstractCommandParser.    *    */
+comment|/**    * Base implementation of NestedScriptParser abstractCommandParser.    */
 specifier|private
 specifier|static
 specifier|abstract

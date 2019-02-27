@@ -16,6 +16,8 @@ operator|.
 name|metastore
 operator|.
 name|tools
+operator|.
+name|schematool
 package|;
 end_package
 
@@ -142,24 +144,6 @@ operator|.
 name|cli
 operator|.
 name|ParseException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|tools
-operator|.
-name|HiveSchemaHelper
 import|;
 end_import
 
