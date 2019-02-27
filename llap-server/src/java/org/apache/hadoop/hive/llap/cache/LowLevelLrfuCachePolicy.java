@@ -1100,7 +1100,7 @@ init|=
 name|LlapCacheableBuffer
 operator|.
 name|INVALIDATE_OK
-operator|!=
+operator|==
 name|current
 operator|.
 name|invalidate
