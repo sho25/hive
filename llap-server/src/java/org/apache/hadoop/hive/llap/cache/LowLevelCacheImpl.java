@@ -2685,6 +2685,11 @@ name|allMoving
 init|=
 literal|0
 decl_stmt|;
+name|long
+name|totalUsedSpace
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|Map
@@ -2739,6 +2744,11 @@ init|=
 literal|0
 decl_stmt|,
 name|fileMoving
+init|=
+literal|0
+decl_stmt|;
+name|long
+name|fileMemoryUsage
 init|=
 literal|0
 decl_stmt|;
@@ -2894,6 +2904,15 @@ block|}
 block|}
 finally|finally
 block|{
+name|fileMemoryUsage
+operator|+=
+name|e2
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|allocSize
+expr_stmt|;
 name|e2
 operator|.
 name|getValue
@@ -2919,6 +2938,10 @@ expr_stmt|;
 name|allMoving
 operator|+=
 name|fileMoving
+expr_stmt|;
+name|totalUsedSpace
+operator|+=
+name|fileMemoryUsage
 expr_stmt|;
 name|sb
 operator|.
@@ -2947,7 +2970,11 @@ literal|" evicted, "
 operator|+
 name|fileMoving
 operator|+
-literal|" being moved"
+literal|" being moved,"
+operator|+
+name|fileMemoryUsage
+operator|+
+literal|" total used byte"
 argument_list|)
 expr_stmt|;
 if|if
@@ -3009,7 +3036,11 @@ literal|" evicted, "
 operator|+
 name|allMoving
 operator|+
-literal|" being moved"
+literal|" being moved,"
+operator|+
+name|totalUsedSpace
+operator|+
+literal|"total used space"
 argument_list|)
 expr_stmt|;
 block|}
