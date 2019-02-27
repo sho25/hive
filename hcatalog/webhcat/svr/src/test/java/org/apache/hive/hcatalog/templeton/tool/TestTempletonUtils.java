@@ -453,6 +453,25 @@ name|fifty
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|String
+name|beeline
+init|=
+literal|"VERTICES: 01/02  [==========================>>] 70%  ELAPSED TIME: 3.79 s"
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"70% complete"
+argument_list|,
+name|TempletonUtils
+operator|.
+name|extractPercentComplete
+argument_list|(
+name|beeline
+argument_list|)
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test

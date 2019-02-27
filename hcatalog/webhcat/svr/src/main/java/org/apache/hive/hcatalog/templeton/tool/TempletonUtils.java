@@ -591,6 +591,19 @@ argument_list|(
 literal|"(Map|Reducer) (\\d+:) (\\d+(\\(\\+\\d+\\))?/\\d+)"
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|Pattern
+name|HIVE_BEELINE_COMPLETE
+init|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+literal|"VERTICES: .* (\\d+%)"
+argument_list|)
+decl_stmt|;
 comment|/**    * Pig on Tez produces progress report that looks like this    * DAG Status: status=RUNNING, progress=TotalTasks: 3 Succeeded: 0 Running: 0 Failed: 0 Killed: 0    *    * Use Succeeded/TotalTasks to report progress    * There is a hole as Pig might launch more than one DAGs. If this happens, user might    * see progress rewind since the percentage is for the new DAG. To fix this, We need to fix    * Pig print total number of DAGs on console, and track complete DAGs in WebHCat.    */
 specifier|public
 specifier|static
@@ -680,6 +693,38 @@ operator|.
 name|trim
 argument_list|()
 return|;
+name|Matcher
+name|beeline
+init|=
+name|HIVE_BEELINE_COMPLETE
+operator|.
+name|matcher
+argument_list|(
+name|line
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|beeline
+operator|.
+name|find
+argument_list|()
+condition|)
+block|{
+return|return
+name|beeline
+operator|.
+name|group
+argument_list|(
+literal|1
+argument_list|)
+operator|.
+name|trim
+argument_list|()
+operator|+
+literal|" complete"
+return|;
+block|}
 name|Matcher
 name|hive
 init|=
