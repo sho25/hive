@@ -903,6 +903,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|parse
+operator|.
+name|CalcitePlanner
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|mapper
@@ -2202,6 +2220,12 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Initialize metadata provider class
+name|CalcitePlanner
+operator|.
+name|initializeMetadataProviderClass
+argument_list|()
+expr_stmt|;
 try|try
 block|{
 name|sessionHive

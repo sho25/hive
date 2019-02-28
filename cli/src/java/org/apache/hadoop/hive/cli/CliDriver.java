@@ -753,6 +753,24 @@ name|ql
 operator|.
 name|parse
 operator|.
+name|CalcitePlanner
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
 name|HiveParser
 import|;
 end_import
@@ -4593,6 +4611,12 @@ block|}
 name|ss
 operator|.
 name|updateThreadName
+argument_list|()
+expr_stmt|;
+comment|// Initialize metadata provider class
+name|CalcitePlanner
+operator|.
+name|initializeMetadataProviderClass
 argument_list|()
 expr_stmt|;
 comment|// Create views registry
