@@ -5681,7 +5681,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.exec.DDLTask. Database does not exist: someJunkDB"
+literal|"org.apache.hadoop.hive.ql.ddl.DDLTask2. Database does not exist: someJunkDB"
 operator|.
 name|toLowerCase
 argument_list|()
