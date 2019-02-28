@@ -6152,6 +6152,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDTF
+argument_list|(
+literal|"get_sql_schema"
+argument_list|,
+name|GenericUDTFGetSQLSchema
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|//PTF declarations
 name|system
 operator|.
