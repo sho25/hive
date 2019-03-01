@@ -410,9 +410,14 @@ if|if
 condition|(
 name|groupFilter
 operator|.
-name|contains
+name|stream
+argument_list|()
+operator|.
+name|anyMatch
 argument_list|(
 name|shortName
+operator|::
+name|equalsIgnoreCase
 argument_list|)
 condition|)
 block|{
