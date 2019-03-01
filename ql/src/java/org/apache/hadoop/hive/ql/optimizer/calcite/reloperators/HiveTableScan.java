@@ -1479,6 +1479,14 @@ literal|"["
 operator|+
 name|this
 operator|.
+name|neededColIndxsFrmReloptHT
+operator|+
+literal|"]"
+operator|+
+literal|"["
+operator|+
+name|this
+operator|.
 name|isInsideView
 argument_list|()
 operator|+
