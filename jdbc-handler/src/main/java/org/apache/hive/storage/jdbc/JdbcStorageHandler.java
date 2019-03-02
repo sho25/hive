@@ -827,6 +827,28 @@ parameter_list|)
 block|{     }
 try|try
 block|{
+name|classesToLoad
+operator|.
+name|add
+argument_list|(
+name|Class
+operator|.
+name|forName
+argument_list|(
+literal|"com.ibm.db2.jcc.DB2Driver"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{     }
+comment|// Adding db2 jdbc driver if exists
+try|try
+block|{
 name|JarUtils
 operator|.
 name|addDependencyJars

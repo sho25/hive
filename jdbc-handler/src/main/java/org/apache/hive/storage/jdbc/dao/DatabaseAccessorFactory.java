@@ -151,6 +151,16 @@ name|MsSqlDatabaseAccessor
 argument_list|()
 expr_stmt|;
 break|break;
+case|case
+name|DB2
+case|:
+name|accessor
+operator|=
+operator|new
+name|DB2DatabaseAccessor
+argument_list|()
+expr_stmt|;
+break|break;
 default|default:
 name|accessor
 operator|=

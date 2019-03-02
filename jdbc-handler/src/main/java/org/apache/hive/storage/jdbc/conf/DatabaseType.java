@@ -28,6 +28,8 @@ name|MYSQL
 block|,
 name|H2
 block|,
+name|DB2
+block|,
 name|DERBY
 block|,
 name|ORACLE
