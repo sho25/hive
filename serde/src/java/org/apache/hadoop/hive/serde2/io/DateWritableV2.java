@@ -507,7 +507,7 @@ block|{
 return|return
 name|date
 operator|.
-name|hashCode
+name|toEpochDay
 argument_list|()
 return|;
 block|}
