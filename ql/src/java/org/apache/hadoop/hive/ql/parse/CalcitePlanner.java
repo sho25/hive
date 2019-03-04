@@ -20896,6 +20896,32 @@ expr_stmt|;
 block|}
 specifier|final
 name|String
+name|catalogName
+init|=
+name|tabMetaData
+operator|.
+name|getProperty
+argument_list|(
+name|Constants
+operator|.
+name|JDBC_CATALOG
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
+name|schemaName
+init|=
+name|tabMetaData
+operator|.
+name|getProperty
+argument_list|(
+name|Constants
+operator|.
+name|JDBC_SCHEMA
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableName
 init|=
 name|tabMetaData
@@ -20965,11 +20991,9 @@ name|dialect
 argument_list|,
 name|jc
 argument_list|,
-literal|null
-comment|/*catalog */
+name|catalogName
 argument_list|,
-literal|null
-comment|/*schema */
+name|schemaName
 argument_list|)
 decl_stmt|;
 name|JdbcTable
