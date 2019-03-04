@@ -711,7 +711,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|dbcp
+name|dbcp2
 operator|.
 name|BasicDataSourceFactory
 operator|.
@@ -728,7 +728,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|pool
+name|pool2
 operator|.
 name|impl
 operator|.
