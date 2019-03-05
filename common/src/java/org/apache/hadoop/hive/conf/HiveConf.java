@@ -6428,7 +6428,18 @@ literal|true
 argument_list|,
 literal|"Flag to control enabling pushdown of operators into JDBC connection and subsequent SQL generation\n"
 operator|+
-literal|"using Calcite."
+literal|"using Calcite"
+argument_list|)
+block|,
+name|HIVE_ENABLE_JDBC_SAFE_PUSHDOWN
+argument_list|(
+literal|"hive.jdbc.pushdown.safe.enable"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Flag to control enabling pushdown of operators using Calcite that prevent splitting results\n"
+operator|+
+literal|"retrieval in the JDBC storage handler"
 argument_list|)
 block|,
 comment|// hive.mapjoin.bucket.cache.size has been replaced by hive.smbjoin.cache.row,
