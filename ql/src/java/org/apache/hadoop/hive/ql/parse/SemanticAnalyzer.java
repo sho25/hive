@@ -48304,6 +48304,11 @@ argument_list|,
 name|isMmCtas
 argument_list|,
 name|isInsertOverwrite
+argument_list|,
+name|qb
+operator|.
+name|getIsQuery
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|boolean
