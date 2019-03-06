@@ -2760,11 +2760,14 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Create a map-reduce scratch directory on demand and return it.    *    */
+comment|/**    * Create a map-reduce scratch directory on demand and return it.    * @param mkDir flag to indicate if scratch dir is to be created or not    *    */
 specifier|public
 name|Path
 name|getMRScratchDir
-parameter_list|()
+parameter_list|(
+name|boolean
+name|mkDir
+parameter_list|)
 block|{
 comment|// if we are executing entirely on the client side - then
 comment|// just (re)use the local scratch directory
@@ -2777,9 +2780,7 @@ block|{
 return|return
 name|getLocalScratchDir
 argument_list|(
-operator|!
-name|isExplainSkipExecution
-argument_list|()
+name|mkDir
 argument_list|)
 return|;
 block|}
@@ -2820,9 +2821,7 @@ operator|.
 name|getAuthority
 argument_list|()
 argument_list|,
-operator|!
-name|isExplainSkipExecution
-argument_list|()
+name|mkDir
 argument_list|,
 name|uri
 operator|.
@@ -2882,6 +2881,21 @@ name|e
 argument_list|)
 throw|;
 block|}
+block|}
+comment|/**    * Create a map-reduce scratch directory on demand and return it.    *    */
+specifier|public
+name|Path
+name|getMRScratchDir
+parameter_list|()
+block|{
+return|return
+name|getMRScratchDir
+argument_list|(
+operator|!
+name|isExplainSkipExecution
+argument_list|()
+argument_list|)
+return|;
 block|}
 comment|/**    * Create a temporary directory depending of the path specified.    * - If path is an Object store filesystem, then use the default MR scratch directory (HDFS), unless isFinalJob and    * {@link BlobStorageUtils#areOptimizationsEnabled(Configuration)} are both true, then return a path on    * the blobstore.    * - If path is on HDFS, then create a staging directory inside the path    *    * @param path Path used to verify the Filesystem to use for temporary directory    *    * @return A path to the new temporary directory    */
 specifier|public
@@ -3358,6 +3372,30 @@ argument_list|,
 operator|!
 name|isExplainSkipExecution
 argument_list|()
+argument_list|)
+argument_list|,
+name|MR_PREFIX
+operator|+
+name|nextPathId
+argument_list|()
+argument_list|)
+return|;
+block|}
+specifier|public
+name|Path
+name|getMRTmpPath
+parameter_list|(
+name|boolean
+name|mkDir
+parameter_list|)
+block|{
+return|return
+operator|new
+name|Path
+argument_list|(
+name|getMRScratchDir
+argument_list|(
+name|mkDir
 argument_list|)
 argument_list|,
 name|MR_PREFIX
