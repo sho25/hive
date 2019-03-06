@@ -6424,12 +6424,7 @@ name|set
 argument_list|(
 name|JaninoRelMetadataProvider
 operator|.
-name|of
-argument_list|(
-name|DefaultRelMetadataProvider
-operator|.
-name|INSTANCE
-argument_list|)
+name|DEFAULT
 argument_list|)
 expr_stmt|;
 block|}
@@ -13032,6 +13027,14 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//Remove subquery
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -13046,6 +13049,7 @@ name|calciteGenPlan
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|calciteGenPlan
 operator|=
 name|hepPlan
@@ -13068,6 +13072,14 @@ name|conf
 argument_list|)
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -13082,6 +13094,7 @@ name|calciteGenPlan
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|calciteGenPlan
 operator|=
 name|HiveRelDecorrelator
@@ -13091,6 +13104,14 @@ argument_list|(
 name|calciteGenPlan
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
@@ -13105,6 +13126,7 @@ name|calciteGenPlan
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Validate query materialization for query results caching. This check needs
 comment|// to occur before constant folding, which may remove some function calls
 comment|// from the query plan.
@@ -16139,12 +16161,7 @@ name|set
 argument_list|(
 name|JaninoRelMetadataProvider
 operator|.
-name|of
-argument_list|(
-name|DefaultRelMetadataProvider
-operator|.
-name|INSTANCE
-argument_list|)
+name|DEFAULT
 argument_list|)
 expr_stmt|;
 comment|// Add materializations to planner
@@ -20879,6 +20896,32 @@ expr_stmt|;
 block|}
 specifier|final
 name|String
+name|catalogName
+init|=
+name|tabMetaData
+operator|.
+name|getProperty
+argument_list|(
+name|Constants
+operator|.
+name|JDBC_CATALOG
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
+name|schemaName
+init|=
+name|tabMetaData
+operator|.
+name|getProperty
+argument_list|(
+name|Constants
+operator|.
+name|JDBC_SCHEMA
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
 name|tableName
 init|=
 name|tabMetaData
@@ -20948,11 +20991,9 @@ name|dialect
 argument_list|,
 name|jc
 argument_list|,
-literal|null
-comment|/*catalog */
+name|catalogName
 argument_list|,
-literal|null
-comment|/*schema */
+name|schemaName
 argument_list|)
 decl_stmt|;
 name|JdbcTable
@@ -35327,6 +35368,19 @@ return|return
 name|tabAliases
 return|;
 block|}
+block|}
+comment|/**    * This method can be called at startup time to pre-register all the    * additional Hive classes (compared to Calcite core classes) that may    * be visited during the planning phase.    */
+specifier|public
+specifier|static
+name|void
+name|initializeMetadataProviderClass
+parameter_list|()
+block|{
+name|HiveDefaultRelMetadataProvider
+operator|.
+name|initializeMetadataProviderClass
+argument_list|()
+expr_stmt|;
 block|}
 specifier|private
 enum|enum

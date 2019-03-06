@@ -476,6 +476,12 @@ name|replicationSpec
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+name|String
+name|ownerName
+init|=
+literal|null
+decl_stmt|;
 comment|/**    * For serialization only.    */
 specifier|public
 name|CreateViewDesc
@@ -1892,6 +1898,21 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+if|if
+condition|(
+name|ownerName
+operator|!=
+literal|null
+condition|)
+block|{
+name|tbl
+operator|.
+name|setOwner
+argument_list|(
+name|ownerName
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Sets the column state for the create view statement (false since it is a creation).
 comment|// Similar to logic in CreateTableDesc.
 name|StatsSetupConst
@@ -1915,6 +1936,32 @@ argument_list|)
 expr_stmt|;
 return|return
 name|tbl
+return|;
+block|}
+specifier|public
+name|void
+name|setOwnerName
+parameter_list|(
+name|String
+name|ownerName
+parameter_list|)
+block|{
+name|this
+operator|.
+name|ownerName
+operator|=
+name|ownerName
+expr_stmt|;
+block|}
+specifier|public
+name|String
+name|getOwnerName
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|ownerName
 return|;
 block|}
 block|}

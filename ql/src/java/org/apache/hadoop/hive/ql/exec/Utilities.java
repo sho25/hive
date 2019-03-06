@@ -841,22 +841,6 @@ name|hive
 operator|.
 name|common
 operator|.
-name|BlobStorageUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|FileUtils
 import|;
 end_import
@@ -7914,6 +7898,78 @@ expr_stmt|;
 block|}
 block|}
 block|}
+specifier|public
+specifier|static
+name|void
+name|moveSpecifiedFiles
+parameter_list|(
+name|FileSystem
+name|fs
+parameter_list|,
+name|Path
+name|dst
+parameter_list|,
+name|Set
+argument_list|<
+name|Path
+argument_list|>
+name|filesToMove
+parameter_list|)
+throws|throws
+name|IOException
+throws|,
+name|HiveException
+block|{
+if|if
+condition|(
+operator|!
+name|fs
+operator|.
+name|exists
+argument_list|(
+name|dst
+argument_list|)
+condition|)
+block|{
+name|fs
+operator|.
+name|mkdirs
+argument_list|(
+name|dst
+argument_list|)
+expr_stmt|;
+block|}
+for|for
+control|(
+name|Path
+name|path
+range|:
+name|filesToMove
+control|)
+block|{
+name|FileStatus
+name|fsStatus
+init|=
+name|fs
+operator|.
+name|getFileStatus
+argument_list|(
+name|path
+argument_list|)
+decl_stmt|;
+name|Utilities
+operator|.
+name|moveFile
+argument_list|(
+name|fs
+argument_list|,
+name|fsStatus
+argument_list|,
+name|dst
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 specifier|private
 specifier|static
 name|void
@@ -8988,6 +9044,77 @@ name|toString
 argument_list|()
 return|;
 block|}
+specifier|public
+specifier|static
+name|boolean
+name|shouldAvoidRename
+parameter_list|(
+name|FileSinkDesc
+name|conf
+parameter_list|,
+name|Configuration
+name|hConf
+parameter_list|)
+block|{
+comment|// we are avoiding rename/move only if following conditions are met
+comment|//  * execution engine is tez
+comment|//  * query cache is disabled
+comment|//  * if it is select query
+if|if
+condition|(
+name|conf
+operator|!=
+literal|null
+operator|&&
+name|conf
+operator|.
+name|getIsQuery
+argument_list|()
+operator|&&
+name|conf
+operator|.
+name|getFilesToFetch
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|hConf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
+argument_list|)
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+literal|"tez"
+argument_list|)
+operator|&&
+operator|!
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|hConf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_QUERY_RESULTS_CACHE_ENABLED
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+return|return
+literal|false
+return|;
+block|}
 comment|/**    * returns null if path is not exist    */
 specifier|public
 specifier|static
@@ -9062,28 +9189,17 @@ name|IOException
 throws|,
 name|HiveException
 block|{
-comment|//
-comment|// Runaway task attempts (which are unable to be killed by MR/YARN) can cause HIVE-17113,
-comment|// where they can write duplicate output files to tmpPath after de-duplicating the files,
-comment|// but before tmpPath is moved to specPath.
-comment|// Fixing this issue will be done differently for blobstore (e.g. S3)
-comment|// vs non-blobstore (local filesystem, HDFS) filesystems due to differences in
-comment|// implementation - a directory move in a blobstore effectively results in file-by-file
-comment|// moves for every file in a directory, while in HDFS/localFS a directory move is just a
-comment|// single filesystem operation.
-comment|// - For non-blobstore FS, do the following:
-comment|//   1) Rename tmpPath to a new directory name to prevent additional files
-comment|//      from being added by runaway processes.
-comment|//   2) Remove duplicates from the temp directory
-comment|//   3) Rename/move the temp directory to specPath
-comment|//
-comment|// - For blobstore FS, do the following:
-comment|//   1) Remove duplicates from tmpPath
-comment|//   2) Use moveSpecifiedFiles() to perform a file-by-file move of the de-duped files
-comment|//      to specPath. On blobstore FS, assuming n files in the directory, this results
-comment|//      in n file moves, compared to 2*n file moves with the previous solution
-comment|//      (each directory move would result in a file-by-file move of the files in the directory)
-comment|//
+comment|// There are following two paths this could could take based on the value of shouldAvoidRename
+comment|//  shouldAvoidRename indicate if tmpPath should be renamed/moved or now.
+comment|//    if false:
+comment|//      Skip renaming/moving the tmpPath
+comment|//      Deduplicate and keep a list of files
+comment|//      Pass on the list of files to conf (to be used later by fetch operator)
+comment|//    if true:
+comment|//       1) Rename tmpPath to a new directory name to prevent additional files
+comment|//          from being added by runaway processes.
+comment|//       2) Remove duplicates from the temp directory
+comment|//       3) Rename/move the temp directory to specPath
 name|FileSystem
 name|fs
 init|=
@@ -9092,18 +9208,6 @@ operator|.
 name|getFileSystem
 argument_list|(
 name|hconf
-argument_list|)
-decl_stmt|;
-name|boolean
-name|isBlobStorage
-init|=
-name|BlobStorageUtils
-operator|.
-name|isBlobStorageFileSystem
-argument_list|(
-name|hconf
-argument_list|,
-name|fs
 argument_list|)
 decl_stmt|;
 name|Path
@@ -9134,7 +9238,12 @@ block|{
 if|if
 condition|(
 operator|!
-name|isBlobStorage
+name|shouldAvoidRename
+argument_list|(
+name|conf
+argument_list|,
+name|hconf
+argument_list|)
 operator|&&
 name|fs
 operator|.
@@ -9167,6 +9276,19 @@ name|getName
 argument_list|()
 operator|+
 literal|".moved"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Moving/Renaming "
+operator|+
+name|tmpPathOriginal
+operator|+
+literal|" to "
+operator|+
+name|tmpPath
 argument_list|)
 expr_stmt|;
 name|Utilities
@@ -9253,15 +9375,13 @@ argument_list|()
 decl_stmt|;
 name|Set
 argument_list|<
-name|Path
+name|FileStatus
 argument_list|>
 name|filesKept
 init|=
 operator|new
 name|HashSet
-argument_list|<
-name|Path
-argument_list|>
+argument_list|<>
 argument_list|()
 decl_stmt|;
 name|perfLogger
@@ -9346,13 +9466,38 @@ argument_list|,
 name|reporter
 argument_list|)
 expr_stmt|;
+for|for
+control|(
+name|Path
+name|p
+range|:
+name|emptyBuckets
+control|)
+block|{
+name|FileStatus
+index|[]
+name|items
+init|=
+name|fs
+operator|.
+name|listStatus
+argument_list|(
+name|p
+argument_list|)
+decl_stmt|;
 name|filesKept
 operator|.
 name|addAll
 argument_list|(
-name|emptyBuckets
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+name|items
+argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|perfLogger
 operator|.
 name|PerfLogEnd
@@ -9377,6 +9522,41 @@ argument_list|,
 name|specPath
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|shouldAvoidRename
+argument_list|(
+name|conf
+argument_list|,
+name|hconf
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping rename/move files. Files to be kept are: "
+operator|+
+name|filesKept
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
+name|getFilesToFetch
+argument_list|()
+operator|.
+name|addAll
+argument_list|(
+name|filesKept
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|perfLogger
 operator|.
 name|PerfLogBegin
@@ -9386,31 +9566,6 @@ argument_list|,
 literal|"RenameOrMoveFiles"
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|isBlobStorage
-condition|)
-block|{
-comment|// HIVE-17113 - avoid copying files that may have been written to the temp dir by runaway tasks,
-comment|// by moving just the files we've tracked from removeTempOrDuplicateFiles().
-name|Utilities
-operator|.
-name|moveSpecifiedFiles
-argument_list|(
-name|fs
-argument_list|,
-name|tmpPath
-argument_list|,
-name|specPath
-argument_list|,
-name|filesKept
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-comment|// For non-blobstore case, can just move the directory - the initial directory rename
-comment|// at the start of this method should prevent files written by runaway tasks.
 name|Utilities
 operator|.
 name|renameOrMoveFiles
@@ -9422,7 +9577,6 @@ argument_list|,
 name|specPath
 argument_list|)
 expr_stmt|;
-block|}
 name|perfLogger
 operator|.
 name|PerfLogEnd
@@ -9432,6 +9586,7 @@ argument_list|,
 literal|"RenameOrMoveFiles"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 else|else
@@ -9721,7 +9876,7 @@ name|files
 parameter_list|,
 name|Set
 argument_list|<
-name|Path
+name|FileStatus
 argument_list|>
 name|fileSet
 parameter_list|)
@@ -9739,9 +9894,6 @@ operator|.
 name|add
 argument_list|(
 name|file
-operator|.
-name|getPath
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -9961,7 +10113,7 @@ name|hconf
 parameter_list|,
 name|Set
 argument_list|<
-name|Path
+name|FileStatus
 argument_list|>
 name|filesKept
 parameter_list|,
@@ -10151,7 +10303,7 @@ name|isMmTable
 parameter_list|,
 name|Set
 argument_list|<
-name|Path
+name|FileStatus
 argument_list|>
 name|filesKept
 parameter_list|,

@@ -2151,8 +2151,6 @@ comment|// Executed if relevant, and used to contain all the other details about
 name|ImportTableDesc
 name|tblDesc
 decl_stmt|;
-try|try
-block|{
 name|org
 operator|.
 name|apache
@@ -2173,6 +2171,8 @@ operator|.
 name|getTable
 argument_list|()
 decl_stmt|;
+try|try
+block|{
 comment|// The table can be non acid in case of replication from a cluster with STRICT_MANAGED set to false.
 if|if
 condition|(
@@ -2396,6 +2396,16 @@ operator|.
 name|setReplWriteId
 argument_list|(
 name|writeId
+argument_list|)
+expr_stmt|;
+name|tblDesc
+operator|.
+name|setOwnerName
+argument_list|(
+name|tblObj
+operator|.
+name|getOwner
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

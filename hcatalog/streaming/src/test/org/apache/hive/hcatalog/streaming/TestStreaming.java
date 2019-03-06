@@ -1333,6 +1333,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -3705,6 +3715,8 @@ comment|// stream data into streaming table with N buckets, then copy the data i
 comment|// check if bucketing in both was done in the same way
 annotation|@
 name|Test
+annotation|@
+name|Ignore
 specifier|public
 name|void
 name|testStreamBucketingMatchesRegularBucketing
