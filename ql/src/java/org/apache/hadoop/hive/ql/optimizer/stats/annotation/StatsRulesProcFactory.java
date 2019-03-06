@@ -8153,11 +8153,6 @@ argument_list|(
 name|colStats
 argument_list|)
 expr_stmt|;
-name|long
-name|ndvProduct
-init|=
-literal|1
-decl_stmt|;
 specifier|final
 name|long
 name|parentNumRows
@@ -8168,101 +8163,20 @@ name|getNumRows
 argument_list|()
 decl_stmt|;
 comment|// compute product of distinct values of grouping columns
-for|for
-control|(
-name|ColStatistics
-name|cs
-range|:
-name|colStats
-control|)
-block|{
-if|if
-condition|(
-name|cs
-operator|!=
-literal|null
-condition|)
-block|{
 name|long
-name|ndv
+name|ndvProduct
 init|=
-name|cs
-operator|.
-name|getCountDistint
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|cs
-operator|.
-name|getNumNulls
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
-name|ndv
-operator|=
 name|StatsUtils
 operator|.
-name|safeAdd
+name|computeNDVGroupingColumns
 argument_list|(
-name|ndv
+name|colStats
 argument_list|,
-literal|1
-argument_list|)
-expr_stmt|;
-block|}
-name|ndvProduct
-operator|=
-name|StatsUtils
-operator|.
-name|safeMult
-argument_list|(
-name|ndvProduct
-argument_list|,
-name|ndv
-argument_list|)
-expr_stmt|;
-block|}
-else|else
-block|{
-if|if
-condition|(
 name|parentStats
-operator|.
-name|getColumnStatsState
-argument_list|()
-operator|.
-name|equals
-argument_list|(
-name|Statistics
-operator|.
-name|State
-operator|.
-name|COMPLETE
+argument_list|,
+literal|false
 argument_list|)
-condition|)
-block|{
-comment|// the column must be an aggregate column inserted by GBY. We
-comment|// don't have to account for this column when computing product
-comment|// of NDVs
-continue|continue;
-block|}
-else|else
-block|{
-comment|// partial column statistics on grouping attributes case.
-comment|// if column statistics on grouping attribute is missing, then
-comment|// assume worst case.
-comment|// GBY rule will emit half the number of rows if ndvProduct is 0
-name|ndvProduct
-operator|=
-literal|0
-expr_stmt|;
-block|}
-break|break;
-block|}
-block|}
+decl_stmt|;
 comment|// if ndvProduct is 0 then column stats state must be partial and we are missing
 comment|// column stats for a group by column
 if|if

@@ -6654,6 +6654,19 @@ operator|+
 literal|"Set to 1 to make sure hash aggregation is never turned off."
 argument_list|)
 block|,
+name|HIVEMAPAGGRHASHMINREDUCTIONSTATSADJUST
+argument_list|(
+literal|"hive.map.aggr.hash.min.reduction.stats"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether the value for hive.map.aggr.hash.min.reduction should be set statically using stats estimates. \n"
+operator|+
+literal|"If this is enabled, the default value for hive.map.aggr.hash.min.reduction is only used as an upper-bound\n"
+operator|+
+literal|"for the value set in the map-side group by operators."
+argument_list|)
+block|,
 name|HIVEMULTIGROUPBYSINGLEREDUCER
 argument_list|(
 literal|"hive.multigroupby.singlereducer"

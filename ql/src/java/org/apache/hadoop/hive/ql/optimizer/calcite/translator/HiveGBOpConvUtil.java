@@ -1014,6 +1014,9 @@ decl_stmt|;
 name|float
 name|memoryThreshold
 decl_stmt|;
+name|float
+name|minReductionHashAggr
+decl_stmt|;
 specifier|private
 name|HIVEGBPHYSICALMODE
 name|gbPhysicalPipelineMode
@@ -2188,6 +2191,23 @@ operator|.
 name|ConfVars
 operator|.
 name|HIVEMAPAGGRMEMORYTHRESHOLD
+argument_list|)
+expr_stmt|;
+name|gbInfo
+operator|.
+name|minReductionHashAggr
+operator|=
+name|HiveConf
+operator|.
+name|getFloatVar
+argument_list|(
+name|hc
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVEMAPAGGRHASHMINREDUCTION
 argument_list|)
 expr_stmt|;
 comment|// 5. Gather GB Physical pipeline (based on user config& Grping Sets size)
@@ -5141,6 +5161,10 @@ name|gbInfo
 operator|.
 name|memoryThreshold
 argument_list|,
+name|gbInfo
+operator|.
+name|minReductionHashAggr
+argument_list|,
 literal|null
 argument_list|,
 literal|false
@@ -6152,6 +6176,10 @@ name|memoryThreshold
 argument_list|,
 name|gbInfo
 operator|.
+name|minReductionHashAggr
+argument_list|,
+name|gbInfo
+operator|.
 name|grpSets
 argument_list|,
 name|includeGrpSetInGBDesc
@@ -6972,6 +7000,10 @@ name|gbInfo
 operator|.
 name|memoryThreshold
 argument_list|,
+name|gbInfo
+operator|.
+name|minReductionHashAggr
+argument_list|,
 literal|null
 argument_list|,
 literal|false
@@ -7707,6 +7739,10 @@ argument_list|,
 name|gbAttrs
 operator|.
 name|memoryThreshold
+argument_list|,
+name|gbAttrs
+operator|.
+name|minReductionHashAggr
 argument_list|,
 name|gbAttrs
 operator|.
