@@ -592,7 +592,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * NOTE: this rule is replicated from Calcite's SubqueryRemoveRule  * Transform that converts IN, EXISTS and scalar sub-queries into joins.  * TODO:  *  Reason this is replicated instead of using Calcite's is  *    Calcite creates null literal with null type but hive needs it to be properly typed  *  *<p>Sub-queries are represented by {@link RexSubQuery} expressions.  *  *<p>A sub-query may or may not be correlated. If a sub-query is correlated,  * the wrapped {@link RelNode} will contain a {@link RexCorrelVariable} before  * the rewrite, and the product of the rewrite will be a {@link Correlate}.  * The Correlate can be removed using {@link RelDecorrelator}.  */
+comment|/**  * NOTE: this rule is replicated from Calcite's SubqueryRemoveRule  * Transform that converts IN, EXISTS and scalar sub-queries into joins.  * TODO:  *  Reason this is replicated instead of using Calcite's is  *    Calcite creates null literal with null type but hive needs it to be properly typed  *  *<p>Sub-queries are represented by {@link RexSubQuery} expressions.  *  *<p>A sub-query may or may not be correlated. If a sub-query is correlated,  * the wrapped {@link RelNode} will contain a {@link org.apache.calcite.rex.RexCorrelVariable} before  * the rewrite, and the product of the rewrite will be a {@link org.apache.calcite.rel.core.Correlate}.  * The Correlate can be removed using {@link org.apache.calcite.sql2rel.RelDecorrelator}.  */
 end_comment
 
 begin_class

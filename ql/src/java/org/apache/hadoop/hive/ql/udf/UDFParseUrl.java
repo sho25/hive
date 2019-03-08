@@ -90,7 +90,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * UDF to extract specfic parts from URL For example,  * parse_url('http://facebook.com/path/p1.php?query=1', 'HOST') will return  * 'facebook.com' For example,  * parse_url('http://facebook.com/path/p1.php?query=1', 'PATH') will return  * '/path/p1.php' parse_url('http://facebook.com/path/p1.php?query=1', 'QUERY')  * will return 'query=1'  * parse_url('http://facebook.com/path/p1.php?query=1#Ref', 'REF') will return  * 'Ref' parse_url('http://facebook.com/path/p1.php?query=1#Ref', 'PROTOCOL')  * will return 'http' Possible values are  * HOST,PATH,QUERY,REF,PROTOCOL,AUTHORITY,FILE,USERINFO Also you can get a value  * of particular key in QUERY, using syntax QUERY:<KEY_NAME> eg: QUERY:k1.  */
+comment|/**  * UDF to extract specfic parts from URL For example,  * parse_url('http://facebook.com/path/p1.php?query=1', 'HOST') will return  * 'facebook.com' For example,  * parse_url('http://facebook.com/path/p1.php?query=1', 'PATH') will return  * '/path/p1.php' parse_url('http://facebook.com/path/p1.php?query=1', 'QUERY')  * will return 'query=1'  * parse_url('http://facebook.com/path/p1.php?query=1#Ref', 'REF') will return  * 'Ref' parse_url('http://facebook.com/path/p1.php?query=1#Ref', 'PROTOCOL')  * will return 'http' Possible values are  * HOST,PATH,QUERY,REF,PROTOCOL,AUTHORITY,FILE,USERINFO Also you can get a value  * of particular key in QUERY, using syntax QUERY:&lt;KEY_NAME&gt; eg: QUERY:k1.  */
 end_comment
 
 begin_class

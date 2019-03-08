@@ -725,7 +725,7 @@ operator|.
 name|bitMask
 return|;
 block|}
-comment|/**    * Get partial hash code from the reference word.    * @param hashCode    * @return    */
+comment|/**    * Get partial hash code from the reference word.    * @return    */
 specifier|public
 specifier|static
 name|long

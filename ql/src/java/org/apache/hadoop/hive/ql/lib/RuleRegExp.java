@@ -337,7 +337,7 @@ operator|&&
 name|hasWildCard
 return|;
 block|}
-comment|/**    * The rule specified by the regular expression. Note that, the regular    * expression is specified in terms of Node name. For eg: TS.*RS -> means    * TableScan Node followed by anything any number of times followed by    * ReduceSink    *     * @param ruleName    *          name of the rule    * @param regExp    *          regular expression for the rule    **/
+comment|/**    * The rule specified by the regular expression. Note that, the regular    * expression is specified in terms of Node name. For eg: TS.*RS -&gt; means    * TableScan Node followed by anything any number of times followed by    * ReduceSink    *     * @param ruleName    *          name of the rule    * @param regExp    *          regular expression for the rule    **/
 specifier|public
 name|RuleRegExp
 parameter_list|(

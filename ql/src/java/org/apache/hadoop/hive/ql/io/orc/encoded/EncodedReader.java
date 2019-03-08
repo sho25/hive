@@ -124,7 +124,7 @@ specifier|public
 interface|interface
 name|EncodedReader
 block|{
-comment|/**    * Reads encoded data from ORC file.    * @param stripeIx Index of the stripe to read.    * @param stripe Externally provided metadata (from metadata reader or external cache).    * @param index Externally provided metadata (from metadata reader or external cache).    * @param encodings Externally provided metadata (from metadata reader or external cache).    * @param streams Externally provided metadata (from metadata reader or external cache).    * @param physicalFileIncludes The array of booleans indicating whether each column should be read.    * @param colRgs Arrays of rgs, per column set to true in included, that are to be read.    *               null in each respective position means all rgs for this column need to be read.    * @param consumer The sink for data that has been read.    */
+comment|/**    * Reads encoded data from ORC file.    * @param stripeIx Index of the stripe to read.    * @param stripe Externally provided metadata (from metadata reader or external cache).    * @param index Externally provided metadata (from metadata reader or external cache).    * @param encodings Externally provided metadata (from metadata reader or external cache).    * @param streams Externally provided metadata (from metadata reader or external cache).    * @param physicalFileIncludes The array of booleans indicating whether each column should be read.    * @param rgs Arrays of rgs, per column set to true in included, that are to be read.    *               null in each respective position means all rgs for this column need to be read.    * @param consumer The sink for data that has been read.    */
 name|void
 name|readEncodedColumns
 parameter_list|(

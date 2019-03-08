@@ -214,7 +214,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** * * GenericUDFIntervalYearMonth * * Example usage: * ... CAST(<Interval string> as INTERVAL YEAR TO MONTH) ... * * Creates a HiveIntervalYearMonthWritable object using PrimitiveObjectInspectorConverter * */
+comment|/** * * GenericUDFIntervalYearMonth * * Example usage: * ... CAST(&lt;Interval string&gt; as INTERVAL YEAR TO MONTH) ... * * Creates a HiveIntervalYearMonthWritable object using PrimitiveObjectInspectorConverter * */
 end_comment
 
 begin_class

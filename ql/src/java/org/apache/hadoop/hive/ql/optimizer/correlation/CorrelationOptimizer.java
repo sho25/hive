@@ -1467,7 +1467,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * Detect correlations and transform the query tree.    *    * @param pactx    *          current parse context    * @throws SemanticException    */
+comment|/**    * Detect correlations and transform the query tree.    *    * @param pctx    *          current parse context    * @throws SemanticException    */
 annotation|@
 name|Override
 specifier|public

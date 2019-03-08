@@ -2044,7 +2044,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * convert a regular join to a a map-side join.    *    * @param opParseCtxMap    * @param op    *          join operator    * @param joinTree    *          qb join tree    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    * @param validateMapJoinTree    */
+comment|/**    * convert a regular join to a a map-side join.    *    * @param op    *          join operator    * @param mapJoinPos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    * @param validateMapJoinTree    */
 specifier|public
 name|MapJoinOperator
 name|convertMapJoin
@@ -3678,7 +3678,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * convert a sortmerge join to a a map-side join.    *    * @param opParseCtxMap    * @param smbJoinOp    *          join operator    * @param joinTree    *          qb join tree    * @param bigTablePos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    */
+comment|/**    * convert a sortmerge join to a a map-side join.    *    * @param smbJoinOp    *          join operator    * @param bigTablePos    *          position of the source to be read as part of map-reduce framework. All other sources    *          are cached in memory    * @param noCheckOuterJoin    */
 specifier|public
 specifier|static
 name|MapJoinOperator
@@ -4504,7 +4504,7 @@ return|return
 name|bigTableCandidates
 return|;
 block|}
-comment|/**    * @param mapJoinPos the position of big table as determined by either hints or auto conversion.    * @param condns the join conditions    * @return if given mapjoin position is a feasible big table position return same else -1.    * @throws SemanticException if given position is not in the big table candidates.    */
+comment|/**    * @param mapJoinPos the position of big table as determined by either hints or auto conversion.    * @param condns the join conditions    * @return if given mapjoin position is a feasible big table position return same else -1.    */
 specifier|public
 specifier|static
 name|int

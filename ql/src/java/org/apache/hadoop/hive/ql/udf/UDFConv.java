@@ -512,7 +512,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Convert numbers between different number bases. If toBase>0 the result is    * unsigned, otherwise it is signed.    *    */
+comment|/**    * Convert numbers between different number bases. If toBase&gt;0 the result is    * unsigned, otherwise it is signed.    *    */
 specifier|public
 name|Text
 name|evaluate

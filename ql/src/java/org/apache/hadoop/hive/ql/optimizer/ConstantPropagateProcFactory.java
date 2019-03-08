@@ -1521,7 +1521,7 @@ parameter_list|()
 block|{
 comment|// prevent instantiation
 block|}
-comment|/**    * Get ColumnInfo from column expression.    *    * @param rr    * @param desc    * @return    */
+comment|/**    * Get ColumnInfo from column expression.    *    * @param rs    * @param desc    * @return    */
 specifier|public
 specifier|static
 name|ColumnInfo

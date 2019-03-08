@@ -104,7 +104,7 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/**    *     GLOBAL         No key.  All rows --> 1 full aggregation on end of input    *    *     HASH           Rows aggregated in to hash table on group key -->    *                        1 partial aggregation per key (normally, unless there is spilling)    *    *     MERGE_PARTIAL  As first operator in a REDUCER, partial aggregations come grouped from    *                    reduce-shuffle -->    *                        aggregate the partial aggregations and emit full aggregation on    *                        endGroup / closeOp    *    *     STREAMING      Rows come from PARENT operator already grouped -->    *                        aggregate the rows and emit full aggregation on key change / closeOp    *    *     NOTE: Hash can spill partial result rows prematurely if it runs low on memory.    *     NOTE: Streaming has to compare keys where MergePartial gets an endGroup call.    */
+comment|/**    *     GLOBAL         No key.  All rows --&gt; 1 full aggregation on end of input    *    *     HASH           Rows aggregated in to hash table on group key --&gt;    *                        1 partial aggregation per key (normally, unless there is spilling)    *    *     MERGE_PARTIAL  As first operator in a REDUCER, partial aggregations come grouped from    *                    reduce-shuffle --&gt;    *                        aggregate the partial aggregations and emit full aggregation on    *                        endGroup / closeOp    *    *     STREAMING      Rows come from PARENT operator already grouped --&gt;    *                        aggregate the rows and emit full aggregation on key change / closeOp    *    *     NOTE: Hash can spill partial result rows prematurely if it runs low on memory.    *     NOTE: Streaming has to compare keys where MergePartial gets an endGroup call.    */
 specifier|public
 specifier|static
 enum|enum
@@ -311,7 +311,7 @@ return|return
 name|isVectorizationGroupByComplexTypesEnabled
 return|;
 block|}
-comment|/**    * Which ProcessingMode for VectorGroupByOperator?    *    *     Decides using GroupByDesc.Mode and whether there are keys.    *    *         Mode.COMPLETE      --> (numKeys == 0 ? ProcessingMode.GLOBAL : ProcessingMode.STREAMING)    *    *         Mode.HASH          --> ProcessingMode.HASH    *    *         Mode.MERGEPARTIAL  --> (numKeys == 0 ? ProcessingMode.GLOBAL : ProcessingMode.MERGE_PARTIAL)    *    *         Mode.PARTIAL1,    *         Mode.PARTIAL2,    *         Mode.PARTIALS,    *         Mode.FINAL        --> ProcessingMode.STREAMING    *    */
+comment|/**    * Which ProcessingMode for VectorGroupByOperator?    *    *     Decides using GroupByDesc.Mode and whether there are keys.    *    *         Mode.COMPLETE      --&gt; (numKeys == 0 ? ProcessingMode.GLOBAL : ProcessingMode.STREAMING)    *    *         Mode.HASH          --&gt; ProcessingMode.HASH    *    *         Mode.MERGEPARTIAL  --&gt; (numKeys == 0 ? ProcessingMode.GLOBAL : ProcessingMode.MERGE_PARTIAL)    *    *         Mode.PARTIAL1,    *         Mode.PARTIAL2,    *         Mode.PARTIALS,    *         Mode.FINAL        --&gt; ProcessingMode.STREAMING    *    */
 specifier|public
 specifier|static
 name|ProcessingMode

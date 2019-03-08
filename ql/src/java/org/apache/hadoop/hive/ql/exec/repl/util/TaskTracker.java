@@ -136,7 +136,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class will be responsible to track how many tasks have been created,  * organization of tasks such that after the number of tasks for next execution are created  * we create a dependency collection task(DCT) -> another bootstrap task,  * and then add DCT as dependent to all existing tasks that are created so the cycle can continue.  */
+comment|/**  * This class will be responsible to track how many tasks have been created,  * organization of tasks such that after the number of tasks for next execution are created  * we create a dependency collection task(DCT) -&gt; another bootstrap task,  * and then add DCT as dependent to all existing tasks that are created so the cycle can continue.  */
 end_comment
 
 begin_class

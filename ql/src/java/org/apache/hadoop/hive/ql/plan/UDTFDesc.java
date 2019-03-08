@@ -90,7 +90,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * All member variables should have a setters and getters of the form get<member  * name> and set<member name> or else they won't be recreated properly at run  * time.  *  */
+comment|/**  * All member variables should have a setters and getters of the form get&lt;member  * name&gt; and set&lt;member name&gt; or else they won't be recreated properly at run  * time.  *  */
 end_comment
 
 begin_class

@@ -498,7 +498,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isPretty    * @param isOutputPadded - if true, add spacing and indentation    * @param colStats    * @param fkInfo  foreign keys information    * @param pkInfo  primary key information    * @param ukInfo  unique constraint information    * @param nnInfo  not null constraint information    * @throws HiveException    */
+comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isOutputPadded - if true, add spacing and indentation    * @param colStats    * @param fkInfo  foreign keys information    * @param pkInfo  primary key information    * @param ukInfo  unique constraint information    * @param nnInfo  not null constraint information    * @throws HiveException    */
 specifier|public
 name|void
 name|describeTable

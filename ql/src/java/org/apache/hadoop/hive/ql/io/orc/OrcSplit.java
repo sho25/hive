@@ -1724,7 +1724,7 @@ return|return
 name|stmtId
 return|;
 block|}
-comment|/**    * Note: this is the bucket number as seen in the file name that contains this split.    * Hive 3.0 encodes a bunch of info in the Acid schema's bucketId attribute.    * See: {@link org.apache.hadoop.hive.ql.io.BucketCodec.V1} for details.    * @return    */
+comment|/**    * Note: this is the bucket number as seen in the file name that contains this split.    * Hive 3.0 encodes a bunch of info in the Acid schema's bucketId attribute.    * See: {@link org.apache.hadoop.hive.ql.io.BucketCodec#V1} for details.    * @return    */
 specifier|public
 name|int
 name|getBucketId

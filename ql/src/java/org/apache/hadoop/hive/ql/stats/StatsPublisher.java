@@ -82,7 +82,7 @@ specifier|public
 interface|interface
 name|StatsPublisher
 block|{
-comment|/**    * This method does the necessary one-time initializations, possibly creating the tables and    * database (if not exist).    * This method is usually called in the Hive client side rather than by the mappers/reducers    * so that it is initialized only once.    * @param hconf HiveConf that contains the configurations parameters used to connect to    * intermediate stats database.    * @return true if initialization is successful, false otherwise.    */
+comment|/**    * This method does the necessary one-time initializations, possibly creating the tables and    * database (if not exist).    * This method is usually called in the Hive client side rather than by the mappers/reducers    * so that it is initialized only once.    * @return true if initialization is successful, false otherwise.    */
 specifier|public
 name|boolean
 name|init
@@ -91,7 +91,7 @@ name|StatsCollectionContext
 name|context
 parameter_list|)
 function_decl|;
-comment|/**    * This method connects to the intermediate statistics database.    * @param hconf HiveConf that contains the connection parameters.    * @return true if connection is successful, false otherwise.    */
+comment|/**    * This method connects to the intermediate statistics database.    * @return true if connection is successful, false otherwise.    */
 specifier|public
 name|boolean
 name|connect

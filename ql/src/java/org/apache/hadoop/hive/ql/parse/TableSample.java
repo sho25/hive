@@ -174,7 +174,7 @@ operator|=
 name|den
 expr_stmt|;
 block|}
-comment|/**    * Gets the ON part's expression list.    *     * @return ArrayList<ASTNode>    */
+comment|/**    * Gets the ON part's expression list.    *     * @return ArrayList&lt;ASTNode&gt;    */
 specifier|public
 name|ArrayList
 argument_list|<

@@ -64,7 +64,7 @@ specifier|public
 interface|interface
 name|SettableUDF
 block|{
-comment|/**    * Add data to UDF prior to initialization.    * An exception may be thrown if the UDF doesn't know what to do with this data.    * @param params UDF-specific data to add to the UDF    */
+comment|/**    * Add data to UDF prior to initialization.    * An exception may be thrown if the UDF doesn't know what to do with this data.    */
 name|void
 name|setTypeInfo
 parameter_list|(

@@ -209,7 +209,7 @@ operator|=
 name|pattern
 expr_stmt|;
 block|}
-comment|/**    * @param pattern    *          names of tables to show    * @param like    *          is like keyword used    */
+comment|/**    * @param pattern    *          names of tables to show    * @param isLikePattern    *          is like keyword used    */
 specifier|public
 name|ShowFunctionsDesc
 parameter_list|(

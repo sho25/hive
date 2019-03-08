@@ -1400,7 +1400,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * connect adds an edge between a and b. Both nodes have    * to be added prior to calling connect.    * @param    */
+comment|/**    * connect adds an edge between a and b. Both nodes have    * to be added prior to calling connect.    */
 specifier|public
 name|void
 name|connect

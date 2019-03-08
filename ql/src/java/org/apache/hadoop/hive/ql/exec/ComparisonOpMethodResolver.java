@@ -116,7 +116,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The class implements the method resolution for operators like (><<=>= =  *<>). The resolution logic is as follows: 1. If one of the parameters is null,  * then it resolves to evaluate(Double, Double) 2. If both of the parameters are  * of type T, then it resolves to evaluate(T, T) 3. If 1 and 2 fails then it  * resolves to evaluate(Double, Double).  */
+comment|/**  * The class implements the method resolution for operators like (&gt;&lt;&lt;=&gt;= =  *&lt;&gt;). The resolution logic is as follows: 1. If one of the parameters is null,  * then it resolves to evaluate(Double, Double) 2. If both of the parameters are  * of type T, then it resolves to evaluate(T, T) 3. If 1 and 2 fails then it  * resolves to evaluate(Double, Double).  */
 end_comment
 
 begin_class

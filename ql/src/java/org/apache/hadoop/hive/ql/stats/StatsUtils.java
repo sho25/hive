@@ -5649,7 +5649,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * Get sum of all values in the list that are>0    * @param vals    *          - list of values    * @return sum    */
+comment|/**    * Get sum of all values in the list that are&gt;0    * @param vals    *          - list of values    * @return sum    */
 specifier|public
 specifier|static
 name|long

@@ -453,7 +453,7 @@ return|return
 name|mmContext
 return|;
 block|}
-comment|/**    * For exporting Acid table, change the "pointer" to the temp table.    * This has to be done after the temp table is populated and all necessary Partition objects    * exist in the metastore.    * See {@link org.apache.hadoop.hive.ql.parse.AcidExportAnalyzer#isAcidExport(ASTNode)}    * for more info.    */
+comment|/**    * For exporting Acid table, change the "pointer" to the temp table.    * This has to be done after the temp table is populated and all necessary Partition objects    * exist in the metastore.    * See {@link org.apache.hadoop.hive.ql.parse.AcidExportSemanticAnalyzer#isAcidExport(ASTNode)}    * for more info.    */
 specifier|public
 name|void
 name|acidPostProcess

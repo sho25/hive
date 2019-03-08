@@ -826,7 +826,7 @@ name|path
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * alter table ... concatenate    *<p/>    * If it is skewed table, use subdirectories in inputpaths.    */
+comment|/**    * alter table ... concatenate    *<br>    * If it is skewed table, use subdirectories in inputpaths.    */
 specifier|public
 name|void
 name|resolveConcatenateMerge

@@ -672,7 +672,7 @@ operator|=
 name|defaultDirName
 expr_stmt|;
 block|}
-comment|/**    * check if list bucketing is enabled.    *    * @param ctx    * @return    */
+comment|/**    * check if list bucketing is enabled.    *    * @return    */
 specifier|public
 name|boolean
 name|isSkewedStoredAsDir
@@ -729,7 +729,7 @@ argument_list|()
 operator|)
 return|;
 block|}
-comment|/**    * Calculate list bucketing level.    *    * 0: not list bucketing    * int: no. of skewed columns    *    * @param ctx    * @return    */
+comment|/**    * Calculate list bucketing level.    *    * 0: not list bucketing    * int: no. of skewed columns    *    * @return    */
 specifier|public
 name|int
 name|calculateListBucketingLevel

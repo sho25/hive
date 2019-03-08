@@ -3123,7 +3123,7 @@ operator|=
 name|allowClose
 expr_stmt|;
 block|}
-comment|/**    * Gets the allowClose flag which determines if it is allowed to close metastore connections.    * @returns allowClose flag    */
+comment|/**    * Gets the allowClose flag which determines if it is allowed to close metastore connections.    * @return allowClose flag    */
 specifier|public
 name|boolean
 name|allowClose
@@ -3790,7 +3790,7 @@ name|transactional
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param fullyQlfdTblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @param transactional    *          Need to generate and save a table snapshot into the metastore?    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param fullyQlfdTblName    *          name of the existing table    * @param newTbl    *          new name of the table. could be the old name    * @param transactional    *          Need to generate and save a table snapshot into the metastore?    * @throws HiveException    */
 specifier|public
 name|void
 name|alterTable
@@ -4293,7 +4293,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws HiveException    */
 annotation|@
 name|Deprecated
 specifier|public
@@ -4350,7 +4350,7 @@ name|transactional
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param dbName    *          name of the exiting table's database    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @param environmentContext    *          environment context for the method    * @param transactional    *          indicates this call is for transaction stats    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing partition metadata with the new metadata.    *    * @param dbName    *          name of the exiting table's database    * @param tblName    *          name of the existing table    * @param newPart    *          new partition    * @param environmentContext    *          environment context for the method    * @param transactional    *          indicates this call is for transaction stats    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws HiveException    */
 specifier|public
 name|void
 name|alterPartition
@@ -4628,7 +4628,7 @@ name|checkValidity
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newParts    *          new partitions    * @param transactional    *          Need to generate and save a table snapshot into the metastore?    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Updates the existing table metadata with the new metadata.    *    * @param tblName    *          name of the existing table    * @param newParts    *          new partitions    * @param transactional    *          Need to generate and save a table snapshot into the metastore?    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws HiveException    */
 specifier|public
 name|void
 name|alterPartitions
@@ -4905,7 +4905,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Rename a old partition to new partition    *    * @param tbl    *          existing table    * @param oldPartSpec    *          spec of old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if the changes in metadata is not acceptable    * @throws TException    */
+comment|/**    * Rename a old partition to new partition    *    * @param tbl    *          existing table    * @param oldPartSpec    *          spec of old partition    * @param newPart    *          new partition    * @throws HiveException    */
 specifier|public
 name|void
 name|renamePartition

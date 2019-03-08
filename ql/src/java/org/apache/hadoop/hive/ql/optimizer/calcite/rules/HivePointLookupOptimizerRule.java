@@ -600,7 +600,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This optimization attempts to identify and close expanded INs and BETWEENs  *  * Basically:  *<pre>  * (c) IN ( v1, v2, ...)&lt;=&gt; c1=v1 || c1=v2 || ...  *</pre>  * If c is struct; then c=v1 is a group of anded equations.  *  * Similarily  *<pre>  * v1<= c1 and c1<= v2  *<pre>  * is rewritten to<p>c1 between v1 and v2</p>  */
+comment|/**  * This optimization attempts to identify and close expanded INs and BETWEENs  *  * Basically:  *<pre>  * (c) IN ( v1, v2, ...)&lt;=&gt; c1=v1 || c1=v2 || ...  *</pre>  * If c is struct; then c=v1 is a group of anded equations.  *  * Similarily  *<pre>  * v1&lt;= c1 and c1&lt;= v2  *</pre>  * is rewritten to<p>c1 between v1 and v2</p>  */
 end_comment
 
 begin_class

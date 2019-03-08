@@ -5652,7 +5652,7 @@ return|return
 name|val
 return|;
 block|}
-comment|/**    * Remove prefix from "Path -> Alias"    * This is required for testing.    * In order to verify that path is right, we need to display it in expected test result.    * But, mask pattern masks path with some patterns.    * So, we need to remove prefix from path which triggers mask pattern.    * @param origiKey    * @return    */
+comment|/**    * Remove prefix from "Path -&gt; Alias"    * This is required for testing.    * In order to verify that path is right, we need to display it in expected test result.    * But, mask pattern masks path with some patterns.    * So, we need to remove prefix from path which triggers mask pattern.    * @param origiKey    * @return    */
 specifier|public
 specifier|static
 name|String

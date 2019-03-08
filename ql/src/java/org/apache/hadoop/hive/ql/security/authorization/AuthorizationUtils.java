@@ -1084,7 +1084,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Convert authorization plugin principal type to thrift principal type    * @param type    * @return    * @throws HiveException    */
+comment|/**    * Convert authorization plugin principal type to thrift principal type    * @param type    * @return    */
 specifier|public
 specifier|static
 name|PrincipalType

@@ -56,7 +56,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Detects when a query has failed because a user's script that was specified in  * transform returns a non-zero error code.  *  * Conditions to check:  *  * 1. "Script failed with code<some number>" is in the log  *  */
+comment|/**  * Detects when a query has failed because a user's script that was specified in  * transform returns a non-zero error code.  *  * Conditions to check:  *  * 1. "Script failed with code&lt;some number&gt;" is in the log  *  */
 end_comment
 
 begin_class

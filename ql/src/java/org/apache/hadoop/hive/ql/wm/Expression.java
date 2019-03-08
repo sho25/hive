@@ -20,7 +20,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Expression that is defined in triggers.  * Most expressions will get triggered only after exceeding a limit. As a result, only greater than (>) expression  * is supported.  */
+comment|/**  * Expression that is defined in triggers.  * Most expressions will get triggered only after exceeding a limit. As a result, only greater than (&gt;) expression  * is supported.  */
 end_comment
 
 begin_interface
@@ -78,7 +78,7 @@ name|build
 parameter_list|()
 function_decl|;
 block|}
-comment|/**    * Evaluate current value against this expression. Return true if expression evaluates to true (current> limit)    * else false otherwise    *    * @param current - current value against which expression will be evaluated    * @return true if current value exceeds limit    */
+comment|/**    * Evaluate current value against this expression. Return true if expression evaluates to true (current&gt; limit)    * else false otherwise    *    * @param current - current value against which expression will be evaluated    * @return true if current value exceeds limit    */
 name|boolean
 name|evaluate
 parameter_list|(

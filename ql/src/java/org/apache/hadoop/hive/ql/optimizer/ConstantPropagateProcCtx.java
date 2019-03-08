@@ -348,7 +348,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class implements the processor context for Constant Propagate.  *  * ConstantPropagateProcCtx keeps track of propagated constants in a column->const map for each  * operator, enabling constants to be revolved across operators.  */
+comment|/**  * This class implements the processor context for Constant Propagate.  *  * ConstantPropagateProcCtx keeps track of propagated constants in a column-&gt;const map for each  * operator, enabling constants to be revolved across operators.  */
 end_comment
 
 begin_class

@@ -70,7 +70,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * PartitionIterable - effectively a lazy Iterable<Partition>  *  * Sometimes, we have a need for iterating through a list of partitions,  * but the list of partitions can be too big to fetch as a single object.  * Thus, the goal of PartitionIterable is to act as an Iterable<Partition>  * while lazily fetching each relevant partition, one after the other as  * independent metadata calls.  *  * It is very likely that any calls to PartitionIterable are going to result  * in a large number of calls, so use sparingly only when the memory cost  * of fetching all the partitions in one shot is too prohibitive.  *  * This is still pretty costly in that it would retain a list of partition  * names, but that should be far less expensive than the entire partition  * objects.  *  * Note that remove() is an illegal call on this, and will result in an  * IllegalStateException.  */
+comment|/**  * PartitionIterable - effectively a lazy Iterable&lt;Partition&gt;  *  * Sometimes, we have a need for iterating through a list of partitions,  * but the list of partitions can be too big to fetch as a single object.  * Thus, the goal of PartitionIterable is to act as an Iterable&lt;Partition&gt;  * while lazily fetching each relevant partition, one after the other as  * independent metadata calls.  *  * It is very likely that any calls to PartitionIterable are going to result  * in a large number of calls, so use sparingly only when the memory cost  * of fetching all the partitions in one shot is too prohibitive.  *  * This is still pretty costly in that it would retain a list of partition  * names, but that should be far less expensive than the entire partition  * objects.  *  * Note that remove() is an illegal call on this, and will result in an  * IllegalStateException.  */
 end_comment
 
 begin_class
@@ -448,7 +448,7 @@ name|getColStats
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * Dummy constructor, which simply acts as an iterator on an already-present    * list of partitions, allows for easy drop-in replacement for other methods    * that already have a List<Partition>    */
+comment|/**    * Dummy constructor, which simply acts as an iterator on an already-present    * list of partitions, allows for easy drop-in replacement for other methods    * that already have a List&lt;Partition&gt;    */
 specifier|public
 name|PartitionIterable
 parameter_list|(

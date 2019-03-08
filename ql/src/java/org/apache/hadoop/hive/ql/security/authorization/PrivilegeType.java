@@ -243,7 +243,7 @@ name|PrivilegeType
 argument_list|>
 name|name2Type
 decl_stmt|;
-comment|/**    * Do case lookup of PrivilegeType associated with this antlr token    * @param privilegeName    * @return corresponding PrivilegeType    */
+comment|/**    * Do case lookup of PrivilegeType associated with this antlr token    * @param token    * @return corresponding PrivilegeType    */
 specifier|public
 specifier|static
 name|PrivilegeType

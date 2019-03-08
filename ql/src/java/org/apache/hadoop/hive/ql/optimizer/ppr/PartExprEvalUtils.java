@@ -382,7 +382,7 @@ specifier|public
 class|class
 name|PartExprEvalUtils
 block|{
-comment|/**    * Evaluate expression with partition columns    *    * @param expr    * @param partSpec    * @param rowObjectInspector    * @return value returned by the expression    * @throws HiveException    */
+comment|/**    * Evaluate expression with partition columns    *    * @param expr    * @param rowObjectInspector    * @return value returned by the expression    * @throws HiveException    */
 specifier|static
 specifier|synchronized
 specifier|public

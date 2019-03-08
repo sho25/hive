@@ -606,7 +606,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A RecordUpdater where the files are stored as ORC.  * A note on various record structures: the {@code row} coming in (as in {@link #insert(long, Object)}  * for example), is a struct like<RecordIdentifier, f1, ... fn> but what is written to the file  * * is<op, owid, writerId, rowid, cwid,<f1, ... fn>> (see {@link #createEventSchema(ObjectInspector)})  * So there are OIs here to make the translation.  */
+comment|/**  * A RecordUpdater where the files are stored as ORC.  * A note on various record structures: the {@code row} coming in (as in {@link #insert(long, Object)}  * for example), is a struct like&lt;RecordIdentifier, f1, ... fn&gt; but what is written to the file  * * is&lt;op, owid, writerId, rowid, cwid,&lt;f1, ... fn&gt;&gt; (see {@link #createEventObjectInspector(ObjectInspector)})  * So there are OIs here to make the translation.  */
 end_comment
 
 begin_class

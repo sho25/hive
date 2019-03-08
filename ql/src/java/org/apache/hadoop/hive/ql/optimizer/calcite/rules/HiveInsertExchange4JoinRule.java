@@ -424,7 +424,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** Not an optimization rule.  * Rule to aid in translation from Calcite tree -> Hive tree.  * Transforms :  *   Left     Right                  Left                    Right  *       \   /           ->             \                   /  *       Join                          HashExchange       HashExchange  *                                             \         /  *                                                 Join  */
+comment|/** Not an optimization rule.  * Rule to aid in translation from Calcite tree -&gt; Hive tree.  * Transforms :  *   Left     Right                  Left                    Right  *       \   /           -&gt;             \                   /  *       Join                          HashExchange       HashExchange  *                                             \         /  *                                                 Join  */
 end_comment
 
 begin_class

@@ -431,7 +431,6 @@ return|return
 name|conf
 return|;
 block|}
-comment|/**      * @return the actual class being deserialized.      * @exception does      *              not currently throw IOException      */
 annotation|@
 name|Override
 specifier|public
@@ -465,7 +464,7 @@ name|class
 argument_list|)
 return|;
 block|}
-comment|/**      * Looks up and instantiates the Serialization Object      *      * Important to note here that we are not relying on the Hadoop      * SerializationFactory part of the Serialization framework. This is because      * in the case of Non-Writable Objects, we cannot make any assumptions about      * the uniformity of the serialization class APIs - i.e., there may not be a      * "write" method call and a subclass may need to implement its own      * Serialization classes. The SerializationFactory currently returns the      * first (de)serializer that is compatible with the class to be      * deserialized; in this context, that assumption isn't necessarily true.      *      * @return the serialization object for this context      * @exception does      *              not currently throw any IOException      */
+comment|/**      * Looks up and instantiates the Serialization Object      *      * Important to note here that we are not relying on the Hadoop      * SerializationFactory part of the Serialization framework. This is because      * in the case of Non-Writable Objects, we cannot make any assumptions about      * the uniformity of the serialization class APIs - i.e., there may not be a      * "write" method call and a subclass may need to implement its own      * Serialization classes. The SerializationFactory currently returns the      * first (de)serializer that is compatible with the class to be      * deserialized; in this context, that assumption isn't necessarily true.      *      * @return the serialization object for this context      */
 annotation|@
 name|Override
 specifier|public

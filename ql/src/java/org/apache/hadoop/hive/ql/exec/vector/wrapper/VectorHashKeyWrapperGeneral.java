@@ -328,7 +328,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A hash map key wrapper for vectorized processing.  * It stores the key values as primitives in arrays for each supported primitive type.  * This works in conjunction with  * {@link org.apache.hadoop.hive.ql.exec.VectorHashKeyWrapperBatch VectorHashKeyWrapperBatch}  * to hash vectorized processing units (batches).  */
+comment|/**  * A hash map key wrapper for vectorized processing.  * It stores the key values as primitives in arrays for each supported primitive type.  * This works in conjunction with  * {@link VectorHashKeyWrapperBatch}  * to hash vectorized processing units (batches).  */
 end_comment
 
 begin_class

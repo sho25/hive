@@ -170,7 +170,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Writes Arrow batches to an {@link org.apache.arrow.vector.ipc.ArrowStreamWriter}.  * The byte stream will be formatted according to the Arrow Streaming format.  * Because ArrowStreamWriter is bound to a {@link org.apache.arrow.vector.VectorSchemaRoot}  * when it is created,  * calls to the {@link #write(Writable, Writable)} method only serve as a signal that  * a new batch has been loaded to the associated VectorSchemaRoot.  * Payload data for writing is indirectly made available by reference:  * ArrowStreamWriter -> VectorSchemaRoot -> List<FieldVector>  * i.e. both they key and value are ignored once a reference to the VectorSchemaRoot  * is obtained.  */
+comment|/**  * Writes Arrow batches to an {@link org.apache.arrow.vector.ipc.ArrowStreamWriter}.  * The byte stream will be formatted according to the Arrow Streaming format.  * Because ArrowStreamWriter is bound to a {@link org.apache.arrow.vector.VectorSchemaRoot}  * when it is created,  * calls to the {@link #write(Writable, Writable)} method only serve as a signal that  * a new batch has been loaded to the associated VectorSchemaRoot.  * Payload data for writing is indirectly made available by reference:  * ArrowStreamWriter -&gt; VectorSchemaRoot -&gt; List&lt;FieldVector&gt;  * i.e. both they key and value are ignored once a reference to the VectorSchemaRoot  * is obtained.  */
 end_comment
 
 begin_class

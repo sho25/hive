@@ -796,7 +796,7 @@ return|return
 literal|false
 return|;
 block|}
-comment|/**    * @param operator the input operator    * @param throwException if throw a exception when the input operator has multiple parents    * @return the single parent or null when the input operator has multiple parents and    *         throwException is false;    * @throws HiveException    */
+comment|/**    * @param operator the input operator    * @param throwException if throw a exception when the input operator has multiple parents    * @return the single parent or null when the input operator has multiple parents and    *         throwException is false;    * @throws SemanticException    */
 specifier|protected
 specifier|static
 name|Operator
@@ -959,7 +959,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * @param operator the input operator    * @param throwException if throw a exception when the input operator has multiple children    * @return the single child or null when the input operator has multiple children and    *         throwException is false;    * @throws HiveException    */
+comment|/**    * @param operator the input operator    * @param throwException if throw a exception when the input operator has multiple children    * @return the single child or null when the input operator has multiple children and    *         throwException is false;    * @throws SemanticException    */
 specifier|protected
 specifier|static
 name|Operator
@@ -3176,7 +3176,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * @param newOperator the operator will be inserted between child and parent    * @param child    * @param parent    * @param context    * @throws HiveException    */
+comment|/**    * @param newOperator the operator will be inserted between child and parent    * @param child    * @param parent    * @throws SemanticException    */
 specifier|protected
 specifier|static
 name|void

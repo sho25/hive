@@ -360,7 +360,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Compute the covariance covar_pop(x, y), using the following one-pass method  * (ref. "Formulas for Robust, One-Pass Parallel Computation of Covariances and  *  Arbitrary-Order Statistical Moments", Philippe Pebay, Sandia Labs):  *  *  Incremental:  *   n :<count>  *   mx_n = mx_(n-1) + [x_n - mx_(n-1)]/n :<xavg>  *   my_n = my_(n-1) + [y_n - my_(n-1)]/n :<yavg>  *   c_n = c_(n-1) + (x_n - mx_(n-1))*(y_n - my_n) :<covariance * n>  *  *  Merge:  *   c_X = c_A + c_B + (mx_A - mx_B)*(my_A - my_B)*n_A*n_B/n_X  *  */
+comment|/**  * Compute the covariance covar_pop(x, y), using the following one-pass method  * (ref. "Formulas for Robust, One-Pass Parallel Computation of Covariances and  *  Arbitrary-Order Statistical Moments", Philippe Pebay, Sandia Labs):  *  *  Incremental:  *   n :&lt;count&gt;  *   mx_n = mx_(n-1) + [x_n - mx_(n-1)]/n :&lt;xavg&gt;  *   my_n = my_(n-1) + [y_n - my_(n-1)]/n :&lt;yavg&gt;  *   c_n = c_(n-1) + (x_n - mx_(n-1))*(y_n - my_n) :&lt;covariance * n&gt;  *  *  Merge:  *   c_X = c_A + c_B + (mx_A - mx_B)*(my_A - my_B)*n_A*n_B/n_X  *  */
 end_comment
 
 begin_class
@@ -649,7 +649,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Evaluate the variance using the algorithm described in    * http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance,    * presumably by  Pébay, Philippe (2008), in "Formulas for Robust,    * One-Pass Parallel Computation of Covariances and Arbitrary-Order    * Statistical Moments", Technical Report SAND2008-6212,    * Sandia National Laboratories,    * http://infoserve.sandia.gov/sand_doc/2008/086212.pdf    *    *  Incremental:    *   n :<count>    *   mx_n = mx_(n-1) + [x_n - mx_(n-1)]/n :<xavg>    *   my_n = my_(n-1) + [y_n - my_(n-1)]/n :<yavg>    *   c_n = c_(n-1) + (x_n - mx_(n-1))*(y_n - my_n) :<covariance * n>    *    *  Merge:    *   c_X = c_A + c_B + (mx_A - mx_B)*(my_A - my_B)*n_A*n_B/n_X    *    *  This one-pass algorithm is stable.    *    */
+comment|/**    * Evaluate the variance using the algorithm described in    * http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance,    * presumably by  Pébay, Philippe (2008), in "Formulas for Robust,    * One-Pass Parallel Computation of Covariances and Arbitrary-Order    * Statistical Moments", Technical Report SAND2008-6212,    * Sandia National Laboratories,    * http://infoserve.sandia.gov/sand_doc/2008/086212.pdf    *    *  Incremental:    *   n :&lt;count&gt;    *   mx_n = mx_(n-1) + [x_n - mx_(n-1)]/n :&lt;xavg&gt;    *   my_n = my_(n-1) + [y_n - my_(n-1)]/n :&lt;yavg&gt;    *   c_n = c_(n-1) + (x_n - mx_(n-1))*(y_n - my_n) :&lt;covariance * n&gt;    *    *  Merge:    *   c_X = c_A + c_B + (mx_A - mx_B)*(my_A - my_B)*n_A*n_B/n_X    *    *  This one-pass algorithm is stable.    *    */
 specifier|public
 specifier|static
 class|class

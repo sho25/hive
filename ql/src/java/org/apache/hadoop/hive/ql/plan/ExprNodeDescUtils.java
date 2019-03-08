@@ -2620,7 +2620,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Join keys are expressions based on the select operator. Resolve the expressions so they    * are based on the ReduceSink operator    *   SEL -> RS -> JOIN    * @param source    * @param reduceSinkOp    * @return    */
+comment|/**    * Join keys are expressions based on the select operator. Resolve the expressions so they    * are based on the ReduceSink operator    *   SEL -&gt; RS -&gt; JOIN    * @param source    * @param reduceSinkOp    * @return    */
 specifier|public
 specifier|static
 name|ExprNodeDesc
@@ -3788,7 +3788,7 @@ name|childTi
 argument_list|)
 return|;
 block|}
-comment|/**    * Build ExprNodeColumnDesc for the projections in the input operator from    * sartpos to endpos(both included). Operator must have an associated    * colExprMap.    *    * @param inputOp    *          Input Hive Operator    * @param startPos    *          starting position in the input operator schema; must be>=0 and<=    *          endPos    * @param endPos    *          end position in the input operator schema; must be>=0.    * @return List of ExprNodeDesc    */
+comment|/**    * Build ExprNodeColumnDesc for the projections in the input operator from    * sartpos to endpos(both included). Operator must have an associated    * colExprMap.    *    * @param inputOp    *          Input Hive Operator    * @param startPos    *          starting position in the input operator schema; must be&gt;=0 and&lt;=    *          endPos    * @param endPos    *          end position in the input operator schema; must be&gt;=0.    * @return List of ExprNodeDesc    */
 specifier|public
 specifier|static
 name|ArrayList

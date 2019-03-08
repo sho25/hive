@@ -278,7 +278,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with  * Hive.  *  * New GenericUDAF classes need to inherit from this GenericUDAF class.  *  * The GenericUDAF are superior to normal UDAFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDAF that accepts  * array<int>, array<array<int>> and so on (arbitrary levels of nesting).  */
+comment|/**  * A Generic User-defined aggregation function (GenericUDAF) for the use with  * Hive.  *  * New GenericUDAF classes need to inherit from this GenericUDAF class.  *  * The GenericUDAF are superior to normal UDAFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDAF that accepts  * array&lt;int&gt;, array&lt;array&lt;int&gt;&gt; and so on (arbitrary levels of nesting).  */
 end_comment
 
 begin_class

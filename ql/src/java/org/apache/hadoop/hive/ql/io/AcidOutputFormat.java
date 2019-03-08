@@ -549,7 +549,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**      * Multiple inserts into legacy (pre-acid) tables can generate multiple copies of each bucket      * file.      * @see org.apache.hadoop.hive.ql.exec.Utilities#COPY_KEYWORD      * @param copyNumber the number of the copy (> 0)      * @return this      */
+comment|/**      * Multiple inserts into legacy (pre-acid) tables can generate multiple copies of each bucket      * file.      * @see org.apache.hadoop.hive.ql.exec.Utilities#COPY_KEYWORD      * @param copyNumber the number of the copy (&gt; 0)      * @return this      */
 specifier|public
 name|Options
 name|copyNumber

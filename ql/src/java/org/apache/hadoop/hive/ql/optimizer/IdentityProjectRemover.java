@@ -440,7 +440,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** This optimization tries to remove {@link SelectOperator} from tree which don't do any  * processing except forwarding columns from its parent to its children.  * e.g., select * from (select * from src where key = value) t1 join (select * from src where key = value) t2;  * Query tree  *  *  Without this optimization:  *  *  TS -> FIL -> SEL -> RS ->  *                             JOIN -> SEL -> FS  *  TS -> FIL -> SEL -> RS ->  *  *  With this optimization  *  *  TS -> FIL -> RS ->  *                      JOIN -> FS  *  TS -> FIL -> RS ->  *  *  Note absence of select operator after filter and after join operator.  *  Also, see : identity_proj_remove.q  */
+comment|/** This optimization tries to remove {@link SelectOperator} from tree which don't do any  * processing except forwarding columns from its parent to its children.  * e.g., select * from (select * from src where key = value) t1 join (select * from src where key = value) t2;  * Query tree  *  *  Without this optimization:  *  *  TS -&gt; FIL -&gt; SEL -&gt; RS -&gt;  *                             JOIN -&gt; SEL -&gt; FS  *  TS -&gt; FIL -&gt; SEL -&gt; RS -&gt;  *  *  With this optimization  *  *  TS -&gt; FIL -&gt; RS -&gt;  *                      JOIN -&gt; FS  *  TS -&gt; FIL -&gt; RS -&gt;  *  *  Note absence of select operator after filter and after join operator.  *  Also, see : identity_proj_remove.q  */
 end_comment
 
 begin_class

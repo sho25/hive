@@ -3911,7 +3911,7 @@ argument_list|>
 argument_list|()
 return|;
 block|}
-comment|/**    * Returns a list of all the columns of the table (data columns + partition    * columns in that order.    *    * @return List<FieldSchema>    */
+comment|/**    * Returns a list of all the columns of the table (data columns + partition    * columns in that order.    *    * @return List&lt;FieldSchema&gt;    */
 specifier|public
 name|List
 argument_list|<
@@ -4709,7 +4709,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a partition name -> value spec map object    *    * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
+comment|/**    * Creates a partition name -&gt; value spec map object    *    * @param tp    *          Use the information from this partition.    * @return Partition name to value mapping.    */
 specifier|public
 name|LinkedHashMap
 argument_list|<

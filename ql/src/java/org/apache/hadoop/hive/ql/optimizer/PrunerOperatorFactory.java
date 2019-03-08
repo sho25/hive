@@ -428,7 +428,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**      * Generate predicate.      *      * Subclass should implement the function. Please refer to {@link OpProcFactory.FilterPPR}      *      * @param procCtx      * @param fop      * @param top      * @throws SemanticException      * @throws UDFArgumentException      */
+comment|/**      * Generate predicate.      *      * Subclass should implement the function. Please refer to {@link org.apache.hadoop.hive.ql.optimizer.ppr.OpProcFactory.FilterPPR}      *      * @param procCtx      * @param fop      * @param top      * @throws SemanticException      * @throws UDFArgumentException      */
 specifier|protected
 specifier|abstract
 name|void

@@ -64,7 +64,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Encapsulates the basic response info returned by classes the implement the  *<code>CommandProcessor</code> interface. Typically<code>errorMessage</code>  * and<code>SQLState</code> will only be set if the<code>responseCode</code>  * is not 0.  Note that often {@code responseCode} ends up the exit value of  * command shell process so should keep it to< 127.  */
+comment|/**  * Encapsulates the basic response info returned by classes the implement the  *<code>CommandProcessor</code> interface. Typically<code>errorMessage</code>  * and<code>SQLState</code> will only be set if the<code>responseCode</code>  * is not 0.  Note that often {@code responseCode} ends up the exit value of  * command shell process so should keep it to&lt; 127.  */
 end_comment
 
 begin_class

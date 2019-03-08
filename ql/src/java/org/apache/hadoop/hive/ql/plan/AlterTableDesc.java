@@ -3390,7 +3390,7 @@ return|return
 name|isCascade
 return|;
 block|}
-comment|/**    * @param cascade the isCascade to set    */
+comment|/**    * @param isCascade the isCascade to set    */
 specifier|public
 name|void
 name|setIsCascade

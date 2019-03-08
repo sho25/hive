@@ -3503,7 +3503,7 @@ name|opProcCtx
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * set the current task in the mapredWork.    *    * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param opProcCtx    *          processing context    */
+comment|/**    * set the current task in the mapredWork.    *    * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param task    *          current task    * @param local    *          whether you need to add to map-reduce or local work    * @param opProcCtx    *          processing context    */
 specifier|public
 specifier|static
 name|void
@@ -3546,7 +3546,7 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * set the current task in the mapredWork.    *    * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param opProcCtx    *          processing context    * @param pList    *          pruned partition list. If it is null it will be computed on-the-fly.    */
+comment|/**    * set the current task in the mapredWork.    *    * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param task    *          current task    * @param local    *          whether you need to add to map-reduce or local work    * @param opProcCtx    *          processing context    * @param pList    *          pruned partition list. If it is null it will be computed on-the-fly.    */
 specifier|public
 specifier|static
 name|void
@@ -3625,7 +3625,7 @@ name|topOp
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * initialize MapWork    *    * @param alias_id    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          map work to initialize    * @param local    *          whether you need to add to map-reduce or local work    * @param pList    *          pruned partition list. If it is null it will be computed on-the-fly.    * @param inputs    *          read entities for the map work    * @param conf    *          current instance of hive conf    */
+comment|/**    * initialize MapWork    *    * @param alias_id    *          current alias    * @param plan    *          map work to initialize    * @param local    *          whether you need to add to map-reduce or local work    * @param partsList    *          pruned partition list. If it is null it will be computed on-the-fly.    * @param inputs    *          read entities for the map work    * @param conf    *          current instance of hive conf    */
 specifier|public
 specifier|static
 name|void
@@ -5114,7 +5114,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * set the current task in the mapredWork.    *    * @param alias    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param tt_desc    *          table descriptor    * @throws SerDeException    */
+comment|/**    * set the current task in the mapredWork.    *    * @param alias    *          current alias    * @param topOp    *          the top operator of the stack    * @param plan    *          current plan    * @param local    *          whether you need to add to map-reduce or local work    * @param tt_desc    *          table descriptor    * @throws SemanticException    */
 specifier|public
 specifier|static
 name|void
@@ -7580,7 +7580,7 @@ name|targetPathToPartitionInfo
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @param fsInput The FileSink operator.    * @param finalName the final destination path the merge job should output.    * @param dependencyTask    * @param mvTasks    * @param conf    * @param currTask    * @param lineageState    * @throws SemanticException     * create a Map-only merge job using CombineHiveInputFormat for all partitions with    * following operators:    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo& pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo& pathToAlias to include the dynamic    *          partition    *          directories.    *    */
+comment|/**    * @param fsInput The FileSink operator.    * @param finalName the final destination path the merge job should output.    * @param dependencyTask    * @param mvTasks    * @param conf    * @param currTask    * @param lineageState    * @throws SemanticException     * create a Map-only merge job using CombineHiveInputFormat for all partitions with    * following operators:    *          MR job J0:    *          ...    *          |    *          v    *          FileSinkOperator_1 (fsInput)    *          |    *          v    *          Merge job J1:    *          |    *          v    *          TableScan (using CombineHiveInputFormat) (tsMerge)    *          |    *          v    *          FileSinkOperator (fsMerge)    *    *          Here the pathToPartitionInfo&amp; pathToAlias will remain the same, which means the paths    *          do    *          not contain the dynamic partitions (their parent). So after the dynamic partitions are    *          created (after the first job finished before the moveTask or ConditionalTask start),    *          we need to change the pathToPartitionInfo&amp; pathToAlias to include the dynamic    *          partition    *          directories.    *    */
 specifier|public
 specifier|static
 name|void
@@ -9435,7 +9435,7 @@ return|return
 name|cplan
 return|;
 block|}
-comment|/**    * Create a block level merge task for RCFiles or stripe level merge task for    * ORCFiles    *    * @param fsInputDesc    * @param finalName    * @param ctx    * @param inputFormatClass    * @return MergeWork if table is stored as RCFile or ORCFile,    *         null otherwise    */
+comment|/**    * Create a block level merge task for RCFiles or stripe level merge task for    * ORCFiles    *    * @param fsInputDesc    * @param finalName    * @param hasDynamicPartitions    * @param ctx    * @return MergeWork if table is stored as RCFile or ORCFile,    *         null otherwise    */
 specifier|public
 specifier|static
 name|MapWork

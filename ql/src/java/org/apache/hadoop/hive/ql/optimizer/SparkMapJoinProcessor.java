@@ -190,7 +190,7 @@ name|SparkMapJoinProcessor
 extends|extends
 name|MapJoinProcessor
 block|{
-comment|/**    * convert a regular join to a a map-side join.    *    * @param conf    * @param opParseCtxMap    * @param op join operator    * @param joinTree qb join tree    * @param bigTablePos position of the source to be read as part of    *                   map-reduce framework. All other sources are cached in memory    * @param noCheckOuterJoin    * @param validateMapJoinTree    */
+comment|/**    * convert a regular join to a a map-side join.    *    * @param conf    * @param op join operator    * @param bigTablePos position of the source to be read as part of    *                   map-reduce framework. All other sources are cached in memory    * @param noCheckOuterJoin    * @param validateMapJoinTree    */
 annotation|@
 name|Override
 specifier|public

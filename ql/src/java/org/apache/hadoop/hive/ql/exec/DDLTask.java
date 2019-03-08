@@ -31165,7 +31165,7 @@ return|return
 literal|"DDL"
 return|;
 block|}
-comment|/**    * Make location in specified sd qualified.    *    * @param databaseName    *          Database name.    * @param sd    *          Storage descriptor.    * @param name    *          Object name.    */
+comment|/**    * Make location in specified sd qualified.    *    * @param databaseName    *          Database name.    */
 specifier|public
 specifier|static
 name|void

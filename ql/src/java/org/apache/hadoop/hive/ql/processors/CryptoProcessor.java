@@ -208,7 +208,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class processes HADOOP commands used for HDFS encryption. It is meant to be run  * only by Hive unit& queries tests.  */
+comment|/**  * This class processes HADOOP commands used for HDFS encryption. It is meant to be run  * only by Hive unit&amp; queries tests.  */
 end_comment
 
 begin_class

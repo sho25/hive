@@ -950,7 +950,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * Returns a predicate filter to filter an Iterable<Partition> to return all partitions    * that the current replication event specification is allowed to replicate-replace-into    */
+comment|/**    * Returns a predicate filter to filter an Iterable&lt;Partition&gt; to return all partitions    * that the current replication event specification is allowed to replicate-replace-into    */
 specifier|public
 name|Predicate
 argument_list|<

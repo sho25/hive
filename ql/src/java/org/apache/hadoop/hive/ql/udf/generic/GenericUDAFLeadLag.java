@@ -238,7 +238,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * abstract class for Lead& lag UDAFs GenericUDAFLeadLag.  *  */
+comment|/**  * abstract class for Lead&amp; lag UDAFs GenericUDAFLeadLag.  *  */
 end_comment
 
 begin_class

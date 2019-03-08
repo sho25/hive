@@ -1710,7 +1710,6 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Get all open sessions. Only used to clean up at shutdown.    * @return List<TezSessionState>    */
 specifier|public
 specifier|static
 name|String

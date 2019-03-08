@@ -622,7 +622,7 @@ name|tree
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Exporting an Acid table is more complicated than a flat table.  It may contains delete events,    * which can only be interpreted properly withing the context of the table/metastore where they    * were generated.  It may also contain insert events that belong to transactions that aborted    * where the same constraints apply.    * In order to make the export artifact free of these constraints, the export does a    * insert into tmpTable select * from<export table> to filter/apply the events in current    * context and then export the tmpTable.  This export artifact can now be imported into any    * table on any cluster (subject to schema checks etc).    * See {@link #analyzeAcidExport(ASTNode)}    * @param tree Export statement    * @return true if exporting an Acid table.    */
+comment|/**    * Exporting an Acid table is more complicated than a flat table.  It may contains delete events,    * which can only be interpreted properly withing the context of the table/metastore where they    * were generated.  It may also contain insert events that belong to transactions that aborted    * where the same constraints apply.    * In order to make the export artifact free of these constraints, the export does a    * insert into tmpTable select * from&lt;export table&gt; to filter/apply the events in current    * context and then export the tmpTable.  This export artifact can now be imported into any    * table on any cluster (subject to schema checks etc).    * See {@link #analyzeAcidExport(ASTNode)}    * @param tree Export statement    * @return true if exporting an Acid table.    */
 specifier|public
 specifier|static
 name|boolean

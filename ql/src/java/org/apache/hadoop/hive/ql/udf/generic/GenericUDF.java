@@ -636,7 +636,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A Generic User-defined function (GenericUDF) for the use with Hive.  *  * New GenericUDF classes need to inherit from this GenericUDF class.  *  * The GenericUDF are superior to normal UDFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDF that accepts  * array<int>, array<array<int>> and so on (arbitrary levels of nesting). 4. It  * can do short-circuit evaluations using DeferedObject.  */
+comment|/**  * A Generic User-defined function (GenericUDF) for the use with Hive.  *  * New GenericUDF classes need to inherit from this GenericUDF class.  *  * The GenericUDF are superior to normal UDFs in the following ways: 1. It can  * accept arguments of complex types, and return complex types. 2. It can accept  * variable length of arguments. 3. It can accept an infinite number of function  * signature - for example, it's easy to write a GenericUDF that accepts  * array&lt;int&gt;, array&lt;array&lt;int&gt;&gt; and so on (arbitrary levels of nesting). 4. It  * can do short-circuit evaluations using DeferedObject.  */
 end_comment
 
 begin_class
@@ -1062,7 +1062,7 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{   }
-comment|/**    * Some functions like comparisons may be affected by appearing order of arguments.    * This is to convert a function, such as 3> x to x< 3. The flip function of    * GenericUDFOPGreaterThan is GenericUDFOPLessThan.    */
+comment|/**    * Some functions like comparisons may be affected by appearing order of arguments.    * This is to convert a function, such as 3&gt; x to x&lt; 3. The flip function of    * GenericUDFOPGreaterThan is GenericUDFOPLessThan.    */
 specifier|public
 name|GenericUDF
 name|flip
@@ -1072,7 +1072,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Gets the negative function of the current one. E.g., GenericUDFOPNotEqual for    * GenericUDFOPEqual, or GenericUDFOPNull for GenericUDFOPNotNull.    * @return Negative function    * @throws UDFArgumentException    */
+comment|/**    * Gets the negative function of the current one. E.g., GenericUDFOPNotEqual for    * GenericUDFOPEqual, or GenericUDFOPNull for GenericUDFOPNotNull.    * @return Negative function    */
 specifier|public
 name|GenericUDF
 name|negative

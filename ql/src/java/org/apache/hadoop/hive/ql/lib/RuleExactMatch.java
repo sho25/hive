@@ -69,7 +69,7 @@ name|String
 index|[]
 name|pattern
 decl_stmt|;
-comment|/**    * The rule specified as operator names separated by % symbols, the left side represents the    * bottom of the stack.    *    * E.g. TS%FIL%RS -> means    * TableScan Node followed by Filter followed by ReduceSink in the tree, or, in terms of the    * stack, ReduceSink on top followed by Filter followed by TableScan    *    * @param ruleName    *          name of the rule    * @param regExp    *          string specification of the rule    **/
+comment|/**    * The rule specified as operator names separated by % symbols, the left side represents the    * bottom of the stack.    *    * E.g. TS%FIL%RS -&gt; means    * TableScan Node followed by Filter followed by ReduceSink in the tree, or, in terms of the    * stack, ReduceSink on top followed by Filter followed by TableScan    *    * @param ruleName    *          name of the rule    * @param pattern    *          string specification of the rule    **/
 specifier|public
 name|RuleExactMatch
 parameter_list|(

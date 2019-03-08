@@ -310,7 +310,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A simple sleep processor implementation that sleeps for the configured  * time in milliseconds.  *  * @see Config for configuring the HivePreWarmProcessor  */
+comment|/**  * A simple sleep processor implementation that sleeps for the configured  * time in milliseconds.  *  * @see Configuration for configuring the HivePreWarmProcessor  */
 end_comment
 
 begin_class

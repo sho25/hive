@@ -214,7 +214,7 @@ import|;
 end_import
 
 begin_comment
-comment|/** * * GenericUDFIntervalDayTime * * Example usage: * ... CAST(<Interval string> as INTERVAL DAY TO SECOND) ... * * Creates a HiveIntervalDayTimeWritable object using PrimitiveObjectInspectorConverter * */
+comment|/** * * GenericUDFIntervalDayTime * * Example usage: * ... CAST(&lt;Interval string&gt; as INTERVAL DAY TO SECOND) ... * * Creates a HiveIntervalDayTimeWritable object using PrimitiveObjectInspectorConverter * */
 end_comment
 
 begin_class

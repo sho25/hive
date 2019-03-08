@@ -98,7 +98,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * The DeepParquetHiveMapInspector will inspect an ArrayWritable, considering it as a Hive map.<br />  * It can also inspect a Map if Hive decides to inspect the result of an inspection.<br />  * When trying to access elements from the map it will iterate over all keys, inspecting them and comparing them to the  * desired key.  *  */
+comment|/**  * The DeepParquetHiveMapInspector will inspect an ArrayWritable, considering it as a Hive map.<br>  * It can also inspect a Map if Hive decides to inspect the result of an inspection.<br>  * When trying to access elements from the map it will iterate over all keys, inspecting them and comparing them to the  * desired key.  *  */
 end_comment
 
 begin_class

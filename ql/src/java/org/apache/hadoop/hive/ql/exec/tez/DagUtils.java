@@ -6922,7 +6922,7 @@ return|return
 name|retPath
 return|;
 block|}
-comment|/**    * Localizes files, archives and jars the user has instructed us    * to provide on the cluster as resources for execution.    *    * @param conf    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails    * @throws LoginException when getDefaultDestDir fails with the same exception    */
+comment|/**    * Localizes files, archives and jars the user has instructed us    * to provide on the cluster as resources for execution.    *    * @param conf    * @return List&lt;LocalResource&gt; local resources to add to execution    * @throws IOException when hdfs operation fails    * @throws LoginException when getDefaultDestDir fails with the same exception    */
 specifier|public
 name|List
 argument_list|<
@@ -7495,7 +7495,7 @@ literal|0
 index|]
 return|;
 block|}
-comment|/**    * Localizes files, archives and jars from a provided array of names.    * @param hdfsDirPathStr Destination directory in HDFS.    * @param conf Configuration.    * @param inputOutputJars The file names to localize.    * @return List<LocalResource> local resources to add to execution    * @throws IOException when hdfs operation fails.    * @throws LoginException when getDefaultDestDir fails with the same exception    */
+comment|/**    * Localizes files, archives and jars from a provided array of names.    * @param hdfsDirPathStr Destination directory in HDFS.    * @param conf Configuration.    * @param inputOutputJars The file names to localize.    * @return List&lt;LocalResource&gt; local resources to add to execution    * @throws IOException when hdfs operation fails.    * @throws LoginException when getDefaultDestDir fails with the same exception    */
 specifier|public
 name|List
 argument_list|<

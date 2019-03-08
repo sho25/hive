@@ -72,7 +72,7 @@ specifier|public
 interface|interface
 name|StatsAggregator
 block|{
-comment|/**    * This method connects to the temporary storage.    *    * @param hconf    *          HiveConf that contains the connection parameters.    * @param sourceTask    * @return true if connection is successful, false otherwise.    */
+comment|/**    * This method connects to the temporary storage.    *    * @return true if connection is successful, false otherwise.    */
 specifier|public
 name|boolean
 name|connect

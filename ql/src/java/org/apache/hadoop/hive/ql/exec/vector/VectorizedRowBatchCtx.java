@@ -1538,7 +1538,7 @@ name|dataTypePhysicalVariation
 argument_list|)
 return|;
 block|}
-comment|/**    * Creates a Vectorized row batch and the column vectors.    *    * @return VectorizedRowBatch    * @throws HiveException    */
+comment|/**    * Creates a Vectorized row batch and the column vectors.    *    * @return VectorizedRowBatch    */
 specifier|public
 name|VectorizedRowBatch
 name|createVectorizedRowBatch
@@ -1832,7 +1832,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Add the partition values to the batch    *    * @param batch    * @param partitionValues    * @throws HiveException    */
+comment|/**    * Add the partition values to the batch    *    * @param batch    * @param partitionValues    */
 specifier|public
 name|void
 name|addPartitionColsToBatch

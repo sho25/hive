@@ -244,7 +244,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveIgnoreKeyTextOutputFormat replaces key with null before feeding the<key,  * value> to TextOutputFormat.RecordWriter.  *  */
+comment|/**  * HiveIgnoreKeyTextOutputFormat replaces key with null before feeding the&lt;key,  * value&gt; to TextOutputFormat.RecordWriter.  *  */
 end_comment
 
 begin_class

@@ -256,7 +256,7 @@ name|HiveAuthzPluginException
 throws|,
 name|HiveAccessControlException
 function_decl|;
-comment|/**    * Create role    * @param roleName    * @param adminGrantor - The user in "[ WITH ADMIN<user> ]" clause of "create role"    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
+comment|/**    * Create role    * @param roleName    * @param adminGrantor - The user in "[ WITH ADMIN&lt;user&gt; ]" clause of "create role"    * @throws HiveAuthzPluginException    * @throws HiveAccessControlException    */
 name|void
 name|createRole
 parameter_list|(
@@ -477,7 +477,7 @@ parameter_list|)
 throws|throws
 name|HiveAuthzPluginException
 function_decl|;
-comment|/**    * Get a {@link HiveAuthorizationTranslator} implementation. See    * {@link HiveAuthorizationTranslator} for details. Return null if no    * customization is needed. Most implementations are expected to return null.    *    * The java signature of the method makes it necessary to only return Object    * type so that older implementations can extend the interface to build    * against older versions of Hive that don't include this additional method    * and HiveAuthorizationTranslator class. However, if a non null value is    * returned, the Object has to be of type HiveAuthorizationTranslator    *    * @return    * @throws HiveException    */
+comment|/**    * Get a {@link HiveAuthorizationTranslator} implementation. See    * {@link HiveAuthorizationTranslator} for details. Return null if no    * customization is needed. Most implementations are expected to return null.    *    * The java signature of the method makes it necessary to only return Object    * type so that older implementations can extend the interface to build    * against older versions of Hive that don't include this additional method    * and HiveAuthorizationTranslator class. However, if a non null value is    * returned, the Object has to be of type HiveAuthorizationTranslator    *    * @return    * @throws HiveAuthzPluginException    */
 name|Object
 name|getHiveAuthorizationTranslator
 parameter_list|()
@@ -485,7 +485,7 @@ throws|throws
 name|HiveAuthzPluginException
 function_decl|;
 comment|/**    * TableMaskingPolicy defines how users can access base tables. It defines a    * policy on what columns and rows are hidden, masked or redacted based on    * user, role or location.    */
-comment|/**    * applyRowFilterAndColumnMasking is called once for each table in a query.     * (part 1) It expects a valid filter condition to be returned. Null indicates no filtering is    * required.    *    * Example: table foo(c int) -> "c> 0&& c % 2 = 0"    *    * (part 2) It expects a valid expression as used in a select clause. Null    * is NOT a valid option. If no transformation is needed simply return the    * column name.    *    * Example: column a -> "a" (no transform)    *    * Example: column a -> "reverse(a)" (call the reverse function on a)    *    * Example: column a -> "5" (replace column a with the constant 5)    *    * @return List<HivePrivilegeObject>    * please return the list of HivePrivilegeObjects that need to be rewritten.    *    * @throws SemanticException    */
+comment|/**    * applyRowFilterAndColumnMasking is called once for each table in a query.     * (part 1) It expects a valid filter condition to be returned. Null indicates no filtering is    * required.    *    * Example: table foo(c int) -&gt; "c&gt; 0&amp;&amp; c % 2 = 0"    *    * (part 2) It expects a valid expression as used in a select clause. Null    * is NOT a valid option. If no transformation is needed simply return the    * column name.    *    * Example: column a -&gt; "a" (no transform)    *    * Example: column a -&gt; "reverse(a)" (call the reverse function on a)    *    * Example: column a -&gt; "5" (replace column a with the constant 5)    *    * @return List&lt;HivePrivilegeObject&gt;    * please return the list of HivePrivilegeObjects that need to be rewritten.    *    * @throws SemanticException    */
 name|List
 argument_list|<
 name|HivePrivilegeObject
@@ -504,7 +504,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 function_decl|;
-comment|/**    * needTransform() is called once per user in a query.     * Returning false short-circuits the generation of row/column transforms.    *    * @return    * @throws SemanticException    */
+comment|/**    * needTransform() is called once per user in a query.     * Returning false short-circuits the generation of row/column transforms.    *    * @return    */
 name|boolean
 name|needTransform
 parameter_list|()

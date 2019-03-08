@@ -620,7 +620,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Planner rule that rewrite  * {@link org.apache.hadoop.hive.ql.optimizer.calcite.reloperators.HiveExcept}  * Note, we only have 2 branches because of except's semantic.  * R1 Except(all) R2  * R1 introduce VCol ‘2’, R2 introduce VCol ‘1’  * R3 = GB(R1 on all keys + VCol + count(VCol) as c) union all GB(R2 on all keys + VCol + count(VCol) as c)  * R4 = GB(R3 on all keys + sum(c) as a + sum(VCol*c) as b) we  * have m+n=a, 2m+n=b where m is the #row in R1 and n is the #row in R2 then  * m=b-a, n=2a-b, m-n=2b-3a  * if it is except (distinct)  * then R5 = Fil (b-a>0&& 2a-b=0) R6 = select only keys from R5  * else R5 = Fil (2b-3a>0) R6 = UDTF (R5) which will explode the tuples based on 2b-3a.  * Note that NULLs are handled the same as other values. Please refer to the test cases.  */
+comment|/**  * Planner rule that rewrite  * {@link org.apache.hadoop.hive.ql.optimizer.calcite.reloperators.HiveExcept}  * Note, we only have 2 branches because of except's semantic.  * R1 Except(all) R2  * R1 introduce VCol ‘2’, R2 introduce VCol ‘1’  * R3 = GB(R1 on all keys + VCol + count(VCol) as c) union all GB(R2 on all keys + VCol + count(VCol) as c)  * R4 = GB(R3 on all keys + sum(c) as a + sum(VCol*c) as b) we  * have m+n=a, 2m+n=b where m is the #row in R1 and n is the #row in R2 then  * m=b-a, n=2a-b, m-n=2b-3a  * if it is except (distinct)  * then R5 = Fil (b-a&gt;0&amp;&amp; 2a-b=0) R6 = select only keys from R5  * else R5 = Fil (2b-3a&gt; 0) R6 = UDTF (R5) which will explode the tuples based on 2b-3a.  * Note that NULLs are handled the same as other values. Please refer to the test cases.  */
 end_comment
 
 begin_class

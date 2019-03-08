@@ -415,7 +415,7 @@ return|return
 name|result
 return|;
 block|}
-comment|/**    * Get the sign of the decimal input    *    * @param dec decimal input    *    * @return -1, 0, or 1 representing the sign of the input decimal    */
+comment|/**    * Get the sign of the decimal input    *    * @param decWritable decimal input    *    * @return -1, 0, or 1 representing the sign of the input decimal    */
 specifier|public
 name|IntWritable
 name|evaluate

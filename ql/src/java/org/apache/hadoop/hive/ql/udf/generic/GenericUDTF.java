@@ -198,7 +198,7 @@ name|collector
 init|=
 literal|null
 decl_stmt|;
-comment|/**    * Additionally setup GenericUDTF with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param context context    */
+comment|/**    * Additionally setup GenericUDTF with MapredContext before initializing.    * This is only called in runtime of MapRedTask.    *    * @param mapredContext context    */
 specifier|public
 name|void
 name|configure

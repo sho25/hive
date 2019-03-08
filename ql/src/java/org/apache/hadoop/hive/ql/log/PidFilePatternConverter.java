@@ -126,7 +126,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * FilePattern converter that converts %pid pattern to<process-id>@<hostname> information  * obtained at runtime.  *  * Example usage:  *<RollingFile name="Rolling-default" fileName="test.log" filePattern="test.log.%pid.gz">  *  * Will generate output file with name containing<process-id>@<hostname> like below  * test.log.95232@localhost.gz  */
+comment|/**  * FilePattern converter that converts %pid pattern to&lt;process-id&gt;@&lt;hostname&gt; information  * obtained at runtime.  *  * Example usage:  *&lt;RollingFile name="Rolling-default" fileName="test.log" filePattern="test.log.%pid.gz"&gt;  *  * Will generate output file with name containing&lt;process-id&gt;@&lt;hostname&gt; like below  * test.log.95232@localhost.gz  */
 end_comment
 
 begin_class

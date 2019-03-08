@@ -462,7 +462,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan.    *    * @return PhysicalContext    * @throws HiveException    */
+comment|/**    * invoke all the resolvers one-by-one, and alter the physical plan.    *    * @return PhysicalContext    * @throws SemanticException    */
 specifier|public
 name|PhysicalContext
 name|optimize

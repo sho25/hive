@@ -7151,7 +7151,7 @@ return|return
 name|maxLength
 return|;
 block|}
-comment|/**    * Given 2 TypeInfo types and the PrimitiveCategory selected as the common class between the two,    * return a TypeInfo corresponding to the common PrimitiveCategory, and with type qualifiers    * (if applicable) that match the 2 TypeInfo types.    * Examples:    *   varchar(10), varchar(20), primitive category varchar => varchar(20)    *   date, string, primitive category string => string    * @param a  TypeInfo of the first type    * @param b  TypeInfo of the second type    * @param typeCategory PrimitiveCategory of the designated common type between a and b    * @return TypeInfo represented by the primitive category, with any applicable type qualifiers.    */
+comment|/**    * Given 2 TypeInfo types and the PrimitiveCategory selected as the common class between the two,    * return a TypeInfo corresponding to the common PrimitiveCategory, and with type qualifiers    * (if applicable) that match the 2 TypeInfo types.    * Examples:    *   varchar(10), varchar(20), primitive category varchar =&gt; varchar(20)    *   date, string, primitive category string =&gt; string    * @param a  TypeInfo of the first type    * @param b  TypeInfo of the second type    * @param typeCategory PrimitiveCategory of the designated common type between a and b    * @return TypeInfo represented by the primitive category, with any applicable type qualifiers.    */
 specifier|public
 specifier|static
 name|TypeInfo
@@ -10232,7 +10232,7 @@ literal|0
 argument_list|)
 return|;
 block|}
-comment|/**    * A shortcut to get the "index" GenericUDF. This is used for getting elements    * out of array and getting values out of map.    * @throws SemanticException    */
+comment|/**    * A shortcut to get the "index" GenericUDF. This is used for getting elements    * out of array and getting values out of map.    */
 specifier|public
 specifier|static
 name|GenericUDF
@@ -10270,7 +10270,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * A shortcut to get the "and" GenericUDF.    * @throws SemanticException    */
+comment|/**    * A shortcut to get the "and" GenericUDF.    */
 specifier|public
 specifier|static
 name|GenericUDF

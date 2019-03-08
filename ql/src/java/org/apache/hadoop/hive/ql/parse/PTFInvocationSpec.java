@@ -1471,7 +1471,7 @@ operator|=
 name|columns
 expr_stmt|;
 block|}
-comment|/**      * Add order expressions from the list of expressions in the format of ASTNode      * @param args      */
+comment|/**      * Add order expressions from the list of expressions in the format of ASTNode      * @param nodes      */
 specifier|public
 name|void
 name|addExpressions

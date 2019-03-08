@@ -220,7 +220,7 @@ return|return
 name|dbName
 return|;
 block|}
-comment|/**    * @param databaseName    *          the dbName to set    */
+comment|/**    * @param dbName    *          the dbName to set    */
 specifier|public
 name|void
 name|setDatabaseName

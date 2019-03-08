@@ -421,7 +421,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-comment|/**    * For every node in this subtree, make sure it's start/stop token's    * are set.  Walk depth first, visit bottom up.  Only updates nodes    * with at least one token index< 0.    *    * In contrast to the method in the parent class, this method is    * iterative.    */
+comment|/**    * For every node in this subtree, make sure it's start/stop token's    * are set.  Walk depth first, visit bottom up.  Only updates nodes    * with at least one token index&lt; 0.    *    * In contrast to the method in the parent class, this method is    * iterative.    */
 annotation|@
 name|Override
 specifier|public
