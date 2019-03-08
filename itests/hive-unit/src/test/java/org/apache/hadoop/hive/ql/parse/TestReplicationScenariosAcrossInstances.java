@@ -7530,34 +7530,17 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Retry with different dump should fail.
-name|CommandProcessorResponse
-name|ret
-init|=
 name|replica
 operator|.
-name|runCommand
+name|loadFailure
 argument_list|(
-literal|"REPL LOAD "
-operator|+
 name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
+argument_list|,
 name|tuple2
 operator|.
 name|dumpLocation
-operator|+
-literal|"'"
-argument_list|)
-decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-name|ret
-operator|.
-name|getResponseCode
-argument_list|()
+argument_list|,
+literal|null
 argument_list|,
 name|ErrorMsg
 operator|.

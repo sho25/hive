@@ -928,13 +928,11 @@ name|TaskTracker
 name|tasks
 parameter_list|()
 throws|throws
-name|SemanticException
+name|Exception
 block|{
 comment|// Path being passed to us is a table dump location. We go ahead and load it in as needed.
 comment|// If tblName is null, then we default to the table name specified in _metadata, which is good.
 comment|// or are both specified, in which case, that's what we are intended to create the new table as.
-try|try
-block|{
 if|if
 condition|(
 name|event
@@ -1112,7 +1110,7 @@ operator|.
 name|location
 argument_list|)
 expr_stmt|;
-comment|/* Note: In the following section, Metadata-only import handling logic is      interleaved with regular repl-import logic. The rule of thumb being      followed here is that MD-only imports are essentially ALTERs. They do      not load data, and should not be "creating" any metadata - they should      be replacing instead. The only place it makes sense for a MD-only import      to create is in the case of a table that's been dropped and recreated,      or in the case of an unpartitioned table. In all other cases, it should      behave like a noop or a pure MD alter.   */
+comment|/* Note: In the following section, Metadata-only import handling logic is        interleaved with regular repl-import logic. The rule of thumb being        followed here is that MD-only imports are essentially ALTERs. They do        not load data, and should not be "creating" any metadata - they should        be replacing instead. The only place it makes sense for a MD-only import        to create is in the case of a table that's been dropped and recreated,        or in the case of an unpartitioned table. In all other cases, it should        behave like a noop or a pure MD alter.     */
 name|newTableTasks
 argument_list|(
 name|tableDesc
@@ -1195,21 +1193,6 @@ expr_stmt|;
 return|return
 name|tracker
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 specifier|private
 name|ReplLoadOpType

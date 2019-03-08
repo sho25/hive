@@ -1071,11 +1071,9 @@ name|TaskTracker
 name|tasks
 parameter_list|()
 throws|throws
-name|SemanticException
+name|Exception
 block|{
-try|try
-block|{
-comment|/*       We are doing this both in load table and load partitions        */
+comment|/*     We are doing this both in load table and load partitions      */
 name|Database
 name|parentDb
 init|=
@@ -1295,21 +1293,6 @@ block|}
 return|return
 name|tracker
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-name|e
-argument_list|)
-throw|;
-block|}
 block|}
 specifier|private
 name|void
