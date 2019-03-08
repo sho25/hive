@@ -3418,7 +3418,7 @@ name|driverConf
 argument_list|,
 name|user
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// Note: we could skip creating the table and just add table type stuff directly to the

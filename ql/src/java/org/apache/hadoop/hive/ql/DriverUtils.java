@@ -279,6 +279,11 @@ argument_list|(
 name|conf
 argument_list|)
 operator|.
+name|withGenerateNewQueryId
+argument_list|(
+literal|true
+argument_list|)
+operator|.
 name|nonIsolated
 argument_list|()
 operator|.
