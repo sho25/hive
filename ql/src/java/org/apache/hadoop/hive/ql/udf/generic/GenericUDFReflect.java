@@ -91,6 +91,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|FunctionRegistry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -277,6 +295,26 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
 begin_comment
 comment|/**  * A simple generic udf to call java static functions via reflection.  */
 end_comment
@@ -310,6 +348,21 @@ name|GenericUDFReflect
 extends|extends
 name|AbstractGenericUDFReflect
 block|{
+specifier|private
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|GenericUDFReflect
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|private
 specifier|transient
 name|StringObjectInspector
@@ -584,7 +637,14 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"UDFReflect evaluate "
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"UDFReflect evaluate error while loading class %s"
+argument_list|,
+name|classNameString
+argument_list|)
 argument_list|,
 name|ex
 argument_list|)
@@ -614,7 +674,46 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// ignored
+if|if
+condition|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|NoSuchMethodException
+condition|)
+block|{
+comment|// still could be okay while using a static method of a class that hasn't got a default/parameterless constructor
+name|LOG
+operator|.
+name|trace
+argument_list|(
+literal|"ignoring NoSuchMethodException while instantiating class"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"UDFReflect evaluate error while instantiating class %s"
+argument_list|,
+name|classNameString
+argument_list|)
+argument_list|,
+name|e
+argument_list|)
+throw|;
+block|}
 block|}
 name|classNameChanged
 operator|=
