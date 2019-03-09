@@ -735,7 +735,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|public
 name|Path
 name|dbLevelPath
 parameter_list|()

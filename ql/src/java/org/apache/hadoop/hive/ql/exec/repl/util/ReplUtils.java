@@ -628,6 +628,16 @@ name|REPL_CURRENT_TBL_WRITE_ID
 init|=
 literal|"hive.repl.current.table.write.id"
 decl_stmt|;
+comment|// Configuration to be received via WITH clause of REPL LOAD to clean tables from any previously failed
+comment|// bootstrap load.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|REPL_CLEAN_TABLES_FROM_BOOTSTRAP_CONFIG
+init|=
+literal|"hive.repl.clean.tables.from.bootstrap"
+decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
