@@ -6610,7 +6610,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|0.99
+literal|0.5
 argument_list|,
 literal|"Portion of total memory to be used by map-side group aggregation hash table"
 argument_list|)
@@ -6648,7 +6648,7 @@ argument_list|,
 operator|(
 name|float
 operator|)
-literal|0.5
+literal|0.99
 argument_list|,
 literal|"Hash aggregation will be turned off if the ratio between hash  table size and input rows is bigger than this number. \n"
 operator|+
