@@ -678,6 +678,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|String
+name|getScheme
+parameter_list|()
+block|{
+return|return
+literal|"raw"
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|FileStatus
 name|getFileStatus
 parameter_list|(

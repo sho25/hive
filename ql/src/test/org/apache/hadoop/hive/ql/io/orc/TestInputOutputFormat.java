@@ -10285,6 +10285,17 @@ argument_list|)
 throw|;
 block|}
 block|}
+annotation|@
+name|Override
+specifier|public
+name|String
+name|getScheme
+parameter_list|()
+block|{
+return|return
+literal|"mock"
+return|;
+block|}
 comment|// increments file modification time
 specifier|public
 name|void

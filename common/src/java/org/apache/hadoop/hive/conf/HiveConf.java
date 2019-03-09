@@ -7559,6 +7559,21 @@ operator|+
 literal|" based on heuristics."
 argument_list|)
 block|,
+name|HIVE_ORC_BLOB_STORAGE_SPLIT_SIZE
+argument_list|(
+literal|"hive.exec.orc.blob.storage.split.size"
+argument_list|,
+literal|128L
+operator|*
+literal|1024
+operator|*
+literal|1024
+argument_list|,
+literal|"When blob storage is used, BI split strategy does not have block locations for splitting orc files.\n"
+operator|+
+literal|"In such cases, split generation will use this config to split orc file"
+argument_list|)
+block|,
 name|HIVE_ORC_WRITER_LLAP_MEMORY_MANAGER_ENABLED
 argument_list|(
 literal|"hive.exec.orc.writer.llap.memory.manager.enabled"
