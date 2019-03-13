@@ -623,24 +623,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
-operator|.
-name|txn
-operator|.
-name|TxnStore
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|ql
 operator|.
 name|DriverUtils
@@ -659,9 +641,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|ddl
 operator|.
-name|DDLTask
+name|table
+operator|.
+name|ShowCreateTableOperation
 import|;
 end_import
 
@@ -4934,7 +4918,7 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|DDLTask
+name|ShowCreateTableOperation
 operator|.
 name|appendSerdeParams
 argument_list|(

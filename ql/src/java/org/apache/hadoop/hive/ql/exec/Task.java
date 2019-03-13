@@ -2642,7 +2642,7 @@ return|return
 name|exception
 return|;
 block|}
-specifier|protected
+specifier|public
 name|void
 name|setException
 parameter_list|(

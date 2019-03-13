@@ -6977,7 +6977,7 @@ name|tableName
 operator|+
 literal|" (key int, value string)"
 argument_list|,
-literal|"FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask"
+literal|"FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.ddl.DDLTask2"
 argument_list|,
 literal|"08S01"
 argument_list|,

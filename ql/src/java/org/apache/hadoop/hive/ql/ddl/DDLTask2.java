@@ -382,6 +382,17 @@ argument_list|(
 name|conf
 argument_list|,
 name|driverContext
+argument_list|,
+name|this
+argument_list|,
+operator|(
+name|DDLWork2
+operator|)
+name|work
+argument_list|,
+name|queryState
+argument_list|,
+name|queryPlan
 argument_list|)
 decl_stmt|;
 name|Class

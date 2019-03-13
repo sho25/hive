@@ -1591,7 +1591,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|DropTableDesc
+name|DropPartitionDesc
 import|;
 end_import
 
@@ -18339,7 +18339,7 @@ block|{
 comment|// partitions to be dropped in this batch
 name|List
 argument_list|<
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 argument_list|>
@@ -18561,7 +18561,7 @@ operator|.
 name|add
 argument_list|(
 operator|new
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 argument_list|(
@@ -18626,7 +18626,7 @@ name|tblName
 parameter_list|,
 name|List
 argument_list|<
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 argument_list|>
@@ -18691,7 +18691,7 @@ name|tblName
 parameter_list|,
 name|List
 argument_list|<
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 argument_list|>
@@ -18747,7 +18747,7 @@ name|tblName
 parameter_list|,
 name|List
 argument_list|<
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 argument_list|>
@@ -18807,7 +18807,7 @@ name|tblName
 parameter_list|,
 name|List
 argument_list|<
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 argument_list|>
@@ -18867,7 +18867,7 @@ argument_list|)
 decl_stmt|;
 for|for
 control|(
-name|DropTableDesc
+name|DropPartitionDesc
 operator|.
 name|PartSpec
 name|partSpec

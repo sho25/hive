@@ -15,7 +15,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|ddl
+operator|.
+name|database
 package|;
 end_package
 
@@ -41,6 +43,60 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ddl
+operator|.
+name|DDLDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|DDLTask2
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|Explain
@@ -50,7 +106,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ShowCreateDatabaseDesc.  *  */
+comment|/**  * DDL task description for SHOW CREATE DATABASE commands.  */
 end_comment
 
 begin_class
@@ -80,9 +136,9 @@ argument_list|)
 specifier|public
 class|class
 name|ShowCreateDatabaseDesc
-extends|extends
-name|DDLDesc
 implements|implements
+name|DDLDesc
+implements|,
 name|Serializable
 block|{
 specifier|private
@@ -93,36 +149,41 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+static|static
+block|{
+name|DDLTask2
+operator|.
+name|registerOperation
+argument_list|(
+name|ShowCreateDatabaseDesc
+operator|.
+name|class
+argument_list|,
+name|ShowCreateDatabaseOperation
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+specifier|final
 name|String
 name|resFile
 decl_stmt|;
+specifier|private
+specifier|final
 name|String
 name|dbName
 decl_stmt|;
-comment|/**    * thrift ddl for the result of showcreatedatabase.    */
-specifier|private
+comment|/**    * Thrift ddl for the result of showcreatedatabase.    */
+specifier|public
 specifier|static
 specifier|final
 name|String
-name|schema
+name|SCHEMA
 init|=
 literal|"createdb_stmt#string"
 decl_stmt|;
-specifier|public
-name|String
-name|getSchema
-parameter_list|()
-block|{
-return|return
-name|schema
-return|;
-block|}
-comment|/**    * For serialization use only.    */
-specifier|public
-name|ShowCreateDatabaseDesc
-parameter_list|()
-block|{   }
-comment|/**    * @param resFile    * @param dbName    *          name of database to show    */
 specifier|public
 name|ShowCreateDatabaseDesc
 parameter_list|(
@@ -146,7 +207,6 @@ operator|=
 name|resFile
 expr_stmt|;
 block|}
-comment|/**    * @return the resFile    */
 annotation|@
 name|Explain
 argument_list|(
@@ -171,23 +231,6 @@ return|return
 name|resFile
 return|;
 block|}
-comment|/**    * @param resFile    *          the resFile to set    */
-specifier|public
-name|void
-name|setResFile
-parameter_list|(
-name|String
-name|resFile
-parameter_list|)
-block|{
-name|this
-operator|.
-name|resFile
-operator|=
-name|resFile
-expr_stmt|;
-block|}
-comment|/**    * @return the databaseName    */
 annotation|@
 name|Explain
 argument_list|(
@@ -219,22 +262,6 @@ block|{
 return|return
 name|dbName
 return|;
-block|}
-comment|/**    * @param dbName    *          the dbName to set    */
-specifier|public
-name|void
-name|setDatabaseName
-parameter_list|(
-name|String
-name|dbName
-parameter_list|)
-block|{
-name|this
-operator|.
-name|dbName
-operator|=
-name|dbName
-expr_stmt|;
 block|}
 block|}
 end_class

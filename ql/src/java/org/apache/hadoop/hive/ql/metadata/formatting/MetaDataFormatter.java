@@ -47,16 +47,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -78,16 +68,6 @@ operator|.
 name|util
 operator|.
 name|Set
-import|;
-end_import
-
-begin_import
-import|import
-name|javax
-operator|.
-name|annotation
-operator|.
-name|Nullable
 import|;
 end_import
 
@@ -140,6 +120,24 @@ operator|.
 name|api
 operator|.
 name|FieldSchema
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|PrincipalType
 import|;
 end_import
 
@@ -632,7 +630,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Describe a database.    */
-specifier|public
 name|void
 name|showDatabaseDescription
 parameter_list|(
@@ -651,7 +648,7 @@ parameter_list|,
 name|String
 name|ownerName
 parameter_list|,
-name|String
+name|PrincipalType
 name|ownerType
 parameter_list|,
 name|Map

@@ -169,7 +169,7 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|DropTableDesc
+name|DropPartitionDesc
 import|;
 end_import
 
@@ -349,11 +349,11 @@ operator|>
 literal|0
 condition|)
 block|{
-name|DropTableDesc
+name|DropPartitionDesc
 name|dropPtnDesc
 init|=
 operator|new
-name|DropTableDesc
+name|DropPartitionDesc
 argument_list|(
 name|actualDbName
 operator|+
@@ -362,8 +362,6 @@ operator|+
 name|actualTblName
 argument_list|,
 name|partSpecs
-argument_list|,
-literal|null
 argument_list|,
 literal|true
 argument_list|,
