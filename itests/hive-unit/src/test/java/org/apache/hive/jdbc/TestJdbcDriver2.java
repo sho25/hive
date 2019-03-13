@@ -18864,13 +18864,7 @@ operator|.
 name|createStatement
 argument_list|()
 decl_stmt|;
-name|stmt
-operator|.
-name|executeAsync
-argument_list|(
-literal|"create database query_id_test with dbproperties ('repl.source.for' = '1, 2, 3')"
-argument_list|)
-expr_stmt|;
+comment|// Returns null if no query is running.
 name|String
 name|queryId
 init|=
@@ -18879,6 +18873,27 @@ operator|.
 name|getQueryId
 argument_list|()
 decl_stmt|;
+name|assertTrue
+argument_list|(
+name|queryId
+operator|==
+literal|null
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeAsync
+argument_list|(
+literal|"create database query_id_test with dbproperties ('repl.source.for' = '1, 2, 3')"
+argument_list|)
+expr_stmt|;
+name|queryId
+operator|=
+name|stmt
+operator|.
+name|getQueryId
+argument_list|()
+expr_stmt|;
 name|assertFalse
 argument_list|(
 name|queryId

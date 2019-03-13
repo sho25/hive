@@ -17,20 +17,6 @@ end_package
 
 begin_import
 import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|annotations
-operator|.
-name|VisibleForTesting
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -42,6 +28,26 @@ operator|.
 name|binary
 operator|.
 name|Base64
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|classification
+operator|.
+name|InterfaceAudience
+operator|.
+name|LimitedPrivate
 import|;
 end_import
 
@@ -342,24 +348,6 @@ operator|.
 name|thrift
 operator|.
 name|TOperationHandle
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|service
-operator|.
-name|rpc
-operator|.
-name|thrift
-operator|.
-name|TOperationState
 import|;
 end_import
 
@@ -3144,8 +3132,16 @@ operator|=
 name|stream
 expr_stmt|;
 block|}
+comment|/**    * Returns the Query ID if it is running.    * This method is a public API for usage outside of Hive, although it is not part of the    * interface java.sql.Statement.    * @return Valid query ID if it is running else returns NULL.    * @throws SQLException If any internal failures.    */
 annotation|@
-name|VisibleForTesting
+name|LimitedPrivate
+argument_list|(
+name|value
+operator|=
+block|{
+literal|"Hive and closely related projects."
+block|}
+argument_list|)
 specifier|public
 name|String
 name|getQueryId
@@ -3153,6 +3149,18 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+if|if
+condition|(
+name|stmtHandle
+operator|==
+literal|null
+condition|)
+block|{
+comment|// If query is not running or already closed.
+return|return
+literal|null
+return|;
+block|}
 try|try
 block|{
 return|return
@@ -3184,6 +3192,17 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// If concurrently the query is closed before we fetch queryID.
+return|return
+literal|null
+return|;
 block|}
 block|}
 block|}
