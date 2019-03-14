@@ -757,6 +757,15 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
+operator|!
+name|cStat
+operator|.
+name|isEstimated
+argument_list|()
+condition|)
+block|{
+if|if
+condition|(
 name|cStat
 operator|.
 name|getCountDistint
@@ -871,6 +880,7 @@ argument_list|(
 name|key
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|colStatsPos
 operator|++
