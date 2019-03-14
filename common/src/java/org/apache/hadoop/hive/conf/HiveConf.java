@@ -5432,7 +5432,7 @@ name|METASTORE_AGGREGATE_STATS_CACHE_ENABLED
 argument_list|(
 literal|"hive.metastore.aggregate.stats.cache.enabled"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether aggregate stats caching is enabled or not."
 argument_list|)
