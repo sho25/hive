@@ -20289,7 +20289,7 @@ name|allBigTableValueExpressions
 init|=
 name|vContext
 operator|.
-name|getVectorExpressionsUpConvertDecimal64
+name|getVectorExpressions
 argument_list|(
 name|bigTableExprs
 argument_list|)
