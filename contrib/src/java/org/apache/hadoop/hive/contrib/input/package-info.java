@@ -4,7 +4,7 @@ comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or m
 end_comment
 
 begin_comment
-comment|/**  * This package contains the HiveMetaTool program and the classes used by it.  */
+comment|/**  * This package contains contributed input format.  */
 end_comment
 
 begin_package
@@ -17,11 +17,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|metastore
+name|contrib
 operator|.
-name|tools
-operator|.
-name|metatool
+name|input
 package|;
 end_package
 
