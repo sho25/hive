@@ -1507,7 +1507,11 @@ name|attemptNum
 init|=
 literal|0
 decl_stmt|;
-comment|// Use task attempt number from conf if provided
+specifier|final
+name|int
+name|taskNum
+decl_stmt|;
+comment|// Use task attempt number, task number from conf if provided
 name|TaskAttemptID
 name|taskAttemptId
 init|=
@@ -1539,6 +1543,16 @@ operator|.
 name|getId
 argument_list|()
 expr_stmt|;
+name|taskNum
+operator|=
+name|taskAttemptId
+operator|.
+name|getTaskID
+argument_list|()
+operator|.
+name|getId
+argument_list|()
+expr_stmt|;
 if|if
 condition|(
 name|LOG
@@ -1551,23 +1565,26 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Setting attempt number to "
-operator|+
+literal|"Setting attempt number to: {}, task number to: {} from given taskAttemptId: {} in conf"
+argument_list|,
 name|attemptNum
-operator|+
-literal|" from task attempt ID in conf: "
-operator|+
-name|job
-operator|.
-name|get
-argument_list|(
-name|MRJobConfig
-operator|.
-name|TASK_ATTEMPT_ID
-argument_list|)
+argument_list|,
+name|taskNum
+argument_list|,
+name|taskAttemptId
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+else|else
+block|{
+name|taskNum
+operator|=
+name|llapSplit
+operator|.
+name|getSplitNum
+argument_list|()
+expr_stmt|;
 block|}
 name|SubmitWorkRequestProto
 name|request
@@ -1576,10 +1593,7 @@ name|constructSubmitWorkRequestProto
 argument_list|(
 name|submitWorkInfo
 argument_list|,
-name|llapSplit
-operator|.
-name|getSplitNum
-argument_list|()
+name|taskNum
 argument_list|,
 name|attemptNum
 argument_list|,
