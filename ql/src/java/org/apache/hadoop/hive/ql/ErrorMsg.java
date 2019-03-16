@@ -487,6 +487,8 @@ argument_list|,
 literal|"[] not valid on non-collection types"
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|SELECT_DISTINCT_WITH_GROUPBY
 argument_list|(
 literal|10034
