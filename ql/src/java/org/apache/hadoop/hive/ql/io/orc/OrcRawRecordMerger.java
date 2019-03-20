@@ -3382,7 +3382,9 @@ operator|=
 operator|new
 name|RecordIdentifier
 argument_list|(
-literal|0
+name|tfp
+operator|.
+name|syntheticWriteId
 argument_list|,
 name|bucketProperty
 argument_list|,
@@ -3403,7 +3405,9 @@ operator|=
 operator|new
 name|RecordIdentifier
 argument_list|(
-literal|0
+name|tfp
+operator|.
+name|syntheticWriteId
 argument_list|,
 name|bucketProperty
 argument_list|,
