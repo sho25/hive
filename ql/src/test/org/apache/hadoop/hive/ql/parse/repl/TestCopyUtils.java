@@ -494,6 +494,8 @@ argument_list|(
 literal|""
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|long
@@ -573,6 +575,8 @@ argument_list|(
 literal|""
 argument_list|,
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|long
@@ -681,6 +685,8 @@ argument_list|(
 literal|null
 argument_list|,
 name|conf
+argument_list|,
+name|fs
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -815,11 +821,6 @@ argument_list|)
 operator|.
 name|regularCopy
 argument_list|(
-name|same
-argument_list|(
-name|fs
-argument_list|)
-argument_list|,
 name|same
 argument_list|(
 name|fs

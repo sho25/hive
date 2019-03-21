@@ -3161,8 +3161,8 @@ parameter_list|,
 name|boolean
 name|deleteSource
 parameter_list|,
-name|String
-name|doAsUser
+name|UserGroupInformation
+name|proxyUser
 parameter_list|,
 name|HiveConf
 name|conf
@@ -3193,7 +3193,7 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|doAsUser
+name|proxyUser
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -3203,7 +3203,7 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
-name|doAsUser
+name|proxyUser
 operator|==
 literal|null
 condition|)
@@ -3236,7 +3236,7 @@ name|dst
 argument_list|,
 name|conf
 argument_list|,
-name|doAsUser
+name|proxyUser
 argument_list|)
 expr_stmt|;
 block|}
@@ -3249,7 +3249,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|doAsUser
+name|proxyUser
 operator|!=
 literal|null
 condition|)

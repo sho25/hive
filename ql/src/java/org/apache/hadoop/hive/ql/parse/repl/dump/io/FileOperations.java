@@ -736,6 +736,13 @@ argument_list|(
 name|distCpDoAsUser
 argument_list|,
 name|hiveConf
+argument_list|,
+name|toPath
+operator|.
+name|getFileSystem
+argument_list|(
+name|hiveConf
+argument_list|)
 argument_list|)
 operator|.
 name|doCopy
@@ -995,6 +1002,13 @@ argument_list|(
 name|distCpDoAsUser
 argument_list|,
 name|hiveConf
+argument_list|,
+name|exportRootDataDir
+operator|.
+name|getFileSystem
+argument_list|(
+name|hiveConf
+argument_list|)
 argument_list|)
 operator|.
 name|doCopy

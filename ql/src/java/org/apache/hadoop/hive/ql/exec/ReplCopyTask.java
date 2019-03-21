@@ -1736,12 +1736,12 @@ name|distCpDoAsUser
 argument_list|()
 argument_list|,
 name|conf
+argument_list|,
+name|dstFs
 argument_list|)
 operator|.
 name|copyAndVerify
 argument_list|(
-name|dstFs
-argument_list|,
 name|toPath
 argument_list|,
 name|srcFiles
