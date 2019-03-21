@@ -8678,6 +8678,13 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
+comment|/**    * Gets the version string of the metastore server which this client is connected to    *    * @return String representation of the version number of Metastore server (eg: 3.1.0-SNAPSHOT)    */
+name|String
+name|getServerVersion
+parameter_list|()
+throws|throws
+name|TException
+function_decl|;
 block|}
 end_interface
 
