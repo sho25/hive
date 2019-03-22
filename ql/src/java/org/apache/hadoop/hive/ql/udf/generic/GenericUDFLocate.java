@@ -225,7 +225,7 @@ name|Description
 argument_list|(
 name|name
 operator|=
-literal|"locate"
+literal|"locate,position"
 argument_list|,
 name|value
 operator|=

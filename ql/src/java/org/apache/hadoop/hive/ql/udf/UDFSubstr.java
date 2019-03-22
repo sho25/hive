@@ -181,7 +181,7 @@ name|Description
 argument_list|(
 name|name
 operator|=
-literal|"substr,substring"
+literal|"substr,substring,mid"
 argument_list|,
 name|value
 operator|=
