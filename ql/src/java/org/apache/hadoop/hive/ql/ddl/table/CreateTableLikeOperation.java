@@ -727,7 +727,27 @@ operator|.
 name|EXTERNAL_TABLE
 argument_list|)
 expr_stmt|;
-comment|// partition discovery is on by default
+comment|// if the partition discovery tablproperty is already defined don't change it
+if|if
+condition|(
+name|tbl
+operator|.
+name|isPartitioned
+argument_list|()
+operator|&&
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+name|PartitionManagementTask
+operator|.
+name|DISCOVER_PARTITIONS_TBLPROPERTY
+argument_list|)
+operator|==
+literal|null
+condition|)
+block|{
+comment|// partition discovery is on by default if it already doesn't exist
 name|tbl
 operator|.
 name|setProperty
@@ -739,6 +759,7 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|tbl
 operator|.
@@ -1405,7 +1426,27 @@ operator|.
 name|EXTERNAL_TABLE
 argument_list|)
 expr_stmt|;
-comment|// partition discovery is on by default
+comment|// if the partition discovery tablproperty is already defined don't change it
+if|if
+condition|(
+name|tbl
+operator|.
+name|isPartitioned
+argument_list|()
+operator|&&
+name|tbl
+operator|.
+name|getProperty
+argument_list|(
+name|PartitionManagementTask
+operator|.
+name|DISCOVER_PARTITIONS_TBLPROPERTY
+argument_list|)
+operator|==
+literal|null
+condition|)
+block|{
+comment|// partition discovery is on by default if it already doesn't exist
 name|tbl
 operator|.
 name|setProperty
@@ -1417,6 +1458,7 @@ argument_list|,
 literal|"true"
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{

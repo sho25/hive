@@ -749,6 +749,15 @@ name|getTableName
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|qualifiedTableName
+operator|=
+name|Warehouse
+operator|.
+name|getCatalogQualifiedTableName
+argument_list|(
+name|table
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|getConf
@@ -785,7 +794,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Retention period ({}s) for partition is enabled for MSCK REPAIR.."
+literal|"{} - Retention period ({}s) for partition is enabled for MSCK REPAIR.."
+argument_list|,
+name|qualifiedTableName
 argument_list|,
 name|msckInfo
 operator|.
@@ -929,7 +940,9 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"#partsNotInMs: {} #partsNotInFs: {} #expiredPartitions: {} lockRequired: {} (R: {} A: {} D: {})"
+literal|"{} - #partsNotInMs: {} #partsNotInFs: {} #expiredPartitions: {} lockRequired: {} (R: {} A: {} D: {})"
+argument_list|,
+name|qualifiedTableName
 argument_list|,
 name|partsNotInMs
 operator|.
@@ -973,15 +986,6 @@ argument_list|()
 condition|)
 block|{
 comment|// Repair metadata in HMS
-name|qualifiedTableName
-operator|=
-name|Warehouse
-operator|.
-name|getCatalogQualifiedTableName
-argument_list|(
-name|table
-argument_list|)
-expr_stmt|;
 name|long
 name|lockId
 decl_stmt|;

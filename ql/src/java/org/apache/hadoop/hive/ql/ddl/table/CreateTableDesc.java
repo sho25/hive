@@ -4544,6 +4544,11 @@ if|if
 condition|(
 name|tbl
 operator|.
+name|isPartitioned
+argument_list|()
+operator|&&
+name|tbl
+operator|.
 name|getProperty
 argument_list|(
 name|PartitionManagementTask
