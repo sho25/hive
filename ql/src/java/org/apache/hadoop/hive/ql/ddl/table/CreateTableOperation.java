@@ -109,6 +109,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|TableType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|api
 operator|.
 name|EnvironmentContext
@@ -415,6 +431,11 @@ name|getDataLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|boolean
+name|replDataLocationChanged
+init|=
+literal|false
+decl_stmt|;
 if|if
 condition|(
 name|desc
@@ -424,20 +445,9 @@ argument_list|()
 operator|.
 name|isInReplicationScope
 argument_list|()
-operator|&&
-operator|(
-operator|!
-name|desc
-operator|.
-name|getReplaceMode
-argument_list|()
-operator|)
 condition|)
 block|{
-comment|// if this is a replication spec, then replace-mode semantics might apply.
-comment|// if we're already asking for a table replacement, then we can skip this check.
-comment|// however, otherwise, if in replication scope, and we've not been explicitly asked
-comment|// to replace, we should check if the object we're looking at exists, and if so,
+comment|// If in replication scope, we should check if the object we're looking at exists, and if so,
 comment|// trigger replace-mode semantics.
 name|Table
 name|existingTable
@@ -508,6 +518,57 @@ name|getParameters
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// If location of an existing managed table is changed, then need to delete the old location if exists.
+comment|// This scenario occurs when a managed table is converted into external table at source. In this case,
+comment|// at target, the table data would be moved to different location under base directory for external tables.
+if|if
+condition|(
+name|existingTable
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|TableType
+operator|.
+name|MANAGED_TABLE
+argument_list|)
+operator|&&
+name|tbl
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|TableType
+operator|.
+name|EXTERNAL_TABLE
+argument_list|)
+operator|&&
+operator|(
+operator|!
+name|existingTable
+operator|.
+name|getDataLocation
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|tbl
+operator|.
+name|getDataLocation
+argument_list|()
+argument_list|)
+operator|)
+condition|)
+block|{
+name|replDataLocationChanged
+operator|=
+literal|true
+expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -542,6 +603,8 @@ block|{
 name|createTableReplaceMode
 argument_list|(
 name|tbl
+argument_list|,
+name|replDataLocationChanged
 argument_list|)
 expr_stmt|;
 block|}
@@ -582,6 +645,9 @@ name|createTableReplaceMode
 parameter_list|(
 name|Table
 name|tbl
+parameter_list|,
+name|boolean
+name|replDataLocationChanged
 parameter_list|)
 throws|throws
 name|HiveException
@@ -709,6 +775,23 @@ name|TRUE
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+comment|// In replication flow, if table's data location is changed, then set the corresponding flag in
+comment|// environment context to notify Metastore to update location of all partitions and delete old directory.
+if|if
+condition|(
+name|replDataLocationChanged
+condition|)
+block|{
+name|environmentContext
+operator|=
+name|ReplUtils
+operator|.
+name|setReplDataLocationChangedFlag
+argument_list|(
+name|environmentContext
+argument_list|)
+expr_stmt|;
 block|}
 comment|// replace-mode creates are really alters using CreateTableDesc.
 name|context

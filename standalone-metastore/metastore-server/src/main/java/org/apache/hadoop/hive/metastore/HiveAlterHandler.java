@@ -71,6 +71,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|ReplConst
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|TableName
 import|;
 end_import
@@ -848,16 +864,27 @@ expr_stmt|;
 specifier|final
 name|boolean
 name|cascade
-init|=
+decl_stmt|;
+specifier|final
+name|boolean
+name|replDataLocationChanged
+decl_stmt|;
+if|if
+condition|(
+operator|(
 name|environmentContext
 operator|!=
 literal|null
+operator|)
 operator|&&
 name|environmentContext
 operator|.
 name|isSetProperties
 argument_list|()
-operator|&&
+condition|)
+block|{
+name|cascade
+operator|=
 name|StatsSetupConst
 operator|.
 name|TRUE
@@ -876,7 +903,40 @@ operator|.
 name|CASCADE
 argument_list|)
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+name|replDataLocationChanged
+operator|=
+name|ReplConst
+operator|.
+name|TRUE
+operator|.
+name|equals
+argument_list|(
+name|environmentContext
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|ReplConst
+operator|.
+name|REPL_DATA_LOCATION_CHANGED
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|cascade
+operator|=
+literal|false
+expr_stmt|;
+name|replDataLocationChanged
+operator|=
+literal|false
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|newt
@@ -1005,6 +1065,11 @@ name|boolean
 name|isPartitionedTable
 init|=
 literal|false
+decl_stmt|;
+name|Database
+name|olddb
+init|=
+literal|null
 decl_stmt|;
 name|Table
 name|oldt
@@ -1157,6 +1222,17 @@ argument_list|()
 expr_stmt|;
 comment|// get old table
 comment|// Note: we don't verify stats here; it's done below in alterTableUpdateTableColumnStats.
+name|olddb
+operator|=
+name|msdb
+operator|.
+name|getDatabase
+argument_list|(
+name|catName
+argument_list|,
+name|dbname
+argument_list|)
+expr_stmt|;
 name|oldt
 operator|=
 name|msdb
@@ -1327,7 +1403,10 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|// rename needs change the data location and move the data to the new location corresponding
+comment|// Two mutually exclusive flows possible.
+comment|// i) Partition locations needs update if replDataLocationChanged is true which means table's
+comment|// data location is changed with all partition sub-directories.
+comment|// ii) Rename needs change the data location and move the data to the new location corresponding
 comment|// to the new name if:
 comment|// 1) the table is not a virtual view, and
 comment|// 2) the table is not an external table, and
@@ -1335,6 +1414,9 @@ comment|// 3) the user didn't change the default location (or new location is em
 comment|// 4) the table was not initially created with a specified location
 if|if
 condition|(
+name|replDataLocationChanged
+operator|||
+operator|(
 name|rename
 operator|&&
 operator|!
@@ -1396,25 +1478,9 @@ name|isExternalTable
 argument_list|(
 name|oldt
 argument_list|)
+operator|)
 condition|)
 block|{
-name|Database
-name|olddb
-init|=
-name|msdb
-operator|.
-name|getDatabase
-argument_list|(
-name|catName
-argument_list|,
-name|dbname
-argument_list|)
-decl_stmt|;
-comment|// if a table was created in a user specified location using the DDL like
-comment|// create table tbl ... location ...., it should be treated like an external table
-comment|// in the table rename, its data location should not be changed. We can check
-comment|// if the table directory was created directly under its database directory to tell
-comment|// if it is such a table
 name|srcPath
 operator|=
 operator|new
@@ -1429,6 +1495,43 @@ name|getLocation
 argument_list|()
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|replDataLocationChanged
+condition|)
+block|{
+comment|// If data location is changed in replication flow, then new path was already set in
+comment|// the newt. Also, it is as good as the data is moved and set dataWasMoved=true so that
+comment|// location in partitions are also updated accordingly.
+comment|// No need to validate if the destPath exists as in replication flow, data gets replicated
+comment|// separately.
+name|destPath
+operator|=
+operator|new
+name|Path
+argument_list|(
+name|newt
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|dataWasMoved
+operator|=
+literal|true
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Rename flow.
+comment|// If a table was created in a user specified location using the DDL like
+comment|// create table tbl ... location ...., it should be treated like an external table
+comment|// in the table rename, its data location should not be changed. We can check
+comment|// if the table directory was created directly under its database directory to tell
+comment|// if it is such a table
 name|String
 name|oldtRelativePath
 init|=
@@ -1780,6 +1883,7 @@ name|newTblName
 argument_list|)
 argument_list|)
 throw|;
+block|}
 block|}
 block|}
 if|if
@@ -2723,9 +2827,121 @@ finally|finally
 block|{
 if|if
 condition|(
-operator|!
 name|success
 condition|)
+block|{
+comment|// Txn was committed successfully.
+comment|// If data location is changed in replication flow, then need to delete the old path.
+if|if
+condition|(
+name|replDataLocationChanged
+condition|)
+block|{
+assert|assert
+operator|(
+name|olddb
+operator|!=
+literal|null
+operator|)
+assert|;
+assert|assert
+operator|(
+name|oldt
+operator|!=
+literal|null
+operator|)
+assert|;
+name|Path
+name|deleteOldDataLoc
+init|=
+operator|new
+name|Path
+argument_list|(
+name|oldt
+operator|.
+name|getSd
+argument_list|()
+operator|.
+name|getLocation
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|boolean
+name|isAutoPurge
+init|=
+literal|"true"
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|oldt
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|"auto.purge"
+argument_list|)
+argument_list|)
+decl_stmt|;
+try|try
+block|{
+name|wh
+operator|.
+name|deleteDir
+argument_list|(
+name|deleteOldDataLoc
+argument_list|,
+literal|true
+argument_list|,
+name|isAutoPurge
+argument_list|,
+name|olddb
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Deleted the old data location: {} for the table: {}"
+argument_list|,
+name|deleteOldDataLoc
+argument_list|,
+name|dbname
+operator|+
+literal|"."
+operator|+
+name|name
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|ex
+parameter_list|)
+block|{
+comment|// Eat the exception as it doesn't affect the state of existing tables.
+comment|// Expect, user to manually drop this path when exception and so logging a warning.
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Unable to delete the old data location: {} for the table: {}"
+argument_list|,
+name|deleteOldDataLoc
+argument_list|,
+name|dbname
+operator|+
+literal|"."
+operator|+
+name|name
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+else|else
 block|{
 name|LOG
 operator|.
@@ -2752,6 +2968,9 @@ argument_list|()
 expr_stmt|;
 if|if
 condition|(
+operator|!
+name|replDataLocationChanged
+operator|&&
 name|dataWasMoved
 condition|)
 block|{
