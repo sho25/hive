@@ -97,15 +97,11 @@ end_import
 
 begin_import
 import|import
-name|com
+name|java
 operator|.
-name|google
+name|io
 operator|.
-name|common
-operator|.
-name|collect
-operator|.
-name|Iterators
+name|IOException
 import|;
 end_import
 
@@ -113,9 +109,9 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
+name|util
 operator|.
-name|IOException
+name|Collections
 import|;
 end_import
 
@@ -180,7 +176,7 @@ argument_list|>
 argument_list|>
 name|compactedValues
 init|=
-name|Iterators
+name|Collections
 operator|.
 name|emptyIterator
 argument_list|()
