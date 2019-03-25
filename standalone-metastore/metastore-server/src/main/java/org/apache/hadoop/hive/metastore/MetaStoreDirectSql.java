@@ -87,16 +87,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|net
-operator|.
-name|URL
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|sql
 operator|.
 name|Connection
@@ -7780,6 +7770,11 @@ name|partColIndex
 operator|+
 literal|"\".\"PART_KEY_VAL\""
 decl_stmt|;
+name|String
+name|nodeValue0
+init|=
+literal|"?"
+decl_stmt|;
 if|if
 condition|(
 name|node
@@ -7987,6 +7982,46 @@ name|tableValue0
 operator|+
 literal|" else null end)"
 expr_stmt|;
+if|if
+condition|(
+name|valType
+operator|==
+name|FilterType
+operator|.
+name|Date
+condition|)
+block|{
+if|if
+condition|(
+name|dbType
+operator|==
+name|DatabaseProduct
+operator|.
+name|ORACLE
+condition|)
+block|{
+comment|// Oracle requires special treatment... as usual.
+name|nodeValue0
+operator|=
+literal|"TO_DATE("
+operator|+
+name|nodeValue0
+operator|+
+literal|", 'YYYY-MM-DD')"
+expr_stmt|;
+block|}
+else|else
+block|{
+name|nodeValue0
+operator|=
+literal|"cast("
+operator|+
+name|nodeValue0
+operator|+
+literal|" as date)"
+expr_stmt|;
+block|}
+block|}
 block|}
 if|if
 condition|(
@@ -8012,7 +8047,11 @@ name|node
 operator|.
 name|isReverseOrder
 condition|?
-literal|"(? "
+literal|"("
+operator|+
+name|nodeValue0
+operator|+
+literal|" "
 operator|+
 name|node
 operator|.
@@ -8040,7 +8079,11 @@ operator|.
 name|getSqlOp
 argument_list|()
 operator|+
-literal|" ?)"
+literal|" "
+operator|+
+name|nodeValue0
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}
