@@ -1148,6 +1148,11 @@ argument_list|(
 name|i
 argument_list|)
 expr_stmt|;
+name|metrics
+operator|.
+name|incrAllocatedArena
+argument_list|()
+expr_stmt|;
 block|}
 name|allocatedArenas
 operator|.
@@ -1208,11 +1213,6 @@ operator|.
 name|metrics
 operator|=
 name|metrics
-expr_stmt|;
-name|metrics
-operator|.
-name|incrAllocatedArena
-argument_list|()
 expr_stmt|;
 name|boolean
 name|isBoth
