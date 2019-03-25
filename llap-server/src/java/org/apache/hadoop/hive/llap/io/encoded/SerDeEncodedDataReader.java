@@ -5115,6 +5115,8 @@ init|=
 operator|new
 name|FileData
 argument_list|(
+name|daemonConf
+argument_list|,
 name|fileKey
 argument_list|,
 name|encodings

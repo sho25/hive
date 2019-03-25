@@ -1543,6 +1543,13 @@ name|serdeCache
 operator|=
 name|serdeCacheImpl
 expr_stmt|;
+name|serdeCacheImpl
+operator|.
+name|setConf
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 block|}
 name|boolean
 name|useGapCache

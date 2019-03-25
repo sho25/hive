@@ -16186,6 +16186,17 @@ argument_list|,
 literal|"Whether LLapOutputFormatService should output arrow batches"
 argument_list|)
 block|,
+name|LLAP_COLLECT_LOCK_METRICS
+argument_list|(
+literal|"hive.llap.lockmetrics.collect"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether lock metrics (wait times, counts) are collected for LLAP "
+operator|+
+literal|"related locks"
+argument_list|)
+block|,
 name|HIVE_TRIGGER_VALIDATION_INTERVAL
 argument_list|(
 literal|"hive.trigger.validation.interval"
