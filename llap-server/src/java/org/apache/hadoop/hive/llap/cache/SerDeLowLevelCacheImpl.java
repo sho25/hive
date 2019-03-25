@@ -3860,6 +3860,18 @@ operator|.
 name|incrementAndGet
 argument_list|()
 expr_stmt|;
+comment|// FileCacheCleanupThread might we waiting for eviction increment
+synchronized|synchronized
+init|(
+name|newEvictions
+init|)
+block|{
+name|newEvictions
+operator|.
+name|notifyAll
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 specifier|private
 specifier|final

@@ -194,7 +194,9 @@ argument_list|)
 expr_stmt|;
 name|setPriority
 argument_list|(
-literal|1
+name|Thread
+operator|.
+name|MIN_PRIORITY
 argument_list|)
 expr_stmt|;
 block|}
@@ -291,6 +293,7 @@ operator|>
 literal|0
 condition|)
 break|break;
+comment|// will be notified by SerDeLowLevelCacheImpl or timeout eventually
 synchronized|synchronized
 init|(
 name|newEvictions
