@@ -4899,9 +4899,28 @@ block|}
 else|else
 block|{
 comment|// TODO: prewarm and update can probably be merged.
+try|try
+block|{
 name|update
 argument_list|()
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"periodical refresh fail "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 else|else
