@@ -15074,6 +15074,29 @@ argument_list|,
 literal|"Chooses whether query fragments will run in container or in llap"
 argument_list|)
 block|,
+name|LLAP_IO_ETL_SKIP_FORMAT
+argument_list|(
+literal|"hive.llap.io.etl.skip.format"
+argument_list|,
+literal|"encode"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"none"
+argument_list|,
+literal|"encode"
+argument_list|,
+literal|"all"
+argument_list|)
+argument_list|,
+literal|"For ETL queries, determines whether to skip llap io cache. By default, hive.llap.io.encode.enabled "
+operator|+
+literal|"will be set to false which disables LLAP IO for text formats. Setting it to 'all' will disable LLAP IO for all"
+operator|+
+literal|" formats. 'none' will not disable LLAP IO for any formats."
+argument_list|)
+block|,
 name|LLAP_OBJECT_CACHE_ENABLED
 argument_list|(
 literal|"hive.llap.object.cache.enabled"
