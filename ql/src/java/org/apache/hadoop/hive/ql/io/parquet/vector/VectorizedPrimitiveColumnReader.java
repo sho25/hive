@@ -317,6 +317,16 @@ name|IOException
 import|;
 end_import
 
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|ZoneId
+import|;
+end_import
+
 begin_comment
 comment|/**  * It's column level Parquet reader which is used to read a batch of records for a column,  * part of the code is referred from Apache Spark and Apache Parquet.  *  * The read calls correspond to the various hivetypes.  When the data was read, it would have been  * checked for validity with respect to the hivetype.  The isValid call will return the result  * of that check.  The readers will keep the value as returned by the reader when valid, and  * set the value to null when it is invalid.  */
 end_comment
@@ -340,6 +350,9 @@ parameter_list|,
 name|boolean
 name|skipTimestampConversion
 parameter_list|,
+name|ZoneId
+name|writerTimezone
+parameter_list|,
 name|Type
 name|type
 parameter_list|,
@@ -356,6 +369,8 @@ argument_list|,
 name|pageReader
 argument_list|,
 name|skipTimestampConversion
+argument_list|,
+name|writerTimezone
 argument_list|,
 name|type
 argument_list|,

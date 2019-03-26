@@ -308,6 +308,16 @@ import|;
 end_import
 
 begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|ZoneId
+import|;
+end_import
+
+begin_import
 import|import static
 name|org
 operator|.
@@ -387,6 +397,12 @@ name|boolean
 name|skipTimestampConversion
 init|=
 literal|false
+decl_stmt|;
+specifier|protected
+name|ZoneId
+name|writerTimezone
+init|=
+literal|null
 decl_stmt|;
 comment|/**    * Total number of values read.    */
 specifier|protected
@@ -516,6 +532,9 @@ parameter_list|,
 name|boolean
 name|skipTimestampConversion
 parameter_list|,
+name|ZoneId
+name|writerTimezone
+parameter_list|,
 name|Type
 name|parquetType
 parameter_list|,
@@ -557,6 +576,12 @@ operator|.
 name|skipTimestampConversion
 operator|=
 name|skipTimestampConversion
+expr_stmt|;
+name|this
+operator|.
+name|writerTimezone
+operator|=
+name|writerTimezone
 expr_stmt|;
 name|this
 operator|.
@@ -609,6 +634,8 @@ name|dictionaryPage
 argument_list|)
 argument_list|,
 name|skipTimestampConversion
+argument_list|,
+name|writerTimezone
 argument_list|)
 expr_stmt|;
 name|this
@@ -848,6 +875,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|skipTimestampConversion
+argument_list|,
+name|writerTimezone
 argument_list|)
 expr_stmt|;
 name|this
@@ -882,6 +911,8 @@ name|VALUES
 argument_list|)
 argument_list|,
 name|skipTimestampConversion
+argument_list|,
+name|writerTimezone
 argument_list|)
 expr_stmt|;
 name|this

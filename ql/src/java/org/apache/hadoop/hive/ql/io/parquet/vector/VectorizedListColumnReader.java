@@ -293,6 +293,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|time
+operator|.
+name|ZoneId
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -350,6 +360,9 @@ parameter_list|,
 name|boolean
 name|skipTimestampConversion
 parameter_list|,
+name|ZoneId
+name|writerTimezone
+parameter_list|,
 name|Type
 name|type
 parameter_list|,
@@ -366,6 +379,8 @@ argument_list|,
 name|pageReader
 argument_list|,
 name|skipTimestampConversion
+argument_list|,
+name|writerTimezone
 argument_list|,
 name|type
 argument_list|,

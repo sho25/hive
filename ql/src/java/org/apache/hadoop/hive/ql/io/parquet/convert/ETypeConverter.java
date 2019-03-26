@@ -103,6 +103,28 @@ name|io
 operator|.
 name|parquet
 operator|.
+name|read
+operator|.
+name|DataWritableReadSupport
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|parquet
+operator|.
 name|timestamp
 operator|.
 name|NanoTime
@@ -3928,8 +3950,13 @@ operator|.
 name|getMetadata
 argument_list|()
 decl_stmt|;
-comment|//Current Hive parquet timestamp implementation stores it in UTC, but other components do not do that.
-comment|//If this file written by current Hive implementation itself, we need to do the reverse conversion, else skip the conversion.
+comment|// Current Hive parquet timestamp implementation stores timestamps in UTC, but other
+comment|// components do not. In this case we skip timestamp conversion.
+comment|// If this file is written by a version of hive before HIVE-21290, file metadata will
+comment|// not contain the writer timezone, so we convert the timestamp to the system (reader)
+comment|// time zone.
+comment|// If file is written by current Hive implementation, we convert timestamps to the writer
+comment|// time zone in order to emulate time zone agnostic behavior.
 name|boolean
 name|skipConversion
 init|=
@@ -3961,6 +3988,13 @@ argument_list|(
 name|nt
 argument_list|,
 name|skipConversion
+argument_list|,
+name|DataWritableReadSupport
+operator|.
+name|getWriterTimeZoneId
+argument_list|(
+name|metadata
+argument_list|)
 argument_list|)
 decl_stmt|;
 return|return
