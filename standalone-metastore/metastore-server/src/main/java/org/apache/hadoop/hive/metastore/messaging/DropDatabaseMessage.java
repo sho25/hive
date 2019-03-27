@@ -19,6 +19,24 @@ name|messaging
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|Database
+import|;
+end_import
+
 begin_class
 specifier|public
 specifier|abstract
@@ -39,6 +57,14 @@ name|DROP_DATABASE
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+specifier|abstract
+name|Database
+name|getDatabaseObject
+parameter_list|()
+throws|throws
+name|Exception
+function_decl|;
 block|}
 end_class
 

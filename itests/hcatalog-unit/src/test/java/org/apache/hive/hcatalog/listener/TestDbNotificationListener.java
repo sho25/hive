@@ -3123,9 +3123,10 @@ name|dbDescription
 init|=
 literal|"no description"
 decl_stmt|;
-name|Database
-name|db
-init|=
+name|msClient
+operator|.
+name|createDatabase
+argument_list|(
 operator|new
 name|Database
 argument_list|(
@@ -3137,14 +3138,20 @@ name|dbLocationUri
 argument_list|,
 name|emptyParameters
 argument_list|)
-decl_stmt|;
-name|msClient
-operator|.
-name|createDatabase
-argument_list|(
-name|db
 argument_list|)
 expr_stmt|;
+comment|// Get the DB for comparison below since it may include additional parameters
+name|Database
+name|db
+init|=
+name|msClient
+operator|.
+name|getDatabase
+argument_list|(
+name|dbName
+argument_list|)
+decl_stmt|;
+comment|// Drop the database
 name|msClient
 operator|.
 name|dropDatabase
@@ -3284,6 +3291,16 @@ name|getDB
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|assertEquals
+argument_list|(
+name|db
+argument_list|,
+name|dropDbMsg
+operator|.
+name|getDatabaseObject
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|// Verify the eventID was passed to the non-transactional listener
 name|MockMetaStoreEventListener
 operator|.
@@ -3313,8 +3330,10 @@ argument_list|)
 expr_stmt|;
 comment|// When hive.metastore.transactional.event.listeners is set,
 comment|// a failed event should not create a new notification
-name|db
-operator|=
+name|msClient
+operator|.
+name|createDatabase
+argument_list|(
 operator|new
 name|Database
 argument_list|(
@@ -3326,12 +3345,6 @@ name|dbLocationUri
 argument_list|,
 name|emptyParameters
 argument_list|)
-expr_stmt|;
-name|msClient
-operator|.
-name|createDatabase
-argument_list|(
-name|db
 argument_list|)
 expr_stmt|;
 name|DummyRawStoreFailEvent
