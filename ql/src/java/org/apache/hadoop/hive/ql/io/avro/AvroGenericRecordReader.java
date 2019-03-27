@@ -149,6 +149,20 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -746,28 +760,17 @@ name|partitionPath
 argument_list|)
 condition|)
 block|{
-if|if
-condition|(
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Matching partition "
-operator|+
+literal|"Matching partition {} with input split {}"
+argument_list|,
 name|partitionPath
-operator|+
-literal|" with input split "
-operator|+
+argument_list|,
 name|split
 argument_list|)
 expr_stmt|;
-block|}
 name|Properties
 name|props
 init|=
@@ -826,26 +829,15 @@ comment|// If it's not in this property, it won't be in any others
 block|}
 block|}
 block|}
-if|if
-condition|(
-name|LOG
-operator|.
-name|isInfoEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Unable to match filesplit "
-operator|+
+literal|"Unable to match filesplit {} with a partition."
+argument_list|,
 name|split
-operator|+
-literal|" with a partition."
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|// In "select * from table" situations (non-MR), we can add things to the job
 comment|// It's safe to add this to the job since it's not *actually* a mapred job.
@@ -867,17 +859,27 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
+name|StringUtils
+operator|.
+name|isNotBlank
+argument_list|(
 name|s
-operator|!=
-literal|null
+argument_list|)
 condition|)
 block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Found the avro schema in the job: "
-operator|+
+literal|"Found the avro schema in the job"
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Avro schema: {}"
+argument_list|,
 name|s
 argument_list|)
 expr_stmt|;
