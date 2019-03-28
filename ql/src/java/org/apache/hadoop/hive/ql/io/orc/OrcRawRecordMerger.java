@@ -2160,6 +2160,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 name|mergerOptions
 operator|.
 name|getRootPath
@@ -2697,6 +2699,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 name|mergerOptions
 operator|.
 name|getRootPath

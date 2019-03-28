@@ -3848,6 +3848,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+name|fs
+argument_list|,
 name|dir
 argument_list|,
 name|conf

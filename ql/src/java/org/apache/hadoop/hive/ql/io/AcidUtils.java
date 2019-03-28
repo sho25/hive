@@ -5292,12 +5292,15 @@ name|visibilityTxnId
 argument_list|)
 return|;
 block|}
-comment|/**    * Is the given directory in ACID format?    * @param directory the partition directory to check    * @param conf the query configuration    * @return true, if it is an ACID directory    * @throws IOException    */
+comment|/**    * Is the given directory in ACID format?    * @param fileSystem file system instance    * @param directory the partition directory to check    * @param conf the query configuration    * @return true, if it is an ACID directory    * @throws IOException    */
 specifier|public
 specifier|static
 name|boolean
 name|isAcid
 parameter_list|(
+name|FileSystem
+name|fileSystem
+parameter_list|,
 name|Path
 name|directory
 parameter_list|,
@@ -5310,12 +5313,18 @@ block|{
 name|FileSystem
 name|fs
 init|=
+name|fileSystem
+operator|==
+literal|null
+condition|?
 name|directory
 operator|.
 name|getFileSystem
 argument_list|(
 name|conf
 argument_list|)
+else|:
+name|fileSystem
 decl_stmt|;
 for|for
 control|(
@@ -5405,6 +5414,8 @@ block|{
 return|return
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 name|directory
 argument_list|,
 name|conf
@@ -5448,12 +5459,15 @@ init|=
 literal|null
 decl_stmt|;
 block|}
-comment|/**    * Get the ACID state of the given directory. It finds the minimal set of    * base and diff directories. Note that because major compactions don't    * preserve the history, we can't use a base directory that includes a    * write id that we must exclude.    * @param directory the partition directory to analyze    * @param conf the configuration    * @param writeIdList the list of write ids that we are reading    * @return the state of the directory    * @throws IOException    */
+comment|/**    * Get the ACID state of the given directory. It finds the minimal set of    * base and diff directories. Note that because major compactions don't    * preserve the history, we can't use a base directory that includes a    * write id that we must exclude.    * @param fileSystem file system instance    * @param directory the partition directory to analyze    * @param conf the configuration    * @param writeIdList the list of write ids that we are reading    * @return the state of the directory    * @throws IOException    */
 specifier|public
 specifier|static
 name|Directory
 name|getAcidState
 parameter_list|(
+name|FileSystem
+name|fileSystem
+parameter_list|,
 name|Path
 name|directory
 parameter_list|,
@@ -5475,6 +5489,8 @@ block|{
 return|return
 name|getAcidState
 argument_list|(
+name|fileSystem
+argument_list|,
 name|directory
 argument_list|,
 name|conf
@@ -5499,6 +5515,9 @@ specifier|static
 name|Directory
 name|getAcidState
 parameter_list|(
+name|FileSystem
+name|fileSystem
+parameter_list|,
 name|Path
 name|directory
 parameter_list|,
@@ -5574,12 +5593,18 @@ block|}
 name|FileSystem
 name|fs
 init|=
+name|fileSystem
+operator|==
+literal|null
+condition|?
 name|directory
 operator|.
 name|getFileSystem
 argument_list|(
 name|conf
 argument_list|)
+else|:
+name|fileSystem
 decl_stmt|;
 comment|// The following 'deltas' includes all kinds of delta files including insert& delete deltas.
 specifier|final

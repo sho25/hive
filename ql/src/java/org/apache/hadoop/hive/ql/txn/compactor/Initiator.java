@@ -1872,6 +1872,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+name|fs
+argument_list|,
 name|location
 argument_list|,
 name|conf

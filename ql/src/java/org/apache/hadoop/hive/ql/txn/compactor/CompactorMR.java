@@ -2153,6 +2153,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
@@ -2677,6 +2679,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
@@ -3186,6 +3190,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
