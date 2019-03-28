@@ -425,6 +425,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -1286,6 +1296,11 @@ return|;
 block|}
 comment|/**    * Runs a simple test where a thread is running in a loop, getting read locks w/o having to    * deal with any contention. The test shows that the locks are received rather quick and tha    * all metrics for write locks remain zero.    */
 annotation|@
+name|Ignore
+argument_list|(
+literal|"Test requires available CPU resources for background threads"
+argument_list|)
+annotation|@
 name|Test
 specifier|public
 name|void
@@ -1688,6 +1703,11 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test where read/write lock contention is tested.    * This test has a background thread that tries to get read locks within a    * loop while the main thread holds a write lock for half of the tex    * execution time. The test verifies that the reported metric for read lock    * wait time reflects that the thread was blocked until the write lock was    * released. It also performs basic sanity checks on the read and write lock    * metrics.    */
+annotation|@
+name|Ignore
+argument_list|(
+literal|"Test requires available CPU resources for background threads"
+argument_list|)
 annotation|@
 name|Test
 specifier|public
