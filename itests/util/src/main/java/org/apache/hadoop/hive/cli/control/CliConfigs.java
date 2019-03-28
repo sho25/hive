@@ -301,6 +301,12 @@ literal|"stat_estimate_related_col.q"
 argument_list|)
 expr_stmt|;
 comment|// disabled in HIVE-20727
+name|excludeQuery
+argument_list|(
+literal|"vector_groupby_reduce.q"
+argument_list|)
+expr_stmt|;
+comment|// Disabled in HIVE-21396
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive"
