@@ -103,9 +103,9 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 import|;
@@ -505,6 +505,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -869,6 +873,10 @@ argument_list|(
 literal|3
 argument_list|)
 argument_list|)
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -888,6 +896,10 @@ argument_list|(
 literal|4
 argument_list|)
 argument_list|)
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -5156,19 +5168,6 @@ literal|0
 argument_list|,
 literal|1
 argument_list|)
-decl_stmt|;
-name|TimestampColumnVector
-name|inT
-init|=
-operator|(
-name|TimestampColumnVector
-operator|)
-name|b
-operator|.
-name|cols
-index|[
-literal|0
-index|]
 decl_stmt|;
 name|expr
 operator|.

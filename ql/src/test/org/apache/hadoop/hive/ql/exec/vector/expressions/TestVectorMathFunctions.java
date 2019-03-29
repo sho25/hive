@@ -57,9 +57,9 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 import|;
@@ -923,6 +923,10 @@ name|vector
 index|[
 literal|0
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -938,6 +942,10 @@ name|vector
 index|[
 literal|1
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -952,6 +960,10 @@ name|vector
 index|[
 literal|2
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -966,6 +978,10 @@ name|vector
 index|[
 literal|3
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -980,6 +996,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -994,6 +1014,10 @@ name|vector
 index|[
 literal|5
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1008,6 +1032,10 @@ name|vector
 index|[
 literal|6
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 comment|// spot check null propagation
@@ -1112,6 +1140,10 @@ name|vector
 index|[
 literal|0
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1162,6 +1194,10 @@ name|vector
 index|[
 literal|0
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1237,6 +1273,10 @@ name|vector
 index|[
 literal|7
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2809,6 +2849,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2886,6 +2930,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2963,6 +3011,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3040,6 +3092,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3117,6 +3173,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3194,6 +3254,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3271,6 +3335,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3348,6 +3416,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3599,6 +3671,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3677,6 +3753,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 comment|// test long->double version
@@ -3742,6 +3822,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -3827,6 +3911,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 comment|// test long->double version
@@ -3899,6 +3987,10 @@ name|vector
 index|[
 literal|3
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -4059,6 +4151,10 @@ name|vector
 index|[
 literal|3
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -5135,6 +5231,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}
@@ -5208,6 +5308,10 @@ name|vector
 index|[
 literal|0
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5222,6 +5326,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 comment|// test long->long version
@@ -5371,6 +5479,10 @@ name|vector
 index|[
 literal|0
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5385,6 +5497,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 comment|// test long->double version
@@ -5446,6 +5562,10 @@ name|vector
 index|[
 literal|0
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -5460,6 +5580,10 @@ name|vector
 index|[
 literal|4
 index|]
+argument_list|,
+name|Double
+operator|.
+name|MIN_VALUE
 argument_list|)
 expr_stmt|;
 block|}

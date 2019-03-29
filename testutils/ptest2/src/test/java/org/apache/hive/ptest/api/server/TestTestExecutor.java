@@ -121,9 +121,9 @@ end_import
 
 begin_import
 import|import
-name|junit
+name|org
 operator|.
-name|framework
+name|junit
 operator|.
 name|Assert
 import|;
