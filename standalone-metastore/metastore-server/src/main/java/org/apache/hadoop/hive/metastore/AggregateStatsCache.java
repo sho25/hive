@@ -1291,6 +1291,12 @@ name|bestMatch
 operator|=
 name|candidate
 expr_stmt|;
+name|bestMatchHits
+operator|=
+name|matchStats
+operator|.
+name|hits
+expr_stmt|;
 block|}
 block|}
 block|}
