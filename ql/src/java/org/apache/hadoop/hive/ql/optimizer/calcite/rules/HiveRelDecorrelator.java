@@ -2073,6 +2073,8 @@ name|Void
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Void
 name|apply
@@ -6719,10 +6721,13 @@ argument_list|()
 operator|)
 operator|.
 name|id
-operator|==
+operator|.
+name|equals
+argument_list|(
 name|correlation
 operator|.
 name|corr
+argument_list|)
 condition|)
 block|{
 return|return
@@ -11224,6 +11229,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onMatch
@@ -11479,6 +11486,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onMatch
@@ -12246,6 +12255,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onMatch
@@ -13625,6 +13636,8 @@ operator|=
 name|flavor
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|void
 name|onMatch
@@ -14275,6 +14288,8 @@ operator|.
 name|field
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compareTo
@@ -14504,6 +14519,8 @@ operator|.
 name|field
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compareTo
@@ -14992,12 +15009,7 @@ operator|!
 operator|(
 name|hasRexOver
 argument_list|(
-operator|(
-operator|(
-name|HiveProject
-operator|)
 name|rel
-operator|)
 operator|.
 name|getProjects
 argument_list|()
@@ -15182,6 +15194,8 @@ argument_list|>
 argument_list|>
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|TreeSet
 argument_list|<
@@ -15286,6 +15300,8 @@ name|mapFieldAccessToCorVar
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RelNode
 name|visit
@@ -15469,6 +15485,8 @@ return|return
 name|join
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RelNode
 name|visit
@@ -15533,6 +15551,8 @@ name|project
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
 specifier|public
 name|RelNode
 name|visit

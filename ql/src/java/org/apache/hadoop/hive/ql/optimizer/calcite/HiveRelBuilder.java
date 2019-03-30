@@ -387,26 +387,6 @@ name|HiveFloorDate
 import|;
 end_import
 
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|Map
-import|;
-end_import
-
 begin_comment
 comment|/**  * Builder for relational expressions in Hive.  *  *<p>{@code RelBuilder} does not make possible anything that you could not  * also accomplish by calling the factory methods of the particular relational  * expression. But it makes common tasks more straightforward and concise.  *  *<p>It is not thread-safe.  */
 end_comment
@@ -484,6 +464,8 @@ argument_list|(
 name|config
 argument_list|)
 block|{
+annotation|@
+name|Override
 specifier|public
 name|Void
 name|apply
@@ -559,6 +541,8 @@ operator|new
 name|RelBuilderFactory
 argument_list|()
 block|{
+annotation|@
+name|Override
 specifier|public
 name|RelBuilder
 name|create
@@ -892,6 +876,18 @@ return|;
 block|}
 return|return
 literal|null
+return|;
+block|}
+annotation|@
+name|Override
+specifier|protected
+name|boolean
+name|shouldMergeProject
+parameter_list|()
+block|{
+comment|/* CALCITE-2470 added ability to merge Project-s together.      * The problem with it is that it may merge 2 windowing expressions.      */
+return|return
+literal|false
 return|;
 block|}
 block|}

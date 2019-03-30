@@ -8409,10 +8409,12 @@ operator|.
 name|hasClusterBy
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"has cluster by; "
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|queryProperties
@@ -8420,10 +8422,12 @@ operator|.
 name|hasDistributeBy
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"has distribute by; "
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|queryProperties
@@ -8431,10 +8435,12 @@ operator|.
 name|hasSortBy
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"has sort by; "
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|queryProperties
@@ -8442,10 +8448,12 @@ operator|.
 name|hasPTF
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"has PTF; "
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|queryProperties
@@ -8453,10 +8461,12 @@ operator|.
 name|usesScript
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"uses scripts; "
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|queryProperties
@@ -8464,10 +8474,12 @@ operator|.
 name|hasLateralViews
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"has lateral views; "
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|msg
@@ -8475,10 +8487,12 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 name|msg
 operator|+=
 literal|"has some unspecified limitations; "
 expr_stmt|;
+block|}
 block|}
 return|return
 name|msg
@@ -10228,10 +10242,12 @@ name|lastDot
 operator|<
 literal|0
 condition|)
+block|{
 return|return
 name|colName
 return|;
 comment|// alias is not fully qualified
+block|}
 name|String
 name|nqColumnName
 init|=
@@ -10880,9 +10896,11 @@ name|length
 operator|-
 literal|1
 condition|)
+block|{
 return|return
 name|next
 return|;
+block|}
 name|searchQueue
 operator|.
 name|clear
@@ -10929,9 +10947,11 @@ condition|(
 operator|!
 name|found
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 block|}
 return|return
 literal|null
@@ -10986,9 +11006,11 @@ argument_list|()
 operator|==
 name|token
 condition|)
+block|{
 return|return
 name|next
 return|;
+block|}
 for|for
 control|(
 name|int
@@ -11098,9 +11120,11 @@ index|[
 name|i
 index|]
 condition|)
+block|{
 return|return
 name|next
 return|;
+block|}
 block|}
 for|for
 control|(
@@ -11378,6 +11402,13 @@ operator|.
 name|withIdentifierQuoteString
 argument_list|(
 literal|"`"
+argument_list|)
+operator|.
+name|withDataTypeSystem
+argument_list|(
+operator|new
+name|HiveTypeSystemImpl
+argument_list|()
 argument_list|)
 operator|.
 name|withNullCollation
@@ -12335,9 +12366,11 @@ name|MESSAGE_FIELD
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|Field
 name|field
 init|=
@@ -12357,9 +12390,11 @@ name|field
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|false
 return|;
+block|}
 name|Throwable
 name|oldCause
 init|=
@@ -16875,6 +16910,7 @@ name|r
 range|:
 name|rules
 control|)
+block|{
 name|programBuilder
 operator|.
 name|addRuleInstance
@@ -16882,6 +16918,7 @@ argument_list|(
 name|r
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Create planner and copy context
 name|HepPlanner
@@ -25541,19 +25578,23 @@ argument_list|(
 literal|"percent_rank"
 argument_list|)
 condition|)
+block|{
 name|udafRetType
 operator|=
 name|TypeInfoFactory
 operator|.
 name|doubleTypeInfo
 expr_stmt|;
+block|}
 else|else
+block|{
 name|udafRetType
 operator|=
 name|TypeInfoFactory
 operator|.
 name|intTypeInfo
 expr_stmt|;
+block|}
 block|}
 else|else
 block|{
@@ -26459,6 +26500,7 @@ name|grpbyExprNDesc
 operator|==
 literal|null
 condition|)
+block|{
 throw|throw
 operator|new
 name|CalciteSemanticException
@@ -26475,6 +26517,7 @@ operator|.
 name|Invalid_column_reference
 argument_list|)
 throw|;
+block|}
 name|addToGBExpr
 argument_list|(
 name|groupByOutputRowResolver
@@ -28841,6 +28884,7 @@ name|amt
 operator|!=
 literal|null
 condition|)
+block|{
 name|amtLiteral
 operator|=
 name|cluster
@@ -28875,6 +28919,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 switch|switch
 condition|(
 name|bs
@@ -29631,9 +29676,11 @@ name|wSpec
 operator|==
 literal|null
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 comment|// 1. Get valid Window Function Spec
 name|wSpec
 operator|.
@@ -29662,9 +29709,11 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return
 literal|null
 return|;
+block|}
 name|RowResolver
 name|inputRR
 init|=
@@ -30360,7 +30409,9 @@ name|HiveParser
 operator|.
 name|QUERY_HINT
 condition|)
+block|{
 return|return;
+block|}
 name|String
 name|hint
 init|=

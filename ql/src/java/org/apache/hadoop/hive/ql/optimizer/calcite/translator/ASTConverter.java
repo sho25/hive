@@ -2326,6 +2326,7 @@ name|obRefToCallMap
 operator|!=
 literal|null
 condition|)
+block|{
 name|obExpr
 operator|=
 name|obRefToCallMap
@@ -2338,6 +2339,7 @@ name|getFieldIndex
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|obExpr
@@ -3435,11 +3437,6 @@ name|schema
 decl_stmt|;
 specifier|private
 specifier|final
-name|boolean
-name|useTypeQualInLiteral
-decl_stmt|;
-specifier|private
-specifier|final
 name|RexBuilder
 name|rexBuilder
 decl_stmt|;
@@ -3514,12 +3511,6 @@ name|schema
 expr_stmt|;
 name|this
 operator|.
-name|useTypeQualInLiteral
-operator|=
-name|useTypeQualInLiteral
-expr_stmt|;
-name|this
-operator|.
 name|rexBuilder
 operator|=
 name|rexBuilder
@@ -3561,13 +3552,17 @@ name|o1
 operator|==
 name|o2
 condition|)
+block|{
 return|return
 literal|0
 return|;
+block|}
 else|else
+block|{
 return|return
 literal|1
 return|;
+block|}
 block|}
 block|}
 argument_list|)
@@ -3687,6 +3682,7 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return
 name|ASTBuilder
 operator|.
@@ -3697,7 +3693,9 @@ operator|.
 name|column
 argument_list|)
 return|;
+block|}
 else|else
+block|{
 return|return
 name|ASTBuilder
 operator|.
@@ -3712,6 +3710,7 @@ operator|.
 name|column
 argument_list|)
 return|;
+block|}
 block|}
 annotation|@
 name|Override
@@ -3767,8 +3766,6 @@ operator|.
 name|literal
 argument_list|(
 name|literal
-argument_list|,
-name|useTypeQualInLiteral
 argument_list|)
 return|;
 block|}
@@ -3811,8 +3808,6 @@ operator|.
 name|literal
 argument_list|(
 name|literal
-argument_list|,
-name|useTypeQualInLiteral
 argument_list|)
 return|;
 block|}
@@ -4169,6 +4164,7 @@ name|dByAst
 operator|!=
 literal|null
 condition|)
+block|{
 name|pSpecAst
 operator|.
 name|addChild
@@ -4176,12 +4172,14 @@ argument_list|(
 name|dByAst
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|oByAst
 operator|!=
 literal|null
 condition|)
+block|{
 name|pSpecAst
 operator|.
 name|addChild
@@ -4189,6 +4187,7 @@ argument_list|(
 name|oByAst
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|pSpecAst
@@ -4238,6 +4237,7 @@ operator|.
 name|isPreceding
 argument_list|()
 condition|)
+block|{
 name|wbAST
 operator|=
 name|ASTBuilder
@@ -4251,7 +4251,9 @@ argument_list|,
 literal|"PRECEDING"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|wbAST
 operator|=
 name|ASTBuilder
@@ -4265,6 +4267,7 @@ argument_list|,
 literal|"FOLLOWING"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|wb
@@ -4406,6 +4409,7 @@ operator|.
 name|isRows
 argument_list|()
 condition|)
+block|{
 name|wRangeAst
 operator|=
 name|ASTBuilder
@@ -4419,7 +4423,9 @@ argument_list|,
 literal|"TOK_WINDOWRANGE"
 argument_list|)
 expr_stmt|;
+block|}
 else|else
+block|{
 name|wRangeAst
 operator|=
 name|ASTBuilder
@@ -4433,12 +4439,14 @@ argument_list|,
 literal|"TOK_WINDOWVALUES"
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|startAST
 operator|!=
 literal|null
 condition|)
+block|{
 name|wRangeAst
 operator|.
 name|addChild
@@ -4446,12 +4454,14 @@ argument_list|(
 name|startAST
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|endAST
 operator|!=
 literal|null
 condition|)
+block|{
 name|wRangeAst
 operator|.
 name|addChild
@@ -4459,6 +4469,7 @@ argument_list|(
 name|endAST
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|wRangeAst
@@ -4550,6 +4561,7 @@ name|wPSpecAst
 operator|!=
 literal|null
 condition|)
+block|{
 name|wSpec
 operator|.
 name|addChild
@@ -4557,12 +4569,14 @@ argument_list|(
 name|wPSpecAst
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|wRangeAst
 operator|!=
 literal|null
 condition|)
+block|{
 name|wSpec
 operator|.
 name|addChild
@@ -4570,6 +4584,7 @@ argument_list|(
 name|wRangeAst
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|wUDAFAst
 return|;
