@@ -3869,10 +3869,14 @@ name|ExprNodeDesc
 argument_list|>
 name|children
 init|=
+operator|new
+name|ArrayList
+argument_list|(
 name|caseOrWhenexpr
 operator|.
 name|getChildren
 argument_list|()
+argument_list|)
 decl_stmt|;
 name|int
 name|i
