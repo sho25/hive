@@ -2005,6 +2005,13 @@ argument_list|(
 name|rewrittenQuery
 argument_list|)
 expr_stmt|;
+name|ctx
+operator|.
+name|setHDFSCleanup
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 return|return
@@ -2513,6 +2520,13 @@ operator|.
 name|setAnalyzeRewrite
 argument_list|(
 name|analyzeRewrite
+argument_list|)
+expr_stmt|;
+name|origCtx
+operator|.
+name|addRewrittenStatementContext
+argument_list|(
+name|ctx
 argument_list|)
 expr_stmt|;
 name|initCtx
