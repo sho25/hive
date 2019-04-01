@@ -715,7 +715,7 @@ argument_list|)
 expr_stmt|;
 comment|// If the dbType is "hive", this is setting up the information schema in Hive.
 comment|// We will set the default jdbc url and driver.
-comment|// It is overriden by command line options if passed (-url and -driver
+comment|// It is overridden by command line options if passed (-url and -driver)
 if|if
 condition|(
 name|dbType
@@ -2398,6 +2398,24 @@ name|SchemaToolTaskCreateUser
 argument_list|()
 expr_stmt|;
 block|}
+elseif|else
+if|if
+condition|(
+name|cmdLine
+operator|.
+name|hasOption
+argument_list|(
+literal|"dropAllDatabases"
+argument_list|)
+condition|)
+block|{
+name|task
+operator|=
+operator|new
+name|SchemaToolTaskDrop
+argument_list|()
+expr_stmt|;
+block|}
 else|else
 block|{
 throw|throw
@@ -2513,6 +2531,13 @@ block|}
 if|if
 condition|(
 name|cmdLine
+operator|!=
+literal|null
+condition|)
+block|{
+if|if
+condition|(
+name|cmdLine
 operator|.
 name|hasOption
 argument_list|(
@@ -2533,6 +2558,7 @@ argument_list|(
 literal|"Use --verbose for detailed stacktrace."
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|logAndPrintToError
 argument_list|(

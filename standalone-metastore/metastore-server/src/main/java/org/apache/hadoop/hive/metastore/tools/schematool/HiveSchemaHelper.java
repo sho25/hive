@@ -383,7 +383,7 @@ argument_list|)
 expr_stmt|;
 name|logAndPrintToStdout
 argument_list|(
-literal|"Metastore Connection Driver :\t "
+literal|"Metastore connection Driver :\t "
 operator|+
 name|driver
 argument_list|)
