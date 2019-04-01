@@ -162,12 +162,6 @@ name|RelNode
 argument_list|>
 name|corrScalarRexSQWithAgg
 parameter_list|,
-name|Set
-argument_list|<
-name|RelNode
-argument_list|>
-name|scalarAggNoGbyWindowing
-parameter_list|,
 name|HiveConfPlannerContext
 name|isCorrelatedColumns
 parameter_list|)
@@ -201,8 +195,6 @@ operator|new
 name|SubqueryConf
 argument_list|(
 name|corrScalarRexSQWithAgg
-argument_list|,
-name|scalarAggNoGbyWindowing
 argument_list|)
 expr_stmt|;
 name|this
