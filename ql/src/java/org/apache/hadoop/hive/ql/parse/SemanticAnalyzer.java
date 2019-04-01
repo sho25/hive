@@ -18886,6 +18886,11 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_DATELITERAL
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_INTERVAL_DAY_LITERAL
 case|:
 case|case
