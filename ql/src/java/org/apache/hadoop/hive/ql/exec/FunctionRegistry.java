@@ -6445,6 +6445,16 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+comment|// No operator for nullsafe not equal, but add as built-in to allow for LLAP.
+name|system
+operator|.
+name|registerHiddenBuiltIn
+argument_list|(
+name|GenericUDFOPNotEqualNS
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// mask UDFs
 name|system
 operator|.
