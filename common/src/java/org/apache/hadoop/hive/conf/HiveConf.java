@@ -6388,6 +6388,19 @@ operator|+
 literal|"is based on the materialized view algebraic incremental rewriting."
 argument_list|)
 block|,
+name|HIVE_MATERIALIZED_VIEW_REBUILD_INCREMENTAL_FACTOR
+argument_list|(
+literal|"hive.materializedview.rebuild.incremental.factor"
+argument_list|,
+literal|0.1f
+argument_list|,
+literal|"The estimated cost of the resulting plan for incremental maintenance of materialization\n"
+operator|+
+literal|"with aggregations will be multiplied by this value. Reducing the value can be useful to\n"
+operator|+
+literal|"favour incremental rebuild over full rebuild."
+argument_list|)
+block|,
 name|HIVE_MATERIALIZED_VIEW_FILE_FORMAT
 argument_list|(
 literal|"hive.materializedview.fileformat"
