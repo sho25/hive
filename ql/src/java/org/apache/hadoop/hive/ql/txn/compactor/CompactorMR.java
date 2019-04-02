@@ -2800,7 +2800,7 @@ name|hiveConf
 argument_list|,
 name|user
 argument_list|,
-literal|false
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// Set up the session for driver.
