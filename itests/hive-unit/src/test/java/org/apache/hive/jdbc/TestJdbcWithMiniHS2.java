@@ -7390,6 +7390,71 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|//try creating same function again which should fail with AlreadyExistsException
+name|String
+name|createSameFunctionAgain
+init|=
+literal|"CREATE FUNCTION example_add AS '"
+operator|+
+name|testUdfClassName
+operator|+
+literal|"' USING JAR '"
+operator|+
+name|jarFilePath
+operator|+
+literal|"'"
+decl_stmt|;
+try|try
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+name|createSameFunctionAgain
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+literal|"recreating same function failed with AlreadyExistsException "
+argument_list|,
+name|e
+operator|.
+name|getMessage
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"AlreadyExistsException"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|// Call describe to see if function still available in registry
+name|res
+operator|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"DESCRIBE FUNCTION "
+operator|+
+name|testDbName
+operator|+
+literal|".example_add"
+argument_list|)
+expr_stmt|;
+name|checkForNotExist
+argument_list|(
+name|res
+argument_list|)
+expr_stmt|;
 comment|// A new connection should be able to call describe/use function without issue
 name|Connection
 name|conn2

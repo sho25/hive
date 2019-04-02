@@ -1353,7 +1353,20 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// Addition to metastore failed, remove the function from the registry.
+comment|// Addition to metastore failed, remove the function from the registry except if already exists.
+if|if
+condition|(
+operator|!
+operator|(
+name|e
+operator|.
+name|getCause
+argument_list|()
+operator|instanceof
+name|AlreadyExistsException
+operator|)
+condition|)
+block|{
 name|FunctionRegistry
 operator|.
 name|unregisterPermanentFunction
@@ -1361,6 +1374,7 @@ argument_list|(
 name|registeredName
 argument_list|)
 expr_stmt|;
+block|}
 name|setException
 argument_list|(
 name|e
