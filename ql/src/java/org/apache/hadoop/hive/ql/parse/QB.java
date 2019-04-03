@@ -165,9 +165,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|metadata
+name|ddl
 operator|.
-name|Table
+name|table
+operator|.
+name|CreateViewDesc
 import|;
 end_import
 
@@ -183,9 +185,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|metadata
 operator|.
-name|CreateViewDesc
+name|Table
 import|;
 end_import
 
