@@ -729,7 +729,7 @@ decl_stmt|;
 comment|//***************************************************************************
 comment|// Data-related configuration properties.
 comment|//***************************************************************************
-comment|/**    * {@value} (default: {@value #HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER_DEFAULT}).    * Pig< 0.10.0 does not have boolean support, and scripts written for pre-boolean Pig versions    * will not expect boolean values when upgrading Pig. For integration the option is offered to    * convert boolean fields to integers by setting this Hadoop configuration key.    */
+comment|/**    * {@value} (default: {@value #HCAT_DATA_CONVERT_BOOLEAN_TO_INTEGER_DEFAULT}).    * Pig&lt; 0.10.0 does not have boolean support, and scripts written for pre-boolean Pig versions    * will not expect boolean values when upgrading Pig. For integration the option is offered to    * convert boolean fields to integers by setting this Hadoop configuration key.    */
 specifier|public
 specifier|static
 specifier|final

@@ -84,7 +84,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * An optionally-bounded {@linkplain BlockingDeque blocking deque} based on  * a navigable set.  *<p/>  *<p> The optional capacity bound constructor argument serves as a  * way to prevent excessive expansion. The capacity, if unspecified,  * is equal to {@link Integer#MAX_VALUE}.  *<p/>  *<p>This class and its iterator implement all of the  *<em>optional</em> methods of the {@link Collection} and {@link  * Iterator} interfaces.  *<p/>  * This code is loosely based on the {@linkplain java.util.concurrent.LinkedBlockingDeque linked blocking deque} code.  */
+comment|/**  * An optionally-bounded {@linkplain BlockingDeque blocking deque} based on  * a navigable set.  *<br>  *<p> The optional capacity bound constructor argument serves as a  * way to prevent excessive expansion. The capacity, if unspecified,  * is equal to {@link Integer#MAX_VALUE}.  *<br>  *<p>This class and its iterator implement all of the  *<em>optional</em> methods of the {@link Collection} and {@link  * Iterator} interfaces.  *<br>  * This code is loosely based on the {@linkplain java.util.concurrent.LinkedBlockingDeque linked blocking deque} code.  */
 end_comment
 
 begin_class
@@ -1478,7 +1478,7 @@ expr_stmt|;
 block|}
 block|}
 comment|// BlockingQueue methods
-comment|/**    * Inserts the specified element to the deque unless it would    * violate capacity restrictions.  When using a capacity-restricted deque,    * it is generally preferable to use method {@link #offer(Object) offer}.    *<p/>    *<p>This method is equivalent to {@link #addLast}.    *    * @throws IllegalStateException if the element cannot be added at this    *                               time due to capacity restrictions    * @throws NullPointerException  if the specified element is null    */
+comment|/**    * Inserts the specified element to the deque unless it would    * violate capacity restrictions.  When using a capacity-restricted deque,    * it is generally preferable to use method {@link #offer(Object) offer}.    *<br>    * This method is equivalent to {@link #addLast}.    *    * @throws IllegalStateException if the element cannot be added at this    *                               time due to capacity restrictions    * @throws NullPointerException  if the specified element is null    */
 annotation|@
 name|Override
 specifier|public
@@ -1561,7 +1561,7 @@ name|unit
 argument_list|)
 return|;
 block|}
-comment|/**    * Retrieves and removes the head of the queue represented by this deque.    * This method differs from {@link #poll poll} only in that it throws an    * exception if this deque is empty.    *<p/>    *<p>This method is equivalent to {@link #removeFirst() removeFirst}.    *    * @return the head of the queue represented by this deque    * @throws NoSuchElementException if this deque is empty    */
+comment|/**    * Retrieves and removes the head of the queue represented by this deque.    * This method differs from {@link #poll poll} only in that it throws an    * exception if this deque is empty.    *<br>    * This method is equivalent to {@link #removeFirst() removeFirst}.    *    * @return the head of the queue represented by this deque    * @throws NoSuchElementException if this deque is empty    */
 annotation|@
 name|Override
 specifier|public
@@ -1618,7 +1618,7 @@ name|unit
 argument_list|)
 return|;
 block|}
-comment|/**    * Retrieves, but does not remove, the head of the queue represented by    * this deque.  This method differs from {@link #peek peek} only in that    * it throws an exception if this deque is empty.    *<p/>    *<p>This method is equivalent to {@link #getFirst() getFirst}.    *    * @return the head of the queue represented by this deque    * @throws NoSuchElementException if this deque is empty    */
+comment|/**    * Retrieves, but does not remove, the head of the queue represented by    * this deque.  This method differs from {@link #peek peek} only in that    * it throws an exception if this deque is empty.    *<br>    * This method is equivalent to {@link #getFirst() getFirst}.    *    * @return the head of the queue represented by this deque    * @throws NoSuchElementException if this deque is empty    */
 annotation|@
 name|Override
 specifier|public
@@ -1641,7 +1641,7 @@ name|peekFirst
 argument_list|()
 return|;
 block|}
-comment|/**    * Returns the number of additional elements that this deque can ideally    * (in the absence of memory or resource constraints) accept without    * blocking. This is always equal to the initial capacity of this deque    * less the current<tt>size</tt> of this deque.    *<p/>    *<p>Note that you<em>cannot</em> always tell if an attempt to insert    * an element will succeed by inspecting<tt>remainingCapacity</tt>    * because it may be the case that another thread is about to    * insert or remove an element.    */
+comment|/**    * Returns the number of additional elements that this deque can ideally    * (in the absence of memory or resource constraints) accept without    * blocking. This is always equal to the initial capacity of this deque    * less the current<tt>size</tt> of this deque.    *<br>    * Note that you<em>cannot</em> always tell if an attempt to insert    * an element will succeed by inspecting<tt>remainingCapacity</tt>    * because it may be the case that another thread is about to    * insert or remove an element.    */
 specifier|public
 name|int
 name|remainingCapacity
@@ -1907,7 +1907,7 @@ argument_list|()
 return|;
 block|}
 comment|// Collection methods
-comment|/**    * Removes the first occurrence of the specified element from this deque.    * If the deque does not contain the element, it is unchanged.    * More formally, removes the first element<tt>e</tt> such that    *<tt>o.equals(e)</tt> (if such an element exists).    * Returns<tt>true</tt> if this deque contained the specified element    * (or equivalently, if this deque changed as a result of the call).    *<p/>    *<p>This method is equivalent to    * {@link #removeFirstOccurrence(Object) removeFirstOccurrence}.    *    * @param o element to be removed from this deque, if present    * @return<tt>true</tt> if this deque changed as a result of the call    */
+comment|/**    * Removes the first occurrence of the specified element from this deque.    * If the deque does not contain the element, it is unchanged.    * More formally, removes the first element<tt>e</tt> such that    *<tt>o.equals(e)</tt> (if such an element exists).    * Returns<tt>true</tt> if this deque contained the specified element    * (or equivalently, if this deque changed as a result of the call).    *<br>    * This method is equivalent to    * {@link #removeFirstOccurrence(Object) removeFirstOccurrence}.    *    * @param o element to be removed from this deque, if present    * @return<tt>true</tt> if this deque changed as a result of the call    */
 annotation|@
 name|Override
 specifier|public
@@ -2001,7 +2001,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Returns an array containing all of the elements in this deque, in    * proper sequence (from first to last element).    *<p/>    *<p>The returned array will be "safe" in that no references to it are    * maintained by this deque.  (In other words, this method must allocate    * a new array).  The caller is thus free to modify the returned array.    *<p/>    *<p>This method acts as bridge between array-based and collection-based    * APIs.    *    * @return an array containing all of the elements in this deque    */
+comment|/**    * Returns an array containing all of the elements in this deque, in    * proper sequence (from first to last element).    *<br>    *<p>The returned array will be "safe" in that no references to it are    * maintained by this deque.  (In other words, this method must allocate    * a new array).  The caller is thus free to modify the returned array.    *</p>    *<br>This method acts as bridge between array-based and collection-based    * APIs.    *    * @return an array containing all of the elements in this deque    */
 annotation|@
 name|Override
 specifier|public
@@ -2033,7 +2033,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Returns an array containing all of the elements in this deque, in    * proper sequence; the runtime type of the returned array is that of    * the specified array.  If the deque fits in the specified array, it    * is returned therein.  Otherwise, a new array is allocated with the    * runtime type of the specified array and the size of this deque.    *<p/>    *<p>If this deque fits in the specified array with room to spare    * (i.e., the array has more elements than this deque), the element in    * the array immediately following the end of the deque is set to    *<tt>null</tt>.    *<p/>    *<p>Like the {@link #toArray()} method, this method acts as bridge between    * array-based and collection-based APIs.  Further, this method allows    * precise control over the runtime type of the output array, and may,    * under certain circumstances, be used to save allocation costs.    *<p/>    *<p>Suppose<tt>x</tt> is a deque known to contain only strings.    * The following code can be used to dump the deque into a newly    * allocated array of<tt>String</tt>:    *<p/>    *<pre>    *     String[] y = x.toArray(new String[0]);</pre>    *<p/>    * Note that<tt>toArray(new Object[0])</tt> is identical in function to    *<tt>toArray()</tt>.    *    * @param a the array into which the elements of the deque are to    *          be stored, if it is big enough; otherwise, a new array of the    *          same runtime type is allocated for this purpose    * @return an array containing all of the elements in this deque    * @throws ArrayStoreException  if the runtime type of the specified array    *                              is not a supertype of the runtime type of every element in    *                              this deque    * @throws NullPointerException if the specified array is null    */
+comment|/**    * Returns an array containing all of the elements in this deque, in    * proper sequence; the runtime type of the returned array is that of    * the specified array.  If the deque fits in the specified array, it    * is returned therein.  Otherwise, a new array is allocated with the    * runtime type of the specified array and the size of this deque.    *<br>    *<p>If this deque fits in the specified array with room to spare    * (i.e., the array has more elements than this deque), the element in    * the array immediately following the end of the deque is set to    *<tt>null</tt>.    *</p>    *<p>Like the {@link #toArray()} method, this method acts as bridge between    * array-based and collection-based APIs.  Further, this method allows    * precise control over the runtime type of the output array, and may,    * under certain circumstances, be used to save allocation costs.    *</p>    *<p>Suppose<tt>x</tt> is a deque known to contain only strings.    * The following code can be used to dump the deque into a newly    * allocated array of<tt>String</tt>:    *</p>    *<pre>    *     String[] y = x.toArray(new String[0]);</pre>    *<br>    * Note that<tt>toArray(new Object[0])</tt> is identical in function to    *<tt>toArray()</tt>.    *    * @param a the array into which the elements of the deque are to    *          be stored, if it is big enough; otherwise, a new array of the    *          same runtime type is allocated for this purpose    * @return an array containing all of the elements in this deque    * @throws ArrayStoreException  if the runtime type of the specified array    *                              is not a supertype of the runtime type of every element in    *                              this deque    * @throws NullPointerException if the specified array is null    */
 annotation|@
 name|Override
 specifier|public

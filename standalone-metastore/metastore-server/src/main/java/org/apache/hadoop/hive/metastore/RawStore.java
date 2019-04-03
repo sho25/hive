@@ -584,7 +584,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param part_vals partition values for this table.    * @param txnId transaction id of the calling transaction    * @param writeIdList string format of valid writeId transaction list    * @return the partition.    * @throws MetaException error reading from RDBMS.    * @throws NoSuchObjectException no partition matching this specification exists.    */
+comment|/**    * Get a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param part_vals partition values for this table.    * @param writeIdList string format of valid writeId transaction list    * @return the partition.    * @throws MetaException error reading from RDBMS.    * @throws NoSuchObjectException no partition matching this specification exists.    */
 name|Partition
 name|getPartition
 parameter_list|(
@@ -1001,7 +1001,7 @@ name|InvalidObjectException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @param txnId transaction id of the transaction that called this method.    * @param writeIdList valid write id list of the transaction on the current table    * @param writeid write id of the transaction for the table    * @return    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
+comment|/**    * Alter a set of partitions.    * @param catName catalog name.    * @param db_name database name.    * @param tbl_name table name.    * @param part_vals_list list of list of partition values.  Each outer list describes one    *                       partition (with its list of partition values).    * @param new_parts list of new partitions.  The order must match the old partitions described in    *                  part_vals_list.  Each of these should be a complete copy of the new    *                  partition, not just the pieces to update.    * @param writeId write id of the transaction for the table    * @param queryValidWriteIds valid write id list of the transaction on the current table    * @return    * @throws InvalidObjectException One of the indicated partitions does not exist.    * @throws MetaException error accessing the RDBMS.    */
 name|List
 argument_list|<
 name|Partition
@@ -1893,7 +1893,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/** Persists the given column statistics object to the metastore    * @param statsObj object to persist    * @param partVals partition values to persist the stats for    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    * @throws TException    */
+comment|/** Persists the given column statistics object to the metastore    * @param statsObj object to persist    * @param partVals partition values to persist the stats for    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table.    * @throws MetaException error accessing the RDBMS.    * @throws InvalidObjectException the stats object is invalid    * @throws InvalidInputException unable to record the stats for the table    */
 name|Map
 argument_list|<
 name|String
@@ -1950,7 +1950,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @param txnId transaction id of the calling transaction    * @param writeIdList string format of valid writeId transaction list    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @param writeIdList string format of valid writeId transaction list    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
 name|ColumnStatistics
 name|getTableColumnStatistics
 parameter_list|(
@@ -2010,7 +2010,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @param txnId transaction id of the calling transaction    * @param writeIdList string format of valid writeId transaction list    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
+comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @param writeIdList string format of valid writeId transaction list    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
 name|List
 argument_list|<
 name|ColumnStatistics
@@ -2528,7 +2528,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @param txnId transaction id of the calling transaction    * @param writeIdList string format of valid writeId transaction list    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
+comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @param writeIdList string format of valid writeId transaction list    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
 name|AggrStats
 name|get_aggr_stats_for
 parameter_list|(

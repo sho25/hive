@@ -168,7 +168,7 @@ name|MemoryBufferOrBuffers
 name|buffer
 parameter_list|)
 function_decl|;
-comment|/**    * Puts the metadata for a given file (e.g. a footer buffer into cache).    * @param fileKey The file key.    * @param length The footer length.    * @param is The stream to read the footer from.    * @return The buffer or buffers representing the cached footer.    *         The caller must decref this buffer when done.    */
+comment|/**    * Puts the metadata for a given file (e.g. a footer buffer into cache).    * @param fileKey The file key.    * @return The buffer or buffers representing the cached footer.    *         The caller must decref this buffer when done.    */
 name|MemoryBufferOrBuffers
 name|putFileMetadata
 parameter_list|(

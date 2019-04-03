@@ -98,7 +98,7 @@ name|UDAFExampleAvg
 extends|extends
 name|UDAF
 block|{
-comment|/**    * The internal state of an aggregation for average.    *     * Note that this is only needed if the internal state cannot be represented    * by a primitive.    *     * The internal state can also contains fields with types like    * ArrayList<String> and HashMap<String,Double> if needed.    */
+comment|/**    * The internal state of an aggregation for average.    *     * Note that this is only needed if the internal state cannot be represented    * by a primitive.    *     * The internal state can also contains fields with types like    * ArrayList&lt;String&gt; and HashMap&lt;String,Double&gt; if needed.    */
 specifier|public
 specifier|static
 class|class

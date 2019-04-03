@@ -388,7 +388,7 @@ literal|"="
 argument_list|)
 return|;
 block|}
-comment|/**    * Reads and parses DN patterns from Hive configuration.    *<br>    * If no patterns are provided in the configuration, then the base DN will be used.    * @param conf Hive configuration    * @param var variable to be read    * @return a list of DN patterns    * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_BASEDN    * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_GUIDKEY    * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_GROUPDNPATTERN    * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_USERDNPATTERN    */
+comment|/**    * Reads and parses DN patterns from Hive configuration.    *<br>    * If no patterns are provided in the configuration, then the base DN will be used.    * @param conf Hive configuration    * @param var variable to be read    * @return a list of DN patterns    * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_BASEDN    * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_GUIDKEY    * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_GROUPDNPATTERN    * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_USERDNPATTERN    */
 specifier|public
 specifier|static
 name|List
@@ -593,7 +593,7 @@ return|return
 name|pattern
 return|;
 block|}
-comment|/**    * Converts a collection of Distinguished Name patterns to a collection of base DNs.    * @param patterns Distinguished Name patterns    * @return a list of base DNs    * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_GROUPDNPATTERN    * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_USERDNPATTERN    */
+comment|/**    * Converts a collection of Distinguished Name patterns to a collection of base DNs.    * @param patterns Distinguished Name patterns    * @return a list of base DNs    * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_GROUPDNPATTERN    * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_USERDNPATTERN    */
 specifier|public
 specifier|static
 name|List

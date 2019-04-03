@@ -757,7 +757,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Parses the HBase columns mapping specifier to identify the column families, qualifiers    * and also caches the byte arrays corresponding to them. One of the Hive table    * columns maps to the HBase row key, by default the first column.    *    * @param columnsMappingSpec string hbase.columns.mapping specified when creating table    * @param doColumnRegexMatching whether to do a regex matching on the columns or not    * @param hideColumnPrefix whether to hide a prefix of column mapping in key name in a map (works only if @doColumnRegexMatching is true)    * @return List<ColumnMapping> which contains the column mapping information by position    * @throws org.apache.hadoop.hive.serde2.SerDeException    */
+comment|/**    * Parses the HBase columns mapping specifier to identify the column families, qualifiers    * and also caches the byte arrays corresponding to them. One of the Hive table    * columns maps to the HBase row key, by default the first column.    *    * @param columnsMappingSpec string hbase.columns.mapping specified when creating table    * @param doColumnRegexMatching whether to do a regex matching on the columns or not    * @param hideColumnPrefix whether to hide a prefix of column mapping in key name in a map (works only if @doColumnRegexMatching is true)    * @return List&lt;ColumnMapping&gt; which contains the column mapping information by position    * @throws org.apache.hadoop.hive.serde2.SerDeException    */
 specifier|public
 specifier|static
 name|ColumnMappings

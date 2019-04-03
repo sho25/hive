@@ -158,7 +158,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class is responsible for setting the ipAddress for operations executed via HiveServer2.  *<p>  *<ul>  *<li>IP address is only set for operations that calls listeners with hookContext</li>  *<li>IP address is only set if the underlying transport mechanism is socket</li>  *</ul>  *</p>  *  * @see org.apache.hadoop.hive.ql.hooks.ExecuteWithHookContext  */
+comment|/**  * This class is responsible for setting the ipAddress for operations executed via HiveServer2.  *<br>  *<ul>  *<li>IP address is only set for operations that calls listeners with hookContext</li>  *<li>IP address is only set if the underlying transport mechanism is socket</li>  *</ul>  *<br>  *  * @see org.apache.hadoop.hive.ql.hooks.ExecuteWithHookContext  */
 end_comment
 
 begin_class

@@ -34,7 +34,7 @@ name|SEARCH_STRING_ESCAPE
 init|=
 literal|'\\'
 decl_stmt|;
-comment|/**    * Convert a SQL search pattern into an equivalent Java Regex.    *    * @param pattern input which may contain '%' or '_' wildcard characters, or    * these characters escaped using {@link #getSearchStringEscape()}.    * @return replace %/_ with regex search characters, also handle escaped    * characters.    */
+comment|/**    * Convert a SQL search pattern into an equivalent Java Regex.    *    * @param pattern input which may contain '%' or '_' wildcard characters, or    * these characters escaped using getSearchStringEscape().    * @return replace %/_ with regex search characters, also handle escaped    * characters.    */
 specifier|public
 specifier|static
 name|String

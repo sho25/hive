@@ -184,7 +184,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Utility to test query and data retrieval via the LLAP input format.  * llapdump --hiveconf hive.zookeeper.quorum=localhost --hiveconf hive.zookeeper.client.port=2181 --hiveconf hive.llap.daemon.service.hosts=@llap_MiniLlapCluster 'select * from employee where employee_id< 10'  *  */
+comment|/**  * Utility to test query and data retrieval via the LLAP input format.  * llapdump --hiveconf hive.zookeeper.quorum=localhost --hiveconf hive.zookeeper.client.port=2181\  *   --hiveconf hive.llap.daemon.service.hosts=@llap_MiniLlapCluster 'select * from employee where employee_id&lt; 10'  *  */
 end_comment
 
 begin_class

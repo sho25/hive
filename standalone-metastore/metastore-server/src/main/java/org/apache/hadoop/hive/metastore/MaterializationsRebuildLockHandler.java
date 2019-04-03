@@ -144,7 +144,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This is a lock handler implementation for the materializations rebuild.  * It is lightweight: it does not persist any information to metastore db.  * Its states are as follows:  * 1) request lock -> 2) ACQUIRED -> 4) COMMIT_READY -> 6) release lock  *                                -> 5) EXPIRED      ->  *                 -> 3) NOT_ACQUIRED  * First, the rebuild operation will ACQUIRE the lock. If other rebuild  * operation for the same operation is already running, we lock status  * will be NOT_ACQUIRED.  * Before committing the rebuild, the txn handler will signal the handler  * that it is ready to commit the resource (move state to COMMIT_READY).  * We make sure the lock is still available before moving to the new state.  * A lock will not be able to expire when it is in COMMIT_READY state.  * The unlock method is always call by the txn handler, no matter whether  * the transaction succeeds or not, e.g., due to an Exception.  * From ACQUIRED, locks can be also moved to EXPIRED state when they  * expire. From EXPIRED, they can only be released.  */
+comment|/**  * This is a lock handler implementation for the materializations rebuild.  * It is lightweight: it does not persist any information to metastore db.  * Its states are as follows:  * 1) request lock -&gt; 2) ACQUIRED -&gt; 4) COMMIT_READY -&gt; 6) release lock  *                                -&gt; 5) EXPIRED      -&gt;  *                 -&gt; 3) NOT_ACQUIRED  * First, the rebuild operation will ACQUIRE the lock. If other rebuild  * operation for the same operation is already running, we lock status  * will be NOT_ACQUIRED.  * Before committing the rebuild, the txn handler will signal the handler  * that it is ready to commit the resource (move state to COMMIT_READY).  * We make sure the lock is still available before moving to the new state.  * A lock will not be able to expire when it is in COMMIT_READY state.  * The unlock method is always call by the txn handler, no matter whether  * the transaction succeeds or not, e.g., due to an Exception.  * From ACQUIRED, locks can be also moved to EXPIRED state when they  * expire. From EXPIRED, they can only be released.  */
 end_comment
 
 begin_class
@@ -340,7 +340,7 @@ name|COMMIT_READY
 argument_list|)
 return|;
 block|}
-comment|/**    * Heartbeats a certain lock and refreshes its timer.    * @param dbName the db name of the materialization    * @param tableName the table name of the materialization    * @param txnId the transaction id for the rebuild    * @throws MetaException    */
+comment|/**    * Heartbeats a certain lock and refreshes its timer.    * @param dbName the db name of the materialization    * @param tableName the table name of the materialization    * @param txnId the transaction id for the rebuild    */
 specifier|public
 name|boolean
 name|refreshLockResource
@@ -419,7 +419,7 @@ return|return
 literal|true
 return|;
 block|}
-comment|/**    * Releases a certain lock.    * @param dbName the db name of the materialization    * @param tableName the table name of the materialization    * @param txnId the transaction id for the rebuild    * @return true if the lock could be released properly, false otherwise    * @throws MetaException    */
+comment|/**    * Releases a certain lock.    * @param dbName the db name of the materialization    * @param tableName the table name of the materialization    * @param txnId the transaction id for the rebuild    * @return true if the lock could be released properly, false otherwise    */
 specifier|public
 name|boolean
 name|unlockResource
@@ -486,7 +486,7 @@ name|prevResourceLock
 argument_list|)
 return|;
 block|}
-comment|/**    * Method that removes from the handler those locks that have expired.    * @param timeout time after which we consider the locks to have expired    * @throws MetaException    */
+comment|/**    * Method that removes from the handler those locks that have expired.    * @param timeout time after which we consider the locks to have expired    */
 specifier|public
 name|long
 name|cleanupResourceLocks

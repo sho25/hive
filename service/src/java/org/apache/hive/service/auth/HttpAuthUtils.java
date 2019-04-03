@@ -459,7 +459,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Creates and returns a HS2 cookie token.    * @param clientUserName Client User name.    * @return An unsigned cookie token generated from input parameters.    * The final cookie generated is of the following format :    * cu=<username>&rn=<randomNumber>&s=<cookieSignature>    */
+comment|/**    * Creates and returns a HS2 cookie token.    * @param clientUserName Client User name.    * @return An unsigned cookie token generated from input parameters.    * The final cookie generated is of the following format :    * cu=&lt;username&gt;&amp;rn=&lt;randomNumber&gt;&amp;s=&lt;cookieSignature&gt;    */
 specifier|public
 specifier|static
 name|String

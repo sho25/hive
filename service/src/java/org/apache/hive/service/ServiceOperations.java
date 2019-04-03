@@ -121,7 +121,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Initialize a service.    *<p/>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service that must be in the state    *   {@link Service.STATE#NOTINITED}    * @param configuration the configuration to initialize the service with    * @throws RuntimeException on a state change failure    * @throws IllegalStateException if the service is in the wrong state    */
+comment|/**    * Initialize a service.    *<br>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service that must be in the state    *   {@link Service.STATE#NOTINITED}    * @param configuration the configuration to initialize the service with    * @throws RuntimeException on a state change failure    * @throws IllegalStateException if the service is in the wrong state    */
 specifier|public
 specifier|static
 name|void
@@ -163,7 +163,7 @@ name|configuration
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Start a service.    *<p/>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service that must be in the state    *   {@link Service.STATE#INITED}    * @throws RuntimeException on a state change failure    * @throws IllegalStateException if the service is in the wrong state    */
+comment|/**    * Start a service.    *<br>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service that must be in the state    *   {@link Service.STATE#INITED}    * @throws RuntimeException on a state change failure    * @throws IllegalStateException if the service is in the wrong state    */
 specifier|public
 specifier|static
 name|void
@@ -200,7 +200,7 @@ name|start
 argument_list|()
 expr_stmt|;
 block|}
-comment|/**    * Initialize then start a service.    *<p/>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service that must be in the state    *   {@link Service.STATE#NOTINITED}    * @param configuration the configuration to initialize the service with    * @throws RuntimeException on a state change failure    * @throws IllegalStateException if the service is in the wrong state    */
+comment|/**    * Initialize then start a service.    *<br>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service that must be in the state    *   {@link Service.STATE#NOTINITED}    * @param configuration the configuration to initialize the service with    * @throws RuntimeException on a state change failure    * @throws IllegalStateException if the service is in the wrong state    */
 specifier|public
 specifier|static
 name|void
@@ -226,7 +226,7 @@ name|service
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Stop a service.    *<p/>Do nothing if the service is null or not    * in a state in which it can be/needs to be stopped.    *<p/>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service or null    */
+comment|/**    * Stop a service.    *<br>Do nothing if the service is null or not    * in a state in which it can be/needs to be stopped.    *<br>    * The service state is checked<i>before</i> the operation begins.    * This process is<i>not</i> thread safe.    * @param service a service or null    */
 specifier|public
 specifier|static
 name|void

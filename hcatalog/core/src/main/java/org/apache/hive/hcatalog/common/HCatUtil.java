@@ -2009,7 +2009,7 @@ return|return
 name|newFields
 return|;
 block|}
-comment|/**    * Test if the first FsAction is more permissive than the second. This is    * useful in cases where we want to ensure that a file owner has more    * permissions than the group they belong to, for eg. More completely(but    * potentially more cryptically) owner-r>= group-r>= world-r : bitwise    * and-masked with 0444 => 444>= 440>= 400>= 000 owner-w>= group-w>=    * world-w : bitwise and-masked with&0222 => 222>= 220>= 200>= 000    * owner-x>= group-x>= world-x : bitwise and-masked with&0111 => 111>=    * 110>= 100>= 000    *    * @return true if first FsAction is more permissive than the second, false    *         if not.    */
+comment|/**    * Test if the first FsAction is more permissive than the second. This is    * useful in cases where we want to ensure that a file owner has more    * permissions than the group they belong to, for eg. More completely(but    * potentially more cryptically) owner-r&gt;= group-r&gt;= world-r : bitwise    * and-masked with 0444 =&gt; 444&gt;= 440&gt;= 400&gt;= 000 owner-w&gt;= group-w&gt;=    * world-w : bitwise and-masked with&amp;0222 =&gt; 222&gt;= 220&gt;= 200&gt;= 000    * owner-x&gt;= group-x&gt;= world-x : bitwise and-masked with&amp;0111 =&gt; 111&gt;=    * 110&gt;= 100&gt;= 000    *    * @return true if first FsAction is more permissive than the second, false    *         if not.    */
 specifier|public
 specifier|static
 name|boolean
@@ -3429,7 +3429,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Get or create a hive client depending on whether it exits in cache or not.    * @Deprecated : use {@link #getHiveMetastoreClient(HiveConf)} instead.    * This was deprecated in Hive 1.2, slated for removal in two versions    * (i.e. 1.2& 1.3(projected) will have it, but it will be removed after that)    * @param hiveConf The hive configuration    * @return the client    * @throws MetaException When HiveMetaStoreClient couldn't be created    * @throws IOException    */
+comment|/**    * Get or create a hive client depending on whether it exits in cache or not.    * @deprecated : use {@link #getHiveMetastoreClient(HiveConf)} instead.    * This was deprecated in Hive 1.2, slated for removal in two versions    * (i.e. 1.2&amp; 1.3(projected) will have it, but it will be removed after that)    * @param hiveConf The hive configuration    * @return the client    * @throws MetaException When HiveMetaStoreClient couldn't be created    * @throws IOException    */
 annotation|@
 name|Deprecated
 specifier|public

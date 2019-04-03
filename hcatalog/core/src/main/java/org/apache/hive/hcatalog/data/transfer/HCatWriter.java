@@ -197,7 +197,7 @@ parameter_list|()
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * This method should be used at slave needs to perform writes.    *    * @param recordItr    *          {@link Iterator} records to be written into HCatalog.    * @throws {@link HCatException}    */
+comment|/**    * This method should be used at slave needs to perform writes.    *    * @param recordItr    *          {@link Iterator} records to be written into HCatalog.    * @throws  HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -213,7 +213,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * This method should be called at master node. Primary purpose of this is to    * do metadata commit.    *    * @throws {@link HCatException}    */
+comment|/**    * This method should be called at master node. Primary purpose of this is to    * do metadata commit.    *    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void
@@ -226,7 +226,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * This method should be called at master node. Primary purpose of this is to    * do cleanups in case of failures.    *    * @throws {@link HCatException} *    */
+comment|/**    * This method should be called at master node. Primary purpose of this is to    * do cleanups in case of failures.    *    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|void

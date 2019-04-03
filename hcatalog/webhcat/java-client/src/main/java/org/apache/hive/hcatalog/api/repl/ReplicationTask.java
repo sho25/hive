@@ -584,7 +584,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Allows a user to specify a table name mapping, where the the function provided maps the name of    * the table in the source warehouse to the name of the table in the dest warehouse. It is expected    * that if the mapping does not exist, it should return the same name sent in. Or, if the function    * throws an IllegalArgumentException as well, a ReplicationTask will use the same key sent in.    * That way, the default will then be that the destination db name is the same as the src db name    *    * If you want to use a Map<String,String> mapping instead of a Function<String,String>,    * simply call this function as .withTableNameMapping(ReplicationUtils.mapBasedFunction(tableMap))    * @param tableNameMapping    * @return this replication task    */
+comment|/**    * Allows a user to specify a table name mapping, where the the function provided maps the name of    * the table in the source warehouse to the name of the table in the dest warehouse. It is expected    * that if the mapping does not exist, it should return the same name sent in. Or, if the function    * throws an IllegalArgumentException as well, a ReplicationTask will use the same key sent in.    * That way, the default will then be that the destination db name is the same as the src db name    *    * If you want to use a Map&lt;String,String&gt; mapping instead of a Function&lt;String,String&gt;,    * simply call this function as .withTableNameMapping(ReplicationUtils.mapBasedFunction(tableMap))    * @param tableNameMapping    * @return this replication task    */
 specifier|public
 name|ReplicationTask
 name|withTableNameMapping
@@ -608,7 +608,7 @@ return|return
 name|this
 return|;
 block|}
-comment|/**    * Allows a user to specify a db name mapping, where the the function provided maps the name of    * the db in the source warehouse to the name of the db in the dest warehouse. It is expected    * that if the mapping does not exist, it should return the same name sent in. Or, if the function    * throws an IllegalArgumentException as well, a ReplicationTask will use the same key sent in.    * That way, the default will then be that the destination db name is the same as the src db name    *    * If you want to use a Map<String,String> mapping instead of a Function<String,String>,    * simply call this function as .withDbNameMapping(ReplicationUtils.mapBasedFunction(dbMap))    * @param dbNameMapping    * @return this replication task    */
+comment|/**    * Allows a user to specify a db name mapping, where the the function provided maps the name of    * the db in the source warehouse to the name of the db in the dest warehouse. It is expected    * that if the mapping does not exist, it should return the same name sent in. Or, if the function    * throws an IllegalArgumentException as well, a ReplicationTask will use the same key sent in.    * That way, the default will then be that the destination db name is the same as the src db name    *    * If you want to use a Map&lt;String,String&gt; mapping instead of a Function&lt;String,String&gt;,    * simply call this function as .withDbNameMapping(ReplicationUtils.mapBasedFunction(dbMap))    * @param dbNameMapping    * @return this replication task    */
 specifier|public
 name|ReplicationTask
 name|withDbNameMapping
@@ -655,7 +655,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Returns a Iterable<Command> to send to a hive driver on the source warehouse    *    * If you *need* a List<Command> instead, you can use guava's    * ImmutableList.copyOf(iterable) or Lists.newArrayList(iterable) to    * get the underlying list, but this defeats the purpose of making this    * interface an Iterable rather than a List, since it is very likely    * that the number of Commands returned here will cause your process    * to run OOM.    */
+comment|/**    * Returns a Iterable&lt;Command&gt; to send to a hive driver on the source warehouse    *    * If you *need* a List&lt;Command&gt; instead, you can use guava's    * ImmutableList.copyOf(iterable) or Lists.newArrayList(iterable) to    * get the underlying list, but this defeats the purpose of making this    * interface an Iterable rather than a List, since it is very likely    * that the number of Commands returned here will cause your process    * to run OOM.    */
 specifier|abstract
 specifier|public
 name|Iterable
@@ -667,7 +667,7 @@ argument_list|>
 name|getSrcWhCommands
 parameter_list|()
 function_decl|;
-comment|/**    * Returns a Iterable<Command> to send to a hive driver on the source warehouse    *    * If you *need* a List<Command> instead, you can use guava's    * ImmutableList.copyOf(iterable) or Lists.newArrayList(iterable) to    * get the underlying list, but this defeats the purpose of making this    * interface an Iterable rather than a List, since it is very likely    * that the number of Commands returned here will cause your process    * to run OOM.    */
+comment|/**    * Returns a Iterable&lt;Command&gt; to send to a hive driver on the source warehouse    *    * If you *need* a List&lt;Command&gt; instead, you can use guava's    * ImmutableList.copyOf(iterable) or Lists.newArrayList(iterable) to    * get the underlying list, but this defeats the purpose of making this    * interface an Iterable rather than a List, since it is very likely    * that the number of Commands returned here will cause your process    * to run OOM.    */
 specifier|abstract
 specifier|public
 name|Iterable

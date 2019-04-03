@@ -1273,7 +1273,7 @@ name|keySet
 argument_list|()
 return|;
 block|}
-comment|/**    *    * @param udfType    *          GenericUDF classname to lookup matching CompareOpt    * @return Class<? extends CompareOpt/>    */
+comment|/**    *    * @param udfType    *          GenericUDF classname to lookup matching CompareOpt    * @return Class&lt;? extends CompareOpt/&gt;    */
 specifier|public
 name|Class
 argument_list|<
@@ -1431,7 +1431,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    *    * @param type    *          String hive column lookup matching PrimitiveCompare    * @return Class<? extends></?>    */
+comment|/**    *    * @param type    *          String hive column lookup matching PrimitiveCompare    * @return Class&lt;? extends&gt;&lt;/?&gt;    */
 specifier|public
 name|Class
 argument_list|<

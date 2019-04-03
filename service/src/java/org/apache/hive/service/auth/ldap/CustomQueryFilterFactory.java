@@ -102,7 +102,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A factory for a {@link Filter} based on a custom query.  *<br>  * The produced filter object filters out all users that are not found in the search result  * of the query provided in Hive configuration.  * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_CUSTOMLDAPQUERY  */
+comment|/**  * A factory for a {@link Filter} based on a custom query.  *<br>  * The produced filter object filters out all users that are not found in the search result  * of the query provided in Hive configuration.  * @see org.apache.hadoop.hive.conf.HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_CUSTOMLDAPQUERY  */
 end_comment
 
 begin_class

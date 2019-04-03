@@ -206,7 +206,7 @@ argument_list|>
 name|getPartitions
 parameter_list|()
 function_decl|;
-comment|/**    * @return get the paris for transaction ids<--> write ids    */
+comment|/**    * @return get the paris for transaction ids&lt;--&gt; write ids    */
 name|List
 argument_list|<
 name|TxnToWriteId

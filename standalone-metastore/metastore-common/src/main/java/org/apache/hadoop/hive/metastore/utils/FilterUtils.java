@@ -905,7 +905,7 @@ return|return
 name|catalogNames
 return|;
 block|}
-comment|/**    * Check if the current user has access to a given database and table name. Throw    * NoSuchObjectException if user has no access. When the db or table is filtered out, we don't need    * to even fetch the partitions. Therefore this check ensures table-level security and    * could improve performance when filtering partitions.    * @param dbName the database name    * @param tblName the table name contained in the database    * @return if the    * @throws NoSuchObjectException if the database or table is filtered out    */
+comment|/**    * Check if the current user has access to a given database and table name. Throw    * NoSuchObjectException if user has no access. When the db or table is filtered out, we don't need    * to even fetch the partitions. Therefore this check ensures table-level security and    * could improve performance when filtering partitions.    * @param dbName the database name    * @param tblName the table name contained in the database    * @throws NoSuchObjectException if the database or table is filtered out    */
 specifier|public
 specifier|static
 name|void

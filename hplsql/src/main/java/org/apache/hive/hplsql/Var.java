@@ -3322,7 +3322,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Convert value to SQL string - string literals are quoted and escaped, ab'c -> 'ab''c'    */
+comment|/**    * Convert value to SQL string - string literals are quoted and escaped, ab'c -&gt; 'ab''c'    */
 specifier|public
 name|String
 name|toSqlString

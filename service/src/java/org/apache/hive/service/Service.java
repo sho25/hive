@@ -57,7 +57,7 @@ block|,
 comment|/** stopped. No further state transitions are permitted */
 name|STOPPED
 block|}
-comment|/**    * Initialize the service.    *    * The transition must be from {@link STATE#NOTINITED} to {@link STATE#INITED} unless the    * operation failed and an exception was raised.    *    * @param config    *          the configuration of the service    */
+comment|/**    * Initialize the service.    *    * The transition must be from {@link STATE#NOTINITED} to {@link STATE#INITED} unless the    * operation failed and an exception was raised.    *    * @param conf    *          the configuration of the service    */
 name|void
 name|init
 parameter_list|(

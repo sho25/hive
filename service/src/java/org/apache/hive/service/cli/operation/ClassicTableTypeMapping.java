@@ -158,7 +158,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * ClassicTableTypeMapping.  * Classic table type mapping :  *  Managed Table ==> Table  *  External Table ==> Table  *  Virtual View ==> View  */
+comment|/**  * ClassicTableTypeMapping.  * Classic table type mapping :  *  Managed Table ==&gt; Table  *  External Table ==&gt; Table  *  Virtual View ==&gt; View  */
 end_comment
 
 begin_class

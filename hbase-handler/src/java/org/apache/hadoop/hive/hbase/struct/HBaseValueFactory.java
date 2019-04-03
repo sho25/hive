@@ -182,7 +182,7 @@ specifier|public
 interface|interface
 name|HBaseValueFactory
 block|{
-comment|/**    * Initialize factory with properties    *     * @param hbaseParam the {@link HBaseParameters hbase parameters}    * @param conf the hadoop {@link Configuration configuration}    * @param properties the custom {@link Properties}    * @throws SerDeException if there was an issue initializing the factory    */
+comment|/**    * Initialize factory with properties    *     * @param hbaseParam the HBaseParameters hbase parameters    * @param conf the hadoop {@link Configuration configuration}    * @param properties the custom {@link Properties}    * @throws SerDeException if there was an issue initializing the factory    */
 name|void
 name|init
 parameter_list|(
@@ -218,7 +218,7 @@ parameter_list|)
 throws|throws
 name|SerDeException
 function_decl|;
-comment|/**    * Serialize the given hive object    *     * @param object the object to be serialized    * @param field the {@link StructField}    * @return the serialized value    * @throws {@link IOException} if there was an issue serializing the value    */
+comment|/**    * Serialize the given hive object    *     * @param object the object to be serialized    * @param field the {@link StructField}    * @return the serialized value    * @throws IOException if there was an issue serializing the value    */
 name|byte
 index|[]
 name|serializeValue

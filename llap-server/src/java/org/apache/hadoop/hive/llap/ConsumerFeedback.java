@@ -18,7 +18,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * Consumer feedback typically used by Consumer<T>;  * allows consumer to influence production of data.  */
+comment|/**  * Consumer feedback typically used by Consumer&lt;T&gt;;  * allows consumer to influence production of data.  */
 end_comment
 
 begin_interface

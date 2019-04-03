@@ -382,7 +382,7 @@ name|timestampStr
 argument_list|)
 return|;
 block|}
-comment|/**    * Read DATE.    * The representation of date in Teradata binary format is:    * The Date D is a int with 4 bytes using little endian,    * The representation is (D+19000000).ToString -> YYYYMMDD,    * eg: Date 07 b2 01 00 -> 111111 in little endian -> 19111111 -> 1911.11.11.    * the null date will use 0 to pad.    *    * @return the date    * @throws IOException the io exception    * @throws ParseException the parse exception    */
+comment|/**    * Read DATE.    * The representation of date in Teradata binary format is:    * The Date D is a int with 4 bytes using little endian,    * The representation is (D+19000000).ToString -&gt; YYYYMMDD,    * eg: Date 07 b2 01 00 -&gt; 111111 in little endian -&gt; 19111111 -&gt; 1911.11.11.    * the null date will use 0 to pad.    *    * @return the date    * @throws IOException the io exception    * @throws ParseException the parse exception    */
 specifier|public
 name|Date
 name|readDate
@@ -513,7 +513,7 @@ return|return
 name|date
 return|;
 block|}
-comment|/**    * Read CHAR(N).    * The representation of char in Teradata binary format is    * the byte number to read is based on the [charLength] * [bytePerChar]<- totalLength,    * bytePerChar is decided by the charset: LATAIN charset is 2 bytes per char and UNICODE charset is 3 bytes per char.    * the null char will use space to pad.    *    * @param totalLength the total length    * @return the string    * @throws IOException the io exception    */
+comment|/**    * Read CHAR(N).    * The representation of char in Teradata binary format is    * the byte number to read is based on the [charLength] * [bytePerChar]&lt;- totalLength,    * bytePerChar is decided by the charset: LATAIN charset is 2 bytes per char and UNICODE charset is 3 bytes per char.    * the null char will use space to pad.    *    * @param totalLength the total length    * @return the string    * @throws IOException the io exception    */
 specifier|public
 name|String
 name|readChar

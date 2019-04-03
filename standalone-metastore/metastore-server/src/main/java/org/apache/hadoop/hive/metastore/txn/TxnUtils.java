@@ -771,7 +771,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Note, users are responsible for using the correct TxnManager. We do not look at    * SessionState.get().getTxnMgr().supportsAcid() here    * Should produce the same result as    * {@link org.apache.hadoop.hive.ql.io.AcidUtils#isTransactionalTable(org.apache.hadoop.hive.ql.metadata.Table)}.    * @return true if table is a transactional table, false otherwise    */
+comment|/**    * Note, users are responsible for using the correct TxnManager. We do not look at    * SessionState.get().getTxnMgr().supportsAcid() here    * Should produce the same result as    * org.apache.hadoop.hive.ql.io.AcidUtils#isTransactionalTable.    * @return true if table is a transactional table, false otherwise    */
 specifier|public
 specifier|static
 name|boolean
@@ -889,7 +889,7 @@ literal|"true"
 argument_list|)
 return|;
 block|}
-comment|/**    * Should produce the same result as    * {@link org.apache.hadoop.hive.ql.io.AcidUtils#isAcidTable(org.apache.hadoop.hive.ql.metadata.Table)}.    */
+comment|/**    * Should produce the same result as    * org.apache.hadoop.hive.ql.io.AcidUtils#isAcidTable.    */
 specifier|public
 specifier|static
 name|boolean
@@ -927,7 +927,7 @@ argument_list|)
 argument_list|)
 return|;
 block|}
-comment|/**    * Should produce the result as<dbName>.<tableName>.    */
+comment|/**    * Should produce the result as&lt;dbName&gt;.&lt;tableName&gt;.    */
 specifier|public
 specifier|static
 name|String

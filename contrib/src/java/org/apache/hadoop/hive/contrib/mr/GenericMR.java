@@ -120,7 +120,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This class attempts to provide a simple framework for writing Hive map/reduce  * tasks in java.  *   * The main benefit is that it deals with grouping the keys together for reduce  * tasks.  *   * Additionally, it deals with all system io... and provides something closer to  * the hadoop m/r.  *   * As an example, here's the wordcount reduce:  *   * new GenericMR().reduce(System.in, System.out, new Reducer() { public void  * reduce(String key, Iterator<String[]> records, Output output) throws  * Exception { int count = 0;  *   * while (records.hasNext()) { count += Integer.parseInt(records.next()[1]); }  *   * output.collect(new String[] { key, String.valueOf(count) }); }});  */
+comment|/**  * This class attempts to provide a simple framework for writing Hive map/reduce  * tasks in java.  *   * The main benefit is that it deals with grouping the keys together for reduce  * tasks.  *   * Additionally, it deals with all system io... and provides something closer to  * the hadoop m/r.  *   * As an example, here's the wordcount reduce:  *   * new GenericMR().reduce(System.in, System.out, new Reducer() { public void  * reduce(String key, Iterator&lt;String[]&gt; records, Output output) throws  * Exception { int count = 0;  *   * while (records.hasNext()) { count += Integer.parseInt(records.next()[1]); }  *   * output.collect(new String[] { key, String.valueOf(count) }); }});  */
 end_comment
 
 begin_class

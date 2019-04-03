@@ -124,7 +124,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * HiveMetaHook defines notification methods which are invoked as part  * of transactions against the metastore, allowing external catalogs  * such as HBase to be kept in sync with Hive's metastore.  *  *<p>  *  * Implementations can use {@link MetaStoreUtils#isExternalTable} to  * distinguish external tables from managed tables.  */
+comment|/**  * HiveMetaHook defines notification methods which are invoked as part  * of transactions against the metastore, allowing external catalogs  * such as HBase to be kept in sync with Hive's metastore.  *  *<p>  *  * Implementations can use {@link org.apache.hadoop.hive.metastore.utils.MetaStoreUtils#isExternalTable} to  * distinguish external tables from managed tables.  */
 end_comment
 
 begin_interface

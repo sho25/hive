@@ -1406,7 +1406,7 @@ return|return
 name|name
 return|;
 block|}
-comment|/**    * Split qualified object to 2 parts: schema.tab.col -> schema.tab|col; tab.col -> tab|col     */
+comment|/**    * Split qualified object to 2 parts: schema.tab.col -&gt; schema.tab|col; tab.col -&gt; tab|col    */
 specifier|public
 name|ArrayList
 argument_list|<

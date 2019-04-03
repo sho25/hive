@@ -88,7 +88,7 @@ name|String
 name|clientTypeName
 parameter_list|)
 function_decl|;
-comment|/**    * Map hive's table type name to client's table type    * @param clientTypeName    * @return    */
+comment|/**    * Map hive's table type name to client's table type    * @param hiveTypeName    * @return    */
 specifier|public
 name|String
 name|mapToClientType

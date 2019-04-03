@@ -89,7 +89,7 @@ name|NUM_QUERY_ITERATIONS
 init|=
 literal|80000
 decl_stmt|;
-comment|/**    * Creates 2 tables to query from    *    * @param num    */
+comment|/**    * Creates 2 tables to query from    *    * @param con    */
 specifier|public
 specifier|static
 name|void

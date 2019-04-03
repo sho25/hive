@@ -98,7 +98,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A factory for a {@link Filter} based on a list of allowed users.  *<br>  * The produced filter object filters out all users that are not on the provided in  * Hive configuration list.  * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_USERFILTER  */
+comment|/**  * A factory for a {@link Filter} based on a list of allowed users.  *<br>  * The produced filter object filters out all users that are not on the provided in  * Hive configuration list.  * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_USERFILTER  */
 end_comment
 
 begin_class

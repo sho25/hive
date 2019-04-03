@@ -198,7 +198,7 @@ name|tooManyAborts
 init|=
 literal|false
 decl_stmt|;
-comment|/**    * {@code 0} means it wasn't set (e.g. in case of upgrades, since ResultSet.getLong() will return 0 if field is NULL)     * See {@link TxnStore#setCompactionHighestWriteId(CompactionInfo, long)} for precise definition.    * See also {@link TxnUtils#createValidCompactWriteIdList(TableValidWriteIds)} and    * {@link ValidCompactorWriteIdList#highWatermark}.    */
+comment|/**    * The highest write id that the compaction job will pay attention to.    * {@code 0} means it wasn't set (e.g. in case of upgrades, since ResultSet.getLong() will return 0 if field is NULL)     * See also {@link TxnUtils#createValidCompactWriteIdList(TableValidWriteIds)} and    * {@link ValidCompactorWriteIdList#highWatermark}.    */
 specifier|public
 name|long
 name|highestWriteId

@@ -190,7 +190,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Quote string and escape characters - ab'c -> 'ab''c'    */
+comment|/**    * Quote string and escape characters - ab'c -&gt; 'ab''c'    */
 specifier|public
 specifier|static
 name|String
@@ -297,7 +297,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * Merge quoted strings: 'a' 'b' -> 'ab'; 'a''b' 'c' -> 'a''bc'    */
+comment|/**    * Merge quoted strings: 'a' 'b' -&gt; 'ab'; 'a''b' 'c' -&gt; 'a''bc'    */
 specifier|public
 specifier|static
 name|String

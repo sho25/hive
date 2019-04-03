@@ -6408,7 +6408,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * @param revokePrivileges    * @param authorizer    * @param objToRefresh    * @return true on success    * @throws MetaException    * @throws TException    */
+comment|/**    * @param authorizer    * @param objToRefresh    * @return true on success    * @throws MetaException    * @throws TException    */
 name|boolean
 name|refresh_privileges
 parameter_list|(
@@ -6753,7 +6753,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a structure that details valid write ids.    * @param fullTableName full table name of format<db_name>.<table_name>    * @return list of valid write ids for the given table    * @throws TException    */
+comment|/**    * Get a structure that details valid write ids.    * @param fullTableName full table name of format&lt;db_name&gt;.&lt;table_name&gt;    * @return list of valid write ids for the given table    * @throws TException    */
 name|ValidWriteIdList
 name|getValidWriteIds
 parameter_list|(
@@ -6763,7 +6763,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a structure that details valid write ids.    * @param fullTableName full table name of format<db_name>.<table_name>    * @param writeId The write id to get the corresponding txn    * @return list of valid write ids for the given table    * @throws TException    */
+comment|/**    * Get a structure that details valid write ids.    * @param fullTableName full table name of format&lt;db_name&gt;.&lt;table_name&gt;    * @param writeId The write id to get the corresponding txn    * @return list of valid write ids for the given table    * @throws TException    */
 name|ValidWriteIdList
 name|getValidWriteIds
 parameter_list|(
@@ -6776,7 +6776,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a structure that details valid write ids list for all tables read by current txn.    * @param tablesList list of tables (format:<db_name>.<table_name>) read from the current transaction    *                   for which needs to populate the valid write ids    * @param validTxnList snapshot of valid txns for the current txn    * @return list of valid write ids for the given list of tables.    * @throws TException    */
+comment|/**    * Get a structure that details valid write ids list for all tables read by current txn.    * @param tablesList list of tables (format:&lt;db_name&gt;.&lt;table_name&gt;) read from the current transaction    *                   for which needs to populate the valid write ids    * @param validTxnList snapshot of valid txns for the current txn    * @return list of valid write ids for the given list of tables.    * @throws TException    */
 name|List
 argument_list|<
 name|TableValidWriteIds

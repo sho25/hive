@@ -178,7 +178,7 @@ name|AlterHandler
 extends|extends
 name|Configurable
 block|{
-comment|/**    * @deprecated As of release 2.2.0. Replaced by {@link #alterTable(RawStore, Warehouse, String,    * String, String, Table, EnvironmentContext, IHMSHandler)}    *    * handles alter table, the changes could be cascaded to partitions if applicable    *    * @param msdb    *          object to get metadata    * @param wh    *          Hive Warehouse where table data is stored    * @param catName    *          catalog of the table being altered    * @param dbname    *          database of the table being altered    * @param name    *          original name of the table being altered. same as    *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable    *          new table object    * @throws InvalidOperationException    *           thrown if the newTable object is invalid    * @throws MetaException    *           thrown if there is any other error    */
+comment|/**    * @deprecated As of release 2.2.0. Replaced by {@link #alterTable(RawStore, Warehouse, String,    * String, String, Table, EnvironmentContext, IHMSHandler, String)}    *    * handles alter table, the changes could be cascaded to partitions if applicable    *    * @param msdb    *          object to get metadata    * @param wh    *          Hive Warehouse where table data is stored    * @param catName    *          catalog of the table being altered    * @param dbname    *          database of the table being altered    * @param name    *          original name of the table being altered. same as    *<i>newTable.tableName</i> if alter op is not a rename.    * @param newTable    *          new table object    * @throws InvalidOperationException    *           thrown if the newTable object is invalid    * @throws MetaException    *           thrown if there is any other error    */
 annotation|@
 name|Deprecated
 specifier|default
@@ -269,7 +269,7 @@ name|InvalidOperationException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * @deprecated As of release 2.2.0.  Replaced by {@link #alterPartition(RawStore, Warehouse, String,    * String, List, Partition, EnvironmentContext, IHMSHandler)}    *    * handles alter partition    *    * @param msdb    *          object to get metadata    * @param wh    * @param dbname    *          database of the partition being altered    * @param name    *          table of the partition being altered    * @param part_vals    *          original values of the partition being altered    * @param new_part    *          new partition object    * @return the altered partition    * @throws InvalidOperationException    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    */
+comment|/**    * @deprecated As of release 2.2.0.  Replaced by {@link #alterPartitions(RawStore, Warehouse, String,    * String, String, List, EnvironmentContext, String, long, IHMSHandler)}    *    * handles alter partition    *    * @param msdb    *          object to get metadata    * @param wh    * @param dbname    *          database of the partition being altered    * @param name    *          table of the partition being altered    * @param part_vals    *          original values of the partition being altered    * @param new_part    *          new partition object    * @return the altered partition    * @throws InvalidOperationException    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    */
 annotation|@
 name|Deprecated
 name|Partition
@@ -365,7 +365,7 @@ name|AlreadyExistsException
 throws|,
 name|MetaException
 function_decl|;
-comment|/**    * @deprecated As of release 3.0.0. Replaced by {@link #alterPartitions(RawStore, Warehouse, String,    * String, String, List, EnvironmentContext, IHMSHandler)}    *    * handles alter partitions    *    * @param msdb    *          object to get metadata    * @param wh    * @param dbname    *          database of the partition being altered    * @param name    *          table of the partition being altered    * @param new_parts    *          new partition list    * @return the altered partition list    * @throws InvalidOperationException    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    */
+comment|/**    * @deprecated As of release 3.0.0. Replaced by {@link #alterPartitions(RawStore, Warehouse, String,    * String, String, List, EnvironmentContext, String, long, IHMSHandler)}    *    * handles alter partitions    *    * @param msdb    *          object to get metadata    * @param wh    * @param dbname    *          database of the partition being altered    * @param name    *          table of the partition being altered    * @param new_parts    *          new partition list    * @return the altered partition list    * @throws InvalidOperationException    * @throws InvalidObjectException    * @throws AlreadyExistsException    * @throws MetaException    */
 annotation|@
 name|Deprecated
 name|List

@@ -18,7 +18,7 @@ package|;
 end_package
 
 begin_comment
-comment|/**  * @deprecated as of Hive 3.0.0, replaced by {@link org.apache.hive.streaming.RecordWriter}  */
+comment|/**  * @deprecated as of Hive 3.0.0, replaced by org.apache.hive.streaming.RecordWriter  */
 end_comment
 
 begin_interface

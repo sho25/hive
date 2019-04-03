@@ -3367,7 +3367,7 @@ return|return
 name|partSpec
 return|;
 block|}
-comment|/**    * Returns the default partition path of a table within a given database and partition key value    * pairs. It uses the database location and appends it the table name and the partition key,value    * pairs to create the Path for the partition directory    *    * @param db - parent database which is used to get the base location of the partition directory    * @param tableName - table name for the partitions    * @param pm - Partition key value pairs    * @return    * @throws MetaException    */
+comment|/**    * Returns the default partition path of a table within a given database and partition key value    * pairs. It uses the database location and appends it the table name and the partition key,value    * pairs to create the Path for the partition directory    *    * @param db - parent database which is used to get the base location of the partition directory    * @param table - table for the partitions    * @param pm - Partition key value pairs    * @return    * @throws MetaException    */
 specifier|public
 name|Path
 name|getDefaultPartitionPath

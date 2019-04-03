@@ -535,7 +535,7 @@ block|}
 block|}
 block|}
 block|}
-comment|/**    * An interface used by {@link SearchResultHandler} for processing records of    * a {@link SearchResult} on a per-record basis.    *<br>    * Implementations of this interface perform the actual work of processing each record,    * but don't need to worry about exception handling, closing underlying data structures,    * and combining results from several search requests.    * {@see SearchResultHandler}    */
+comment|/**    * An interface used by {@link SearchResultHandler} for processing records of    * a {@link SearchResult} on a per-record basis.    *<br>    * Implementations of this interface perform the actual work of processing each record,    * but don't need to worry about exception handling, closing underlying data structures,    * and combining results from several search requests.    * @see SearchResultHandler    */
 specifier|public
 interface|interface
 name|RecordProcessor

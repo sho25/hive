@@ -146,7 +146,7 @@ name|txnIds
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * @return List<Long> txnIds    */
+comment|/**    * @return List&lt;Long&gt; txnIds    */
 specifier|public
 name|List
 argument_list|<

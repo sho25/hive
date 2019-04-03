@@ -542,7 +542,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Serializer for HCatTable.    * @param hcatTable The HCatTable to be serialized into string form    * @return String representation of the HCatTable.    * @throws HCatException, on failure to serialize.    */
+comment|/**    * Serializer for HCatTable.    * @param hcatTable The HCatTable to be serialized into string form    * @return String representation of the HCatTable.    * @throws HCatException on failure to serialize.    */
 specifier|public
 specifier|abstract
 name|String
@@ -566,7 +566,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Serializer for HCatPartition.    * @param hcatPartition The HCatPartition instance to be serialized.    * @return String representation of the HCatPartition.    * @throws HCatException, on failure to serialize.    */
+comment|/**    * Serializer for HCatPartition.    * @param hcatPartition The HCatPartition instance to be serialized.    * @return String representation of the HCatPartition.    * @throws HCatException on failure to serialize.    */
 specifier|public
 specifier|abstract
 name|String
@@ -578,7 +578,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Serializer for a list of HCatPartition.    * @param hcatPartitions The HCatPartitions to be serialized.    * @return A list of Strings, each representing an HCatPartition.    * @throws HCatException, on failure to serialize.    */
+comment|/**    * Serializer for a list of HCatPartition.    * @param hcatPartitions The HCatPartitions to be serialized.    * @return A list of Strings, each representing an HCatPartition.    * @throws HCatException on failure to serialize.    */
 specifier|public
 specifier|abstract
 name|List
@@ -596,7 +596,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Deserializer for an HCatPartition.    * @param hcatPartitionStringRep The String representation of the HCatPartition, presumably retrieved from {@link #serializePartition(HCatPartition)}    * @return HCatPartition instance reconstructed from the string.    * @throws HCatException, on failure to deserialze.    */
+comment|/**    * Deserializer for an HCatPartition.    * @param hcatPartitionStringRep The String representation of the HCatPartition, presumably retrieved from {@link #serializePartition(HCatPartition)}    * @return HCatPartition instance reconstructed from the string.    * @throws HCatException on failure to deserialze.    */
 specifier|public
 specifier|abstract
 name|HCatPartition
@@ -608,7 +608,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Deserializer for a list of HCatPartition strings.    * @param hcatPartitionStringReps The list of HCatPartition strings to be deserialized.    * @return A list of HCatPartition instances, each reconstructed from an entry in the string-list.    * @throws HCatException, on failure to deserialize.    */
+comment|/**    * Deserializer for a list of HCatPartition strings.    * @param hcatPartitionStringReps The list of HCatPartition strings to be deserialized.    * @return A list of HCatPartition instances, each reconstructed from an entry in the string-list.    * @throws HCatException on failure to deserialize.    */
 specifier|public
 specifier|abstract
 name|List
@@ -934,7 +934,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Drops partition(s) that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.    *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.    * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.    * @throws HCatException,ConnectionFailureException    */
+comment|/**    * Drops partition(s) that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.    *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.    * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.    * @throws HCatException    * @throws ConnectionFailureException    */
 specifier|public
 specifier|abstract
 name|void
@@ -960,7 +960,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Drops partition(s) that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.    *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.    * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.    * @param deleteData Whether to delete the underlying data.    * @throws HCatException,ConnectionFailureException    */
+comment|/**    * Drops partition(s) that match the specified (and possibly partial) partition specification.    * A partial partition-specification is one where not all partition-keys have associated values. For example,    * for a table ('myDb.myTable') with 2 partition keys (dt string, region string),    * if for each dt ('20120101', '20120102', etc.) there can exist 3 regions ('us', 'uk', 'in'), then,    *  1. Complete partition spec: dropPartitions('myDb', 'myTable', {dt='20120101', region='us'}) would drop 1 partition.    *  2. Partial  partition spec: dropPartitions('myDb', 'myTable', {dt='20120101'}) would drop all 3 partitions,    *                              with dt='20120101' (i.e. region = 'us', 'uk' and 'in').    * @param dbName The database name.    * @param tableName The table name.    * @param partitionSpec The partition specification, {[col_name,value],[col_name2,value2]}.    * @param ifExists Hive returns an error if the partition specified does not exist, unless ifExists is set to true.    * @param deleteData Whether to delete the underlying data.    * @throws HCatException    * @throws ConnectionFailureException    */
 specifier|public
 specifier|abstract
 name|void
@@ -989,7 +989,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * List partitions by filter.    *    * @param dbName The database name.    * @param tblName The table name.    * @param filter The filter string,    *    for example "part1 = \"p1_abc\" and part2<= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return list of partitions    * @throws HCatException    */
+comment|/**    * List partitions by filter.    *    * @param dbName The database name.    * @param tblName The table name.    * @param filter The filter string,    *    for example "part1 = \"p1_abc\" and part2&lt;= "\p2_test\"". Filtering can    *    be done only on string partition keys.    * @return list of partitions    * @throws HCatException    */
 specifier|public
 specifier|abstract
 name|List
@@ -1096,7 +1096,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Gets the delegation token.    *    * @param owner the owner    * @param renewerKerberosPrincipalName the renewer kerberos principal name    * @return the delegation token    * @throws HCatException,ConnectionFailureException    */
+comment|/**    * Gets the delegation token.    *    * @param owner the owner    * @param renewerKerberosPrincipalName the renewer kerberos principal name    * @return the delegation token    * @throws HCatException    * @throws ConnectionFailureException    */
 specifier|public
 specifier|abstract
 name|String
@@ -1135,7 +1135,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Retrieve Message-bus topic for a table.    *    * @param dbName The name of the DB.    * @param tableName The name of the table.    * @return Topic-name for the message-bus on which messages will be sent for the specified table.    * By default, this is set to<db-name>.<table-name>. Returns null when not set.    */
+comment|/**    * Retrieve Message-bus topic for a table.    *    * @param dbName The name of the DB.    * @param tableName The name of the table.    * @return Topic-name for the message-bus on which messages will be sent for the specified table.    * By default, this is set to&lt;db-name&gt;.&lt;table-name&gt;. Returns null when not set.    */
 specifier|public
 specifier|abstract
 name|String
@@ -1150,7 +1150,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Get an iterator that iterates over a list of replication tasks needed to replicate all the    * events that have taken place for a given db/table.    * @param lastEventId : The last event id that was processed for this reader. The returned    *                    replication tasks will start from this point forward    * @param maxEvents : Maximum number of events to consider for generating the    *                  replication tasks. If< 1, then all available events will be considered.    * @param dbName : The database name for which we're interested in the events for.    * @param tableName : The table name for which we're interested in the events for - if null,    *                  then this function will behave as if it were running at a db level.    * @return an iterator over a list of replication events that can be processed one by one.    * @throws HCatException    */
+comment|/**    * Get an iterator that iterates over a list of replication tasks needed to replicate all the    * events that have taken place for a given db/table.    * @param lastEventId : The last event id that was processed for this reader. The returned    *                    replication tasks will start from this point forward    * @param maxEvents : Maximum number of events to consider for generating the    *                  replication tasks. If&lt; 1, then all available events will be considered.    * @param dbName : The database name for which we're interested in the events for.    * @param tableName : The table name for which we're interested in the events for - if null,    *                  then this function will behave as if it were running at a db level.    * @return an iterator over a list of replication events that can be processed one by one.    * @throws HCatException    */
 annotation|@
 name|InterfaceStability
 operator|.
@@ -1178,7 +1178,7 @@ parameter_list|)
 throws|throws
 name|HCatException
 function_decl|;
-comment|/**    * Get a list of notifications    * @param lastEventId The last event id that was consumed by this reader.  The returned    *                    notifications will start at the next eventId available this eventId that    *                    matches the filter.    * @param maxEvents Maximum number of events to return.  If< 1, then all available events will    *                  be returned.    * @param filter Filter to determine if message should be accepted.  If null, then all    *               available events up to maxEvents will be returned.    * @return list of notifications, sorted by eventId.  It is guaranteed that the events are in    * the order that the operations were done on the database.    * @throws HCatException    */
+comment|/**    * Get a list of notifications    * @param lastEventId The last event id that was consumed by this reader.  The returned    *                    notifications will start at the next eventId available this eventId that    *                    matches the filter.    * @param maxEvents Maximum number of events to return.  If&lt; 1, then all available events will    *                  be returned.    * @param filter Filter to determine if message should be accepted.  If null, then all    *               available events up to maxEvents will be returned.    * @return list of notifications, sorted by eventId.  It is guaranteed that the events are in    * the order that the operations were done on the database.    * @throws HCatException    */
 annotation|@
 name|InterfaceAudience
 operator|.

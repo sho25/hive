@@ -410,7 +410,6 @@ operator|=
 name|alterTblDesc
 expr_stmt|;
 block|}
-comment|/**    * @param dropTblDesc    *          drop table descriptor    */
 specifier|public
 name|DDLWork
 parameter_list|(

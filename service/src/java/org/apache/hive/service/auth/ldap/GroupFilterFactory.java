@@ -156,7 +156,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A factory for a {@link Filter} based on a list of allowed groups.  *<br>  * The produced filter object filters out all users that are not members of at least one of  * the groups provided in Hive configuration.  * @see HiveConf.ConfVars.HIVE_SERVER2_PLAIN_LDAP_GROUPFILTER  */
+comment|/**  * A factory for a {@link Filter} based on a list of allowed groups.  *<br>  * The produced filter object filters out all users that are not members of at least one of  * the groups provided in Hive configuration.  * @see HiveConf.ConfVars#HIVE_SERVER2_PLAIN_LDAP_GROUPFILTER  */
 end_comment
 
 begin_class
