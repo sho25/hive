@@ -32,6 +32,10 @@ name|EXTERNAL_TABLE
 block|,
 name|VIRTUAL_VIEW
 block|,
+comment|// @deprecated
+comment|// INDEX_TABLE enum is deprecated
+name|INDEX_TABLE
+block|,
 name|MATERIALIZED_VIEW
 block|}
 end_enum
