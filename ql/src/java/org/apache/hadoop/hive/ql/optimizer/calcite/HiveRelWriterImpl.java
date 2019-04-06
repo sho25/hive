@@ -169,6 +169,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|//~ Methods ------------------------------------------------------------------
+annotation|@
+name|Override
 specifier|protected
 name|void
 name|explain_
@@ -197,13 +199,6 @@ argument_list|,
 name|values
 argument_list|)
 expr_stmt|;
-comment|// TODO: The following is hackish since we do not have visibility over relList
-comment|// and we do not want to bring all the writer utilities from Calcite. It should
-comment|// be changed once we move to new Calcite version and relList is visible for
-comment|// subclasses.
-try|try
-block|{
-specifier|final
 name|RelMetadataQuery
 name|mq
 init|=
@@ -214,44 +209,6 @@ argument_list|()
 operator|.
 name|getMetadataQuery
 argument_list|()
-decl_stmt|;
-name|Field
-name|fs
-init|=
-name|RelJsonWriter
-operator|.
-name|class
-operator|.
-name|getDeclaredField
-argument_list|(
-literal|"relList"
-argument_list|)
-decl_stmt|;
-name|fs
-operator|.
-name|setAccessible
-argument_list|(
-literal|true
-argument_list|)
-expr_stmt|;
-name|List
-argument_list|<
-name|Object
-argument_list|>
-name|relList
-init|=
-operator|(
-name|List
-argument_list|<
-name|Object
-argument_list|>
-operator|)
-name|fs
-operator|.
-name|get
-argument_list|(
-name|this
-argument_list|)
 decl_stmt|;
 name|Map
 argument_list|<
@@ -329,30 +286,15 @@ name|put
 argument_list|(
 literal|"rowType"
 argument_list|,
+name|relJson
+operator|.
+name|toJson
+argument_list|(
 name|rel
 operator|.
 name|getRowType
 argument_list|()
-operator|.
-name|toString
-argument_list|()
 argument_list|)
-expr_stmt|;
-block|}
-block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-name|LOG
-operator|.
-name|warn
-argument_list|(
-literal|"Failed to add additional fields in json writer"
-argument_list|,
-name|e
 argument_list|)
 expr_stmt|;
 block|}
