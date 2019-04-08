@@ -3006,11 +3006,8 @@ parameter_list|,
 name|ImmutableBitSet
 name|fieldsUsed
 parameter_list|,
-name|Set
-argument_list|<
-name|RelDataTypeField
-argument_list|>
-name|extraFields
+name|ImmutableBitSet
+name|aggCallFields
 parameter_list|)
 block|{
 if|if
@@ -3197,6 +3194,14 @@ name|get
 argument_list|(
 name|i
 argument_list|)
+operator|&&
+operator|!
+name|aggCallFields
+operator|.
+name|get
+argument_list|(
+name|i
+argument_list|)
 condition|)
 block|{
 name|newProjects
@@ -3317,43 +3322,21 @@ comment|//
 comment|// 2. If aggregate functions are not used, remove them.
 comment|//
 comment|// But group and indicator fields stay, even if they are not used.
-name|aggregate
-operator|=
-name|rewriteGBConstantKeys
-argument_list|(
-name|aggregate
-argument_list|,
-name|fieldsUsed
-argument_list|,
-name|extraFields
-argument_list|)
-expr_stmt|;
-specifier|final
-name|RelDataType
-name|rowType
-init|=
-name|aggregate
-operator|.
-name|getRowType
-argument_list|()
-decl_stmt|;
 comment|// Compute which input fields are used.
-comment|// 1. group fields are always used
+comment|// agg functions
+comment|// agg functions are added first (before group sets) because rewriteGBConstantsKeys
+comment|// needs it
 specifier|final
 name|ImmutableBitSet
 operator|.
 name|Builder
-name|inputFieldsUsed
+name|aggCallFieldsUsedBuilder
 init|=
-name|aggregate
+name|ImmutableBitSet
 operator|.
-name|getGroupSet
-argument_list|()
-operator|.
-name|rebuild
+name|builder
 argument_list|()
 decl_stmt|;
-comment|// 2. agg functions
 for|for
 control|(
 name|AggregateCall
@@ -3376,7 +3359,7 @@ name|getArgList
 argument_list|()
 control|)
 block|{
-name|inputFieldsUsed
+name|aggCallFieldsUsedBuilder
 operator|.
 name|set
 argument_list|(
@@ -3393,7 +3376,7 @@ operator|>=
 literal|0
 condition|)
 block|{
-name|inputFieldsUsed
+name|aggCallFieldsUsedBuilder
 operator|.
 name|set
 argument_list|(
@@ -3404,6 +3387,57 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// transform if group by contain constant keys
+name|ImmutableBitSet
+name|aggCallFieldsUsed
+init|=
+name|aggCallFieldsUsedBuilder
+operator|.
+name|build
+argument_list|()
+decl_stmt|;
+name|aggregate
+operator|=
+name|rewriteGBConstantKeys
+argument_list|(
+name|aggregate
+argument_list|,
+name|fieldsUsed
+argument_list|,
+name|aggCallFieldsUsed
+argument_list|)
+expr_stmt|;
+comment|// add group fields
+specifier|final
+name|ImmutableBitSet
+operator|.
+name|Builder
+name|inputFieldsUsed
+init|=
+name|aggregate
+operator|.
+name|getGroupSet
+argument_list|()
+operator|.
+name|rebuild
+argument_list|()
+decl_stmt|;
+name|inputFieldsUsed
+operator|.
+name|addAll
+argument_list|(
+name|aggCallFieldsUsed
+argument_list|)
+expr_stmt|;
+specifier|final
+name|RelDataType
+name|rowType
+init|=
+name|aggregate
+operator|.
+name|getRowType
+argument_list|()
+decl_stmt|;
 comment|// Create input with trimmed columns.
 specifier|final
 name|RelNode
