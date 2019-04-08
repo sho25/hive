@@ -393,6 +393,8 @@ argument_list|,
 name|queryState
 argument_list|,
 name|queryPlan
+argument_list|,
+name|console
 argument_list|)
 decl_stmt|;
 name|Class

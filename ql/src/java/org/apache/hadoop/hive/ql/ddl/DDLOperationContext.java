@@ -159,6 +159,26 @@ name|MetaDataFormatter
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+operator|.
+name|LogHelper
+import|;
+end_import
+
 begin_comment
 comment|/**  * Context for DDL operations.  */
 end_comment
@@ -208,6 +228,11 @@ specifier|final
 name|QueryPlan
 name|queryPlan
 decl_stmt|;
+specifier|private
+specifier|final
+name|LogHelper
+name|console
+decl_stmt|;
 specifier|public
 name|DDLOperationContext
 parameter_list|(
@@ -228,6 +253,9 @@ name|queryState
 parameter_list|,
 name|QueryPlan
 name|queryPlan
+parameter_list|,
+name|LogHelper
+name|console
 parameter_list|)
 throws|throws
 name|HiveException
@@ -289,6 +317,12 @@ operator|.
 name|queryPlan
 operator|=
 name|queryPlan
+expr_stmt|;
+name|this
+operator|.
+name|console
+operator|=
+name|console
 expr_stmt|;
 block|}
 specifier|public
@@ -361,6 +395,15 @@ parameter_list|()
 block|{
 return|return
 name|queryPlan
+return|;
+block|}
+specifier|public
+name|LogHelper
+name|getConsole
+parameter_list|()
+block|{
+return|return
+name|console
 return|;
 block|}
 block|}
