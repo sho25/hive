@@ -421,6 +421,24 @@ operator|+
 literal|" admin user and the hive password to the db admin password with this"
 argument_list|)
 decl_stmt|;
+name|Option
+name|createLogsTable
+init|=
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withDescription
+argument_list|(
+literal|"Create table for Hive warehouse/compute logs"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|"createLogsTable"
+argument_list|)
+decl_stmt|;
 name|OptionGroup
 name|optGroup
 init|=
@@ -498,6 +516,11 @@ operator|.
 name|addOption
 argument_list|(
 name|createUserOpt
+argument_list|)
+operator|.
+name|addOption
+argument_list|(
+name|createLogsTable
 argument_list|)
 expr_stmt|;
 name|optGroup
@@ -881,6 +904,24 @@ argument_list|(
 literal|"toDatabase"
 argument_list|)
 decl_stmt|;
+name|Option
+name|retentionPeriod
+init|=
+name|OptionBuilder
+operator|.
+name|hasArg
+argument_list|()
+operator|.
+name|withDescription
+argument_list|(
+literal|"Specify logs table retention period"
+argument_list|)
+operator|.
+name|create
+argument_list|(
+literal|"retentionPeriod"
+argument_list|)
+decl_stmt|;
 name|Options
 name|options
 init|=
@@ -1041,6 +1082,13 @@ operator|.
 name|addOption
 argument_list|(
 name|yesOpt
+argument_list|)
+expr_stmt|;
+name|options
+operator|.
+name|addOption
+argument_list|(
+name|retentionPeriod
 argument_list|)
 expr_stmt|;
 if|if
