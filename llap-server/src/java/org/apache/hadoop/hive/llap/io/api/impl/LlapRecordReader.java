@@ -3676,8 +3676,10 @@ argument_list|<>
 argument_list|(
 name|rbCtx
 operator|.
-name|getDataColumnCount
+name|getRowColumnTypeInfos
 argument_list|()
+operator|.
+name|length
 argument_list|)
 expr_stmt|;
 for|for
@@ -3691,8 +3693,10 @@ name|i
 operator|<
 name|rbCtx
 operator|.
-name|getDataColumnCount
+name|getRowColumnTypeInfos
 argument_list|()
+operator|.
+name|length
 condition|;
 operator|++
 name|i
