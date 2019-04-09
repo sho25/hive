@@ -4836,20 +4836,7 @@ expr_stmt|;
 comment|// TODO: add tez session reconnect after TEZ-3875
 name|WMFullResourcePlan
 name|resourcePlan
-init|=
-literal|null
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|StringUtils
-operator|.
-name|isEmpty
-argument_list|(
-name|wmQueue
-argument_list|)
-condition|)
-block|{
 try|try
 block|{
 name|resourcePlan
@@ -4931,7 +4918,6 @@ name|createTestResourcePlan
 argument_list|()
 expr_stmt|;
 block|}
-block|}
 name|initAndStartTezSessionPoolManager
 argument_list|(
 name|resourcePlan
@@ -4977,7 +4963,28 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Initializing tez session pool manager"
+literal|"Initializing tez session pool manager. Active resource plan: {}"
+argument_list|,
+name|resourcePlan
+operator|==
+literal|null
+operator|||
+name|resourcePlan
+operator|.
+name|getPlan
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|"null"
+else|:
+name|resourcePlan
+operator|.
+name|getPlan
+argument_list|()
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|tezSessionPoolManager
@@ -5082,7 +5089,28 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Initializing workload management"
+literal|"Initializing workload management. Active resource plan: {}"
+argument_list|,
+name|resourcePlan
+operator|==
+literal|null
+operator|||
+name|resourcePlan
+operator|.
+name|getPlan
+argument_list|()
+operator|==
+literal|null
+condition|?
+literal|"null"
+else|:
+name|resourcePlan
+operator|.
+name|getPlan
+argument_list|()
+operator|.
+name|getName
+argument_list|()
 argument_list|)
 expr_stmt|;
 try|try
@@ -5137,7 +5165,13 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Workload management is not enabled."
+literal|"Workload management is not enabled as {} config is not set"
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_TEZ_INTERACTIVE_QUEUE
+operator|.
+name|varname
 argument_list|)
 expr_stmt|;
 block|}

@@ -105,6 +105,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collections
 import|;
 end_import
@@ -5250,20 +5260,28 @@ operator|!=
 literal|null
 condition|)
 block|{
+name|Collection
+argument_list|<
+name|String
+argument_list|>
+name|appliedTriggers
+init|=
 name|pm
 operator|.
 name|updateTriggers
 argument_list|(
 name|appliedRp
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updated tez session pool manager with active resource plan: {}"
+literal|"Updated tez session pool manager with active resource plan: {} appliedTriggers: {}"
 argument_list|,
 name|name
+argument_list|,
+name|appliedTriggers
 argument_list|)
 expr_stmt|;
 block|}
