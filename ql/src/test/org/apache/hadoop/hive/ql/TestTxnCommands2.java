@@ -8391,7 +8391,7 @@ name|runStatementOnDriver
 argument_list|(
 literal|"update t1"
 operator|+
-literal|" set b = -2 where b = 2"
+literal|" set b = -2 where a = 1"
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver

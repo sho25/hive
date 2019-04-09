@@ -3706,8 +3706,6 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
-literal|null
-argument_list|,
 name|syntheticTxnInfo
 operator|.
 name|folder
