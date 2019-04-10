@@ -3929,12 +3929,6 @@ block|}
 block|}
 block|}
 comment|// Filter operator
-name|filterDynamicValuePredicatesCollection
-operator|=
-operator|new
-name|DynamicValuePredicateContext
-argument_list|()
-expr_stmt|;
 for|for
 control|(
 name|Operator
@@ -3974,6 +3968,12 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+name|filterDynamicValuePredicatesCollection
+operator|=
+operator|new
+name|DynamicValuePredicateContext
+argument_list|()
+expr_stmt|;
 name|collectDynamicValuePredicates
 argument_list|(
 name|filterDesc
