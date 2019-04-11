@@ -8207,6 +8207,52 @@ operator|+
 literal|"Spark UI."
 argument_list|)
 block|,
+name|SYSLOG_INPUT_FORMAT_FILE_PRUNING
+argument_list|(
+literal|"hive.syslog.input.format.file.pruning"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether syslog input format should prune files based on timestamp (ts) column in sys.logs table."
+argument_list|)
+block|,
+name|SYSLOG_INPUT_FORMAT_FILE_TIME_SLICE
+argument_list|(
+literal|"hive.syslog.input.format.file.time.slice"
+argument_list|,
+literal|"300s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|,
+literal|0L
+argument_list|,
+literal|false
+argument_list|,
+name|Long
+operator|.
+name|MAX_VALUE
+argument_list|,
+literal|false
+argument_list|)
+argument_list|,
+literal|"Files stored in sys.logs typically are chunked with time interval. For example: depending on the\n"
+operator|+
+literal|"logging library used this represents the flush interval/time slice. \n"
+operator|+
+literal|"If time slice/flust interval is set to 5 minutes, then the expectation is that the filename \n"
+operator|+
+literal|"2019-01-02-10-00_0.log represent time range from 10:00 to 10:05.\n"
+operator|+
+literal|"This time slice should align with the flush interval of the logging library else file pruning may\n"
+operator|+
+literal|"incorrectly prune files leading to incorrect results from sys.logs table."
+argument_list|)
+block|,
 name|HIVEOPTIMIZEBUCKETINGSORTING
 argument_list|(
 literal|"hive.optimize.bucketingsorting"
