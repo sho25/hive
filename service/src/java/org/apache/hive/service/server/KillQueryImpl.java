@@ -1195,7 +1195,7 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"No privilege"
+literal|"No privilege to kill query id"
 argument_list|)
 throw|;
 block|}
@@ -1251,7 +1251,7 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-literal|"No privilege"
+literal|"No privilege to kill query tag"
 argument_list|)
 throw|;
 block|}
