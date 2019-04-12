@@ -561,24 +561,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|AcidUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|HiveFileFormatUtils
 import|;
 end_import
@@ -5695,20 +5677,6 @@ name|void
 name|setStatsStateLikeNewTable
 parameter_list|()
 block|{
-comment|// We do not replicate statistics for
-comment|// an ACID Table right now, so don't touch them right now.
-if|if
-condition|(
-name|AcidUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|this
-argument_list|)
-condition|)
-block|{
-return|return;
-block|}
 if|if
 condition|(
 name|isPartitioned

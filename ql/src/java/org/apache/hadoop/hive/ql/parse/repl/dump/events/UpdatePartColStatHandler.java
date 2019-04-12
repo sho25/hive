@@ -73,24 +73,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
-operator|.
-name|AcidUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|Table
@@ -277,20 +259,6 @@ name|replicationSpec
 operator|.
 name|isMetadataOnly
 argument_list|()
-condition|)
-block|{
-return|return;
-block|}
-comment|// For now we do not dump statistics for a transactional table since replicating the same is
-comment|// not supported.
-if|if
-condition|(
-name|AcidUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|tableObj
-argument_list|)
 condition|)
 block|{
 return|return;

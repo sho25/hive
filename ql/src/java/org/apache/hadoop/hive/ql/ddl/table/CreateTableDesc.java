@@ -355,24 +355,6 @@ name|hive
 operator|.
 name|metastore
 operator|.
-name|txn
-operator|.
-name|TxnUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
 name|utils
 operator|.
 name|MetaStoreUtils
@@ -1068,6 +1050,7 @@ specifier|private
 name|ColumnStatistics
 name|colStats
 decl_stmt|;
+comment|// For the sake of replication
 specifier|private
 name|Long
 name|initialMmWriteId
@@ -1242,6 +1225,9 @@ name|checkConstraints
 parameter_list|,
 name|ColumnStatistics
 name|colStats
+parameter_list|,
+name|long
+name|writeId
 parameter_list|)
 block|{
 name|this
@@ -1318,6 +1304,12 @@ operator|.
 name|colStats
 operator|=
 name|colStats
+expr_stmt|;
+name|this
+operator|.
+name|replWriteId
+operator|=
+name|writeId
 expr_stmt|;
 block|}
 specifier|public
@@ -1537,6 +1529,9 @@ argument_list|,
 name|checkConstraints
 argument_list|,
 literal|null
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|this
@@ -4820,35 +4815,41 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
-comment|// The statistics for non-transactional tables will be obtained from the source. Do not
-comment|// reset those on replica.
+comment|// Statistics will have an associated write Id for a transactional table. We need it to
+comment|// update column statistics.
 if|if
 condition|(
-name|replicationSpec
-operator|!=
-literal|null
-operator|&&
-name|replicationSpec
-operator|.
-name|isInReplicationScope
-argument_list|()
-operator|&&
-operator|!
-name|TxnUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
+name|replWriteId
+operator|>
+literal|0
+condition|)
+block|{
 name|tbl
 operator|.
 name|getTTable
 argument_list|()
+operator|.
+name|setWriteId
+argument_list|(
+name|replWriteId
 argument_list|)
-condition|)
-block|{
-comment|// Do nothing to the table statistics.
+expr_stmt|;
 block|}
-else|else
+block|}
+comment|// When replicating the statistics for a table will be obtained from the source. Do not
+comment|// reset it on replica.
+if|if
+condition|(
+name|replicationSpec
+operator|==
+literal|null
+operator|||
+operator|!
+name|replicationSpec
+operator|.
+name|isInReplicationScope
+argument_list|()
+condition|)
 block|{
 if|if
 condition|(

@@ -1381,21 +1381,19 @@ comment|// So, just need to append the base or delta directory.
 comment|// getDeleteDestIfExist returns true if it is repl load for replace/insert overwrite event and
 comment|// hence need to create base directory. If false, then it is repl load for regular insert into or
 comment|// load flow and hence just create delta directory.
-name|String
-name|writeIdString
+name|Long
+name|writeId
 init|=
-name|conf
-operator|.
-name|get
-argument_list|(
 name|ReplUtils
 operator|.
-name|REPL_CURRENT_TBL_WRITE_ID
+name|getMigrationCurrentTblWriteId
+argument_list|(
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|writeIdString
+name|writeId
 operator|==
 literal|null
 condition|)
@@ -1411,16 +1409,6 @@ return|return
 literal|6
 return|;
 block|}
-name|long
-name|writeId
-init|=
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|writeIdString
-argument_list|)
-decl_stmt|;
 comment|// Set stmt id 0 for bootstrap load as the directory needs to be searched during incremental load to avoid any
 comment|// duplicate copy from the source. Check HIVE-21197 for more detail.
 name|int
@@ -1428,10 +1416,13 @@ name|stmtId
 init|=
 operator|(
 name|writeId
-operator|==
+operator|.
+name|equals
+argument_list|(
 name|ReplUtils
 operator|.
 name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
+argument_list|)
 operator|)
 condition|?
 name|ReplUtils

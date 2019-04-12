@@ -2978,17 +2978,6 @@ name|lastReplId
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// For now we do not replicate stats for ACID table. So, wipe out column stats if any.
-name|tableSpec
-operator|.
-name|tableHandle
-operator|.
-name|getTTable
-argument_list|()
-operator|.
-name|unsetColStats
-argument_list|()
-expr_stmt|;
 block|}
 name|MmContext
 name|mmCtx

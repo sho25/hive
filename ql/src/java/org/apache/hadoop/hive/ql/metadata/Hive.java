@@ -345,6 +345,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|BitSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Collections
 import|;
 end_import
@@ -3907,6 +3917,68 @@ name|void
 name|alterTable
 parameter_list|(
 name|String
+name|fullyQlfdTblName
+parameter_list|,
+name|Table
+name|newTbl
+parameter_list|,
+name|boolean
+name|cascade
+parameter_list|,
+name|EnvironmentContext
+name|environmentContext
+parameter_list|,
+name|boolean
+name|transactional
+parameter_list|,
+name|long
+name|writeId
+parameter_list|)
+throws|throws
+name|HiveException
+block|{
+name|String
+index|[]
+name|names
+init|=
+name|Utilities
+operator|.
+name|getDbTableName
+argument_list|(
+name|fullyQlfdTblName
+argument_list|)
+decl_stmt|;
+name|alterTable
+argument_list|(
+literal|null
+argument_list|,
+name|names
+index|[
+literal|0
+index|]
+argument_list|,
+name|names
+index|[
+literal|1
+index|]
+argument_list|,
+name|newTbl
+argument_list|,
+name|cascade
+argument_list|,
+name|environmentContext
+argument_list|,
+name|transactional
+argument_list|,
+name|writeId
+argument_list|)
+expr_stmt|;
+block|}
+specifier|public
+name|void
+name|alterTable
+parameter_list|(
+name|String
 name|catName
 parameter_list|,
 name|String
@@ -4082,18 +4154,37 @@ operator|>
 literal|0
 condition|)
 block|{
+comment|// We need a valid writeId list for a transactional table modification. During
+comment|// replication we do not have a valid writeId list which was used to modify the table
+comment|// on the source. But we know for sure that the writeId associated with it was valid
+comment|// then (otherwise modification would have failed on the source). So use a valid
+comment|// transaction list with only that writeId.
 name|ValidWriteIdList
 name|writeIds
 init|=
-name|AcidUtils
-operator|.
-name|getTableValidWriteIdListWithTxnList
+operator|new
+name|ValidReaderWriteIdList
 argument_list|(
-name|conf
-argument_list|,
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
 name|dbName
 argument_list|,
 name|tblName
+argument_list|)
+argument_list|,
+operator|new
+name|long
+index|[
+literal|0
+index|]
+argument_list|,
+operator|new
+name|BitSet
+argument_list|()
+argument_list|,
+name|replWriteId
 argument_list|)
 decl_stmt|;
 name|tableSnapshot
@@ -4923,6 +5014,9 @@ name|oldPartSpec
 parameter_list|,
 name|Partition
 name|newPart
+parameter_list|,
+name|long
+name|replWriteId
 parameter_list|)
 throws|throws
 name|HiveException
@@ -5108,10 +5202,74 @@ name|tbl
 argument_list|)
 condition|)
 block|{
-comment|// Set table snapshot to api.Table to make it persistent.
 name|TableSnapshot
 name|tableSnapshot
+decl_stmt|;
+if|if
+condition|(
+name|replWriteId
+operator|>
+literal|0
+condition|)
+block|{
+comment|// We need a valid writeId list for a transactional table modification. During
+comment|// replication we do not have a valid writeId list which was used to modify the table
+comment|// on the source. But we know for sure that the writeId associated with it was valid
+comment|// then (otherwise modification would have failed on the source). So use a valid
+comment|// transaction list with only that writeId.
+name|ValidWriteIdList
+name|writeIds
 init|=
+operator|new
+name|ValidReaderWriteIdList
+argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+argument_list|,
+operator|new
+name|long
+index|[
+literal|0
+index|]
+argument_list|,
+operator|new
+name|BitSet
+argument_list|()
+argument_list|,
+name|replWriteId
+argument_list|)
+decl_stmt|;
+name|tableSnapshot
+operator|=
+operator|new
+name|TableSnapshot
+argument_list|(
+name|replWriteId
+argument_list|,
+name|writeIds
+operator|.
+name|writeToString
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// Set table snapshot to api.Table to make it persistent.
+name|tableSnapshot
+operator|=
 name|AcidUtils
 operator|.
 name|getTableSnapshot
@@ -5122,7 +5280,8 @@ name|tbl
 argument_list|,
 literal|true
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|tableSnapshot
@@ -5624,7 +5783,19 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// Set table snapshot to api.Table to make it persistent.
+comment|// Set table snapshot to api.Table to make it persistent. A transactional table being
+comment|// replicated may have a valid write Id copied from the source. Use that instead of
+comment|// crafting one on the replica.
+if|if
+condition|(
+name|tTbl
+operator|.
+name|getWriteId
+argument_list|()
+operator|<=
+literal|0
+condition|)
+block|{
 name|TableSnapshot
 name|tableSnapshot
 init|=
@@ -5659,6 +5830,7 @@ name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -15496,6 +15668,92 @@ argument_list|(
 name|size
 argument_list|)
 decl_stmt|;
+name|long
+name|writeId
+decl_stmt|;
+name|String
+name|validWriteIdList
+decl_stmt|;
+comment|// In case of replication, get the writeId from the source and use valid write Id list
+comment|// for replication.
+if|if
+condition|(
+name|addPartitionDesc
+operator|.
+name|getReplicationSpec
+argument_list|()
+operator|.
+name|isInReplicationScope
+argument_list|()
+operator|&&
+name|addPartitionDesc
+operator|.
+name|getPartition
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getWriteId
+argument_list|()
+operator|>
+literal|0
+condition|)
+block|{
+name|writeId
+operator|=
+name|addPartitionDesc
+operator|.
+name|getPartition
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|getWriteId
+argument_list|()
+expr_stmt|;
+comment|// We need a valid writeId list for a transactional change. During replication we do not
+comment|// have a valid writeId list which was used for this on the source. But we know for sure
+comment|// that the writeId associated with it was valid then (otherwise the change would have
+comment|// failed on the source). So use a valid transaction list with only that writeId.
+name|validWriteIdList
+operator|=
+operator|new
+name|ValidReaderWriteIdList
+argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+argument_list|,
+operator|new
+name|long
+index|[
+literal|0
+index|]
+argument_list|,
+operator|new
+name|BitSet
+argument_list|()
+argument_list|,
+name|writeId
+argument_list|)
+operator|.
+name|writeToString
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
 name|AcidUtils
 operator|.
 name|TableSnapshot
@@ -15511,12 +15769,6 @@ name|tbl
 argument_list|,
 literal|true
 argument_list|)
-decl_stmt|;
-name|long
-name|writeId
-decl_stmt|;
-name|String
-name|validWriteIdList
 decl_stmt|;
 if|if
 condition|(
@@ -15558,6 +15810,7 @@ name|validWriteIdList
 operator|=
 literal|null
 expr_stmt|;
+block|}
 block|}
 for|for
 control|(
@@ -15609,14 +15862,7 @@ name|tmpPart
 operator|!=
 literal|null
 operator|&&
-name|tableSnapshot
-operator|!=
-literal|null
-operator|&&
-name|tableSnapshot
-operator|.
-name|getWriteId
-argument_list|()
+name|writeId
 operator|>
 literal|0
 condition|)
@@ -15625,10 +15871,7 @@ name|tmpPart
 operator|.
 name|setWriteId
 argument_list|(
-name|tableSnapshot
-operator|.
-name|getWriteId
-argument_list|()
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}
@@ -15967,20 +16210,8 @@ operator|new
 name|EnvironmentContext
 argument_list|()
 decl_stmt|;
-comment|// In case of replication statistics is obtained from the source, so do not update those
-comment|// on replica. Since we are not replicating statistics for transactional tables, do not do
-comment|// so for a partition of a transactional table right now.
-if|if
-condition|(
-operator|!
-name|AcidUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|tbl
-argument_list|)
-condition|)
-block|{
+comment|// In case of replication, statistics is obtained from the source, so do not update those
+comment|// on replica.
 name|ec
 operator|.
 name|putToProperties
@@ -15994,7 +16225,6 @@ operator|.
 name|TRUE
 argument_list|)
 expr_stmt|;
-block|}
 name|getMSC
 argument_list|()
 operator|.
@@ -16452,6 +16682,18 @@ argument_list|(
 name|addSpec
 operator|.
 name|getColStats
+argument_list|()
+argument_list|)
+expr_stmt|;
+comment|// Statistics will have an associated write Id for a transactional table. We need it to
+comment|// update column statistics.
+name|part
+operator|.
+name|setWriteId
+argument_list|(
+name|addSpec
+operator|.
+name|getWriteId
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -27634,6 +27876,25 @@ operator|.
 name|getStatsDesc
 argument_list|()
 decl_stmt|;
+comment|// In case of replication, the request already has valid writeId and valid transaction id
+comment|// list obtained from the source. Just use it.
+if|if
+condition|(
+name|request
+operator|.
+name|getWriteId
+argument_list|()
+operator|<=
+literal|0
+operator|||
+name|request
+operator|.
+name|getValidWriteIdList
+argument_list|()
+operator|==
+literal|null
+condition|)
+block|{
 name|Table
 name|tbl
 init|=
@@ -27698,6 +27959,7 @@ else|:
 literal|0
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|getMSC
 argument_list|()

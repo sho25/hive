@@ -24974,6 +24974,15 @@ name|errorMsg
 init|=
 name|verifyStatsChangeCtx
 argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|name
+argument_list|,
+name|dbname
+argument_list|)
+argument_list|,
 name|oldt
 operator|.
 name|getParameters
@@ -25304,6 +25313,9 @@ specifier|static
 name|String
 name|verifyStatsChangeCtx
 parameter_list|(
+name|String
+name|fullTableName
+parameter_list|,
 name|Map
 argument_list|<
 name|String
@@ -25442,9 +25454,13 @@ comment|// Some change to the stats state is being made; it can only be made wit
 comment|// Note - we could do this:  if (writeId> 0&& (validWriteIds != null || !StatsSetupConst.areBasicStatsUptoDate(newP))) { return null;
 comment|//       However the only way ID list can be absent is if WriteEntity wasn't generated for the alter, which is a separate bug.
 return|return
-literal|"Cannot change stats state for a transactional table without providing the transactional"
+literal|"Cannot change stats state for a transactional table "
 operator|+
-literal|" write state for verification (new write ID "
+name|fullTableName
+operator|+
+literal|" without "
+operator|+
+literal|"providing the transactional write state for verification (new write ID "
 operator|+
 name|writeId
 operator|+
@@ -25456,7 +25472,9 @@ literal|"; current state "
 operator|+
 name|oldVal
 operator|+
-literal|"; new state "
+literal|"; new"
+operator|+
+literal|" state "
 operator|+
 name|newVal
 return|;
@@ -25799,6 +25817,15 @@ name|errorMsg
 init|=
 name|verifyStatsChangeCtx
 argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|dbname
+argument_list|,
+name|name
+argument_list|)
+argument_list|,
 name|oldp
 operator|.
 name|getParameters
@@ -51020,6 +51047,15 @@ name|errorMsg
 init|=
 name|verifyStatsChangeCtx
 argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|dbname
+argument_list|,
+name|name
+argument_list|)
+argument_list|,
 name|oldt
 operator|.
 name|getParameters
@@ -51555,6 +51591,21 @@ name|errorMsg
 init|=
 name|verifyStatsChangeCtx
 argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|statsDesc
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|statsDesc
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+argument_list|,
 name|mPartition
 operator|.
 name|getParameters

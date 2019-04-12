@@ -225,6 +225,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|io
 operator|.
 name|AcidUtils
@@ -820,18 +842,31 @@ operator|.
 name|setMigratingToTxnTable
 argument_list|()
 expr_stmt|;
-comment|// There won't be any writeId associated with statistics on source non-transactional
-comment|// table. We will need to associate a cooked up writeId on target for those. But that's
-comment|// not done yet. Till then we don't replicate statistics for ACID table even if it's
-comment|// available on the source.
+comment|// For migrated tables associate bootstrap writeId when replicating stats.
+if|if
+condition|(
 name|table
 operator|.
 name|getTTable
 argument_list|()
 operator|.
-name|unsetColStats
+name|isSetColStats
 argument_list|()
+condition|)
+block|{
+name|table
+operator|.
+name|getTTable
+argument_list|()
+operator|.
+name|setWriteId
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
+argument_list|)
 expr_stmt|;
+block|}
 block|}
 if|if
 condition|(
@@ -1392,21 +1427,11 @@ name|replicationSpec
 argument_list|()
 argument_list|)
 expr_stmt|;
-comment|// Right now, we do not have a way of associating a writeId with statistics for a table
-comment|// converted to a transactional table if it was non-transactional on the source. So, do not
-comment|// update statistics for converted tables even if available on the source.
 if|if
 condition|(
 name|partition
 operator|.
 name|isSetColStats
-argument_list|()
-operator|&&
-operator|!
-name|replicationSpec
-argument_list|()
-operator|.
-name|isMigratingToTxnTable
 argument_list|()
 condition|)
 block|{
@@ -1464,6 +1489,31 @@ operator|.
 name|getStatsObj
 argument_list|()
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|long
+name|writeId
+init|=
+name|replicationSpec
+argument_list|()
+operator|.
+name|isMigratingToTxnTable
+argument_list|()
+condition|?
+name|ReplUtils
+operator|.
+name|REPL_BOOTSTRAP_MIGRATION_BASE_WRITE_ID
+else|:
+name|partition
+operator|.
+name|getWriteId
+argument_list|()
+decl_stmt|;
+name|partDesc
+operator|.
+name|setWriteId
+argument_list|(
+name|writeId
 argument_list|)
 expr_stmt|;
 block|}

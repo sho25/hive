@@ -293,24 +293,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
-operator|.
-name|AcidUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -660,10 +642,10 @@ operator|.
 name|getReplicationSpec
 argument_list|()
 decl_stmt|;
-name|long
+name|Long
 name|writeId
 init|=
-literal|0
+literal|0L
 decl_stmt|;
 name|EnvironmentContext
 name|environmentContext
@@ -691,24 +673,21 @@ argument_list|()
 condition|)
 block|{
 comment|// for migration we start the transaction and allocate write id in repl txn task for migration.
-name|String
-name|writeIdPara
-init|=
+name|writeId
+operator|=
+name|ReplUtils
+operator|.
+name|getMigrationCurrentTblWriteId
+argument_list|(
 name|context
 operator|.
 name|getConf
 argument_list|()
-operator|.
-name|get
-argument_list|(
-name|ReplUtils
-operator|.
-name|REPL_CURRENT_TBL_WRITE_ID
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
-name|writeIdPara
+name|writeId
 operator|==
 literal|null
 condition|)
@@ -721,15 +700,6 @@ literal|"DDLTask : Write id is not set in the config by open txn task for migrat
 argument_list|)
 throw|;
 block|}
-name|writeId
-operator|=
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|writeIdPara
-argument_list|)
-expr_stmt|;
 block|}
 else|else
 block|{
@@ -742,19 +712,7 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|// In case of replication statistics is obtained from the source, so do not update those
-comment|// on replica. Since we are not replicating statisics for transactional tables, do not do
-comment|// so for transactional tables right now.
-if|if
-condition|(
-operator|!
-name|AcidUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|desc
-argument_list|)
-condition|)
-block|{
+comment|// on replica.
 name|environmentContext
 operator|=
 operator|new
@@ -774,7 +732,6 @@ operator|.
 name|TRUE
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 comment|// In replication flow, if table's data location is changed, then set the corresponding flag in
 comment|// environment context to notify Metastore to update location of all partitions and delete old directory.

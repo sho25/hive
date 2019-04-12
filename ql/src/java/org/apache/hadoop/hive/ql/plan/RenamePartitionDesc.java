@@ -405,6 +405,15 @@ operator|=
 name|writeId
 expr_stmt|;
 block|}
+specifier|public
+name|long
+name|getWriteId
+parameter_list|()
+block|{
+return|return
+name|writeId
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

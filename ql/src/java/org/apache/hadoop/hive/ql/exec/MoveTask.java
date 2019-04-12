@@ -2001,18 +2001,9 @@ literal|true
 return|;
 block|}
 comment|// If we are loading a table during replication, the stats will also be replicated
-comment|// and hence accurate if it's a non-transactional table. For transactional table we
-comment|// do not replicate stats yet.
+comment|// and hence accurate. No need to reset those.
 return|return
-name|AcidUtils
-operator|.
-name|isTransactionalTable
-argument_list|(
-name|table
-operator|.
-name|getParameters
-argument_list|()
-argument_list|)
+literal|false
 return|;
 block|}
 specifier|private
@@ -2740,16 +2731,14 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|String
+name|Long
 name|writeId
 init|=
-name|conf
-operator|.
-name|get
-argument_list|(
 name|ReplUtils
 operator|.
-name|REPL_CURRENT_TBL_WRITE_ID
+name|getMigrationCurrentTblWriteId
+argument_list|(
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
@@ -2771,12 +2760,7 @@ name|tbd
 operator|.
 name|setWriteId
 argument_list|(
-name|Long
-operator|.
-name|parseLong
-argument_list|(
 name|writeId
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|tbd

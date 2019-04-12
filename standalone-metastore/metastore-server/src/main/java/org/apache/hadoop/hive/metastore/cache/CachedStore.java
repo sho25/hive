@@ -13664,6 +13664,15 @@ name|ObjectStore
 operator|.
 name|verifyStatsChangeCtx
 argument_list|(
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+argument_list|,
 name|table
 operator|.
 name|getParameters
