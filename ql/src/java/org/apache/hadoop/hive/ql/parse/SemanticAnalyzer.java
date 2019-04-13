@@ -18903,6 +18903,16 @@ case|:
 case|case
 name|HiveParser
 operator|.
+name|TOK_TIMESTAMPLITERAL
+case|:
+case|case
+name|HiveParser
+operator|.
+name|TOK_TIMESTAMPLOCALTZLITERAL
+case|:
+case|case
+name|HiveParser
+operator|.
 name|TOK_INTERVAL_DAY_LITERAL
 case|:
 case|case
