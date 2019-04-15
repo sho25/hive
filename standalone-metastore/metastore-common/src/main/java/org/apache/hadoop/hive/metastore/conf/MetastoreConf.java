@@ -2830,7 +2830,7 @@ argument_list|)
 block|,
 name|MSCK_PATH_VALIDATION
 argument_list|(
-literal|"msck.path.validation"
+literal|"metastore.msck.path.validation"
 argument_list|,
 literal|"hive.msck.path.validation"
 argument_list|,
@@ -2857,7 +2857,7 @@ argument_list|)
 block|,
 name|MSCK_REPAIR_BATCH_SIZE
 argument_list|(
-literal|"msck.repair.batch.size"
+literal|"metastore.msck.repair.batch.size"
 argument_list|,
 literal|"hive.msck.repair.batch.size"
 argument_list|,
@@ -2874,7 +2874,7 @@ argument_list|)
 block|,
 name|MSCK_REPAIR_BATCH_MAX_RETRIES
 argument_list|(
-literal|"msck.repair.batch.max.retries"
+literal|"metastore.msck.repair.batch.max.retries"
 argument_list|,
 literal|"hive.msck.repair.batch.max.retries"
 argument_list|,
@@ -2893,9 +2893,9 @@ argument_list|)
 block|,
 name|MSCK_REPAIR_ENABLE_PARTITION_RETENTION
 argument_list|(
-literal|"msck.repair.enable.partition.retention"
+literal|"metastore.msck.repair.enable.partition.retention"
 argument_list|,
-literal|"msck.repair.enable.partition.retention"
+literal|"metastore.msck.repair.enable.partition.retention"
 argument_list|,
 literal|false
 argument_list|,
