@@ -753,6 +753,16 @@ name|REPL_BOOTSTRAP_MIGRATION_BASE_STMT_ID
 init|=
 literal|0
 decl_stmt|;
+comment|// Configuration to enable/disable dumping ACID tables. Used only for testing and shouldn't be
+comment|// seen in production or in case of tests other than the ones where it's required.
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|REPL_DUMP_INCLUDE_ACID_TABLES
+init|=
+literal|"hive.repl.dump.include.acid.tables"
+decl_stmt|;
 comment|/**    * Bootstrap REPL LOAD operation type on the examined object based on ckpt state.    */
 specifier|public
 enum|enum
@@ -1959,6 +1969,45 @@ name|parseLong
 argument_list|(
 name|writeIdString
 argument_list|)
+return|;
+block|}
+comment|// Only for testing, we do not include ACID tables in the dump (and replicate) if config says so.
+specifier|public
+specifier|static
+name|boolean
+name|includeAcidTableInDump
+parameter_list|(
+name|HiveConf
+name|conf
+parameter_list|)
+block|{
+if|if
+condition|(
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_IN_TEST_REPL
+argument_list|)
+condition|)
+block|{
+return|return
+name|conf
+operator|.
+name|getBoolean
+argument_list|(
+name|REPL_DUMP_INCLUDE_ACID_TABLES
+argument_list|,
+literal|true
+argument_list|)
+return|;
+block|}
+return|return
+literal|true
 return|;
 block|}
 block|}

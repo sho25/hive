@@ -307,15 +307,58 @@ return|return
 name|maxEventLimit
 return|;
 block|}
+comment|// Override any user specification that changes the last event to be dumped.
 name|void
-name|overrideEventTo
+name|overrideLastEventToDump
 parameter_list|(
 name|Hive
 name|fromDb
+parameter_list|,
+name|long
+name|bootstrapLastId
 parameter_list|)
 throws|throws
 name|Exception
 block|{
+comment|// If we are bootstrapping ACID tables, we need to dump all the events upto the event id at
+comment|// the beginning of the bootstrap dump and also not dump any event after that. So we override
+comment|// both, the last event as well as any user specified limit on the number of events. See
+comment|// bootstrampDump() for more details.
+if|if
+condition|(
+name|bootstrapLastId
+operator|>
+literal|0
+condition|)
+block|{
+name|eventTo
+operator|=
+name|bootstrapLastId
+expr_stmt|;
+name|maxEventLimit
+operator|=
+literal|null
+expr_stmt|;
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|this
+operator|.
+name|getClass
+argument_list|()
+argument_list|)
+operator|.
+name|debug
+argument_list|(
+literal|"eventTo restricted to event id : {} because of bootstrap of ACID tables"
+argument_list|,
+name|eventTo
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
+comment|// If no last event is specified get the current last from the metastore.
 if|if
 condition|(
 name|eventTo

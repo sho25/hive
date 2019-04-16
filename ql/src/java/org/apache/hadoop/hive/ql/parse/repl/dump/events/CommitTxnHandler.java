@@ -185,6 +185,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveUtils
@@ -848,6 +870,76 @@ name|REPL_DUMP_METADATA_ONLY
 argument_list|)
 condition|)
 block|{
+name|boolean
+name|replicatingAcidEvents
+init|=
+literal|true
+decl_stmt|;
+if|if
+condition|(
+name|withinContext
+operator|.
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_BOOTSTRAP_ACID_TABLES
+argument_list|)
+condition|)
+block|{
+comment|// We do not dump ACID table related events when taking a bootstrap dump of ACID tables as
+comment|// part of an incremental dump. So we shouldn't be dumping any changes to ACID table as
+comment|// part of the commit. At the same time we need to dump the commit transaction event so
+comment|// that replication can end a transaction opened when replaying open transaction event.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"writeEventsInfoList will be removed from commit message because we are "
+operator|+
+literal|"bootstrapping acid tables."
+argument_list|)
+expr_stmt|;
+name|replicatingAcidEvents
+operator|=
+literal|false
+expr_stmt|;
+block|}
+elseif|else
+if|if
+condition|(
+operator|!
+name|ReplUtils
+operator|.
+name|includeAcidTableInDump
+argument_list|(
+name|withinContext
+operator|.
+name|hiveConf
+argument_list|)
+condition|)
+block|{
+comment|// Similar to the above condition, only for testing purposes, if the config doesn't allow
+comment|// ACID tables to be replicated, we don't dump any changes to the ACID tables as part of
+comment|// commit.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"writeEventsInfoList will be removed from commit message because we are "
+operator|+
+literal|"not dumping acid tables."
+argument_list|)
+expr_stmt|;
+name|replicatingAcidEvents
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|String
 name|contextDbName
 init|=
@@ -894,6 +986,15 @@ name|WriteEventInfo
 argument_list|>
 name|writeEventInfoList
 init|=
+literal|null
+decl_stmt|;
+if|if
+condition|(
+name|replicatingAcidEvents
+condition|)
+block|{
+name|writeEventInfoList
+operator|=
 name|HiveMetaStore
 operator|.
 name|HMSHandler
@@ -916,7 +1017,8 @@ name|contextDbName
 argument_list|,
 name|contextTableName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|int
 name|numEntry
 init|=

@@ -683,6 +683,9 @@ name|conf
 parameter_list|,
 name|boolean
 name|keepJdbcUri
+parameter_list|,
+name|boolean
+name|keepWarehousePath
 parameter_list|)
 throws|throws
 name|Exception
@@ -700,6 +703,8 @@ argument_list|,
 name|conf
 argument_list|,
 name|keepJdbcUri
+argument_list|,
+name|keepWarehousePath
 argument_list|)
 return|;
 block|}
@@ -752,10 +757,12 @@ argument_list|,
 name|conf
 argument_list|,
 literal|false
+argument_list|,
+literal|false
 argument_list|)
 return|;
 block|}
-comment|/**    * Starts a MetaStore instance with the given configuration and given bridge.    * Tries to find a free port, and use it. If failed tries another port so the tests will not    * fail if run parallel. Also adds the port to the warehouse dir, so the multiple MetaStore    * instances will use different warehouse directories.    * @param bridge The Thrift bridge to uses    * @param conf The configuration to use    * @param keepJdbcUri If set to true, then the JDBC url is not changed    * @return The port on which the MetaStore finally started    * @throws Exception    */
+comment|/**    * Starts a MetaStore instance with the given configuration and given bridge.    * Tries to find a free port, and use it. If failed tries another port so the tests will not    * fail if run parallel. Also adds the port to the warehouse dir, so the multiple MetaStore    * instances will use different warehouse directories.    * @param bridge The Thrift bridge to uses    * @param conf The configuration to use    * @param keepJdbcUri If set to true, then the JDBC url is not changed    * @param keepWarehousePath If set to true, then the Warehouse directory is not changed    * @return The port on which the MetaStore finally started    * @throws Exception    */
 specifier|public
 specifier|static
 name|int
@@ -769,6 +776,9 @@ name|conf
 parameter_list|,
 name|boolean
 name|keepJdbcUri
+parameter_list|,
+name|boolean
+name|keepWarehousePath
 parameter_list|)
 throws|throws
 name|Exception
@@ -817,6 +827,12 @@ init|=
 name|findFreePort
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+operator|!
+name|keepWarehousePath
+condition|)
+block|{
 comment|// Setting metastore instance specific warehouse directory, postfixing with port
 name|Path
 name|postfixedWarehouseDir
@@ -850,6 +866,14 @@ name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|warehouseDir
+operator|=
+name|postfixedWarehouseDir
+operator|.
+name|toString
+argument_list|()
+expr_stmt|;
+block|}
 name|String
 name|jdbcUrl
 init|=
@@ -1029,7 +1053,7 @@ name|info
 argument_list|(
 literal|"MetaStore warehouse root dir ({}) is created"
 argument_list|,
-name|postfixedWarehouseDir
+name|warehouseDir
 argument_list|)
 expr_stmt|;
 block|}
@@ -1043,7 +1067,7 @@ literal|"jdbcUrl: {}"
 argument_list|,
 name|metaStorePort
 argument_list|,
-name|postfixedWarehouseDir
+name|warehouseDir
 argument_list|,
 name|jdbcUrl
 argument_list|)

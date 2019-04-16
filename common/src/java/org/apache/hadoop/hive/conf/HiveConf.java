@@ -2967,21 +2967,21 @@ operator|+
 literal|"This config makes hive.repl.include.external.tables config ineffective."
 argument_list|)
 block|,
-name|REPL_DUMP_INCLUDE_ACID_TABLES
+name|REPL_BOOTSTRAP_ACID_TABLES
 argument_list|(
-literal|"hive.repl.dump.include.acid.tables"
+literal|"hive.repl.bootstrap.acid.tables"
 argument_list|,
 literal|false
 argument_list|,
-literal|"Indicates if repl dump should include information about ACID tables. It should be \n"
+literal|"Indicates if repl dump should bootstrap the information about ACID tables along with \n"
 operator|+
-literal|"used in conjunction with 'hive.repl.dump.metadata.only' to enable copying of \n"
+literal|"incremental dump for replication. It is recommended to keep this config parameter \n"
 operator|+
-literal|"metadata for acid tables which do not require the corresponding transaction \n"
+literal|"as false always and should be set to true only via WITH clause of REPL DUMP \n"
 operator|+
-literal|"semantics to be applied on target. This can be removed when ACID table \n"
+literal|"command. It should be set to true only once for incremental repl dump on \n"
 operator|+
-literal|"replication is supported."
+literal|"each of the existing replication policies after enabling acid tables replication."
 argument_list|)
 block|,
 name|REPL_BOOTSTRAP_DUMP_OPEN_TXN_TIMEOUT

@@ -1470,6 +1470,8 @@ argument_list|(
 name|hiveConf
 argument_list|,
 literal|true
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Add the below mentioned dependency in metastore/pom.xml file. For postgres need to copy postgresql-42.2.1.jar to
