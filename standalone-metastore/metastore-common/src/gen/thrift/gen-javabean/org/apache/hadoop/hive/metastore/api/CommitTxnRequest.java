@@ -1274,7 +1274,7 @@ name|thrift
 operator|.
 name|meta_data
 operator|.
-name|FieldValueMetaData
+name|StructMetaData
 argument_list|(
 name|org
 operator|.
@@ -1288,7 +1288,9 @@ name|TType
 operator|.
 name|STRUCT
 argument_list|,
-literal|"WriteEventInfo"
+name|WriteEventInfo
+operator|.
+name|class
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1552,7 +1554,11 @@ name|__this__writeEventInfos
 operator|.
 name|add
 argument_list|(
+operator|new
+name|WriteEventInfo
+argument_list|(
 name|other_element
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
