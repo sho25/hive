@@ -840,7 +840,7 @@ name|thrift
 operator|.
 name|meta_data
 operator|.
-name|FieldValueMetaData
+name|StructMetaData
 argument_list|(
 name|org
 operator|.
@@ -854,7 +854,9 @@ name|TType
 operator|.
 name|STRUCT
 argument_list|,
-literal|"CompactionInfoStruct"
+name|CompactionInfoStruct
+operator|.
+name|class
 argument_list|)
 argument_list|)
 argument_list|)
@@ -912,9 +914,13 @@ name|this
 operator|.
 name|ci
 operator|=
+operator|new
+name|CompactionInfoStruct
+argument_list|(
 name|other
 operator|.
 name|ci
+argument_list|)
 expr_stmt|;
 block|}
 block|}
@@ -1629,6 +1635,19 @@ name|TException
 block|{
 comment|// check for required fields
 comment|// check for sub-struct validity
+if|if
+condition|(
+name|ci
+operator|!=
+literal|null
+condition|)
+block|{
+name|ci
+operator|.
+name|validate
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
