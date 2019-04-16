@@ -3457,6 +3457,122 @@ name|lastReplicationId
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|dynamicallyConvertManagedToExternalTable
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+comment|// With Strict managed disabled but Db enabled for replication, it is not possible to convert
+comment|// external table to managed table.
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (id int) clustered by(id) into 3 buckets stored as orc "
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into t1 values(1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t2 partitioned by (country string) ROW FORMAT SERDE "
+operator|+
+literal|"'org.apache.hadoop.hive.serde2.avro.AvroSerDe' stored as avro "
+operator|+
+literal|"tblproperties ('avro.schema.url'='"
+operator|+
+name|avroSchemaFile
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+operator|+
+literal|"')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into t2 partition (country='india') values ('another', 13)"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t1 set tblproperties('EXTERNAL'='true')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t2 set tblproperties('EXTERNAL'='true')"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|dynamicallyConvertExternalToManagedTable
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+comment|// With Strict managed disabled but Db enabled for replication, it is not possible to convert
+comment|// external table to managed table.
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t1 (id int) stored as orc"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t1 values (1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create external table t2 (place string) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t1 set tblproperties('EXTERNAL'='false')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t2 set tblproperties('EXTERNAL'='false')"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
