@@ -10427,6 +10427,8 @@ argument_list|,
 name|needRecycle
 argument_list|,
 name|isManaged
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 expr_stmt|;
 block|}
@@ -15092,6 +15094,8 @@ argument_list|,
 name|needRecycle
 argument_list|,
 name|isManaged
+argument_list|,
+name|isInsertOverwrite
 argument_list|)
 expr_stmt|;
 block|}
@@ -25786,7 +25790,7 @@ comment|/**    * Replaces files in the partition with new data set specified by 
 end_comment
 
 begin_function
-specifier|protected
+specifier|private
 name|void
 name|replaceFiles
 parameter_list|(
@@ -25825,6 +25829,9 @@ name|isNeedRecycle
 parameter_list|,
 name|boolean
 name|isManaged
+parameter_list|,
+name|boolean
+name|isInsertOverwrite
 parameter_list|)
 throws|throws
 name|HiveException
@@ -25891,29 +25898,20 @@ name|e
 argument_list|)
 throw|;
 block|}
-if|if
-condition|(
-name|srcs
-operator|==
-literal|null
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"No sources specified to move: "
-operator|+
-name|srcf
-argument_list|)
-expr_stmt|;
-return|return;
-block|}
+comment|// the extra check is required to make ALTER TABLE ... CONCATENATE work
 if|if
 condition|(
 name|oldPath
 operator|!=
 literal|null
+operator|&&
+operator|(
+name|srcs
+operator|!=
+literal|null
+operator|||
+name|isInsertOverwrite
+operator|)
 condition|)
 block|{
 name|deleteOldPathForReplace
@@ -25931,6 +25929,24 @@ argument_list|,
 name|isNeedRecycle
 argument_list|)
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|srcs
+operator|==
+literal|null
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"No sources specified to move: "
+operator|+
+name|srcf
+argument_list|)
+expr_stmt|;
+return|return;
 block|}
 comment|// first call FileUtils.mkdir to make sure that destf directory exists, if not, it creates
 comment|// destf
