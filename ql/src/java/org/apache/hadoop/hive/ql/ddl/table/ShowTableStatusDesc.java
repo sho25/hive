@@ -159,6 +159,14 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SCHEMA
+init|=
+literal|"tab_name#string"
+decl_stmt|;
 static|static
 block|{
 name|DDLTask2
@@ -175,15 +183,6 @@ name|class
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Thrift ddl for the result of show tables.    */
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|SCHEMA
-init|=
-literal|"tab_name#string"
-decl_stmt|;
 specifier|private
 specifier|final
 name|String

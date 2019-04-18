@@ -298,18 +298,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"pattern: {}"
-argument_list|,
-name|desc
-operator|.
-name|getPattern
-argument_list|()
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|desc
@@ -360,11 +348,16 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Found {} function(s) matching the SHOW FUNCTIONS statement."
+literal|"Found {} function(s) using pattern {} matching the SHOW FUNCTIONS statement."
 argument_list|,
 name|funcs
 operator|.
 name|size
+argument_list|()
+argument_list|,
+name|desc
+operator|.
+name|getPattern
 argument_list|()
 argument_list|)
 expr_stmt|;

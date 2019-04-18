@@ -163,7 +163,6 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-comment|/** Thrift ddl for the result of show databases. */
 specifier|public
 specifier|static
 specifier|final

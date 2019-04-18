@@ -149,6 +149,14 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SCHEMA
+init|=
+literal|"createdb_stmt#string"
+decl_stmt|;
 static|static
 block|{
 name|DDLTask2
@@ -174,15 +182,6 @@ specifier|private
 specifier|final
 name|String
 name|dbName
-decl_stmt|;
-comment|/**    * Thrift ddl for the result of showcreatedatabase.    */
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|SCHEMA
-init|=
-literal|"createdb_stmt#string"
 decl_stmt|;
 specifier|public
 name|ShowCreateDatabaseDesc

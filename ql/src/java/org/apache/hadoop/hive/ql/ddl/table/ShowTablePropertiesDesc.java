@@ -149,6 +149,14 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|SCHEMA
+init|=
+literal|"prpt_name,prpt_value#string:string"
+decl_stmt|;
 static|static
 block|{
 name|DDLTask2
@@ -165,15 +173,6 @@ name|class
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Thrift ddl for the result of showtblproperties.    */
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|SCHEMA
-init|=
-literal|"prpt_name,prpt_value#string:string"
-decl_stmt|;
 specifier|private
 specifier|final
 name|String
