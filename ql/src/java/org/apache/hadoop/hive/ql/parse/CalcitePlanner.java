@@ -2715,6 +2715,28 @@ name|calcite
 operator|.
 name|rules
 operator|.
+name|HiveAggregateSplitRule
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|optimizer
+operator|.
+name|calcite
+operator|.
+name|rules
+operator|.
 name|HiveDruidRules
 import|;
 end_import
@@ -16527,6 +16549,16 @@ name|materialization
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Add rule to split aggregate with grouping sets (if any)
+name|planner
+operator|.
+name|addRule
+argument_list|(
+name|HiveAggregateSplitRule
+operator|.
+name|INSTANCE
+argument_list|)
+expr_stmt|;
 comment|// Add view-based rewriting rules to planner
 for|for
 control|(
