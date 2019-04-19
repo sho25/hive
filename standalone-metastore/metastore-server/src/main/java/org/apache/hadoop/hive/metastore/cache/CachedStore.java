@@ -4932,6 +4932,10 @@ argument_list|(
 name|rawStore
 argument_list|)
 expr_stmt|;
+name|shouldRunPrewarm
+operator|=
+literal|false
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -5818,6 +5822,13 @@ argument_list|,
 name|partitionColStats
 argument_list|)
 expr_stmt|;
+name|Deadline
+operator|.
+name|startTimer
+argument_list|(
+literal|"getPartitionsByNames"
+argument_list|)
+expr_stmt|;
 name|List
 argument_list|<
 name|Partition
@@ -5837,6 +5848,11 @@ argument_list|,
 name|partNames
 argument_list|)
 decl_stmt|;
+name|Deadline
+operator|.
+name|stopTimer
+argument_list|()
+expr_stmt|;
 comment|// Also save partitions for consistency as they have the stats state.
 for|for
 control|(
