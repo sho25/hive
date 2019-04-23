@@ -802,6 +802,19 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**    * Retrieve all materialized views.    * @return all materialized views in a catalog    * @throws MetaException error querying the RDBMS    * @throws NoSuchObjectException no such database    */
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|getAllMaterializedViewObjectsForRewriting
+parameter_list|(
+name|String
+name|catName
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 comment|/**    * Get list of materialized views in a database.    * @param catName catalog name    * @param dbName database name    * @return names of all materialized views in the database    * @throws MetaException error querying the RDBMS    * @throws NoSuchObjectException no such database    */
 name|List
 argument_list|<

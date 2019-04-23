@@ -2337,6 +2337,20 @@ name|TException
 throws|,
 name|UnknownDBException
 function_decl|;
+comment|/**    * Retrieve all materialized views that have rewriting enabled. This will use the default catalog.    * @return List of materialized views.    * @throws MetaException error fetching from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException no such database    */
+name|List
+argument_list|<
+name|Table
+argument_list|>
+name|getAllMaterializedViewObjectsForRewriting
+parameter_list|()
+throws|throws
+name|MetaException
+throws|,
+name|TException
+throws|,
+name|UnknownDBException
+function_decl|;
 comment|/**    * Get materialized views that have rewriting enabled.  This will use the default catalog.    * @param dbName Name of the database to fetch materialized views from.    * @return List of materialized view names.    * @throws MetaException error fetching from the RDBMS    * @throws TException thrift transport error    * @throws UnknownDBException no such database    */
 name|List
 argument_list|<
