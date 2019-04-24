@@ -342,7 +342,7 @@ return|return
 name|serializedLength
 return|;
 block|}
-comment|/**    * Batch compute the hash codes for all the serialized keys.    *    * NOTE: MAJOR MAJOR ASSUMPTION:    *     We assume that HashCodeUtil.murmurHash produces the same result    *     as MurmurHash.hash with seed = 0 (the method used by ReduceSinkOperator for    *     UNIFORM distribution).    */
+comment|/**    * Batch compute the hash codes for all the serialized keys.    *    * NOTE: MAJOR MAJOR ASSUMPTION:    *     We use Murmur3.hash32(seed=0) across the board for the ReduceSink UNIFORM distribution.    *     Previous use of HashCodeUtil is deprecated.    */
 specifier|protected
 name|void
 name|computeSerializedHashCodes

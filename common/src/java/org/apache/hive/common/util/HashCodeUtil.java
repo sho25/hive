@@ -190,6 +190,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 name|int
@@ -206,6 +208,7 @@ name|int
 name|keyLength
 parameter_list|)
 block|{
+comment|// Don't use this for ReduceSinkOperators
 return|return
 name|murmurHash
 argument_list|(

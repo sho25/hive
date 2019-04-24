@@ -221,7 +221,7 @@ name|common
 operator|.
 name|util
 operator|.
-name|HashCodeUtil
+name|Murmur3
 import|;
 end_import
 
@@ -481,15 +481,17 @@ argument_list|)
 expr_stmt|;
 name|nullKeyHashCode
 operator|=
-name|HashCodeUtil
+name|Murmur3
 operator|.
-name|calculateBytesHashCode
+name|hash32
 argument_list|(
 name|nullBytes
 argument_list|,
 literal|0
 argument_list|,
 name|nullBytesLength
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
