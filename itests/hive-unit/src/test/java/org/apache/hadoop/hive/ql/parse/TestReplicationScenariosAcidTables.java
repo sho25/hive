@@ -481,6 +481,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Rule
 import|;
 end_import
@@ -650,6 +660,11 @@ comment|/**  * TestReplicationScenariosAcidTables - test replication for ACID ta
 end_comment
 
 begin_class
+annotation|@
+name|Ignore
+argument_list|(
+literal|"See HIVE-21647, HIVE-21648"
+argument_list|)
 specifier|public
 class|class
 name|TestReplicationScenariosAcidTables
