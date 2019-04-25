@@ -979,7 +979,7 @@ name|realtime
 operator|.
 name|appenderator
 operator|.
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 import|;
 end_import
 
@@ -3504,7 +3504,7 @@ argument_list|)
 throw|;
 block|}
 comment|// Find out the segment with latest version and maximum partition number
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 name|max
 init|=
 literal|null
@@ -3584,7 +3584,7 @@ condition|)
 block|{
 name|max
 operator|=
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 operator|.
 name|fromDataSegment
 argument_list|(
@@ -3752,7 +3752,10 @@ literal|"id"
 argument_list|,
 name|segment
 operator|.
-name|getIdentifier
+name|getId
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 operator|.
@@ -3866,7 +3869,10 @@ literal|"Published {}"
 argument_list|,
 name|segment
 operator|.
-name|getIdentifier
+name|getId
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4170,7 +4176,10 @@ literal|"%s.json"
 argument_list|,
 name|pushedSegment
 operator|.
-name|getIdentifier
+name|getId
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 operator|.
 name|replace

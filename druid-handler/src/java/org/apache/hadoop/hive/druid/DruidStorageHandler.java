@@ -3952,7 +3952,10 @@ argument_list|()
 argument_list|,
 name|dataSegment
 operator|.
-name|getIdentifier
+name|getId
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 argument_list|)
@@ -4208,7 +4211,10 @@ literal|"removing segment {}, located at path {}"
 argument_list|,
 name|segment
 operator|.
-name|getIdentifier
+name|getId
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|,
 name|path
@@ -4639,7 +4645,10 @@ literal|"Error while deleting segment [%s]"
 argument_list|,
 name|dataSegment
 operator|.
-name|getIdentifier
+name|getId
+argument_list|()
+operator|.
+name|toString
 argument_list|()
 argument_list|)
 argument_list|,

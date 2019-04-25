@@ -303,7 +303,7 @@ name|realtime
 operator|.
 name|appenderator
 operator|.
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 import|;
 end_import
 
@@ -771,7 +771,7 @@ name|Path
 name|segmentsDescriptorDir
 decl_stmt|;
 specifier|private
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 name|currentOpenSegment
 init|=
 literal|null
@@ -973,7 +973,7 @@ expr_stmt|;
 block|}
 comment|/**    * This function computes the segment identifier and push the current open segment    * The push will occur if max size is reached or the event belongs to the next interval.    * Note that this function assumes that timestamps are pseudo sorted.    * This function will close and move to the next segment granularity as soon as    * an event from the next interval appears. The sorting is done by the previous stage.    *    * @return segmentIdentifier with of the truncatedTime and maybe push the current open segment.    */
 specifier|private
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 name|getSegmentIdentifierAndMaybePush
 parameter_list|(
 name|long
@@ -1012,7 +1012,7 @@ name|truncatedDateTime
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 name|retVal
 decl_stmt|;
 if|if
@@ -1025,7 +1025,7 @@ block|{
 name|currentOpenSegment
 operator|=
 operator|new
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|(
 name|dataSchema
 operator|.
@@ -1099,7 +1099,7 @@ block|{
 name|retVal
 operator|=
 operator|new
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|(
 name|dataSchema
 operator|.
@@ -1151,7 +1151,7 @@ literal|"Creating new partition for segment {}, partition num {}"
 argument_list|,
 name|retVal
 operator|.
-name|getIdentifierAsString
+name|toString
 argument_list|()
 argument_list|,
 name|retVal
@@ -1177,7 +1177,7 @@ block|{
 name|retVal
 operator|=
 operator|new
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|(
 name|dataSchema
 operator|.
@@ -1221,7 +1221,7 @@ literal|"Creating segment {}"
 argument_list|,
 name|retVal
 operator|.
-name|getIdentifierAsString
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1240,7 +1240,7 @@ name|pushSegments
 parameter_list|(
 name|List
 argument_list|<
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|>
 name|segmentsToPush
 parameter_list|)
@@ -1294,14 +1294,14 @@ name|pushedSegmentIdentifierHashSet
 operator|.
 name|add
 argument_list|(
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 operator|.
 name|fromDataSegment
 argument_list|(
 name|pushedSegment
 argument_list|)
 operator|.
-name|getIdentifierAsString
+name|toString
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -1360,9 +1360,9 @@ argument_list|()
 operator|.
 name|map
 argument_list|(
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 operator|::
-name|getIdentifierAsString
+name|toString
 argument_list|)
 operator|.
 name|collect
@@ -1427,7 +1427,7 @@ throw|;
 block|}
 for|for
 control|(
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 name|dataSegmentId
 range|:
 name|segmentsToPush
@@ -1731,7 +1731,7 @@ expr_stmt|;
 name|currentOpenSegment
 operator|=
 operator|new
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|(
 name|dataSchema
 operator|.
@@ -1764,7 +1764,7 @@ block|{
 name|currentOpenSegment
 operator|=
 operator|new
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|(
 name|dataSchema
 operator|.
@@ -1897,7 +1897,7 @@ block|{
 specifier|final
 name|List
 argument_list|<
-name|SegmentIdentifier
+name|SegmentIdWithShardSpec
 argument_list|>
 name|segmentsToPush
 init|=

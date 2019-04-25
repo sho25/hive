@@ -829,7 +829,7 @@ name|Override
 annotation|@
 name|JsonProperty
 specifier|public
-name|int
+name|Integer
 name|getMaxRowsPerSegment
 parameter_list|()
 block|{
