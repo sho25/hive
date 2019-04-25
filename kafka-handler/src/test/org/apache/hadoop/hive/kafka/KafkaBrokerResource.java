@@ -267,12 +267,6 @@ argument_list|(
 literal|"init embedded Zookeeper"
 argument_list|)
 expr_stmt|;
-name|zkServer
-operator|=
-operator|new
-name|EmbeddedZookeeper
-argument_list|()
-expr_stmt|;
 name|tmpLogDir
 operator|=
 name|Files
@@ -283,6 +277,12 @@ literal|"kafka-log-dir-"
 argument_list|)
 operator|.
 name|toAbsolutePath
+argument_list|()
+expr_stmt|;
+name|zkServer
+operator|=
+operator|new
+name|EmbeddedZookeeper
 argument_list|()
 expr_stmt|;
 name|String
@@ -520,11 +520,19 @@ name|awaitShutdown
 argument_list|()
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|zkServer
+operator|!=
+literal|null
+condition|)
+block|{
 name|zkServer
 operator|.
 name|shutdown
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 name|void
 name|deleteTopic
