@@ -868,6 +868,42 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|TIMESTAMP_SCHEMA
+init|=
+literal|"{\n"
+operator|+
+literal|"  \"type\": \"record\", \n"
+operator|+
+literal|"  \"name\": \"timestampTest\",\n"
+operator|+
+literal|"  \"fields\" : [\n"
+operator|+
+literal|"    {\"name\":\"timestampField\", "
+operator|+
+literal|"     \"type\":\""
+operator|+
+name|AvroSerDe
+operator|.
+name|AVRO_LONG_TYPE_NAME
+operator|+
+literal|"\", "
+operator|+
+literal|"         \"logicalType\":\""
+operator|+
+name|AvroSerDe
+operator|.
+name|TIMESTAMP_TYPE_NAME
+operator|+
+literal|"\"}"
+operator|+
+literal|"  ]\n"
+operator|+
+literal|"}"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|KITCHEN_SINK_SCHEMA
 init|=
 literal|"{\n"

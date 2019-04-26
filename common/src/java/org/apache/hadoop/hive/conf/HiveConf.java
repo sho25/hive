@@ -7524,6 +7524,23 @@ operator|+
 literal|"on reading parquet files from other tools"
 argument_list|)
 block|,
+name|HIVE_AVRO_TIMESTAMP_SKIP_CONVERSION
+argument_list|(
+literal|"hive.avro.timestamp.skip.conversion"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Some older Hive implementations (pre-3.1) wrote Avro timestamps in a UTC-normalized"
+operator|+
+literal|"manner, while from version 3.1 until now Hive wrote time zone agnostic timestamps. "
+operator|+
+literal|"Setting this flag to true will treat legacy timestamps as time zone agnostic. Setting "
+operator|+
+literal|"it to false will treat legacy timestamps as UTC-normalized. This flag will not affect "
+operator|+
+literal|"timestamps written after this change."
+argument_list|)
+block|,
 name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS
 argument_list|(
 literal|"hive.int.timestamp.conversion.in.seconds"

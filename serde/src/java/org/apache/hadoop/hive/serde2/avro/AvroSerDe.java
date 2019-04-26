@@ -436,6 +436,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|WRITER_TIME_ZONE
+init|=
+literal|"writer.time.zone"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|AVRO_PROP_LOGICAL_TYPE
 init|=
 literal|"logicalType"
@@ -922,7 +930,9 @@ name|avroDeserializer
 operator|=
 operator|new
 name|AvroDeserializer
-argument_list|()
+argument_list|(
+name|configuration
+argument_list|)
 expr_stmt|;
 block|}
 block|}

@@ -93,6 +93,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|time
+operator|.
+name|ZoneId
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -266,6 +276,13 @@ specifier|private
 name|Schema
 name|fileSchema
 decl_stmt|;
+comment|// Time zone file was written in, from metadata
+specifier|private
+name|ZoneId
+name|writerTimezone
+init|=
+literal|null
+decl_stmt|;
 comment|/**    * Unique Id determine which record reader created this record    */
 specifier|private
 name|UID
@@ -318,6 +335,20 @@ operator|.
 name|record
 operator|=
 name|record
+expr_stmt|;
+block|}
+specifier|public
+name|AvroGenericRecordWritable
+parameter_list|(
+name|ZoneId
+name|writerTimezone
+parameter_list|)
+block|{
+name|this
+operator|.
+name|writerTimezone
+operator|=
+name|writerTimezone
 expr_stmt|;
 block|}
 annotation|@
@@ -753,6 +784,15 @@ name|fileSchema
 operator|=
 name|originalSchema
 expr_stmt|;
+block|}
+specifier|public
+name|ZoneId
+name|getWriterTimezone
+parameter_list|()
+block|{
+return|return
+name|writerTimezone
+return|;
 block|}
 block|}
 end_class
