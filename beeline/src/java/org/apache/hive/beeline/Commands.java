@@ -1129,12 +1129,9 @@ return|return
 literal|false
 return|;
 block|}
-name|URLClassLoader
+name|ClassLoader
 name|classLoader
 init|=
-operator|(
-name|URLClassLoader
-operator|)
 name|Thread
 operator|.
 name|currentThread
