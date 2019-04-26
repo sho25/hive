@@ -1609,6 +1609,8 @@ argument_list|,
 literal|"Plan Optimized by CBO"
 argument_list|,
 literal|null
+argument_list|,
+literal|null
 argument_list|)
 operator|.
 name|toString

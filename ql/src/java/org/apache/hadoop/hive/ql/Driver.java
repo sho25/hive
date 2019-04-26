@@ -6417,6 +6417,11 @@ argument_list|()
 argument_list|,
 name|plan
 operator|.
+name|getOptimizedCBOPlan
+argument_list|()
+argument_list|,
+name|plan
+operator|.
 name|getOptimizedQueryString
 argument_list|()
 argument_list|)
@@ -6496,6 +6501,11 @@ argument_list|,
 name|sem
 operator|.
 name|getCboInfo
+argument_list|()
+argument_list|,
+name|plan
+operator|.
+name|getOptimizedCBOPlan
 argument_list|()
 argument_list|,
 name|plan
