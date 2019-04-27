@@ -3600,6 +3600,28 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|HIVE_ADDITIONAL_PARTIAL_MASKS_PATTERN
+argument_list|(
+literal|"hive.qtest.additional.partial.mask.pattern"
+argument_list|,
+literal|""
+argument_list|,
+literal|"internal use only, used in only qtests. Provide additional partial masks pattern"
+operator|+
+literal|"for qtests as a ',' separated list"
+argument_list|)
+block|,
+name|HIVE_ADDITIONAL_PARTIAL_MASKS_REPLACEMENT_TEXT
+argument_list|(
+literal|"hive.qtest.additional.partial.mask.replacement.text"
+argument_list|,
+literal|""
+argument_list|,
+literal|"internal use only, used in only qtests. Provide additional partial masks replacement"
+operator|+
+literal|"text for qtests as a ',' separated list"
+argument_list|)
+block|,
 name|HIVE_IN_REPL_TEST_FILES_SORTED
 argument_list|(
 literal|"hive.in.repl.test.files.sorted"
