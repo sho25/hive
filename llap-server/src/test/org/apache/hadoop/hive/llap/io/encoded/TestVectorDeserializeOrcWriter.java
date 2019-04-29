@@ -713,7 +713,7 @@ specifier|public
 name|void
 name|consumeData
 parameter_list|(
-name|Object
+name|EncodedColumnBatch
 name|data
 parameter_list|)
 throws|throws

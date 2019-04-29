@@ -17,9 +17,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|contrib
+name|ql
 operator|.
-name|input
+name|io
+operator|.
+name|protobuf
 package|;
 end_package
 
