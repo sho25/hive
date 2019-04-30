@@ -3193,17 +3193,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-catch|catch
-parameter_list|(
-name|Exception
-name|e
-parameter_list|)
-block|{
-comment|// If concurrently the query is closed before we fetch queryID.
-return|return
-literal|null
-return|;
-block|}
 block|}
 block|}
 end_class

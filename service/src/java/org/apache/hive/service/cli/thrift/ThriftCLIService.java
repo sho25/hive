@@ -5755,6 +5755,24 @@ name|e
 argument_list|)
 throw|;
 block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
+block|{
+comment|// If concurrently the query is closed before we fetch queryID.
+return|return
+operator|new
+name|TGetQueryIdResp
+argument_list|(
+operator|(
+name|String
+operator|)
+literal|null
+argument_list|)
+return|;
+block|}
 block|}
 annotation|@
 name|Override
