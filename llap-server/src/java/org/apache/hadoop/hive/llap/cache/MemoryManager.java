@@ -69,6 +69,14 @@ name|AtomicBoolean
 name|isStopped
 parameter_list|)
 function_decl|;
+comment|/**    * Request the memory manager to evict more memory, this will be blocking and might return 0 if nothing was evicted.    *    * @param memoryToEvict amount of bytes to evict.    * @return actual amount of evicted bytes.    */
+name|long
+name|evictMemory
+parameter_list|(
+name|long
+name|memoryToEvict
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 

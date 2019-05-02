@@ -41,31 +41,26 @@ interface|interface
 name|BuddyAllocatorMXBean
 block|{
 comment|/**    * Gets if bytebuffers are allocated directly offheap.    *    * @return gets if direct bytebuffer allocation    */
-specifier|public
 name|boolean
 name|getIsDirect
 parameter_list|()
 function_decl|;
 comment|/**    * Gets minimum allocation size of allocator.    *    * @return minimum allocation size    */
-specifier|public
 name|int
 name|getMinAllocation
 parameter_list|()
 function_decl|;
 comment|/**    * Gets maximum allocation size of allocator.    *    * @return maximum allocation size    */
-specifier|public
 name|int
 name|getMaxAllocation
 parameter_list|()
 function_decl|;
 comment|/**    * Gets the arena size.    *    * @return arena size    */
-specifier|public
 name|int
 name|getArenaSize
 parameter_list|()
 function_decl|;
 comment|/**    * Gets the maximum cache size.    *    * @return max cache size    */
-specifier|public
 name|long
 name|getMaxCacheSize
 parameter_list|()

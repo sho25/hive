@@ -14836,6 +14836,19 @@ operator|+
 literal|"The allocator would further cap it to a fraction of total memory."
 argument_list|)
 block|,
+name|LLAP_ALLOCATOR_MAX_FORCE_EVICTED
+argument_list|(
+literal|"hive.llap.io.allocator.max.force.eviction"
+argument_list|,
+literal|"16Mb"
+argument_list|,
+literal|"Fragmentation can lead to some cases where more eviction has to happen to accommodate allocations\n"
+operator|+
+literal|" This configuration puts a limit on how many bytes to force evict before using Allocator Discard method."
+operator|+
+literal|" Higher values will allow allocator more flexibility and will lead to better caching."
+argument_list|)
+block|,
 name|LLAP_TRACK_CACHE_USAGE
 argument_list|(
 literal|"hive.llap.io.track.cache.usage"
