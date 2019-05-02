@@ -382,14 +382,20 @@ name|desc
 operator|.
 name|isReplace
 argument_list|()
-operator|&&
-operator|!
+condition|)
+block|{
+if|if
+condition|(
 name|desc
 operator|.
 name|getIfNotExists
 argument_list|()
 condition|)
 block|{
+return|return
+literal|0
+return|;
+block|}
 comment|// View already exists, thus we should be replacing
 throw|throw
 operator|new
