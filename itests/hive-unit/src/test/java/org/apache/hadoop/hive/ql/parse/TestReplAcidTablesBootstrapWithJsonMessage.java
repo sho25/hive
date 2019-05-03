@@ -129,12 +129,16 @@ name|Map
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestReplAcidTablesBootstrapWithJsonMessage - same as  * TestReplicationScenariosAcidTablesBootstrap but uses JSON messages.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
-name|TestReplAcidTablesWithJsonMessage
+name|TestReplAcidTablesBootstrapWithJsonMessage
 extends|extends
-name|TestReplicationScenariosAcidTables
+name|TestReplicationScenariosAcidTablesBootstrap
 block|{
 annotation|@
 name|Rule
@@ -190,7 +194,7 @@ name|internalBeforeClassSetup
 argument_list|(
 name|overrides
 argument_list|,
-name|TestReplAcidTablesWithJsonMessage
+name|TestReplAcidTablesBootstrapWithJsonMessage
 operator|.
 name|class
 argument_list|)

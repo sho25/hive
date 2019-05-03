@@ -11817,7 +11817,7 @@ argument_list|)
 operator|)
 return|;
 block|}
-specifier|private
+specifier|public
 name|void
 name|listFilesInsideAcidDirectory
 parameter_list|(
@@ -17674,7 +17674,7 @@ block|}
 end_function
 
 begin_function
-specifier|private
+specifier|public
 name|void
 name|addWriteNotificationLog
 parameter_list|(
