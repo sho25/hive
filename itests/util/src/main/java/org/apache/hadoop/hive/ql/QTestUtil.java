@@ -8156,6 +8156,26 @@ name|command
 init|=
 literal|""
 decl_stmt|;
+name|QTestSyntaxUtil
+name|qtsu
+init|=
+operator|new
+name|QTestSyntaxUtil
+argument_list|(
+name|this
+argument_list|,
+name|conf
+argument_list|,
+name|pd
+argument_list|)
+decl_stmt|;
+name|qtsu
+operator|.
+name|checkQFileSyntax
+argument_list|(
+name|cmds
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|String
@@ -8328,7 +8348,6 @@ block|}
 end_function
 
 begin_function
-specifier|private
 name|boolean
 name|isHiveCommand
 parameter_list|(
