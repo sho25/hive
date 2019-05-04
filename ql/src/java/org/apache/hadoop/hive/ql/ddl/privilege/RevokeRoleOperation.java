@@ -217,7 +217,7 @@ block|{
 name|HiveAuthorizer
 name|authorizer
 init|=
-name|RoleUtils
+name|PrivilegeUtils
 operator|.
 name|getSessionAuthorizer
 argument_list|(
@@ -242,7 +242,7 @@ operator|.
 name|getPrincipals
 argument_list|()
 argument_list|,
-name|RoleUtils
+name|PrivilegeUtils
 operator|.
 name|getAuthorizationTranslator
 argument_list|(

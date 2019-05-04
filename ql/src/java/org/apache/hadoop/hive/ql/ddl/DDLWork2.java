@@ -143,7 +143,7 @@ init|=
 literal|false
 decl_stmt|;
 comment|/** ReadEntitites that are passed to the hooks. */
-specifier|protected
+specifier|private
 name|Set
 argument_list|<
 name|ReadEntity
@@ -151,7 +151,7 @@ argument_list|>
 name|inputs
 decl_stmt|;
 comment|/** List of WriteEntities that are passed to the hooks. */
-specifier|protected
+specifier|private
 name|Set
 argument_list|<
 name|WriteEntity

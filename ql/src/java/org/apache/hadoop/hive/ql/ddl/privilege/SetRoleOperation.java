@@ -147,7 +147,7 @@ block|{
 name|HiveAuthorizer
 name|authorizer
 init|=
-name|RoleUtils
+name|PrivilegeUtils
 operator|.
 name|getSessionAuthorizer
 argument_list|(

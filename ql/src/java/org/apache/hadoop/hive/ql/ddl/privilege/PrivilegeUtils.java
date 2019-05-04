@@ -230,23 +230,23 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Common utilities for Role related ddl operations.  */
+comment|/**  * Common utilities for Privilege related ddl operations.  */
 end_comment
 
 begin_class
 specifier|final
 class|class
-name|RoleUtils
+name|PrivilegeUtils
 block|{
 specifier|private
-name|RoleUtils
+name|PrivilegeUtils
 parameter_list|()
 block|{
 throw|throw
 operator|new
 name|UnsupportedOperationException
 argument_list|(
-literal|"RoleUtils should not be instantiated"
+literal|"PrivilegeUtils should not be instantiated"
 argument_list|)
 throw|;
 block|}

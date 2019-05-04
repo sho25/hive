@@ -169,7 +169,7 @@ block|{
 name|HiveAuthorizer
 name|authorizer
 init|=
-name|RoleUtils
+name|PrivilegeUtils
 operator|.
 name|getSessionAuthorizer
 argument_list|(
@@ -190,7 +190,7 @@ operator|.
 name|getCurrentRoleNames
 argument_list|()
 decl_stmt|;
-name|RoleUtils
+name|PrivilegeUtils
 operator|.
 name|writeListToFileAfterSort
 argument_list|(
