@@ -579,6 +579,9 @@ name|executeClient
 argument_list|(
 name|fname
 argument_list|)
+operator|.
+name|getResponseCode
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -729,7 +732,7 @@ parameter_list|)
 block|{
 name|qt
 operator|.
-name|failed
+name|failedWithException
 argument_list|(
 name|e
 argument_list|,

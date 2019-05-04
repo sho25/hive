@@ -758,8 +758,8 @@ decl_stmt|;
 name|String
 name|errors
 decl_stmt|;
-name|int
-name|ret
+name|CommandProcessorResponse
+name|response
 decl_stmt|;
 try|try
 block|{
@@ -778,7 +778,7 @@ name|CliDriver
 argument_list|()
 decl_stmt|;
 comment|// issue a command with bad options
-name|ret
+name|response
 operator|=
 name|cliDriver
 operator|.
@@ -830,7 +830,10 @@ literal|"Comments with '--; should not have been stripped,"
 operator|+
 literal|" so command should fail"
 argument_list|,
-name|ret
+name|response
+operator|.
+name|getResponseCode
+argument_list|()
 operator|!=
 literal|0
 argument_list|)

@@ -637,8 +637,10 @@ condition|)
 block|{
 name|qt
 operator|.
-name|failed
+name|failedQuery
 argument_list|(
+literal|null
+argument_list|,
 name|result
 operator|.
 name|getReturnCode
@@ -732,7 +734,7 @@ parameter_list|)
 block|{
 name|qt
 operator|.
-name|failed
+name|failedWithException
 argument_list|(
 name|e
 argument_list|,
