@@ -211,6 +211,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|exception
+operator|.
+name|ExceptionUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|conf
@@ -1179,8 +1195,29 @@ name|DEFAULT_CACHE_REFRESH_PERIOD
 decl_stmt|;
 specifier|private
 specifier|static
+name|int
+name|MAX_RETRIES
+init|=
+literal|10
+decl_stmt|;
+comment|// This is set to true only after prewarm is complete
+specifier|private
+specifier|static
 name|AtomicBoolean
 name|isCachePrewarmed
+init|=
+operator|new
+name|AtomicBoolean
+argument_list|(
+literal|false
+argument_list|)
+decl_stmt|;
+comment|// This is set to true only if we were able to cache all the metadata.
+comment|// We may not be able to cache all metadata if we hit CACHED_RAW_STORE_MAX_CACHE_MEMORY limit.
+specifier|private
+specifier|static
+name|AtomicBoolean
+name|isCachedAllMetadata
 init|=
 operator|new
 name|AtomicBoolean
@@ -1220,7 +1257,6 @@ literal|null
 decl_stmt|;
 specifier|private
 specifier|static
-specifier|final
 name|SharedCache
 name|sharedCache
 init|=
@@ -1689,15 +1725,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Maximum memory that the cache will use: {} GB"
+literal|"Maximum memory that the cache will use: {} KB"
 argument_list|,
 name|maxSharedCacheSizeInBytes
 operator|/
 operator|(
-literal|1024
-operator|*
-literal|1024
-operator|*
 literal|1024
 operator|)
 argument_list|)
@@ -3673,6 +3705,18 @@ name|MetaException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|ExceptionUtils
+operator|.
+name|getStackTrace
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// It is possible the table is deleted during fetching tables of the database,
 comment|// in that case, continue with the next table
 continue|continue;
@@ -4093,6 +4137,8 @@ expr_stmt|;
 name|completePrewarm
 argument_list|(
 name|startTime
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 return|return;
@@ -4106,6 +4152,18 @@ name|NoSuchObjectException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|ExceptionUtils
+operator|.
+name|getStackTrace
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// Continue with next table
 continue|continue;
 block|}
@@ -4162,17 +4220,35 @@ expr_stmt|;
 name|completePrewarm
 argument_list|(
 name|startTime
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
+annotation|@
+name|VisibleForTesting
+specifier|static
+name|void
+name|clearSharedCache
+parameter_list|()
+block|{
+name|sharedCache
+operator|=
+operator|new
+name|SharedCache
+argument_list|()
+expr_stmt|;
+block|}
 specifier|static
 name|void
 name|completePrewarm
 parameter_list|(
 name|long
 name|startTime
+parameter_list|,
+name|boolean
+name|cachedAllMetadata
 parameter_list|)
 block|{
 name|isCachePrewarmed
@@ -4180,6 +4256,13 @@ operator|.
 name|set
 argument_list|(
 literal|true
+argument_list|)
+expr_stmt|;
+name|isCachedAllMetadata
+operator|.
+name|set
+argument_list|(
+name|cachedAllMetadata
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -4353,17 +4436,6 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-if|if
-condition|(
-name|whitelistPatterns
-operator|==
-literal|null
-operator|||
-name|blacklistPatterns
-operator|==
-literal|null
-condition|)
-block|{
 name|whitelistPatterns
 operator|=
 name|createPatterns
@@ -4400,7 +4472,6 @@ name|CACHED_RAW_STORE_CACHED_OBJECTS_BLACKLIST
 argument_list|)
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 specifier|private
 specifier|static
@@ -4545,7 +4616,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"CachedStore: starting cache update service (run every {} ms"
+literal|"CachedStore: starting cache update service (run every {} ms)"
 argument_list|,
 name|cacheRefreshPeriodMS
 argument_list|)
@@ -4980,7 +5051,12 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"CachedStore: updating cached objects"
+literal|"CachedStore: updating cached objects. Shared cache has been update {} times so far."
+argument_list|,
+name|sharedCache
+operator|.
+name|getUpdateCount
+argument_list|()
 argument_list|)
 expr_stmt|;
 try|try
@@ -5063,6 +5139,18 @@ name|MetaException
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|ExceptionUtils
+operator|.
+name|getStackTrace
+argument_list|(
+name|e
+argument_list|)
+argument_list|)
+expr_stmt|;
 comment|// Continue with next database
 continue|continue;
 block|}
@@ -5145,6 +5233,18 @@ operator|.
 name|incrementUpdateCount
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached objects. Shared cache update count is: {}"
+argument_list|,
+name|sharedCache
+operator|.
+name|getUpdateCount
+argument_list|()
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -5179,6 +5279,39 @@ name|String
 argument_list|>
 name|dbNames
 parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updating cached database objects for catalog: {}"
+argument_list|,
+name|catName
+argument_list|)
+expr_stmt|;
+name|boolean
+name|success
+init|=
+literal|false
+decl_stmt|;
+comment|// Try MAX_RETRIES times, then move to next method
+name|int
+name|maxTries
+init|=
+name|MAX_RETRIES
+decl_stmt|;
+while|while
+condition|(
+operator|!
+name|success
+operator|&&
+operator|(
+name|maxTries
+operator|--
+operator|>
+literal|0
+operator|)
+condition|)
 block|{
 comment|// Prepare the list of databases
 name|List
@@ -5234,7 +5367,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Updating CachedStore: database - "
+literal|"Updating CachedStore: database: "
 operator|+
 name|catName
 operator|+
@@ -5249,6 +5382,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|success
+operator|=
 name|sharedCache
 operator|.
 name|refreshDatabasesInCache
@@ -5256,6 +5391,16 @@ argument_list|(
 name|databases
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached database objects for catalog: {}"
+argument_list|,
+name|catName
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
@@ -5270,6 +5415,41 @@ parameter_list|,
 name|String
 name|dbName
 parameter_list|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updating cached table objects for catalog: {}, database: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|)
+expr_stmt|;
+name|boolean
+name|success
+init|=
+literal|false
+decl_stmt|;
+comment|// Try MAX_RETRIES times, then move to next method
+name|int
+name|maxTries
+init|=
+name|MAX_RETRIES
+decl_stmt|;
+while|while
+condition|(
+operator|!
+name|success
+operator|&&
+operator|(
+name|maxTries
+operator|--
+operator|>
+literal|0
+operator|)
+condition|)
 block|{
 name|List
 argument_list|<
@@ -5359,6 +5539,8 @@ name|table
 argument_list|)
 expr_stmt|;
 block|}
+name|success
+operator|=
 name|sharedCache
 operator|.
 name|refreshTablesInCache
@@ -5368,6 +5550,17 @@ argument_list|,
 name|dbName
 argument_list|,
 name|tables
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached table objects for catalog: {}, database: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
 argument_list|)
 expr_stmt|;
 block|}
@@ -5390,6 +5583,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 specifier|private
 name|void
 name|updateTableColStats
@@ -5407,6 +5601,17 @@ name|String
 name|tblName
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updating cached table col stats objects for catalog: {}, database: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|)
+expr_stmt|;
 name|boolean
 name|committed
 init|=
@@ -5548,6 +5753,17 @@ operator|.
 name|commitTransaction
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached table col stats objects for catalog: {}, database: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -5613,6 +5829,19 @@ name|String
 name|tblName
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updating cached partition objects for catalog: {}, database: {}, table: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|Deadline
@@ -5676,6 +5905,19 @@ argument_list|,
 name|partitions
 argument_list|)
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached partition objects for catalog: {}, database: {}, table: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -5715,6 +5957,19 @@ name|String
 name|tblName
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updating cached partition col stats objects for catalog: {}, database: {}, table: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+expr_stmt|;
 name|boolean
 name|committed
 init|=
@@ -5898,6 +6153,19 @@ operator|.
 name|commitTransaction
 argument_list|()
 expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached partition col stats objects for catalog: {}, database: {}, table: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
@@ -5966,6 +6234,19 @@ name|String
 name|tblName
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updating cached aggregate partition col stats objects for catalog: {}, database: {}, table: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+expr_stmt|;
 try|try
 block|{
 name|Table
@@ -6235,6 +6516,19 @@ argument_list|,
 name|aggrStatsAllButDefaultPartition
 argument_list|,
 literal|null
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"CachedStore: updated cached aggregate partition col stats objects for catalog: {}, database: {}, table: {}"
+argument_list|,
+name|catName
+argument_list|,
+name|dbName
+argument_list|,
+name|tblName
 argument_list|)
 expr_stmt|;
 block|}
@@ -9185,6 +9479,12 @@ operator|.
 name|get
 argument_list|()
 operator|||
+operator|!
+name|isCachedAllMetadata
+operator|.
+name|get
+argument_list|()
+operator|||
 operator|(
 name|canUseEvents
 operator|&&
@@ -9271,6 +9571,12 @@ argument_list|)
 operator|||
 operator|!
 name|isCachePrewarmed
+operator|.
+name|get
+argument_list|()
+operator|||
+operator|!
+name|isCachedAllMetadata
 operator|.
 name|get
 argument_list|()
@@ -9419,6 +9725,12 @@ argument_list|)
 operator|||
 operator|!
 name|isCachePrewarmed
+operator|.
+name|get
+argument_list|()
+operator|||
+operator|!
+name|isCachedAllMetadata
 operator|.
 name|get
 argument_list|()
@@ -9750,6 +10062,12 @@ argument_list|)
 operator|||
 operator|!
 name|isCachePrewarmed
+operator|.
+name|get
+argument_list|()
+operator|||
+operator|!
+name|isCachedAllMetadata
 operator|.
 name|get
 argument_list|()

@@ -1508,6 +1508,9 @@ name|parts
 parameter_list|,
 name|SharedCache
 name|sharedCache
+parameter_list|,
+name|boolean
+name|fromPrewarm
 parameter_list|)
 block|{
 try|try
@@ -1643,6 +1646,12 @@ argument_list|,
 name|ptnWrapper
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|fromPrewarm
+condition|)
+block|{
 name|isPartitionCacheDirty
 operator|.
 name|set
@@ -1650,6 +1659,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|// Invalidate cached aggregate stats
 if|if
@@ -6600,7 +6610,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-name|void
+name|boolean
 name|refreshDatabasesInCache
 parameter_list|(
 name|List
@@ -6610,16 +6620,6 @@ argument_list|>
 name|databases
 parameter_list|)
 block|{
-try|try
-block|{
-name|cacheLock
-operator|.
-name|writeLock
-argument_list|()
-operator|.
-name|lock
-argument_list|()
-expr_stmt|;
 if|if
 condition|(
 name|isDatabaseCacheDirty
@@ -6639,8 +6639,20 @@ argument_list|(
 literal|"Skipping database cache update; the database list we have is dirty."
 argument_list|)
 expr_stmt|;
-return|return;
+return|return
+literal|false
+return|;
 block|}
+try|try
+block|{
+name|cacheLock
+operator|.
+name|writeLock
+argument_list|()
+operator|.
+name|lock
+argument_list|()
+expr_stmt|;
 name|databaseCache
 operator|.
 name|clear
@@ -6660,6 +6672,9 @@ name|db
 argument_list|)
 expr_stmt|;
 block|}
+return|return
+literal|true
+return|;
 block|}
 finally|finally
 block|{
@@ -6965,6 +6980,8 @@ argument_list|(
 name|partitions
 argument_list|,
 name|this
+argument_list|,
+literal|true
 argument_list|)
 condition|)
 block|{
@@ -8442,7 +8459,7 @@ name|tableNames
 return|;
 block|}
 specifier|public
-name|void
+name|boolean
 name|refreshTablesInCache
 parameter_list|(
 name|String
@@ -8457,8 +8474,6 @@ name|Table
 argument_list|>
 name|tables
 parameter_list|)
-block|{
-try|try
 block|{
 if|if
 condition|(
@@ -8479,7 +8494,9 @@ argument_list|(
 literal|"Skipping table cache update; the table list we have is dirty."
 argument_list|)
 expr_stmt|;
-return|return;
+return|return
+literal|false
+return|;
 block|}
 name|Map
 argument_list|<
@@ -8586,6 +8603,8 @@ name|tblWrapper
 argument_list|)
 expr_stmt|;
 block|}
+try|try
+block|{
 name|cacheLock
 operator|.
 name|writeLock
@@ -8663,19 +8682,11 @@ argument_list|(
 name|newCacheForDB
 argument_list|)
 expr_stmt|;
+return|return
+literal|true
+return|;
 block|}
 finally|finally
-block|{
-if|if
-condition|(
-name|cacheLock
-operator|.
-name|writeLock
-argument_list|()
-operator|.
-name|isHeldByCurrentThread
-argument_list|()
-condition|)
 block|{
 name|cacheLock
 operator|.
@@ -8685,7 +8696,6 @@ operator|.
 name|unlock
 argument_list|()
 expr_stmt|;
-block|}
 block|}
 block|}
 specifier|public
@@ -9514,6 +9524,8 @@ argument_list|(
 name|parts
 argument_list|,
 name|this
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
