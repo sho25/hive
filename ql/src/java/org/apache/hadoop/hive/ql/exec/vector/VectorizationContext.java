@@ -10535,6 +10535,35 @@ operator|==
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+name|typeInfo
+operator|.
+name|getCategory
+argument_list|()
+operator|!=
+name|Category
+operator|.
+name|PRIMITIVE
+condition|)
+block|{
+throw|throw
+operator|new
+name|HiveException
+argument_list|(
+literal|"Complex type constants ("
+operator|+
+name|typeInfo
+operator|.
+name|getCategory
+argument_list|()
+operator|+
+literal|") not supported for type name "
+operator|+
+name|typeName
+argument_list|)
+throw|;
+block|}
 return|return
 operator|new
 name|ConstantVectorExpression
