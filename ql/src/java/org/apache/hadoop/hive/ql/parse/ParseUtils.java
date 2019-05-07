@@ -3329,9 +3329,11 @@ argument_list|)
 decl_stmt|;
 name|analyzer
 operator|.
-name|genLogicalPlan
+name|analyze
 argument_list|(
 name|ast
+argument_list|,
+name|ctx
 argument_list|)
 expr_stmt|;
 return|return
