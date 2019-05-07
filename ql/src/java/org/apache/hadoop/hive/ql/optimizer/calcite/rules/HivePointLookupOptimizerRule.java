@@ -4164,6 +4164,29 @@ argument_list|(
 name|expressions
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|inLHSExprToRHSExprs
+operator|.
+name|containsKey
+argument_list|(
+name|ref
+argument_list|)
+condition|)
+block|{
+comment|// Note that Multimap does not keep a key if all its values are removed.
+comment|// Hence, since there are no common expressions and it is within an AND,
+comment|// we should return false
+return|return
+name|rexBuilder
+operator|.
+name|makeLiteral
+argument_list|(
+literal|false
+argument_list|)
+return|;
+block|}
 block|}
 else|else
 block|{
