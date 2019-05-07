@@ -169,6 +169,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|info
+operator|.
 name|DescTableDesc
 import|;
 end_import
@@ -189,6 +191,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|info
+operator|.
 name|ShowTableStatusDesc
 import|;
 end_import
@@ -208,6 +212,8 @@ operator|.
 name|ddl
 operator|.
 name|table
+operator|.
+name|info
 operator|.
 name|ShowTablesDesc
 import|;

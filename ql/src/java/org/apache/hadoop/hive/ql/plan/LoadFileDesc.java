@@ -59,6 +59,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|creation
+operator|.
 name|CreateTableDesc
 import|;
 end_import
@@ -77,7 +79,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|table
+name|view
 operator|.
 name|CreateViewDesc
 import|;

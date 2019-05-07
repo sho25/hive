@@ -77,6 +77,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|misc
+operator|.
 name|TruncateTableDesc
 import|;
 end_import

@@ -657,6 +657,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|creation
+operator|.
 name|ShowCreateTableOperation
 import|;
 end_import

@@ -459,6 +459,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|info
+operator|.
 name|DescTableDesc
 import|;
 end_import

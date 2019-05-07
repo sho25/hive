@@ -357,6 +357,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|creation
+operator|.
 name|DropTableDesc
 import|;
 end_import

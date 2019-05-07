@@ -219,6 +219,8 @@ name|ddl
 operator|.
 name|table
 operator|.
+name|lock
+operator|.
 name|LockTableDesc
 import|;
 end_import
@@ -238,6 +240,8 @@ operator|.
 name|ddl
 operator|.
 name|table
+operator|.
+name|lock
 operator|.
 name|UnlockTableDesc
 import|;
