@@ -83,7 +83,27 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -143,7 +163,21 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
-name|List
+comment|// HashSet will make sure that no duplicate children are added. If a task is added multiple
+comment|// time to the children list then it may cause the list to grow exponentially. Lets take an example of
+comment|// incremental load with 2 events. The DAG will look some thing similar as below.
+comment|//
+comment|//                 --->ev1.task1--                          --->ev2.task1--
+comment|//                /               \                        /               \
+comment|//  evTaskRoot-->*---->ev1.task2---*--> ev1.barrierTask-->*---->ev2.task2---*->ev2.barrierTask-------
+comment|//                \               /
+comment|//                 --->ev1.task3--
+comment|//
+comment|// While traversing the DAG, if the filter is not added then  ev1.barrierTask will be added 3 times in
+comment|// the children list and in next iteration ev2.task1 will be added 3 times and ev2.task2 will be added
+comment|// 3 times. So in next iteration ev2.barrierTask will be added 6 times. As it goes like this, the next barrier
+comment|// task will be added 12-15 times and may reaches millions with large number of events.
+name|Set
 argument_list|<
 name|Task
 argument_list|<
@@ -155,7 +189,7 @@ argument_list|>
 name|children
 init|=
 operator|new
-name|ArrayList
+name|HashSet
 argument_list|<>
 argument_list|()
 decl_stmt|;
@@ -240,7 +274,12 @@ expr_stmt|;
 block|}
 name|listOfTasks
 operator|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|(
 name|children
+argument_list|)
 expr_stmt|;
 block|}
 block|}
