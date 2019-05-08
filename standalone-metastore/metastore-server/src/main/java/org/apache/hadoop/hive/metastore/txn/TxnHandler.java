@@ -10290,6 +10290,19 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
+name|info
+argument_list|(
+literal|"Allocated write ids for the table: "
+operator|+
+name|dbName
+operator|+
+literal|"."
+operator|+
+name|tblName
+argument_list|)
+expr_stmt|;
+name|LOG
+operator|.
 name|debug
 argument_list|(
 literal|"Going to commit"

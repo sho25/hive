@@ -1088,56 +1088,7 @@ name|tableName
 operator|+
 literal|"_CTASMM"
 decl_stmt|;
-name|insertRecords
-argument_list|(
-name|primary
-argument_list|,
-name|primaryDbName
-argument_list|,
-name|primaryDbNameExtra
-argument_list|,
-name|tableName
-argument_list|,
-name|tableNameCTAS
-argument_list|,
-literal|false
-argument_list|,
-name|OperationType
-operator|.
-name|REPL_TEST_ACID_CTAS
-argument_list|)
-expr_stmt|;
-name|selectStmtList
-operator|.
-name|add
-argument_list|(
-literal|"select key from "
-operator|+
-name|tableNameCTAS
-operator|+
-literal|" order by key"
-argument_list|)
-expr_stmt|;
-name|expectedValues
-operator|.
-name|add
-argument_list|(
-operator|new
-name|String
-index|[]
-block|{
-literal|"1"
-block|,
-literal|"2"
-block|,
-literal|"3"
-block|,
-literal|"4"
-block|,
-literal|"5"
-block|}
-argument_list|)
-expr_stmt|;
+comment|/*insertRecords(primary, primaryDbName, primaryDbNameExtra,             tableName, tableNameCTAS, false, OperationType.REPL_TEST_ACID_CTAS);     selectStmtList.add("select key from " + tableNameCTAS + " order by key");     expectedValues.add(new String[]{"1", "2", "3", "4", "5"});*/
 name|insertRecords
 argument_list|(
 name|primary
@@ -3124,7 +3075,15 @@ literal|"create table "
 operator|+
 name|tableNameOp
 operator|+
-literal|" as select * from "
+literal|" partitioned by (load_date) "
+operator|+
+name|tableStorage
+operator|+
+literal|" tblproperties ("
+operator|+
+name|tableProperty
+operator|+
+literal|") as select * from "
 operator|+
 name|tableName
 argument_list|)
@@ -3135,7 +3094,15 @@ literal|"create table "
 operator|+
 name|tableNameOp
 operator|+
-literal|"_nopart as select * from "
+literal|"_nopart "
+operator|+
+name|tableStorage
+operator|+
+literal|" tblproperties ("
+operator|+
+name|tableProperty
+operator|+
+literal|") as select * from "
 operator|+
 name|tableName
 operator|+
