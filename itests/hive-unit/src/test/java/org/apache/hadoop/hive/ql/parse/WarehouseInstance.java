@@ -2103,7 +2103,7 @@ literal|" FROM '"
 operator|+
 name|dumpLocation
 operator|+
-literal|"'"
+literal|"' with ('hive.exec.parallel'='true')"
 argument_list|)
 expr_stmt|;
 return|return

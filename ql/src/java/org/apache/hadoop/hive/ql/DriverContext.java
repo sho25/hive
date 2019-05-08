@@ -621,6 +621,17 @@ return|return
 literal|null
 return|;
 block|}
+specifier|public
+specifier|synchronized
+name|void
+name|releaseRunnable
+parameter_list|()
+block|{
+comment|//release the waiting poller.
+name|notify
+argument_list|()
+expr_stmt|;
+block|}
 comment|/**    * Polls running tasks to see if a task has ended.    *    * @return The result object for any completed/failed task    */
 specifier|public
 specifier|synchronized
