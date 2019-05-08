@@ -252,6 +252,29 @@ name|UnsupportedOperationException
 argument_list|()
 throw|;
 block|}
+comment|/**    * Adds the information of delta directory under which bucket files are created by streaming write.    * Hive replication uses this information to log write events.    * @param partitionValues partition values    * @param writeDir Delta directory under which bucket files are written by streaming    */
+specifier|default
+name|void
+name|addWriteDirectoryInfo
+parameter_list|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partitionValues
+parameter_list|,
+name|Path
+name|writeDir
+parameter_list|)
+block|{   }
+comment|/**    * Add Write notification events if it is enabled.    * @throws StreamingException File operation errors or HMS errors.    */
+specifier|default
+name|void
+name|addWriteNotificationEvents
+parameter_list|()
+throws|throws
+name|StreamingException
+block|{   }
 block|}
 end_interface
 

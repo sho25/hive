@@ -1831,6 +1831,38 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+comment|// If it is the last transaction in the batch, then close the files and add write events.
+comment|// We need to close the writer as file checksum can't be obtained on the opened file.
+if|if
+condition|(
+operator|(
+name|currentTxnIndex
+operator|+
+literal|1
+operator|)
+operator|>=
+name|txnToWriteIds
+operator|.
+name|size
+argument_list|()
+condition|)
+block|{
+comment|// Replication doesn't work if txn batch size> 1 and the last txn is aborted as write events
+comment|// are ignored by abort txn event causing data loss. However, if the last txn in the batch is
+comment|// committed, then data gets replicated making eventually consistent, but doesn't guarantee
+comment|// point-in-time consistency.
+name|recordWriter
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+comment|// Add write notification events if it is enabled.
+name|conn
+operator|.
+name|addWriteNotificationEvents
+argument_list|()
+expr_stmt|;
+block|}
 name|transactionLock
 operator|.
 name|lock
