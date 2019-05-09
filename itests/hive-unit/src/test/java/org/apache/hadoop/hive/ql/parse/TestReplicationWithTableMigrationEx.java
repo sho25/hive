@@ -27,6 +27,36 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|permission
+operator|.
+name|FsPermission
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hdfs
 operator|.
 name|DistributedFileSystem
@@ -2919,6 +2949,192 @@ expr_stmt|;
 name|verifyUserName
 argument_list|(
 literal|"hive"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|dynamicallyConvertNonAcidToAcidTable
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+comment|// Non-acid table converted to an ACID table should be prohibited on source cluster with
+comment|// strict managed false.
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (id int) stored as orc"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t1 values (1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t2 (place string) partitioned by (country string) stored as orc"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t1 set tblproperties('transactional'='true')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t2 set tblproperties('transactional'='true')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t1 set tblproperties('transactional'='true', "
+operator|+
+literal|"'transactional_properties'='insert_only')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t2 set tblproperties('transactional'='true', "
+operator|+
+literal|"'transactional_properties'='insert_only')"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|prohibitManagedTableLocationChangeOnReplSource
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|tmpLocation
+init|=
+literal|"/tmp/"
+operator|+
+name|System
+operator|.
+name|nanoTime
+argument_list|()
+decl_stmt|;
+name|primary
+operator|.
+name|miniDFSCluster
+operator|.
+name|getFileSystem
+argument_list|()
+operator|.
+name|mkdirs
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|tmpLocation
+argument_list|)
+argument_list|,
+operator|new
+name|FsPermission
+argument_list|(
+literal|"777"
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// For managed tables at source, the table location shouldn't be changed for the given
+comment|// non-partitioned table and partition location shouldn't be changed for partitioned table as
+comment|// alter event doesn't capture the new files list. So, it may cause data inconsistsency. So,
+comment|// if database is enabled for replication at source, then alter location on managed tables
+comment|// should be blocked.
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t1 (id int) clustered by(id) into 3 buckets stored as orc "
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into t1 values(1)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table t2 (place string) partitioned by (country string) stored as orc"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table t2 partition(country='india') values ('bangalore')"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t1 set location '"
+operator|+
+name|tmpLocation
+operator|+
+literal|"'"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t2 partition(country='india') set location '"
+operator|+
+name|tmpLocation
+operator|+
+literal|"'"
+argument_list|)
+operator|.
+name|runFailure
+argument_list|(
+literal|"alter table t2 set location '"
+operator|+
+name|tmpLocation
+operator|+
+literal|"'"
+argument_list|)
+expr_stmt|;
+name|primary
+operator|.
+name|miniDFSCluster
+operator|.
+name|getFileSystem
+argument_list|()
+operator|.
+name|delete
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|tmpLocation
+argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}

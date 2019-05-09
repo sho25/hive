@@ -988,22 +988,12 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"create table t5 (id int) stored as orc "
+literal|"create table t5 (id int) stored as orc tblproperties (\"transactional\"=\"true\")"
 argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"insert into t5 values(1111), (2222)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"alter table t5 set tblproperties (\"transactional\"=\"true\")"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"insert into t5 values(3333)"
+literal|"insert into t5 values(1111), (2222), (3333)"
 argument_list|)
 expr_stmt|;
 name|acidTableNames

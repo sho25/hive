@@ -687,6 +687,42 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|HiveMetaHook
+operator|.
+name|ALTERLOCATION
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|HiveMetaHook
+operator|.
+name|ALTER_TABLE_OPERATION_TYPE
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|Warehouse
 operator|.
 name|DEFAULT_CATALOG_NAME
@@ -1276,13 +1312,15 @@ literal|" doesn't exist"
 argument_list|)
 throw|;
 block|}
-name|checkTableTypeConversion
+name|validateTableChangesOnReplSource
 argument_list|(
 name|olddb
 argument_list|,
 name|oldt
 argument_list|,
 name|newt
+argument_list|,
+name|environmentContext
 argument_list|)
 expr_stmt|;
 if|if
@@ -4865,6 +4903,22 @@ literal|"Unable to alter partitions because table or database does not exist."
 argument_list|)
 throw|;
 block|}
+name|blockPartitionLocationChangesOnReplSource
+argument_list|(
+name|msdb
+operator|.
+name|getDatabase
+argument_list|(
+name|catName
+argument_list|,
+name|dbname
+argument_list|)
+argument_list|,
+name|tbl
+argument_list|,
+name|environmentContext
+argument_list|)
+expr_stmt|;
 for|for
 control|(
 name|Partition
@@ -5250,9 +5304,126 @@ return|return
 name|oldParts
 return|;
 block|}
+comment|// Validate changes to partition's location to protect against errors on migration during
+comment|// replication
 specifier|private
 name|void
-name|checkTableTypeConversion
+name|blockPartitionLocationChangesOnReplSource
+parameter_list|(
+name|Database
+name|db
+parameter_list|,
+name|Table
+name|tbl
+parameter_list|,
+name|EnvironmentContext
+name|ec
+parameter_list|)
+throws|throws
+name|InvalidOperationException
+block|{
+comment|// If the database is not replication source, nothing to do
+if|if
+condition|(
+operator|!
+name|ReplChangeManager
+operator|.
+name|isSourceOfReplication
+argument_list|(
+name|db
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
+comment|// Do not allow changing location of a managed table as alter event doesn't capture the
+comment|// new files list. So, it may cause data inconsistency.
+if|if
+condition|(
+name|ec
+operator|.
+name|isSetProperties
+argument_list|()
+condition|)
+block|{
+name|String
+name|alterType
+init|=
+name|ec
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|ALTER_TABLE_OPERATION_TYPE
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|alterType
+operator|!=
+literal|null
+operator|&&
+name|alterType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|ALTERLOCATION
+argument_list|)
+operator|&&
+name|tbl
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|TableType
+operator|.
+name|MANAGED_TABLE
+operator|.
+name|name
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"Cannot change location of a managed table "
+operator|+
+name|TableName
+operator|.
+name|getQualified
+argument_list|(
+name|tbl
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+operator|+
+literal|" as it is enabled for replication."
+argument_list|)
+throw|;
+block|}
+block|}
+block|}
+comment|// Validate changes to a table to protect against errors on migration during replication.
+specifier|private
+name|void
+name|validateTableChangesOnReplSource
 parameter_list|(
 name|Database
 name|db
@@ -5262,19 +5433,115 @@ name|oldTbl
 parameter_list|,
 name|Table
 name|newTbl
+parameter_list|,
+name|EnvironmentContext
+name|ec
 parameter_list|)
 throws|throws
 name|InvalidOperationException
 block|{
-comment|// If the given DB is enabled for replication and strict managed is false, then table type cannot be changed.
-comment|// This is to avoid migration scenarios which causes Managed ACID table to be converted to external at replica.
-comment|// As ACID tables cannot be converted to external table and vice versa, we need to restrict this conversion at
-comment|// primary as well.
-comment|// Currently, table type conversion is allowed only between managed and external table types.
-comment|// But, to be future proof, any table type conversion is restricted on a replication enabled DB.
+comment|// If the database is not replication source, nothing to do
 if|if
 condition|(
 operator|!
+name|ReplChangeManager
+operator|.
+name|isSourceOfReplication
+argument_list|(
+name|db
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
+comment|// Do not allow changing location of a managed table as alter event doesn't capture the
+comment|// new files list. So, it may cause data inconsistency. We do this whether or not strict
+comment|// managed is true on the source cluster.
+if|if
+condition|(
+name|ec
+operator|.
+name|isSetProperties
+argument_list|()
+condition|)
+block|{
+name|String
+name|alterType
+init|=
+name|ec
+operator|.
+name|getProperties
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|ALTER_TABLE_OPERATION_TYPE
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|alterType
+operator|!=
+literal|null
+operator|&&
+name|alterType
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|ALTERLOCATION
+argument_list|)
+operator|&&
+name|oldTbl
+operator|.
+name|getTableType
+argument_list|()
+operator|.
+name|equalsIgnoreCase
+argument_list|(
+name|TableType
+operator|.
+name|MANAGED_TABLE
+operator|.
+name|name
+argument_list|()
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"Cannot change location of a managed table "
+operator|+
+name|TableName
+operator|.
+name|getQualified
+argument_list|(
+name|oldTbl
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|oldTbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|oldTbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+operator|+
+literal|" as it is enabled for replication."
+argument_list|)
+throw|;
+block|}
+block|}
+comment|// Rest of the changes need validation only when strict managed tables is false. That's
+comment|// when there's scope for migration during replication, at least for now.
+if|if
+condition|(
 name|conf
 operator|.
 name|getBoolean
@@ -5290,7 +5557,18 @@ argument_list|()
 argument_list|,
 literal|false
 argument_list|)
-operator|&&
+condition|)
+block|{
+return|return;
+block|}
+comment|// Do not allow changing the type of table. This is to avoid migration scenarios which causes
+comment|// Managed ACID table to be converted to external at replica. As ACID tables cannot be
+comment|// converted to external table and vice versa, we need to restrict this conversion at primary
+comment|// as well. Currently, table type conversion is allowed only between managed and external
+comment|// table types. But, to be future proof, any table type conversion is restricted on a
+comment|// replication enabled DB.
+if|if
+condition|(
 operator|!
 name|oldTbl
 operator|.
@@ -5303,13 +5581,6 @@ name|newTbl
 operator|.
 name|getTableType
 argument_list|()
-argument_list|)
-operator|&&
-name|ReplChangeManager
-operator|.
-name|isSourceOfReplication
-argument_list|(
-name|db
 argument_list|)
 condition|)
 block|{
@@ -5332,6 +5603,60 @@ name|getTableType
 argument_list|()
 operator|+
 literal|" for the table "
+operator|+
+name|TableName
+operator|.
+name|getQualified
+argument_list|(
+name|oldTbl
+operator|.
+name|getCatName
+argument_list|()
+argument_list|,
+name|oldTbl
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|oldTbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+operator|+
+literal|" as it is enabled for replication."
+argument_list|)
+throw|;
+block|}
+comment|// Also we do not allow changing a non-Acid managed table to acid table on source with strict
+comment|// managed false. After replicating a non-acid managed table to a target with strict managed
+comment|// true the table will be converted to acid or external table. So changing the transactional
+comment|// property of table on source can conflict with resultant change in the target.
+if|if
+condition|(
+operator|!
+name|TxnUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|oldTbl
+argument_list|)
+operator|&&
+name|TxnUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|newTbl
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"A non-Acid table cannot be converted to an Acid "
+operator|+
+literal|"table for the table "
 operator|+
 name|TableName
 operator|.

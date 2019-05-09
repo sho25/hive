@@ -146,6 +146,7 @@ name|ALTER_TABLE_OPERATION_TYPE
 init|=
 literal|"alterTableOpType"
 decl_stmt|;
+comment|// These should remain in sync with AlterTableDesc::AlterTableType enum
 specifier|public
 name|List
 argument_list|<
@@ -161,6 +162,11 @@ literal|"ADDPROPS"
 argument_list|,
 literal|"DROPPROPS"
 argument_list|)
+decl_stmt|;
+name|String
+name|ALTERLOCATION
+init|=
+literal|"ALTERLOCATION"
 decl_stmt|;
 comment|/**    * Called before a new table definition is added to the metastore    * during CREATE TABLE.    *    * @param table new table definition    */
 specifier|public
