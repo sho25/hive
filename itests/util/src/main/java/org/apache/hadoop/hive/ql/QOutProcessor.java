@@ -209,7 +209,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 import|;
@@ -437,7 +437,7 @@ name|fsType
 init|=
 name|FsType
 operator|.
-name|local
+name|LOCAL
 decl_stmt|;
 specifier|public
 specifier|static
@@ -608,7 +608,7 @@ name|fsType
 operator|=
 name|FsType
 operator|.
-name|hdfs
+name|HDFS
 expr_stmt|;
 block|}
 specifier|private
@@ -905,7 +905,7 @@ name|fsType
 operator|==
 name|FsType
 operator|.
-name|encrypted_hdfs
+name|ENCRYPTED_HDFS
 condition|)
 block|{
 for|for

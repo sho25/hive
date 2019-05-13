@@ -57,7 +57,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|dataset
+operator|.
+name|QTestDatasetHandler
 import|;
 end_import
 
@@ -252,7 +254,7 @@ name|String
 argument_list|>
 name|srcTables
 init|=
-name|QTestUtil
+name|QTestDatasetHandler
 operator|.
 name|getSrcTables
 argument_list|()

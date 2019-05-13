@@ -113,7 +113,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 import|;

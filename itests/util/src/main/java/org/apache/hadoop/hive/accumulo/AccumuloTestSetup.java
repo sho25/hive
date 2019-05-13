@@ -49,26 +49,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|extensions
-operator|.
-name|TestSetup
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|Test
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -301,7 +281,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 import|;
 end_import
 
@@ -314,7 +294,7 @@ specifier|public
 class|class
 name|AccumuloTestSetup
 extends|extends
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|QTestSetup
 block|{

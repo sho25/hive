@@ -159,6 +159,20 @@ name|hadoop
 operator|.
 name|hbase
 operator|.
+name|MiniHBaseCluster
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hbase
+operator|.
 name|TableName
 import|;
 end_import
@@ -192,20 +206,6 @@ operator|.
 name|client
 operator|.
 name|Connection
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hbase
-operator|.
-name|MiniHBaseCluster
 import|;
 end_import
 
@@ -285,7 +285,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
+operator|.
+name|QTestSetup
 import|;
 end_import
 
@@ -324,8 +326,6 @@ specifier|public
 class|class
 name|HBaseTestSetup
 extends|extends
-name|QTestUtil
-operator|.
 name|QTestSetup
 block|{
 specifier|private

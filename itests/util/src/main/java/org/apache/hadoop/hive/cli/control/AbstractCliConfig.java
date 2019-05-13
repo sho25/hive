@@ -193,7 +193,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestSystemProperties
 import|;
 end_import
 
@@ -209,7 +209,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 import|;
@@ -227,7 +227,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 import|;
@@ -426,7 +426,7 @@ name|clusterType
 operator|=
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 expr_stmt|;
 name|queryFile
 operator|=
@@ -1325,6 +1325,11 @@ argument_list|)
 operator|||
 operator|!
 name|isQFileSpecified
+argument_list|()
+operator|||
+name|QTestSystemProperties
+operator|.
+name|shouldForceExclusions
 argument_list|()
 condition|)
 block|{

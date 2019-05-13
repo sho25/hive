@@ -61,7 +61,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 import|;
 end_import
 
@@ -77,7 +77,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 import|;
@@ -336,7 +336,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -412,7 +412,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -495,7 +495,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|mr
+name|MR
 argument_list|)
 expr_stmt|;
 block|}
@@ -599,7 +599,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|tez
+name|TEZ
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -611,11 +611,11 @@ argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|hdfs
+name|HDFS
 argument_list|)
 expr_stmt|;
 block|}
@@ -705,7 +705,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|llap
+name|LLAP
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -814,7 +814,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|druid
+name|DRUID
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -826,11 +826,11 @@ argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|hdfs
+name|HDFS
 argument_list|)
 expr_stmt|;
 block|}
@@ -913,7 +913,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|druidKafka
+name|DRUID_KAFKA
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -925,11 +925,11 @@ argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|hdfs
+name|HDFS
 argument_list|)
 expr_stmt|;
 block|}
@@ -1002,7 +1002,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|kafka
+name|KAFKA
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -1014,11 +1014,11 @@ argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|hdfs
+name|HDFS
 argument_list|)
 expr_stmt|;
 block|}
@@ -1168,7 +1168,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|llap_local
+name|LLAP_LOCAL
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -1180,11 +1180,11 @@ argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|local
+name|LOCAL
 argument_list|)
 expr_stmt|;
 block|}
@@ -1262,16 +1262,16 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|mr
+name|MR
 argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|encrypted_hdfs
+name|ENCRYPTED_HDFS
 argument_list|)
 expr_stmt|;
 if|if
@@ -1281,7 +1281,7 @@ argument_list|()
 operator|==
 name|MiniClusterType
 operator|.
-name|tez
+name|TEZ
 condition|)
 block|{
 name|setHiveConfDir
@@ -1543,7 +1543,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|tez
+name|TEZ
 argument_list|)
 expr_stmt|;
 block|}
@@ -1626,7 +1626,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|spark
+name|SPARK
 argument_list|)
 expr_stmt|;
 block|}
@@ -1702,7 +1702,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -1797,7 +1797,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -1880,7 +1880,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|mr
+name|MR
 argument_list|)
 expr_stmt|;
 block|}
@@ -1956,7 +1956,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2032,7 +2032,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2108,7 +2108,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2184,7 +2184,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2267,7 +2267,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2348,7 +2348,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2438,7 +2438,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|spark
+name|SPARK
 argument_list|)
 expr_stmt|;
 block|}
@@ -2521,7 +2521,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|spark
+name|SPARK
 argument_list|)
 expr_stmt|;
 block|}
@@ -2611,7 +2611,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|miniSparkOnYarn
+name|MINI_SPARK_ON_YARN
 argument_list|)
 expr_stmt|;
 block|}
@@ -2701,7 +2701,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|spark
+name|SPARK
 argument_list|)
 expr_stmt|;
 block|}
@@ -2777,7 +2777,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2853,7 +2853,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|)
 expr_stmt|;
 block|}
@@ -2939,16 +2939,16 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|mr
+name|MR
 argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|erasure_coded_hdfs
+name|ERASURE_CODED_HDFS
 argument_list|)
 expr_stmt|;
 name|setHiveConfDir
@@ -2990,7 +2990,7 @@ name|clusterType
 condition|)
 block|{
 case|case
-name|tez
+name|TEZ
 case|:
 name|setHiveConfDir
 argument_list|(
@@ -2999,7 +2999,7 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
-name|spark
+name|SPARK
 case|:
 name|setHiveConfDir
 argument_list|(
@@ -3008,7 +3008,7 @@ argument_list|)
 expr_stmt|;
 break|break;
 case|case
-name|miniSparkOnYarn
+name|MINI_SPARK_ON_YARN
 case|:
 name|setHiveConfDir
 argument_list|(
@@ -3087,7 +3087,7 @@ name|setClusterType
 argument_list|(
 name|MiniClusterType
 operator|.
-name|druidLocal
+name|DRUID_LOCAL
 argument_list|)
 expr_stmt|;
 name|setMetastoreType
@@ -3099,11 +3099,11 @@ argument_list|)
 expr_stmt|;
 name|setFsType
 argument_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 operator|.
-name|local
+name|LOCAL
 argument_list|)
 expr_stmt|;
 block|}

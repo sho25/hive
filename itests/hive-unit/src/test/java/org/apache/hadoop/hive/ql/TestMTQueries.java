@@ -113,7 +113,7 @@ name|QTestUtil
 index|[]
 name|qts
 init|=
-name|QTestUtil
+name|QTestRunnerUtils
 operator|.
 name|queryListRunnerSetup
 argument_list|(
@@ -218,7 +218,7 @@ block|}
 name|boolean
 name|success
 init|=
-name|QTestUtil
+name|QTestRunnerUtils
 operator|.
 name|queryListRunnerMultiThreaded
 argument_list|(

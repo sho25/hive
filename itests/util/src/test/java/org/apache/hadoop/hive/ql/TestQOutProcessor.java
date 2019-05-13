@@ -29,7 +29,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 import|;
@@ -72,7 +72,7 @@ name|QOutProcessor
 argument_list|(
 name|FsType
 operator|.
-name|local
+name|LOCAL
 argument_list|)
 decl_stmt|;
 annotation|@

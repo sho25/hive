@@ -53,7 +53,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QFileVersionHandler
 import|;
 end_import
 
@@ -64,6 +64,13 @@ name|CoreDummy
 extends|extends
 name|CliAdapter
 block|{
+name|QFileVersionHandler
+name|qvh
+init|=
+operator|new
+name|QFileVersionHandler
+argument_list|()
+decl_stmt|;
 specifier|public
 name|CoreDummy
 parameter_list|(
@@ -127,7 +134,7 @@ name|String
 argument_list|>
 name|versionFiles
 init|=
-name|QTestUtil
+name|qvh
 operator|.
 name|getVersionFiles
 argument_list|(

@@ -17,6 +17,42 @@ name|ql
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestMiniClusters
+operator|.
+name|FsType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestMiniClusters
+operator|.
+name|QTestSetup
+import|;
+end_import
+
 begin_comment
 comment|/**  * QTestArguments composite used as arguments holder for QTestUtil initialization.  */
 end_comment
@@ -40,7 +76,7 @@ name|String
 name|confDir
 decl_stmt|;
 specifier|private
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 name|clusterType
@@ -58,14 +94,10 @@ name|boolean
 name|withLlapIo
 decl_stmt|;
 specifier|private
-name|QTestUtil
-operator|.
 name|FsType
 name|fsType
 decl_stmt|;
 specifier|private
-name|QTestUtil
-operator|.
 name|QTestSetup
 name|qtestSetup
 decl_stmt|;
@@ -74,7 +106,7 @@ name|QTestArguments
 parameter_list|()
 block|{   }
 specifier|public
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 name|getClusterType
@@ -88,7 +120,7 @@ specifier|private
 name|void
 name|setClusterType
 parameter_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 name|clusterType
@@ -246,8 +278,6 @@ name|withLlapIo
 expr_stmt|;
 block|}
 specifier|public
-name|QTestUtil
-operator|.
 name|FsType
 name|getFsType
 parameter_list|()
@@ -260,7 +290,7 @@ specifier|private
 name|void
 name|setFsType
 parameter_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 name|fsType
@@ -274,8 +304,6 @@ name|fsType
 expr_stmt|;
 block|}
 specifier|public
-name|QTestUtil
-operator|.
 name|QTestSetup
 name|getQTestSetup
 parameter_list|()
@@ -288,8 +316,6 @@ specifier|private
 name|void
 name|setQTestSetup
 parameter_list|(
-name|QTestUtil
-operator|.
 name|QTestSetup
 name|qtestSetup
 parameter_list|)
@@ -321,7 +347,7 @@ name|String
 name|confDir
 decl_stmt|;
 specifier|private
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 name|clusterType
@@ -339,14 +365,10 @@ name|boolean
 name|withLlapIo
 decl_stmt|;
 specifier|private
-name|QTestUtil
-operator|.
 name|FsType
 name|fsType
 decl_stmt|;
 specifier|private
-name|QTestUtil
-operator|.
 name|QTestSetup
 name|qtestSetup
 decl_stmt|;
@@ -424,7 +446,7 @@ specifier|public
 name|QTestArgumentsBuilder
 name|withClusterType
 parameter_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 name|clusterType
@@ -498,7 +520,7 @@ specifier|public
 name|QTestArgumentsBuilder
 name|withFsType
 parameter_list|(
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|FsType
 name|fsType
@@ -518,8 +540,6 @@ specifier|public
 name|QTestArgumentsBuilder
 name|withQTestSetup
 parameter_list|(
-name|QTestUtil
-operator|.
 name|QTestSetup
 name|qtestSetup
 parameter_list|)
@@ -622,8 +642,6 @@ condition|?
 name|qtestSetup
 else|:
 operator|new
-name|QTestUtil
-operator|.
 name|QTestSetup
 argument_list|()
 argument_list|)

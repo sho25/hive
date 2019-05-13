@@ -83,7 +83,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 import|;
@@ -502,7 +502,7 @@ name|logDir
 argument_list|,
 name|MiniClusterType
 operator|.
-name|none
+name|NONE
 argument_list|,
 literal|"parta"
 argument_list|)
@@ -542,7 +542,7 @@ block|}
 name|boolean
 name|success
 init|=
-name|QTestUtil
+name|QTestRunnerUtils
 operator|.
 name|queryListRunnerSingleThreaded
 argument_list|(

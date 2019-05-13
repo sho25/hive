@@ -73,6 +73,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|QFileVersionHandler
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|QTestArguments
 import|;
 end_import
@@ -121,7 +137,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 import|;
@@ -210,6 +226,14 @@ specifier|private
 specifier|static
 name|QTestUtil
 name|qt
+decl_stmt|;
+specifier|private
+name|QFileVersionHandler
+name|qvh
+init|=
+operator|new
+name|QFileVersionHandler
+argument_list|()
 decl_stmt|;
 specifier|public
 name|CoreCompareCliDriver
@@ -552,15 +576,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
-specifier|static
-name|String
-name|debugHint
-init|=
-literal|"\nSee ./ql/target/tmp/log/hive.log or ./itests/qtest/target/tmp/log/hive.log, "
-operator|+
-literal|"or check ./ql/target/surefire-reports or ./itests/qtest/target/surefire-reports/ for specific test cases logs."
-decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -614,7 +629,7 @@ name|String
 argument_list|>
 name|versionFiles
 init|=
-name|QTestUtil
+name|qvh
 operator|.
 name|getVersionFiles
 argument_list|(
@@ -800,7 +815,9 @@ argument_list|()
 argument_list|,
 name|fname
 argument_list|,
-name|debugHint
+name|QTestUtil
+operator|.
+name|DEBUG_HINT
 argument_list|)
 expr_stmt|;
 block|}
@@ -840,7 +857,9 @@ name|getCapturedOutput
 argument_list|()
 argument_list|)
 condition|?
-name|debugHint
+name|QTestUtil
+operator|.
+name|DEBUG_HINT
 else|:
 literal|"\r\n"
 operator|+
@@ -879,7 +898,9 @@ name|e
 argument_list|,
 name|fname
 argument_list|,
-name|debugHint
+name|QTestUtil
+operator|.
+name|DEBUG_HINT
 argument_list|)
 expr_stmt|;
 block|}

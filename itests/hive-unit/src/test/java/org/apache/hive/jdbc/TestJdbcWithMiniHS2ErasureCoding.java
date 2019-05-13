@@ -431,7 +431,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestMiniClusters
 operator|.
 name|DEFAULT_TEST_EC_POLICY
 import|;

@@ -113,7 +113,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|QTestUtil
+name|QTestSystemProperties
 import|;
 end_import
 
@@ -130,6 +130,22 @@ operator|.
 name|ql
 operator|.
 name|QTestUtil
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestMiniClusters
 operator|.
 name|MiniClusterType
 import|;
@@ -188,7 +204,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  This is the TestPerformance Cli Driver for integrating performance regression tests  as part of the Hive Unit tests.  Currently this includes support for :  1. Running explain plans for TPCDS workload (non-partitioned dataset)  on 30TB scaleset.  TODO :  1. Support for partitioned data set  2. Use HBase Metastore instead of Derby  This suite differs from TestCliDriver w.r.t the fact that we modify the underlying metastore database to reflect the dataset before running the queries. */
+comment|/**  * This is the TestPerformance Cli Driver for integrating performance regression tests as part of  * the Hive Unit tests. Currently this includes support for : 1. Running explain plans for TPCDS  * workload (non-partitioned dataset) on 30TB scaleset. TODO : 1. Support for partitioned data set  * 2. Use HBase Metastore instead of Derby  * This suite differs from TestCliDriver w.r.t the fact that we modify the underlying metastore  * database to reflect the dataset before running the queries.  */
 end_comment
 
 begin_class
@@ -359,14 +375,10 @@ operator|.
 name|getConf
 argument_list|()
 argument_list|,
-name|System
+name|QTestSystemProperties
 operator|.
-name|getProperty
-argument_list|(
-name|QTestUtil
-operator|.
-name|TEST_TMP_DIR_PROPERTY
-argument_list|)
+name|getTempDir
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -545,15 +557,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|private
-specifier|static
-name|String
-name|debugHint
-init|=
-literal|"\nSee ./ql/target/tmp/log/hive.log or ./itests/qtest/target/tmp/log/hive.log, "
-operator|+
-literal|"or check ./ql/target/surefire-reports or ./itests/qtest/target/surefire-reports/ for specific test cases logs."
-decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -650,7 +653,9 @@ argument_list|()
 argument_list|,
 name|fname
 argument_list|,
-name|debugHint
+name|QTestUtil
+operator|.
+name|DEBUG_HINT
 argument_list|)
 expr_stmt|;
 block|}
@@ -687,7 +692,9 @@ name|getCapturedOutput
 argument_list|()
 argument_list|)
 condition|?
-name|debugHint
+name|QTestUtil
+operator|.
+name|DEBUG_HINT
 else|:
 literal|"\r\n"
 operator|+
@@ -726,7 +733,9 @@ name|e
 argument_list|,
 name|fname
 argument_list|,
-name|debugHint
+name|QTestUtil
+operator|.
+name|DEBUG_HINT
 argument_list|)
 expr_stmt|;
 block|}
