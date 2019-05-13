@@ -2075,6 +2075,8 @@ name|tableNameOrPattern
 argument_list|)
 control|)
 block|{
+try|try
+block|{
 name|Table
 name|table
 init|=
@@ -2159,6 +2161,26 @@ argument_list|,
 name|hiveDb
 argument_list|,
 name|tableTuple
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|InvalidTableException
+name|te
+parameter_list|)
+block|{
+comment|// Repl dump shouldn't fail if the table is dropped/renamed while dumping it.
+comment|// Just log a debug message and skip it.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|te
+operator|.
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
