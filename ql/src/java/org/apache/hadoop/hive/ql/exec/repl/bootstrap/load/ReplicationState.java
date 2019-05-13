@@ -27,6 +27,16 @@ end_package
 
 begin_import
 import|import
+name|java
+operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -37,19 +47,13 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|ddl
 operator|.
-name|AddPartitionDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|java
+name|table
 operator|.
-name|io
+name|partition
 operator|.
-name|Serializable
+name|AlterTableAddPartitionDesc
 import|;
 end_import
 
@@ -71,7 +75,7 @@ name|tableName
 decl_stmt|;
 specifier|public
 specifier|final
-name|AddPartitionDesc
+name|AlterTableAddPartitionDesc
 name|lastReplicatedPartition
 decl_stmt|;
 specifier|public
@@ -80,7 +84,7 @@ parameter_list|(
 name|String
 name|tableName
 parameter_list|,
-name|AddPartitionDesc
+name|AlterTableAddPartitionDesc
 name|lastReplicatedPartition
 parameter_list|)
 block|{

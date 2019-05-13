@@ -437,9 +437,13 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|ddl
 operator|.
-name|AddPartitionDesc
+name|table
+operator|.
+name|partition
+operator|.
+name|AlterTableAddPartitionDesc
 import|;
 end_import
 
@@ -1848,11 +1852,11 @@ argument_list|,
 name|partitionValues
 argument_list|)
 decl_stmt|;
-name|AddPartitionDesc
+name|AlterTableAddPartitionDesc
 name|addPartitionDesc
 init|=
 operator|new
-name|AddPartitionDesc
+name|AlterTableAddPartitionDesc
 argument_list|(
 name|database
 argument_list|,
