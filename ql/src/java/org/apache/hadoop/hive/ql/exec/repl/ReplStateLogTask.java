@@ -152,6 +152,19 @@ return|return
 literal|"REPL_STATE_LOG"
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|canExecuteInParallel
+parameter_list|()
+block|{
+comment|// ReplStateLogTask is executed only when all its parents are done with execution. So running it in parallel has no
+comment|// benefits.
+return|return
+literal|false
+return|;
+block|}
 block|}
 end_class
 

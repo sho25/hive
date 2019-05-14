@@ -1248,6 +1248,8 @@ operator|.
 name|get
 argument_list|(
 name|replStateLogWork
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 name|AddDependencyToLeaves

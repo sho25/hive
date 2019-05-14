@@ -2640,6 +2640,8 @@ operator|.
 name|get
 argument_list|(
 name|replLogWork
+argument_list|,
+name|conf
 argument_list|)
 decl_stmt|;
 if|if
