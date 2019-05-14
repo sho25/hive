@@ -4220,7 +4220,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Processing changes for pool "
 operator|+
