@@ -6169,14 +6169,27 @@ argument_list|)
 decl_stmt|;
 specifier|final
 name|long
+name|nanos
+init|=
+name|timestampColumnVector
+operator|.
+name|getNanos
+argument_list|(
+name|j
+argument_list|)
+decl_stmt|;
+comment|// nanos should be subtracted from total time(secondInMillis) to obtain micros
+comment|// Divide nanos by 1000_000 to bring it to millisecond precision and then perform the subtraction
+specifier|final
+name|long
 name|secondInMicros
 init|=
 operator|(
 name|secondInMillis
 operator|-
-name|secondInMillis
-operator|%
-name|MILLIS_PER_SECOND
+name|nanos
+operator|/
+name|NS_PER_MILLIS
 operator|)
 operator|*
 name|MICROS_PER_MILLIS
@@ -6185,12 +6198,7 @@ specifier|final
 name|long
 name|subSecondInMicros
 init|=
-name|timestampColumnVector
-operator|.
-name|getNanos
-argument_list|(
-name|j
-argument_list|)
+name|nanos
 operator|/
 name|NS_PER_MICROS
 decl_stmt|;
