@@ -2995,6 +2995,23 @@ argument_list|,
 literal|"Automatic partition management will look for tables using the specified table pattern"
 argument_list|)
 block|,
+name|METASTORE_METADATA_TRANSFORMER_CLASS
+argument_list|(
+literal|"metastore.metadata.transformer.class"
+argument_list|,
+literal|"metastore.metadata.transformer.class"
+argument_list|,
+literal|"org.apache.hadoop.hive.metastore.MetastoreDefaultTransformer"
+argument_list|,
+literal|"Fully qualified class name for the metastore metadata transformer class \n"
+operator|+
+literal|"which is used by HMS Server to fetch the extended tables/partitions information \n"
+operator|+
+literal|"based on the data processor capabilities \n"
+operator|+
+literal|" This class should implement the IMetaStoreMetadataTransformer interface"
+argument_list|)
+block|,
 name|MULTITHREADED
 argument_list|(
 literal|"javax.jdo.option.Multithreaded"
