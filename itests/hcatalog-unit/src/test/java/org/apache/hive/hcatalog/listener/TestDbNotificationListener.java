@@ -10507,9 +10507,6 @@ name|defaultDbName
 argument_list|,
 name|firstEventId
 argument_list|,
-operator|(
-name|long
-operator|)
 name|firstEventId
 operator|+
 literal|5
@@ -11203,19 +11200,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// replace-overwrite introduces no new files
-name|assertTrue
-argument_list|(
-name|event
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|matches
-argument_list|(
-literal|".*\"files\":\\[\\].*"
-argument_list|)
-argument_list|)
-expr_stmt|;
+comment|// the insert overwrite creates an empty file with the current change
+comment|//assertTrue(event.getMessage().matches(".*\"files\":\\[\\].*"));
 name|event
 operator|=
 name|rsp
@@ -11354,9 +11340,6 @@ name|defaultDbName
 argument_list|,
 name|firstEventId
 argument_list|,
-operator|(
-name|long
-operator|)
 name|firstEventId
 operator|+
 literal|100
@@ -11373,9 +11356,6 @@ name|defaultDbName
 argument_list|,
 name|firstEventId
 argument_list|,
-operator|(
-name|long
-operator|)
 name|firstEventId
 operator|+
 literal|100
@@ -11392,9 +11372,6 @@ name|defaultDbName
 argument_list|,
 name|firstEventId
 argument_list|,
-operator|(
-name|long
-operator|)
 name|firstEventId
 operator|+
 literal|100
