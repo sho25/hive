@@ -5766,10 +5766,7 @@ return|return
 operator|new
 name|TGetQueryIdResp
 argument_list|(
-operator|(
-name|String
-operator|)
-literal|null
+literal|""
 argument_list|)
 return|;
 block|}

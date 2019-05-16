@@ -37,6 +37,20 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang
+operator|.
+name|StringUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|hive
@@ -3149,9 +3163,16 @@ parameter_list|()
 throws|throws
 name|SQLException
 block|{
+comment|// Storing it in temp variable as this method is not thread-safe and concurrent thread can
+comment|// close this handle and set it to null after checking for null.
+name|TOperationHandle
+name|stmtHandleTmp
+init|=
+name|stmtHandle
+decl_stmt|;
 if|if
 condition|(
-name|stmtHandle
+name|stmtHandleTmp
 operator|==
 literal|null
 condition|)
@@ -3163,7 +3184,9 @@ return|;
 block|}
 try|try
 block|{
-return|return
+name|String
+name|queryId
+init|=
 name|client
 operator|.
 name|GetQueryId
@@ -3171,12 +3194,25 @@ argument_list|(
 operator|new
 name|TGetQueryIdReq
 argument_list|(
-name|stmtHandle
+name|stmtHandleTmp
 argument_list|)
 argument_list|)
 operator|.
 name|getQueryId
 argument_list|()
+decl_stmt|;
+comment|// queryId can be empty string if query was already closed. Need to return null in such case.
+return|return
+name|StringUtils
+operator|.
+name|isBlank
+argument_list|(
+name|queryId
+argument_list|)
+condition|?
+literal|null
+else|:
+name|queryId
 return|;
 block|}
 catch|catch
