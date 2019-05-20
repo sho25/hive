@@ -930,7 +930,10 @@ block|}
 specifier|public
 name|TaskTracker
 name|tasks
-parameter_list|()
+parameter_list|(
+name|boolean
+name|isBootstrapDuringInc
+parameter_list|)
 throws|throws
 name|Exception
 block|{
@@ -1060,6 +1063,8 @@ init|=
 name|getLoadTableType
 argument_list|(
 name|table
+argument_list|,
+name|isBootstrapDuringInc
 argument_list|)
 decl_stmt|;
 switch|switch
@@ -1204,6 +1209,9 @@ name|getLoadTableType
 parameter_list|(
 name|Table
 name|table
+parameter_list|,
+name|boolean
+name|isBootstrapDuringInc
 parameter_list|)
 throws|throws
 name|InvalidOperationException
@@ -1221,6 +1229,35 @@ return|return
 name|ReplLoadOpType
 operator|.
 name|LOAD_NEW
+return|;
+block|}
+comment|// In case user has asked for bootstrap of table during a incremental load, we replace the old one if present.
+comment|// This is to make sure that the transactional info like write id etc for the table is consistent between the
+comment|// source and target cluster. This is also to avoid mismatch between target and source cluster table type in case
+comment|// migration and upgrade uses different conversion rule.
+if|if
+condition|(
+name|isBootstrapDuringInc
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Table "
+operator|+
+name|table
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" will be replaced as bootstrap is requested during incremental load"
+argument_list|)
+expr_stmt|;
+return|return
+name|ReplLoadOpType
+operator|.
+name|LOAD_REPLACE
 return|;
 block|}
 if|if
