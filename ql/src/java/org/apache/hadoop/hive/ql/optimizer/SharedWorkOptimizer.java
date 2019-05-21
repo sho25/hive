@@ -9186,9 +9186,9 @@ comment|// some requirements. In particular:
 comment|// 1.1. None of the works that we are merging can contain a Union
 comment|// operator. This is not supported yet as we might end up with cycles in
 comment|// the Tez DAG.
-comment|// 1.2. There cannot be more than one DummyStore operator in the new resulting
-comment|// work when the operators are merged. This is due to an assumption in
-comment|// MergeJoinProc that needs to be further explored.
+comment|// 1.2. There cannot be any DummyStore operator in the works being merged.
+comment|//  This is due to an assumption in MergeJoinProc that needs to be further explored.
+comment|//  This is also due to some assumption in task generation
 comment|// If any of these conditions are not met, we cannot merge.
 comment|// TODO: Extend rule so it can be applied for these cases.
 specifier|final
@@ -9225,11 +9225,6 @@ argument_list|,
 name|op2
 argument_list|)
 decl_stmt|;
-name|boolean
-name|foundDummyStoreOp
-init|=
-literal|false
-decl_stmt|;
 for|for
 control|(
 name|Operator
@@ -9260,10 +9255,10 @@ operator|instanceof
 name|DummyStoreOperator
 condition|)
 block|{
-name|foundDummyStoreOp
-operator|=
-literal|true
-expr_stmt|;
+comment|// We cannot merge (1.2)
+return|return
+literal|false
+return|;
 block|}
 block|}
 for|for
@@ -9291,8 +9286,6 @@ return|;
 block|}
 if|if
 condition|(
-name|foundDummyStoreOp
-operator|&&
 name|op
 operator|instanceof
 name|DummyStoreOperator
