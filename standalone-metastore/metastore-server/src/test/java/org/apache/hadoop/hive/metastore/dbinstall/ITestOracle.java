@@ -45,7 +45,7 @@ name|getDockerImageName
 parameter_list|()
 block|{
 return|return
-literal|"alexeiled/docker-oracle-xe-11g"
+literal|"orangehrm/oracle-xe-11g"
 return|;
 block|}
 annotation|@
