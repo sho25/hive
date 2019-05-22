@@ -1965,6 +1965,9 @@ name|pattern
 parameter_list|,
 name|TableType
 name|tableType
+parameter_list|,
+name|int
+name|limit
 parameter_list|)
 throws|throws
 name|MetaException

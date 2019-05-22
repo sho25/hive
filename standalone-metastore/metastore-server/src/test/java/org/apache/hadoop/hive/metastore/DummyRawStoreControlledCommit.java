@@ -2388,6 +2388,9 @@ name|pattern
 parameter_list|,
 name|TableType
 name|tableType
+parameter_list|,
+name|int
+name|limit
 parameter_list|)
 throws|throws
 name|MetaException
@@ -2404,6 +2407,8 @@ argument_list|,
 name|pattern
 argument_list|,
 name|tableType
+argument_list|,
+name|limit
 argument_list|)
 return|;
 block|}

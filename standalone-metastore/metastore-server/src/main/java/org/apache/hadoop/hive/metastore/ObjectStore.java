@@ -7307,6 +7307,9 @@ argument_list|,
 name|pattern
 argument_list|,
 literal|null
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 return|;
 block|}
@@ -7330,6 +7333,9 @@ name|pattern
 parameter_list|,
 name|TableType
 name|tableType
+parameter_list|,
+name|int
+name|limit
 parameter_list|)
 throws|throws
 name|MetaException
@@ -7363,6 +7369,8 @@ argument_list|)
 operator|)
 argument_list|,
 literal|true
+argument_list|,
+name|limit
 argument_list|)
 return|;
 block|}
@@ -7985,6 +7993,9 @@ name|allowSql
 parameter_list|,
 name|boolean
 name|allowJdo
+parameter_list|,
+name|int
+name|limit
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8058,6 +8069,8 @@ argument_list|,
 name|db_name
 argument_list|,
 name|tableType
+argument_list|,
+name|limit
 argument_list|)
 return|;
 block|}
@@ -8094,6 +8107,8 @@ argument_list|,
 name|pattern
 argument_list|,
 name|tableType
+argument_list|,
+name|limit
 argument_list|)
 return|;
 block|}
@@ -8123,6 +8138,9 @@ name|pattern
 parameter_list|,
 name|TableType
 name|tableType
+parameter_list|,
+name|int
+name|limit
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8284,6 +8302,21 @@ operator|.
 name|setOrdering
 argument_list|(
 literal|"tableName ascending"
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|limit
+operator|>=
+literal|0
+condition|)
+name|query
+operator|.
+name|setRange
+argument_list|(
+literal|0
+argument_list|,
+name|limit
 argument_list|)
 expr_stmt|;
 name|Collection
@@ -15982,19 +16015,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-name|Integer
-name|max
-init|=
-operator|(
-name|maxParts
-operator|<
-literal|0
-operator|)
-condition|?
-literal|null
-else|:
-name|maxParts
-decl_stmt|;
 return|return
 name|directSql
 operator|.
@@ -16006,7 +16026,7 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|max
+name|maxParts
 argument_list|)
 return|;
 block|}

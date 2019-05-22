@@ -19273,6 +19273,14 @@ operator|.
 name|getProcessorCapabilities
 argument_list|()
 decl_stmt|;
+name|int
+name|limit
+init|=
+name|req
+operator|.
+name|getLimit
+argument_list|()
+decl_stmt|;
 name|String
 name|processorId
 init|=
@@ -19324,6 +19332,8 @@ argument_list|,
 name|pattern
 argument_list|,
 literal|null
+argument_list|,
+name|limit
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -33796,6 +33806,9 @@ name|valueOf
 argument_list|(
 name|tableType
 argument_list|)
+argument_list|,
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 block|}

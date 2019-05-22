@@ -780,7 +780,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Get table names that match a pattern.    * @param catName catalog to search in    * @param dbName database to search in    * @param pattern pattern to match    * @param tableType type of table to look for    * @return list of table names, if any    * @throws MetaException failure in querying the RDBMS    */
+comment|/**    * Get table names that match a pattern.    * @param catName catalog to search in    * @param dbName database to search in    * @param pattern pattern to match    * @param tableType type of table to look for    * @param limit Maximum number of tables to return (undeterministic set)    * @return list of table names, if any    * @throws MetaException failure in querying the RDBMS    */
 name|List
 argument_list|<
 name|String
@@ -798,6 +798,9 @@ name|pattern
 parameter_list|,
 name|TableType
 name|tableType
+parameter_list|,
+name|int
+name|limit
 parameter_list|)
 throws|throws
 name|MetaException
