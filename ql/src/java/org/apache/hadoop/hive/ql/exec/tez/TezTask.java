@@ -3926,6 +3926,17 @@ block|}
 annotation|@
 name|Override
 specifier|public
+name|boolean
+name|canExecuteInParallel
+parameter_list|()
+block|{
+return|return
+literal|false
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
 name|Collection
 argument_list|<
 name|MapWork
