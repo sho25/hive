@@ -501,6 +501,8 @@ argument_list|,
 literal|"hive.druid.select.distribute"
 argument_list|,
 literal|"distcp.options.px"
+argument_list|,
+literal|"hive.materializedview.rewriting"
 argument_list|)
 decl_stmt|;
 comment|// combine two lists

@@ -23246,6 +23246,8 @@ literal|"hive\\.merge\\..*"
 block|,
 literal|"hive\\.optimize\\..*"
 block|,
+literal|"hive\\.materializedview\\..*"
+block|,
 literal|"hive\\.orc\\..*"
 block|,
 literal|"hive\\.outerjoin\\..*"
