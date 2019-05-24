@@ -2340,7 +2340,7 @@ argument_list|>
 name|referencedColumns
 parameter_list|,
 name|boolean
-name|fetchColStats
+name|needColStats
 parameter_list|)
 throws|throws
 name|HiveException
@@ -2362,7 +2362,7 @@ name|colStatsCache
 argument_list|,
 name|referencedColumns
 argument_list|,
-name|fetchColStats
+name|needColStats
 argument_list|,
 literal|false
 argument_list|)
@@ -2404,7 +2404,7 @@ argument_list|>
 name|referencedColumns
 parameter_list|,
 name|boolean
-name|fetchColStats
+name|needColStats
 parameter_list|,
 name|boolean
 name|failIfCacheMiss
@@ -2418,7 +2418,23 @@ init|=
 literal|null
 decl_stmt|;
 name|boolean
-name|shouldEstimateStats
+name|fetchColStats
+init|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_FETCH_COLUMN_STATS
+argument_list|)
+decl_stmt|;
+name|boolean
+name|estimateStats
 init|=
 name|HiveConf
 operator|.
@@ -2451,7 +2467,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|shouldEstimateStats
+name|estimateStats
 condition|)
 block|{
 name|basicStatsFactory
@@ -2551,7 +2567,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|fetchColStats
+name|needColStats
 condition|)
 block|{
 name|colStats
@@ -2565,23 +2581,10 @@ argument_list|,
 name|neededColumns
 argument_list|,
 name|colStatsCache
+argument_list|,
+name|fetchColStats
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|colStats
-operator|==
-literal|null
-condition|)
-block|{
-name|colStats
-operator|=
-name|Lists
-operator|.
-name|newArrayList
-argument_list|()
-expr_stmt|;
-block|}
 name|estimateStatsForMissingCols
 argument_list|(
 name|neededColumns
@@ -2701,7 +2704,7 @@ argument_list|()
 decl_stmt|;
 if|if
 condition|(
-name|shouldEstimateStats
+name|estimateStats
 condition|)
 block|{
 comment|// FIXME: misses parallel
@@ -2938,7 +2941,7 @@ block|}
 block|}
 if|if
 condition|(
-name|fetchColStats
+name|needColStats
 condition|)
 block|{
 name|List
@@ -3281,6 +3284,8 @@ comment|// size is 0, aggrStats is null after several retries. Thus, we can
 comment|// skip the step to connect to the metastore.
 if|if
 condition|(
+name|fetchColStats
+operator|&&
 name|neededColsToRetrieve
 operator|.
 name|size
@@ -7534,8 +7539,22 @@ name|neededColumns
 parameter_list|,
 name|ColumnStatsList
 name|colStatsCache
+parameter_list|,
+name|boolean
+name|fetchColStats
 parameter_list|)
 block|{
+name|List
+argument_list|<
+name|ColStatistics
+argument_list|>
+name|stats
+init|=
+operator|new
+name|ArrayList
+argument_list|<>
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|table
@@ -7552,7 +7571,7 @@ literal|"Materialized table does not contain table statistics"
 argument_list|)
 expr_stmt|;
 return|return
-literal|null
+name|stats
 return|;
 block|}
 comment|// We will retrieve stats from the metastore only for columns that are not cached
@@ -7661,17 +7680,14 @@ block|{
 comment|// insert into values gets written into insert from select dummy_table
 comment|// This table is dummy and has no stats
 return|return
-literal|null
+name|stats
 return|;
 block|}
-name|List
-argument_list|<
-name|ColStatistics
-argument_list|>
-name|stats
-init|=
-literal|null
-decl_stmt|;
+if|if
+condition|(
+name|fetchColStats
+condition|)
+block|{
 try|try
 block|{
 name|List
@@ -7721,15 +7737,7 @@ argument_list|,
 name|e
 argument_list|)
 expr_stmt|;
-name|stats
-operator|=
-operator|new
-name|ArrayList
-argument_list|<
-name|ColStatistics
-argument_list|>
-argument_list|()
-expr_stmt|;
+block|}
 block|}
 comment|// Merge stats from cache with metastore cache
 if|if
