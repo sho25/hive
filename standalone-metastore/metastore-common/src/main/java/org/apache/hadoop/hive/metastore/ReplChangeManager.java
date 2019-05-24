@@ -1736,6 +1736,21 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
+if|if
+condition|(
+name|instance
+operator|==
+literal|null
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+literal|"Uninitialized ReplChangeManager instance."
+argument_list|)
+throw|;
+block|}
 name|String
 name|encodedUri
 init|=

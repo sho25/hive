@@ -230,7 +230,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Processing#{} CREATE_MESSAGE message : {}"
+literal|"Processing#{} CREATE_FUNCTION message : {}"
 argument_list|,
 name|fromEventId
 argument_list|()
