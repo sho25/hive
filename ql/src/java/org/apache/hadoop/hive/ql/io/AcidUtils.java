@@ -12855,6 +12855,15 @@ name|SemanticException
 block|{
 try|try
 block|{
+if|if
+condition|(
+name|srcs
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 for|for
 control|(
 name|FileStatus

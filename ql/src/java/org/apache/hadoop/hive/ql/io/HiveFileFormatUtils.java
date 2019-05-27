@@ -1318,7 +1318,7 @@ operator|)
 name|origin
 return|;
 block|}
-comment|/**    * checks if files are in same format as the given input format.    */
+comment|/**    * Checks if files are in same format as the given input format.    *    * Note: an empty set of files is considered compliant.    */
 annotation|@
 name|SuppressWarnings
 argument_list|(
@@ -1359,9 +1359,11 @@ operator|.
 name|isEmpty
 argument_list|()
 condition|)
+block|{
 return|return
-literal|false
+literal|true
 return|;
+block|}
 name|Class
 argument_list|<
 name|?
