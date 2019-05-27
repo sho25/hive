@@ -3578,6 +3578,47 @@ operator|+
 literal|"operation log directory will not be removed, so they can be found after the test runs."
 argument_list|)
 block|,
+name|HIVE_TEST_LOAD_HOSTNAMES
+argument_list|(
+literal|"hive.test.load.hostnames"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Specify host names for load testing. (e.g., \"host1,host2,host3\"). Leave it empty if no "
+operator|+
+literal|"load generation is needed (eg. for production)."
+argument_list|)
+block|,
+name|HIVE_TEST_LOAD_INTERVAL
+argument_list|(
+literal|"hive.test.load.interval"
+argument_list|,
+literal|"10ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"The interval length used for load and idle periods in milliseconds."
+argument_list|)
+block|,
+name|HIVE_TEST_LOAD_UTILIZATION
+argument_list|(
+literal|"hive.test.load.utilization"
+argument_list|,
+literal|0.2f
+argument_list|,
+literal|"Specify processor load utilization between 0.0 (not loaded on all threads) and 1.0 "
+operator|+
+literal|"(fully loaded on all threads). Comparing this with a random value the load generator creates "
+operator|+
+literal|"hive.test.load.interval length active loops or idle periods"
+argument_list|)
+block|,
 name|HIVE_IN_TEZ_TEST
 argument_list|(
 literal|"hive.in.tez.test"
