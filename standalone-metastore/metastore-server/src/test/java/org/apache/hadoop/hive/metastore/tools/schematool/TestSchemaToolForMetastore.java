@@ -2598,7 +2598,7 @@ operator|new
 name|String
 index|[]
 block|{
-literal|"insert into CTLGS values (1, 'mycat', 'my description', 'hdfs://myhost.com:8020/user/hive/warehouse', "
+literal|"insert into CTLGS values (2, 'mycat', 'my description', 'hdfs://myhost.com:8020/user/hive/warehouse', "
 operator|+
 name|time
 operator|+
