@@ -12716,6 +12716,19 @@ operator|+
 literal|"  NOSASL:  Raw transport"
 argument_list|)
 block|,
+name|HIVE_SERVER2_TRUST_DOMAIN
+argument_list|(
+literal|"hive.server2.trust.domain"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Specifies the host or a domain to trust connections from. Authentication is skipped "
+operator|+
+literal|"for any connection coming from this domain or the host. By default it is "
+operator|+
+literal|"empty, which means that all the connections to HiveServer2 are authenticated."
+argument_list|)
+block|,
 name|HIVE_SERVER2_ALLOW_USER_SUBSTITUTION
 argument_list|(
 literal|"hive.server2.allow.user.substitution"

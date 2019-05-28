@@ -471,6 +471,22 @@ name|service
 operator|.
 name|auth
 operator|.
+name|PlainSaslHelper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|auth
+operator|.
 name|ldap
 operator|.
 name|HttpEmptyAuthenticationException
@@ -1034,6 +1050,86 @@ expr_stmt|;
 return|return;
 block|}
 block|}
+name|clientIpAddress
+operator|=
+name|request
+operator|.
+name|getRemoteAddr
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Client IP Address: "
+operator|+
+name|clientIpAddress
+argument_list|)
+expr_stmt|;
+name|String
+name|trustedDomain
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_TRUST_DOMAIN
+argument_list|)
+operator|.
+name|trim
+argument_list|()
+decl_stmt|;
+comment|// Skip authentication if the connection is from the trusted domain
+if|if
+condition|(
+operator|!
+name|trustedDomain
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|PlainSaslHelper
+operator|.
+name|isHostFromTrustedDomain
+argument_list|(
+name|request
+operator|.
+name|getRemoteHost
+argument_list|()
+argument_list|,
+name|trustedDomain
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"No authentication performed because the connecting host "
+operator|+
+name|request
+operator|.
+name|getRemoteHost
+argument_list|()
+operator|+
+literal|" is from the trusted domain "
+operator|+
+name|trustedDomain
+argument_list|)
+expr_stmt|;
+comment|// TODO: We need to get the user name somehow here. In this case, I think the incoming
+comment|//  connection should have proxy user set. How do we get it here is the question.
+name|clientUserName
+operator|=
+literal|"xyz"
+expr_stmt|;
+block|}
+else|else
+block|{
 comment|// If the cookie based authentication is already enabled, parse the
 comment|// request and validate the request cookies.
 if|if
@@ -1152,6 +1248,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 name|LOG
 operator|.
 name|debug
@@ -1196,22 +1293,6 @@ name|doAsQueryParam
 argument_list|)
 expr_stmt|;
 block|}
-name|clientIpAddress
-operator|=
-name|request
-operator|.
-name|getRemoteAddr
-argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Client IP Address: "
-operator|+
-name|clientIpAddress
-argument_list|)
-expr_stmt|;
 comment|// Set the thread local ip address
 name|SessionManager
 operator|.
