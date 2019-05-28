@@ -642,7 +642,7 @@ name|op
 condition|)
 block|{
 case|case
-name|RENAMECOLUMN
+name|RENAME_COLUMN
 case|:
 case|case
 name|ADDCLUSTERSORTCOLUMN
@@ -657,7 +657,7 @@ case|case
 name|DROPPROPS
 case|:
 case|case
-name|REPLACECOLS
+name|REPLACE_COLUMNS
 case|:
 case|case
 name|ARCHIVE
@@ -687,7 +687,7 @@ case|case
 name|ALTERPARTITION
 case|:
 case|case
-name|ADDCOLS
+name|ADD_COLUMNS
 case|:
 case|case
 name|RENAME
@@ -699,7 +699,7 @@ case|case
 name|MERGEFILES
 case|:
 case|case
-name|DROPCONSTRAINT
+name|DROP_CONSTRAINT
 case|:
 return|return
 name|WriteType
