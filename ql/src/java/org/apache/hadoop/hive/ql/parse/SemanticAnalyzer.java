@@ -79389,6 +79389,7 @@ name|getInternalName
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// __u<n> is a UNION ALL placeholder name
 if|if
 condition|(
 name|useTabAliasIfAvailable
@@ -79400,6 +79401,7 @@ index|]
 operator|!=
 literal|null
 operator|&&
+operator|(
 operator|!
 name|qualifiedColName
 index|[
@@ -79408,6 +79410,20 @@ index|]
 operator|.
 name|isEmpty
 argument_list|()
+operator|)
+operator|&&
+operator|(
+operator|!
+name|qualifiedColName
+index|[
+literal|0
+index|]
+operator|.
+name|startsWith
+argument_list|(
+literal|"__u"
+argument_list|)
+operator|)
 condition|)
 block|{
 name|colName
