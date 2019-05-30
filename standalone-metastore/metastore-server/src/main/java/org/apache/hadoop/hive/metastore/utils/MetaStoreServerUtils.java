@@ -1289,6 +1289,14 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|JUNIT_DATABASE_PREFIX
+init|=
+literal|"junit_metastore_db"
+decl_stmt|;
 comment|/**    * Helper function to transform Nulls to empty strings.    */
 specifier|private
 specifier|static

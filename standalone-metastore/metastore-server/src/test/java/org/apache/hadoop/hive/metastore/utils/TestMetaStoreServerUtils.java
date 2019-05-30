@@ -5775,7 +5775,13 @@ argument_list|)
 expr_stmt|;
 name|connectionURL
 operator|=
-literal|"jdbc:derby:memory:${test.tmp.dir}/junit_metastore_db;create=true"
+literal|"jdbc:derby:memory:${test.tmp.dir}/"
+operator|+
+name|MetaStoreServerUtils
+operator|.
+name|JUNIT_DATABASE_PREFIX
+operator|+
+literal|";create=true"
 expr_stmt|;
 name|result
 operator|=
