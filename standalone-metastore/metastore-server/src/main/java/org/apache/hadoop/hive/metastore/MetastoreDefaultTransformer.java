@@ -1273,8 +1273,6 @@ argument_list|(
 name|ACCESSTYPE_NONE
 argument_list|)
 expr_stmt|;
-break|break;
-block|}
 name|ret
 operator|.
 name|put
@@ -1284,6 +1282,8 @@ argument_list|,
 name|generated
 argument_list|)
 expr_stmt|;
+break|break;
+block|}
 continue|continue;
 block|}
 comment|// WITH CAPABLITIES ON TABLE
@@ -2038,7 +2038,7 @@ name|info
 argument_list|(
 literal|"Transformer return list of "
 operator|+
-name|objects
+name|ret
 operator|.
 name|size
 argument_list|()
