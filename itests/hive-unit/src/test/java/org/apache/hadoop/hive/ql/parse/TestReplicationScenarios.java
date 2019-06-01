@@ -1836,6 +1836,32 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+name|hconf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVESTATSAUTOGATHER
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|hconf
+operator|.
+name|setBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_STATS_RELIABLE
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|System
 operator|.
 name|setProperty
@@ -6591,6 +6617,8 @@ name|dbName
 operator|+
 literal|".unptned"
 argument_list|,
+literal|true
+argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
@@ -6647,6 +6675,8 @@ name|dbName
 operator|+
 literal|".ptned PARTITION(b=1)"
 argument_list|,
+literal|true
+argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
@@ -6674,6 +6704,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned PARTITION(b=2)"
+argument_list|,
+literal|true
 argument_list|,
 name|driver
 argument_list|)
@@ -6714,6 +6746,8 @@ name|dbName
 operator|+
 literal|".ptned_late PARTITION(b=1)"
 argument_list|,
+literal|true
+argument_list|,
 name|driver
 argument_list|)
 expr_stmt|;
@@ -6741,6 +6775,8 @@ operator|+
 name|dbName
 operator|+
 literal|".ptned_late PARTITION(b=2)"
+argument_list|,
+literal|true
 argument_list|,
 name|driver
 argument_list|)

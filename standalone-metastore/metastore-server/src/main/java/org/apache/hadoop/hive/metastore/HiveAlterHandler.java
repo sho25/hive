@@ -5340,6 +5340,12 @@ comment|// Do not allow changing location of a managed table as alter event does
 comment|// new files list. So, it may cause data inconsistency.
 if|if
 condition|(
+operator|(
+name|ec
+operator|!=
+literal|null
+operator|)
+operator|&&
 name|ec
 operator|.
 name|isSetProperties
@@ -5459,6 +5465,12 @@ comment|// new files list. So, it may cause data inconsistency. We do this wheth
 comment|// managed is true on the source cluster.
 if|if
 condition|(
+operator|(
+name|ec
+operator|!=
+literal|null
+operator|)
+operator|&&
 name|ec
 operator|.
 name|isSetProperties
