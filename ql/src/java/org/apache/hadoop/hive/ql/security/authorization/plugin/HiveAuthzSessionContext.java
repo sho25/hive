@@ -91,6 +91,10 @@ block|{
 name|HIVESERVER2
 block|,
 name|HIVECLI
+block|,
+name|HIVEMETASTORE
+block|,
+name|OTHER
 block|}
 empty_stmt|;
 specifier|public

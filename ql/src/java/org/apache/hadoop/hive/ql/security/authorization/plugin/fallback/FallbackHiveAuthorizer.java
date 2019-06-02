@@ -532,6 +532,7 @@ name|admins
 init|=
 literal|null
 decl_stmt|;
+specifier|public
 name|FallbackHiveAuthorizer
 parameter_list|(
 name|HiveConf
