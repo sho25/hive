@@ -778,8 +778,6 @@ name|trans
 argument_list|)
 return|;
 block|}
-else|else
-block|{
 return|return
 name|otherFactory
 operator|.
@@ -788,7 +786,6 @@ argument_list|(
 name|trans
 argument_list|)
 return|;
-block|}
 block|}
 block|}
 specifier|public

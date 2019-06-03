@@ -1066,6 +1066,51 @@ operator|+
 name|clientIpAddress
 argument_list|)
 expr_stmt|;
+comment|// If the cookie based authentication is already enabled, parse the
+comment|// request and validate the request cookies.
+if|if
+condition|(
+name|isCookieAuthEnabled
+condition|)
+block|{
+name|clientUserName
+operator|=
+name|validateCookie
+argument_list|(
+name|request
+argument_list|)
+expr_stmt|;
+name|requireNewCookie
+operator|=
+operator|(
+name|clientUserName
+operator|==
+literal|null
+operator|)
+expr_stmt|;
+if|if
+condition|(
+name|requireNewCookie
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Could not validate cookie sent, will try to generate a new cookie"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+comment|// If the cookie based authentication is not enabled or the request does not have a valid
+comment|// cookie, use authentication depending on the server setup.
+if|if
+condition|(
+name|clientUserName
+operator|==
+literal|null
+condition|)
+block|{
 name|String
 name|trustedDomain
 init|=
@@ -1077,13 +1122,13 @@ name|hiveConf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_TRUST_DOMAIN
+name|HIVE_SERVER2_TRUSTED_DOMAIN
 argument_list|)
 operator|.
 name|trim
 argument_list|()
 decl_stmt|;
-comment|// Skip authentication if the connection is from the trusted domain
+comment|// Skip authentication if the connection is from the trusted domain, if specified.
 if|if
 condition|(
 operator|!
@@ -1121,60 +1166,27 @@ operator|+
 name|trustedDomain
 argument_list|)
 expr_stmt|;
-comment|// TODO: We need to get the user name somehow here. In this case, I think the incoming
-comment|//  connection should have proxy user set. How do we get it here is the question.
+comment|// In order to skip authentication, we use auth type NOSASL to be consistent with the
+comment|// HiveAuthFactory defaults. In HTTP mode, it will also get us the user name from the
+comment|// HTTP request header.
 name|clientUserName
 operator|=
-literal|"xyz"
+name|doPasswdAuth
+argument_list|(
+name|request
+argument_list|,
+name|HiveAuthConstants
+operator|.
+name|AuthTypes
+operator|.
+name|NOSASL
+operator|.
+name|getAuthName
+argument_list|()
+argument_list|)
 expr_stmt|;
 block|}
 else|else
-block|{
-comment|// If the cookie based authentication is already enabled, parse the
-comment|// request and validate the request cookies.
-if|if
-condition|(
-name|isCookieAuthEnabled
-condition|)
-block|{
-name|clientUserName
-operator|=
-name|validateCookie
-argument_list|(
-name|request
-argument_list|)
-expr_stmt|;
-name|requireNewCookie
-operator|=
-operator|(
-name|clientUserName
-operator|==
-literal|null
-operator|)
-expr_stmt|;
-if|if
-condition|(
-name|requireNewCookie
-condition|)
-block|{
-name|LOG
-operator|.
-name|info
-argument_list|(
-literal|"Could not validate cookie sent, will try to generate a new cookie"
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-comment|// If the cookie based authentication is not enabled or the request does
-comment|// not have a valid cookie, use the kerberos or password based authentication
-comment|// depending on the server setup.
-if|if
-condition|(
-name|clientUserName
-operator|==
-literal|null
-condition|)
 block|{
 comment|// For a kerberos setup
 if|if
@@ -1249,6 +1261,13 @@ expr_stmt|;
 block|}
 block|}
 block|}
+assert|assert
+operator|(
+name|clientUserName
+operator|!=
+literal|null
+operator|)
+assert|;
 name|LOG
 operator|.
 name|debug

@@ -1114,7 +1114,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_SERVER2_TRUST_DOMAIN
+name|HIVE_SERVER2_TRUSTED_DOMAIN
 argument_list|)
 operator|.
 name|trim
