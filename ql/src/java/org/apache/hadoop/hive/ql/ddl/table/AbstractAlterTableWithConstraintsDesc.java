@@ -160,6 +160,14 @@ parameter_list|,
 name|boolean
 name|expectView
 parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|props
+parameter_list|,
 name|Constraints
 name|constraints
 parameter_list|)
@@ -179,6 +187,8 @@ argument_list|,
 name|isCascade
 argument_list|,
 name|expectView
+argument_list|,
+name|props
 argument_list|)
 expr_stmt|;
 name|this

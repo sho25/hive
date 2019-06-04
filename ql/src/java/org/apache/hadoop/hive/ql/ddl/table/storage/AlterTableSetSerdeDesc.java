@@ -19,7 +19,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|column
+name|storage
 package|;
 end_package
 
@@ -29,35 +29,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|Map
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|FieldSchema
 import|;
 end_import
 
@@ -96,24 +68,6 @@ operator|.
 name|table
 operator|.
 name|AbstractAlterTableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
 import|;
 end_import
 
@@ -194,7 +148,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DDL task description for ALTER TABLE ... ADD COLUMNS ... commands.  */
+comment|/**  * DDL task description for ALTER TABLE ... SET SERDE ... commands.  */
 end_comment
 
 begin_class
@@ -203,7 +157,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Add Columns"
+literal|"Set Serde"
 argument_list|,
 name|explainLevels
 operator|=
@@ -223,7 +177,7 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|AlterTableAddColumnsDesc
+name|AlterTableSetSerdeDesc
 extends|extends
 name|AbstractAlterTableDesc
 block|{
@@ -241,11 +195,11 @@ name|DDLTask2
 operator|.
 name|registerOperation
 argument_list|(
-name|AlterTableAddColumnsDesc
+name|AlterTableSetSerdeDesc
 operator|.
 name|class
 argument_list|,
-name|AlterTableAddColumnsOperation
+name|AlterTableSetSerdeOperation
 operator|.
 name|class
 argument_list|)
@@ -253,14 +207,11 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|final
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|newColumns
+name|String
+name|serdeName
 decl_stmt|;
 specifier|public
-name|AlterTableAddColumnsDesc
+name|AlterTableSetSerdeDesc
 parameter_list|(
 name|String
 name|tableName
@@ -273,14 +224,16 @@ name|String
 argument_list|>
 name|partitionSpec
 parameter_list|,
-name|boolean
-name|isCascade
-parameter_list|,
-name|List
+name|Map
 argument_list|<
-name|FieldSchema
+name|String
+argument_list|,
+name|String
 argument_list|>
-name|newColumns
+name|props
+parameter_list|,
+name|String
+name|serdeName
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -289,7 +242,7 @@ name|super
 argument_list|(
 name|AlterTableTypes
 operator|.
-name|ADD_COLUMNS
+name|SET_SERDE
 argument_list|,
 name|tableName
 argument_list|,
@@ -297,39 +250,26 @@ name|partitionSpec
 argument_list|,
 literal|null
 argument_list|,
-name|isCascade
+literal|false
 argument_list|,
 literal|false
 argument_list|,
-literal|null
+name|props
 argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|newColumns
+name|serdeName
 operator|=
-name|newColumns
+name|serdeName
 expr_stmt|;
 block|}
-specifier|public
-name|List
-argument_list|<
-name|FieldSchema
-argument_list|>
-name|getNewColumns
-parameter_list|()
-block|{
-return|return
-name|newColumns
-return|;
-block|}
-comment|// Only for explain
 annotation|@
 name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"new columns"
+literal|"serde"
 argument_list|,
 name|explainLevels
 operator|=
@@ -348,20 +288,12 @@ name|EXTENDED
 block|}
 argument_list|)
 specifier|public
-name|List
-argument_list|<
 name|String
-argument_list|>
-name|getNewColsString
+name|getSerdeName
 parameter_list|()
 block|{
 return|return
-name|Utilities
-operator|.
-name|getFieldSchemaString
-argument_list|(
-name|newColumns
-argument_list|)
+name|serdeName
 return|;
 block|}
 annotation|@
@@ -372,7 +304,7 @@ name|mayNeedWriteId
 parameter_list|()
 block|{
 return|return
-literal|true
+literal|false
 return|;
 block|}
 block|}

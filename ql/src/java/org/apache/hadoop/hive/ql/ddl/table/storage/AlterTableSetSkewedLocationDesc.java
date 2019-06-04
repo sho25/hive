@@ -19,7 +19,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|column
+name|storage
 package|;
 end_package
 
@@ -45,19 +45,13 @@ end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|hadoop
+name|stream
 operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|FieldSchema
+name|Collectors
 import|;
 end_import
 
@@ -96,24 +90,6 @@ operator|.
 name|table
 operator|.
 name|AbstractAlterTableDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
 import|;
 end_import
 
@@ -194,7 +170,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DDL task description for ALTER TABLE ... ADD COLUMNS ... commands.  */
+comment|/**  * DDL task description for ALTER TABLE ... SET SKEWED LOCATION commands.  */
 end_comment
 
 begin_class
@@ -203,7 +179,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Add Columns"
+literal|"Set Skewed Location"
 argument_list|,
 name|explainLevels
 operator|=
@@ -223,7 +199,7 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|AlterTableAddColumnsDesc
+name|AlterTableSetSkewedLocationDesc
 extends|extends
 name|AbstractAlterTableDesc
 block|{
@@ -241,11 +217,11 @@ name|DDLTask2
 operator|.
 name|registerOperation
 argument_list|(
-name|AlterTableAddColumnsDesc
+name|AlterTableSetSkewedLocationDesc
 operator|.
 name|class
 argument_list|,
-name|AlterTableAddColumnsOperation
+name|AlterTableSetSkewedLocationOperation
 operator|.
 name|class
 argument_list|)
@@ -253,14 +229,19 @@ expr_stmt|;
 block|}
 specifier|private
 specifier|final
+name|Map
+argument_list|<
 name|List
 argument_list|<
-name|FieldSchema
+name|String
 argument_list|>
-name|newColumns
+argument_list|,
+name|String
+argument_list|>
+name|skewedLocations
 decl_stmt|;
 specifier|public
-name|AlterTableAddColumnsDesc
+name|AlterTableSetSkewedLocationDesc
 parameter_list|(
 name|String
 name|tableName
@@ -273,14 +254,16 @@ name|String
 argument_list|>
 name|partitionSpec
 parameter_list|,
-name|boolean
-name|isCascade
-parameter_list|,
+name|Map
+argument_list|<
 name|List
 argument_list|<
-name|FieldSchema
+name|String
 argument_list|>
-name|newColumns
+argument_list|,
+name|String
+argument_list|>
+name|skewedLocations
 parameter_list|)
 throws|throws
 name|SemanticException
@@ -289,7 +272,7 @@ name|super
 argument_list|(
 name|AlterTableTypes
 operator|.
-name|ADD_COLUMNS
+name|SET_SKEWED_LOCATION
 argument_list|,
 name|tableName
 argument_list|,
@@ -297,7 +280,7 @@ name|partitionSpec
 argument_list|,
 literal|null
 argument_list|,
-name|isCascade
+literal|false
 argument_list|,
 literal|false
 argument_list|,
@@ -306,30 +289,35 @@ argument_list|)
 expr_stmt|;
 name|this
 operator|.
-name|newColumns
+name|skewedLocations
 operator|=
-name|newColumns
+name|skewedLocations
 expr_stmt|;
 block|}
 specifier|public
+name|Map
+argument_list|<
 name|List
 argument_list|<
-name|FieldSchema
+name|String
 argument_list|>
-name|getNewColumns
+argument_list|,
+name|String
+argument_list|>
+name|getSkewedLocations
 parameter_list|()
 block|{
 return|return
-name|newColumns
+name|skewedLocations
 return|;
 block|}
-comment|// Only for explain
+comment|// for Explain only
 annotation|@
 name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"new columns"
+literal|"skewed locations"
 argument_list|,
 name|explainLevels
 operator|=
@@ -352,15 +340,45 @@ name|List
 argument_list|<
 name|String
 argument_list|>
-name|getNewColsString
+name|getSkewedLocationsExplain
 parameter_list|()
 block|{
 return|return
-name|Utilities
+name|skewedLocations
 operator|.
-name|getFieldSchemaString
+name|entrySet
+argument_list|()
+operator|.
+name|stream
+argument_list|()
+operator|.
+name|map
 argument_list|(
-name|newColumns
+name|e
+lambda|->
+literal|"("
+operator|+
+name|e
+operator|.
+name|getKey
+argument_list|()
+operator|+
+literal|": "
+operator|+
+name|e
+operator|.
+name|getValue
+argument_list|()
+operator|+
+literal|")"
+argument_list|)
+operator|.
+name|collect
+argument_list|(
+name|Collectors
+operator|.
+name|toList
+argument_list|()
 argument_list|)
 return|;
 block|}
@@ -372,7 +390,7 @@ name|mayNeedWriteId
 parameter_list|()
 block|{
 return|return
-literal|true
+literal|false
 return|;
 block|}
 block|}

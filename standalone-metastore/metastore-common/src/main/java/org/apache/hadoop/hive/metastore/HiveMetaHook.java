@@ -164,9 +164,9 @@ literal|"DROPPROPS"
 argument_list|)
 decl_stmt|;
 name|String
-name|ALTERLOCATION
+name|SET_LOCATION
 init|=
-literal|"ALTERLOCATION"
+literal|"SET_LOCATION"
 decl_stmt|;
 comment|/**    * Called before a new table definition is added to the metastore    * during CREATE TABLE.    *    * @param table new table definition    */
 specifier|public

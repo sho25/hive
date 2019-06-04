@@ -689,7 +689,7 @@ name|metastore
 operator|.
 name|HiveMetaHook
 operator|.
-name|ALTERLOCATION
+name|SET_LOCATION
 import|;
 end_import
 
@@ -5375,7 +5375,7 @@ name|alterType
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|ALTERLOCATION
+name|SET_LOCATION
 argument_list|)
 operator|&&
 name|tbl
@@ -5394,12 +5394,9 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|InvalidOperationException
-argument_list|(
-literal|"Cannot change location of a managed table "
-operator|+
+name|String
+name|tableName
+init|=
 name|TableName
 operator|.
 name|getQualified
@@ -5419,6 +5416,14 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+decl_stmt|;
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"Cannot change location of a managed table "
+operator|+
+name|tableName
 operator|+
 literal|" as it is enabled for replication."
 argument_list|)
@@ -5500,7 +5505,7 @@ name|alterType
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|ALTERLOCATION
+name|SET_LOCATION
 argument_list|)
 operator|&&
 name|oldTbl
@@ -5519,12 +5524,9 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-throw|throw
-operator|new
-name|InvalidOperationException
-argument_list|(
-literal|"Cannot change location of a managed table "
-operator|+
+name|String
+name|tableName
+init|=
 name|TableName
 operator|.
 name|getQualified
@@ -5544,6 +5546,14 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+decl_stmt|;
+throw|throw
+operator|new
+name|InvalidOperationException
+argument_list|(
+literal|"Cannot change location of a managed table "
+operator|+
+name|tableName
 operator|+
 literal|" as it is enabled for replication."
 argument_list|)

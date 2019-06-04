@@ -482,6 +482,10 @@ operator|=
 name|desc
 expr_stmt|;
 block|}
+specifier|protected
+name|EnvironmentContext
+name|environmentContext
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -578,14 +582,13 @@ operator|.
 name|copy
 argument_list|()
 decl_stmt|;
-name|EnvironmentContext
 name|environmentContext
-init|=
+operator|=
 name|initializeEnvironmentContext
 argument_list|(
 literal|null
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 if|if
 condition|(
 name|partitions
