@@ -1129,6 +1129,24 @@ name|trim
 argument_list|()
 decl_stmt|;
 comment|// Skip authentication if the connection is from the trusted domain, if specified.
+comment|// getRemoteHost may or may not return the FQDN of the remote host depending upon the
+comment|// HTTP server configuration. So, force a reverse DNS lookup.
+name|String
+name|remoteHostName
+init|=
+name|InetAddress
+operator|.
+name|getByName
+argument_list|(
+name|request
+operator|.
+name|getRemoteHost
+argument_list|()
+argument_list|)
+operator|.
+name|getCanonicalHostName
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -1141,10 +1159,7 @@ name|PlainSaslHelper
 operator|.
 name|isHostFromTrustedDomain
 argument_list|(
-name|request
-operator|.
-name|getRemoteHost
-argument_list|()
+name|remoteHostName
 argument_list|,
 name|trustedDomain
 argument_list|)
@@ -1156,10 +1171,7 @@ name|info
 argument_list|(
 literal|"No authentication performed because the connecting host "
 operator|+
-name|request
-operator|.
-name|getRemoteHost
-argument_list|()
+name|remoteHostName
 operator|+
 literal|" is from the trusted domain "
 operator|+
