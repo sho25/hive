@@ -1063,7 +1063,7 @@ case|:
 name|authzEvent
 operator|=
 operator|new
-name|CreateTableEvent
+name|AlterTableEvent
 argument_list|(
 name|preEventContext
 argument_list|)
@@ -1110,7 +1110,7 @@ case|:
 name|authzEvent
 operator|=
 operator|new
-name|CreateTableEvent
+name|DropTableEvent
 argument_list|(
 name|preEventContext
 argument_list|)
