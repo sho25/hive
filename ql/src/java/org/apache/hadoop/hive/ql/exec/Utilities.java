@@ -9840,13 +9840,13 @@ expr_stmt|;
 name|RecordWriter
 name|writer
 init|=
-name|HiveFileFormatUtils
+name|hiveOutputFormat
 operator|.
-name|getRecordWriter
+name|getHiveRecordWriter
 argument_list|(
 name|jc
 argument_list|,
-name|hiveOutputFormat
+name|path
 argument_list|,
 name|outputClass
 argument_list|,
@@ -9856,8 +9856,6 @@ name|tableInfo
 operator|.
 name|getProperties
 argument_list|()
-argument_list|,
-name|path
 argument_list|,
 name|reporter
 argument_list|)
