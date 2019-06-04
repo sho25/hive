@@ -2341,6 +2341,9 @@ argument_list|,
 name|druidColNames
 argument_list|)
 expr_stmt|;
+comment|// We can pass null for Hive object because it is only used to retrieve tables
+comment|// if constraints on a table object are existing, but constraints cannot be defined
+comment|// for materialized views.
 name|RelOptHiveTable
 name|optTable
 init|=
@@ -2370,6 +2373,13 @@ argument_list|<>
 argument_list|()
 argument_list|,
 name|conf
+argument_list|,
+literal|null
+argument_list|,
+operator|new
+name|HashMap
+argument_list|<>
+argument_list|()
 argument_list|,
 operator|new
 name|HashMap
@@ -2496,7 +2506,10 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// Build Hive Table Scan Rel
+comment|// Build Hive Table Scan Rel.
+comment|// We can pass null for Hive object because it is only used to retrieve tables
+comment|// if constraints on a table object are existing, but constraints cannot be defined
+comment|// for materialized views.
 name|RelOptHiveTable
 name|optTable
 init|=
@@ -2526,6 +2539,13 @@ argument_list|<>
 argument_list|()
 argument_list|,
 name|conf
+argument_list|,
+literal|null
+argument_list|,
+operator|new
+name|HashMap
+argument_list|<>
+argument_list|()
 argument_list|,
 operator|new
 name|HashMap
