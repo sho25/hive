@@ -613,15 +613,6 @@ name|x
 init|=
 name|RexUtil
 operator|.
-name|simplify
-argument_list|(
-name|cluster
-operator|.
-name|getRexBuilder
-argument_list|()
-argument_list|,
-name|RexUtil
-operator|.
 name|composeConjunction
 argument_list|(
 name|cluster
@@ -632,7 +623,6 @@ argument_list|,
 name|predicates
 argument_list|,
 literal|false
-argument_list|)
 argument_list|)
 decl_stmt|;
 if|if
