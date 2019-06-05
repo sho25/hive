@@ -16372,6 +16372,15 @@ operator|+
 literal|"related locks"
 argument_list|)
 block|,
+name|LLAP_TASK_TIME_SUMMARY
+argument_list|(
+literal|"hive.llap.task.time.print.summary"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Display queue and runtime of tasks by host for every query executed by the shell."
+argument_list|)
+block|,
 name|HIVE_TRIGGER_VALIDATION_INTERVAL
 argument_list|(
 literal|"hive.trigger.validation.interval"
