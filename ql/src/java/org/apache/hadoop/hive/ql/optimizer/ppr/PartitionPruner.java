@@ -1325,7 +1325,9 @@ init|=
 name|prunerExpr
 operator|.
 name|getExprString
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -1358,7 +1360,9 @@ operator|+
 name|compactExpr
 operator|.
 name|getExprString
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 argument_list|,
 operator|new
 name|LinkedHashSet
@@ -1402,7 +1406,9 @@ init|=
 name|compactExpr
 operator|.
 name|getExprString
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -1476,10 +1482,7 @@ name|oldFilter
 operator|.
 name|equals
 argument_list|(
-name|compactExpr
-operator|.
-name|getExprString
-argument_list|()
+name|compactExprString
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1830,7 +1833,9 @@ operator|+
 name|expr
 operator|.
 name|getExprString
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 argument_list|)
 throw|;
 block|}
@@ -2229,7 +2234,9 @@ operator|+
 name|expr
 operator|.
 name|getExprString
-argument_list|()
+argument_list|(
+literal|true
+argument_list|)
 argument_list|)
 throw|;
 block|}

@@ -234,12 +234,6 @@ name|Vectorization
 operator|.
 name|NON_VECTORIZED
 function_decl|;
-name|boolean
-name|postProcess
-parameter_list|()
-default|default
-literal|false
-function_decl|;
 block|}
 end_annotation_defn
 

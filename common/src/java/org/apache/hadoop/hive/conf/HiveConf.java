@@ -8853,6 +8853,17 @@ operator|+
 literal|"to optimize (remove or transform) join operators"
 argument_list|)
 block|,
+name|HIVE_OPTIMIZE_SORT_PREDS_WITH_STATS
+argument_list|(
+literal|"hive.optimize.filter.preds.sort"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to sort conditions in filters\n"
+operator|+
+literal|"based on estimated selectivity and compute cost"
+argument_list|)
+block|,
 name|HIVE_OPTIMIZE_REDUCE_WITH_STATS
 argument_list|(
 literal|"hive.optimize.filter.stats.reduction"
