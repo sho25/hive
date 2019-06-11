@@ -118,6 +118,25 @@ name|Object
 name|o
 parameter_list|)
 block|{
+if|if
+condition|(
+name|o
+operator|==
+literal|null
+condition|)
+block|{
+name|ret
+operator|.
+name|put
+argument_list|(
+literal|"__null"
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
 name|SignatureMapper
 name|mapper
 init|=
@@ -138,6 +157,7 @@ argument_list|,
 name|o
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/** Prevent construction. */
 specifier|private

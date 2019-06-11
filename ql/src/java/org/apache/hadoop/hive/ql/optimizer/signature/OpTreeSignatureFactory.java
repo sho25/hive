@@ -98,6 +98,10 @@ argument_list|>
 name|op
 parameter_list|)
 function_decl|;
+name|void
+name|clear
+parameter_list|()
+function_decl|;
 name|OpTreeSignatureFactory
 name|DIRECT
 init|=
@@ -158,6 +162,13 @@ name|this
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|clear
+parameter_list|()
+block|{     }
 block|}
 class|class
 name|CachedFactory
@@ -216,6 +227,19 @@ name|this
 argument_list|)
 argument_list|)
 return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|clear
+parameter_list|()
+block|{
+name|cache
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
 block|}
 block|}
 block|}

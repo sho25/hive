@@ -160,7 +160,7 @@ end_comment
 begin_class
 specifier|public
 class|class
-name|HiveRelWriterImpl
+name|HiveRelJsonImpl
 extends|extends
 name|RelJsonWriter
 block|{
@@ -174,14 +174,14 @@ name|LoggerFactory
 operator|.
 name|getLogger
 argument_list|(
-name|HiveRelWriterImpl
+name|HiveRelJsonImpl
 operator|.
 name|class
 argument_list|)
 decl_stmt|;
 comment|//~ Constructors -------------------------------------------------------------
 specifier|public
-name|HiveRelWriterImpl
+name|HiveRelJsonImpl
 parameter_list|()
 block|{
 name|super

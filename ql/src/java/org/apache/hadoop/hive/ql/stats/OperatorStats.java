@@ -49,6 +49,12 @@ specifier|static
 class|class
 name|IncorrectRuntimeStatsMarker
 block|{   }
+comment|/** Marker class to help with plan elements which will collect invalid statistics */
+specifier|public
+specifier|static
+class|class
+name|MayNotUseForRelNodes
+block|{   }
 specifier|private
 name|String
 name|operatorId

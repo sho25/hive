@@ -17165,6 +17165,15 @@ argument_list|,
 literal|"Size of the runtime statistics cache. Unit is: OperatorStat entry; a query plan consist ~100."
 argument_list|)
 block|,
+name|HIVE_QUERY_PLANMAPPER_LINK_RELNODES
+argument_list|(
+literal|"hive.query.planmapper.link.relnodes"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Wether to link Calcite nodes to runtime statistics."
+argument_list|)
+block|,
 name|HIVE_QUERY_RESULTS_CACHE_ENABLED
 argument_list|(
 literal|"hive.query.results.cache.enabled"

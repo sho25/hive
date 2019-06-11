@@ -6060,11 +6060,11 @@ literal|null
 return|;
 block|}
 specifier|final
-name|HiveRelWriterImpl
+name|HiveRelJsonImpl
 name|planWriter
 init|=
 operator|new
-name|HiveRelWriterImpl
+name|HiveRelJsonImpl
 argument_list|()
 decl_stmt|;
 name|rel

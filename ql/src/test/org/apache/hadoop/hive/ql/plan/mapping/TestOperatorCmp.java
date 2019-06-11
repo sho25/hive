@@ -891,22 +891,6 @@ argument_list|,
 literal|"select u from tu where id_uv = 2 group by u"
 argument_list|)
 decl_stmt|;
-comment|//Since we have hive.optimize.index.filter=true we will have different table scan operator
-name|assertHelper
-argument_list|(
-name|AssertHelperOp
-operator|.
-name|NOT_SAME
-argument_list|,
-name|pm0
-argument_list|,
-name|pm1
-argument_list|,
-name|TableScanOperator
-operator|.
-name|class
-argument_list|)
-expr_stmt|;
 name|assertHelper
 argument_list|(
 name|AssertHelperOp
@@ -1286,6 +1270,17 @@ argument_list|()
 operator|.
 name|hiveConf
 decl_stmt|;
+name|conf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVEOPTPPD
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|conf
 operator|.
 name|setBoolVar

@@ -34,6 +34,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertThat
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -194,6 +206,16 @@ operator|.
 name|testutils
 operator|.
 name|HiveTestEnvSetup
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|hamcrest
+operator|.
+name|Matchers
 import|;
 end_import
 
@@ -536,14 +558,19 @@ name|reversed
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|assertEquals
+name|assertThat
 argument_list|(
-literal|1
-argument_list|,
 name|fos
 operator|.
 name|size
 argument_list|()
+argument_list|,
+name|Matchers
+operator|.
+name|greaterThanOrEqualTo
+argument_list|(
+literal|1
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|FilterOperator

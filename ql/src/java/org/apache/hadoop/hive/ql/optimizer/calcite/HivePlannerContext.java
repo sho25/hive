@@ -109,6 +109,26 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|mapper
+operator|.
+name|StatsSource
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|util
@@ -144,6 +164,10 @@ specifier|private
 name|HiveConfPlannerContext
 name|isCorrelatedColumns
 decl_stmt|;
+specifier|private
+name|StatsSource
+name|statsSource
+decl_stmt|;
 specifier|public
 name|HivePlannerContext
 parameter_list|(
@@ -164,6 +188,9 @@ name|corrScalarRexSQWithAgg
 parameter_list|,
 name|HiveConfPlannerContext
 name|isCorrelatedColumns
+parameter_list|,
+name|StatsSource
+name|statsSource
 parameter_list|)
 block|{
 name|this
@@ -183,6 +210,12 @@ operator|.
 name|calciteConfig
 operator|=
 name|calciteConfig
+expr_stmt|;
+name|this
+operator|.
+name|statsSource
+operator|=
+name|statsSource
 expr_stmt|;
 comment|// this is to keep track if a subquery is correlated and contains aggregate
 comment|// this is computed in CalcitePlanner while planning and is later required by subuery remove rule
@@ -204,6 +237,8 @@ operator|=
 name|isCorrelatedColumns
 expr_stmt|;
 block|}
+annotation|@
+name|Override
 specifier|public
 parameter_list|<
 name|T
@@ -310,6 +345,25 @@ operator|.
 name|cast
 argument_list|(
 name|isCorrelatedColumns
+argument_list|)
+return|;
+block|}
+if|if
+condition|(
+name|clazz
+operator|.
+name|isInstance
+argument_list|(
+name|statsSource
+argument_list|)
+condition|)
+block|{
+return|return
+name|clazz
+operator|.
+name|cast
+argument_list|(
+name|statsSource
 argument_list|)
 return|;
 block|}
