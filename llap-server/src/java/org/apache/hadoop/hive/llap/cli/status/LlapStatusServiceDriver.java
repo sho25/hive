@@ -385,6 +385,22 @@ name|yarn
 operator|.
 name|exceptions
 operator|.
+name|ApplicationNotFoundException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|yarn
+operator|.
+name|exceptions
+operator|.
 name|YarnException
 import|;
 end_import
@@ -1357,8 +1373,6 @@ name|getAppReport
 argument_list|(
 name|appName
 argument_list|,
-name|serviceClient
-argument_list|,
 name|cl
 operator|.
 name|getFindAppTimeoutMs
@@ -1561,9 +1575,6 @@ parameter_list|(
 name|String
 name|appName
 parameter_list|,
-name|ServiceClient
-name|serviceClient
-parameter_list|,
 name|long
 name|timeoutMs
 parameter_list|)
@@ -1718,7 +1729,21 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-comment|// No point separating IOException vs YarnException vs others
+if|if
+condition|(
+name|e
+operator|instanceof
+name|ApplicationNotFoundException
+condition|)
+block|{
+comment|//This might happen when serviceClient caches an appId from the past which is now not
+comment|// valid (i.e. Yarn RM restart). This will force re-creation of service client in the
+comment|// next check (if watch mode is on..) which effectively invalidates such cache.
+name|serviceClient
+operator|=
+literal|null
+expr_stmt|;
+block|}
 throw|throw
 operator|new
 name|LlapStatusCliException
