@@ -10732,12 +10732,16 @@ condition|)
 block|{
 name|StatsSetupConst
 operator|.
-name|clearColumnStatsState
+name|setBasicStatsState
 argument_list|(
 name|newTPart
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+name|StatsSetupConst
+operator|.
+name|FALSE
 argument_list|)
 expr_stmt|;
 block|}

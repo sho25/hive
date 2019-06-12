@@ -1999,6 +1999,108 @@ literal|"import existing table"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testImportPartitionedOrc
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists T"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"drop table if exists Tstage"
+argument_list|)
+expr_stmt|;
+name|runStatementOnDriver
+argument_list|(
+literal|"create table T (a int, b int) partitioned by (p int) stored"
+operator|+
+literal|" as orc tblproperties('transactional'='true')"
+argument_list|)
+expr_stmt|;
+comment|//Tstage is the target table
+name|runStatementOnDriver
+argument_list|(
+literal|"create table Tstage (a int, b int) partitioned by (p int) stored"
+operator|+
+literal|" as orc tblproperties('transactional'='true')"
+argument_list|)
+expr_stmt|;
+comment|//this creates an ORC data file with correct schema under table root
+name|runStatementOnDriver
+argument_list|(
+literal|"insert into Tstage values(1,2,10),(3,4,11),(5,6,12)"
+argument_list|)
+expr_stmt|;
+specifier|final
+name|int
+index|[]
+index|[]
+name|rows
+init|=
+block|{
+block|{
+literal|3
+block|}
+block|}
+decl_stmt|;
+comment|//now we have an archive with 3 partitions
+name|runStatementOnDriver
+argument_list|(
+literal|"export table Tstage to '"
+operator|+
+name|getWarehouseDir
+argument_list|()
+operator|+
+literal|"/1'"
+argument_list|)
+expr_stmt|;
+comment|//load T
+name|runStatementOnDriver
+argument_list|(
+literal|"import table T from '"
+operator|+
+name|getWarehouseDir
+argument_list|()
+operator|+
+literal|"/1'"
+argument_list|)
+expr_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|rs
+init|=
+name|runStatementOnDriver
+argument_list|(
+literal|"select count(*) from T"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"Rowcount of imported table"
+argument_list|,
+name|TestTxnCommands2
+operator|.
+name|stringifyValues
+argument_list|(
+name|rows
+argument_list|)
+argument_list|,
+name|rs
+argument_list|)
+expr_stmt|;
+block|}
 comment|/**    * test selective partitioned import where target table needs to be created.    * export is made from acid table so that target table is created as acid    */
 annotation|@
 name|Test
