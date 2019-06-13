@@ -1377,10 +1377,6 @@ name|work
 operator|.
 name|dbNameToLoadIn
 argument_list|,
-name|work
-operator|.
-name|tableNameToLoadIn
-argument_list|,
 name|loadTaskTracker
 argument_list|)
 operator|.
@@ -1489,10 +1485,6 @@ argument_list|,
 name|work
 operator|.
 name|dbNameToLoadIn
-argument_list|,
-name|work
-operator|.
-name|tableNameToLoadIn
 argument_list|)
 decl_stmt|;
 name|TableEvent
@@ -1672,10 +1664,6 @@ argument_list|,
 name|work
 operator|.
 name|dbNameToLoadIn
-argument_list|,
-name|work
-operator|.
-name|tableNameToLoadIn
 argument_list|)
 decl_stmt|;
 name|LoadPartitions

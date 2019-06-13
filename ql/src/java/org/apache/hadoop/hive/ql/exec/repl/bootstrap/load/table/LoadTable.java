@@ -965,16 +965,11 @@ comment|// Executed if relevant, and used to contain all the other details about
 name|ImportTableDesc
 name|tableDesc
 init|=
-name|tableContext
-operator|.
-name|overrideProperties
-argument_list|(
 name|event
 operator|.
 name|tableDesc
 argument_list|(
 name|dbName
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|Table

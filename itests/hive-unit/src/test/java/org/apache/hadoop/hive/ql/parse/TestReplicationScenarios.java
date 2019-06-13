@@ -3263,8 +3263,6 @@ name|replicadb
 argument_list|,
 literal|null
 argument_list|,
-literal|null
-argument_list|,
 name|isIncrementalDump
 argument_list|,
 name|Long
@@ -21296,7 +21294,7 @@ name|void
 name|testStatus
 parameter_list|()
 throws|throws
-name|IOException
+name|Throwable
 block|{
 name|String
 name|name
@@ -21348,8 +21346,6 @@ name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
 argument_list|,
-literal|"ptned"
-argument_list|,
 name|lastReplDumpId
 argument_list|,
 literal|"CREATE TABLE "
@@ -21366,8 +21362,6 @@ operator|=
 name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
-argument_list|,
-literal|"ptned"
 argument_list|,
 name|lastReplDumpId
 argument_list|,
@@ -21386,8 +21380,6 @@ name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
 argument_list|,
-literal|"ptned"
-argument_list|,
 name|lastReplDumpId
 argument_list|,
 literal|"ALTER TABLE "
@@ -21405,8 +21397,6 @@ name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
 argument_list|,
-literal|"ptned"
-argument_list|,
 name|lastReplDumpId
 argument_list|,
 literal|"ALTER TABLE "
@@ -21423,8 +21413,6 @@ operator|=
 name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
-argument_list|,
-literal|"ptned_rn"
 argument_list|,
 name|lastReplDumpId
 argument_list|,
@@ -21447,8 +21435,6 @@ name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
 argument_list|,
-literal|"ptned_rn"
-argument_list|,
 name|lastReplDumpId
 argument_list|,
 literal|"ALTER TABLE "
@@ -21466,8 +21452,6 @@ name|verifyAndReturnDbReplStatus
 argument_list|(
 name|dbName
 argument_list|,
-literal|null
-argument_list|,
 name|lastReplDumpId
 argument_list|,
 literal|"DROP TABLE "
@@ -21482,12 +21466,7 @@ expr_stmt|;
 comment|// DB-level REPL LOADs testing done, now moving on to table level repl loads.
 comment|// In each of these cases, the table-level repl.last.id must move forward, but the
 comment|// db-level last.repl.id must not.
-name|String
-name|lastTblReplDumpId
-init|=
 name|lastReplDumpId
-decl_stmt|;
-name|lastTblReplDumpId
 operator|=
 name|verifyAndReturnTblReplStatus
 argument_list|(
@@ -21496,8 +21475,6 @@ argument_list|,
 literal|"ptned2"
 argument_list|,
 name|lastReplDumpId
-argument_list|,
-name|lastTblReplDumpId
 argument_list|,
 literal|"CREATE TABLE "
 operator|+
@@ -21508,7 +21485,7 @@ argument_list|,
 name|replDbName
 argument_list|)
 expr_stmt|;
-name|lastTblReplDumpId
+name|lastReplDumpId
 operator|=
 name|verifyAndReturnTblReplStatus
 argument_list|(
@@ -21517,8 +21494,6 @@ argument_list|,
 literal|"ptned2"
 argument_list|,
 name|lastReplDumpId
-argument_list|,
-name|lastTblReplDumpId
 argument_list|,
 literal|"ALTER TABLE "
 operator|+
@@ -21529,7 +21504,7 @@ argument_list|,
 name|replDbName
 argument_list|)
 expr_stmt|;
-name|lastTblReplDumpId
+name|lastReplDumpId
 operator|=
 name|verifyAndReturnTblReplStatus
 argument_list|(
@@ -21538,8 +21513,6 @@ argument_list|,
 literal|"ptned2"
 argument_list|,
 name|lastReplDumpId
-argument_list|,
-name|lastTblReplDumpId
 argument_list|,
 literal|"ALTER TABLE "
 operator|+
@@ -21550,7 +21523,7 @@ argument_list|,
 name|replDbName
 argument_list|)
 expr_stmt|;
-name|lastTblReplDumpId
+name|lastReplDumpId
 operator|=
 name|verifyAndReturnTblReplStatus
 argument_list|(
@@ -21559,8 +21532,6 @@ argument_list|,
 literal|"ptned2"
 argument_list|,
 name|lastReplDumpId
-argument_list|,
-name|lastTblReplDumpId
 argument_list|,
 literal|"ALTER TABLE "
 operator|+
@@ -21572,9 +21543,6 @@ name|replDbName
 argument_list|)
 expr_stmt|;
 comment|// Note : Not testing table rename because table rename replication is not supported for table-level repl.
-name|String
-name|finalTblReplDumpId
-init|=
 name|verifyAndReturnTblReplStatus
 argument_list|(
 name|dbName
@@ -21583,8 +21551,6 @@ literal|"ptned2"
 argument_list|,
 name|lastReplDumpId
 argument_list|,
-name|lastTblReplDumpId
-argument_list|,
 literal|"ALTER TABLE "
 operator|+
 name|dbName
@@ -21592,33 +21558,6 @@ operator|+
 literal|".ptned2 DROP PARTITION (b=11)"
 argument_list|,
 name|replDbName
-argument_list|)
-decl_stmt|;
-comment|/*     Comparisons using Strings for event Ids is wrong. This should be numbers since lexical string comparison     and numeric comparision differ. This requires a broader change where we return the dump Id as long and not string     fixing this here for now as it was observed in one of the builds where "1001".compareTo("998") results     in failure of the assertion below.      */
-name|assertTrue
-argument_list|(
-operator|new
-name|Long
-argument_list|(
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|finalTblReplDumpId
-argument_list|)
-argument_list|)
-operator|.
-name|compareTo
-argument_list|(
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|lastTblReplDumpId
-argument_list|)
-argument_list|)
-operator|>
-literal|0
 argument_list|)
 expr_stmt|;
 comment|// TODO : currently not testing the following scenarios:
@@ -26692,9 +26631,6 @@ name|String
 name|dbName
 parameter_list|,
 name|String
-name|tblName
-parameter_list|,
-name|String
 name|prevReplDumpId
 parameter_list|,
 name|String
@@ -26727,29 +26663,6 @@ argument_list|)
 operator|.
 name|lastReplId
 decl_stmt|;
-if|if
-condition|(
-name|tblName
-operator|!=
-literal|null
-condition|)
-block|{
-name|verifyRun
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|replDbName
-operator|+
-literal|"."
-operator|+
-name|tblName
-argument_list|,
-name|lastReplDumpId
-argument_list|,
-name|driverMirror
-argument_list|)
-expr_stmt|;
-block|}
 name|assertTrue
 argument_list|(
 name|Long
@@ -26771,7 +26684,7 @@ return|return
 name|lastReplDumpId
 return|;
 block|}
-comment|// Tests that doing a table-level REPL LOAD updates table repl.last.id, but not db-level repl.last.id
+comment|// Tests that verify table's last repl ID
 specifier|private
 name|String
 name|verifyAndReturnTblReplStatus
@@ -26786,9 +26699,6 @@ name|String
 name|lastDbReplDumpId
 parameter_list|,
 name|String
-name|prevReplDumpId
-parameter_list|,
-name|String
 name|cmd
 parameter_list|,
 name|String
@@ -26796,6 +26706,8 @@ name|replDbName
 parameter_list|)
 throws|throws
 name|IOException
+throws|,
+name|TException
 block|{
 name|run
 argument_list|(
@@ -26810,18 +26722,10 @@ init|=
 name|incrementalLoadAndVerify
 argument_list|(
 name|dbName
-operator|+
-literal|"."
-operator|+
-name|tblName
 argument_list|,
-name|prevReplDumpId
+name|lastDbReplDumpId
 argument_list|,
 name|replDbName
-operator|+
-literal|"."
-operator|+
-name|tblName
 argument_list|)
 operator|.
 name|lastReplId
@@ -26832,7 +26736,7 @@ literal|"REPL STATUS "
 operator|+
 name|replDbName
 argument_list|,
-name|lastDbReplDumpId
+name|lastReplDumpId
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -26850,7 +26754,73 @@ name|Long
 operator|.
 name|parseLong
 argument_list|(
-name|prevReplDumpId
+name|lastDbReplDumpId
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Table
+name|tbl
+init|=
+name|metaStoreClientMirror
+operator|.
+name|getTable
+argument_list|(
+name|replDbName
+argument_list|,
+name|tblName
+argument_list|)
+decl_stmt|;
+name|String
+name|tblLastReplId
+init|=
+name|tbl
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|ReplicationSpec
+operator|.
+name|KEY
+operator|.
+name|CURR_STATE_ID
+operator|.
+name|toString
+argument_list|()
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|tblLastReplId
+argument_list|)
+operator|>
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|lastDbReplDumpId
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|assertTrue
+argument_list|(
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|tblLastReplId
+argument_list|)
+operator|<=
+name|Long
+operator|.
+name|parseLong
+argument_list|(
+name|lastReplDumpId
 argument_list|)
 argument_list|)
 expr_stmt|;

@@ -4151,7 +4151,13 @@ name|compile
 argument_list|(
 literal|"repl dump "
 operator|+
-name|fullInTableName
+name|dbName
+operator|+
+literal|".['"
+operator|+
+name|inDbTableName
+operator|+
+literal|"']"
 argument_list|)
 expr_stmt|;
 name|assertEquals

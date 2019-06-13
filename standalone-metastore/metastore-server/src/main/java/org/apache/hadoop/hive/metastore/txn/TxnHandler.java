@@ -4909,19 +4909,6 @@ argument_list|()
 else|:
 literal|null
 decl_stmt|;
-name|boolean
-name|needUpdateDBReplId
-init|=
-name|replLastIdInfo
-operator|.
-name|isSetNeedUpdateDBReplId
-argument_list|()
-operator|&&
-name|replLastIdInfo
-operator|.
-name|isNeedUpdateDBReplId
-argument_list|()
-decl_stmt|;
 try|try
 block|{
 name|stmt
@@ -5060,11 +5047,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-name|needUpdateDBReplId
-condition|)
-block|{
 comment|// not used select for update as it will be updated by single thread only from repl load
 name|rs
 operator|=
@@ -5181,7 +5163,6 @@ operator|.
 name|close
 argument_list|()
 expr_stmt|;
-block|}
 if|if
 condition|(
 name|table

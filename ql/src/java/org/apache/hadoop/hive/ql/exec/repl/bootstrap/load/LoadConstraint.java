@@ -998,8 +998,6 @@ name|Context
 argument_list|(
 name|dbNameToLoadIn
 argument_list|,
-literal|null
-argument_list|,
 name|fromPath
 operator|.
 name|toString
@@ -1101,8 +1099,6 @@ operator|.
 name|Context
 argument_list|(
 name|dbNameToLoadIn
-argument_list|,
-literal|null
 argument_list|,
 name|fromPath
 operator|.
@@ -1206,8 +1202,6 @@ name|Context
 argument_list|(
 name|dbNameToLoadIn
 argument_list|,
-literal|null
-argument_list|,
 name|fromPath
 operator|.
 name|toString
@@ -1309,8 +1303,6 @@ operator|.
 name|Context
 argument_list|(
 name|dbNameToLoadIn
-argument_list|,
-literal|null
 argument_list|,
 name|fromPath
 operator|.

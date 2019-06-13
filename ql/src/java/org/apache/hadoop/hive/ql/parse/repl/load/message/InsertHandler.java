@@ -383,23 +383,6 @@ name|withinContext
 operator|.
 name|dbName
 decl_stmt|;
-name|String
-name|actualTblName
-init|=
-name|withinContext
-operator|.
-name|isTableNameEmpty
-argument_list|()
-condition|?
-name|insertMessage
-operator|.
-name|getTable
-argument_list|()
-else|:
-name|withinContext
-operator|.
-name|tableName
-decl_stmt|;
 name|Context
 name|currentContext
 init|=
@@ -409,8 +392,6 @@ argument_list|(
 name|withinContext
 argument_list|,
 name|actualDbName
-argument_list|,
-name|actualTblName
 argument_list|)
 decl_stmt|;
 comment|// Piggybacking in Import logic for now

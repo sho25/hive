@@ -285,35 +285,14 @@ name|getDB
 argument_list|()
 operator|)
 decl_stmt|;
-comment|// The context table name can be null if repl load is done on a full db.
-comment|// But we need table name for alloc write id and that is received from source.
+comment|// We need table name for alloc write id and that is received from source.
 name|String
 name|tableName
 init|=
-operator|(
-name|context
-operator|.
-name|tableName
-operator|!=
-literal|null
-operator|&&
-operator|!
-name|context
-operator|.
-name|tableName
-operator|.
-name|isEmpty
-argument_list|()
-condition|?
-name|context
-operator|.
-name|tableName
-else|:
 name|msg
 operator|.
 name|getTableName
 argument_list|()
-operator|)
 decl_stmt|;
 comment|// Repl policy should be created based on the table name in context.
 name|ReplTxnWork
@@ -329,10 +308,6 @@ argument_list|(
 name|context
 operator|.
 name|dbName
-argument_list|,
-name|context
-operator|.
-name|tableName
 argument_list|)
 argument_list|,
 name|dbName

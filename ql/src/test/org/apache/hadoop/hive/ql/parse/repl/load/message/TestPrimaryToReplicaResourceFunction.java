@@ -604,8 +604,6 @@ literal|null
 argument_list|,
 literal|null
 argument_list|,
-literal|null
-argument_list|,
 name|hiveConf
 argument_list|,
 literal|null

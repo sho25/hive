@@ -71,6 +71,8 @@ name|hive
 operator|.
 name|common
 operator|.
+name|repl
+operator|.
 name|ReplConst
 import|;
 end_import

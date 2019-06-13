@@ -2608,6 +2608,15 @@ argument_list|,
 literal|"Source of replication (repl.source.for) is not set in the database properties."
 argument_list|)
 block|,
+name|REPL_INVALID_DB_OR_TABLE_PATTERN
+argument_list|(
+literal|20021
+argument_list|,
+literal|"Invalid pattern for the DB or table name in the replication policy. "
+operator|+
+literal|"It should be a valid regex enclosed within single or double quotes."
+argument_list|)
+block|,
 comment|// An exception from runtime that will show the full stack to client
 name|UNRESOLVED_RT_EXCEPTION
 argument_list|(

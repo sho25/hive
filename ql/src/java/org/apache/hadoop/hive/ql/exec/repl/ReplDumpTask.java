@@ -313,7 +313,7 @@ name|event
 operator|.
 name|filters
 operator|.
-name|DatabaseAndTableFilter
+name|EventBoundaryFilter
 import|;
 end_import
 
@@ -335,7 +335,7 @@ name|event
 operator|.
 name|filters
 operator|.
-name|EventBoundaryFilter
+name|ReplEventFilter
 import|;
 end_import
 
@@ -1660,15 +1660,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Dump for bootstrapping ACID tables during an incremental dump for db {} and table {}"
+literal|"Dump for bootstrapping ACID tables during an incremental dump for db {}"
 argument_list|,
 name|work
 operator|.
 name|dbNameOrPattern
-argument_list|,
-name|work
-operator|.
-name|tableNameOrPattern
 argument_list|)
 expr_stmt|;
 name|long
@@ -1724,15 +1720,11 @@ operator|new
 name|AndFilter
 argument_list|(
 operator|new
-name|DatabaseAndTableFilter
+name|ReplEventFilter
 argument_list|(
 name|work
 operator|.
-name|dbNameOrPattern
-argument_list|,
-name|work
-operator|.
-name|tableNameOrPattern
+name|replScope
 argument_list|)
 argument_list|,
 operator|new
@@ -2071,7 +2063,7 @@ name|dbName
 argument_list|,
 name|work
 operator|.
-name|tableNameOrPattern
+name|replScope
 argument_list|)
 control|)
 block|{
@@ -2280,11 +2272,7 @@ argument_list|)
 argument_list|,
 name|work
 operator|.
-name|dbNameOrPattern
-argument_list|,
-name|work
-operator|.
-name|tableNameOrPattern
+name|replScope
 argument_list|)
 decl_stmt|;
 name|EventHandler
@@ -2433,15 +2421,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Bootstrap Dump for db {} and table {}"
+literal|"Bootstrap Dump for db {}"
 argument_list|,
 name|work
 operator|.
 name|dbNameOrPattern
-argument_list|,
-name|work
-operator|.
-name|tableNameOrPattern
 argument_list|)
 expr_stmt|;
 name|long
@@ -2574,6 +2558,10 @@ argument_list|(
 name|hiveDb
 argument_list|,
 name|dbName
+argument_list|,
+name|work
+operator|.
+name|replScope
 argument_list|)
 operator|.
 name|size
@@ -2688,7 +2676,7 @@ name|dbName
 argument_list|,
 name|work
 operator|.
-name|tableNameOrPattern
+name|replScope
 argument_list|)
 control|)
 block|{

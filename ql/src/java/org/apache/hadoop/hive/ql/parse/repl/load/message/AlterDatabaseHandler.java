@@ -332,23 +332,6 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-if|if
-condition|(
-operator|!
-name|context
-operator|.
-name|isTableNameEmpty
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"Alter Database are not supported for table-level replication"
-argument_list|)
-throw|;
-block|}
 name|AlterDatabaseMessage
 name|msg
 init|=

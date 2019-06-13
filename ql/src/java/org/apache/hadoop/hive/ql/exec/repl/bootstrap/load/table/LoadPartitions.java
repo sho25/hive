@@ -1046,16 +1046,11 @@ name|this
 operator|.
 name|tableDesc
 operator|=
-name|tableContext
-operator|.
-name|overrideProperties
-argument_list|(
 name|event
 operator|.
 name|tableDesc
 argument_list|(
 name|dbNameToLoadIn
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|this

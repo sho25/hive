@@ -379,10 +379,6 @@ name|dbNameToLoadIn
 decl_stmt|;
 specifier|final
 name|String
-name|tableNameToLoadIn
-decl_stmt|;
-specifier|final
-name|String
 name|dumpDirectory
 decl_stmt|;
 specifier|final
@@ -458,9 +454,6 @@ parameter_list|,
 name|String
 name|dbNameToLoadIn
 parameter_list|,
-name|String
-name|tableNameToLoadIn
-parameter_list|,
 name|LineageState
 name|lineageState
 parameter_list|,
@@ -479,12 +472,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|this
-operator|.
-name|tableNameToLoadIn
-operator|=
-name|tableNameToLoadIn
-expr_stmt|;
 name|sessionStateLineageState
 operator|=
 name|lineageState
@@ -542,8 +529,6 @@ operator|new
 name|IncrementalLoadTasksBuilder
 argument_list|(
 name|dbNameToLoadIn
-argument_list|,
-name|tableNameToLoadIn
 argument_list|,
 name|dumpDirectory
 argument_list|,

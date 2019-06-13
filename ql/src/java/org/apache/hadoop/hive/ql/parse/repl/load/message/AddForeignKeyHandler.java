@@ -264,8 +264,6 @@ argument_list|<
 name|SQLForeignKey
 argument_list|>
 name|fks
-init|=
-literal|null
 decl_stmt|;
 try|try
 block|{
@@ -373,11 +371,6 @@ decl_stmt|;
 name|String
 name|actualTblName
 init|=
-name|context
-operator|.
-name|isTableNameEmpty
-argument_list|()
-condition|?
 name|fks
 operator|.
 name|get
@@ -387,10 +380,6 @@ argument_list|)
 operator|.
 name|getFktable_name
 argument_list|()
-else|:
-name|context
-operator|.
-name|tableName
 decl_stmt|;
 for|for
 control|(

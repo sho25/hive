@@ -661,9 +661,7 @@ operator|)
 argument_list|,
 name|parsedLocation
 argument_list|,
-name|context
-operator|.
-name|tableName
+literal|null
 argument_list|,
 name|context
 operator|.

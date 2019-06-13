@@ -271,23 +271,6 @@ name|getPayload
 argument_list|()
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|context
-operator|.
-name|isTableNameEmpty
-argument_list|()
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"RENAMES of tables are not supported for table-level replication"
-argument_list|)
-throw|;
-block|}
 try|try
 block|{
 name|Table

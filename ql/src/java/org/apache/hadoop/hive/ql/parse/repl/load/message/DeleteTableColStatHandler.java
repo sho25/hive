@@ -194,9 +194,7 @@ name|context
 operator|.
 name|dbName
 argument_list|,
-name|context
-operator|.
-name|tableName
+literal|null
 argument_list|,
 literal|null
 argument_list|)
