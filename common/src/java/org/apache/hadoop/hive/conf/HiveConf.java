@@ -16168,6 +16168,19 @@ operator|+
 literal|"Currently used for ExecutorNumExecutorsAvailableAverage and ExecutorNumQueuedRequestsAverage\n"
 argument_list|)
 block|,
+name|LLAP_DAEMON_METRICS_SIMPLE_AVERAGE_DATA_POINTS
+argument_list|(
+literal|"hive.llap.daemon.metrics.simple.average.data.points"
+argument_list|,
+literal|0
+argument_list|,
+literal|"The number of data points stored for calculating executor metrics simple averages.\n"
+operator|+
+literal|"Currently used for AverageQueueTime and AverageResponseTime\n"
+operator|+
+literal|"0 means that average calculation is turned off"
+argument_list|)
+block|,
 name|LLAP_TASK_COMMUNICATOR_CONNECTION_TIMEOUT_MS
 argument_list|(
 literal|"hive.llap.task.communicator.connection.timeout.ms"

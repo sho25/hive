@@ -251,6 +251,16 @@ name|ExecutorFallOffNumCompletedFragments
 argument_list|(
 literal|"Number of completed fragments w.r.t falloff values"
 argument_list|)
+block|,
+name|AverageQueueTime
+argument_list|(
+literal|"Average queue time for tasks"
+argument_list|)
+block|,
+name|AverageResponseTime
+argument_list|(
+literal|"Average response time for successful tasks"
+argument_list|)
 block|,   ;
 specifier|private
 specifier|final

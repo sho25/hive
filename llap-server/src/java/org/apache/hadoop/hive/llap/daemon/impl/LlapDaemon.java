@@ -1838,6 +1838,20 @@ operator|.
 name|NANOSECONDS
 argument_list|)
 decl_stmt|;
+name|int
+name|simpleAverageWindowDataSize
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_METRICS_SIMPLE_AVERAGE_DATA_POINTS
+argument_list|)
+decl_stmt|;
 name|Preconditions
 operator|.
 name|checkArgument
@@ -1864,6 +1878,17 @@ argument_list|,
 literal|"hive.llap.daemon.metrics.timed.window.average.window.length should be greater than 0 if "
 operator|+
 literal|"hive.llap.daemon.metrics.average.timed.window.data.points is set fo greater than 0"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|simpleAverageWindowDataSize
+operator|>=
+literal|0
+argument_list|,
+literal|"hive.llap.daemon.metrics.simple.average.data.points should be greater or equal to 0"
 argument_list|)
 expr_stmt|;
 specifier|final
@@ -2003,6 +2028,10 @@ operator|+
 literal|", timedWindowAverageWindowLength= "
 operator|+
 name|timedWindowAverageWindowLength
+operator|+
+literal|", simpleAverageWindowDataSize= "
+operator|+
+name|simpleAverageWindowDataSize
 operator|+
 literal|", versionInfo= ("
 operator|+
@@ -2437,6 +2466,8 @@ argument_list|,
 name|timedWindowAverageDataPoints
 argument_list|,
 name|timedWindowAverageWindowLength
+argument_list|,
+name|simpleAverageWindowDataSize
 argument_list|)
 expr_stmt|;
 name|this
