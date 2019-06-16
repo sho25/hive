@@ -471,6 +471,22 @@ name|service
 operator|.
 name|auth
 operator|.
+name|PlainSaslHelper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|service
+operator|.
+name|auth
+operator|.
 name|ldap
 operator|.
 name|HttpEmptyAuthenticationException
@@ -1034,6 +1050,22 @@ expr_stmt|;
 return|return;
 block|}
 block|}
+name|clientIpAddress
+operator|=
+name|request
+operator|.
+name|getRemoteAddr
+argument_list|()
+expr_stmt|;
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Client IP Address: "
+operator|+
+name|clientIpAddress
+argument_list|)
+expr_stmt|;
 comment|// If the cookie based authentication is already enabled, parse the
 comment|// request and validate the request cookies.
 if|if
@@ -1070,15 +1102,103 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|// If the cookie based authentication is not enabled or the request does
-comment|// not have a valid cookie, use the kerberos or password based authentication
-comment|// depending on the server setup.
+comment|// If the cookie based authentication is not enabled or the request does not have a valid
+comment|// cookie, use authentication depending on the server setup.
 if|if
 condition|(
 name|clientUserName
 operator|==
 literal|null
 condition|)
+block|{
+name|String
+name|trustedDomain
+init|=
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|hiveConf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_TRUSTED_DOMAIN
+argument_list|)
+operator|.
+name|trim
+argument_list|()
+decl_stmt|;
+comment|// Skip authentication if the connection is from the trusted domain, if specified.
+comment|// getRemoteHost may or may not return the FQDN of the remote host depending upon the
+comment|// HTTP server configuration. So, force a reverse DNS lookup.
+name|String
+name|remoteHostName
+init|=
+name|InetAddress
+operator|.
+name|getByName
+argument_list|(
+name|request
+operator|.
+name|getRemoteHost
+argument_list|()
+argument_list|)
+operator|.
+name|getCanonicalHostName
+argument_list|()
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|trustedDomain
+operator|.
+name|isEmpty
+argument_list|()
+operator|&&
+name|PlainSaslHelper
+operator|.
+name|isHostFromTrustedDomain
+argument_list|(
+name|remoteHostName
+argument_list|,
+name|trustedDomain
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"No authentication performed because the connecting host "
+operator|+
+name|remoteHostName
+operator|+
+literal|" is from the trusted domain "
+operator|+
+name|trustedDomain
+argument_list|)
+expr_stmt|;
+comment|// In order to skip authentication, we use auth type NOSASL to be consistent with the
+comment|// HiveAuthFactory defaults. In HTTP mode, it will also get us the user name from the
+comment|// HTTP request header.
+name|clientUserName
+operator|=
+name|doPasswdAuth
+argument_list|(
+name|request
+argument_list|,
+name|HiveAuthConstants
+operator|.
+name|AuthTypes
+operator|.
+name|NOSASL
+operator|.
+name|getAuthName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+else|else
 block|{
 comment|// For a kerberos setup
 if|if
@@ -1152,6 +1272,14 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
+assert|assert
+operator|(
+name|clientUserName
+operator|!=
+literal|null
+operator|)
+assert|;
 name|LOG
 operator|.
 name|debug
@@ -1196,22 +1324,6 @@ name|doAsQueryParam
 argument_list|)
 expr_stmt|;
 block|}
-name|clientIpAddress
-operator|=
-name|request
-operator|.
-name|getRemoteAddr
-argument_list|()
-expr_stmt|;
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Client IP Address: "
-operator|+
-name|clientIpAddress
-argument_list|)
-expr_stmt|;
 comment|// Set the thread local ip address
 name|SessionManager
 operator|.
