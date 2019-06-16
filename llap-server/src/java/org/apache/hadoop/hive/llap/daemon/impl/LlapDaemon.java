@@ -2536,6 +2536,8 @@ argument_list|,
 name|mngPort
 argument_list|,
 name|daemonId
+argument_list|,
+name|metrics
 argument_list|)
 expr_stmt|;
 name|UgiFactory
