@@ -12716,27 +12716,6 @@ operator|+
 literal|"  NOSASL:  Raw transport"
 argument_list|)
 block|,
-name|HIVE_SERVER2_TRUSTED_DOMAIN
-argument_list|(
-literal|"hive.server2.trusted.domain"
-argument_list|,
-literal|""
-argument_list|,
-literal|"Specifies the host or a domain to trust connections from. Authentication is skipped "
-operator|+
-literal|"for any connection coming from a host whose hostname ends with the value of this"
-operator|+
-literal|" property. If authentication is expected to be skipped for connections from "
-operator|+
-literal|"only a given host, fully qualified hostname of that host should be specified. By default"
-operator|+
-literal|" it is empty, which means that all the connections to HiveServer2 are authenticated. "
-operator|+
-literal|"When it is non-empty, the client has to provide a Hive user name. Any password, if "
-operator|+
-literal|"provided, will not be used when authentication is skipped."
-argument_list|)
-block|,
 name|HIVE_SERVER2_ALLOW_USER_SUBSTITUTION
 argument_list|(
 literal|"hive.server2.allow.user.substitution"
