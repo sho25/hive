@@ -704,6 +704,10 @@ literal|60
 block|,
 literal|300
 block|}
+argument_list|,
+literal|0
+argument_list|,
+literal|0L
 argument_list|)
 decl_stmt|;
 name|LlapProtocolServerImpl

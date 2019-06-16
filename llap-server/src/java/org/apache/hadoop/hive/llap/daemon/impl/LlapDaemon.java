@@ -155,6 +155,18 @@ name|util
 operator|.
 name|concurrent
 operator|.
+name|TimeUnit
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
 name|atomic
 operator|.
 name|AtomicLong
@@ -1794,6 +1806,66 @@ operator|.
 name|LLAP_DAEMON_TASK_SCHEDULER_ENABLE_PREEMPTION
 argument_list|)
 decl_stmt|;
+name|int
+name|timedWindowAverageDataPoints
+init|=
+name|HiveConf
+operator|.
+name|getIntVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_METRICS_TIMED_WINDOW_AVERAGE_DATA_POINTS
+argument_list|)
+decl_stmt|;
+name|long
+name|timedWindowAverageWindowLength
+init|=
+name|HiveConf
+operator|.
+name|getTimeVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_DAEMON_METRICS_TIMED_WINDOW_AVERAGE_WINDOW_LENGTH
+argument_list|,
+name|TimeUnit
+operator|.
+name|NANOSECONDS
+argument_list|)
+decl_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|timedWindowAverageDataPoints
+operator|>=
+literal|0
+argument_list|,
+literal|"hive.llap.daemon.metrics.timed.window.average.data.points should be greater or equal to 0"
+argument_list|)
+expr_stmt|;
+name|Preconditions
+operator|.
+name|checkArgument
+argument_list|(
+name|timedWindowAverageDataPoints
+operator|==
+literal|0
+operator|||
+name|timedWindowAverageWindowLength
+operator|>
+literal|0
+argument_list|,
+literal|"hive.llap.daemon.metrics.timed.window.average.window.length should be greater than 0 if "
+operator|+
+literal|"hive.llap.daemon.metrics.average.timed.window.data.points is set fo greater than 0"
+argument_list|)
+expr_stmt|;
 specifier|final
 name|String
 name|logMsg
@@ -1923,6 +1995,14 @@ operator|+
 literal|", enablePreemption= "
 operator|+
 name|enablePreemption
+operator|+
+literal|", timedWindowAverageDataPoints= "
+operator|+
+name|timedWindowAverageDataPoints
+operator|+
+literal|", timedWindowAverageWindowLength= "
+operator|+
+name|timedWindowAverageWindowLength
 operator|+
 literal|", versionInfo= ("
 operator|+
@@ -2353,6 +2433,10 @@ name|toArray
 argument_list|(
 name|intervalList
 argument_list|)
+argument_list|,
+name|timedWindowAverageDataPoints
+argument_list|,
+name|timedWindowAverageWindowLength
 argument_list|)
 expr_stmt|;
 name|this

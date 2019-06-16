@@ -92,6 +92,11 @@ argument_list|(
 literal|"Total number of executor threads per node that are free"
 argument_list|)
 block|,
+name|ExecutorNumExecutorsAvailableAverage
+argument_list|(
+literal|"Total number of executor threads per node that are free averaged over time"
+argument_list|)
+block|,
 name|ExecutorAvailableFreeSlots
 argument_list|(
 literal|"Number of free slots available"
@@ -140,6 +145,11 @@ block|,
 name|ExecutorNumQueuedRequests
 argument_list|(
 literal|"Number of requests queued by the container for processing"
+argument_list|)
+block|,
+name|ExecutorNumQueuedRequestsAverage
+argument_list|(
+literal|"Number of requests queued by the container for processing averaged over time"
 argument_list|)
 block|,
 name|ExecutorNumPreemptableRequests

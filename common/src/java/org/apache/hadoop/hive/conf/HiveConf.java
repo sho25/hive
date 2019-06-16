@@ -16136,6 +16136,38 @@ argument_list|,
 literal|"llap.daemon.task.scheduler.enable.preemption"
 argument_list|)
 block|,
+name|LLAP_DAEMON_METRICS_TIMED_WINDOW_AVERAGE_DATA_POINTS
+argument_list|(
+literal|"hive.llap.daemon.metrics.timed.window.average.data.points"
+argument_list|,
+literal|0
+argument_list|,
+literal|"The number of data points stored for calculating executor metrics timed averages.\n"
+operator|+
+literal|"Currently used for ExecutorNumExecutorsAvailableAverage and ExecutorNumQueuedRequestsAverage\n"
+operator|+
+literal|"0 means that average calculation is turned off"
+argument_list|)
+block|,
+name|LLAP_DAEMON_METRICS_TIMED_WINDOW_AVERAGE_WINDOW_LENGTH
+argument_list|(
+literal|"hive.llap.daemon.metrics.timed.window.average.window.length"
+argument_list|,
+literal|"1m"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|NANOSECONDS
+argument_list|)
+argument_list|,
+literal|"The length of the time window used for calculating executor metrics timed averages.\n"
+operator|+
+literal|"Currently used for ExecutorNumExecutorsAvailableAverage and ExecutorNumQueuedRequestsAverage\n"
+argument_list|)
+block|,
 name|LLAP_TASK_COMMUNICATOR_CONNECTION_TIMEOUT_MS
 argument_list|(
 literal|"hive.llap.task.communicator.connection.timeout.ms"
