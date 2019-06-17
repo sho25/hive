@@ -965,7 +965,7 @@ specifier|static
 name|Path
 name|dataTypesFilePath
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 name|HiveConf
 name|conf
@@ -1347,7 +1347,7 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
-specifier|private
+specifier|protected
 name|void
 name|createTestTable
 parameter_list|(
