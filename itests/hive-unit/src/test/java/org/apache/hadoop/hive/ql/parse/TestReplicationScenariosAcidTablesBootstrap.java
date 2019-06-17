@@ -235,6 +235,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Test
 import|;
 end_import
@@ -1596,6 +1606,11 @@ name|replicaConf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-21879: Disabling this testcase as it is flaky."
+argument_list|)
 annotation|@
 name|Test
 specifier|public
