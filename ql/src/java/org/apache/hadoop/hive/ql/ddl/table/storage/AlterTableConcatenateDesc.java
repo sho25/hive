@@ -15,7 +15,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|ddl
+operator|.
+name|table
+operator|.
+name|storage
 package|;
 end_package
 
@@ -35,7 +39,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|List
 import|;
 end_import
 
@@ -45,7 +49,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Map
 import|;
 end_import
 
@@ -60,6 +64,42 @@ operator|.
 name|fs
 operator|.
 name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|DDLDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|DDLTask2
 import|;
 end_import
 
@@ -151,13 +191,17 @@ name|Level
 import|;
 end_import
 
+begin_comment
+comment|/**  * DDL task description for ALTER TABLE ... [PARTITION ... ] CONCATENATE commands.  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Alter Table Partition Merge Files"
+literal|"Concatenate"
 argument_list|,
 name|explainLevels
 operator|=
@@ -177,14 +221,32 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|AlterTablePartMergeFilesDesc
+name|AlterTableConcatenateDesc
+implements|implements
+name|DDLDesc
 block|{
+static|static
+block|{
+name|DDLTask2
+operator|.
+name|registerOperation
+argument_list|(
+name|AlterTableConcatenateDesc
+operator|.
+name|class
+argument_list|,
+name|AlterTableConcatenateOperation
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|String
 name|tableName
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -231,12 +293,12 @@ name|TableDesc
 name|tableDesc
 decl_stmt|;
 specifier|public
-name|AlterTablePartMergeFilesDesc
+name|AlterTableConcatenateDesc
 parameter_list|(
 name|String
 name|tableName
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -274,21 +336,6 @@ return|return
 name|tableName
 return|;
 block|}
-specifier|public
-name|void
-name|setTableName
-parameter_list|(
-name|String
-name|tableName
-parameter_list|)
-block|{
-name|this
-operator|.
-name|tableName
-operator|=
-name|tableName
-expr_stmt|;
-block|}
 annotation|@
 name|Explain
 argument_list|(
@@ -297,7 +344,7 @@ operator|=
 literal|"partition desc"
 argument_list|)
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -309,26 +356,6 @@ block|{
 return|return
 name|partSpec
 return|;
-block|}
-specifier|public
-name|void
-name|setPartSpec
-parameter_list|(
-name|HashMap
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
-parameter_list|)
-block|{
-name|this
-operator|.
-name|partSpec
-operator|=
-name|partSpec
-expr_stmt|;
 block|}
 specifier|public
 name|Path
@@ -384,7 +411,6 @@ operator|=
 name|inputDir
 expr_stmt|;
 block|}
-comment|/**    * @return the lbCtx    */
 specifier|public
 name|ListBucketingCtx
 name|getLbCtx
@@ -394,7 +420,6 @@ return|return
 name|lbCtx
 return|;
 block|}
-comment|/**    * @param lbCtx the lbCtx to set    */
 specifier|public
 name|void
 name|setLbCtx

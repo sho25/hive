@@ -1114,7 +1114,7 @@ throw|;
 block|}
 block|}
 comment|/**    * This method is overridden in each Task. TODO execute should return a TaskHandle.    *    * @return status of executing the task    */
-specifier|protected
+specifier|public
 specifier|abstract
 name|int
 name|execute

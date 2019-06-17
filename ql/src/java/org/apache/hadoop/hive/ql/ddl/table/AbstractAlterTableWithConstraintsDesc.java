@@ -89,26 +89,6 @@ name|SemanticException
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|AlterTableDesc
-operator|.
-name|AlterTableTypes
-import|;
-end_import
-
 begin_comment
 comment|/**  * Abstract ancestor of all ALTER TABLE descriptors that are handled by the AlterTableWithWriteIdOperations framework  * and also has constraint changes.  */
 end_comment
@@ -137,7 +117,7 @@ decl_stmt|;
 specifier|public
 name|AbstractAlterTableWithConstraintsDesc
 parameter_list|(
-name|AlterTableTypes
+name|AlterTableType
 name|type
 parameter_list|,
 name|String

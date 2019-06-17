@@ -95,9 +95,11 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|parse
+name|ddl
 operator|.
-name|SemanticException
+name|table
+operator|.
+name|AlterTableType
 import|;
 end_import
 
@@ -113,11 +115,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|parse
 operator|.
-name|AlterTableDesc
-operator|.
-name|AlterTableTypes
+name|SemanticException
 import|;
 end_import
 
@@ -270,7 +270,7 @@ name|SemanticException
 block|{
 name|super
 argument_list|(
-name|AlterTableTypes
+name|AlterTableType
 operator|.
 name|SKEWED_BY
 argument_list|,

@@ -1695,7 +1695,7 @@ literal|"ADDPROPS"
 argument_list|,
 literal|"DROPPROPS"
 argument_list|,
-literal|"ADD_COLUMNS"
+literal|"ADDCOLS"
 argument_list|)
 decl_stmt|;
 static|static

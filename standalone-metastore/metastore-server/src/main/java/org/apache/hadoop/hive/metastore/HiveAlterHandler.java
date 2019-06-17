@@ -691,7 +691,7 @@ name|metastore
 operator|.
 name|HiveMetaHook
 operator|.
-name|SET_LOCATION
+name|ALTERLOCATION
 import|;
 end_import
 
@@ -5377,7 +5377,7 @@ name|alterType
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|SET_LOCATION
+name|ALTERLOCATION
 argument_list|)
 operator|&&
 name|tbl
@@ -5507,7 +5507,7 @@ name|alterType
 operator|.
 name|equalsIgnoreCase
 argument_list|(
-name|SET_LOCATION
+name|ALTERLOCATION
 argument_list|)
 operator|&&
 name|oldTbl

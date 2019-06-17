@@ -107,6 +107,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|ddl
+operator|.
+name|table
+operator|.
+name|AlterTableType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|ASTNode
@@ -128,26 +148,6 @@ operator|.
 name|parse
 operator|.
 name|ASTNodeOrigin
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|AlterTableDesc
-operator|.
-name|AlterTableTypes
 import|;
 end_import
 
@@ -1206,9 +1206,9 @@ literal|10134
 argument_list|,
 literal|"ALTER TABLE can only be used for "
 operator|+
-name|AlterTableTypes
+name|AlterTableType
 operator|.
-name|nonNativeTableAllowedTypes
+name|NON_NATIVE_TABLE_ALLOWED
 operator|+
 literal|" to a non-native table "
 argument_list|)
