@@ -17160,7 +17160,7 @@ name|HIVE_QUERY_REEXECUTION_STATS_PERSISTENCE
 argument_list|(
 literal|"hive.query.reexecution.stats.persist.scope"
 argument_list|,
-literal|"query"
+literal|"metastore"
 argument_list|,
 operator|new
 name|StringSet
