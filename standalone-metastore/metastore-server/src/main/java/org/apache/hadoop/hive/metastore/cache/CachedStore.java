@@ -3798,9 +3798,8 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|Integer
-operator|.
-name|MAX_VALUE
+operator|-
+literal|1
 argument_list|)
 expr_stmt|;
 name|Deadline
@@ -5867,9 +5866,8 @@ name|dbName
 argument_list|,
 name|tblName
 argument_list|,
-name|Integer
-operator|.
-name|MAX_VALUE
+operator|-
+literal|1
 argument_list|)
 decl_stmt|;
 name|Deadline
