@@ -71,9 +71,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|ddl
 operator|.
-name|DDLTask
+name|DDLTask2
 import|;
 end_import
 
@@ -308,11 +308,11 @@ argument_list|,
 literal|4096l
 argument_list|)
 expr_stmt|;
-name|DDLTask
+name|DDLTask2
 name|task1
 init|=
 operator|new
-name|DDLTask
+name|DDLTask2
 argument_list|()
 decl_stmt|;
 name|task1
@@ -322,11 +322,11 @@ argument_list|(
 literal|"alias2"
 argument_list|)
 expr_stmt|;
-name|DDLTask
+name|DDLTask2
 name|task2
 init|=
 operator|new
-name|DDLTask
+name|DDLTask2
 argument_list|()
 decl_stmt|;
 name|task2

@@ -189,9 +189,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|ddl
 operator|.
-name|DDLTask
+name|DDLUtils
 import|;
 end_import
 
@@ -1866,7 +1866,7 @@ operator|=
 name|getSerde
 argument_list|()
 expr_stmt|;
-name|DDLTask
+name|DDLUtils
 operator|.
 name|validateSerDe
 argument_list|(
