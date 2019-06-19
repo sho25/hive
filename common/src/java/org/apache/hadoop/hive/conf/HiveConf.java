@@ -12737,6 +12737,25 @@ operator|+
 literal|"provided, will not be used when authentication is skipped."
 argument_list|)
 block|,
+name|HIVE_SERVER2_TRUSTED_DOMAIN_USE_XFF_HEADER
+argument_list|(
+literal|"hive.server2.trusted.domain.use.xff.header"
+argument_list|,
+literal|false
+argument_list|,
+literal|"When trusted domain authentication is enabled, the clients connecting to the HS2 could pass"
+operator|+
+literal|"through many layers of proxy. Some proxies append its own ip address to 'X-Forwarded-For' header"
+operator|+
+literal|"before passing on the request to another proxy or HS2. Some proxies also connect on behalf of client"
+operator|+
+literal|"and may create a separate connection to HS2 without binding using client IP. For such environments, instead"
+operator|+
+literal|"of looking at client IP from the request, if this config is set and if 'X-Forwarded-For' is present,"
+operator|+
+literal|"trusted domain authentication will use left most ip address from X-Forwarded-For header."
+argument_list|)
+block|,
 name|HIVE_SERVER2_ALLOW_USER_SUBSTITUTION
 argument_list|(
 literal|"hive.server2.allow.user.substitution"
