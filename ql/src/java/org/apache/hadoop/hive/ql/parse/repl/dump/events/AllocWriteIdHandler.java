@@ -240,6 +240,31 @@ condition|)
 block|{
 return|return;
 block|}
+comment|// If replication policy is replaced with new included/excluded tables list, then events
+comment|// corresponding to tables which are not included in old policy but included in new policy
+comment|// should be skipped. Those tables would be bootstrapped along with the current incremental
+comment|// replication dump.
+comment|// Note: If any event dump reaches here, it means, it is included in new replication policy.
+if|if
+condition|(
+operator|!
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|withinContext
+operator|.
+name|oldReplScope
+argument_list|,
+name|eventMessage
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
 name|DumpMetaData
 name|dmd
 init|=

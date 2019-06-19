@@ -517,9 +517,12 @@ name|writeOutput
 parameter_list|(
 name|List
 argument_list|<
+name|List
+argument_list|<
 name|String
 argument_list|>
-name|values
+argument_list|>
+name|listValues
 parameter_list|,
 name|Path
 name|outputFile
@@ -556,6 +559,17 @@ argument_list|(
 name|outputFile
 argument_list|)
 expr_stmt|;
+for|for
+control|(
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|values
+range|:
+name|listValues
+control|)
+block|{
 name|outStream
 operator|.
 name|writeBytes
@@ -647,6 +661,7 @@ operator|.
 name|newLineCode
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1253,6 +1268,9 @@ parameter_list|,
 name|boolean
 name|isEventDump
 parameter_list|,
+name|ReplScope
+name|oldReplScope
+parameter_list|,
 name|HiveConf
 name|hiveConf
 parameter_list|)
@@ -1364,6 +1382,7 @@ name|isEventDump
 condition|)
 block|{
 comment|// Skip dumping of events related to external tables if bootstrap is enabled on it.
+comment|// Also, skip if current table is included only in new policy but not in old policy.
 name|shouldReplicateExternalTables
 operator|=
 name|shouldReplicateExternalTables
@@ -1378,6 +1397,18 @@ operator|.
 name|ConfVars
 operator|.
 name|REPL_BOOTSTRAP_EXTERNAL_TABLES
+argument_list|)
+operator|&&
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|oldReplScope
+argument_list|,
+name|tableHandle
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1413,7 +1444,8 @@ return|return
 literal|false
 return|;
 block|}
-comment|// Skip dumping events related to ACID tables if bootstrap is enabled on it
+comment|// Skip dumping events related to ACID tables if bootstrap is enabled on it.
+comment|// Also, skip if current table is included only in new policy but not in old policy.
 if|if
 condition|(
 name|isEventDump
@@ -1431,8 +1463,47 @@ name|ConfVars
 operator|.
 name|REPL_BOOTSTRAP_ACID_TABLES
 argument_list|)
+operator|&&
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|oldReplScope
+argument_list|,
+name|tableHandle
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
 return|;
 block|}
+block|}
+comment|// If replication policy is replaced with new included/excluded tables list, then events
+comment|// corresponding to tables which are not included in old policy but included in new policy
+comment|// should be skipped. Those tables would be bootstrapped along with the current incremental
+comment|// replication dump.
+comment|// Note: If any event dump reaches here, it means, table is included in new replication policy.
+if|if
+condition|(
+name|isEventDump
+operator|&&
+operator|!
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|oldReplScope
+argument_list|,
+name|tableHandle
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|false
+return|;
 block|}
 block|}
 return|return
@@ -1455,6 +1526,9 @@ name|db
 parameter_list|,
 name|boolean
 name|isEventDump
+parameter_list|,
+name|ReplScope
+name|oldReplScope
 parameter_list|,
 name|HiveConf
 name|hiveConf
@@ -1522,6 +1596,8 @@ argument_list|,
 name|table
 argument_list|,
 name|isEventDump
+argument_list|,
+name|oldReplScope
 argument_list|,
 name|hiveConf
 argument_list|)

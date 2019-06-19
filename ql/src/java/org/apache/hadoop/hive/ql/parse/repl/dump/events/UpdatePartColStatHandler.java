@@ -284,6 +284,10 @@ literal|true
 argument_list|,
 name|withinContext
 operator|.
+name|oldReplScope
+argument_list|,
+name|withinContext
+operator|.
 name|hiveConf
 argument_list|)
 condition|)

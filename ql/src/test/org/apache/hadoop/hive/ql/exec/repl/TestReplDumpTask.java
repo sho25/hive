@@ -981,6 +981,8 @@ name|ReplDumpWork
 argument_list|(
 name|replScope
 argument_list|,
+literal|null
+argument_list|,
 name|Long
 operator|.
 name|MAX_VALUE

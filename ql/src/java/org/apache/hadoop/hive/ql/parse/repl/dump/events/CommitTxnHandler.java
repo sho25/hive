@@ -946,18 +946,41 @@ operator|!=
 literal|null
 operator|)
 assert|;
+comment|// If replication policy is replaced with new included/excluded tables list, then events
+comment|// corresponding to tables which are included in both old and new policies should be dumped.
+comment|// If table is included in new policy but not in old policy, then it should be skipped.
+comment|// Those tables would be bootstrapped along with the current incremental
+comment|// replication dump.
 return|return
-name|withinContext
-operator|.
-name|replScope
+operator|(
+name|ReplUtils
 operator|.
 name|tableIncludedInReplScope
 argument_list|(
+name|withinContext
+operator|.
+name|replScope
+argument_list|,
 name|writeEventInfo
 operator|.
 name|getTable
 argument_list|()
 argument_list|)
+operator|&&
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|withinContext
+operator|.
+name|oldReplScope
+argument_list|,
+name|writeEventInfo
+operator|.
+name|getTable
+argument_list|()
+argument_list|)
+operator|)
 return|;
 block|}
 argument_list|)

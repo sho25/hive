@@ -3263,6 +3263,8 @@ name|replicadb
 argument_list|,
 literal|null
 argument_list|,
+literal|null
+argument_list|,
 name|isIncrementalDump
 argument_list|,
 name|Long

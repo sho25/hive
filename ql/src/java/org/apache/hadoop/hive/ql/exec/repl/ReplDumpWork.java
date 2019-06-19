@@ -150,6 +150,10 @@ name|ReplScope
 name|replScope
 decl_stmt|;
 specifier|final
+name|ReplScope
+name|oldReplScope
+decl_stmt|;
+specifier|final
 name|String
 name|dbNameOrPattern
 decl_stmt|,
@@ -194,6 +198,9 @@ parameter_list|(
 name|ReplScope
 name|replScope
 parameter_list|,
+name|ReplScope
+name|oldReplScope
+parameter_list|,
 name|Long
 name|eventFrom
 parameter_list|,
@@ -215,6 +222,12 @@ operator|.
 name|replScope
 operator|=
 name|replScope
+expr_stmt|;
+name|this
+operator|.
+name|oldReplScope
+operator|=
+name|oldReplScope
 expr_stmt|;
 name|this
 operator|.
