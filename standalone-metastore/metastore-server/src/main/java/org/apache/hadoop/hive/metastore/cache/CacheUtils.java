@@ -369,7 +369,7 @@ name|colName
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|buildKey
