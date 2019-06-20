@@ -457,6 +457,13 @@ name|TXN_WRITE_EVENT_FILE_SEPARATOR
 init|=
 literal|"]"
 decl_stmt|;
+specifier|static
+specifier|final
+name|String
+name|CM_THREAD_NAME_PREFIX
+init|=
+literal|"cmclearer-"
+decl_stmt|;
 specifier|public
 enum|enum
 name|RecycleType
@@ -2380,7 +2387,9 @@ argument_list|()
 operator|.
 name|namingPattern
 argument_list|(
-literal|"cmclearer-%d"
+name|CM_THREAD_NAME_PREFIX
+operator|+
+literal|"%d"
 argument_list|)
 operator|.
 name|daemon

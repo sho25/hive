@@ -718,6 +718,14 @@ name|SKIP_STATS_AUTOUPDATE_PROPERTY
 init|=
 literal|"skip.stats.autoupdate"
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|WORKER_NAME_PREFIX
+init|=
+literal|"Stats updater worker "
+decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
@@ -1178,7 +1186,7 @@ index|]
 operator|.
 name|setName
 argument_list|(
-literal|"Stats updater worker "
+name|WORKER_NAME_PREFIX
 operator|+
 name|i
 argument_list|)
@@ -1192,6 +1200,13 @@ name|void
 name|run
 parameter_list|()
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Stats updater thread started"
+argument_list|)
+expr_stmt|;
 name|startWorkers
 argument_list|()
 expr_stmt|;
@@ -1274,6 +1289,23 @@ operator|++
 name|i
 control|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Stats updater worker thread "
+operator|+
+name|workers
+index|[
+name|i
+index|]
+operator|.
+name|getName
+argument_list|()
+operator|+
+literal|" started"
+argument_list|)
+expr_stmt|;
 name|workers
 index|[
 name|i

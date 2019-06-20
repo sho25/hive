@@ -1618,6 +1618,29 @@ operator|+
 literal|"than hive.compactor.history.retention.failed."
 argument_list|)
 block|,
+name|METASTORE_HOUSEKEEPING_LEADER_HOSTNAME
+argument_list|(
+literal|"metastore.housekeeping.leader.hostname"
+argument_list|,
+literal|"hive.metastore.housekeeping.leader.hostname"
+argument_list|,
+literal|""
+argument_list|,
+literal|"If there are multiple Thrift metastore services running, the hostname of Thrift metastore "
+operator|+
+literal|"service to run housekeeping tasks at. By default this values is empty, which "
+operator|+
+literal|"means that the current metastore will run the housekeeping tasks. If configuration"
+operator|+
+literal|"metastore.thrift.bind.host is set on the intended leader metastore, this value should "
+operator|+
+literal|"match that configuration. Otherwise it should be same as the hostname returned by "
+operator|+
+literal|"InetAddress#getLocalHost#getHostName(). Given the uncertainty in the later "
+operator|+
+literal|"it is desirable to configure metastore.thrift.bind.host on the intended leader HMS."
+argument_list|)
+block|,
 name|COMPACTOR_INITIATOR_ON
 argument_list|(
 literal|"metastore.compactor.initiator.on"
