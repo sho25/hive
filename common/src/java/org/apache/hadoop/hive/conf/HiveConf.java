@@ -23386,6 +23386,10 @@ literal|"hive\\.tez\\..*"
 block|,
 literal|"hive\\.vectorized\\..*"
 block|,
+literal|"hive\\.query\\.reexecution\\..*"
+block|,
+literal|"reexec\\.overlay\\..*"
+block|,
 literal|"fs\\.defaultFS"
 block|,
 literal|"ssl\\.client\\.truststore\\.location"
