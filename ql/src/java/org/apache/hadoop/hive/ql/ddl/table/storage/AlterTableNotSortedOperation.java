@@ -171,6 +171,9 @@ class|class
 name|AlterTableNotSortedOperation
 extends|extends
 name|AbstractAlterTableOperation
+argument_list|<
+name|AlterTableNotSortedDesc
+argument_list|>
 block|{
 specifier|public
 name|AlterTableNotSortedOperation

@@ -221,6 +221,9 @@ class|class
 name|CreateDatabaseOperation
 extends|extends
 name|DDLOperation
+argument_list|<
+name|CreateDatabaseDesc
+argument_list|>
 block|{
 specifier|private
 specifier|static
@@ -229,11 +232,6 @@ name|String
 name|DATABASE_PATH_SUFFIX
 init|=
 literal|".db"
-decl_stmt|;
-specifier|private
-specifier|final
-name|CreateDatabaseDesc
-name|desc
 decl_stmt|;
 specifier|public
 name|CreateDatabaseOperation
@@ -248,13 +246,9 @@ block|{
 name|super
 argument_list|(
 name|context
+argument_list|,
+name|desc
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|desc
-operator|=
-name|desc
 expr_stmt|;
 block|}
 annotation|@

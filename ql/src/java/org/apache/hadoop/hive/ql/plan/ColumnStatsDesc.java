@@ -67,8 +67,6 @@ begin_class
 specifier|public
 class|class
 name|ColumnStatsDesc
-extends|extends
-name|DDLDesc
 implements|implements
 name|Serializable
 implements|,

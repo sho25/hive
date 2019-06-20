@@ -321,12 +321,10 @@ class|class
 name|AlterResourcePlanOperation
 extends|extends
 name|DDLOperation
-block|{
-specifier|private
-specifier|final
+argument_list|<
 name|AlterResourcePlanDesc
-name|desc
-decl_stmt|;
+argument_list|>
+block|{
 comment|// Note: the resource plan operations are going to be annotated with namespace based on the config
 comment|//       inside Hive.java. We don't want HS2 to be aware of namespaces beyond that, or to even see
 comment|//       that there exist other namespaces, because one HS2 always operates inside just one and we
@@ -345,13 +343,9 @@ block|{
 name|super
 argument_list|(
 name|context
+argument_list|,
+name|desc
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|desc
-operator|=
-name|desc
 expr_stmt|;
 block|}
 annotation|@

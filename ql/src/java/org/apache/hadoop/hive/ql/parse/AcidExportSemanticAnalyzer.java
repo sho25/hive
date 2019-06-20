@@ -275,7 +275,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -293,7 +293,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -1072,18 +1072,18 @@ name|dbForTmpTable
 argument_list|)
 expr_stmt|;
 comment|//so the plan knows we are 'reading' this db - locks, security...
-name|DDLTask2
+name|DDLTask
 name|createTableTask
 init|=
 operator|(
-name|DDLTask2
+name|DDLTask
 operator|)
 name|TaskFactory
 operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 operator|new
 name|HashSet
@@ -1326,7 +1326,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -1369,7 +1369,7 @@ argument_list|)
 decl_stmt|;
 name|Task
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 name|dropTask
 init|=
@@ -1378,7 +1378,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 operator|new
 name|HashSet
@@ -1726,7 +1726,7 @@ name|exportTask
 parameter_list|,
 name|Task
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 name|alterTable
 parameter_list|)

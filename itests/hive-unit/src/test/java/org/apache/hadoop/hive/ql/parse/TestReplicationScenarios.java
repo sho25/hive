@@ -765,7 +765,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -3177,14 +3177,14 @@ if|if
 condition|(
 name|task
 operator|instanceof
-name|DDLTask2
+name|DDLTask
 condition|)
 block|{
-name|DDLTask2
+name|DDLTask
 name|ddlTask
 init|=
 operator|(
-name|DDLTask2
+name|DDLTask
 operator|)
 name|task
 decl_stmt|;

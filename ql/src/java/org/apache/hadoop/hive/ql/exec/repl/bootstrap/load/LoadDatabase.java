@@ -91,7 +91,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -866,11 +866,11 @@ decl_stmt|;
 comment|// If it exists, we want this to be an error condition. Repl Load is not intended to replace a
 comment|// db.
 comment|// TODO: we might revisit this in create-drop-recreate cases, needs some thinking on.
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 operator|new
 name|HashSet
@@ -975,11 +975,11 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 operator|new
 name|HashSet
@@ -1127,11 +1127,11 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 operator|new
 name|HashSet

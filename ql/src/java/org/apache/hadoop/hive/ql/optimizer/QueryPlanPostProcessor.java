@@ -33,7 +33,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -953,7 +953,7 @@ name|CopyWork
 operator|||
 name|work
 operator|instanceof
-name|DDLWork2
+name|DDLWork
 operator|||
 name|work
 operator|instanceof

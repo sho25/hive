@@ -137,7 +137,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -703,7 +703,7 @@ name|AlterTableCompactDesc
 call|)
 argument_list|(
 operator|(
-name|DDLWork2
+name|DDLWork
 operator|)
 name|roots
 operator|.

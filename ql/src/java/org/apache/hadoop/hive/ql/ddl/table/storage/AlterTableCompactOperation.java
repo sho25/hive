@@ -249,6 +249,9 @@ class|class
 name|AlterTableCompactOperation
 extends|extends
 name|DDLOperation
+argument_list|<
+name|AlterTableCompactDesc
+argument_list|>
 block|{
 specifier|private
 specifier|static
@@ -261,11 +264,6 @@ operator|*
 literal|60
 operator|*
 literal|1000
-decl_stmt|;
-specifier|private
-specifier|final
-name|AlterTableCompactDesc
-name|desc
 decl_stmt|;
 specifier|public
 name|AlterTableCompactOperation
@@ -280,13 +278,9 @@ block|{
 name|super
 argument_list|(
 name|context
+argument_list|,
+name|desc
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|desc
-operator|=
-name|desc
 expr_stmt|;
 block|}
 annotation|@

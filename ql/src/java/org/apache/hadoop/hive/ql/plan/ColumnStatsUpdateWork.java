@@ -69,7 +69,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|ddl
 operator|.
 name|DDLDesc
 operator|.

@@ -455,6 +455,9 @@ class|class
 name|ShowCreateTableOperation
 extends|extends
 name|DDLOperation
+argument_list|<
+name|ShowCreateTableDesc
+argument_list|>
 block|{
 specifier|private
 specifier|static
@@ -536,11 +539,6 @@ name|TBL_PROPERTIES
 init|=
 literal|"tbl_properties"
 decl_stmt|;
-specifier|private
-specifier|final
-name|ShowCreateTableDesc
-name|desc
-decl_stmt|;
 specifier|public
 name|ShowCreateTableOperation
 parameter_list|(
@@ -554,13 +552,9 @@ block|{
 name|super
 argument_list|(
 name|context
+argument_list|,
+name|desc
 argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|desc
-operator|=
-name|desc
 expr_stmt|;
 block|}
 annotation|@

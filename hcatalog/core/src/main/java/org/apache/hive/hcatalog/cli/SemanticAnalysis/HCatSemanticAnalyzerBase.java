@@ -71,7 +71,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -467,14 +467,14 @@ operator|.
 name|getWork
 argument_list|()
 operator|instanceof
-name|DDLWork2
+name|DDLWork
 condition|)
 block|{
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 operator|(
-name|DDLWork2
+name|DDLWork
 operator|)
 name|task
 operator|.
@@ -488,7 +488,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|authorizeDDLWork2
+name|authorizeDDLWork
 argument_list|(
 name|context
 argument_list|,
@@ -536,10 +536,10 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Authorized the given DDLWork2. It is only for the interim time while DDLTask and DDLWork are being refactored.    */
+comment|/**    * Authorized the given DDLWork. It is only for the interim time while DDLTask and DDLWork are being refactored.    */
 specifier|protected
 name|void
-name|authorizeDDLWork2
+name|authorizeDDLWork
 parameter_list|(
 name|HiveSemanticAnalyzerHookContext
 name|context
@@ -547,7 +547,7 @@ parameter_list|,
 name|Hive
 name|hive
 parameter_list|,
-name|DDLWork2
+name|DDLWork
 name|work
 parameter_list|)
 throws|throws

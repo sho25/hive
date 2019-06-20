@@ -210,12 +210,12 @@ name|formatter
 decl_stmt|;
 specifier|private
 specifier|final
-name|DDLTask2
+name|DDLTask
 name|task
 decl_stmt|;
 specifier|private
 specifier|final
-name|DDLWork2
+name|DDLWork
 name|work
 decl_stmt|;
 specifier|private
@@ -242,10 +242,10 @@ parameter_list|,
 name|DriverContext
 name|driverContext
 parameter_list|,
-name|DDLTask2
+name|DDLTask
 name|task
 parameter_list|,
-name|DDLWork2
+name|DDLWork
 name|work
 parameter_list|,
 name|QueryState
@@ -362,7 +362,7 @@ name|formatter
 return|;
 block|}
 specifier|public
-name|DDLTask2
+name|DDLTask
 name|getTask
 parameter_list|()
 block|{
@@ -371,7 +371,7 @@ name|task
 return|;
 block|}
 specifier|public
-name|DDLWork2
+name|DDLWork
 name|getWork
 parameter_list|()
 block|{

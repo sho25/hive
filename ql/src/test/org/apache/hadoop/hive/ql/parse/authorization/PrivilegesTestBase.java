@@ -69,7 +69,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -242,7 +242,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 name|AuthorizationTestUtil

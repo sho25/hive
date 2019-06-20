@@ -163,6 +163,9 @@ class|class
 name|AlterTableNotSkewedOperation
 extends|extends
 name|AbstractAlterTableOperation
+argument_list|<
+name|AlterTableNotSkewedDesc
+argument_list|>
 block|{
 specifier|public
 name|AlterTableNotSkewedOperation

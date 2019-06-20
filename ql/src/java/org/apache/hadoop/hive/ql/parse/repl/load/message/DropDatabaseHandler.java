@@ -57,7 +57,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -263,7 +263,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 operator|new
 name|HashSet

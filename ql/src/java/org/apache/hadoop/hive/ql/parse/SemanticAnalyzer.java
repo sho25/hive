@@ -1173,7 +1173,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -42739,7 +42739,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -50222,7 +50222,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -77964,7 +77964,7 @@ operator|.
 name|getWork
 argument_list|()
 operator|instanceof
-name|DDLWork2
+name|DDLWork
 argument_list|)
 operator|.
 name|map
@@ -77972,7 +77972,7 @@ argument_list|(
 name|task
 lambda|->
 operator|(
-name|DDLWork2
+name|DDLWork
 operator|)
 name|task
 operator|.
@@ -78037,7 +78037,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -83319,7 +83319,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -83515,7 +83515,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -83662,7 +83662,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -85115,7 +85115,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()

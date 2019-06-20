@@ -74,6 +74,8 @@ operator|.
 name|ddl
 operator|.
 name|DDLDesc
+operator|.
+name|DDLDescWithWriteId
 import|;
 end_import
 
@@ -163,26 +165,6 @@ name|ql
 operator|.
 name|plan
 operator|.
-name|DDLDesc
-operator|.
-name|DDLDescWithWriteId
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
 name|Explain
 operator|.
 name|Level
@@ -199,8 +181,6 @@ specifier|abstract
 class|class
 name|AbstractAlterTableDesc
 implements|implements
-name|DDLDesc
-implements|,
 name|DDLDescWithWriteId
 implements|,
 name|Serializable

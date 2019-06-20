@@ -27,7 +27,30 @@ begin_interface
 specifier|public
 interface|interface
 name|DDLDesc
-block|{ }
+block|{
+comment|/**    * DDL Desc for operation which needs write id.    */
+interface|interface
+name|DDLDescWithWriteId
+extends|extends
+name|DDLDesc
+block|{
+name|void
+name|setWriteId
+parameter_list|(
+name|long
+name|writeId
+parameter_list|)
+function_decl|;
+name|String
+name|getFullTableName
+parameter_list|()
+function_decl|;
+name|boolean
+name|mayNeedWriteId
+parameter_list|()
+function_decl|;
+block|}
+block|}
 end_interface
 
 end_unit

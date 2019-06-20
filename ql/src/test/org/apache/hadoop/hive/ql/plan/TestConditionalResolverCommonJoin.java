@@ -73,7 +73,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -308,11 +308,11 @@ argument_list|,
 literal|4096l
 argument_list|)
 expr_stmt|;
-name|DDLTask2
+name|DDLTask
 name|task1
 init|=
 operator|new
-name|DDLTask2
+name|DDLTask
 argument_list|()
 decl_stmt|;
 name|task1
@@ -322,11 +322,11 @@ argument_list|(
 literal|"alias2"
 argument_list|)
 expr_stmt|;
-name|DDLTask2
+name|DDLTask
 name|task2
 init|=
 operator|new
-name|DDLTask2
+name|DDLTask
 argument_list|()
 decl_stmt|;
 name|task2

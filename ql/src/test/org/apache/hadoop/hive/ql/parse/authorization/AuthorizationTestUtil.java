@@ -77,7 +77,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -210,7 +210,7 @@ name|AuthorizationTestUtil
 block|{
 specifier|public
 specifier|static
-name|DDLWork2
+name|DDLWork
 name|analyze
 parameter_list|(
 name|ASTNode
@@ -278,7 +278,7 @@ argument_list|()
 decl_stmt|;
 return|return
 operator|(
-name|DDLWork2
+name|DDLWork
 operator|)
 name|inList
 argument_list|(
@@ -301,7 +301,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|DDLWork2
+name|DDLWork
 name|analyze
 parameter_list|(
 name|String

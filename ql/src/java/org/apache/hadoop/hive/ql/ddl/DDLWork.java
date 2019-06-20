@@ -121,7 +121,7 @@ begin_class
 specifier|public
 specifier|final
 class|class
-name|DDLWork2
+name|DDLWork
 implements|implements
 name|Serializable
 block|{
@@ -159,11 +159,11 @@ argument_list|>
 name|outputs
 decl_stmt|;
 specifier|public
-name|DDLWork2
+name|DDLWork
 parameter_list|()
 block|{   }
 specifier|public
-name|DDLWork2
+name|DDLWork
 parameter_list|(
 name|Set
 argument_list|<
@@ -192,7 +192,7 @@ name|outputs
 expr_stmt|;
 block|}
 specifier|public
-name|DDLWork2
+name|DDLWork
 parameter_list|(
 name|Set
 argument_list|<

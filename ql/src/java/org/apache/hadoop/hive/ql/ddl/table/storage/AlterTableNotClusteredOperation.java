@@ -171,6 +171,9 @@ class|class
 name|AlterTableNotClusteredOperation
 extends|extends
 name|AbstractAlterTableOperation
+argument_list|<
+name|AlterTableNotClusteredDesc
+argument_list|>
 block|{
 specifier|public
 name|AlterTableNotClusteredOperation

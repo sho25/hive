@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -441,7 +441,7 @@ argument_list|)
 expr_stmt|;
 name|Task
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 name|truncatePtnTask
 init|=
@@ -450,7 +450,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|readEntitySet
 argument_list|,

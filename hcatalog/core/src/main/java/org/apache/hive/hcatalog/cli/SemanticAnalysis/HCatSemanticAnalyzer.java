@@ -69,7 +69,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -1475,7 +1475,7 @@ annotation|@
 name|Override
 specifier|protected
 name|void
-name|authorizeDDLWork2
+name|authorizeDDLWork
 parameter_list|(
 name|HiveSemanticAnalyzerHookContext
 name|cntxt
@@ -1483,7 +1483,7 @@ parameter_list|,
 name|Hive
 name|hive
 parameter_list|,
-name|DDLWork2
+name|DDLWork
 name|work
 parameter_list|)
 throws|throws

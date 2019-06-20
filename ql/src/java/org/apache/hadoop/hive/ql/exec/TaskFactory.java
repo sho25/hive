@@ -79,7 +79,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -97,7 +97,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -897,14 +897,14 @@ argument_list|(
 operator|new
 name|TaskTuple
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 argument_list|(
-name|DDLWork2
+name|DDLWork
 operator|.
 name|class
 argument_list|,
-name|DDLTask2
+name|DDLTask
 operator|.
 name|class
 argument_list|)

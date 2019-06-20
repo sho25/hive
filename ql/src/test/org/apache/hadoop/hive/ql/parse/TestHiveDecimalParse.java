@@ -99,7 +99,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -117,7 +117,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -836,11 +836,11 @@ operator|.
 name|getPlan
 argument_list|()
 decl_stmt|;
-name|DDLTask2
+name|DDLTask
 name|task
 init|=
 operator|(
-name|DDLTask2
+name|DDLTask
 operator|)
 name|plan
 operator|.
@@ -852,7 +852,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 name|task

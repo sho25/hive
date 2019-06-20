@@ -265,6 +265,9 @@ class|class
 name|AlterTableUpdateColumnsOperation
 extends|extends
 name|AbstractAlterTableOperation
+argument_list|<
+name|AlterTableUpdateColumnsDesc
+argument_list|>
 block|{
 specifier|public
 name|AlterTableUpdateColumnsOperation

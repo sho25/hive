@@ -249,7 +249,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -267,7 +267,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLWork
 import|;
 end_import
 
@@ -2867,7 +2867,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|inputs
 argument_list|,
@@ -2931,7 +2931,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|inputs
 argument_list|,
@@ -4138,18 +4138,18 @@ if|if
 condition|(
 name|createTask
 operator|instanceof
-name|DDLTask2
+name|DDLTask
 condition|)
 block|{
-name|DDLTask2
+name|DDLTask
 name|ddlTask
 init|=
 operator|(
-name|DDLTask2
+name|DDLTask
 operator|)
 name|createTask
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 name|ddlTask

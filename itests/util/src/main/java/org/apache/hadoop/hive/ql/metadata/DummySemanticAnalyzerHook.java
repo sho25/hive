@@ -73,7 +73,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -453,7 +453,7 @@ name|CreateTableDesc
 call|)
 argument_list|(
 operator|(
-name|DDLTask2
+name|DDLTask
 operator|)
 name|rootTasks
 operator|.

@@ -147,7 +147,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLTask2
+name|DDLTask
 import|;
 end_import
 
@@ -853,17 +853,17 @@ operator|!
 operator|(
 name|t
 operator|instanceof
-name|DDLTask2
+name|DDLTask
 operator|)
 condition|)
 block|{
 return|return;
 block|}
-name|DDLTask2
+name|DDLTask
 name|task
 init|=
 operator|(
-name|DDLTask2
+name|DDLTask
 operator|)
 name|t
 decl_stmt|;

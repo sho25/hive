@@ -817,7 +817,27 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|DDLWork2
+name|DDLDesc
+operator|.
+name|DDLDescWithWriteId
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|DDLWork
 import|;
 end_import
 
@@ -3182,26 +3202,6 @@ operator|.
 name|plan
 operator|.
 name|ColumnStatsUpdateWork
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|DDLDesc
-operator|.
-name|DDLDescWithWriteId
 import|;
 end_import
 
@@ -6564,7 +6564,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -7409,14 +7409,14 @@ literal|"unchecked"
 argument_list|)
 name|Task
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 name|roleDDLTask
 init|=
 operator|(
 name|Task
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 operator|)
 name|hiveAuthorizationTaskFactory
@@ -7640,7 +7640,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -8126,7 +8126,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -8481,7 +8481,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -8583,7 +8583,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -8721,7 +8721,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -9351,7 +9351,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -9514,7 +9514,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -9666,7 +9666,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -10078,7 +10078,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -10175,7 +10175,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -10484,7 +10484,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -10727,7 +10727,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -10762,7 +10762,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -11000,7 +11000,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -11095,7 +11095,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -11319,7 +11319,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -11437,7 +11437,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -11688,7 +11688,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -11940,7 +11940,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -12029,7 +12029,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -12205,7 +12205,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -12614,11 +12614,11 @@ name|truncateTblDesc
 argument_list|)
 expr_stmt|;
 block|}
-name|DDLWork2
+name|DDLWork
 name|ddlWork
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -14195,7 +14195,7 @@ name|alterTblDesc
 init|=
 literal|null
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|ddlWork
 init|=
 literal|null
@@ -14342,7 +14342,7 @@ expr_stmt|;
 name|ddlWork
 operator|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -14429,7 +14429,7 @@ expr_stmt|;
 name|ddlWork
 operator|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -14614,7 +14614,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -14743,7 +14743,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -14874,7 +14874,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -15436,7 +15436,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -15609,7 +15609,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -15777,7 +15777,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -16226,11 +16226,11 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-name|DDLWork2
+name|DDLWork
 name|ddlWork
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -16758,7 +16758,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -17022,7 +17022,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -17087,7 +17087,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -17400,7 +17400,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -17505,7 +17505,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -18675,7 +18675,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -18847,7 +18847,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -19212,7 +19212,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -19307,7 +19307,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -19404,7 +19404,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -19504,7 +19504,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -19807,7 +19807,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -20123,7 +20123,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -20395,7 +20395,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -20522,7 +20522,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -20683,7 +20683,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -20945,7 +20945,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -21084,7 +21084,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -21166,7 +21166,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -21454,7 +21454,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -21743,7 +21743,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -21917,7 +21917,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -21971,7 +21971,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22027,7 +22027,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22137,7 +22137,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22238,7 +22238,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22451,7 +22451,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22580,11 +22580,11 @@ name|getCmd
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22686,11 +22686,11 @@ argument_list|(
 name|dbName
 argument_list|)
 decl_stmt|;
-name|DDLWork2
+name|DDLWork
 name|work
 init|=
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22835,7 +22835,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -22975,7 +22975,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -23781,7 +23781,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -23992,7 +23992,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -24123,7 +24123,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -24276,7 +24276,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -24429,7 +24429,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -24699,7 +24699,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -24971,7 +24971,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -25412,7 +25412,7 @@ return|return;
 block|}
 name|Task
 argument_list|<
-name|DDLWork2
+name|DDLWork
 argument_list|>
 name|ddlTask
 init|=
@@ -25421,7 +25421,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -26197,7 +26197,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -26262,7 +26262,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -26533,7 +26533,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -26919,7 +26919,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -28609,7 +28609,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -28776,7 +28776,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -28931,7 +28931,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -29372,7 +29372,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
@@ -29951,7 +29951,7 @@ operator|.
 name|get
 argument_list|(
 operator|new
-name|DDLWork2
+name|DDLWork
 argument_list|(
 name|getInputs
 argument_list|()
