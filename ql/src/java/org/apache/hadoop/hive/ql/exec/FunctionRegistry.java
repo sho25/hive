@@ -6109,6 +6109,17 @@ operator|.
 name|class
 argument_list|)
 expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
+literal|"cast_format"
+argument_list|,
+name|GenericUDFCastFormat
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
 comment|// Generic UDTF's
 name|system
 operator|.
