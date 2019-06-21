@@ -80,7 +80,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * This annotation provides a way to skip the execution of seome tests,  * when a certain runtime criteria is met. It should be used together with {@link CustomIgnoreRule}.  */
+comment|/**  * This annotation provides a way to skip the execution of some tests,  * when a certain runtime criteria is met. It should be used together with {@link CustomIgnoreRule}.  */
 end_comment
 
 begin_annotation_defn
