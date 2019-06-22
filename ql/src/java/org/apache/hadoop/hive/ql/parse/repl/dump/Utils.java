@@ -451,6 +451,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|List
 import|;
 end_import
@@ -1268,6 +1278,12 @@ parameter_list|,
 name|boolean
 name|isEventDump
 parameter_list|,
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|bootstrapTableList
+parameter_list|,
 name|ReplScope
 name|oldReplScope
 parameter_list|,
@@ -1444,15 +1460,11 @@ return|return
 literal|false
 return|;
 block|}
-comment|// Skip dumping events related to ACID tables if bootstrap is enabled on it.
-comment|// Also, skip if current table is included only in new policy but not in old policy.
+comment|// Skip dumping events related to ACID tables if bootstrap is enabled for ACID tables.
 if|if
 condition|(
 name|isEventDump
-condition|)
-block|{
-return|return
-operator|!
+operator|&&
 name|hiveConf
 operator|.
 name|getBoolVar
@@ -1463,30 +1475,27 @@ name|ConfVars
 operator|.
 name|REPL_BOOTSTRAP_ACID_TABLES
 argument_list|)
-operator|&&
-name|ReplUtils
-operator|.
-name|tableIncludedInReplScope
-argument_list|(
-name|oldReplScope
-argument_list|,
-name|tableHandle
-operator|.
-name|getTableName
-argument_list|()
-argument_list|)
+condition|)
+block|{
+return|return
+literal|false
 return|;
 block|}
 block|}
-comment|// If replication policy is replaced with new included/excluded tables list, then events
-comment|// corresponding to tables which are not included in old policy but included in new policy
-comment|// should be skipped. Those tables would be bootstrapped along with the current incremental
-comment|// replication dump.
-comment|// Note: If any event dump reaches here, it means, table is included in new replication policy.
+comment|// Tables which are selected for bootstrap should be skipped. Those tables would be bootstrapped
+comment|// along with the current incremental replication dump and thus no need to dump events for them.
+comment|// Note: If any event (other than alter table with table level replication) dump reaches here, it means, table is
+comment|// included in new replication policy.
 if|if
 condition|(
 name|isEventDump
-operator|&&
+condition|)
+block|{
+comment|// If replication policy is replaced with new included/excluded tables list, then events
+comment|// corresponding to tables which are not included in old policy but included in new policy
+comment|// should be skipped.
+if|if
+condition|(
 operator|!
 name|ReplUtils
 operator|.
@@ -1503,6 +1512,26 @@ condition|)
 block|{
 return|return
 literal|false
+return|;
+block|}
+comment|// Tables in the list of tables to be bootstrapped should be skipped.
+return|return
+operator|(
+name|bootstrapTableList
+operator|==
+literal|null
+operator|||
+operator|!
+name|bootstrapTableList
+operator|.
+name|contains
+argument_list|(
+name|tableHandle
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+operator|)
 return|;
 block|}
 block|}
@@ -1526,6 +1555,12 @@ name|db
 parameter_list|,
 name|boolean
 name|isEventDump
+parameter_list|,
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|bootstrapTableList
 parameter_list|,
 name|ReplScope
 name|oldReplScope
@@ -1596,6 +1631,8 @@ argument_list|,
 name|table
 argument_list|,
 name|isEventDump
+argument_list|,
+name|bootstrapTableList
 argument_list|,
 name|oldReplScope
 argument_list|,

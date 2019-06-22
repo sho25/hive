@@ -59,6 +59,24 @@ name|NotificationEvent
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|messaging
+operator|.
+name|MessageBuilder
+import|;
+end_import
+
 begin_comment
 comment|/**  * Utility function that constructs a notification filter to check if table is accepted for replication.  */
 end_comment
@@ -102,7 +120,8 @@ parameter_list|)
 block|{
 comment|// All txn related events are global ones and should be always accepted.
 comment|// For other events, if the DB/table names are included as per replication scope, then should
-comment|// accept the event.
+comment|// accept the event. For alter table with table name filter, bootstrap of the table will be done if the new table
+comment|// name matches the filter but the old table name does not. This can be judge only after deserialize of the message.
 return|return
 operator|(
 name|isTxnRelatedEvent
@@ -124,6 +143,30 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|)
+operator|||
+operator|(
+name|replScope
+operator|.
+name|dbIncludedInReplScope
+argument_list|(
+name|event
+operator|.
+name|getDbName
+argument_list|()
+argument_list|)
+operator|&&
+name|event
+operator|.
+name|getEventType
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|MessageBuilder
+operator|.
+name|ALTER_TABLE_EVENT
+argument_list|)
+operator|)
 operator|)
 return|;
 block|}

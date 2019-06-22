@@ -1047,6 +1047,26 @@ name|java
 operator|.
 name|util
 operator|.
+name|HashSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|concurrent
 operator|.
 name|TimeUnit
@@ -1112,6 +1132,17 @@ name|long
 name|SLEEP_TIME
 init|=
 literal|60000
+decl_stmt|;
+name|Set
+argument_list|<
+name|String
+argument_list|>
+name|tablesForBootstrap
+init|=
+operator|new
+name|HashSet
+argument_list|<>
+argument_list|()
 decl_stmt|;
 specifier|public
 enum|enum
@@ -1447,7 +1478,7 @@ name|conf
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Decide whether to examine all the tables to dump. We do this if    * 1. External tables are going to be part of the dump : In which case we need to list their    * locations.    * 2. External or ACID tables are being bootstrapped for the first time : so that we can dump    * those tables as a whole.    * 3. If replication policy is changed/replaced, then need to examine all the tables to see if    * any of them need to be bootstrapped as old policy doesn't include it but new one does.    * @return true if need to examine tables for dump and false if not.    */
+comment|/**    * Decide whether to examine all the tables to dump. We do this if    * 1. External tables are going to be part of the dump : In which case we need to list their    * locations.    * 2. External or ACID tables are being bootstrapped for the first time : so that we can dump    * those tables as a whole.    * 3. If replication policy is changed/replaced, then need to examine all the tables to see if    * any of them need to be bootstrapped as old policy doesn't include it but new one does.    * 4. Some tables are renamed and the new name satisfies the table list filter while old name was not.    * @return true if need to examine tables for dump and false if not.    */
 specifier|private
 name|boolean
 name|shouldExamineTablesToDump
@@ -1461,6 +1492,12 @@ name|oldReplScope
 operator|!=
 literal|null
 operator|)
+operator|||
+operator|!
+name|tablesForBootstrap
+operator|.
+name|isEmpty
+argument_list|()
 operator|||
 name|conf
 operator|.
@@ -1660,6 +1697,28 @@ argument_list|(
 name|table
 operator|.
 name|getTableName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+return|return
+literal|true
+return|;
+block|}
+comment|// If the table is renamed and the new name satisfies the filter but the old name does not then the table needs to
+comment|// be bootstrapped.
+if|if
+condition|(
+name|tablesForBootstrap
+operator|.
+name|contains
+argument_list|(
+name|table
+operator|.
+name|getTableName
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 condition|)
@@ -2273,18 +2332,38 @@ name|boolean
 name|needBootstrapAcidTablesDuringIncrementalDump
 parameter_list|()
 block|{
-comment|// If old replication policy is available, then it is possible some of the ACID tables might be
-comment|// included for bootstrap during incremental dump.
-return|return
-operator|(
+comment|// If acid table dump is not enabled, then no neeed to check further.
+if|if
+condition|(
+operator|!
 name|ReplUtils
 operator|.
 name|includeAcidTableInDump
 argument_list|(
 name|conf
 argument_list|)
-operator|&&
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|// If old table level policy is available or the policy has filter based on table name then it is possible that some
+comment|// of the ACID tables might be included for bootstrap during incremental dump. For old policy, its because the table
+comment|// may not satisfying the old policy but satisfying the new policy. For filter, it may happen that the table
+comment|// is renamed and started satisfying the policy.
+return|return
 operator|(
+operator|(
+operator|!
+name|work
+operator|.
+name|replScope
+operator|.
+name|includeAllTables
+argument_list|()
+operator|)
+operator|||
 operator|(
 name|work
 operator|.
@@ -2303,7 +2382,6 @@ name|ConfVars
 operator|.
 name|REPL_BOOTSTRAP_ACID_TABLES
 argument_list|)
-operator|)
 operator|)
 return|;
 block|}
@@ -2401,6 +2479,8 @@ argument_list|,
 name|work
 operator|.
 name|oldReplScope
+argument_list|,
+name|tablesForBootstrap
 argument_list|)
 decl_stmt|;
 name|EventHandler

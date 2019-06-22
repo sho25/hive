@@ -166,6 +166,37 @@ argument_list|,
 name|eventMessageAsJSON
 argument_list|)
 expr_stmt|;
+comment|// If table is present in the list of tables to be bootstrapped, then remove it. Drop event can be ignored as
+comment|// table will not be present at target. Anyways all the events related to this table is ignored.
+if|if
+condition|(
+name|withinContext
+operator|.
+name|removeFromListOfTablesForBootstrap
+argument_list|(
+name|event
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Table "
+operator|+
+name|event
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" is removed from list of tables to be bootstrapped."
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 name|DumpMetaData
 name|dmd
 init|=

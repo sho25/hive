@@ -341,6 +341,11 @@ literal|true
 argument_list|,
 name|withinContext
 operator|.
+name|getTablesForBootstrap
+argument_list|()
+argument_list|,
+name|withinContext
+operator|.
 name|oldReplScope
 argument_list|,
 name|withinContext
