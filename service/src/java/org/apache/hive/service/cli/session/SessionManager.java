@@ -558,7 +558,21 @@ specifier|final
 name|String
 name|INACTIVE_ERROR_MESSAGE
 init|=
-literal|"Cannot open sessions on an inactive HS2 instance; use service discovery to connect"
+literal|"Cannot open sessions on an inactive HS2 instance, "
+operator|+
+literal|"or the HS2 server leader is not ready; please use service discovery to "
+operator|+
+literal|"connect the server leader again"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|FAIL_CLOSE_ERROR_MESSAGE
+init|=
+literal|"Cannot close the session opened "
+operator|+
+literal|"during the HA state change time"
 decl_stmt|;
 specifier|public
 specifier|static
@@ -2749,7 +2763,7 @@ throw|throw
 operator|new
 name|HiveSQLException
 argument_list|(
-name|INACTIVE_ERROR_MESSAGE
+name|FAIL_CLOSE_ERROR_MESSAGE
 argument_list|)
 throw|;
 block|}
