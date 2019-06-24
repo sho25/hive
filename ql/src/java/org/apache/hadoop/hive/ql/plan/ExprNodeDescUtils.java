@@ -23,6 +23,26 @@ begin_import
 import|import
 name|org
 operator|.
+name|slf4j
+operator|.
+name|Logger
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|slf4j
+operator|.
+name|LoggerFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|apache
 operator|.
 name|hadoop
@@ -590,6 +610,21 @@ specifier|public
 class|class
 name|ExprNodeDescUtils
 block|{
+specifier|protected
+specifier|static
+specifier|final
+name|Logger
+name|LOG
+init|=
+name|LoggerFactory
+operator|.
+name|getLogger
+argument_list|(
+name|ExprNodeDescUtils
+operator|.
+name|class
+argument_list|)
+decl_stmt|;
 specifier|public
 specifier|static
 name|int
@@ -2750,7 +2785,33 @@ block|{
 comment|// Join key expression is likely some expression involving functions/operators, so there
 comment|// is no actual table column for this. But the ReduceSink operator should still have an
 comment|// output column corresponding to this expression, using the columnInternalName.
-comment|// TODO: does tableAlias matter for this kind of expression?
+name|String
+name|tabAlias
+init|=
+literal|""
+decl_stmt|;
+comment|// HIVE-21746: Set tabAlias when possible, such as for constant folded column
+comment|// that has foldedFromTab info.
+if|if
+condition|(
+name|source
+operator|instanceof
+name|ExprNodeConstantDesc
+condition|)
+block|{
+name|tabAlias
+operator|=
+operator|(
+operator|(
+name|ExprNodeConstantDesc
+operator|)
+name|source
+operator|)
+operator|.
+name|getFoldedFromTab
+argument_list|()
+expr_stmt|;
+block|}
 return|return
 operator|new
 name|ExprNodeColumnDesc
@@ -2762,7 +2823,7 @@ argument_list|()
 argument_list|,
 name|columnInternalName
 argument_list|,
-literal|""
+name|tabAlias
 argument_list|,
 literal|false
 argument_list|)
