@@ -11949,6 +11949,24 @@ argument_list|,
 literal|"Comma separated list of http headers that are allowed when CORS is enabled.\n"
 argument_list|)
 block|,
+name|HIVE_SERVER2_WEBUI_XFRAME_ENABLED
+argument_list|(
+literal|"hive.server2.webui.xframe.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to enable xframe\n"
+argument_list|)
+block|,
+name|HIVE_SERVER2_WEBUI_XFRAME_VALUE
+argument_list|(
+literal|"hive.server2.webui.xframe.value"
+argument_list|,
+literal|"SAMEORIGIN"
+argument_list|,
+literal|"Configuration to allow the user to set the x_frame-options value\n"
+argument_list|)
+block|,
 comment|// Tez session settings
 name|HIVE_SERVER2_ACTIVE_PASSIVE_HA_ENABLE
 argument_list|(
