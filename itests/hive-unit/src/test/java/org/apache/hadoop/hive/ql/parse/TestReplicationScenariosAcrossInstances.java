@@ -823,7 +823,7 @@ literal|"SHOW FUNCTIONS LIKE '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -865,7 +865,7 @@ literal|"SHOW FUNCTIONS LIKE '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1138,7 +1138,7 @@ literal|"show functions like '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1322,7 +1322,7 @@ literal|"show functions like '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResults
@@ -1461,7 +1461,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"SHOW FUNCTIONS LIKE '*testfunctionanother*'"
+literal|"SHOW FUNCTIONS LIKE '%testfunctionanother%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1497,7 +1497,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"SHOW FUNCTIONS LIKE '*testfunctionanother*'"
+literal|"SHOW FUNCTIONS LIKE '%testfunctionanother%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1559,7 +1559,7 @@ literal|"SHOW FUNCTIONS LIKE '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1643,7 +1643,7 @@ literal|"SHOW FUNCTIONS LIKE '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -1909,7 +1909,7 @@ literal|"SHOW FUNCTIONS LIKE '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -4609,7 +4609,7 @@ literal|"show functions like '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -4807,7 +4807,7 @@ literal|"show functions like '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult
@@ -8837,7 +8837,7 @@ literal|"show functions like '"
 operator|+
 name|replicatedDbName
 operator|+
-literal|"*'"
+literal|"%'"
 argument_list|)
 operator|.
 name|verifyResult

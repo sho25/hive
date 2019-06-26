@@ -6909,13 +6909,11 @@ name|subpattern
 operator|=
 literal|"(?i)"
 operator|+
-name|subpattern
+name|UDFLike
 operator|.
-name|replaceAll
+name|likePatternToRegExp
 argument_list|(
-literal|"\\*"
-argument_list|,
-literal|".*"
+name|subpattern
 argument_list|)
 expr_stmt|;
 try|try

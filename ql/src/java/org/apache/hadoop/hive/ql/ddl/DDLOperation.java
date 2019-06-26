@@ -40,7 +40,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Abstract ancestor class of all DDL Operation classes.  */
+comment|/**  * Abstract ancestor class of all DDL Operation classes.  *  * A class that is extending this abstract class, and which is under the org.apache.hadoop.hive.ql.ddl package  * will be registered automatically as the operation for it's generic DDLDesc argument.  */
 end_comment
 
 begin_class
