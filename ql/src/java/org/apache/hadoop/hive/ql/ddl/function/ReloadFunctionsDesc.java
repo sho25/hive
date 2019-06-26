@@ -15,7 +15,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|plan
+name|ddl
+operator|.
+name|function
 package|;
 end_package
 
@@ -29,18 +31,60 @@ name|Serializable
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|DDLDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|Explain
+import|;
+end_import
+
+begin_comment
+comment|/**  * DDL task description for RELOAD FUNCTIONS commands.  * Due to backward compatibility reasons we also accept the RELOAD FUNCTION command.  */
+end_comment
+
 begin_class
 annotation|@
 name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Reload Function"
+literal|"Reload Functions"
 argument_list|)
 specifier|public
 class|class
-name|ReloadFunctionDesc
+name|ReloadFunctionsDesc
 implements|implements
+name|DDLDesc
+implements|,
 name|Serializable
 block|{
 specifier|private

@@ -321,7 +321,7 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|FunctionTask
+name|FunctionUtils
 import|;
 end_import
 
@@ -1742,7 +1742,7 @@ decl_stmt|;
 name|ResourceType
 name|rt
 init|=
-name|FunctionTask
+name|FunctionUtils
 operator|.
 name|getResourceType
 argument_list|(

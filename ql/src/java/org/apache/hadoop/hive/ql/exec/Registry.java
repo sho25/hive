@@ -3843,7 +3843,7 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|FunctionTask
+name|FunctionUtils
 operator|.
 name|addFunctionResources
 argument_list|(
@@ -4450,7 +4450,7 @@ argument_list|()
 argument_list|,
 literal|true
 argument_list|,
-name|FunctionTask
+name|FunctionUtils
 operator|.
 name|toFunctionResource
 argument_list|(

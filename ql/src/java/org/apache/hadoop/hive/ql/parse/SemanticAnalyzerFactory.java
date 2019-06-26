@@ -756,7 +756,7 @@ name|put
 argument_list|(
 name|HiveParser
 operator|.
-name|TOK_RELOADFUNCTION
+name|TOK_RELOADFUNCTIONS
 argument_list|,
 name|HiveOperation
 operator|.
@@ -2819,7 +2819,7 @@ case|:
 case|case
 name|HiveParser
 operator|.
-name|TOK_RELOADFUNCTION
+name|TOK_RELOADFUNCTIONS
 case|:
 return|return
 operator|new
