@@ -15999,6 +15999,27 @@ argument_list|,
 literal|"Whether LLAP daemon should localize the resources for permanent UDFs."
 argument_list|)
 block|,
+name|LLAP_TASK_SCHEDULER_AM_COLLECT_DAEMON_METRICS_MS
+argument_list|(
+literal|"hive.llap.task.scheduler.am.collect.daemon.metrics.ms"
+argument_list|,
+literal|"0ms"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|MILLISECONDS
+argument_list|)
+argument_list|,
+literal|"Collect llap daemon metrics in the AM every given milliseconds,\n"
+operator|+
+literal|"so that the AM can use this information, to make better scheduling decisions.\n"
+operator|+
+literal|"If it's set to 0, then the feature is disabled."
+argument_list|)
+block|,
 name|LLAP_TASK_SCHEDULER_AM_REGISTRY_NAME
 argument_list|(
 literal|"hive.llap.task.scheduler.am.registry"
