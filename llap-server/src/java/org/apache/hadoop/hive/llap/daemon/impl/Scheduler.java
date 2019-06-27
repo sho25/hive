@@ -100,6 +100,17 @@ name|boolean
 name|isGuaranteed
 parameter_list|)
 function_decl|;
+comment|/**    * Sets the scheduler executor and queue size.    * @param newExecutors New number of executors    * @param newWaitQueueSize New size of the queue    */
+name|void
+name|setCapacity
+parameter_list|(
+name|int
+name|newExecutors
+parameter_list|,
+name|int
+name|newWaitQueueSize
+parameter_list|)
+function_decl|;
 block|}
 end_interface
 
