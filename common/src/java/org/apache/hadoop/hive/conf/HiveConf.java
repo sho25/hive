@@ -7580,7 +7580,7 @@ name|HIVE_PARQUET_TIMESTAMP_SKIP_CONVERSION
 argument_list|(
 literal|"hive.parquet.timestamp.skip.conversion"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"Current Hive implementation of parquet stores timestamps to UTC, this flag allows skipping of the conversion"
 operator|+
