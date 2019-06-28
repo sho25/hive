@@ -4001,9 +4001,17 @@ argument_list|(
 name|i
 argument_list|)
 argument_list|,
+operator|(
 name|chksums
 operator|!=
 literal|null
+operator|&&
+operator|!
+name|chksums
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
 condition|?
 name|chksums
 operator|.
