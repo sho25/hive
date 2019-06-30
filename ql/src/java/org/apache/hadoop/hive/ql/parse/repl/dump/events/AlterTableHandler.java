@@ -49,6 +49,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|repl
+operator|.
+name|ReplScope
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -514,31 +532,142 @@ name|RENAME
 return|;
 block|}
 block|}
-comment|// return true, if event needs to be dumped, else return false.
+comment|// Return true, if event needs to be dumped, else return false.
 specifier|private
 name|boolean
-name|handleForTableLevelReplication
+name|handleRenameForReplacePolicy
 parameter_list|(
 name|Context
 name|withinContext
-parameter_list|)
-block|{
+parameter_list|,
 name|String
 name|oldName
-init|=
-name|before
-operator|.
-name|getTableName
-argument_list|()
-decl_stmt|;
+parameter_list|,
 name|String
 name|newName
+parameter_list|)
+block|{
+comment|// If the table is renamed after being added to the list of tables to be bootstrapped, then remove it from the
+comment|// list of tables to be bootstrapped.
+name|boolean
+name|oldTableInBootstrapList
 init|=
-name|after
+name|withinContext
 operator|.
-name|getTableName
-argument_list|()
+name|removeFromListOfTablesForBootstrap
+argument_list|(
+name|oldName
+argument_list|)
 decl_stmt|;
+comment|// If the new table satisfies the new policy, then add it to the list of table to be bootstrapped.
+if|if
+condition|(
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|withinContext
+operator|.
+name|replScope
+argument_list|,
+name|newName
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Table "
+operator|+
+name|newName
+operator|+
+literal|" is added for bootstrap "
+operator|+
+literal|" during rename from "
+operator|+
+name|oldName
+argument_list|)
+expr_stmt|;
+name|withinContext
+operator|.
+name|addToListOfTablesForBootstrap
+argument_list|(
+name|newName
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|withinContext
+operator|.
+name|oldReplScope
+argument_list|,
+name|oldName
+argument_list|)
+condition|)
+block|{
+comment|// If the old table was in the list of tables to be bootstrapped which is a multi rename case, the old table
+comment|// is removed from the list of tables, else drop event is dumped for the old table. This is done even if the
+comment|// table is not present at target. This makes the logic simple and has no side effect as drop is idempotent.
+if|if
+condition|(
+name|oldTableInBootstrapList
+condition|)
+block|{
+return|return
+literal|false
+return|;
+block|}
+comment|// To keep the logic simple, rename with replace policy is always drop and create.
+name|scenario
+operator|=
+name|Scenario
+operator|.
+name|DROP
+expr_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Table "
+operator|+
+name|oldName
+operator|+
+literal|" will be dropped as the table is renamed to "
+operator|+
+name|newName
+argument_list|)
+expr_stmt|;
+return|return
+literal|true
+return|;
+block|}
+comment|// If the old table does not satisfy the old policy then event can be skipped. in case the new table satisfies the
+comment|// new policy, it is already added to the list of tables to be bootstrapped.
+return|return
+literal|false
+return|;
+block|}
+comment|// return true, if event needs to be dumped, else return false.
+specifier|private
+name|boolean
+name|handleRenameForTableLevelReplication
+parameter_list|(
+name|Context
+name|withinContext
+parameter_list|,
+name|String
+name|oldName
+parameter_list|,
+name|String
+name|newName
+parameter_list|)
+block|{
 if|if
 condition|(
 name|ReplUtils
@@ -556,19 +685,16 @@ block|{
 comment|// If the table is renamed after being added to the list of tables to be bootstrapped, then remove it from the
 comment|// list of tables to be bootstrapped.
 name|boolean
-name|oldTableIsPresent
+name|oldTableInBootstrapList
 init|=
 name|withinContext
 operator|.
 name|removeFromListOfTablesForBootstrap
 argument_list|(
-name|before
-operator|.
-name|getTableName
-argument_list|()
+name|oldName
 argument_list|)
 decl_stmt|;
-comment|// If old table satisfies the filter, but the new table does not, then the old table should be dropped.
+comment|// If old table satisfies the policy, but the new table does not, then the old table should be dropped.
 comment|// This should be done, only if the old table is not in the list of tables to be bootstrapped which is a multi
 comment|// rename case. In case of multi rename, only the first rename should do the drop.
 if|if
@@ -588,7 +714,7 @@ condition|)
 block|{
 if|if
 condition|(
-name|oldTableIsPresent
+name|oldTableInBootstrapList
 condition|)
 block|{
 comment|// If the old table was present in the list of tables to be bootstrapped, then just ignore the event.
@@ -626,7 +752,7 @@ comment|// If the old table was in the list of tables to be bootstrapped which i
 comment|// is removed from the list of tables to be bootstrapped and new one is added.
 if|if
 condition|(
-name|oldTableIsPresent
+name|oldTableInBootstrapList
 condition|)
 block|{
 name|withinContext
@@ -640,12 +766,12 @@ return|return
 literal|false
 return|;
 block|}
-comment|// If both old and new table satisfies the filter and old table is present at target, then dump the rename event.
+comment|// If both old and new table satisfies the policy and old table is present at target, then dump the rename event.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"both old and new table satisfies the filter"
+literal|"both old and new table satisfies the policy"
 argument_list|)
 expr_stmt|;
 return|return
@@ -654,7 +780,7 @@ return|;
 block|}
 else|else
 block|{
-comment|// if the old table does not satisfies the filter, but the new one satisfies, then the new table should be
+comment|// if the old table does not satisfies the policy, but the new one satisfies, then the new table should be
 comment|// added to the list of tables to be bootstrapped and don't dump the event.
 if|if
 condition|(
@@ -696,12 +822,12 @@ return|return
 literal|false
 return|;
 block|}
-comment|// if both old and new table does not satisfies the filter, then don't dump the event.
+comment|// if both old and new table does not satisfies the policy, then don't dump the event.
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"both old and new table not satisfies the filter"
+literal|"both old and new table does not satisfies the policy"
 argument_list|)
 expr_stmt|;
 return|return
@@ -748,6 +874,9 @@ name|String
 argument_list|>
 name|bootstrapTableList
 decl_stmt|;
+name|ReplScope
+name|oldReplScope
+decl_stmt|;
 if|if
 condition|(
 name|Scenario
@@ -757,20 +886,66 @@ operator|==
 name|scenario
 condition|)
 block|{
-comment|// Handling for table level replication is done in handleForTableLevelReplication method.
+comment|// Handling for table level replication is not done in shouldReplicate method for rename events. Its done in
+comment|// handleRenameForReplacePolicy and handleRenameForTableLevelReplication method.
 name|bootstrapTableList
+operator|=
+literal|null
+expr_stmt|;
+name|oldReplScope
 operator|=
 literal|null
 expr_stmt|;
 block|}
 else|else
 block|{
+comment|// This check was ignored for alter table event during event filter.
+if|if
+condition|(
+operator|!
+name|ReplUtils
+operator|.
+name|tableIncludedInReplScope
+argument_list|(
+name|withinContext
+operator|.
+name|replScope
+argument_list|,
+name|before
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Table "
+operator|+
+name|before
+operator|.
+name|getTableName
+argument_list|()
+operator|+
+literal|" does not satisfy the policy"
+argument_list|)
+expr_stmt|;
+return|return;
+block|}
 name|bootstrapTableList
 operator|=
 name|withinContext
 operator|.
 name|getTablesForBootstrap
 argument_list|()
+expr_stmt|;
+name|oldReplScope
+operator|=
+name|withinContext
+operator|.
+name|oldReplScope
 expr_stmt|;
 block|}
 if|if
@@ -790,8 +965,6 @@ literal|true
 argument_list|,
 name|bootstrapTableList
 argument_list|,
-name|withinContext
-operator|.
 name|oldReplScope
 argument_list|,
 name|withinContext
@@ -855,7 +1028,58 @@ expr_stmt|;
 return|return;
 block|}
 block|}
-comment|// If the tables are filtered based on name, then needs to handle the rename scenarios.
+if|if
+condition|(
+name|Scenario
+operator|.
+name|RENAME
+operator|==
+name|scenario
+condition|)
+block|{
+name|String
+name|oldName
+init|=
+name|before
+operator|.
+name|getTableName
+argument_list|()
+decl_stmt|;
+name|String
+name|newName
+init|=
+name|after
+operator|.
+name|getTableName
+argument_list|()
+decl_stmt|;
+name|boolean
+name|needDump
+init|=
+literal|true
+decl_stmt|;
+if|if
+condition|(
+name|withinContext
+operator|.
+name|oldReplScope
+operator|!=
+literal|null
+condition|)
+block|{
+name|needDump
+operator|=
+name|handleRenameForReplacePolicy
+argument_list|(
+name|withinContext
+argument_list|,
+name|oldName
+argument_list|,
+name|newName
+argument_list|)
+expr_stmt|;
+block|}
+elseif|else
 if|if
 condition|(
 operator|!
@@ -867,25 +1091,35 @@ name|includeAllTables
 argument_list|()
 condition|)
 block|{
+name|needDump
+operator|=
+name|handleRenameForTableLevelReplication
+argument_list|(
+name|withinContext
+argument_list|,
+name|oldName
+argument_list|,
+name|newName
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 operator|!
-name|handleForTableLevelReplication
-argument_list|(
-name|withinContext
-argument_list|)
+name|needDump
 condition|)
 block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Alter event for table "
+literal|"Rename event for table "
 operator|+
-name|before
-operator|.
-name|getTableName
-argument_list|()
+name|oldName
+operator|+
+literal|" to "
+operator|+
+name|newName
 operator|+
 literal|" is skipped from dumping"
 argument_list|)

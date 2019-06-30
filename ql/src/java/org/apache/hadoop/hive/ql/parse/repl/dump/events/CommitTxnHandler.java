@@ -950,7 +950,8 @@ comment|// If replication policy is replaced with new included/excluded tables l
 comment|// corresponding to tables which are included in both old and new policies should be dumped.
 comment|// If table is included in new policy but not in old policy, then it should be skipped.
 comment|// Those tables would be bootstrapped along with the current incremental
-comment|// replication dump.
+comment|// replication dump. If the table is in the list of tables to be bootstrapped, then
+comment|// it should be skipped.
 return|return
 operator|(
 name|ReplUtils
@@ -978,6 +979,23 @@ argument_list|,
 name|writeEventInfo
 operator|.
 name|getTable
+argument_list|()
+argument_list|)
+operator|&&
+operator|!
+name|withinContext
+operator|.
+name|getTablesForBootstrap
+argument_list|()
+operator|.
+name|contains
+argument_list|(
+name|writeEventInfo
+operator|.
+name|getTable
+argument_list|()
+operator|.
+name|toLowerCase
 argument_list|()
 argument_list|)
 operator|)

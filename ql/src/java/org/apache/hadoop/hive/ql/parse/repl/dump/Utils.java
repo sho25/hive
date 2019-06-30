@@ -1530,6 +1530,9 @@ name|tableHandle
 operator|.
 name|getTableName
 argument_list|()
+operator|.
+name|toLowerCase
+argument_list|()
 argument_list|)
 operator|)
 return|;

@@ -5313,6 +5313,808 @@ name|replicatedTables
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testRenameTableScenariosWithReplaceExternalTable
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|loadWithClause
+init|=
+name|ReplicationTestUtils
+operator|.
+name|externalTableBasePathWithClause
+argument_list|(
+name|REPLICA_EXTERNAL_BASE
+argument_list|,
+name|replica
+argument_list|)
+decl_stmt|;
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|dumpWithClause
+init|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'"
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_INCLUDE_EXTERNAL_TABLES
+operator|.
+name|varname
+operator|+
+literal|"'='true'"
+argument_list|,
+literal|"'"
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_BOOTSTRAP_EXTERNAL_TABLES
+operator|.
+name|varname
+operator|+
+literal|"'='true'"
+argument_list|)
+decl_stmt|;
+name|String
+name|replPolicy
+init|=
+name|primaryDbName
+operator|+
+literal|".['in[0-9]+', 'out4', 'out5', 'out1500']"
+decl_stmt|;
+name|String
+name|lastReplId
+init|=
+name|replicateAndVerify
+argument_list|(
+name|replPolicy
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|dumpWithClause
+argument_list|,
+name|loadWithClause
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{}
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{}
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|originalExternalTables
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in1"
+block|,
+literal|"in2"
+block|,
+literal|"out3"
+block|,
+literal|"out4"
+block|,
+literal|"out10"
+block|,
+literal|"out11"
+block|,
+literal|"out1500"
+block|}
+decl_stmt|;
+name|createTables
+argument_list|(
+name|originalExternalTables
+argument_list|,
+name|CreateTableType
+operator|.
+name|EXTERNAL
+argument_list|)
+expr_stmt|;
+comment|// Rename the tables to satisfy the condition also replace the policy.
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out4 rename to in5"
+argument_list|)
+comment|// Old name matching old, new name matching both
+operator|.
+name|run
+argument_list|(
+literal|"alter table out3 rename to in6"
+argument_list|)
+comment|// Old name not matching old and new name matching both
+operator|.
+name|run
+argument_list|(
+literal|"alter table in1 rename to out5"
+argument_list|)
+comment|// Old name matching old, new name matching only old.
+operator|.
+name|run
+argument_list|(
+literal|"alter table in2 rename to in7"
+argument_list|)
+comment|// Old name matching old, only new name not matching new.
+operator|.
+name|run
+argument_list|(
+literal|"alter table out1500 rename to out1501"
+argument_list|)
+comment|// Old name matching old, only old name not matching new.
+operator|.
+name|run
+argument_list|(
+literal|"alter table out10 rename to in10"
+argument_list|)
+comment|// Old name not matching old and new name matching both
+operator|.
+name|run
+argument_list|(
+literal|"drop table in10"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out11 rename to out12"
+argument_list|)
+comment|// Old name not matching old and new name not matching both
+operator|.
+name|run
+argument_list|(
+literal|"alter table out12 rename to in12"
+argument_list|)
+expr_stmt|;
+comment|// Old name not matching old and new name matching both
+name|String
+name|newPolicy
+init|=
+name|primaryDbName
+operator|+
+literal|".['in[0-9]+', 'out1500'].['in2']"
+decl_stmt|;
+name|dumpWithClause
+operator|=
+name|Arrays
+operator|.
+name|asList
+argument_list|(
+literal|"'"
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_INCLUDE_EXTERNAL_TABLES
+operator|.
+name|varname
+operator|+
+literal|"'='true'"
+argument_list|,
+literal|"'"
+operator|+
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_BOOTSTRAP_EXTERNAL_TABLES
+operator|.
+name|varname
+operator|+
+literal|"'='false'"
+argument_list|)
+expr_stmt|;
+comment|// in2 should be dropped.
+name|String
+index|[]
+name|replicatedTables
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in5"
+block|,
+literal|"in6"
+block|,
+literal|"in7"
+block|,
+literal|"in12"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|bootstrapTables
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in5"
+block|,
+literal|"in6"
+block|,
+literal|"in7"
+block|,
+literal|"in12"
+block|}
+decl_stmt|;
+name|replicateAndVerify
+argument_list|(
+name|newPolicy
+argument_list|,
+name|replPolicy
+argument_list|,
+name|lastReplId
+argument_list|,
+name|dumpWithClause
+argument_list|,
+name|loadWithClause
+argument_list|,
+name|bootstrapTables
+argument_list|,
+name|replicatedTables
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testRenameTableScenariosWithReplacePolicyDMLOperattion
+parameter_list|()
+throws|throws
+name|Throwable
+block|{
+name|String
+name|replPolicy
+init|=
+name|primaryDbName
+operator|+
+literal|".['in[0-9]+', 'out5000', 'out5001'].['in100', 'in200', 'in305']"
+decl_stmt|;
+name|String
+name|lastReplId
+init|=
+name|replicateAndVerify
+argument_list|(
+name|replPolicy
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{}
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{}
+argument_list|)
+decl_stmt|;
+name|String
+index|[]
+name|originalFullAcidTables
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in1"
+block|,
+literal|"in2"
+block|,
+literal|"out3"
+block|,
+literal|"out4"
+block|,
+literal|"out5"
+block|,
+literal|"in100"
+block|,
+literal|"in200"
+block|,
+literal|"in300"
+block|,
+literal|"out3000"
+block|,
+literal|"out4000"
+block|,
+literal|"out4001"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|originalNonAcidTables
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in400"
+block|,
+literal|"out500"
+block|}
+decl_stmt|;
+name|createTables
+argument_list|(
+name|originalFullAcidTables
+argument_list|,
+name|CreateTableType
+operator|.
+name|FULL_ACID
+argument_list|)
+expr_stmt|;
+name|createTables
+argument_list|(
+name|originalNonAcidTables
+argument_list|,
+name|CreateTableType
+operator|.
+name|NON_ACID
+argument_list|)
+expr_stmt|;
+comment|// Replicate and verify if only 4 tables are replicated to target.
+name|String
+index|[]
+name|replicatedTables
+init|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in1"
+block|,
+literal|"in2"
+block|,
+literal|"in300"
+block|,
+literal|"in400"
+block|}
+decl_stmt|;
+name|String
+index|[]
+name|bootstrapTables
+init|=
+operator|new
+name|String
+index|[]
+block|{}
+decl_stmt|;
+name|lastReplId
+operator|=
+name|replicateAndVerify
+argument_list|(
+name|replPolicy
+argument_list|,
+literal|null
+argument_list|,
+name|lastReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|bootstrapTables
+argument_list|,
+name|replicatedTables
+argument_list|)
+expr_stmt|;
+comment|// Rename the tables to satisfy the condition also replace the policy.
+name|String
+name|newPolicy
+init|=
+name|primaryDbName
+operator|+
+literal|".['in[0-9]+', 'out3000'].['in2']"
+decl_stmt|;
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table in200 rename to in2000"
+argument_list|)
+comment|// Old name not matching old, old and new matching new policy.
+operator|.
+name|run
+argument_list|(
+literal|"alter table in400 rename to out400"
+argument_list|)
+comment|// Old name matching new and old policy, new matching none.
+operator|.
+name|run
+argument_list|(
+literal|"alter table out500 rename to in500"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out3000 rename to in3000"
+argument_list|)
+comment|// Old name not matching old policy and both name matching new
+operator|.
+name|run
+argument_list|(
+literal|"alter table in1 rename to out7"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table in300 rename to in301"
+argument_list|)
+comment|// for rename its all matching to matching.
+operator|.
+name|run
+argument_list|(
+literal|"alter table in301 rename to in305"
+argument_list|)
+comment|// ideally in305 bootstrap should not happen.
+operator|.
+name|run
+argument_list|(
+literal|"alter table out3 rename to in8"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out4 rename to in9"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table in9"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out5 rename to in10"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table in10 rename to out11"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table out11"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in100 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in8 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in305 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in3000 values (2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in2000 values (2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in500 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out4000 rename to out5000"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out5000 rename to in5000"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in5000 values (2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out4001 rename to out5001"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table out5001 rename to out5002"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into out5002 values (2, 100)"
+argument_list|)
+expr_stmt|;
+comment|// in2 should be dropped.
+name|replicatedTables
+operator|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in100"
+block|,
+literal|"in2000"
+block|,
+literal|"in8"
+block|,
+literal|"in305"
+block|,
+literal|"in500"
+block|,
+literal|"in3000"
+block|,
+literal|"in5000"
+block|}
+expr_stmt|;
+name|bootstrapTables
+operator|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in500"
+block|,
+literal|"in8"
+block|,
+literal|"in5000"
+block|,
+literal|"in305"
+block|,
+literal|"in3000"
+block|,
+literal|"in2000"
+block|,
+literal|"in100"
+block|}
+expr_stmt|;
+name|lastReplId
+operator|=
+name|replicateAndVerify
+argument_list|(
+name|newPolicy
+argument_list|,
+name|replPolicy
+argument_list|,
+name|lastReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|bootstrapTables
+argument_list|,
+name|replicatedTables
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+expr_stmt|;
+comment|// No table filter
+name|replPolicy
+operator|=
+name|newPolicy
+expr_stmt|;
+name|newPolicy
+operator|=
+name|primaryDbName
+expr_stmt|;
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table in100 rename to in12"
+argument_list|)
+comment|// should be just rename, but for replace its always bootstrap
+operator|.
+name|run
+argument_list|(
+literal|"alter table in2000 rename to out12"
+argument_list|)
+comment|// bootstrap by replace policy handler
+operator|.
+name|run
+argument_list|(
+literal|"alter table out400 rename to in400"
+argument_list|)
+comment|// bootstrap by rename
+operator|.
+name|run
+argument_list|(
+literal|"alter table out7 rename to in1"
+argument_list|)
+comment|// bootstrap by rename
+operator|.
+name|run
+argument_list|(
+literal|"alter table in305 rename to in301"
+argument_list|)
+comment|// should be just rename, but for replace its always bootstrap
+operator|.
+name|run
+argument_list|(
+literal|"alter table in301 rename to in300"
+argument_list|)
+comment|// should be just rename, but for replace its always bootstrap
+operator|.
+name|run
+argument_list|(
+literal|"alter table in8 rename to out3"
+argument_list|)
+comment|// should be just rename, but for replace its always bootstrap
+operator|.
+name|run
+argument_list|(
+literal|"insert into in2 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in1 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into in400 values(2, 100)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table out3"
+argument_list|)
+expr_stmt|;
+comment|// table will be removed from bootstrap list.
+name|replicatedTables
+operator|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"in12"
+block|,
+literal|"in400"
+block|,
+literal|"in1"
+block|,
+literal|"in300"
+block|,
+literal|"out12"
+block|,
+literal|"in500"
+block|,
+literal|"in3000"
+block|,
+literal|"in2"
+block|,
+literal|"in5000"
+block|,
+literal|"out5002"
+block|}
+expr_stmt|;
+name|bootstrapTables
+operator|=
+operator|new
+name|String
+index|[]
+block|{
+literal|"out12"
+block|,
+literal|"in2"
+block|,
+literal|"in400"
+block|,
+literal|"in1"
+block|,
+literal|"in300"
+block|,
+literal|"in12"
+block|,
+literal|"out5002"
+block|}
+expr_stmt|;
+name|replicateAndVerify
+argument_list|(
+name|newPolicy
+argument_list|,
+name|replPolicy
+argument_list|,
+name|lastReplId
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|,
+name|bootstrapTables
+argument_list|,
+name|replicatedTables
+argument_list|,
+operator|new
+name|String
+index|[]
+block|{
+literal|"1"
+block|,
+literal|"2"
+block|}
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 
