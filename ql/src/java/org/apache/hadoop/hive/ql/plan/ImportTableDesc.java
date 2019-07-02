@@ -85,6 +85,22 @@ name|hive
 operator|.
 name|conf
 operator|.
+name|Constants
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|conf
+operator|.
 name|HiveConf
 import|;
 end_import
@@ -730,6 +746,12 @@ operator|.
 name|getPartColNames
 argument_list|()
 argument_list|,
+literal|null
+argument_list|,
+comment|// sort columns passed as table params (if present)
+literal|null
+argument_list|,
+comment|// distribute columns passed as table params (if present)
 literal|false
 argument_list|,
 literal|false
