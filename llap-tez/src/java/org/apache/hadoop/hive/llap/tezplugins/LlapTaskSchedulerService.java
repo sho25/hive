@@ -3012,6 +3012,8 @@ operator|new
 name|LlapMetricsCollector
 argument_list|(
 name|conf
+argument_list|,
+name|registry
 argument_list|)
 expr_stmt|;
 name|this

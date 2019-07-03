@@ -16020,6 +16020,19 @@ operator|+
 literal|"If it's set to 0, then the feature is disabled."
 argument_list|)
 block|,
+name|LLAP_TASK_SCHEDULER_AM_COLLECT_DAEMON_METRICS_LISTENER
+argument_list|(
+literal|"hive.llap.task.scheduler.am.collect.daemon.metrics.listener"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The listener which is called when new Llap Daemon statistics is received on AM side.\n"
+operator|+
+literal|"The listener should implement the "
+operator|+
+literal|"org.apache.hadoop.hive.llap.tezplugins.metrics.LlapMetricsListener interface."
+argument_list|)
+block|,
 name|LLAP_TASK_SCHEDULER_AM_REGISTRY_NAME
 argument_list|(
 literal|"hive.llap.task.scheduler.am.registry"
