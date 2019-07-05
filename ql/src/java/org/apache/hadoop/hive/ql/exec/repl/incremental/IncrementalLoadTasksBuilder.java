@@ -201,7 +201,7 @@ name|ddl
 operator|.
 name|database
 operator|.
-name|AlterDatabaseDesc
+name|AlterDatabaseSetPropertiesDesc
 import|;
 end_import
 
@@ -2287,11 +2287,11 @@ argument_list|,
 name|replState
 argument_list|)
 expr_stmt|;
-name|AlterDatabaseDesc
+name|AlterDatabaseSetPropertiesDesc
 name|alterDbDesc
 init|=
 operator|new
-name|AlterDatabaseDesc
+name|AlterDatabaseSetPropertiesDesc
 argument_list|(
 name|dbName
 argument_list|,
