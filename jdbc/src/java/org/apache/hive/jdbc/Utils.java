@@ -357,6 +357,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|RETRY_INTERVAL
+init|=
+literal|"retryInterval"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|AUTH_TYPE
 init|=
 literal|"auth"
