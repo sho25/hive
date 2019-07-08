@@ -181,6 +181,24 @@ name|HiveException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|session
+operator|.
+name|SessionState
+import|;
+end_import
+
 begin_comment
 comment|/**  * Operation process of showing compactions.  */
 end_comment
@@ -222,6 +240,14 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
+name|SessionState
+name|sessionState
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
 comment|// Call the metastore to get the status of all known compactions (completed get purged eventually)
 name|ShowCompactResponse
 name|rsp
@@ -257,12 +283,22 @@ name|context
 argument_list|)
 init|)
 block|{
-comment|// Write a header
+comment|// Write a header for cliDriver
+if|if
+condition|(
+operator|!
+name|sessionState
+operator|.
+name|isHiveServerQuery
+argument_list|()
+condition|)
+block|{
 name|writeHeader
 argument_list|(
 name|os
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|rsp
