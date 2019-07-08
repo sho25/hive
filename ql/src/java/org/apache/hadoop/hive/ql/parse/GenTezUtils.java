@@ -2177,6 +2177,22 @@ operator|)
 name|current
 decl_stmt|;
 comment|// remember it for additional processing later
+if|if
+condition|(
+name|context
+operator|.
+name|fileSinkSet
+operator|.
+name|contains
+argument_list|(
+name|fileSink
+argument_list|)
+condition|)
+block|{
+continue|continue;
+block|}
+else|else
+block|{
 name|context
 operator|.
 name|fileSinkSet
@@ -2186,6 +2202,7 @@ argument_list|(
 name|fileSink
 argument_list|)
 expr_stmt|;
+block|}
 name|FileSinkDesc
 name|desc
 init|=
