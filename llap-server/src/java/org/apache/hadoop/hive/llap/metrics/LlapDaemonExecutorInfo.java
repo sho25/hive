@@ -82,7 +82,17 @@ argument_list|(
 literal|"Sum of wait queue size and number of executors"
 argument_list|)
 block|,
-name|ExecutorNumExecutorsPerInstance
+name|ExecutorNumExecutors
+argument_list|(
+literal|"Total number of executor threads"
+argument_list|)
+block|,
+name|ExecutorMaxFreeSlotsConfigured
+argument_list|(
+literal|"Sum of the configured wait queue size and the configured number of executors"
+argument_list|)
+block|,
+name|ExecutorNumExecutorsConfigured
 argument_list|(
 literal|"Total number of executor threads per node"
 argument_list|)
@@ -129,7 +139,12 @@ argument_list|)
 block|,
 name|ExecutorWaitQueueSize
 argument_list|(
-literal|"Size of wait queue per node"
+literal|"Size of wait queue"
+argument_list|)
+block|,
+name|ExecutorWaitQueueSizeConfigured
+argument_list|(
+literal|"Size of wait queue configured per node"
 argument_list|)
 block|,
 name|ExecutorThreadUserTime

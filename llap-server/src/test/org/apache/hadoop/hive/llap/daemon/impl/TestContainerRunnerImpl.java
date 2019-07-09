@@ -811,6 +811,8 @@ argument_list|()
 argument_list|,
 name|numExecutors
 argument_list|,
+name|waitQueueSize
+argument_list|,
 name|Ints
 operator|.
 name|toArray

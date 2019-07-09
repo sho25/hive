@@ -738,6 +738,8 @@ literal|"SessionId"
 argument_list|,
 name|numHandlers
 argument_list|,
+literal|1
+argument_list|,
 operator|new
 name|int
 index|[]
@@ -1362,6 +1364,8 @@ argument_list|,
 literal|"SessionId"
 argument_list|,
 name|numHandlers
+argument_list|,
+literal|1
 argument_list|,
 operator|new
 name|int

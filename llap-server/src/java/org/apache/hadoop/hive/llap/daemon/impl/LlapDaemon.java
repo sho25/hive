@@ -2520,6 +2520,8 @@ name|sessionId
 argument_list|,
 name|numExecutors
 argument_list|,
+name|waitQueueSize
+argument_list|,
 name|Ints
 operator|.
 name|toArray
@@ -2559,15 +2561,6 @@ operator|.
 name|setJvmMaxMemory
 argument_list|(
 name|maxJvmMemory
-argument_list|)
-expr_stmt|;
-name|this
-operator|.
-name|metrics
-operator|.
-name|setWaitQueueSize
-argument_list|(
-name|waitQueueSize
 argument_list|)
 expr_stmt|;
 name|this
