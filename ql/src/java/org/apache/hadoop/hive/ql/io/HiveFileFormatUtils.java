@@ -2367,6 +2367,14 @@ operator|.
 name|getDestPath
 argument_list|()
 argument_list|)
+operator|.
+name|temporary
+argument_list|(
+name|conf
+operator|.
+name|isTemporary
+argument_list|()
+argument_list|)
 argument_list|)
 return|;
 block|}
