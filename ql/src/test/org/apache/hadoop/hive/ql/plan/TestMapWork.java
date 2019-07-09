@@ -37,7 +37,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|LinkedHashMap
 import|;
 end_import
 
@@ -47,7 +47,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|LinkedHashMap
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
 import|;
 end_import
 
@@ -108,11 +118,11 @@ operator|new
 name|MapWork
 argument_list|()
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -151,11 +161,11 @@ argument_list|(
 name|pathToAliases
 argument_list|)
 expr_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

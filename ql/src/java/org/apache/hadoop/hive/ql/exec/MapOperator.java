@@ -2142,7 +2142,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -2690,7 +2690,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

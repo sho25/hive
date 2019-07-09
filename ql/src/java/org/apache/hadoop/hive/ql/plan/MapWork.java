@@ -656,11 +656,11 @@ block|}
 comment|// use LinkedHashMap to make sure the iteration order is
 comment|// deterministic, to ease testing
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -673,7 +673,7 @@ argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
@@ -687,7 +687,7 @@ argument_list|<>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -715,7 +715,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -733,7 +733,7 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1084,11 +1084,11 @@ name|EXTENDED
 block|}
 argument_list|)
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1105,12 +1105,11 @@ specifier|public
 name|void
 name|setPathToAliases
 parameter_list|(
-specifier|final
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1151,7 +1150,7 @@ parameter_list|(
 name|Path
 name|path
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1186,7 +1185,7 @@ name|String
 name|newAlias
 parameter_list|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1280,7 +1279,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1292,7 +1291,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1304,7 +1303,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1317,7 +1316,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1343,12 +1342,11 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
-specifier|final
 name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1381,7 +1379,7 @@ name|toString
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1422,7 +1420,7 @@ name|EXTENDED
 block|}
 argument_list|)
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
@@ -1440,7 +1438,7 @@ name|void
 name|setPathToPartitionInfo
 parameter_list|(
 specifier|final
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
@@ -2067,7 +2065,7 @@ block|}
 block|}
 comment|/**    * @return the aliasToPartnInfo    */
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2102,7 +2100,7 @@ name|aliasToPartnInfo
 expr_stmt|;
 block|}
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2124,8 +2122,7 @@ specifier|public
 name|void
 name|setAliasToWork
 parameter_list|(
-specifier|final
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2162,7 +2159,7 @@ name|EXTENDED
 block|}
 argument_list|)
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2288,7 +2285,7 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -2470,7 +2467,7 @@ parameter_list|,
 name|TableDesc
 name|tblDesc
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -2882,7 +2879,7 @@ operator|.
 name|intern
 argument_list|()
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

@@ -1253,7 +1253,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -2014,11 +2014,11 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

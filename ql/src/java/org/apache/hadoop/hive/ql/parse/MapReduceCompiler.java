@@ -55,16 +55,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -1038,7 +1028,7 @@ operator|.
 name|getMapWork
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1298,7 +1288,7 @@ operator|instanceof
 name|ExecDriver
 condition|)
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

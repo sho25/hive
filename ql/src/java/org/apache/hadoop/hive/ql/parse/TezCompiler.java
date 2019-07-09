@@ -5871,7 +5871,7 @@ name|MapWork
 operator|)
 name|w
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

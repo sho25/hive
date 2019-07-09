@@ -9214,7 +9214,7 @@ name|mapWork
 parameter_list|)
 block|{
 comment|// Eliminate MR plans with more than one TableScanOperator.
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -11316,11 +11316,11 @@ name|tableDataTypeInfoList
 init|=
 literal|null
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -11332,7 +11332,7 @@ operator|.
 name|getPathToAliases
 argument_list|()
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
@@ -11426,7 +11426,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
