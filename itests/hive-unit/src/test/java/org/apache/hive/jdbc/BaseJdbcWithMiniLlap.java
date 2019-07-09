@@ -972,7 +972,7 @@ name|conf
 init|=
 literal|null
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 name|Connection
 name|hs2Conn
