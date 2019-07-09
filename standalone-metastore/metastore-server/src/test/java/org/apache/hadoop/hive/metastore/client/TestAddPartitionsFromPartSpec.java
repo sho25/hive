@@ -558,7 +558,7 @@ specifier|private
 name|IMetaStoreClient
 name|client
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -566,7 +566,7 @@ name|DB_NAME
 init|=
 literal|"test_partition_db"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -574,7 +574,7 @@ name|TABLE_NAME
 init|=
 literal|"test_partition_table"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -582,7 +582,7 @@ name|DEFAULT_PARAM_VALUE
 init|=
 literal|"partparamvalue"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -622,7 +622,7 @@ name|MONTH_COL_NAME
 init|=
 literal|"month"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|int
@@ -755,6 +755,39 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+block|}
+specifier|protected
+name|AbstractMetaStoreService
+name|getMetaStore
+parameter_list|()
+block|{
+return|return
+name|metaStore
+return|;
+block|}
+specifier|protected
+name|IMetaStoreClient
+name|getClient
+parameter_list|()
+block|{
+return|return
+name|client
+return|;
+block|}
+specifier|protected
+name|void
+name|setClient
+parameter_list|(
+name|IMetaStoreClient
+name|client
+parameter_list|)
+block|{
+name|this
+operator|.
+name|client
+operator|=
+name|client
+expr_stmt|;
 block|}
 comment|// Tests for int add_partitions_pspec(PartitionSpecProxy partitionSpec) method
 annotation|@
@@ -1837,6 +1870,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionSpecUpperCaseDBAndTableNameInOnePart
@@ -4871,6 +4906,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionSpecWithSharedSDInvalidSD
@@ -5329,6 +5366,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionSpecForView
@@ -5387,6 +5426,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionSpecForViewNullPartLocation
@@ -5482,6 +5523,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionsForViewNullPartSd
@@ -6970,7 +7013,7 @@ name|TABLE_NAME
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|Table
 name|createTable
 parameter_list|(
@@ -7439,7 +7482,7 @@ return|return
 name|cols
 return|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|verifyPartition
 parameter_list|(

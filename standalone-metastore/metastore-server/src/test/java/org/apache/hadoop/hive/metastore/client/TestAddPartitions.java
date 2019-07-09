@@ -576,7 +576,7 @@ specifier|private
 name|IMetaStoreClient
 name|client
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -584,7 +584,7 @@ name|DB_NAME
 init|=
 literal|"test_partition_db"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -592,7 +592,7 @@ name|TABLE_NAME
 init|=
 literal|"test_partition_table"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -600,7 +600,7 @@ name|DEFAULT_PARAM_VALUE
 init|=
 literal|"partparamvalue"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -608,7 +608,7 @@ name|DEFAULT_PARAM_KEY
 init|=
 literal|"partparamkey"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -616,7 +616,7 @@ name|DEFAULT_YEAR_VALUE
 init|=
 literal|"2017"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -624,7 +624,7 @@ name|DEFAULT_COL_TYPE
 init|=
 literal|"string"
 decl_stmt|;
-specifier|private
+specifier|protected
 specifier|static
 specifier|final
 name|String
@@ -757,6 +757,39 @@ operator|=
 literal|null
 expr_stmt|;
 block|}
+block|}
+specifier|protected
+name|AbstractMetaStoreService
+name|getMetaStore
+parameter_list|()
+block|{
+return|return
+name|metaStore
+return|;
+block|}
+specifier|protected
+name|IMetaStoreClient
+name|getClient
+parameter_list|()
+block|{
+return|return
+name|client
+return|;
+block|}
+specifier|protected
+name|void
+name|setClient
+parameter_list|(
+name|IMetaStoreClient
+name|client
+parameter_list|)
+block|{
+name|this
+operator|.
+name|client
+operator|=
+name|client
+expr_stmt|;
 block|}
 comment|// Tests for the Partition add_partition(Partition partition) method
 annotation|@
@@ -910,6 +943,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|addPartitionOtherCatalog
@@ -1258,6 +1293,8 @@ name|InvalidObjectException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|noSuchCatalog
@@ -3101,6 +3138,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionForView
@@ -3140,6 +3179,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionsForViewNullPartLocation
@@ -3229,6 +3270,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionsForViewNullPartSd
@@ -5143,6 +5186,15 @@ name|e
 parameter_list|)
 block|{
 comment|// Expected exception
+name|System
+operator|.
+name|out
+operator|.
+name|println
+argument_list|(
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 name|List
 argument_list|<
@@ -7530,6 +7582,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testAddPartitionsForView
@@ -10106,7 +10160,7 @@ name|TABLE_NAME
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|Table
 name|createTable
 parameter_list|(
@@ -10136,7 +10190,7 @@ name|location
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|Table
 name|createTable
 parameter_list|(
@@ -10252,7 +10306,7 @@ name|tableName
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|createExternalTable
 parameter_list|(
@@ -10327,7 +10381,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|Partition
 name|buildPartition
 parameter_list|(
@@ -10365,7 +10419,7 @@ literal|"/addparttest"
 argument_list|)
 return|;
 block|}
-specifier|private
+specifier|protected
 name|Partition
 name|buildPartition
 parameter_list|(
@@ -10719,7 +10773,7 @@ return|return
 name|cols
 return|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|verifyPartition
 parameter_list|(
@@ -11061,7 +11115,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 name|void
 name|verifyPartitionAttributesDefaultValues
 parameter_list|(
