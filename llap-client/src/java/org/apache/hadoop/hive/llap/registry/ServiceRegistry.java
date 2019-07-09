@@ -31,6 +31,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -134,6 +144,26 @@ comment|/**    * Remove the current registration cleanly (implementation defined
 name|void
 name|unregister
 parameter_list|()
+throws|throws
+name|IOException
+function_decl|;
+comment|/**    * Update the current registration with the given attributes.    */
+name|void
+name|updateRegistration
+parameter_list|(
+name|Iterable
+argument_list|<
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+argument_list|>
+name|attributes
+parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
