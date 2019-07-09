@@ -221,6 +221,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|DatabaseProduct
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|HiveMetaStore
 operator|.
 name|HMSHandler
@@ -7144,6 +7160,45 @@ literal|"SET @@session.sql_mode=ANSI_QUOTES"
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Derby doesn't allow FOR UPDATE to lock the row being selected (See https://db.apache
+comment|// .org/derby/docs/10.1/ref/rrefsqlj31783.html) . So lock the whole table. Since there's
+comment|// only one row in the table, this shouldn't cause any performance degradation.
+if|if
+condition|(
+name|sqlGenerator
+operator|.
+name|getDbProduct
+argument_list|()
+operator|==
+name|DatabaseProduct
+operator|.
+name|DERBY
+condition|)
+block|{
+name|String
+name|lockingQuery
+init|=
+literal|"lock table \"NOTIFICATION_SEQUENCE\" in exclusive mode"
+decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Going to execute query<"
+operator|+
+name|lockingQuery
+operator|+
+literal|">"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|executeUpdate
+argument_list|(
+name|lockingQuery
+argument_list|)
+expr_stmt|;
+block|}
 name|String
 name|s
 init|=
@@ -7572,6 +7627,13 @@ name|pst
 operator|.
 name|execute
 argument_list|()
+expr_stmt|;
+name|event
+operator|.
+name|setEventId
+argument_list|(
+name|nextEventId
+argument_list|)
 expr_stmt|;
 comment|// Set the DB_NOTIFICATION_EVENT_ID for future reference by other listeners.
 if|if

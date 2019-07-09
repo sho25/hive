@@ -59538,10 +59538,53 @@ block|}
 block|}
 specifier|private
 name|void
-name|lockForUpdate
+name|lockNotificationSequenceForUpdate
 parameter_list|()
 throws|throws
 name|MetaException
+block|{
+if|if
+condition|(
+name|sqlGenerator
+operator|.
+name|getDbProduct
+argument_list|()
+operator|==
+name|DatabaseProduct
+operator|.
+name|DERBY
+operator|&&
+name|directSql
+operator|!=
+literal|null
+condition|)
+block|{
+comment|// Derby doesn't allow FOR UPDATE to lock the row being selected (See https://db.apache
+comment|// .org/derby/docs/10.1/ref/rrefsqlj31783.html) . So lock the whole table. Since there's
+comment|// only one row in the table, this shouldn't cause any performance degradation.
+operator|new
+name|RetryingExecutor
+argument_list|(
+name|conf
+argument_list|,
+parameter_list|()
+lambda|->
+block|{
+name|directSql
+operator|.
+name|lockDbTable
+argument_list|(
+literal|"NOTIFICATION_SEQUENCE"
+argument_list|)
+expr_stmt|;
+block|}
+argument_list|)
+operator|.
+name|run
+argument_list|()
+expr_stmt|;
+block|}
+else|else
 block|{
 name|String
 name|selectQuery
@@ -59549,7 +59592,7 @@ init|=
 literal|"select \"NEXT_EVENT_ID\" from \"NOTIFICATION_SEQUENCE\""
 decl_stmt|;
 name|String
-name|selectForUpdateQuery
+name|lockingQuery
 init|=
 name|sqlGenerator
 operator|.
@@ -59578,7 +59621,7 @@ name|newQuery
 argument_list|(
 literal|"javax.jdo.query.SQL"
 argument_list|,
-name|selectForUpdateQuery
+name|lockingQuery
 argument_list|)
 decl_stmt|;
 name|query
@@ -59605,6 +59648,7 @@ operator|.
 name|run
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 specifier|static
 class|class
@@ -59883,7 +59927,7 @@ block|{
 name|openTransaction
 argument_list|()
 expr_stmt|;
-name|lockForUpdate
+name|lockNotificationSequenceForUpdate
 argument_list|()
 expr_stmt|;
 name|query

@@ -18290,6 +18290,57 @@ argument_list|()
 expr_stmt|;
 block|}
 block|}
+specifier|public
+name|void
+name|lockDbTable
+parameter_list|(
+name|String
+name|tableName
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+name|String
+name|lockCommand
+init|=
+literal|"lock table \""
+operator|+
+name|tableName
+operator|+
+literal|"\" in exclusive mode"
+decl_stmt|;
+try|try
+block|{
+name|executeNoResult
+argument_list|(
+name|lockCommand
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|SQLException
+name|sqle
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+literal|"Error while locking table "
+operator|+
+name|tableName
+operator|+
+literal|": "
+operator|+
+name|sqle
+operator|.
+name|getMessage
+argument_list|()
+argument_list|)
+throw|;
+block|}
+block|}
 block|}
 end_class
 

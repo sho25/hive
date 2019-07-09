@@ -1158,6 +1158,14 @@ name|REPL_EVENTS_MISSING_IN_METASTORE
 init|=
 literal|"Notification events are missing in the meta store."
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|REPL_EVENTS_WITH_DUPLICATE_ID_IN_METASTORE
+init|=
+literal|"Notification events with duplicate event ids in the meta store."
+decl_stmt|;
 specifier|static
 specifier|final
 specifier|protected
@@ -18668,6 +18676,11 @@ name|lastEventId
 operator|+
 literal|1
 decl_stmt|;
+name|long
+name|prevEventId
+init|=
+name|lastEventId
+decl_stmt|;
 for|for
 control|(
 name|NotificationEvent
@@ -18679,6 +18692,18 @@ name|getEvents
 argument_list|()
 control|)
 block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Got event with id : "
+operator|+
+name|e
+operator|.
+name|getEventId
+argument_list|()
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|e
@@ -18688,6 +18713,39 @@ argument_list|()
 operator|!=
 name|nextEventId
 condition|)
+block|{
+if|if
+condition|(
+name|e
+operator|.
+name|getEventId
+argument_list|()
+operator|==
+name|prevEventId
+condition|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"NOTIFICATION_LOG table has multiple events with the same event Id {}. "
+operator|+
+literal|"Something went wrong when inserting notification events.  Bootstrap the system "
+operator|+
+literal|"again to get back teh consistent replicated state."
+argument_list|,
+name|prevEventId
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|IllegalStateException
+argument_list|(
+name|REPL_EVENTS_WITH_DUPLICATE_ID_IN_METASTORE
+argument_list|)
+throw|;
+block|}
+else|else
 block|{
 name|LOG
 operator|.
@@ -18717,6 +18775,7 @@ name|REPL_EVENTS_MISSING_IN_METASTORE
 argument_list|)
 throw|;
 block|}
+block|}
 if|if
 condition|(
 operator|(
@@ -18741,6 +18800,10 @@ name|e
 argument_list|)
 expr_stmt|;
 block|}
+name|prevEventId
+operator|=
+name|nextEventId
+expr_stmt|;
 name|nextEventId
 operator|++
 expr_stmt|;
