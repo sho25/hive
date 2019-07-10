@@ -28337,7 +28337,7 @@ operator|==
 literal|null
 operator|)
 condition|?
-literal|0
+literal|null
 else|:
 name|entry
 operator|.
@@ -28370,6 +28370,18 @@ block|{
 name|RexNode
 name|offsetRN
 init|=
+operator|(
+name|offset
+operator|==
+literal|null
+operator|||
+name|offset
+operator|==
+literal|0
+operator|)
+condition|?
+literal|null
+else|:
 name|cluster
 operator|.
 name|getRexBuilder
