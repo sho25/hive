@@ -1245,7 +1245,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['t1', 't4', 't5']"
+literal|".'(t1)|(t4)|(t5)'"
 decl_stmt|;
 name|String
 index|[]
@@ -1319,7 +1319,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['t1*', 't3'].['t100']"
+literal|".'(t1*)|(t3)'.'t100'"
 decl_stmt|;
 name|String
 index|[]
@@ -1461,7 +1461,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['t1', 't5']"
+literal|".'t1|t5'"
 decl_stmt|;
 name|String
 index|[]
@@ -1567,7 +1567,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['t1+', 't2'].['t11', 't3']"
+literal|".'(t1+)|(t2)'.'t11|t3'"
 decl_stmt|;
 name|String
 index|[]
@@ -1662,31 +1662,36 @@ name|primaryDbName
 operator|+
 literal|".t1.t2"
 block|,
-comment|// Two explicit table names not allowed.
+comment|// Didn't enclose table pattern within single quotes.
 name|primaryDbName
 operator|+
-literal|".['t1'].t2"
+literal|".'t1'.t2"
 block|,
 comment|// Table name and include list not allowed.
 name|primaryDbName
 operator|+
-literal|".t1.['t2']"
+literal|".t1.'t2'"
 block|,
 comment|// Table name and exclude list not allowed.
 name|primaryDbName
 operator|+
-literal|".[t1].t2"
-block|,
-comment|// Table name and include list not allowed.
-name|primaryDbName
-operator|+
-literal|".['t1+']."
+literal|".'t1+'."
 block|,
 comment|// Abrubtly ended dot.
 name|primaryDbName
 operator|+
-literal|"..[]"
-comment|// Multiple dots
+literal|".['t1+'].['t11']"
+block|,
+comment|// With square brackets
+name|primaryDbName
+operator|+
+literal|"..''"
+block|,
+comment|// Two dots with empty list
+name|primaryDbName
+operator|+
+literal|".'t1'.'tt2'.'t3'"
+comment|// More than two list
 block|}
 decl_stmt|;
 for|for
@@ -1884,7 +1889,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|"_dupe.['t1+'].['t1']"
+literal|"_dupe.'t1+'.'t1'"
 expr_stmt|;
 name|failed
 operator|=
@@ -1949,13 +1954,32 @@ argument_list|(
 name|failed
 argument_list|)
 expr_stmt|;
-comment|// Invalid pattern where we didn't enclose table pattern within single or double quotes.
-name|replPolicy
+comment|// Invalid pattern, include/exclude table list is empty.
+name|invalidReplPolicies
 operator|=
+operator|new
+name|String
+index|[]
+block|{
 name|primaryDbName
 operator|+
-literal|".[t1].[t2]"
+literal|".''.'t2'"
+block|,
+comment|// Include list is empty.
+name|primaryDbName
+operator|+
+literal|".'t1'.''"
+comment|// Exclude list is empty.
+block|}
 expr_stmt|;
+for|for
+control|(
+name|String
+name|invalidReplPolicy
+range|:
+name|invalidReplPolicies
+control|)
+block|{
 name|failed
 operator|=
 literal|false
@@ -1964,7 +1988,7 @@ try|try
 block|{
 name|replicateAndVerify
 argument_list|(
-name|replPolicy
+name|invalidReplPolicy
 argument_list|,
 literal|null
 argument_list|,
@@ -2036,6 +2060,7 @@ name|failed
 argument_list|)
 expr_stmt|;
 block|}
+block|}
 annotation|@
 name|Test
 specifier|public
@@ -2080,11 +2105,9 @@ index|[]
 block|{
 name|primaryDbName
 operator|+
-literal|".['.*?']"
+literal|".'.*?'"
 block|,
 name|primaryDbName
-operator|+
-literal|".['.*?'].[]"
 block|}
 decl_stmt|;
 comment|// Replicate and verify if all 3 tables are replicated to target.
@@ -2155,7 +2178,7 @@ operator|.
 name|toUpperCase
 argument_list|()
 operator|+
-literal|".['.*a1+', 'cc3', 'B2'].['AA1+', 'b2']"
+literal|".'(.*a1+)|(cc3)|(B2)'.'(AA1+)|(b2)'"
 decl_stmt|;
 name|String
 index|[]
@@ -2196,7 +2219,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['.*a1+', 'cc3', 'B2'].['AA1+']"
+literal|".'(.*a1+)|(cc3)|(B2)'.'AA1+'"
 expr_stmt|;
 name|replicatedTables
 operator|=
@@ -2340,7 +2363,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b1'].['a4']"
+literal|".'(a[0-9]+)|(b1)'.'a4'"
 decl_stmt|;
 name|String
 index|[]
@@ -2527,7 +2550,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b2'].['a1']"
+literal|".'(a[0-9]+)|(b2)'.'a1'"
 decl_stmt|;
 name|String
 index|[]
@@ -2762,7 +2785,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b2'].['a1']"
+literal|".'(a[0-9]+)|(b2)'.'a1'"
 decl_stmt|;
 name|String
 index|[]
@@ -3020,7 +3043,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['t1', 't4']"
+literal|".'(t1)|(t4)'"
 decl_stmt|;
 name|String
 name|oldReplPolicy
@@ -3079,7 +3102,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['t1', 't3', 't6']"
+literal|".'t1|t3|t6'"
 expr_stmt|;
 name|replicatedTables
 operator|=
@@ -3193,7 +3216,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['.*?'].['t[3-5]+']"
+literal|".'.*?'.'t[3-5]+'"
 expr_stmt|;
 name|replicatedTables
 operator|=
@@ -3335,7 +3358,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b[0-9]+'].['b1']"
+literal|".'(a[0-9]+)|(b[0-9]+)'.'b1'"
 decl_stmt|;
 name|String
 index|[]
@@ -3375,7 +3398,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['[a-z]+[0-9]+'].['a3', 'b1']"
+literal|".'[a-z]+[0-9]+'.'(a3)|(b1)'"
 expr_stmt|;
 name|List
 argument_list|<
@@ -3538,7 +3561,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b[0-9]+'].['b1']"
+literal|".'(a[0-9]+)|(b[0-9]+)'.'b1'"
 decl_stmt|;
 name|String
 index|[]
@@ -3579,7 +3602,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b[0-9]+'].['a2']"
+literal|".'(a[0-9]+)|(b[0-9]+)'.'a2'"
 expr_stmt|;
 name|String
 index|[]
@@ -3724,7 +3747,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b1'].['a1']"
+literal|".'(a[0-9]+)|(b1)'.'a1'"
 decl_stmt|;
 name|String
 index|[]
@@ -3764,7 +3787,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['a[0-9]+', 'b[0-9]+'].['a2', 'b1']"
+literal|".'(a[0-9]+)|(b[0-9]+)'.'(a2)|(b1)'"
 expr_stmt|;
 name|String
 index|[]
@@ -3817,7 +3840,7 @@ name|replPolicy
 operator|=
 name|primaryDbName
 operator|+
-literal|".['[a-z]+[0-9]+'].['b[0-9]+']"
+literal|".'[a-z]+[0-9]+'.'b[0-9]+'"
 expr_stmt|;
 name|incrementalReplicatedTables
 operator|=
@@ -4007,7 +4030,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+'].['out[0-9]+']"
+literal|".'in[0-9]+'.'out[0-9]+'"
 decl_stmt|;
 name|String
 name|lastReplId
@@ -4377,7 +4400,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+'].['out[0-9]+']"
+literal|".'in[0-9]+'.'out[0-9]+'"
 decl_stmt|;
 name|String
 name|lastReplId
@@ -4590,7 +4613,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+'].['out[0-9]+']"
+literal|".'in[0-9]+'.'out[0-9]+'"
 decl_stmt|;
 name|List
 argument_list|<
@@ -4871,7 +4894,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+'].['out[0-9]+']"
+literal|".'in[0-9]+'.'out[0-9]+'"
 decl_stmt|;
 name|List
 argument_list|<
@@ -5377,7 +5400,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+', 'out4', 'out5', 'out1500']"
+literal|".'(in[0-9]+)|(out4)|(out5)|(out1500)'"
 decl_stmt|;
 name|String
 name|lastReplId
@@ -5505,7 +5528,7 @@ name|newPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+', 'out1500'].['in2']"
+literal|".'(in[0-9]+)|(out1500)|(in2)'"
 decl_stmt|;
 name|dumpWithClause
 operator|=
@@ -5605,7 +5628,7 @@ name|replPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+', 'out5000', 'out5001'].['in100', 'in200', 'in305']"
+literal|".'(in[0-9]+)|(out5000)|(out5001)'.'(in100)|(in200)|(in305)'"
 decl_stmt|;
 name|String
 name|lastReplId
@@ -5747,7 +5770,7 @@ name|newPolicy
 init|=
 name|primaryDbName
 operator|+
-literal|".['in[0-9]+', 'out3000'].['in2']"
+literal|".'(in[0-9]+)|(out3000)'.'in2'"
 decl_stmt|;
 name|primary
 operator|.

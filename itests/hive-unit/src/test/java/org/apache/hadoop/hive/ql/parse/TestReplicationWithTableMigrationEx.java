@@ -1490,7 +1490,7 @@ name|dump
 argument_list|(
 name|primaryDbName
 operator|+
-literal|".['t1']"
+literal|".'t1'"
 argument_list|,
 literal|null
 argument_list|)
@@ -1553,7 +1553,7 @@ name|dump
 argument_list|(
 name|primaryDbName
 operator|+
-literal|".['t1']"
+literal|".'t1'"
 argument_list|,
 name|tuple
 operator|.

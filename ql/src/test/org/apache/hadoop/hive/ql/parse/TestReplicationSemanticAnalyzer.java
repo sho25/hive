@@ -501,44 +501,9 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"TOK_REPL_TABLES_LIST"
-argument_list|,
-name|child
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getText
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|1
-argument_list|,
-name|child
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getChildCount
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
 literal|"'test_table'"
 argument_list|,
 name|child
-operator|.
-name|getChild
-argument_list|(
-literal|0
-argument_list|)
 operator|.
 name|getChild
 argument_list|(
@@ -732,7 +697,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table']"
+literal|"repl dump testDb.'test_table'"
 argument_list|)
 decl_stmt|;
 name|assertDatabase
@@ -762,7 +727,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] from 100"
+literal|"repl dump testDb.'test_table' from 100"
 argument_list|)
 decl_stmt|;
 name|assertDatabase
@@ -799,7 +764,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] from 100 to 200"
+literal|"repl dump testDb.'test_table' from 100 to 200"
 argument_list|)
 decl_stmt|;
 name|assertDatabase
@@ -844,7 +809,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] from 100 to 200 limit 10"
+literal|"repl dump testDb.'test_table' from 100 to 200 limit 10"
 argument_list|)
 decl_stmt|;
 name|assertDatabase
@@ -992,7 +957,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] with ('key.1'='value.1','key.2'='value.2')"
+literal|"repl dump testDb.'test_table' with ('key.1'='value.1','key.2'='value.2')"
 argument_list|)
 decl_stmt|;
 name|assertDatabase
@@ -1029,7 +994,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] from 100 "
+literal|"repl dump testDb.'test_table' from 100 "
 operator|+
 literal|"with ('key.1'='value.1','key.2'='value.2')"
 argument_list|)
@@ -1075,7 +1040,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] from 100 to 200 "
+literal|"repl dump testDb.'test_table' from 100 to 200 "
 operator|+
 literal|"with ('key.1'='value.1','key.2'='value.2')"
 argument_list|)
@@ -1129,7 +1094,7 @@ name|root
 init|=
 name|parse
 argument_list|(
-literal|"repl dump testDb.['test_table'] from 100 to 200 limit 10 "
+literal|"repl dump testDb.'test_table' from 100 to 200 limit 10 "
 operator|+
 literal|"with ('key.1'='value.1','key.2'='value.2')"
 argument_list|)
