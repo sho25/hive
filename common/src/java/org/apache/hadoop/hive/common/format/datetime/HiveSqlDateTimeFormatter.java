@@ -103,6 +103,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|Serializable
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|time
 operator|.
 name|DateTimeException
@@ -255,6 +265,8 @@ begin_class
 specifier|public
 class|class
 name|HiveSqlDateTimeFormatter
+implements|implements
+name|Serializable
 block|{
 specifier|private
 specifier|static
@@ -843,6 +855,8 @@ specifier|public
 specifier|static
 class|class
 name|Token
+implements|implements
+name|Serializable
 block|{
 name|TokenType
 name|type
