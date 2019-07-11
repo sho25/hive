@@ -16443,9 +16443,6 @@ argument_list|()
 argument_list|,
 name|ImmutableList
 operator|.
-expr|<
-name|RelNode
-operator|>
 name|of
 argument_list|(
 name|dq
@@ -16453,6 +16450,11 @@ operator|.
 name|getTableScan
 argument_list|()
 argument_list|)
+argument_list|,
+name|DruidSqlOperatorConverter
+operator|.
+name|getDefaultMap
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
