@@ -183,8 +183,6 @@ name|SHOW_CREATETABLE
 block|,
 name|SHOWFUNCTIONS
 block|,
-name|SHOWINDEXES
-block|,
 name|SHOWPARTITIONS
 block|,
 name|SHOWLOCKS
@@ -212,12 +210,6 @@ block|,
 name|DROPVIEW
 block|,
 name|DROP_MATERIALIZED_VIEW
-block|,
-name|CREATEINDEX
-block|,
-name|DROPINDEX
-block|,
-name|ALTERINDEX_REBUILD
 block|,
 name|ALTERVIEW_PROPERTIES
 block|,
@@ -266,8 +258,6 @@ block|,
 name|CREATETABLE_AS_SELECT
 block|,
 name|QUERY
-block|,
-name|ALTERINDEX_PROPS
 block|,
 name|ALTERDATABASE
 block|,
