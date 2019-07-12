@@ -81,6 +81,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|Collection
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|HashMap
 import|;
 end_import
@@ -122,6 +132,18 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Map
+operator|.
+name|Entry
 import|;
 end_import
 
@@ -660,6 +682,20 @@ operator|.
 name|mapreduce
 operator|.
 name|MRJobConfig
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|util
+operator|.
+name|Shell
 import|;
 end_import
 
@@ -2855,7 +2891,7 @@ name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -2912,7 +2948,7 @@ name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -3044,7 +3080,7 @@ name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -3142,7 +3178,7 @@ name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

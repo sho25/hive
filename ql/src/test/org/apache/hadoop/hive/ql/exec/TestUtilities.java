@@ -2894,7 +2894,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -3660,11 +3660,11 @@ name|LOCALSCRATCHDIR
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

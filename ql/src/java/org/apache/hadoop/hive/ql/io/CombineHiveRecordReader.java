@@ -45,6 +45,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|LinkedHashMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Map
 import|;
 end_import
@@ -396,7 +406,7 @@ name|class
 argument_list|)
 decl_stmt|;
 specifier|private
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|Path
 argument_list|,

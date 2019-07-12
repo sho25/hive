@@ -2225,7 +2225,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// initialize pathToAliases
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -2252,11 +2252,11 @@ argument_list|(
 literal|"b"
 argument_list|)
 expr_stmt|;
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

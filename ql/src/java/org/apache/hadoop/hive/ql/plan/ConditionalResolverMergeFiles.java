@@ -1187,11 +1187,11 @@ argument_list|)
 expr_stmt|;
 comment|// the root path is not useful anymore
 comment|// cleanup pathToAliases
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -1224,7 +1224,7 @@ operator|.
 name|next
 argument_list|()
 expr_stmt|;
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

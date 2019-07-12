@@ -5449,7 +5449,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -5506,7 +5506,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -5642,7 +5642,7 @@ condition|(
 name|match
 condition|)
 block|{
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>

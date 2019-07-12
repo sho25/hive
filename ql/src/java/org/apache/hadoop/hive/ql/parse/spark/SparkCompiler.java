@@ -3853,7 +3853,7 @@ name|MapWork
 operator|)
 name|w
 decl_stmt|;
-name|Map
+name|HashMap
 argument_list|<
 name|String
 argument_list|,

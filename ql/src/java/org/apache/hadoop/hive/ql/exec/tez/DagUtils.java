@@ -2760,7 +2760,7 @@ name|Node
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|Map
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

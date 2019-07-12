@@ -305,7 +305,7 @@ name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
@@ -448,7 +448,7 @@ argument_list|(
 name|path
 argument_list|)
 expr_stmt|;
-name|List
+name|ArrayList
 argument_list|<
 name|String
 argument_list|>
