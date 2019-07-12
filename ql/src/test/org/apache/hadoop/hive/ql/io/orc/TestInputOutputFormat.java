@@ -17565,11 +17565,11 @@ argument_list|(
 literal|false
 argument_list|)
 expr_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -17581,7 +17581,7 @@ name|LinkedHashMap
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

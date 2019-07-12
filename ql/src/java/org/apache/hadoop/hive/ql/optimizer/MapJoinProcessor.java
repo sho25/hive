@@ -1339,11 +1339,11 @@ argument_list|)
 expr_stmt|;
 comment|// get input path and remove this alias from pathToAlias
 comment|// because this file will be fetched by fetch operator
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1389,7 +1389,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1410,7 +1410,7 @@ operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

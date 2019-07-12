@@ -437,24 +437,6 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ParseContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
 name|SemanticException
 import|;
 end_import
@@ -732,7 +714,7 @@ name|Entry
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -1677,11 +1659,11 @@ argument_list|>
 argument_list|()
 decl_stmt|;
 comment|// Note that pathToAlias will behave as if the original plan was a join plan
-name|HashMap
+name|Map
 argument_list|<
 name|Path
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
