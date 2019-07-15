@@ -435,7 +435,7 @@ name|class
 operator|.
 name|getDeclaredField
 argument_list|(
-literal|"sqlStdAuthSafeVarNames"
+literal|"SQL_STD_AUTH_SAFE_VAR_NAMES"
 argument_list|)
 decl_stmt|;
 name|varNameField

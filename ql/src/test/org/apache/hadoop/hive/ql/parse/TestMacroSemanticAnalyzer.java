@@ -429,7 +429,7 @@ name|setBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 argument_list|,
 literal|false
 argument_list|)
@@ -505,7 +505,7 @@ name|setBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 argument_list|,
 literal|false
 argument_list|)
@@ -552,7 +552,7 @@ name|setBoolVar
 argument_list|(
 name|ConfVars
 operator|.
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 argument_list|,
 literal|false
 argument_list|)

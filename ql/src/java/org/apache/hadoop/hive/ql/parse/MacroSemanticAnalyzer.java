@@ -1178,7 +1178,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 argument_list|)
 decl_stmt|;
 comment|// Temp macros are not allowed to have qualified names.

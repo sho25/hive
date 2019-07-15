@@ -770,7 +770,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 argument_list|)
 decl_stmt|;
 name|FunctionInfo

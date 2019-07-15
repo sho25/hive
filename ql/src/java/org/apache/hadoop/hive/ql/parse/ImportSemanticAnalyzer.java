@@ -3953,11 +3953,6 @@ operator|.
 name|getTableName
 argument_list|()
 argument_list|,
-name|table
-operator|.
-name|getTableType
-argument_list|()
-argument_list|,
 literal|true
 argument_list|,
 literal|false

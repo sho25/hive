@@ -3701,7 +3701,7 @@ argument_list|,
 literal|"When hive.exec.mode.local.auto is true, the number of tasks should less than this for local mode."
 argument_list|)
 block|,
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 argument_list|(
 literal|"hive.exec.drop.ignorenonexistent"
 argument_list|,
@@ -22824,7 +22824,7 @@ name|join
 argument_list|(
 name|convertVarsToRegex
 argument_list|(
-name|sqlStdAuthSafeVarNames
+name|SQL_STD_AUTH_SAFE_VAR_NAMES
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -22945,7 +22945,7 @@ specifier|static
 specifier|final
 name|String
 index|[]
-name|sqlStdAuthSafeVarNames
+name|SQL_STD_AUTH_SAFE_VAR_NAMES
 init|=
 operator|new
 name|String
@@ -22977,7 +22977,7 @@ name|varname
 block|,
 name|ConfVars
 operator|.
-name|DROPIGNORESNONEXISTENT
+name|DROP_IGNORES_NON_EXISTENT
 operator|.
 name|varname
 block|,
