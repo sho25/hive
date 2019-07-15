@@ -848,7 +848,7 @@ name|l
 operator|++
 control|)
 block|{
-comment|// Copy the BigTable values into the overflow batch. Since the overflow batch may
+comment|// Copy the values into the overflow batch. Since the overflow batch may
 comment|// not get flushed here, we must copy by value.
 if|if
 condition|(
@@ -858,6 +858,29 @@ literal|null
 condition|)
 block|{
 name|bigTableRetainedVectorCopy
+operator|.
+name|copyByValue
+argument_list|(
+name|batch
+argument_list|,
+name|batchIndex
+argument_list|,
+name|overflowBatch
+argument_list|,
+name|overflowBatch
+operator|.
+name|size
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|nonOuterSmallTableKeyVectorCopy
+operator|!=
+literal|null
+condition|)
+block|{
+name|nonOuterSmallTableKeyVectorCopy
 operator|.
 name|copyByValue
 argument_list|(
