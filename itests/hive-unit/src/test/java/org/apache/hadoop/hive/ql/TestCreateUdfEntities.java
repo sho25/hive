@@ -93,6 +93,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|reexec
+operator|.
+name|ReExecDriver
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -225,7 +243,12 @@ block|{
 name|int
 name|rc
 init|=
+operator|(
+operator|(
+name|ReExecDriver
+operator|)
 name|driver
+operator|)
 operator|.
 name|compile
 argument_list|(
@@ -233,11 +256,13 @@ literal|"CREATE FUNCTION "
 operator|+
 name|funcName
 operator|+
-literal|" AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFPrintf' "
+literal|" AS "
 operator|+
-literal|" using file '"
+literal|"'org.apache.hadoop.hive.ql.udf.generic.GenericUDFPrintf'  using file '"
 operator|+
 literal|"file:///tmp/udf1.jar'"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -385,7 +410,12 @@ block|{
 name|int
 name|rc
 init|=
+operator|(
+operator|(
+name|ReExecDriver
+operator|)
 name|driver
+operator|)
 operator|.
 name|compile
 argument_list|(
@@ -393,11 +423,13 @@ literal|"CREATE FUNCTION default."
 operator|+
 name|funcName
 operator|+
-literal|" AS 'org.apache.hadoop.hive.ql.udf.generic.GenericUDFPrintf' "
+literal|" AS "
 operator|+
-literal|" using file '"
+literal|"'org.apache.hadoop.hive.ql.udf.generic.GenericUDFPrintf'  using file '"
 operator|+
 literal|"hdfs:///tmp/udf1.jar'"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals

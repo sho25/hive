@@ -500,11 +500,6 @@ comment|/**  * Unittest for SymlinkTextInputFormat.  */
 end_comment
 
 begin_class
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"deprecation"
-argument_list|)
 specifier|public
 class|class
 name|TestSymlinkTextInputFormat
@@ -797,11 +792,6 @@ argument_list|(
 name|newJob
 argument_list|)
 decl_stmt|;
-name|int
-name|symbolLinkedFileSize
-init|=
-literal|0
-decl_stmt|;
 name|Path
 name|dir1_file1
 init|=
@@ -822,18 +812,6 @@ operator|+
 literal|"dir1_file1_line2\n"
 argument_list|)
 expr_stmt|;
-name|symbolLinkedFileSize
-operator|+=
-name|fs
-operator|.
-name|getFileStatus
-argument_list|(
-name|dir1_file1
-argument_list|)
-operator|.
-name|getLen
-argument_list|()
-expr_stmt|;
 name|Path
 name|dir2_file1
 init|=
@@ -853,18 +831,6 @@ literal|"dir2_file1_line1\n"
 operator|+
 literal|"dir2_file1_line2\n"
 argument_list|)
-expr_stmt|;
-name|symbolLinkedFileSize
-operator|+=
-name|fs
-operator|.
-name|getFileStatus
-argument_list|(
-name|dir2_file1
-argument_list|)
-operator|.
-name|getLen
-argument_list|()
 expr_stmt|;
 comment|// A symlink file, contains first file from first dir and second file from
 comment|// second dir.
@@ -1099,6 +1065,8 @@ operator|.
 name|compile
 argument_list|(
 name|cmd
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 if|if

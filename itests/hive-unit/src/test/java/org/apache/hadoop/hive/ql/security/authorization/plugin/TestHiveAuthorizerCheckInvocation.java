@@ -956,6 +956,8 @@ operator|+
 name|tableName
 operator|+
 literal|" where k = 'X' and city = 'Scottsdale-AZ' "
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1058,6 +1060,8 @@ operator|+
 name|viewName
 operator|+
 literal|" where k = 'X' and city = 'Scottsdale-AZ' "
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1184,6 +1188,8 @@ operator|+
 name|tableName
 operator|+
 literal|".k = 'X'"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1414,6 +1420,8 @@ operator|+
 name|tableName
 operator|+
 literal|" order by i"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1584,6 +1592,8 @@ operator|.
 name|compile
 argument_list|(
 name|cmd
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1751,6 +1761,8 @@ argument_list|(
 literal|"describe "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -1834,6 +1846,8 @@ operator|+
 name|funcName
 operator|+
 literal|" as 'org.apache.hadoop.hive.ql.udf.UDFPI'"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2049,6 +2063,8 @@ operator|+
 literal|"() , i from "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2281,6 +2297,8 @@ operator|+
 literal|"(i)  from "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2480,6 +2498,8 @@ operator|+
 literal|"(), j  from "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2672,6 +2692,8 @@ operator|+
 name|funcName
 operator|+
 literal|" as 'org.apache.hadoop.hive.ql.udf.UDFPI'"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -2904,6 +2926,8 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2933,6 +2957,8 @@ operator|+
 name|tableName
 operator|+
 literal|" values(1)"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3031,6 +3057,8 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3168,6 +3196,8 @@ operator|+
 name|tableName
 operator|+
 literal|" values (1)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3228,6 +3258,8 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|tableName
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3333,6 +3365,8 @@ operator|+
 name|acidTableName
 operator|+
 literal|" set i = 5 where j = 3"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3506,6 +3540,8 @@ operator|+
 name|acidTableName
 operator|+
 literal|" set i = 5, j = k where j = 3"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3691,6 +3727,8 @@ operator|+
 name|acidTableName
 operator|+
 literal|" where j = 3"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3799,6 +3837,8 @@ operator|.
 name|compile
 argument_list|(
 literal|"show tables"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -3894,6 +3934,8 @@ argument_list|(
 literal|"describe database "
 operator|+
 name|dbName
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4080,6 +4122,8 @@ argument_list|(
 literal|"repl dump "
 operator|+
 name|dbName
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -4158,6 +4202,8 @@ operator|+
 name|inDbTableName
 operator|+
 literal|"'"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -4461,6 +4507,17 @@ expr_stmt|;
 return|return
 operator|new
 name|ImmutablePair
+argument_list|<
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+argument_list|,
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+argument_list|>
 argument_list|(
 name|inputsCapturer
 operator|.
