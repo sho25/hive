@@ -599,6 +599,8 @@ operator|.
 name|compile
 argument_list|(
 literal|"create table default.t1 (name string)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Pair
@@ -798,6 +800,8 @@ operator|.
 name|compile
 argument_list|(
 literal|"create table default.t1 (name string)"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|Pair
@@ -990,6 +994,17 @@ expr_stmt|;
 return|return
 operator|new
 name|ImmutablePair
+argument_list|<
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+argument_list|,
+name|List
+argument_list|<
+name|HivePrivilegeObject
+argument_list|>
+argument_list|>
 argument_list|(
 name|inputsCapturer
 operator|.

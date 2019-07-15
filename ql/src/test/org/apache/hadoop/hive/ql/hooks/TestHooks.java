@@ -402,6 +402,8 @@ operator|.
 name|compile
 argument_list|(
 literal|"select 'XXX' from t1"
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals

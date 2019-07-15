@@ -173,30 +173,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|security
-operator|.
-name|authorization
-operator|.
-name|plugin
-operator|.
-name|sqlstd
-operator|.
-name|SQLStdHiveAuthorizerFactory
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|session
 operator|.
 name|SessionState
@@ -240,16 +216,6 @@ operator|.
 name|net
 operator|.
 name|MalformedURLException
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|net
-operator|.
-name|URL
 import|;
 end_import
 
@@ -435,6 +401,8 @@ operator|.
 name|compile
 argument_list|(
 literal|"select * from test order by col"
+argument_list|,
+literal|true
 argument_list|)
 argument_list|)
 expr_stmt|;
