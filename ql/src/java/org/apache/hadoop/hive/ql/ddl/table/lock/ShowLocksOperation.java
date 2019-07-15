@@ -1321,7 +1321,24 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// Write a header
+name|SessionState
+name|sessionState
+init|=
+name|SessionState
+operator|.
+name|get
+argument_list|()
+decl_stmt|;
+comment|// Write a header for CliDriver
+if|if
+condition|(
+operator|!
+name|sessionState
+operator|.
+name|isHiveServerQuery
+argument_list|()
+condition|)
+block|{
 name|os
 operator|.
 name|writeBytes
@@ -1530,6 +1547,7 @@ operator|.
 name|newLineCode
 argument_list|)
 expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|ShowLocksResponseElement
