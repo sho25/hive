@@ -103,16 +103,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -191,6 +181,52 @@ name|BytesWritable
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestDynamicSerDe.  *  */
 end_comment
@@ -199,8 +235,6 @@ begin_class
 specifier|public
 class|class
 name|TestDynamicSerDe
-extends|extends
-name|TestCase
 block|{
 specifier|public
 specifier|static
@@ -274,6 +308,8 @@ return|return
 name|r
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDynamicSerDe
@@ -2039,6 +2075,8 @@ block|}
 block|}
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTBinarySortableProtocol
@@ -2803,6 +2841,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testConfigurableTCTLSeparated
@@ -3355,6 +3395,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Tests a single null list within a struct with return nulls on.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNulls1
@@ -3629,6 +3671,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Tests all elements of a struct being null with return nulls on.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNulls2
@@ -3928,6 +3972,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Tests map and list being empty with return nulls on.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNulls3
@@ -4243,6 +4289,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Tests map and list null/empty with return nulls *off*.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNulls4
@@ -4592,6 +4640,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Tests map and list null/empty with return nulls *off*.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStructsinStructs
@@ -4981,6 +5031,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSkip

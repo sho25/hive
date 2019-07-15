@@ -63,16 +63,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -513,13 +503,82 @@ name|Assert
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * FunctionRegistry Test.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestFunctionRegistry
-extends|extends
-name|TestCase
 block|{
+comment|/**    * Test UDF class.    */
 specifier|public
 class|class
 name|TestUDF
@@ -681,8 +740,8 @@ name|TypeInfo
 name|char10
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -782,6 +841,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testImplicitConversion
@@ -1238,6 +1299,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTypeAffinity
@@ -1525,6 +1588,8 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetMethodInternal
@@ -1846,6 +1911,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testCommonClass
@@ -2005,6 +2072,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testCommonClassComparison
@@ -2259,6 +2328,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Method to print out the comparison/conversion behavior for data types.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPrintTypeCompatibility
@@ -2520,6 +2591,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testCommonClassUnionAll
@@ -2699,6 +2772,8 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetTypeInfoForPrimitiveCategory
@@ -2902,12 +2977,14 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
 block|{   }
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testIsRankingFunction
@@ -2976,6 +3053,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testImpliesOrder
@@ -3092,6 +3171,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRegisterTemporaryFunctions
@@ -3251,6 +3332,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRegisterPermanentFunction
@@ -3527,6 +3610,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testBuiltInFunction
@@ -3561,6 +3646,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testIsPermanentFunction
@@ -3796,6 +3883,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDeterminism

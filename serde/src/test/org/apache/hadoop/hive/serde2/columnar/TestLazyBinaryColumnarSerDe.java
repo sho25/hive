@@ -303,12 +303,48 @@ name|LongWritable
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * LazyBinaryColumnarSerDe Test.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestLazyBinaryColumnarSerDe
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -389,6 +425,8 @@ name|InnerStruct
 name|mStruct
 decl_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSerDe
@@ -759,6 +797,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSerDeEmpties
@@ -1045,6 +1085,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyBinaryColumnarSerDeWithEmptyBinary
@@ -1267,6 +1309,8 @@ assert|assert
 literal|false
 assert|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSerDeOuterNulls
@@ -1464,6 +1508,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSerDeInnerNulls
@@ -1852,6 +1898,8 @@ name|l3
 decl_stmt|;
 block|}
 comment|/**    * HIVE-5788    *<p>    * Background: in cases of "add column", table metadata changes but data does not.  Columns    * missing from the data but which are required by metadata are interpreted as null.    *<p>    * This tests the use-case of altering columns of a table with already some data, then adding more data    * in the new schema, and seeing if this serde can to read both types of data from the resultant table.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHandlingAlteredSchemas

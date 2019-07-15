@@ -703,16 +703,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|junit
-operator|.
-name|Test
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|mockito
 operator|.
 name|Mockito
@@ -732,12 +722,46 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
 import|;
 end_import
 
@@ -749,8 +773,6 @@ begin_class
 specifier|public
 class|class
 name|TestOperators
-extends|extends
-name|TestCase
 block|{
 comment|// this is our row to test expressions on
 specifier|protected
@@ -759,8 +781,8 @@ index|[]
 name|r
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -1082,6 +1104,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * More stuff needs to be added here. Currently it only checks some basic    * file naming libraries    * The old test was deactivated as part of hive-405    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFileSinkOperator
@@ -1120,7 +1144,7 @@ block|{
 literal|"job_local_0001_map_000005"
 block|,
 literal|"job_local_0001_reduce_000005"
-block|,         }
+block|,           }
 argument_list|,
 literal|"000005"
 argument_list|,
@@ -1180,6 +1204,8 @@ throw|;
 block|}
 block|}
 comment|/**    *  When ScriptOperator runs external script, it passes job configuration as environment    *  variables. But environment variables have some system limitations and we have to check    *  job configuration properties firstly. This test checks that staff.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testScriptOperatorEnvVarsProcessing
@@ -1497,6 +1523,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testScriptOperatorBlacklistedEnvVarsProcessing
@@ -1608,6 +1636,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testScriptOperator
@@ -2167,6 +2197,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapOperator

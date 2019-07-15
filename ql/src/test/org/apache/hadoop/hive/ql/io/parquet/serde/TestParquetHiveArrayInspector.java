@@ -45,16 +45,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -116,6 +106,52 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -125,19 +161,21 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestParquetHiveArrayInspector.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestParquetHiveArrayInspector
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|ParquetHiveArrayInspector
 name|inspector
 decl_stmt|;
 annotation|@
-name|Override
+name|Before
 specifier|public
 name|void
 name|setUp

@@ -165,6 +165,16 @@ name|TestCase
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Tests util-libraries used for parquet-timestamp.  */
 end_comment
@@ -173,8 +183,6 @@ begin_class
 specifier|public
 class|class
 name|TestParquetTimestampUtils
-extends|extends
-name|TestCase
 block|{
 specifier|public
 specifier|static
@@ -215,6 +223,8 @@ argument_list|(
 literal|"America/New_York"
 argument_list|)
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testJulianDay
@@ -824,6 +834,8 @@ literal|730517
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNanos
@@ -1432,6 +1444,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimezone
@@ -1603,6 +1617,8 @@ literal|2440001
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimezoneValues
@@ -1614,6 +1630,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimezonelessValues
@@ -1625,6 +1643,8 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimezoneless
@@ -2007,6 +2027,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testConvertTimestampToZone

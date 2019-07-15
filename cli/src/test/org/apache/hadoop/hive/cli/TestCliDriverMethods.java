@@ -271,16 +271,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -455,6 +445,74 @@ name|Test
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
 begin_comment
 comment|// Cannot call class TestCliDriver since that's the name of the generated
 end_comment
@@ -463,12 +521,14 @@ begin_comment
 comment|// code for the script-based testing
 end_comment
 
+begin_comment
+comment|/**  * TestCliDriverMethods.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestCliDriverMethods
-extends|extends
-name|TestCase
 block|{
 name|SecurityManager
 name|securityManager
@@ -477,7 +537,7 @@ comment|// Some of these tests require intercepting System.exit() using the Secu
 comment|// It is safer to  register/unregister our SecurityManager during setup/teardown instead
 comment|// of doing it within the individual test cases.
 annotation|@
-name|Override
+name|Before
 specifier|public
 name|void
 name|setUp
@@ -503,7 +563,7 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Override
+name|After
 specifier|public
 name|void
 name|tearDown
@@ -518,6 +578,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// If the command has an associated schema, make sure it gets printed to use
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testThatCliDriverPrintsHeaderForCommandsWithSchema
@@ -605,6 +667,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// If the command has no schema, make sure nothing is printed
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testThatCliDriverPrintsNoHeaderForCommandsWithNoSchema
@@ -658,6 +722,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Test that CliDriver does not strip comments starting with '--'
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testThatCliDriverDoesNotStripComments
@@ -1056,6 +1122,8 @@ return|return
 name|mockOut
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetCommandCompletor
@@ -1228,6 +1296,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRun
@@ -1466,6 +1536,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Test commands exit and quit    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testQuit
@@ -1611,6 +1683,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testProcessSelectDatabase
@@ -1717,6 +1791,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testprocessInitFiles

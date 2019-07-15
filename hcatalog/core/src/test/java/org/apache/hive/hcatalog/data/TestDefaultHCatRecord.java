@@ -353,14 +353,28 @@ name|AliasMasker
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestDefaultHCatRecord.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestDefaultHCatRecord
-extends|extends
-name|TestCase
 block|{
 comment|/**    * test that we properly serialize/deserialize HCatRecordS    * @throws IOException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRYW
@@ -576,6 +590,8 @@ name|close
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testCompareTo
@@ -633,6 +649,8 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testEqualsObject
@@ -687,6 +705,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test get and set calls with type    * @throws HCatException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetSetByType1
@@ -921,6 +941,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test get and set calls with type    * @throws HCatException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetSetByType2
@@ -1044,6 +1066,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test type specific get/set methods on HCatRecord types added in Hive 13    * @throws HCatException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetSetByType3

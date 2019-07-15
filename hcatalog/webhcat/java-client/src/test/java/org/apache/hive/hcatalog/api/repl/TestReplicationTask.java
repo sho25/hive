@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -202,6 +192,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -211,12 +213,14 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestReplicationTask.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestReplicationTask
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -464,7 +468,6 @@ block|}
 annotation|@
 name|Test
 specifier|public
-specifier|static
 name|void
 name|testCreate
 parameter_list|()

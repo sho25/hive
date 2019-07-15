@@ -221,12 +221,14 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestSessionHooks.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestSessionHooks
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -333,8 +335,6 @@ expr_stmt|;
 block|}
 block|}
 annotation|@
-name|Override
-annotation|@
 name|Before
 specifier|public
 name|void
@@ -343,11 +343,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|setUp
-argument_list|()
-expr_stmt|;
 name|SessionHookTest
 operator|.
 name|runCount

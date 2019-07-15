@@ -81,16 +81,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -195,12 +185,14 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestSessionCleanup.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestSessionCleanup
-extends|extends
-name|TestCase
 block|{
 annotation|@
 name|Test

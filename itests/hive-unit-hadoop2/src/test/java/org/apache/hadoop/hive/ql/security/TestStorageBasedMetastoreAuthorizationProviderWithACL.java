@@ -93,6 +93,16 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
 name|java
 operator|.
 name|lang
@@ -671,8 +681,8 @@ argument_list|()
 return|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()

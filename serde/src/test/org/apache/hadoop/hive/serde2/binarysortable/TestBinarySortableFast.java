@@ -323,11 +323,35 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
 operator|.
-name|TestCase
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
 import|;
 end_import
 
@@ -337,7 +361,7 @@ name|org
 operator|.
 name|junit
 operator|.
-name|Assert
+name|Test
 import|;
 end_import
 
@@ -345,8 +369,6 @@ begin_class
 specifier|public
 class|class
 name|TestBinarySortableFast
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -959,8 +981,6 @@ operator|==
 name|columnCount
 condition|)
 block|{
-name|TestCase
-operator|.
 name|assertTrue
 argument_list|(
 name|binarySortableDeserializeRead
@@ -1961,8 +1981,6 @@ operator|==
 name|columnCount
 condition|)
 block|{
-name|TestCase
-operator|.
 name|assertTrue
 argument_list|(
 name|binarySortableDeserializeRead
@@ -2044,8 +2062,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Field reports not null but object is null (class "
@@ -2108,8 +2124,6 @@ block|{
 return|return;
 block|}
 block|}
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Field reports null but object is not null (class "
@@ -2149,8 +2163,6 @@ name|expectedObject
 argument_list|)
 condition|)
 block|{
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Comparision failed typeInfo "
@@ -2978,6 +2990,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testBinarySortableFastPrimitive
@@ -2997,6 +3011,8 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testBinarySortableFastComplexDepthOne
@@ -3016,6 +3032,8 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testBinarySortableFastComplexDepthFour

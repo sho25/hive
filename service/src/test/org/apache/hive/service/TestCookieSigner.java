@@ -27,16 +27,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|junit
@@ -73,8 +63,6 @@ begin_class
 specifier|public
 class|class
 name|TestCookieSigner
-extends|extends
-name|TestCase
 block|{
 specifier|protected
 specifier|static

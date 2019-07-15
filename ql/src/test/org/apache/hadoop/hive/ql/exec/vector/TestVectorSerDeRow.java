@@ -588,12 +588,36 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
 import|;
 end_import
 
@@ -605,8 +629,6 @@ begin_class
 specifier|public
 class|class
 name|TestVectorSerDeRow
-extends|extends
-name|TestCase
 block|{
 specifier|public
 specifier|static
@@ -691,8 +713,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Field reports not null but object is null (class "
@@ -755,8 +775,6 @@ block|{
 return|return;
 block|}
 block|}
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Field reports null but object is not null (class "
@@ -796,8 +814,6 @@ name|expectedObject
 argument_list|)
 condition|)
 block|{
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Comparision failed typeInfo "
@@ -901,8 +917,6 @@ name|expected
 argument_list|)
 expr_stmt|;
 block|}
-name|TestCase
-operator|.
 name|assertTrue
 argument_list|(
 name|deserializeRead
@@ -3578,6 +3592,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVectorBinarySortableSerializeRow
@@ -3604,6 +3620,8 @@ name|BINARY_SORTABLE
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVectorLazyBinarySerializeRow
@@ -3630,6 +3648,8 @@ name|LAZY_BINARY
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVectorLazySimpleSerializeRow
@@ -3656,6 +3676,8 @@ name|LAZY_SIMPLE
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVectorBinarySortableDeserializeRow
@@ -3817,6 +3839,8 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVectorLazyBinaryDeserializeRow
@@ -3870,6 +3894,8 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVectorLazySimpleDeserializeRow

@@ -6440,6 +6440,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * See {@link TestOrcRawRecordMerger#testGetLogicalLength()}    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetLogicalLength

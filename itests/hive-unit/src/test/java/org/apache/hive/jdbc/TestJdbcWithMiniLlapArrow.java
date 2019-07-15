@@ -877,6 +877,8 @@ block|}
 comment|// Currently MAP type is not supported. Add it back when Arrow 1.0 is released.
 comment|// See: SPARK-21187
 annotation|@
+name|Test
+annotation|@
 name|Override
 specifier|public
 name|void
@@ -2583,6 +2585,8 @@ name|testKillQueryByTagOwner
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testKillQueryById
@@ -2646,6 +2650,8 @@ name|throwable
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testKillQueryByTagNegative
@@ -2721,6 +2727,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testKillQueryByTagAdmin
@@ -2779,6 +2787,8 @@ name|throwable
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testKillQueryByTagOwner

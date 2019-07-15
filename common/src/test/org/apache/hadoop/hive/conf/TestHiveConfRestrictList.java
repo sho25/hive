@@ -19,16 +19,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -46,6 +36,40 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -55,12 +79,14 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * HiveConfRestrictList Test.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestHiveConfRestrictList
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|HiveConf
@@ -69,19 +95,14 @@ init|=
 literal|null
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|setUp
-argument_list|()
-expr_stmt|;
 name|System
 operator|.
 name|setProperty

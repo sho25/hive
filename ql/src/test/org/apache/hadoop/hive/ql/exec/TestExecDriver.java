@@ -71,16 +71,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -705,6 +695,38 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Mimics the actual query compiler in generating end to end plans and testing  * them out.  *  */
 end_comment
@@ -713,8 +735,6 @@ begin_class
 specifier|public
 class|class
 name|TestExecDriver
-extends|extends
-name|TestCase
 block|{
 specifier|static
 name|QueryState
@@ -728,7 +748,7 @@ specifier|private
 specifier|static
 specifier|final
 name|String
-name|tmpdir
+name|TMPDIR
 decl_stmt|;
 specifier|private
 specifier|static
@@ -847,7 +867,7 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|tmpdir
+name|TMPDIR
 operator|=
 name|System
 operator|.
@@ -861,7 +881,7 @@ operator|=
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 argument_list|)
 expr_stmt|;
 name|fs
@@ -903,7 +923,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 literal|" exists but is not a directory"
 argument_list|)
@@ -937,7 +957,7 @@ name|RuntimeException
 argument_list|(
 literal|"Could not make scratch directory "
 operator|+
-name|tmpdir
+name|TMPDIR
 argument_list|)
 throw|;
 block|}
@@ -1269,8 +1289,8 @@ name|MapredWork
 name|mr
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -1367,7 +1387,7 @@ argument_list|)
 decl_stmt|;
 comment|// inbuilt assumption that the testdir has only one output file.
 name|Path
-name|di_test
+name|diTest
 init|=
 operator|new
 name|Path
@@ -1384,7 +1404,7 @@ name|fs
 operator|.
 name|exists
 argument_list|(
-name|di_test
+name|diTest
 argument_list|)
 condition|)
 block|{
@@ -1392,7 +1412,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -1418,7 +1438,7 @@ name|fs
 operator|.
 name|getFileStatus
 argument_list|(
-name|di_test
+name|diTest
 argument_list|)
 argument_list|)
 condition|)
@@ -1427,7 +1447,7 @@ throw|throw
 operator|new
 name|RuntimeException
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -1440,7 +1460,7 @@ argument_list|)
 throw|;
 block|}
 name|FSDataInputStream
-name|fi_test
+name|fiTest
 init|=
 name|fs
 operator|.
@@ -1451,7 +1471,7 @@ name|fs
 operator|.
 name|listStatus
 argument_list|(
-name|di_test
+name|diTest
 argument_list|)
 operator|)
 index|[
@@ -1463,7 +1483,7 @@ argument_list|()
 argument_list|)
 decl_stmt|;
 name|FileInputStream
-name|fi_gold
+name|fiGold
 init|=
 operator|new
 name|FileInputStream
@@ -1484,9 +1504,9 @@ name|Utilities
 operator|.
 name|contentsEqual
 argument_list|(
-name|fi_gold
+name|fiGold
 argument_list|,
-name|fi_test
+name|fiTest
 argument_list|,
 literal|false
 argument_list|)
@@ -1496,7 +1516,7 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-name|di_test
+name|diTest
 operator|.
 name|toString
 argument_list|()
@@ -1733,7 +1753,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -1813,7 +1833,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -2125,7 +2145,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -2435,7 +2455,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -2861,7 +2881,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -3262,7 +3282,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -3624,7 +3644,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -4031,7 +4051,7 @@ argument_list|(
 operator|new
 name|Path
 argument_list|(
-name|tmpdir
+name|TMPDIR
 operator|+
 name|File
 operator|.
@@ -4255,6 +4275,8 @@ literal|" execution completed successfully"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapPlan1
@@ -4294,6 +4316,8 @@ literal|"mapplan1.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapPlan2
@@ -4333,6 +4357,8 @@ literal|"mapplan2.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapRedPlan1
@@ -4372,6 +4398,8 @@ literal|"mapredplan1.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapRedPlan2
@@ -4411,6 +4439,8 @@ literal|"mapredplan2.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapRedPlan3
@@ -4461,6 +4491,8 @@ literal|"mapredplan3.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapRedPlan4
@@ -4500,6 +4532,8 @@ literal|"mapredplan4.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapRedPlan5
@@ -4539,6 +4573,8 @@ literal|"mapredplan5.out"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapRedPlan6

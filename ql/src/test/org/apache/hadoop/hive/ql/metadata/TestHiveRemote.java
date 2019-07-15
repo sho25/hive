@@ -85,6 +85,16 @@ name|StringUtils
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
 begin_comment
 comment|/**  *  * TestHiveRemote.  *  * Tests using the Hive metadata class to make calls to a remote metastore  */
 end_comment
@@ -98,8 +108,8 @@ name|TestHive
 block|{
 comment|/**    * Start a remote metastore and initialize a Hive object pointing at it.    */
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()

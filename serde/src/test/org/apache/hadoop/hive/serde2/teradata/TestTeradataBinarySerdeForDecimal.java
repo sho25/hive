@@ -35,16 +35,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -131,6 +121,26 @@ name|Properties
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Test the data type DECIMAL for Teradata binary format.  */
 end_comment
@@ -139,8 +149,6 @@ begin_class
 specifier|public
 class|class
 name|TestTeradataBinarySerdeForDecimal
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|final
@@ -160,7 +168,9 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-specifier|protected
+annotation|@
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -199,6 +209,8 @@ name|props
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPositiveFraction
@@ -312,6 +324,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNegativeFraction
@@ -425,6 +439,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPositiveNumber1
@@ -538,6 +554,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNegativeNumber1
@@ -651,6 +669,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPositiveNumber2
@@ -764,6 +784,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNegativeNumber2

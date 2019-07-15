@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -191,13 +181,39 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestGenericUDFSha2.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestGenericUDFSha2
-extends|extends
-name|TestCase
 block|{
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha0Str
@@ -294,6 +310,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha0Bin
@@ -403,6 +421,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha200Str
@@ -476,6 +496,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha200Bin
@@ -558,6 +580,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha256Str
@@ -654,6 +678,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha256Bin
@@ -763,6 +789,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha384Str
@@ -859,6 +887,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha384Bin
@@ -968,6 +998,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha512Str
@@ -1064,6 +1096,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSha512Bin
@@ -1173,6 +1207,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testShaNullStr
@@ -1242,6 +1278,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testShaNullBin

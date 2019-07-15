@@ -197,12 +197,24 @@ name|LoggerFactory
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestHCatRecordSerDe.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestHCatRecordSerDe
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -840,6 +852,8 @@ return|return
 name|data
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRW

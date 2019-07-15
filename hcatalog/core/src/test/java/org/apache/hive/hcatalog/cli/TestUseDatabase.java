@@ -39,16 +39,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -183,24 +173,70 @@ name|HCatSemanticAnalyzer
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/* Unit test for GitHub Howl issue #3 */
+end_comment
+
+begin_comment
+comment|/**  * TestUseDatabase.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestUseDatabase
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|IDriver
 name|hcatDriver
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -314,6 +350,8 @@ name|tblName
 init|=
 literal|"testUseDatabase_tbl"
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testAlterTablePass

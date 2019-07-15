@@ -35,16 +35,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -285,6 +275,26 @@ name|Properties
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Test all the data types supported for Teradata Binary Format.  */
 end_comment
@@ -293,8 +303,6 @@ begin_class
 specifier|public
 class|class
 name|TestTeradataBinarySerdeGeneral
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|final
@@ -314,7 +322,9 @@ operator|new
 name|Properties
 argument_list|()
 decl_stmt|;
-specifier|protected
+annotation|@
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -355,6 +365,8 @@ name|props
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDeserializeAndSerialize
@@ -728,6 +740,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDeserializeAndSerializeWithNull
@@ -882,6 +896,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDeserializeAndSerializeAllNull
@@ -1109,6 +1125,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDeserializeCorruptedRecord

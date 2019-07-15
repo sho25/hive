@@ -25,11 +25,11 @@ end_package
 
 begin_import
 import|import
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
-operator|.
-name|TestCase
+name|Test
 import|;
 end_import
 
@@ -41,9 +41,9 @@ begin_class
 specifier|public
 class|class
 name|TestDebugDisplay
-extends|extends
-name|TestCase
 block|{
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDebugDisplay

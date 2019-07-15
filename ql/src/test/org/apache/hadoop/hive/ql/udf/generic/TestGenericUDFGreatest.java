@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -281,13 +271,51 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestGenericUDFGreatest.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestGenericUDFGreatest
-extends|extends
-name|TestCase
 block|{
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testOneArg
@@ -356,6 +384,8 @@ name|ex
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVoids
@@ -429,6 +459,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreatestMixed
@@ -519,6 +551,8 @@ argument_list|)
 expr_stmt|;
 comment|//string comparisons
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreatestStr
@@ -830,6 +864,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreatestInt
@@ -1038,6 +1074,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreatestDouble
@@ -1246,6 +1284,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreatestDate
@@ -1425,6 +1465,8 @@ name|udf
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreatestIntTypes

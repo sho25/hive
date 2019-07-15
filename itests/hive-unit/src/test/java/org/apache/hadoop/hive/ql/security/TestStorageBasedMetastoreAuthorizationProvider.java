@@ -127,6 +127,30 @@ name|StorageBasedAuthorizationProvider
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestStorageBasedMetastoreAuthorizationProvider. Test case for  * StorageBasedAuthorizationProvider, by overriding methods defined in  * TestMetastoreAuthorizationProvider  *  * Note that while we do use the hive driver to test, that is mostly for test  * writing ease, and it has the same effect as using a metastore client directly  * because we disable hive client-side authorization for this test, and only  * turn on server-side auth.  */
 end_comment

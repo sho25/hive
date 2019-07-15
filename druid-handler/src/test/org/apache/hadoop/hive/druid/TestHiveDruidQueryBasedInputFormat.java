@@ -154,12 +154,24 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
 import|;
 end_import
 
@@ -176,8 +188,6 @@ argument_list|)
 specifier|public
 class|class
 name|TestHiveDruidQueryBasedInputFormat
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -479,6 +489,8 @@ literal|"\"pagingSpec\":{\"pagingIdentifiers\":{},\"threshold\":5,\"fromNext\":f
 operator|+
 literal|"\"context\":{\"druid.query.fetch\":true,\"queryId\":\"\"}}, [localhost:8082]}]"
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimeZone

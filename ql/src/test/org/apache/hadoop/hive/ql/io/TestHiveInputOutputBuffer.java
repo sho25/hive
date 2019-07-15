@@ -20,18 +20,6 @@ package|;
 end_package
 
 begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertArrayEquals
-import|;
-end_import
-
-begin_import
 import|import
 name|java
 operator|.
@@ -62,22 +50,48 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertArrayEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
 name|junit
 operator|.
 name|Test
-import|;
-end_import
-
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
 import|;
 end_import
 
@@ -89,8 +103,6 @@ begin_class
 specifier|public
 class|class
 name|TestHiveInputOutputBuffer
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -130,6 +142,8 @@ name|asciiLine2
 operator|+
 literal|"\r\n"
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testReadAndWrite

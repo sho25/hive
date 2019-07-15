@@ -53,16 +53,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -107,8 +97,6 @@ begin_class
 specifier|public
 class|class
 name|TestDynamicMultiDimeCollection
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static

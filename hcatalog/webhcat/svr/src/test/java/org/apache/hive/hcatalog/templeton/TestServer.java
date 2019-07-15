@@ -19,16 +19,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -55,20 +45,80 @@ name|List
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/*  * Test that the server code exists, and responds to basic requests.  */
+end_comment
+
+begin_comment
+comment|/**  * TestServer.  */
 end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestServer
-extends|extends
-name|TestCase
 block|{
 name|MockServer
 name|server
 decl_stmt|;
+annotation|@
+name|Before
 specifier|public
 name|void
 name|setUp
@@ -91,6 +141,8 @@ name|MockServer
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testServer
@@ -102,6 +154,8 @@ name|server
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStatus
@@ -123,6 +177,8 @@ literal|"ok"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVersions
@@ -144,6 +200,8 @@ literal|"v1"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFormats
@@ -188,6 +246,8 @@ literal|"application/json"
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVerifyPropertyParam

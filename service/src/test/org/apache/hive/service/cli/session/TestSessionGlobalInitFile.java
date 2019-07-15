@@ -61,16 +61,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -257,12 +247,14 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestSessionGlobalInitFile.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestSessionGlobalInitFile
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|FakeEmbeddedThriftBinaryCLIService
@@ -347,11 +339,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|setUp
-argument_list|()
-expr_stmt|;
 comment|// create and put .hiverc sample file to default directory
 name|initFile
 operator|=

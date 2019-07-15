@@ -38,16 +38,6 @@ import|;
 end_import
 
 begin_import
-import|import
-name|org
-operator|.
-name|junit
-operator|.
-name|Test
-import|;
-end_import
-
-begin_import
 import|import static
 name|org
 operator|.
@@ -85,20 +75,22 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
-operator|.
-name|TestCase
+name|Test
 import|;
 end_import
+
+begin_comment
+comment|/**  * TestJdbcJarDownloadServlet.  *  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestJdbcJarDownloadServlet
-extends|extends
-name|TestCase
 block|{
 annotation|@
 name|Test

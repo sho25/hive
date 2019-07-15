@@ -286,12 +286,24 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
 import|;
 end_import
 
@@ -303,9 +315,9 @@ begin_class
 specifier|public
 class|class
 name|TestPlan
-extends|extends
-name|TestCase
 block|{
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPlan
@@ -315,13 +327,13 @@ name|Exception
 block|{
 specifier|final
 name|String
-name|F1
+name|f1
 init|=
 literal|"#affiliations"
 decl_stmt|;
 specifier|final
 name|String
-name|F2
+name|f2
 init|=
 literal|"friends[0].friendid"
 decl_stmt|;
@@ -338,7 +350,7 @@ name|TypeInfoFactory
 operator|.
 name|stringTypeInfo
 argument_list|,
-name|F1
+name|f1
 argument_list|,
 literal|""
 argument_list|,
@@ -355,7 +367,7 @@ name|TypeInfoFactory
 operator|.
 name|stringTypeInfo
 argument_list|,
-name|F2
+name|f2
 argument_list|,
 literal|""
 argument_list|,

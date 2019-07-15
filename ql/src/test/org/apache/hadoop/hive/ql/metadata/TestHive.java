@@ -766,12 +766,104 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
 import|;
 end_import
 
@@ -783,8 +875,6 @@ begin_class
 specifier|public
 class|class
 name|TestHive
-extends|extends
-name|TestCase
 block|{
 specifier|protected
 name|Hive
@@ -795,19 +885,14 @@ name|HiveConf
 name|hiveConf
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|setUp
-argument_list|()
-expr_stmt|;
 name|hiveConf
 operator|=
 operator|new
@@ -927,8 +1012,8 @@ throw|;
 block|}
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
@@ -937,11 +1022,6 @@ name|Exception
 block|{
 try|try
 block|{
-name|super
-operator|.
-name|tearDown
-argument_list|()
-expr_stmt|;
 comment|// disable trash
 name|hiveConf
 operator|.
@@ -1005,6 +1085,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTable
@@ -1511,6 +1593,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Tests create and fetch of a thrift based table.    *    * @throws Throwable    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testThriftTable
@@ -1758,6 +1842,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test logging of timing for metastore api calls    *    * @throws Throwable    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetaStoreApiTiming
@@ -2456,6 +2542,8 @@ name|tbl
 return|;
 block|}
 comment|/**    * Test basic Hive class interaction, that:    * - We can have different Hive objects throughout the lifetime of this thread.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHiveCloseCurrent
@@ -2497,6 +2585,8 @@ name|hive2
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGetAndDropTables
@@ -2861,6 +2951,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testWmNamespaceHandling
@@ -3172,6 +3264,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDropTableTrash
@@ -3954,6 +4048,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Test for PURGE support for dropping partitions.    * 1. Drop partitions without PURGE, and check that the data isn't moved to Trash.    * 2. Drop partitions with PURGE, and check that the data is moved to Trash.    * @throws Exception on failure.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDropPartitionsWithPurge
@@ -4213,6 +4309,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Test that tables set up with auto-purge skip trash-directory when tables/partitions are dropped.    * @throws Throwable    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testAutoPurgeTablesAndPartitions
@@ -4452,6 +4550,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testPartition
@@ -4795,6 +4895,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHiveRefreshOnConfChange

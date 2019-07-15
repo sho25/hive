@@ -81,16 +81,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|slf4j
@@ -451,6 +441,60 @@ name|ReflectionUtils
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Unittest for SymlinkTextInputFormat.  */
 end_comment
@@ -464,8 +508,6 @@ argument_list|)
 specifier|public
 class|class
 name|TestSymlinkTextInputFormat
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -514,8 +556,8 @@ name|Path
 name|symlinkDir
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -708,8 +750,8 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
@@ -727,6 +769,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test combine symlink text input file. Two input dir, and each contains one    * file, and then create one symlink file containing these 2 files. Normally    * without combine, it will return at least 2 splits    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testCombine
@@ -1267,6 +1311,8 @@ block|}
 block|}
 block|}
 comment|/**    * Test scenario: Two data directories, one symlink file that contains two    * paths each point to a file in one of data directories.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testAccuracy1
@@ -1643,6 +1689,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Scenario: Empty input directory, i.e. no symlink file.    *    * Expected: Should return empty result set without any exception.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testAccuracy2
@@ -1847,6 +1895,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Scenario: No job input paths.    * Expected: IOException with proper message.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFailure

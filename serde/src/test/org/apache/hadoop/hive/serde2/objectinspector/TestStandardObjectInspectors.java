@@ -51,16 +51,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -469,6 +459,76 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestStandardObjectInspectors.  *  */
 end_comment
@@ -477,8 +537,6 @@ begin_class
 specifier|public
 class|class
 name|TestStandardObjectInspectors
-extends|extends
-name|TestCase
 block|{
 name|void
 name|doTestStandardPrimitiveObjectInspector
@@ -656,6 +714,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStandardPrimitiveObjectInspector
@@ -1014,6 +1074,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testJavaPrimitiveObjectInspector
@@ -1217,6 +1279,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStandardListObjectInspector
@@ -1575,6 +1639,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStandardMapObjectInspector
@@ -1961,6 +2027,8 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStandardStructObjectInspector
@@ -2726,6 +2794,8 @@ name|SuppressWarnings
 argument_list|(
 literal|"unchecked"
 argument_list|)
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStandardUnionObjectInspector

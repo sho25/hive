@@ -138,6 +138,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -147,22 +159,14 @@ name|Test
 import|;
 end_import
 
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
+begin_comment
+comment|/**  * HiveAsyncLogging Test.  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestHiveAsyncLogging
-extends|extends
-name|TestCase
 block|{
 comment|// this test requires disruptor jar in classpath
 annotation|@

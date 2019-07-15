@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -57,6 +47,28 @@ name|LineageInfo
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestLineageInfo.  *  */
 end_comment
@@ -65,8 +77,6 @@ begin_class
 specifier|public
 class|class
 name|TestLineageInfo
-extends|extends
-name|TestCase
 block|{
 comment|/**    * Checks whether the test outputs match the expected outputs.    *     * @param lep    *          The LineageInfo extracted from the test    * @param i    *          The set of input tables    * @param o    *          The set of output tables    */
 specifier|private
@@ -130,6 +140,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSimpleQuery
@@ -223,6 +235,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSimpleQuery2
@@ -311,6 +325,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSimpleQuery3
@@ -406,6 +422,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSimpleQuery4
@@ -495,6 +513,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSimpleQuery5

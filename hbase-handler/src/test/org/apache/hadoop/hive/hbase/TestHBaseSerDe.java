@@ -775,6 +775,64 @@ name|TException
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Tests the HBaseSerDe class.  */
 end_comment
@@ -783,8 +841,6 @@ begin_class
 specifier|public
 class|class
 name|TestHBaseSerDe
-extends|extends
-name|TestCase
 block|{
 specifier|static
 specifier|final
@@ -972,6 +1028,8 @@ operator|+
 literal|"\"boolean1\":true,\"long1\":42432234234}}}"
 decl_stmt|;
 comment|/**    * Test the default behavior of the Lazy family of objects and object inspectors.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeI
@@ -1673,6 +1731,8 @@ name|expectedFieldsData
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithTimestamp
@@ -2730,6 +2790,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeII
@@ -3620,6 +3682,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithHiveMapToHBaseColumnFamily
@@ -4929,6 +4993,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithHiveMapToHBaseColumnFamilyII
@@ -5763,6 +5829,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithColumnPrefixes
@@ -6564,6 +6632,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeCompositeKeyWithSeparator
@@ -6805,6 +6875,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeCompositeKeyWithoutSeparator
@@ -7203,6 +7275,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithAvroSchemaInline
@@ -7445,6 +7519,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithForwardEvolvedSchema
@@ -7687,6 +7763,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithBackwardEvolvedSchema
@@ -7929,6 +8007,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithAvroSerClass
@@ -8172,6 +8252,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithAvroSchemaUrl
@@ -8517,6 +8599,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithAvroExternalSchema
@@ -8772,6 +8856,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeWithHiveMapToHBaseAvroColumnFamily
@@ -9236,6 +9322,8 @@ return|return
 name|tbl
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHBaseSerDeCustomStructValue
@@ -9428,6 +9516,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Since there are assertions in the code, when running this test it throws an assertion error    * and not the error in a production setup. The Properties.java object that is passed to the serDe    * initializer, is passed with empty value "" for "columns.comments" key for hbase backed tables.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testEmptyColumnComment

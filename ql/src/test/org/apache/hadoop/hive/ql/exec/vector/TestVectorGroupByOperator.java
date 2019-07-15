@@ -4041,6 +4041,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDoubleValueTypeCountOneKey

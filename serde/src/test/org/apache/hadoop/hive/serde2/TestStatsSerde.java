@@ -59,16 +59,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -417,27 +407,52 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNotSame
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * StatsSerde Test.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestStatsSerde
-extends|extends
-name|TestCase
 block|{
-specifier|public
-name|TestStatsSerde
-parameter_list|(
-name|String
-name|name
-parameter_list|)
-block|{
-name|super
-argument_list|(
-name|name
-argument_list|)
-expr_stmt|;
-block|}
 comment|/**    * Test LazySimpleSerDe    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazySimpleSerDe
@@ -627,6 +642,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test LazyBinarySerDe    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyBinarySerDe
@@ -999,6 +1016,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test ColumnarSerDe    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testColumnarSerDe

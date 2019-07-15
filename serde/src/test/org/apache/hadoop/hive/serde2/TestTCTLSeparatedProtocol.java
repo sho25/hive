@@ -29,16 +29,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -183,6 +173,64 @@ name|TTransportException
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestTCTLSeparatedProtocol.  *  */
 end_comment
@@ -191,8 +239,6 @@ begin_class
 specifier|public
 class|class
 name|TestTCTLSeparatedProtocol
-extends|extends
-name|TestCase
 block|{
 specifier|public
 name|TestTCTLSeparatedProtocol
@@ -200,6 +246,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{   }
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testReads
@@ -665,6 +713,8 @@ name|readStructEnd
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testWrites
@@ -1381,6 +1431,8 @@ name|readStructEnd
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testQuotedWrites
@@ -1754,6 +1806,8 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/**    * Tests a sample apache log format. This is actually better done in general    * with a more TRegexLike protocol, but for this case, TCTLSeparatedProtocol    * can do it.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|test1ApacheLogFormat
@@ -2063,6 +2117,8 @@ name|readStructEnd
 argument_list|()
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNulls
@@ -2568,6 +2624,8 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testShouldThrowRunTimeExceptionIfUnableToInitializeTokenizer

@@ -63,16 +63,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -415,6 +405,62 @@ name|TextInputFormat
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestHiveHistory.  *  */
 end_comment
@@ -423,8 +469,6 @@ begin_class
 specifier|public
 class|class
 name|TestHiveHistory
-extends|extends
-name|TestCase
 block|{
 specifier|static
 name|HiveConf
@@ -465,8 +509,8 @@ name|fs
 decl_stmt|;
 comment|/*    * intialize the tables    */
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
@@ -823,6 +867,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Check history file output for this query.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSimpleQuery
@@ -1136,6 +1182,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testQueryloglocParentDirNotExist
@@ -1286,6 +1334,8 @@ block|{       }
 block|}
 block|}
 comment|/**    * Check if HiveHistoryImpl class is returned when hive history is enabled    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHiveHistoryConfigEnabled
@@ -1355,6 +1405,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Check if HiveHistory class is a Proxy class when hive history is disabled    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHiveHistoryConfigDisabled

@@ -121,16 +121,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -433,6 +423,16 @@ name|InOrder
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestHiveBinarySearchRecordReader.  *  */
 end_comment
@@ -441,8 +441,6 @@ begin_class
 specifier|public
 class|class
 name|TestHiveBinarySearchRecordReader
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|RCFileRecordReader
@@ -902,6 +900,8 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNonLinearGreaterThan
@@ -970,6 +970,8 @@ literal|25
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNonLinearLessThan
@@ -1039,6 +1041,8 @@ literal|75
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testNonLinearEqualTo
@@ -1107,6 +1111,8 @@ literal|25
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHitLastBlock
@@ -1210,6 +1216,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHitSamePositionTwice
@@ -1298,6 +1306,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testResetRange
@@ -1427,6 +1437,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testEqualOpClass
@@ -1521,6 +1533,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLessThanOpClass
@@ -1608,6 +1622,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLessThanOrEqualOpClass
@@ -1695,6 +1711,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreaterThanOpClass
@@ -1789,6 +1807,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testGreaterThanOrEqualOpClass

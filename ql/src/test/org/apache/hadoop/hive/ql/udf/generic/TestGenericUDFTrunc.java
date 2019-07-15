@@ -208,22 +208,38 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertEquals
 import|;
 end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestGenericUDFTrunc.  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestGenericUDFTrunc
-extends|extends
-name|TestCase
 block|{
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStringToDateWithMonthFormat
@@ -829,6 +845,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStringToDateWithQuarterFormat
@@ -1638,6 +1656,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testStringToDateWithYearFormat
@@ -2243,6 +2263,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimestampToDateWithMonthFormat
@@ -2928,6 +2950,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimestampToDateWithQuarterFormat
@@ -3847,6 +3871,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testTimestampToDateWithYearFormat
@@ -4532,6 +4558,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDateWritableToDateWithMonthFormat
@@ -4904,6 +4932,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDateWritableToDateWithQuarterFormat
@@ -5393,6 +5423,8 @@ name|evalArgs
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDateWritableToDateWithYearFormat

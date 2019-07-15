@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -357,6 +347,38 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestExpressionEvaluator.  *  */
 end_comment
@@ -365,8 +387,6 @@ begin_class
 specifier|public
 class|class
 name|TestExpressionEvaluator
-extends|extends
-name|TestCase
 block|{
 comment|// this is our row to test expressions on
 specifier|protected
@@ -679,12 +699,14 @@ throw|;
 block|}
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
 block|{   }
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExprNodeColumnEvaluator
@@ -890,6 +912,8 @@ name|children
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExprNodeFuncEvaluator
@@ -1045,6 +1069,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExprNodeConversionEvaluator
@@ -1348,6 +1374,8 @@ literal|" seconds/million call."
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testExprNodeSpeed

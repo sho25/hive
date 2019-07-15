@@ -31,16 +31,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -259,6 +249,16 @@ name|Ignore
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  *  * Provides a base environment for testing scalar UDF's. Users should extend this class  * and override the abstract methods. It is highly suggested to test with multiple rows  * of input because UDFS are stateful in some cases, null, and boundary conditions.  *  */
 end_comment
@@ -275,8 +275,6 @@ specifier|public
 specifier|abstract
 class|class
 name|BaseScalarUdfTest
-extends|extends
-name|TestCase
 block|{
 comment|/**    * The data from this method will be fed through the    * select operator. It is considered the source data    * for the test.    * @return The source table that will be fed through the operator tree    */
 specifier|public
@@ -307,6 +305,8 @@ throws|throws
 name|UDFArgumentException
 function_decl|;
 comment|/**    * This method drives the test. It takes the data from getBaseTable() and    * feeds it through a SELECT operator with a COLLECT operator after. Each    * row that is produced by the collect operator is compared to getExpectedResult()    * and if every row is the expected result the method completes without asserting.    * @throws HiveException    */
+annotation|@
+name|Test
 specifier|public
 specifier|final
 name|void

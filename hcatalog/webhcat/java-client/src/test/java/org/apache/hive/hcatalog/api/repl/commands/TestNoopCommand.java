@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -68,6 +58,18 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -77,17 +79,18 @@ name|Test
 import|;
 end_import
 
+begin_comment
+comment|/**  * TestNoopCommand.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestNoopCommand
-extends|extends
-name|TestCase
 block|{
 annotation|@
 name|Test
 specifier|public
-specifier|static
 name|void
 name|testCommand
 parameter_list|()

@@ -89,6 +89,28 @@ name|MiniClusterType
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
 begin_comment
 comment|/**  * Suite for testing location. e.g. if "alter table alter partition  * location" is run, do the partitions end up in the correct location.  *  *  This is a special case of the regular queries as paths are typically  *  ignored.  */
 end_comment
@@ -432,6 +454,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Verify that the location of the partition is valid. In this case    * the path should end in "parta" and not "dt=a" (the default).    *    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testAlterTablePartitionLocation_alter5

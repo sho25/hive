@@ -99,11 +99,11 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
-operator|.
-name|TestCase
+name|Test
 import|;
 end_import
 
@@ -115,8 +115,6 @@ begin_class
 specifier|public
 class|class
 name|TestArrayWritableObjectInspector
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|StructTypeInfo
@@ -197,6 +195,8 @@ name|result
 return|;
 block|}
 comment|/** Regression tests for HIVE-21796: equals and hash takes forever if HIVE-21796 is reverted / reintroduced. */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testIdenticalInspectorsEquals
@@ -269,6 +269,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/** Regression tests for HIVE-21796: equals and hash takes forever if HIVE-21796 is reverted / reintroduced. */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testEqualInspectorsEquals
@@ -356,6 +358,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/** Regression tests for HIVE-21796: equals and hash takes forever if HIVE-21796 is reverted / reintroduced. */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDifferentInspectorsEquals

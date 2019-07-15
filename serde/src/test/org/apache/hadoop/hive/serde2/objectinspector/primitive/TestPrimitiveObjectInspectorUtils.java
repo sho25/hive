@@ -220,6 +220,42 @@ import|;
 end_import
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertFalse
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
 import|import
 name|org
 operator|.
@@ -229,22 +265,14 @@ name|Test
 import|;
 end_import
 
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
+begin_comment
+comment|/**  * PrimitiveObjectInspectorUtils Test.  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestPrimitiveObjectInspectorUtils
-extends|extends
-name|TestCase
 block|{
 annotation|@
 name|Test

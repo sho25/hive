@@ -59,8 +59,6 @@ begin_class
 specifier|public
 class|class
 name|TestListBucketingPrunner
-extends|extends
-name|TestCase
 block|{
 annotation|@
 name|Test

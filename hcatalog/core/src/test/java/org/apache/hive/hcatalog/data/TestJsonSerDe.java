@@ -298,21 +298,35 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertTrue
 import|;
 end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestJsonSerDe.  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestJsonSerDe
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -1134,6 +1148,8 @@ return|return
 name|data
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRW
@@ -1369,6 +1385,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testRobustRead
@@ -1753,6 +1771,8 @@ argument_list|()
 return|;
 block|}
 comment|/**    * This test tests that our json deserialization is not too strict, as per HIVE-6166    *    * i.e, if our schema is "s:struct<a:int,b:string>,k:int", and we pass in    * data that looks like : {    *                            "x" : "abc" ,    *                            "t" : {    *                                "a" : "1",    *                                "b" : "2",    *                                "c" : [    *                                    { "x" : 2 , "y" : 3 } ,    *                                    { "x" : 3 , "y" : 2 }    *                                ]    *                            } ,    *                            "s" : {    *                                "a" : 2 ,    *                                "b" : "blah",    *                                "c": "woo"    *                            }    *                        }    *    * Then it should still work, and ignore the "x" and "t" field and "c" subfield of "s", and it    * should read k as null.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLooseJsonReadability
@@ -1932,6 +1952,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testUpperCaseKey
@@ -2181,6 +2203,8 @@ return|return
 name|retval
 return|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMapValues

@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -159,6 +149,40 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Unit tests for LazySimpleDeserializeRead.  *  */
 end_comment
@@ -167,10 +191,10 @@ begin_class
 specifier|public
 class|class
 name|TestLazySimpleDeserializeRead
-extends|extends
-name|TestCase
 block|{
 comment|/**    * Test for escaping.    *    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testEscaping

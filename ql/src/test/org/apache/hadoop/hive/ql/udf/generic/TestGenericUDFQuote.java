@@ -137,11 +137,35 @@ end_import
 
 begin_import
 import|import
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Test
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
 operator|.
-name|TestCase
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
 import|;
 end_import
 
@@ -153,13 +177,13 @@ begin_class
 specifier|public
 class|class
 name|TestGenericUDFQuote
-extends|extends
-name|TestCase
 block|{
 specifier|public
 name|TestGenericUDFQuote
 parameter_list|()
 block|{}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testQuote

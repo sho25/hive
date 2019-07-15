@@ -23,16 +23,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -297,13 +287,51 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestGenericUDFAbs.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestGenericUDFAbs
-extends|extends
-name|TestCase
 block|{
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testInt
@@ -431,6 +459,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLong
@@ -558,6 +588,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDouble
@@ -638,6 +670,8 @@ name|output
 operator|.
 name|get
 argument_list|()
+argument_list|,
+literal|1e-15
 argument_list|)
 expr_stmt|;
 name|valueObj
@@ -682,9 +716,13 @@ name|output
 operator|.
 name|get
 argument_list|()
+argument_list|,
+literal|1e-15
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFloat
@@ -827,6 +865,8 @@ literal|0.0001
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testText
@@ -993,6 +1033,8 @@ name|output
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testHiveDecimal
@@ -1132,6 +1174,8 @@ argument_list|()
 operator|.
 name|doubleValue
 argument_list|()
+argument_list|,
+literal|1e-15
 argument_list|)
 expr_stmt|;
 name|valueObj
@@ -1183,6 +1227,8 @@ argument_list|()
 operator|.
 name|doubleValue
 argument_list|()
+argument_list|,
+literal|1e-15
 argument_list|)
 expr_stmt|;
 comment|// null input

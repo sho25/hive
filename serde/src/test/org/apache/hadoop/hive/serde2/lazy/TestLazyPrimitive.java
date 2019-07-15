@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -213,6 +203,52 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestLazyPrimitive.  *  */
 end_comment
@@ -221,8 +257,6 @@ begin_class
 specifier|public
 class|class
 name|TestLazyPrimitive
-extends|extends
-name|TestCase
 block|{
 comment|/**    * Initialize the LazyObject with the parameters, wrapping the byte[]    * automatically.    */
 specifier|public
@@ -271,6 +305,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyByte class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyByte
@@ -775,6 +811,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyShort class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyShort
@@ -1374,6 +1412,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyInteger class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyInteger
@@ -2064,6 +2104,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyLong class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyLong
@@ -2927,6 +2969,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyDouble class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyDouble
@@ -4343,6 +4387,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyString class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyString
@@ -4482,6 +4528,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyBinary
@@ -4677,6 +4725,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyTimestamp
@@ -4822,6 +4872,8 @@ name|isNull
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyDate
@@ -4967,6 +5019,8 @@ name|isNull
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyIntegerWrite
@@ -5109,6 +5163,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyLongWrite
@@ -5475,6 +5531,8 @@ block|{
 comment|// Error was expected
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyIntWithSpaces
@@ -5888,6 +5946,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyLongWithSpaces

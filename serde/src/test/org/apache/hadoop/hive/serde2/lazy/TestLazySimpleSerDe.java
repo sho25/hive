@@ -61,16 +61,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -433,6 +423,18 @@ name|Test
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestLazySimpleSerDe.  *  */
 end_comment
@@ -441,10 +443,10 @@ begin_class
 specifier|public
 class|class
 name|TestLazySimpleSerDe
-extends|extends
-name|TestCase
 block|{
 comment|/**    * Test the LazySimpleSerDe class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazySimpleSerDe
@@ -718,6 +720,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazySimpleSerDe class with LastColumnTakesRest option.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazySimpleSerDeLastColumnTakesRest
@@ -877,6 +881,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazySimpleSerDe class with extra columns.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazySimpleSerDeExtraColumns
@@ -1025,6 +1031,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazySimpleSerDe class with missing columns.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazySimpleSerDeMissingColumns

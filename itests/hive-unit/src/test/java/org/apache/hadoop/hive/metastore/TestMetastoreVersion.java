@@ -226,21 +226,91 @@ import|;
 end_import
 
 begin_import
-import|import
+import|import static
+name|org
+operator|.
 name|junit
 operator|.
-name|framework
+name|Assert
 operator|.
-name|TestCase
+name|assertFalse
 import|;
 end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Before
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|After
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestMetastoreVersion.  */
+end_comment
 
 begin_class
 specifier|public
 class|class
 name|TestMetastoreVersion
-extends|extends
-name|TestCase
 block|{
 specifier|private
 specifier|static
@@ -278,19 +348,14 @@ name|IMetaStoreSchemaInfo
 name|metastoreSchemaInfo
 decl_stmt|;
 annotation|@
-name|Override
-specifier|protected
+name|Before
+specifier|public
 name|void
 name|setUp
 parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|super
-operator|.
-name|setUp
-argument_list|()
-expr_stmt|;
 name|Field
 name|defDb
 init|=
@@ -479,8 +544,8 @@ argument_list|)
 expr_stmt|;
 block|}
 annotation|@
-name|Override
-specifier|protected
+name|After
+specifier|public
 name|void
 name|tearDown
 parameter_list|()
@@ -514,6 +579,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/***    * Test config defaults    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testDefaults
@@ -574,6 +641,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/***    * Test schema verification property    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVersionRestriction
@@ -710,6 +779,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/***    * Test that with no verification, and record verification enabled, hive populates the schema    * and version correctly    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMetastoreVersion
@@ -821,6 +892,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/***    * Test that with verification enabled, hive works when the correct schema is already populated    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVersionMatching
@@ -954,6 +1027,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Store garbage version in metastore and verify that hive fails when verification is on    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVersionMisMatch
@@ -1098,6 +1173,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Store higher version in metastore and verify that hive works with the compatible    * version    * @throws Exception    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testVersionCompatibility

@@ -21,16 +21,6 @@ end_package
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -75,12 +65,24 @@ name|Assert
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestEmbeddedLockManager.  *  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestEmbeddedLockManager
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|int
@@ -94,6 +96,8 @@ operator|new
 name|HiveConf
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLocking

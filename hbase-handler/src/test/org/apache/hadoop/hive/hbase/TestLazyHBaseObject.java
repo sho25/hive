@@ -499,6 +499,52 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestLazyHBaseObject is a test for the LazyHBaseXXX classes.  */
 end_comment
@@ -507,10 +553,10 @@ begin_class
 specifier|public
 class|class
 name|TestLazyHBaseObject
-extends|extends
-name|TestCase
 block|{
 comment|/**    * Test the LazyMap class with Integer-to-String.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyHBaseCellMap1
@@ -1046,6 +1092,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyMap class with String-to-String.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyHBaseCellMap2
@@ -1580,6 +1628,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyHBaseCellMap class for the case where both the key and the value in the family    * map are stored in binary format using the appropriate LazyPrimitive objects.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyHBaseCellMap3
@@ -3967,6 +4017,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyHBaseRow class with one-for-one mappings between    * Hive fields and HBase columns.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyHBaseRow1
@@ -4974,6 +5026,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyHBaseRow class with a mapping from a Hive field to    * an HBase column family.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyHBaseRow2
@@ -5998,6 +6052,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyHBaseRow class with a one-to-one/onto mapping between Hive columns and    * HBase column family/column qualifier pairs. The column types are primitive and fields    * are stored in binary format in HBase.    * @throws SerDeException    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyHBaseRow3

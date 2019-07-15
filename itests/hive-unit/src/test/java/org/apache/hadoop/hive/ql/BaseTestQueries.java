@@ -27,16 +27,6 @@ name|File
 import|;
 end_import
 
-begin_import
-import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
 begin_comment
 comment|/**  * Base class for testing queries.  */
 end_comment
@@ -46,8 +36,6 @@ specifier|public
 specifier|abstract
 class|class
 name|BaseTestQueries
-extends|extends
-name|TestCase
 block|{
 specifier|protected
 specifier|final

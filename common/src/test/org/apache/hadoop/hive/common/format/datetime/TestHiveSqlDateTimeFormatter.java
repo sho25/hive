@@ -279,6 +279,40 @@ name|YEAR
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
 begin_comment
 comment|/**  * Tests HiveSqlDateTimeFormatter.  */
 end_comment
@@ -287,13 +321,13 @@ begin_class
 specifier|public
 class|class
 name|TestHiveSqlDateTimeFormatter
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|HiveSqlDateTimeFormatter
 name|formatter
 decl_stmt|;
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSetPattern
@@ -395,6 +429,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testSetPatternWithBadPatterns
@@ -543,6 +579,8 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFormatTimestamp
@@ -661,6 +699,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testFormatDate
@@ -770,6 +810,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testParseTimestamp
@@ -1322,6 +1364,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testParseDate
@@ -1605,6 +1649,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testParseTimestampError

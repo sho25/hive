@@ -93,16 +93,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -341,6 +331,64 @@ name|Text
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertNull
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
 begin_comment
 comment|/**  * Tests LazyArray, LazyMap, LazyStruct and LazyUnion  *  */
 end_comment
@@ -349,8 +397,6 @@ begin_class
 specifier|public
 class|class
 name|TestLazyArrayMapStruct
-extends|extends
-name|TestCase
 block|{
 comment|// nesting level limits
 specifier|static
@@ -368,6 +414,8 @@ init|=
 literal|8
 decl_stmt|;
 comment|/**    * Test the LazyArray class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyArray
@@ -1187,6 +1235,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyMap class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyMap
@@ -1777,6 +1827,8 @@ throw|;
 block|}
 block|}
 comment|/*    * test LazyMap with bad entries, e.g., empty key or empty entries    * where '[' and  ']' don't exist, only for notation purpose,    * STX with value of 2 as entry separator, ETX with 3 as key/value separator    * */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyMapWithBadEntries
@@ -2700,6 +2752,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyMap class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyMapWithDuplicateKeys
@@ -3246,6 +3300,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyStruct class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyStruct
@@ -3817,6 +3873,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyUnion class.    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyUnion
@@ -4241,6 +4299,8 @@ throw|;
 block|}
 block|}
 comment|/**    * Test the LazyArray class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyArrayNested
@@ -4277,6 +4337,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Test the LazyArray class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyArrayNestedExceedLimit
@@ -4342,6 +4404,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyArray class with multiple levels of nesting, when nesting    * levels are not extended    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyArrayNestedExceedLimitNotExtended
@@ -4362,6 +4426,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyMap class with multiple levels of nesting, when nesting    * levels are not extended    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyMapNestedExceedLimitNotExtended
@@ -4384,6 +4450,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyMap class with multiple levels of nesting, when nesting    * levels are not extended    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyStructNestedExceedLimitNotExtended
@@ -4404,6 +4472,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyMap class with multiple levels of nesting, when nesting    * levels are not extended    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyUnionNestedExceedLimitNotExtended
@@ -4473,6 +4543,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyMap class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyMapNested
@@ -4512,6 +4584,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Test the LazyMap class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyMapNestedExceedLimit
@@ -4535,6 +4609,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyUnion class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyUnionNested
@@ -4571,6 +4647,8 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Test the LazyUnion class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyUnionNestedExceedLimit
@@ -4591,6 +4669,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyStruct class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyStructNested
@@ -4671,6 +4751,8 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Test the LazyStruct class with multiple levels of nesting    */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyStructNestedExceedLimit

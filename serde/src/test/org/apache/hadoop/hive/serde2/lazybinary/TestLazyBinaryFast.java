@@ -61,16 +61,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -329,12 +319,48 @@ name|Writable
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertTrue
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
+name|Test
+import|;
+end_import
+
+begin_comment
+comment|/**  * TestLazyBinaryFast.  */
+end_comment
+
 begin_class
 specifier|public
 class|class
 name|TestLazyBinaryFast
-extends|extends
-name|TestCase
 block|{
 specifier|private
 name|void
@@ -743,8 +769,6 @@ operator|==
 name|columnCount
 condition|)
 block|{
-name|TestCase
-operator|.
 name|assertTrue
 argument_list|(
 name|lazyBinaryDeserializeRead
@@ -1317,8 +1341,6 @@ operator|==
 name|columnCount
 condition|)
 block|{
-name|TestCase
-operator|.
 name|assertTrue
 argument_list|(
 name|lazyBinaryDeserializeRead
@@ -1400,8 +1422,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Field reports not null but object is null (class "
@@ -1464,8 +1484,6 @@ block|{
 return|return;
 block|}
 block|}
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Field reports null but object is not null (class "
@@ -1505,8 +1523,6 @@ name|expectedObject
 argument_list|)
 condition|)
 block|{
-name|TestCase
-operator|.
 name|fail
 argument_list|(
 literal|"Comparision failed typeInfo "
@@ -1914,6 +1930,8 @@ name|e
 throw|;
 block|}
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyBinaryFastPrimitive
@@ -1933,6 +1951,8 @@ literal|0
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyBinaryFastComplexDepthOne
@@ -1952,6 +1972,8 @@ literal|1
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testLazyBinaryFastComplexDepthFour
