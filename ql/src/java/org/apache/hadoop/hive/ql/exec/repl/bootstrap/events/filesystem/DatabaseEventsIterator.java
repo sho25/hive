@@ -207,6 +207,28 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|repl
+operator|.
+name|util
+operator|.
+name|ReplUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|parse
 operator|.
 name|EximUtil
@@ -796,7 +818,7 @@ name|next
 argument_list|()
 decl_stmt|;
 comment|// we want to skip this file, this also means there cant be a table with name represented
-comment|// by constant ReplExternalTables.FILE_NAME
+comment|// by constant ReplExternalTables.FILE_NAME or ReplUtils.REPL_TABLE_LIST_DIR_NAME (_tables)
 if|if
 condition|(
 name|next
@@ -812,6 +834,21 @@ argument_list|(
 name|ReplExternalTables
 operator|.
 name|FILE_NAME
+argument_list|)
+operator|||
+name|next
+operator|.
+name|getPath
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+operator|.
+name|endsWith
+argument_list|(
+name|ReplUtils
+operator|.
+name|REPL_TABLE_LIST_DIR_NAME
 argument_list|)
 condition|)
 block|{

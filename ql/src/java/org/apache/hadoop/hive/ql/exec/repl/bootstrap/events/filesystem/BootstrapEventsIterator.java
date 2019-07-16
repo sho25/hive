@@ -370,9 +370,9 @@ argument_list|(
 name|dumpDirectory
 argument_list|)
 argument_list|,
-name|EximUtil
+name|ReplUtils
 operator|.
-name|getDirectoryFilter
+name|getBootstrapDirectoryFilter
 argument_list|(
 name|fileSystem
 argument_list|)
