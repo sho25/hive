@@ -183,6 +183,20 @@ end_import
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -845,7 +859,10 @@ operator|+
 name|host
 return|;
 block|}
-specifier|private
+comment|/**    * A single instance in an Llap Service.    */
+annotation|@
+name|VisibleForTesting
+specifier|public
 specifier|final
 class|class
 name|FixedServiceInstance

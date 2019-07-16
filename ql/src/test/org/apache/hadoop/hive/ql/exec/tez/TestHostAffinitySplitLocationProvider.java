@@ -2466,7 +2466,7 @@ return|return
 name|inputSplit
 return|;
 block|}
-specifier|private
+specifier|static
 name|FileSplit
 name|createMockFileSplit
 parameter_list|(

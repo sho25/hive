@@ -23,6 +23,20 @@ end_package
 
 begin_import
 import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1399,7 +1413,10 @@ name|IOException
 block|{
 comment|// Nothing for the zkCreate models
 block|}
-specifier|private
+comment|/**    * A dynamically changing instance in an Llap Service. Can become inactive if failing or can be    * blacklisted (set to 0 capacity) if too slow (See: BlacklistingLlapMetricsListener).    */
+annotation|@
+name|VisibleForTesting
+specifier|public
 class|class
 name|DynamicServiceInstance
 extends|extends
