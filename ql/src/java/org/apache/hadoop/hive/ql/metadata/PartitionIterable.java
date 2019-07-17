@@ -285,7 +285,7 @@ name|getNextBatch
 parameter_list|()
 block|{
 name|int
-name|batch_counter
+name|batchCounter
 init|=
 literal|0
 decl_stmt|;
@@ -304,9 +304,9 @@ argument_list|()
 decl_stmt|;
 while|while
 condition|(
-name|batch_counter
+name|batchCounter
 operator|<
-name|batch_size
+name|batchSize
 operator|&&
 name|partitionNamesIter
 operator|.
@@ -324,7 +324,7 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|batch_counter
+name|batchCounter
 operator|++
 expr_stmt|;
 block|}
@@ -440,7 +440,7 @@ literal|null
 decl_stmt|;
 specifier|private
 name|int
-name|batch_size
+name|batchSize
 decl_stmt|;
 specifier|private
 name|boolean
@@ -493,7 +493,7 @@ argument_list|>
 name|partialPartitionSpec
 parameter_list|,
 name|int
-name|batch_size
+name|batchSize
 parameter_list|)
 throws|throws
 name|HiveException
@@ -506,7 +506,7 @@ name|table
 argument_list|,
 name|partialPartitionSpec
 argument_list|,
-name|batch_size
+name|batchSize
 argument_list|,
 literal|false
 argument_list|)
@@ -531,7 +531,7 @@ argument_list|>
 name|partialPartitionSpec
 parameter_list|,
 name|int
-name|batch_size
+name|batchSize
 parameter_list|,
 name|boolean
 name|getColStats
@@ -567,9 +567,9 @@ name|partialPartitionSpec
 expr_stmt|;
 name|this
 operator|.
-name|batch_size
+name|batchSize
 operator|=
-name|batch_size
+name|batchSize
 expr_stmt|;
 name|this
 operator|.

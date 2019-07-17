@@ -18245,7 +18245,7 @@ literal|1
 condition|)
 block|{
 return|return
-name|tableName
+literal|null
 return|;
 block|}
 name|ASTNode
@@ -18361,7 +18361,7 @@ block|}
 else|else
 block|{
 return|return
-name|tableName
+literal|null
 return|;
 block|}
 block|}
@@ -19105,13 +19105,9 @@ comment|// colPath will be equal to tableName. This is how we can differentiate
 comment|// if we are describing a table or column
 if|if
 condition|(
-operator|!
 name|colPath
-operator|.
-name|equalsIgnoreCase
-argument_list|(
-name|tableName
-argument_list|)
+operator|!=
+literal|null
 operator|&&
 name|isFormatted
 condition|)

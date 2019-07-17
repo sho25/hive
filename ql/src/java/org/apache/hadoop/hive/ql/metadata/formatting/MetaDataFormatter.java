@@ -209,60 +209,6 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|CheckConstraint
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|DefaultConstraint
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|ForeignKeyInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
 name|Hive
 import|;
 end_import
@@ -299,61 +245,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|NotNullConstraint
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
 name|Partition
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|PrimaryKeyInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|StorageHandlerInfo
 import|;
 end_import
 
@@ -375,24 +267,6 @@ name|Table
 import|;
 end_import
 
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|UniqueConstraint
-import|;
-end_import
-
 begin_comment
 comment|/**  * Interface to format table and index information.  We can format it  * for human readability (lines of text) or for machine readability  * (json).  */
 end_comment
@@ -403,7 +277,6 @@ interface|interface
 name|MetaDataFormatter
 block|{
 comment|/**    * Write an error message.    * @param sqlState if {@code null}, will be ignored    */
-specifier|public
 name|void
 name|error
 parameter_list|(
@@ -423,7 +296,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * @param sqlState if {@code null}, will be skipped in output    * @param errorDetail usually string version of some Exception, if {@code null}, will be ignored    */
-specifier|public
 name|void
 name|error
 parameter_list|(
@@ -446,7 +318,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Show a list of tables.    */
-specifier|public
 name|void
 name|showTables
 parameter_list|(
@@ -463,7 +334,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Show a list of tables including table types.    */
-specifier|public
 name|void
 name|showTablesExtended
 parameter_list|(
@@ -480,7 +350,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Show a list of materialized views.    */
-specifier|public
 name|void
 name|showMaterializedViews
 parameter_list|(
@@ -496,8 +365,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Describe table.    * @param out    * @param colPath    * @param tableName    * @param tbl    * @param part    * @param cols    * @param isFormatted - describe with formatted keyword    * @param isExt    * @param isOutputPadded - if true, add spacing and indentation    * @param colStats    * @param fkInfo  foreign keys information    * @param pkInfo  primary key information    * @param ukInfo  unique constraint information    * @param nnInfo  not null constraint information    * @throws HiveException    */
-specifier|public
+comment|/**    * Describe table.    */
 name|void
 name|describeTable
 parameter_list|(
@@ -526,7 +394,7 @@ name|boolean
 name|isFormatted
 parameter_list|,
 name|boolean
-name|isExt
+name|isExtended
 parameter_list|,
 name|boolean
 name|isOutputPadded
@@ -536,33 +404,11 @@ argument_list|<
 name|ColumnStatisticsObj
 argument_list|>
 name|colStats
-parameter_list|,
-name|PrimaryKeyInfo
-name|pkInfo
-parameter_list|,
-name|ForeignKeyInfo
-name|fkInfo
-parameter_list|,
-name|UniqueConstraint
-name|ukInfo
-parameter_list|,
-name|NotNullConstraint
-name|nnInfo
-parameter_list|,
-name|DefaultConstraint
-name|dInfo
-parameter_list|,
-name|CheckConstraint
-name|cInfo
-parameter_list|,
-name|StorageHandlerInfo
-name|storageHandlerInfo
 parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Show the table status.    */
-specifier|public
 name|void
 name|showTableStatus
 parameter_list|(
@@ -596,7 +442,6 @@ throws|throws
 name|HiveException
 function_decl|;
 comment|/**    * Show the table partitions.    */
-specifier|public
 name|void
 name|showTablePartitions
 parameter_list|(
@@ -612,8 +457,7 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Show the databases    */
-specifier|public
+comment|/**    * Show the databases.    */
 name|void
 name|showDatabases
 parameter_list|(
