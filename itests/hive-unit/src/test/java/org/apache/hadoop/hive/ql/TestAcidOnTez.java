@@ -5678,7 +5678,7 @@ literal|"warehouse/t/delta_0000001_0000001_0000/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":2}\t5\t6"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t5\t6"
 block|,
 literal|"warehouse/t/delta_0000001_0000001_0000/bucket_00001"
 block|}
@@ -5690,7 +5690,7 @@ literal|"warehouse/t/delta_0000001_0000001_0000/bucket_00000"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t9\t10"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":2}\t9\t10"
 block|,
 literal|"warehouse/t/delta_0000001_0000001_0000/bucket_00001"
 block|}
@@ -6511,13 +6511,6 @@ name|expectedRs
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t2\t4"
-argument_list|)
-expr_stmt|;
-name|expectedRs
-operator|.
-name|add
-argument_list|(
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t2\t3"
 argument_list|)
 expr_stmt|;
@@ -6525,7 +6518,7 @@ name|expectedRs
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":0}\t3\t4"
+literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":2}\t2\t4"
 argument_list|)
 expr_stmt|;
 name|expectedRs
@@ -6539,7 +6532,7 @@ name|expectedRs
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t4"
+literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":2}\t3\t4"
 argument_list|)
 expr_stmt|;
 name|expectedRs
@@ -6553,7 +6546,7 @@ name|expectedRs
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":0}\t4\t4"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":2}\t1\t4"
 argument_list|)
 expr_stmt|;
 name|expectedRs
@@ -6561,6 +6554,13 @@ operator|.
 name|add
 argument_list|(
 literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":1}\t4\t3"
+argument_list|)
+expr_stmt|;
+name|expectedRs
+operator|.
+name|add
+argument_list|(
+literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":2}\t4\t4"
 argument_list|)
 expr_stmt|;
 name|List

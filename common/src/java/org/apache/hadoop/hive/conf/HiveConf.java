@@ -8381,6 +8381,17 @@ operator|+
 literal|"query will fail if hive.enforce.bucketmapjoin is set to true."
 argument_list|)
 block|,
+name|HIVE_SORT_WHEN_BUCKETING
+argument_list|(
+literal|"hive.optimize.clustered.sort"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When this option is true, when a Hive table was created with a clustered by clause, we will also\n"
+operator|+
+literal|"sort by same value (if sort columns were not specified)"
+argument_list|)
+block|,
 name|HIVE_ENFORCE_NOT_NULL_CONSTRAINT
 argument_list|(
 literal|"hive.constraint.notnull.enforce"

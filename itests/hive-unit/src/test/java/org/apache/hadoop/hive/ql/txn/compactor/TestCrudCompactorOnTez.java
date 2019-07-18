@@ -1478,13 +1478,6 @@ name|expectedRsBucket0
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t2\t4"
-argument_list|)
-expr_stmt|;
-name|expectedRsBucket0
-operator|.
-name|add
-argument_list|(
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t2\t3"
 argument_list|)
 expr_stmt|;
@@ -1492,7 +1485,7 @@ name|expectedRsBucket0
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":0}\t3\t4"
+literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":2}\t2\t4"
 argument_list|)
 expr_stmt|;
 name|expectedRsBucket0
@@ -1500,6 +1493,13 @@ operator|.
 name|add
 argument_list|(
 literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":1}\t3\t3"
+argument_list|)
+expr_stmt|;
+name|expectedRsBucket0
+operator|.
+name|add
+argument_list|(
+literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":2}\t3\t4"
 argument_list|)
 expr_stmt|;
 name|List
@@ -1517,13 +1517,6 @@ name|expectedRsBucket1
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":0}\t1\t4"
-argument_list|)
-expr_stmt|;
-name|expectedRsBucket1
-operator|.
-name|add
-argument_list|(
 literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t1\t3"
 argument_list|)
 expr_stmt|;
@@ -1531,7 +1524,7 @@ name|expectedRsBucket1
 operator|.
 name|add
 argument_list|(
-literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":0}\t4\t4"
+literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":2}\t1\t4"
 argument_list|)
 expr_stmt|;
 name|expectedRsBucket1
@@ -1539,6 +1532,13 @@ operator|.
 name|add
 argument_list|(
 literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":1}\t4\t3"
+argument_list|)
+expr_stmt|;
+name|expectedRsBucket1
+operator|.
+name|add
+argument_list|(
+literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":2}\t4\t4"
 argument_list|)
 expr_stmt|;
 comment|// Bucket 0

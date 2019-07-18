@@ -7999,7 +7999,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 5<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
+literal|"Reducer 5<- Reducer 2 (ONE_TO_ONE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8048,7 +8048,7 @@ operator|+
 operator|(
 name|i
 operator|+
-literal|5
+literal|6
 operator|)
 operator|+
 name|explain
@@ -8057,7 +8057,7 @@ name|get
 argument_list|(
 name|i
 operator|+
-literal|5
+literal|6
 argument_list|)
 argument_list|,
 name|explain
@@ -8071,7 +8071,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 7<- Reducer 2 (CUSTOM_SIMPLE_EDGE)"
+literal|"Reducer 7<- Reducer 2 (ONE_TO_ONE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -9223,13 +9223,13 @@ literal|"nonacidorctbl/000001_0"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t5"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t0\t12"
 block|,
 literal|"nonacidorctbl/000001_0_copy_1"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":2}\t0\t12"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":2}\t1\t5"
 block|,
 literal|"nonacidorctbl/000001_0_copy_1"
 block|}
@@ -9366,13 +9366,13 @@ literal|"nonacidorctbl/base_10000001_v0000020/bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t1\t5"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":1}\t0\t12"
 block|,
 literal|"nonacidorctbl/base_10000001_v0000020/bucket_00001"
 block|}
 block|,
 block|{
-literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":2}\t0\t12"
+literal|"{\"writeid\":0,\"bucketid\":536936448,\"rowid\":2}\t1\t5"
 block|,
 literal|"nonacidorctbl/base_10000001_v0000020/bucket_00001"
 block|}
