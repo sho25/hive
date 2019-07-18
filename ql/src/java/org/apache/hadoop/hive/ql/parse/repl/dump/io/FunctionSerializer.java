@@ -370,6 +370,16 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
+if|if
+condition|(
+name|function
+operator|.
+name|getResourceUris
+argument_list|()
+operator|!=
+literal|null
+condition|)
+block|{
 for|for
 control|(
 name|ResourceUri
@@ -494,6 +504,7 @@ argument_list|(
 name|uri
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|Function

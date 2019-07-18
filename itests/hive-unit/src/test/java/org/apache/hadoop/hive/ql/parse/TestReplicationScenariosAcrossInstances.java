@@ -775,6 +775,15 @@ literal|".testFunctionOne as 'hivemall.tools.string.StopwordUDF' "
 operator|+
 literal|"using jar  'ivy://io.github.myui:hivemall:0.4.0-2'"
 argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"CREATE FUNCTION "
+operator|+
+name|primaryDbName
+operator|+
+literal|".testFunctionTwo as 'org.apache.hadoop.hive.ql.udf.generic.GenericUDAFMax'"
+argument_list|)
 expr_stmt|;
 name|WarehouseInstance
 operator|.
@@ -826,11 +835,20 @@ operator|+
 literal|"%'"
 argument_list|)
 operator|.
-name|verifyResult
+name|verifyResults
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|replicatedDbName
 operator|+
 literal|".testFunctionOne"
+block|,
+name|replicatedDbName
+operator|+
+literal|".testFunctionTwo"
+block|}
 argument_list|)
 expr_stmt|;
 comment|// Test the idempotent behavior of CREATE FUNCTION
@@ -868,11 +886,20 @@ operator|+
 literal|"%'"
 argument_list|)
 operator|.
-name|verifyResult
+name|verifyResults
 argument_list|(
+operator|new
+name|String
+index|[]
+block|{
 name|replicatedDbName
 operator|+
 literal|".testFunctionOne"
+block|,
+name|replicatedDbName
+operator|+
+literal|".testFunctionTwo"
+block|}
 argument_list|)
 expr_stmt|;
 block|}
