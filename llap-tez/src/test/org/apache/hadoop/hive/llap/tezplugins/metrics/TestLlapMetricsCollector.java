@@ -479,8 +479,6 @@ decl_stmt|;
 annotation|@
 name|Mock
 specifier|private
-name|LlapMetricsCollector
-operator|.
 name|LlapManagementProtocolClientImplFactory
 name|mockClientFactory
 decl_stmt|;

@@ -16033,6 +16033,79 @@ operator|+
 literal|"org.apache.hadoop.hive.llap.tezplugins.metrics.LlapMetricsListener interface."
 argument_list|)
 block|,
+name|LLAP_NODEHEALTHCHECKS_MINTASKS
+argument_list|(
+literal|"hive.llap.nodehealthchecks.mintasks"
+argument_list|,
+literal|2000
+argument_list|,
+literal|"Specifies the minimum amount of tasks, executed by a particular LLAP daemon, before the health\n"
+operator|+
+literal|"status of the node is examined."
+argument_list|)
+block|,
+name|LLAP_NODEHEALTHCHECKS_MININTERVALDURATION
+argument_list|(
+literal|"hive.llap.nodehealthckecks.minintervalduration"
+argument_list|,
+literal|"300s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"The minimum time that needs to elapse between two actions that are the correcting results of identifying\n"
+operator|+
+literal|"an unhealthy node. Even if additional nodes are considered to be unhealthy, no action is performed until\n"
+operator|+
+literal|"this time interval has passed since the last corrective action."
+argument_list|)
+block|,
+name|LLAP_NODEHEALTHCHECKS_TASKTIMERATIO
+argument_list|(
+literal|"hive.llap.nodehealthckecks.tasktimeratio"
+argument_list|,
+literal|1.5f
+argument_list|,
+literal|"LLAP daemons are considered unhealthy, if their average (Map-) task execution time is significantly larger\n"
+operator|+
+literal|"than the average task execution time of other nodes. This value specifies the ratio of a node to other\n"
+operator|+
+literal|"nodes, which is considered as threshold for unhealthy. A value of 1.5 for example considers a node to be\n"
+operator|+
+literal|"unhealthy if its average task execution time is 50% larger than the average of other nodes."
+argument_list|)
+block|,
+name|LLAP_NODEHEALTHCHECKS_EXECUTORRATIO
+argument_list|(
+literal|"hive.llap.nodehealthckecks.executorratio"
+argument_list|,
+literal|2.0f
+argument_list|,
+literal|"If an unhealthy node is identified, it is blacklisted only where there is enough free executors to execute\n"
+operator|+
+literal|"the tasks. This value specifies the ratio of the free executors compared to the blacklisted ones.\n"
+operator|+
+literal|"A value of 2.0 for example defines that we blacklist an unhealthy node only if we have 2 times more\n"
+operator|+
+literal|"free executors on the remaining nodes than the unhealthy node."
+argument_list|)
+block|,
+name|LLAP_NODEHEALTHCHECKS_MAXNODES
+argument_list|(
+literal|"hive.llap.nodehealthckecks.maxnodes"
+argument_list|,
+literal|1
+argument_list|,
+literal|"The maximum number of blacklisted nodes. If there are at least this number of blacklisted nodes\n"
+operator|+
+literal|"the listener will not blacklist further nodes even if all the conditions are met."
+argument_list|)
+block|,
 name|LLAP_TASK_SCHEDULER_AM_REGISTRY_NAME
 argument_list|(
 literal|"hive.llap.task.scheduler.am.registry"
