@@ -417,6 +417,16 @@ name|BlockingService
 import|;
 end_import
 
+begin_import
+import|import
+name|javax
+operator|.
+name|annotation
+operator|.
+name|Nullable
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -2464,6 +2474,8 @@ name|DELETE_DELTA_PREFIX
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Nullable
 specifier|public
 specifier|static
 name|ThreadMXBean

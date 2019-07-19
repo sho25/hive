@@ -61,7 +61,7 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|ExecutorService
+name|ArrayBlockingQueue
 import|;
 end_import
 
@@ -73,7 +73,7 @@ name|util
 operator|.
 name|concurrent
 operator|.
-name|LinkedBlockingQueue
+name|ExecutorService
 import|;
 end_import
 
@@ -100,6 +100,20 @@ operator|.
 name|atomic
 operator|.
 name|AtomicReference
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
 import|;
 end_import
 
@@ -925,20 +939,6 @@ name|google
 operator|.
 name|common
 operator|.
-name|base
-operator|.
-name|Preconditions
-import|;
-end_import
-
-begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
 name|collect
 operator|.
 name|Lists
@@ -1023,7 +1023,7 @@ name|partitionValues
 decl_stmt|;
 specifier|private
 specifier|final
-name|LinkedBlockingQueue
+name|ArrayBlockingQueue
 argument_list|<
 name|Object
 argument_list|>
@@ -1495,7 +1495,7 @@ name|getQueueVar
 argument_list|(
 name|ConfVars
 operator|.
-name|LLAP_IO_VRB_QUEUE_LIMIT_BASE
+name|LLAP_IO_VRB_QUEUE_LIMIT_MAX
 argument_list|,
 name|job
 argument_list|,
@@ -1510,6 +1510,20 @@ argument_list|(
 name|ConfVars
 operator|.
 name|LLAP_IO_VRB_QUEUE_LIMIT_MIN
+argument_list|,
+name|job
+argument_list|,
+name|daemonConf
+argument_list|)
+decl_stmt|;
+name|long
+name|bestEffortSize
+init|=
+name|getLongQueueVar
+argument_list|(
+name|ConfVars
+operator|.
+name|LLAP_IO_CVB_BUFFERED_SIZE
 argument_list|,
 name|job
 argument_list|,
@@ -1541,6 +1555,8 @@ name|limit
 init|=
 name|determineQueueLimit
 argument_list|(
+name|bestEffortSize
+argument_list|,
 name|queueLimitBase
 argument_list|,
 name|queueLimitMin
@@ -1567,7 +1583,7 @@ operator|.
 name|queue
 operator|=
 operator|new
-name|LinkedBlockingQueue
+name|ArrayBlockingQueue
 argument_list|<>
 argument_list|(
 name|limit
@@ -1777,6 +1793,57 @@ name|var
 argument_list|)
 return|;
 block|}
+specifier|private
+specifier|static
+name|long
+name|getLongQueueVar
+parameter_list|(
+name|ConfVars
+name|var
+parameter_list|,
+name|JobConf
+name|jobConf
+parameter_list|,
+name|Configuration
+name|daemonConf
+parameter_list|)
+block|{
+comment|// Check job config for overrides, otherwise use the default server value.
+name|long
+name|jobVal
+init|=
+name|jobConf
+operator|.
+name|getLong
+argument_list|(
+name|var
+operator|.
+name|varname
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+decl_stmt|;
+return|return
+operator|(
+name|jobVal
+operator|!=
+operator|-
+literal|1
+operator|)
+condition|?
+name|jobVal
+else|:
+name|HiveConf
+operator|.
+name|getLongVar
+argument_list|(
+name|daemonConf
+argument_list|,
+name|var
+argument_list|)
+return|;
+block|}
 comment|// For queue size estimation purposes, we assume all columns have weight one, and the following
 comment|// types are counted as multiple columns. This is very primitive; if we wanted to make it better,
 comment|// we'd increase the base limit, and adjust dynamically based on IO and processing perf delays.
@@ -1790,19 +1857,23 @@ literal|16
 decl_stmt|,
 name|COL_WEIGHT_HIVEDECIMAL
 init|=
-literal|4
+literal|10
 decl_stmt|,
 name|COL_WEIGHT_STRING
 init|=
 literal|8
 decl_stmt|;
-specifier|private
+annotation|@
+name|VisibleForTesting
 specifier|static
 name|int
 name|determineQueueLimit
 parameter_list|(
+name|long
+name|maxBufferedSize
+parameter_list|,
 name|int
-name|queueLimitBase
+name|queueLimitMax
 parameter_list|,
 name|int
 name|queueLimitMin
@@ -1816,15 +1887,20 @@ name|boolean
 name|decimal64Support
 parameter_list|)
 block|{
+assert|assert
+name|queueLimitMax
+operator|>=
+name|queueLimitMin
+assert|;
 comment|// If the values are equal, the queue limit is fixed.
 if|if
 condition|(
-name|queueLimitBase
+name|queueLimitMax
 operator|==
 name|queueLimitMin
 condition|)
 return|return
-name|queueLimitBase
+name|queueLimitMax
 return|;
 comment|// If there are no columns (projection only join?) just assume no weight.
 if|if
@@ -1840,21 +1916,98 @@ operator|==
 literal|0
 condition|)
 return|return
-name|queueLimitBase
+name|queueLimitMax
 return|;
+comment|// total weight as bytes
 name|double
 name|totalWeight
 init|=
 literal|0
 decl_stmt|;
+name|int
+name|numberOfProjectedColumns
+init|=
+name|typeInfos
+operator|.
+name|length
+decl_stmt|;
+name|double
+name|scale
+init|=
+name|Math
+operator|.
+name|max
+argument_list|(
+name|Math
+operator|.
+name|log
+argument_list|(
+name|numberOfProjectedColumns
+argument_list|)
+argument_list|,
+literal|1
+argument_list|)
+decl_stmt|;
+comment|// Assuming that an empty Column Vector is about 96 bytes the object
+comment|// org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector object internals:
+comment|// OFFSET  SIZE                                                      TYPE DESCRIPTION
+comment|// VALUE
+comment|//      0    16                                                           (object header)
+comment|//     16     1                                                   boolean ColumnVector.noNulls
+comment|//     17     1                                                   boolean ColumnVector.isRepeating
+comment|//     18     1                                                   boolean ColumnVector.preFlattenIsRepeating
+comment|//     19     1                                                   boolean ColumnVector.preFlattenNoNulls
+comment|//     20     4                                                           (alignment/padding gap)
+comment|//     24     8   org.apache.hadoop.hive.ql.exec.vector.ColumnVector.Type ColumnVector.type
+comment|//     32     8                                                 boolean[] ColumnVector.isNull
+comment|//     40     4                                                       int BytesColumnVector.nextFree
+comment|//     44     4                                                       int BytesColumnVector.smallBufferNextFree
+comment|//     48     4                                                       int BytesColumnVector.bufferAllocationCount
+comment|//     52     4                                                           (alignment/padding gap)
+comment|//     56     8                                                  byte[][] BytesColumnVector.vector
+comment|//     64     8                                                     int[] BytesColumnVector.start
+comment|//     72     8                                                     int[] BytesColumnVector.length
+comment|//     80     8                                                    byte[] BytesColumnVector.buffer
+comment|//     88     8                                                    byte[] BytesColumnVector.smallBuffer
+name|long
+name|columnVectorBaseSize
+init|=
+call|(
+name|long
+call|)
+argument_list|(
+literal|96
+operator|*
+name|numberOfProjectedColumns
+operator|*
+name|scale
+argument_list|)
+decl_stmt|;
 for|for
 control|(
-name|TypeInfo
-name|ti
-range|:
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
 name|typeInfos
+operator|.
+name|length
+condition|;
+name|i
+operator|++
 control|)
 block|{
+name|TypeInfo
+name|ti
+init|=
+name|typeInfos
+index|[
+name|i
+index|]
+decl_stmt|;
 name|int
 name|colWeight
 decl_stmt|;
@@ -1908,6 +2061,18 @@ case|:
 name|colWeight
 operator|=
 name|COL_WEIGHT_STRING
+expr_stmt|;
+break|break;
+comment|//Timestamp column vector uses an int and long arrays
+case|case
+name|TIMESTAMP
+case|:
+case|case
+name|INTERVAL_DAY_TIME
+case|:
+name|colWeight
+operator|=
+literal|2
 expr_stmt|;
 break|break;
 case|case
@@ -1982,23 +2147,48 @@ block|}
 name|totalWeight
 operator|+=
 name|colWeight
+operator|*
+literal|8
+operator|*
+name|scale
 expr_stmt|;
 block|}
+comment|//default batch size is 1024
+name|totalWeight
+operator|*=
+literal|1024
+expr_stmt|;
+name|totalWeight
+operator|+=
+name|columnVectorBaseSize
+expr_stmt|;
+name|int
+name|bestEffortSize
+init|=
+name|Math
+operator|.
+name|min
+argument_list|(
+call|(
+name|int
+call|)
+argument_list|(
+name|maxBufferedSize
+operator|/
+name|totalWeight
+argument_list|)
+argument_list|,
+name|queueLimitMax
+argument_list|)
+decl_stmt|;
 return|return
 name|Math
 operator|.
 name|max
 argument_list|(
-name|queueLimitMin
+name|bestEffortSize
 argument_list|,
-call|(
-name|int
-call|)
-argument_list|(
-name|queueLimitBase
-operator|/
-name|totalWeight
-argument_list|)
+name|queueLimitMin
 argument_list|)
 return|;
 block|}
@@ -2143,10 +2333,6 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|work
-operator|==
-literal|null
-operator|||
 operator|!
 operator|(
 name|work
@@ -2395,8 +2581,6 @@ expr_stmt|;
 block|}
 name|ColumnVectorBatch
 name|cvb
-init|=
-literal|null
 decl_stmt|;
 try|try
 block|{
@@ -2486,7 +2670,7 @@ block|{
 comment|// TODO: relying everywhere on the magical constants and columns being together means ACID
 comment|//       columns are going to be super hard to change in a backward compat manner. I can
 comment|//       foresee someone cursing while refactoring all the magic for prefix schema changes.
-comment|/**          * Acid meta cols are always either all included or all excluded the          * the width of 'cvb' changes accordingly so 'acidColCount' and          * 'ixInVrb' need to be adjusted. See {@link IncludesImpl} comments.          */
+comment|/*           Acid meta cols are always either all included or all excluded the           the width of 'cvb' changes accordingly so 'acidColCount' and           'ixInVrb' need to be adjusted. See {@link IncludesImpl} comments.          */
 comment|// Exclude the row column.
 name|int
 name|acidColCount
@@ -3054,8 +3238,6 @@ comment|// Hive operators rely on recordreader to handle task interruption, and 
 comment|// do not do any blocking IO ops on this thread.
 name|Object
 name|next
-init|=
-literal|null
 decl_stmt|;
 do|do
 block|{
@@ -3751,9 +3933,7 @@ name|filePhysicalColumnIds
 operator|=
 operator|new
 name|ArrayList
-argument_list|<
-name|Integer
-argument_list|>
+argument_list|<>
 argument_list|(
 name|filePhysicalColumnIds
 operator|.
@@ -3803,7 +3983,7 @@ operator|!
 name|includeAcidColumns
 condition|)
 block|{
-comment|/**              * if not including acid columns, we still want to number the              * physical columns as if acid columns are included becase              * {@link #generateFileIncludes(TypeDescription)} takes the file              * schema as input              * (eg<op, owid, writerId, rowid, cwid,<f1, ... fn>>)              */
+comment|/*               if not including acid columns, we still want to number the               physical columns as if acid columns are included becase               {@link #generateFileIncludes(TypeDescription)} takes the file               schema as input               (eg<op, owid, writerId, rowid, cwid,<f1, ... fn>>)              */
 continue|continue;
 block|}
 name|filePhysicalColumnIds

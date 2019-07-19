@@ -18,7 +18,7 @@ package|;
 end_package
 
 begin_comment
-comment|/** Simple object pool to prevent GC on small objects passed between threads. */
+comment|/**  * Simple object pool to prevent GC on small objects passed between threads.  */
 end_comment
 
 begin_interface
@@ -29,7 +29,7 @@ parameter_list|<
 name|T
 parameter_list|>
 block|{
-comment|/** Object helper for objects stored in the pool. */
+comment|/**    * Object helper for objects stored in the pool.    */
 specifier|public
 interface|interface
 name|PoolObjectHelper
@@ -37,12 +37,12 @@ parameter_list|<
 name|T
 parameter_list|>
 block|{
-comment|/** Called to create an object when one cannot be provided.      * @return a newly allocated object      */
+comment|/**      * Called to create an object when one cannot be provided.      *      * @return a newly allocated object      */
 name|T
 name|create
 parameter_list|()
 function_decl|;
-comment|/** Called before the object is put in the pool (regardless of whether put succeeds).      * @param t the object to reset      */
+comment|/**      * Called before the object is put in the pool (regardless of whether put succeeds).      *      * @param t the object to reset      */
 name|void
 name|resetBeforeOffer
 parameter_list|(
@@ -66,6 +66,13 @@ name|int
 name|size
 parameter_list|()
 function_decl|;
+specifier|default
+name|void
+name|clear
+parameter_list|()
+block|{
+comment|//no op
+block|}
 block|}
 end_interface
 

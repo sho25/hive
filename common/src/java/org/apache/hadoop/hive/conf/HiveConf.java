@@ -15160,28 +15160,41 @@ argument_list|,
 literal|"Whether to enable time counters for LLAP IO layer (time spent in HDFS, etc.)"
 argument_list|)
 block|,
-name|LLAP_IO_VRB_QUEUE_LIMIT_BASE
+name|LLAP_IO_VRB_QUEUE_LIMIT_MAX
 argument_list|(
-literal|"hive.llap.io.vrb.queue.limit.base"
+literal|"hive.llap.io.vrb.queue.limit.max"
 argument_list|,
 literal|50000
 argument_list|,
-literal|"The default queue size for VRBs produced by a LLAP IO thread when the processing is\n"
+literal|"The maximum queue size for VRBs produced by a LLAP IO thread when the processing is\n"
 operator|+
 literal|"slower than the IO. The actual queue size is set per fragment, and is adjusted down\n"
 operator|+
-literal|"from the base, depending on the schema."
+literal|"from the base, depending on the schema see LLAP_IO_CVB_BUFFERED_SIZE."
 argument_list|)
 block|,
 name|LLAP_IO_VRB_QUEUE_LIMIT_MIN
 argument_list|(
 literal|"hive.llap.io.vrb.queue.limit.min"
 argument_list|,
-literal|10
+literal|1
 argument_list|,
 literal|"The minimum queue size for VRBs produced by a LLAP IO thread when the processing is\n"
 operator|+
 literal|"slower than the IO (used when determining the size from base size)."
+argument_list|)
+block|,
+name|LLAP_IO_CVB_BUFFERED_SIZE
+argument_list|(
+literal|"hive.llap.io.cvb.memory.consumption."
+argument_list|,
+literal|1L
+operator|<<
+literal|30
+argument_list|,
+literal|"The amount of bytes used to buffer CVB between IO and Processor Threads default to 1GB, "
+operator|+
+literal|"this will be used to compute a best effort queue size for VRBs produced by a LLAP IO thread."
 argument_list|)
 block|,
 name|LLAP_IO_SHARE_OBJECT_POOLS
