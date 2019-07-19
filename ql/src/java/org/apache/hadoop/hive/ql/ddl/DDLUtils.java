@@ -95,6 +95,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|SortedMap
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|TreeMap
 import|;
 end_import
@@ -802,7 +812,7 @@ name|String
 argument_list|>
 name|props
 parameter_list|,
-name|List
+name|Set
 argument_list|<
 name|String
 argument_list|>
@@ -821,7 +831,7 @@ return|return
 literal|""
 return|;
 block|}
-name|Map
+name|SortedMap
 argument_list|<
 name|String
 argument_list|,

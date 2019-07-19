@@ -883,7 +883,7 @@ argument_list|()
 operator|)
 return|;
 block|}
-specifier|public
+specifier|private
 name|void
 name|finalizeAlterTableWithWriteIdOp
 parameter_list|(
