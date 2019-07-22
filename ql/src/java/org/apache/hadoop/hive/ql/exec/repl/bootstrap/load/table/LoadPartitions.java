@@ -1510,7 +1510,10 @@ name|partSpec
 init|=
 name|addPartitionDesc
 operator|.
-name|getPartition
+name|getPartitions
+argument_list|()
+operator|.
+name|get
 argument_list|(
 literal|0
 argument_list|)
@@ -2527,7 +2530,10 @@ name|lastReplicatedPartSpec
 operator|=
 name|lastPartitionReplicated
 operator|.
-name|getPartition
+name|getPartitions
+argument_list|()
+operator|.
+name|get
 argument_list|(
 literal|0
 argument_list|)
@@ -2595,7 +2601,10 @@ name|currentSpec
 init|=
 name|addPartitionDesc
 operator|.
-name|getPartition
+name|getPartitions
+argument_list|()
+operator|.
+name|get
 argument_list|(
 literal|0
 argument_list|)
@@ -2644,7 +2653,10 @@ name|partSpec
 init|=
 name|addPartitionDesc
 operator|.
-name|getPartition
+name|getPartitions
+argument_list|()
+operator|.
+name|get
 argument_list|(
 literal|0
 argument_list|)
