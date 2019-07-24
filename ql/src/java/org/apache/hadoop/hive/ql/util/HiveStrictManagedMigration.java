@@ -3547,6 +3547,14 @@ expr_stmt|;
 block|}
 else|else
 block|{
+if|if
+condition|(
+operator|!
+name|runOptions
+operator|.
+name|dryRun
+condition|)
+block|{
 name|Path
 name|newDefaultDbLocation
 init|=
@@ -3574,6 +3582,7 @@ argument_list|,
 name|newDefaultDbLocation
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
