@@ -852,6 +852,10 @@ name|TableMigrationOption
 name|migrationOption
 decl_stmt|;
 specifier|final
+name|Properties
+name|confProps
+decl_stmt|;
+specifier|final
 name|boolean
 name|shouldModifyManagedTableLocation
 decl_stmt|;
@@ -888,6 +892,9 @@ name|oldWarehouseRoot
 parameter_list|,
 name|TableMigrationOption
 name|migrationOption
+parameter_list|,
+name|Properties
+name|confProps
 parameter_list|,
 name|boolean
 name|shouldModifyManagedTableLocation
@@ -934,6 +941,12 @@ operator|.
 name|migrationOption
 operator|=
 name|migrationOption
+expr_stmt|;
+name|this
+operator|.
+name|confProps
+operator|=
+name|confProps
 expr_stmt|;
 name|this
 operator|.
@@ -1000,6 +1013,10 @@ name|this
 operator|.
 name|migrationOption
 argument_list|,
+name|this
+operator|.
+name|confProps
+argument_list|,
 name|shouldModifyManagedTableLocation
 argument_list|,
 name|this
@@ -1055,6 +1072,10 @@ operator|+
 literal|", migrationOption="
 operator|+
 name|migrationOption
+operator|+
+literal|", confProps="
+operator|+
+name|confProps
 operator|+
 literal|", shouldModifyManagedTableLocation="
 operator|+
@@ -2111,6 +2132,8 @@ name|oldWarehouseRoot
 argument_list|,
 name|migrationOption
 argument_list|,
+name|confProps
+argument_list|,
 name|shouldModifyManagedTableLocation
 argument_list|,
 name|shouldModifyManagedTableOwner
@@ -2369,6 +2392,51 @@ name|warehouseRootCheckResult
 operator|.
 name|encryptionShim
 expr_stmt|;
+comment|// Make sure all --hiveconf settings get added to the HiveConf.
+comment|// This allows utility-specific settings (such as strict.managed.tables.migration.owner)
+comment|// to be set via command line.
+if|if
+condition|(
+name|runOptions
+operator|.
+name|confProps
+operator|!=
+literal|null
+condition|)
+block|{
+for|for
+control|(
+name|String
+name|propKey
+range|:
+name|runOptions
+operator|.
+name|confProps
+operator|.
+name|stringPropertyNames
+argument_list|()
+control|)
+block|{
+name|this
+operator|.
+name|conf
+operator|.
+name|set
+argument_list|(
+name|propKey
+argument_list|,
+name|runOptions
+operator|.
+name|confProps
+operator|.
+name|getProperty
+argument_list|(
+name|propKey
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 name|this
 operator|.
 name|hms
