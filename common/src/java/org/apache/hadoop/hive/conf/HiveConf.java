@@ -15653,6 +15653,17 @@ argument_list|,
 literal|"Number of RPC handlers for AM LLAP plugin endpoint."
 argument_list|)
 block|,
+name|LLAP_HDFS_PACKAGE_DIR
+argument_list|(
+literal|"hive.llap.hdfs.package.dir"
+argument_list|,
+literal|".yarn"
+argument_list|,
+literal|"Package directory on HDFS used for holding collected configuration and libraries"
+operator|+
+literal|" required for YARN launch. Note: this should be set to the same as yarn.service.base.path"
+argument_list|)
+block|,
 name|LLAP_DAEMON_WORK_DIRS
 argument_list|(
 literal|"hive.llap.daemon.work.dirs"
