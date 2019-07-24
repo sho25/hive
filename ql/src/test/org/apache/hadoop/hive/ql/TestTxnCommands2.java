@@ -3087,6 +3087,7 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+comment|//TestTxnCommands2.runCleaner(hiveConf);
 name|rs
 operator|=
 name|runStatementOnDriver

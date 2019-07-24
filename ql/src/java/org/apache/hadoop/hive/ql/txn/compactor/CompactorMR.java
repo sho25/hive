@@ -2167,6 +2167,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
@@ -2180,9 +2182,18 @@ name|conf
 argument_list|,
 name|writeIds
 argument_list|,
+name|Ref
+operator|.
+name|from
+argument_list|(
 literal|false
+argument_list|)
 argument_list|,
 literal|true
+argument_list|,
+literal|null
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
@@ -2371,6 +2382,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
@@ -2383,6 +2396,19 @@ argument_list|,
 name|conf
 argument_list|,
 name|writeIds
+argument_list|,
+name|Ref
+operator|.
+name|from
+argument_list|(
+literal|false
+argument_list|)
+argument_list|,
+literal|false
+argument_list|,
+literal|null
+argument_list|,
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -2634,6 +2660,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
@@ -2660,6 +2688,8 @@ name|t
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 if|if
@@ -3317,6 +3347,8 @@ name|AcidUtils
 operator|.
 name|getAcidState
 argument_list|(
+literal|null
+argument_list|,
 operator|new
 name|Path
 argument_list|(
@@ -3343,6 +3375,8 @@ name|t
 operator|.
 name|getParameters
 argument_list|()
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|removeFilesForMmTable
@@ -7303,6 +7337,8 @@ argument_list|(
 name|dir
 argument_list|,
 name|fs
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 comment|//deltes can't be raw format

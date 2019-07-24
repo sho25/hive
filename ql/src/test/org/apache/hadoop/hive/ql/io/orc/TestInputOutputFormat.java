@@ -6301,7 +6301,7 @@ argument_list|(
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_0000001_0000001_0000/bucket_00000"
+literal|"mock:/a/base_0000001/bucket_00000"
 argument_list|,
 literal|1000
 argument_list|,
@@ -6326,7 +6326,7 @@ argument_list|(
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_0000001_0000001_0000/bucket_00001"
+literal|"mock:/a/base_0000001/bucket_00001"
 argument_list|,
 literal|1000
 argument_list|,
@@ -6351,7 +6351,7 @@ argument_list|(
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_0000001_0000001_0000/bucket_00002"
+literal|"mock:/a/base_0000001/bucket_00002"
 argument_list|,
 literal|1000
 argument_list|,
@@ -6376,7 +6376,7 @@ argument_list|(
 operator|new
 name|MockFile
 argument_list|(
-literal|"mock:/a/delta_0000001_0000001_0000/bucket_00003"
+literal|"mock:/a/base_0000001/bucket_00003"
 argument_list|,
 literal|1000
 argument_list|,
@@ -6477,6 +6477,106 @@ operator|new
 name|MockFile
 argument_list|(
 literal|"mock:/a/delta_0000002_0000002_0000/bucket_00003"
+argument_list|,
+literal|1000
+argument_list|,
+operator|new
+name|byte
+index|[
+literal|1
+index|]
+argument_list|,
+operator|new
+name|MockBlock
+argument_list|(
+literal|"host1"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|MockFileSystem
+operator|.
+name|addGlobalFile
+argument_list|(
+operator|new
+name|MockFile
+argument_list|(
+literal|"mock:/a/delta_0000003_0000003_0000/bucket_00000"
+argument_list|,
+literal|1000
+argument_list|,
+operator|new
+name|byte
+index|[
+literal|1
+index|]
+argument_list|,
+operator|new
+name|MockBlock
+argument_list|(
+literal|"host1"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|MockFileSystem
+operator|.
+name|addGlobalFile
+argument_list|(
+operator|new
+name|MockFile
+argument_list|(
+literal|"mock:/a/delta_0000003_0000003_0000/bucket_00001"
+argument_list|,
+literal|1000
+argument_list|,
+operator|new
+name|byte
+index|[
+literal|1
+index|]
+argument_list|,
+operator|new
+name|MockBlock
+argument_list|(
+literal|"host1"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|MockFileSystem
+operator|.
+name|addGlobalFile
+argument_list|(
+operator|new
+name|MockFile
+argument_list|(
+literal|"mock:/a/delta_0000003_0000003_0000/bucket_00002"
+argument_list|,
+literal|1000
+argument_list|,
+operator|new
+name|byte
+index|[
+literal|1
+index|]
+argument_list|,
+operator|new
+name|MockBlock
+argument_list|(
+literal|"host1"
+argument_list|)
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|MockFileSystem
+operator|.
+name|addGlobalFile
+argument_list|(
+operator|new
+name|MockFile
+argument_list|(
+literal|"mock:/a/delta_0000003_0000003_0000/bucket_00003"
 argument_list|,
 literal|1000
 argument_list|,
@@ -6855,7 +6955,7 @@ decl_stmt|;
 comment|//HIVE-16812 adds 1 read of the footer of each file (only if delete delta exists)
 name|assertEquals
 argument_list|(
-literal|8
+literal|12
 argument_list|,
 name|delta
 argument_list|)
@@ -22591,7 +22691,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktable
+comment|// call-1: getAcidState - mock:/mocktable
 comment|// call-2: open - mock:/mocktable/0_0
 comment|// call-3: open - mock:/mocktable/0_1
 name|assertEquals
@@ -23000,7 +23100,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl
+comment|// call-1: getAcidState - mock:/mocktbl
 comment|// call-2: open - mock:/mocktbl/0_0
 comment|// call-3: open - mock:/mocktbl/0_1
 name|assertEquals
@@ -23124,7 +23224,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl
+comment|// call-1: getAcidState - mock:/mocktbl
 name|assertEquals
 argument_list|(
 literal|1
@@ -23259,7 +23359,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl
+comment|// call-1: getAcidState - mock:/mocktbl
 comment|// call-2: open - mock:/mocktbl/0_0
 comment|// call-3: open - mock:/mocktbl/0_1
 name|assertEquals
@@ -23367,7 +23467,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl
+comment|// call-1: getAcidState - mock:/mocktbl
 name|assertEquals
 argument_list|(
 literal|1
@@ -23752,7 +23852,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktable
+comment|// call-1: getAcidState - mock:/mocktable
 comment|// call-2: open - mock:/mocktbl1/0_0
 comment|// call-3: open - mock:/mocktbl1/0_1
 name|assertEquals
@@ -24012,7 +24112,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktable
+comment|// call-1: getAcidState - mock:/mocktable
 comment|// call-2: open - mock:/mocktbl1/0_0
 comment|// call-3: open - mock:/mocktbl1/0_1
 name|assertEquals
@@ -24120,7 +24220,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl1
+comment|// call-1: getAcidState - mock:/mocktbl1
 name|assertEquals
 argument_list|(
 literal|1
@@ -24514,7 +24614,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl2
+comment|// call-1: getAcidState - mock:/mocktbl2
 comment|// call-2: open - mock:/mocktbl2/0_0
 comment|// call-3: open - mock:/mocktbl2/0_1
 name|assertEquals
@@ -24666,7 +24766,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl2
+comment|// call-1: getAcidState - mock:/mocktbl2
 comment|// call-2: open - mock:/mocktbl2/0_1
 name|assertEquals
 argument_list|(
@@ -24815,7 +24915,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl2
+comment|// call-1: getAcidState - mock:/mocktbl2
 comment|// call-2: open - mock:/mocktbl2/0_0
 name|assertEquals
 argument_list|(
@@ -24922,7 +25022,7 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: listLocatedStatus - mock:/mocktbl2
+comment|// call-1: getAcidState - mock:/mocktbl2
 name|assertEquals
 argument_list|(
 literal|1
@@ -27555,7 +27655,7 @@ comment|// call-7: open to read footer - split 2 => mock:/mocktable5/0_0 (to get
 comment|// call-8: file status - split 2 => mock:/mocktable5/0_0
 name|assertEquals
 argument_list|(
-literal|8
+literal|12
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -28127,7 +28227,7 @@ comment|// call-5: read footer - split 2 => mock:/mocktable6/0_0 (to get offset 
 comment|// call-6: file stat - split 2 => mock:/mocktable6/0_0
 name|assertEquals
 argument_list|(
-literal|6
+literal|10
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -28719,7 +28819,7 @@ block|}
 block|}
 name|assertEquals
 argument_list|(
-literal|7
+literal|12
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -29312,7 +29412,7 @@ block|}
 block|}
 name|assertEquals
 argument_list|(
-literal|5
+literal|10
 argument_list|,
 name|readOpsDelta
 argument_list|)
