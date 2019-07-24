@@ -1437,6 +1437,8 @@ argument_list|,
 name|name
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}
@@ -1466,6 +1468,9 @@ name|name
 parameter_list|,
 name|boolean
 name|getColStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1530,6 +1535,8 @@ argument_list|,
 name|name
 argument_list|,
 name|getColStats
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -1575,6 +1582,8 @@ argument_list|,
 name|tableName
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}
@@ -1609,6 +1618,9 @@ name|tableName
 parameter_list|,
 name|boolean
 name|getColStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|TException
@@ -1636,6 +1648,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|getColStats
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -1649,6 +1663,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|getColStats
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -3551,6 +3567,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -3596,6 +3615,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -3614,6 +3635,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -3659,6 +3683,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colName
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -9535,6 +9561,9 @@ name|partNames
 parameter_list|,
 name|boolean
 name|getColStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|TException
@@ -9583,6 +9612,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|getColStats
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}

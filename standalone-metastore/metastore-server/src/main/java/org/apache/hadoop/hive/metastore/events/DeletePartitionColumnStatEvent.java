@@ -103,6 +103,8 @@ decl_stmt|,
 name|colName
 decl_stmt|,
 name|partName
+decl_stmt|,
+name|engine
 decl_stmt|;
 specifier|private
 name|List
@@ -111,7 +113,7 @@ name|String
 argument_list|>
 name|partVals
 decl_stmt|;
-comment|/**    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partName partition column name    * @param partVals partition value    * @param colName column name    * @param handler handler that is firing the event    */
+comment|/**    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partName partition column name    * @param partVals partition value    * @param colName column name    * @param engine engine    * @param handler handler that is firing the event    */
 specifier|public
 name|DeletePartitionColumnStatEvent
 parameter_list|(
@@ -135,6 +137,9 @@ name|partVals
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|IHMSHandler
 name|handler
@@ -182,6 +187,12 @@ operator|.
 name|partVals
 operator|=
 name|partVals
+expr_stmt|;
+name|this
+operator|.
+name|engine
+operator|=
+name|engine
 expr_stmt|;
 block|}
 specifier|public
@@ -239,6 +250,15 @@ parameter_list|()
 block|{
 return|return
 name|partVals
+return|;
+block|}
+specifier|public
+name|String
+name|getEngine
+parameter_list|()
+block|{
+return|return
+name|engine
 return|;
 block|}
 block|}

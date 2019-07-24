@@ -194,6 +194,15 @@ name|delimit
 init|=
 literal|"\u0001"
 decl_stmt|;
+comment|/**    * Constant variable that stores engine value needed to store / access    * Hive column statistics.    * TODO: Once CachedStore supports multiple engines, this constant variable    * can be removed.    */
+specifier|protected
+specifier|static
+specifier|final
+name|String
+name|HIVE_ENGINE
+init|=
+literal|"hive"
+decl_stmt|;
 specifier|public
 specifier|static
 name|String

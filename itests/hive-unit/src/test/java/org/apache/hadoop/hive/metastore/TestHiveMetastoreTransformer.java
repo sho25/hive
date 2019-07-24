@@ -5848,6 +5848,8 @@ argument_list|,
 name|partValues
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -5975,6 +5977,8 @@ argument_list|,
 name|partValues
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -6062,6 +6066,8 @@ argument_list|,
 name|partValues
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 for|for
@@ -6239,6 +6245,8 @@ argument_list|,
 name|partValues
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|assertEquals

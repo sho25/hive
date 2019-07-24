@@ -8089,7 +8089,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Retrieve the column statistics for the specified columns of the table. NULL    * is returned if the columns are not provided.    * @param catName     the catalog name of the table    * @param dbName      the database name of the table    * @param tableName   the table name    * @param colNames    the list of the column names    * @return            the column statistics for the specified columns    * @throws MetaException    */
+comment|/**    * Retrieve the column statistics for the specified columns of the table. NULL    * is returned if the columns are not provided.    * @param catName     the catalog name of the table    * @param dbName      the database name of the table    * @param tableName   the table name    * @param colNames    the list of the column names    * @param engine      engine making the request    * @return            the column statistics for the specified columns    * @throws MetaException    */
 specifier|public
 name|ColumnStatistics
 name|getTableStats
@@ -8111,6 +8111,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|boolean
 name|enableBitVector
@@ -8158,7 +8161,9 @@ literal|" from "
 operator|+
 name|TAB_COL_STATS
 operator|+
-literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and \"COLUMN_NAME\" in ("
+literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
+operator|+
+literal|" and \"ENGINE\" = ? and \"COLUMN_NAME\" in ("
 decl_stmt|;
 name|Batchable
 argument_list|<
@@ -8225,7 +8230,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|3
+literal|4
 index|]
 decl_stmt|;
 name|params
@@ -8249,6 +8254,13 @@ index|]
 operator|=
 name|tableName
 expr_stmt|;
+name|params
+index|[
+literal|3
+index|]
+operator|=
+name|engine
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -8271,7 +8283,7 @@ name|params
 index|[
 name|i
 operator|+
-literal|3
+literal|4
 index|]
 operator|=
 name|input
@@ -8434,6 +8446,8 @@ argument_list|,
 name|csd
 argument_list|,
 literal|0
+argument_list|,
+name|engine
 argument_list|)
 decl_stmt|;
 name|b
@@ -8469,6 +8483,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|boolean
 name|useDensityFunctionForNDVEstimation
@@ -8671,6 +8688,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 expr_stmt|;
 name|computePartsFound
@@ -8710,6 +8729,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNamesForDB
+argument_list|,
+name|engine
 argument_list|,
 name|partsFound
 argument_list|,
@@ -8785,6 +8806,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 expr_stmt|;
 name|colStatsList
@@ -8800,6 +8823,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|,
 name|partsFound
 argument_list|,
@@ -8925,6 +8950,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -8964,6 +8992,8 @@ operator|+
 literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? "
 operator|+
 literal|" and \"COLUMN_NAME\" in (%1$s) and \"PARTITION_NAME\" in (%2$s)"
+operator|+
+literal|" and \"ENGINE\" = ? "
 operator|+
 literal|" group by \"PARTITION_NAME\""
 decl_stmt|;
@@ -9120,6 +9150,8 @@ argument_list|,
 name|inputPartNames
 argument_list|,
 name|inputColName
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -9288,6 +9320,9 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
+name|String
+name|engine
+parameter_list|,
 name|long
 name|partsFound
 parameter_list|,
@@ -9404,6 +9439,8 @@ argument_list|,
 name|inputPartNames
 argument_list|,
 name|inputColNames
+argument_list|,
+name|engine
 argument_list|,
 name|areAllPartsFound
 argument_list|,
@@ -9705,6 +9742,9 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
+name|String
+name|engine
+parameter_list|,
 name|boolean
 name|areAllPartsFound
 parameter_list|,
@@ -9738,6 +9778,8 @@ name|partNames
 argument_list|,
 name|colNames
 argument_list|,
+name|engine
+argument_list|,
 name|areAllPartsFound
 argument_list|,
 name|useDensityFunctionForNDVEstimation
@@ -9760,6 +9802,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|,
 name|areAllPartsFound
 argument_list|,
@@ -9798,6 +9842,9 @@ name|String
 argument_list|>
 name|colNames
 parameter_list|,
+name|String
+name|engine
+parameter_list|,
 name|boolean
 name|areAllPartsFound
 parameter_list|,
@@ -9828,6 +9875,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|,
 literal|true
 argument_list|)
@@ -9885,6 +9934,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|boolean
 name|areAllPartsFound
@@ -10018,6 +10070,8 @@ argument_list|)
 operator|+
 literal|")"
 operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
 literal|" group by \"COLUMN_NAME\", \"COLUMN_TYPE\""
 expr_stmt|;
 name|start
@@ -10059,6 +10113,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -10236,6 +10292,8 @@ argument_list|)
 operator|+
 literal|")"
 operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
 literal|" group by \"COLUMN_NAME\", \"COLUMN_TYPE\""
 expr_stmt|;
 name|start
@@ -10277,6 +10335,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -10515,6 +10575,8 @@ argument_list|)
 operator|+
 literal|")"
 operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
 literal|" group by \"COLUMN_NAME\", \"COLUMN_TYPE\""
 expr_stmt|;
 name|start
@@ -10556,6 +10618,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|noExtraColumnNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -10760,7 +10824,9 @@ name|size
 argument_list|()
 argument_list|)
 operator|+
-literal|") and \"PARTITION_NAME\" in ("
+literal|")"
+operator|+
+literal|" and \"PARTITION_NAME\" in ("
 operator|+
 name|makeParams
 argument_list|(
@@ -10770,7 +10836,11 @@ name|size
 argument_list|()
 argument_list|)
 operator|+
-literal|") group by \"COLUMN_NAME\""
+literal|")"
+operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
+literal|" group by \"COLUMN_NAME\""
 expr_stmt|;
 name|start
 operator|=
@@ -10834,6 +10904,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|extraColumnNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -11334,6 +11406,8 @@ argument_list|)
 operator|+
 literal|")"
 operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
 literal|" order by \""
 operator|+
 name|colStatName
@@ -11368,6 +11442,8 @@ argument_list|()
 argument_list|)
 operator|+
 literal|")"
+operator|+
+literal|" and \"ENGINE\" = ? "
 operator|+
 literal|" order by cast(\""
 operator|+
@@ -11420,6 +11496,8 @@ name|asList
 argument_list|(
 name|colName
 argument_list|)
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -11608,6 +11686,8 @@ argument_list|)
 operator|+
 literal|")"
 operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
 literal|" group by \"COLUMN_NAME\""
 expr_stmt|;
 name|start
@@ -11654,6 +11734,8 @@ name|asList
 argument_list|(
 name|colName
 argument_list|)
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -12235,6 +12317,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -12256,7 +12341,7 @@ operator|.
 name|size
 argument_list|()
 operator|+
-literal|3
+literal|4
 index|]
 decl_stmt|;
 name|int
@@ -12322,6 +12407,14 @@ operator|=
 name|partName
 expr_stmt|;
 block|}
+name|params
+index|[
+name|paramI
+operator|++
+index|]
+operator|=
+name|engine
+expr_stmt|;
 return|return
 name|params
 return|;
@@ -12357,6 +12450,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|boolean
 name|enableBitVector
@@ -12414,7 +12510,11 @@ literal|" where \"CAT_NAME\" = ? and \"DB_NAME\" = ? and \"TABLE_NAME\" = ? and 
 operator|+
 literal|"\"COLUMN_NAME\""
 operator|+
-literal|"  in (%1$s) AND \"PARTITION_NAME\" in (%2$s) order by \"PARTITION_NAME\""
+literal|"  in (%1$s) AND \"PARTITION_NAME\" in (%2$s) "
+operator|+
+literal|" and \"ENGINE\" = ? "
+operator|+
+literal|" order by \"PARTITION_NAME\""
 decl_stmt|;
 name|Batchable
 argument_list|<
@@ -12561,6 +12661,8 @@ argument_list|,
 name|inputPartNames
 argument_list|,
 name|inputColNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|,
 name|queryText
@@ -12821,6 +12923,8 @@ argument_list|,
 name|csd
 argument_list|,
 literal|1
+argument_list|,
+name|engine
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -12894,6 +12998,9 @@ name|csd
 parameter_list|,
 name|int
 name|offset
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -13014,6 +13121,13 @@ operator|.
 name|setStatsObj
 argument_list|(
 name|csos
+argument_list|)
+expr_stmt|;
+name|result
+operator|.
+name|setEngine
+argument_list|(
+name|engine
 argument_list|)
 expr_stmt|;
 return|return

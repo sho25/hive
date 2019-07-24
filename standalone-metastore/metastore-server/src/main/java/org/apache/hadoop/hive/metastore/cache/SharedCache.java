@@ -4377,6 +4377,10 @@ argument_list|(
 name|csd
 argument_list|,
 name|colStatObjs
+argument_list|,
+name|CacheUtils
+operator|.
+name|HIVE_ENGINE
 argument_list|)
 argument_list|,
 name|getTable
@@ -4919,6 +4923,10 @@ argument_list|(
 name|csd
 argument_list|,
 name|statObject
+argument_list|,
+name|CacheUtils
+operator|.
+name|HIVE_ENGINE
 argument_list|)
 decl_stmt|;
 if|if

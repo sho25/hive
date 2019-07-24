@@ -1119,7 +1119,7 @@ name|TException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get a table object in the default catalog.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @param getColumnStats    *          get the column stats, if available, when true    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
+comment|/**    * Get a table object in the default catalog.    *    * @param dbName    *          The database the table is located in.    * @param tableName    *          Name of the table to fetch.    * @param getColumnStats    *          get the column stats, if available, when true    * @param engine engine sending the request    * @return An object representing the table.    * @throws MetaException    *           Could not fetch the table    * @throws TException    *           A thrift communication error occurred    * @throws NoSuchObjectException    *           In case the table wasn't found.    */
 name|Table
 name|getTable
 parameter_list|(
@@ -1131,6 +1131,9 @@ name|tableName
 parameter_list|,
 name|boolean
 name|getColumnStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -1176,7 +1179,7 @@ parameter_list|)
 throws|throws
 name|TException
 function_decl|;
-comment|/**    * Get a table object.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @param validWriteIdList applicable snapshot    * @param getColumnStats get the column stats, if available, when true    * @return table object.    * @throws MetaException Something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
+comment|/**    * Get a table object.    * @param catName catalog the table is in.    * @param dbName database the table is in.    * @param tableName table name.    * @param validWriteIdList applicable snapshot    * @param getColumnStats get the column stats, if available, when true    * @param engine engine sending the request    * @return table object.    * @throws MetaException Something went wrong, usually in the RDBMS.    * @throws TException general thrift error.    */
 name|Table
 name|getTable
 parameter_list|(
@@ -1194,6 +1197,9 @@ name|validWriteIdList
 parameter_list|,
 name|boolean
 name|getColumnStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|TException
@@ -2375,7 +2381,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get partitions by a list of partition names.    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @param getColStats if true include statistics in the Partition object    * @return list of Partition objects    * @throws NoSuchObjectException No such partitions    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error    */
+comment|/**    * Get partitions by a list of partition names.    * @param db_name database name    * @param tbl_name table name    * @param part_names list of partition names    * @param getColStats if true include statistics in the Partition object    * @param engine engine sending the request    * @return list of Partition objects    * @throws NoSuchObjectException No such partitions    * @throws MetaException error accessing the RDBMS.    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|Partition
@@ -2396,6 +2402,9 @@ name|part_names
 parameter_list|,
 name|boolean
 name|getColStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -2433,7 +2442,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**      * Get partitions by a list of partition names.      * @param catName catalog name      * @param db_name database name      * @param tbl_name table name      * @param part_names list of partition names      * @param getColStats if true, column statistics is added to the Partition objects      * @return list of Partition objects      * @throws NoSuchObjectException No such partitions      * @throws MetaException error accessing the RDBMS.      * @throws TException thrift transport error      */
+comment|/**      * Get partitions by a list of partition names.      * @param catName catalog name      * @param db_name database name      * @param tbl_name table name      * @param part_names list of partition names      * @param getColStats if true, column statistics is added to the Partition objects      * @param engine engine sending the request      * @return list of Partition objects      * @throws NoSuchObjectException No such partitions      * @throws MetaException error accessing the RDBMS.      * @throws TException thrift transport error      */
 name|List
 argument_list|<
 name|Partition
@@ -2457,6 +2466,9 @@ name|part_names
 parameter_list|,
 name|boolean
 name|getColStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -4135,7 +4147,7 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Get the column statistics for a set of columns in a table.  This should only be used for    * non-partitioned tables.  For partitioned tables use    * {@link #getPartitionColumnStatistics(String, String, List, List)}.    * @param dbName database name    * @param tableName table name    * @param colNames list of column names    * @return list of column statistics objects, one per column    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+comment|/**    * Get the column statistics for a set of columns in a table.  This should only be used for    * non-partitioned tables.  For partitioned tables use    * {@link #getPartitionColumnStatistics(String, String, List, List)}.    * @param dbName database name    * @param tableName table name    * @param colNames list of column names    * @param engine engine sending the request    * @return list of column statistics objects, one per column    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|ColumnStatisticsObj
@@ -4153,6 +4165,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -4178,6 +4193,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|validWriteIdList
@@ -4189,35 +4207,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get the column statistics for a set of columns in a table.  This should only be used for    * non-partitioned tables.  For partitioned tables use    * {@link #getPartitionColumnStatistics(String, String, String, List, List)}.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colNames list of column names    * @return list of column statistics objects, one per column    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
-name|getTableColumnStatistics
-parameter_list|(
-name|String
-name|catName
-parameter_list|,
-name|String
-name|dbName
-parameter_list|,
-name|String
-name|tableName
-parameter_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|colNames
-parameter_list|)
-throws|throws
-name|NoSuchObjectException
-throws|,
-name|MetaException
-throws|,
-name|TException
-function_decl|;
+comment|/**    * Get the column statistics for a set of columns in a table.  This should only be used for    * non-partitioned tables.  For partitioned tables use    * {@link #getPartitionColumnStatistics(String, String, String, List, List)}.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colNames list of column names    * @param engine engine sending the request    * @return list of column statistics objects, one per column    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|List
 argument_list|<
 name|ColumnStatisticsObj
@@ -4240,6 +4230,40 @@ argument_list|>
 name|colNames
 parameter_list|,
 name|String
+name|engine
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+name|getTableColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|,
+name|String
+name|engine
+parameter_list|,
+name|String
 name|validWriteIdList
 parameter_list|)
 throws|throws
@@ -4249,7 +4273,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get the column statistics for a set of columns in a partition.    * @param dbName database name    * @param tableName table name    * @param partNames partition names.  Since these are names they should be of the form    *                  "key1=value1[/key2=value2...]"    * @param colNames list of column names    * @return map of columns to statistics    * @throws NoSuchObjectException no such partition    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
+comment|/**    * Get the column statistics for a set of columns in a partition.    * @param dbName database name    * @param tableName table name    * @param partNames partition names.  Since these are names they should be of the form    *                  "key1=value1[/key2=value2...]"    * @param colNames list of column names    * @param engine engine sending the request    * @return map of columns to statistics    * @throws NoSuchObjectException no such partition    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|Map
 argument_list|<
 name|String
@@ -4278,6 +4302,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -4314,6 +4341,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|validWriteIdList
@@ -4325,46 +4355,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get the column statistics for a set of columns in a partition.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partNames partition names.  Since these are names they should be of the form    *                  "key1=value1[/key2=value2...]"    * @param colNames list of column names    * @return map of columns to statistics    * @throws NoSuchObjectException no such partition    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|List
-argument_list|<
-name|ColumnStatisticsObj
-argument_list|>
-argument_list|>
-name|getPartitionColumnStatistics
-parameter_list|(
-name|String
-name|catName
-parameter_list|,
-name|String
-name|dbName
-parameter_list|,
-name|String
-name|tableName
-parameter_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|partNames
-parameter_list|,
-name|List
-argument_list|<
-name|String
-argument_list|>
-name|colNames
-parameter_list|)
-throws|throws
-name|NoSuchObjectException
-throws|,
-name|MetaException
-throws|,
-name|TException
-function_decl|;
+comment|/**    * Get the column statistics for a set of columns in a partition.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param partNames partition names.  Since these are names they should be of the form    *                  "key1=value1[/key2=value2...]"    * @param colNames list of column names    * @param engine engine sending the request    * @return map of columns to statistics    * @throws NoSuchObjectException no such partition    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    */
 name|Map
 argument_list|<
 name|String
@@ -4398,6 +4389,51 @@ argument_list|>
 name|colNames
 parameter_list|,
 name|String
+name|engine
+parameter_list|)
+throws|throws
+name|NoSuchObjectException
+throws|,
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|List
+argument_list|<
+name|ColumnStatisticsObj
+argument_list|>
+argument_list|>
+name|getPartitionColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|,
+name|String
+name|engine
+parameter_list|,
+name|String
 name|validWriteIdList
 parameter_list|)
 throws|throws
@@ -4407,7 +4443,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName, or    * all columns in a partition.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param colName column name, or null for all columns    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error dropping the stats data    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    * @throws InvalidInputException input is invalid or null.    */
+comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName, or    * all columns in a partition.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param colName column name, or null for all columns    * @param engine engine, or null for all engines    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error dropping the stats data    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    * @throws InvalidInputException input is invalid or null.    */
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
@@ -4422,6 +4458,9 @@ name|partName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -4434,7 +4473,7 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName, or    * all columns in a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param colName column name, or null for all columns    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error dropping the stats data    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    * @throws InvalidInputException input is invalid or null.    */
+comment|/**    * Delete partition level column statistics given dbName, tableName, partName and colName, or    * all columns in a partition.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param colName column name, or null for all columns    * @param engine engine, or null for all engines    * @return boolean indicating outcome of the operation    * @throws NoSuchObjectException no such partition exists    * @throws InvalidObjectException error dropping the stats data    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport error    * @throws InvalidInputException input is invalid or null.    */
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
@@ -4452,6 +4491,9 @@ name|partName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -4464,7 +4506,7 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Delete table level column statistics given dbName, tableName and colName, or all columns in    * a table.  This should be used for non-partitioned tables.    * @param dbName database name    * @param tableName table name    * @param colName column name, or null to drop stats for all columns    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws TException thrift transport error    * @throws InvalidInputException bad input, like a null table name.    */
+comment|/**    * Delete table level column statistics given dbName, tableName and colName, or all columns in    * a table.  This should be used for non-partitioned tables.    * @param dbName database name    * @param tableName table name    * @param colName column name, or null to drop stats for all columns    * @param engine engine, or null for all engines    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws TException thrift transport error    * @throws InvalidInputException bad input, like a null table name.    */
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
@@ -4476,6 +4518,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -4488,7 +4533,7 @@ name|TException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Delete table level column statistics given dbName, tableName and colName, or all columns in    * a table.  This should be used for non-partitioned tables.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name, or null to drop stats for all columns    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws TException thrift transport error    * @throws InvalidInputException bad input, like a null table name.    */
+comment|/**    * Delete table level column statistics given dbName, tableName and colName, or all columns in    * a table.  This should be used for non-partitioned tables.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name, or null to drop stats for all columns    * @param engine engine, or null for all engines    * @return boolean indicating the outcome of the operation    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws TException thrift transport error    * @throws InvalidInputException bad input, like a null table name.    */
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
@@ -4503,6 +4548,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5726,7 +5774,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get aggregated column stats for a set of partitions.    * @param dbName database name    * @param tblName table name    * @param colNames list of column names    * @param partName list of partition names (not values).    * @return aggregated stats for requested partitions    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport exception    */
+comment|/**    * Get aggregated column stats for a set of partitions.    * @param dbName database name    * @param tblName table name    * @param colNames list of column names    * @param partName list of partition names (not values).    * @param engine engine sending the request    * @return aggregated stats for requested partitions    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport exception    */
 name|AggrStats
 name|getAggrColStatsFor
 parameter_list|(
@@ -5747,6 +5795,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5775,6 +5826,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partName
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList
@@ -5786,7 +5840,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * Get aggregated column stats for a set of partitions.    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param colNames list of column names    * @param partNames list of partition names (not values).    * @return aggregated stats for requested partitions    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport exception    */
+comment|/**    * Get aggregated column stats for a set of partitions.    * @param catName catalog name    * @param dbName database name    * @param tblName table name    * @param colNames list of column names    * @param partNames list of partition names (not values).    * @param engine engine sending the request    * @return aggregated stats for requested partitions    * @throws NoSuchObjectException no such table    * @throws MetaException error accessing the RDBMS    * @throws TException thrift transport exception    */
 name|AggrStats
 name|getAggrColStatsFor
 parameter_list|(
@@ -5810,6 +5864,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -5841,6 +5898,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList

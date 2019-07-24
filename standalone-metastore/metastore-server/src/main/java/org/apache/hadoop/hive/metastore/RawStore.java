@@ -1943,7 +1943,10 @@ throws|,
 name|InvalidInputException
 function_decl|;
 comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
+name|List
+argument_list|<
 name|ColumnStatistics
+argument_list|>
 name|getTableColumnStatistics
 parameter_list|(
 name|String
@@ -1966,7 +1969,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @param writeIdList string format of valid writeId transaction list    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @param engine engine requesting the statistics    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
 name|ColumnStatistics
 name|getTableColumnStatistics
 parameter_list|(
@@ -1984,6 +1987,36 @@ argument_list|<
 name|String
 argument_list|>
 name|colName
+parameter_list|,
+name|String
+name|engine
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**    * Returns the relevant column statistics for a given column in a given table in a given database    * if such statistics exist.    * @param catName catalog name.    * @param dbName name of the database, defaults to current database    * @param tableName name of the table    * @param colName names of the columns for which statistics is requested    * @param engine engine requesting the statistics    * @param writeIdList string format of valid writeId transaction list    * @return Relevant column statistics for the column for the given table    * @throws NoSuchObjectException No such table    * @throws MetaException error accessing the RDBMS    *    */
+name|ColumnStatistics
+name|getTableColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tableName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList
@@ -1996,7 +2029,10 @@ function_decl|;
 comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
 name|List
 argument_list|<
+name|List
+argument_list|<
 name|ColumnStatistics
+argument_list|>
 argument_list|>
 name|getPartitionColumnStatistics
 parameter_list|(
@@ -2026,7 +2062,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @param writeIdList string format of valid writeId transaction list    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
+comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @param engine engine requesting the statistics    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
 name|List
 argument_list|<
 name|ColumnStatistics
@@ -2053,6 +2089,45 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|NoSuchObjectException
+function_decl|;
+comment|/**    * Get statistics for a partition for a set of columns.    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are names so must be key1=val1[/key2=val2...]    * @param colNames list of columns to get stats for    * @param engine engine requesting the statistics    * @param writeIdList string format of valid writeId transaction list    * @return list of statistics objects    * @throws MetaException error accessing the RDBMS    * @throws NoSuchObjectException no such partition.    */
+name|List
+argument_list|<
+name|ColumnStatistics
+argument_list|>
+name|getPartitionColumnStatistics
+parameter_list|(
+name|String
+name|catName
+parameter_list|,
+name|String
+name|dbName
+parameter_list|,
+name|String
+name|tblName
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|partNames
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList
@@ -2062,7 +2137,7 @@ name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Deletes column statistics if present associated with a given db, table, partition and col. If    * null is passed instead of a colName, stats when present for all columns associated    * with a given db, table and partition are deleted.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param partVals partition values.    * @param colName column name.    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException no such partition    * @throws MetaException error access the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws InvalidInputException bad input, such as null table or database name.    */
+comment|/**    * Deletes column statistics if present associated with a given db, table, partition and col. If    * null is passed instead of a colName, stats when present for all columns associated    * with a given db, table and partition are deleted.    * @param catName catalog name.    * @param dbName database name.    * @param tableName table name.    * @param partName partition name.    * @param partVals partition values.    * @param colName column name.    * @param engine engine for which we want to delete statistics    * @return Boolean indicating the outcome of the operation    * @throws NoSuchObjectException no such partition    * @throws MetaException error access the RDBMS    * @throws InvalidObjectException error dropping the stats    * @throws InvalidInputException bad input, such as null table or database name.    */
 name|boolean
 name|deletePartitionColumnStatistics
 parameter_list|(
@@ -2086,6 +2161,9 @@ name|partVals
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -2096,7 +2174,7 @@ name|InvalidObjectException
 throws|,
 name|InvalidInputException
 function_decl|;
-comment|/**    * Delete statistics for a single column or all columns in a table.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name.  Null to delete stats for all columns in the table.    * @return true if the statistics were deleted.    * @throws NoSuchObjectException no such table or column.    * @throws MetaException error access the RDBMS.    * @throws InvalidObjectException error dropping the stats    * @throws InvalidInputException bad inputs, such as null table name.    */
+comment|/**    * Delete statistics for a single column or all columns in a table.    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name.  Null to delete stats for all columns in the table.    * @param engine engine for which we want to delete statistics    * @return true if the statistics were deleted.    * @throws NoSuchObjectException no such table or column.    * @throws MetaException error access the RDBMS.    * @throws InvalidObjectException error dropping the stats    * @throws InvalidInputException bad inputs, such as null table name.    */
 name|boolean
 name|deleteTableColumnStatistics
 parameter_list|(
@@ -2111,6 +2189,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -2514,7 +2595,7 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
-comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
+comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @param engine engine requesting the statistics    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
 name|AggrStats
 name|get_aggr_stats_for
 parameter_list|(
@@ -2538,13 +2619,16 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
 throws|,
 name|NoSuchObjectException
 function_decl|;
-comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @param writeIdList string format of valid writeId transaction list    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
+comment|/**    * Get aggregated stats for a table or partition(s).    * @param catName catalog name.    * @param dbName database name.    * @param tblName table name.    * @param partNames list of partition names.  These are the names of the partitions, not    *                  values.    * @param colNames list of column names    * @param engine engine requesting the statistics    * @param writeIdList string format of valid writeId transaction list    * @return aggregated stats    * @throws MetaException error accessing RDBMS    * @throws NoSuchObjectException no such table or partition    */
 name|AggrStats
 name|get_aggr_stats_for
 parameter_list|(
@@ -2568,6 +2652,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList

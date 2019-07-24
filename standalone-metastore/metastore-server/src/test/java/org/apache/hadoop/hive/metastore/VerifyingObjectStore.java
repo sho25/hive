@@ -756,6 +756,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -775,6 +778,8 @@ name|tableName
 argument_list|,
 name|colNames
 argument_list|,
+name|engine
+argument_list|,
 literal|true
 argument_list|,
 literal|false
@@ -792,6 +797,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|,
 literal|false
 argument_list|,
@@ -842,6 +849,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -866,6 +876,8 @@ name|partNames
 argument_list|,
 name|colNames
 argument_list|,
+name|engine
+argument_list|,
 literal|true
 argument_list|,
 literal|false
@@ -888,6 +900,8 @@ argument_list|,
 name|partNames
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|,
 literal|false
 argument_list|,

@@ -6906,6 +6906,8 @@ argument_list|,
 name|part_names
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}
@@ -6932,6 +6934,9 @@ name|part_names
 parameter_list|,
 name|boolean
 name|get_col_stats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -6965,6 +6970,19 @@ argument_list|(
 name|get_col_stats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|get_col_stats
+condition|)
+block|{
+name|gpbnr
+operator|.
+name|setEngine
+argument_list|(
+name|engine
+argument_list|)
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|Partition
@@ -8889,6 +8907,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -8914,6 +8935,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|)
 operator|.
@@ -8943,6 +8966,9 @@ argument_list|>
 name|colNames
 parameter_list|,
 name|String
+name|engine
+parameter_list|,
+name|String
 name|validWriteIdList
 parameter_list|)
 throws|throws
@@ -8963,6 +8989,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colNames
+argument_list|,
+name|engine
 argument_list|)
 decl_stmt|;
 name|tsr
@@ -9016,6 +9044,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -9039,6 +9070,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partNames
+argument_list|,
+name|engine
 argument_list|)
 argument_list|)
 operator|.
@@ -9079,6 +9112,9 @@ argument_list|>
 name|colNames
 parameter_list|,
 name|String
+name|engine
+parameter_list|,
+name|String
 name|validWriteIdList
 parameter_list|)
 throws|throws
@@ -9101,6 +9137,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partNames
+argument_list|,
+name|engine
 argument_list|)
 decl_stmt|;
 name|psr
@@ -9140,6 +9178,9 @@ name|partName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -9164,6 +9205,8 @@ argument_list|,
 name|partName
 argument_list|,
 name|colName
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -9182,6 +9225,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -9204,6 +9250,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colName
+argument_list|,
+name|engine
 argument_list|)
 return|;
 block|}
@@ -13768,6 +13816,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -13823,6 +13874,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partNames
+argument_list|,
+name|engine
 argument_list|)
 decl_stmt|;
 return|return
@@ -13857,6 +13910,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partName
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList
@@ -13915,6 +13971,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partName
+argument_list|,
+name|engine
 argument_list|)
 decl_stmt|;
 name|req
@@ -16126,6 +16184,9 @@ name|dbName
 parameter_list|,
 name|boolean
 name|getColumnStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|MetaException
@@ -16185,6 +16246,9 @@ name|validWriteIdList
 parameter_list|,
 name|boolean
 name|getColumnStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|TException
@@ -16961,6 +17025,9 @@ name|part_names
 parameter_list|,
 name|boolean
 name|getColStats
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -17576,6 +17643,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -17615,6 +17685,9 @@ argument_list|>
 name|colNames
 parameter_list|,
 name|String
+name|engine
+parameter_list|,
+name|String
 name|validWriteIdList
 parameter_list|)
 throws|throws
@@ -17664,6 +17737,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -17712,6 +17788,9 @@ argument_list|<
 name|String
 argument_list|>
 name|colNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|validWriteIdList
@@ -17749,6 +17828,9 @@ name|partName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -17784,6 +17866,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -17946,6 +18031,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|)
 throws|throws
 name|NoSuchObjectException
@@ -17986,6 +18074,9 @@ argument_list|<
 name|String
 argument_list|>
 name|partNames
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|String
 name|writeIdList

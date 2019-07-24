@@ -633,6 +633,14 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|ENGINE
+init|=
+literal|"hive"
+decl_stmt|;
 specifier|public
 specifier|static
 class|class
@@ -1371,6 +1379,13 @@ argument_list|(
 name|obj
 argument_list|)
 expr_stmt|;
+name|cs
+operator|.
+name|setEngine
+argument_list|(
+name|ENGINE
+argument_list|)
+expr_stmt|;
 name|store
 operator|.
 name|updatePartitionColumnStatistics
@@ -1590,6 +1605,8 @@ name|asList
 argument_list|(
 literal|"col1"
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|statChecker

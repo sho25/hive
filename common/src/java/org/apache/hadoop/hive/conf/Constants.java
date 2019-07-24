@@ -22,6 +22,15 @@ specifier|public
 class|class
 name|Constants
 block|{
+comment|/* Constants for Hive stats */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_ENGINE
+init|=
+literal|"hive"
+decl_stmt|;
 comment|/* Constants for LLAP */
 specifier|public
 specifier|static

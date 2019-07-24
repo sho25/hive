@@ -1391,6 +1391,14 @@ specifier|private
 specifier|static
 specifier|final
 name|String
+name|ENGINE
+init|=
+literal|"hive"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
 name|TEST_DB1_NAME
 init|=
 literal|"testdb1"
@@ -11326,6 +11334,8 @@ argument_list|,
 name|emptyColNames
 argument_list|,
 name|emptyPartNames
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|assertNotNull
@@ -11378,6 +11388,8 @@ argument_list|,
 name|emptyColNames
 argument_list|,
 name|partNames
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|assertNotNull
@@ -11430,6 +11442,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|emptyPartNames
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|assertNotNull
@@ -11482,6 +11496,8 @@ argument_list|,
 name|colNames
 argument_list|,
 name|partNames
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|assertNotNull
@@ -11930,6 +11946,13 @@ argument_list|(
 name|statsObjs
 argument_list|)
 expr_stmt|;
+name|colStats
+operator|.
+name|setEngine
+argument_list|(
+name|ENGINE
+argument_list|)
+expr_stmt|;
 comment|// write stats objs persistently
 name|client
 operator|.
@@ -11959,6 +11982,8 @@ index|[
 literal|0
 index|]
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 operator|.
 name|get
@@ -12067,6 +12092,8 @@ argument_list|,
 name|tblName
 argument_list|,
 literal|null
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|assertTrue
@@ -12094,6 +12121,8 @@ index|[
 literal|1
 index|]
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 operator|.
 name|isEmpty
@@ -12142,6 +12171,8 @@ index|[
 literal|0
 index|]
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 operator|.
 name|get
@@ -12322,6 +12353,13 @@ argument_list|(
 name|statsObjs
 argument_list|)
 expr_stmt|;
+name|colStats
+operator|.
+name|setEngine
+argument_list|(
+name|ENGINE
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|updatePartitionColumnStatistics
@@ -12355,6 +12393,8 @@ index|[
 literal|1
 index|]
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 operator|.
 name|get
@@ -12480,6 +12520,8 @@ name|colName
 index|[
 literal|1
 index|]
+argument_list|,
+name|ENGINE
 argument_list|)
 expr_stmt|;
 name|colStats2
@@ -12508,6 +12550,8 @@ index|[
 literal|0
 index|]
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 operator|.
 name|get
@@ -12547,6 +12591,8 @@ index|[
 literal|1
 index|]
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 operator|.
 name|isEmpty

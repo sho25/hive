@@ -91,8 +91,10 @@ decl_stmt|,
 name|tableName
 decl_stmt|,
 name|colName
+decl_stmt|,
+name|engine
 decl_stmt|;
-comment|/**    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name    * @param handler handler that is firing the event    */
+comment|/**    * @param catName catalog name    * @param dbName database name    * @param tableName table name    * @param colName column name    * @param engine engine    * @param handler handler that is firing the event    */
 specifier|public
 name|DeleteTableColumnStatEvent
 parameter_list|(
@@ -107,6 +109,9 @@ name|tableName
 parameter_list|,
 name|String
 name|colName
+parameter_list|,
+name|String
+name|engine
 parameter_list|,
 name|IHMSHandler
 name|handler
@@ -143,6 +148,12 @@ name|colName
 operator|=
 name|colName
 expr_stmt|;
+name|this
+operator|.
+name|engine
+operator|=
+name|engine
+expr_stmt|;
 block|}
 specifier|public
 name|String
@@ -178,6 +189,15 @@ parameter_list|()
 block|{
 return|return
 name|colName
+return|;
+block|}
+specifier|public
+name|String
+name|getEngine
+parameter_list|()
+block|{
+return|return
+name|engine
 return|;
 block|}
 block|}

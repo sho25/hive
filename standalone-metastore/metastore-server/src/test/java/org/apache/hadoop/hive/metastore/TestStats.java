@@ -732,6 +732,14 @@ specifier|private
 specifier|static
 specifier|final
 name|String
+name|ENGINE
+init|=
+literal|"hive"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
 name|NO_CAT
 init|=
 literal|"DO_NOT_USE_A_CATALOG!"
@@ -1409,6 +1417,13 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+name|rqst
+operator|.
+name|setEngine
+argument_list|(
+name|ENGINE
+argument_list|)
+expr_stmt|;
 name|client
 operator|.
 name|setPartitionColumnStatistics
@@ -1528,6 +1543,8 @@ argument_list|(
 name|desc
 argument_list|,
 name|objs
+argument_list|,
+name|ENGINE
 argument_list|)
 return|;
 block|}
@@ -1589,6 +1606,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colName
+argument_list|,
+name|ENGINE
 argument_list|)
 expr_stmt|;
 else|else
@@ -1603,6 +1622,8 @@ argument_list|,
 name|tableName
 argument_list|,
 name|colName
+argument_list|,
+name|ENGINE
 argument_list|)
 expr_stmt|;
 block|}
@@ -1628,6 +1649,8 @@ argument_list|,
 name|partName
 argument_list|,
 name|colName
+argument_list|,
+name|ENGINE
 argument_list|)
 expr_stmt|;
 else|else
@@ -1644,6 +1667,8 @@ argument_list|,
 name|partName
 argument_list|,
 name|colName
+argument_list|,
+name|ENGINE
 argument_list|)
 expr_stmt|;
 block|}
@@ -1703,6 +1728,8 @@ operator|.
 name|keySet
 argument_list|()
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 else|:
 name|client
@@ -1724,6 +1751,8 @@ operator|.
 name|keySet
 argument_list|()
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|compareStatsForOneTableOrPartition
@@ -1755,6 +1784,8 @@ argument_list|,
 name|tableName
 argument_list|,
 literal|true
+argument_list|,
+name|ENGINE
 argument_list|)
 else|:
 name|client
@@ -1770,6 +1801,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|true
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -1816,6 +1849,8 @@ argument_list|,
 name|tableName
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 else|:
 name|client
@@ -1831,6 +1866,8 @@ argument_list|,
 literal|null
 argument_list|,
 literal|false
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1912,6 +1949,8 @@ operator|.
 name|keySet
 argument_list|()
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 else|:
 name|client
@@ -1935,6 +1974,8 @@ operator|.
 name|keySet
 argument_list|()
 argument_list|)
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 for|for
@@ -2004,6 +2045,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|partNames
+argument_list|,
+name|ENGINE
 argument_list|)
 else|:
 name|client
@@ -2027,6 +2070,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|partNames
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -2142,6 +2187,8 @@ name|partName
 argument_list|)
 argument_list|,
 literal|true
+argument_list|,
+name|ENGINE
 argument_list|)
 else|:
 name|client
@@ -2162,6 +2209,8 @@ name|partName
 argument_list|)
 argument_list|,
 literal|true
+argument_list|,
+name|ENGINE
 argument_list|)
 decl_stmt|;
 name|Partition
@@ -2215,6 +2264,8 @@ name|partName
 argument_list|)
 argument_list|,
 literal|true
+argument_list|,
+name|ENGINE
 argument_list|)
 else|:
 name|client
@@ -2235,6 +2286,8 @@ name|partName
 argument_list|)
 argument_list|,
 literal|true
+argument_list|,
+name|ENGINE
 argument_list|)
 expr_stmt|;
 name|partition
