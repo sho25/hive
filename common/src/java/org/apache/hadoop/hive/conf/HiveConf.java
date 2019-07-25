@@ -21736,6 +21736,8 @@ operator|.
 name|varname
 argument_list|,
 name|val
+argument_list|,
+literal|"setVar"
 argument_list|)
 expr_stmt|;
 block|}
@@ -22316,6 +22318,8 @@ name|addResource
 argument_list|(
 name|getConfVarInputStream
 argument_list|()
+argument_list|,
+literal|"HiveConf.java"
 argument_list|)
 expr_stmt|;
 comment|// Overlay hive-site.xml if it exists
@@ -22888,7 +22892,6 @@ operator|=
 name|getSQLStdAuthDefaultWhiteListPattern
 argument_list|()
 expr_stmt|;
-block|}
 name|setVar
 argument_list|(
 name|ConfVars
@@ -22898,6 +22901,7 @@ argument_list|,
 name|whiteListParamsStr
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 specifier|private
 specifier|static

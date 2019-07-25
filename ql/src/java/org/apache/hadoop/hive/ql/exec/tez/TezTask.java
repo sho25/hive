@@ -1519,7 +1519,7 @@ operator|.
 name|getWmContext
 argument_list|()
 decl_stmt|;
-comment|// jobConf will hold all the configuration for hadoop, tez, and hive
+comment|// jobConf will hold all the configuration for hadoop, tez, and hive, which are not set in AM defaults
 name|JobConf
 name|jobConf
 init|=
@@ -1528,6 +1528,8 @@ operator|.
 name|createConfiguration
 argument_list|(
 name|conf
+argument_list|,
+literal|true
 argument_list|)
 decl_stmt|;
 comment|// Get all user jars from work (e.g. input format stuff).
@@ -1750,8 +1752,6 @@ name|dagClient
 init|=
 name|submit
 argument_list|(
-name|jobConf
-argument_list|,
 name|dag
 argument_list|,
 name|sessionRef
@@ -3466,9 +3466,6 @@ block|}
 name|DAGClient
 name|submit
 parameter_list|(
-name|JobConf
-name|conf
-parameter_list|,
 name|DAG
 name|dag
 parameter_list|,

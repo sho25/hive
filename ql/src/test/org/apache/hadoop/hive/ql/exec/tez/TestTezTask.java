@@ -151,16 +151,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -1908,8 +1898,6 @@ name|task
 operator|.
 name|submit
 argument_list|(
-name|conf
-argument_list|,
 name|dag
 argument_list|,
 name|Ref
