@@ -341,8 +341,6 @@ operator|.
 name|compile
 argument_list|(
 name|query
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -533,8 +531,6 @@ operator|.
 name|compile
 argument_list|(
 name|query
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -856,8 +852,6 @@ operator|.
 name|compile
 argument_list|(
 name|query
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|Assert

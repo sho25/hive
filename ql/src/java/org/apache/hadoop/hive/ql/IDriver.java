@@ -180,6 +180,13 @@ name|IDriver
 extends|extends
 name|CommandProcessor
 block|{
+name|int
+name|compile
+parameter_list|(
+name|String
+name|string
+parameter_list|)
+function_decl|;
 name|CommandProcessorResponse
 name|compileAndRespond
 parameter_list|(

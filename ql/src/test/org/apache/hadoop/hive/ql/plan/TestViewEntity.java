@@ -552,8 +552,6 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|view1
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 comment|// view entity
@@ -786,8 +784,6 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|view1
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 comment|// view entity
@@ -1213,8 +1209,6 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|view2
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 comment|//verify that only view2 is direct input in above query
@@ -1453,8 +1447,6 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|view2
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 comment|// view entity
@@ -1707,8 +1699,6 @@ argument_list|(
 literal|"select * from "
 operator|+
 name|view2
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 comment|// view entity

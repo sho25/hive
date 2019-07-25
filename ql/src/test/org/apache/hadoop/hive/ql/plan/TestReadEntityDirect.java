@@ -433,8 +433,6 @@ operator|.
 name|compile
 argument_list|(
 literal|"select * from t1"
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -501,8 +499,6 @@ operator|.
 name|compile
 argument_list|(
 literal|"select * from v1"
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -624,8 +620,6 @@ operator|.
 name|compile
 argument_list|(
 literal|"select * from v1 join t1 on (v1.i = t1.i)"
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -747,8 +741,6 @@ operator|.
 name|compile
 argument_list|(
 literal|"select * from ( select * from v1 union all select * from t1) uv1t1"
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals
@@ -870,8 +862,6 @@ operator|.
 name|compile
 argument_list|(
 literal|"select * from v1 as a join v1 as b on (a.i = b.i)"
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 name|assertEquals

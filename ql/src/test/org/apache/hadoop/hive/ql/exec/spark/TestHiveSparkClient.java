@@ -127,9 +127,15 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|reexec
+name|security
 operator|.
-name|ReExecDriver
+name|authorization
+operator|.
+name|plugin
+operator|.
+name|sqlstd
+operator|.
+name|SQLStdHiveAuthorizerFactory
 import|;
 end_import
 
@@ -450,18 +456,11 @@ name|query
 init|=
 literal|"select * from test order by col"
 decl_stmt|;
-operator|(
-operator|(
-name|ReExecDriver
-operator|)
 name|driver
-operator|)
 operator|.
 name|compile
 argument_list|(
 name|query
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 name|List
