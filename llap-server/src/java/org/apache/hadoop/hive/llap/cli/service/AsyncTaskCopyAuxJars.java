@@ -310,6 +310,8 @@ block|,
 literal|"org.apache.commons.pool.impl.GenericObjectPool"
 block|,
 literal|"org.apache.hadoop.hive.kafka.KafkaStorageHandler"
+block|,
+literal|"org.apache.hadoop.hive.kudu.KuduStorageHandler"
 block|}
 decl_stmt|;
 specifier|private

@@ -10650,6 +10650,18 @@ operator|+
 literal|"restore the HBase table snapshot."
 argument_list|)
 block|,
+comment|// For Kudu storage handler
+name|HIVE_KUDU_MASTER_ADDRESSES_DEFAULT
+argument_list|(
+literal|"hive.kudu.master.addresses.default"
+argument_list|,
+literal|"localhost:7050"
+argument_list|,
+literal|"Comma-separated list of all of the Kudu master addresses.\n"
+operator|+
+literal|"This value is only used for a given table if the kudu.master_addresses table property is not set."
+argument_list|)
+block|,
 comment|// For har files
 name|HIVEARCHIVEENABLED
 argument_list|(
