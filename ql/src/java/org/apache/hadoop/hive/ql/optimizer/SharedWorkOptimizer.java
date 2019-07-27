@@ -1210,6 +1210,60 @@ return|return
 name|pctx
 return|;
 block|}
+comment|// Map of dbName.TblName -> TSOperator
+name|ArrayListMultimap
+argument_list|<
+name|String
+argument_list|,
+name|TableScanOperator
+argument_list|>
+name|tableNameToOps
+init|=
+name|splitTableScanOpsByTable
+argument_list|(
+name|pctx
+argument_list|)
+decl_stmt|;
+comment|// Check whether all tables in the plan are unique
+name|boolean
+name|tablesReferencedOnlyOnce
+init|=
+name|tableNameToOps
+operator|.
+name|asMap
+argument_list|()
+operator|.
+name|entrySet
+argument_list|()
+operator|.
+name|stream
+argument_list|()
+operator|.
+name|noneMatch
+argument_list|(
+name|e
+lambda|->
+name|e
+operator|.
+name|getValue
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|>
+literal|1
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|tablesReferencedOnlyOnce
+condition|)
+block|{
+comment|// Nothing to do, bail out
+return|return
+name|pctx
+return|;
+block|}
 if|if
 condition|(
 name|LOG
@@ -1239,36 +1293,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Cache to use during optimization
-name|SharedWorkOptimizerCache
-name|optimizerCache
-init|=
-operator|new
-name|SharedWorkOptimizerCache
-argument_list|()
-decl_stmt|;
-comment|// Gather information about the DPP table scans and store it in the cache
-name|gatherDPPTableScanOps
-argument_list|(
-name|pctx
-argument_list|,
-name|optimizerCache
-argument_list|)
-expr_stmt|;
-comment|// Map of dbName.TblName -> TSOperator
-name|ArrayListMultimap
-argument_list|<
-name|String
-argument_list|,
-name|TableScanOperator
-argument_list|>
-name|tableNameToOps
-init|=
-name|splitTableScanOpsByTable
-argument_list|(
-name|pctx
-argument_list|)
-decl_stmt|;
 comment|// We enforce a certain order when we do the reutilization.
 comment|// In particular, we use size of table x number of reads to
 comment|// rank the tables.
@@ -1295,6 +1319,22 @@ argument_list|(
 literal|"Sorted tables by size: {}"
 argument_list|,
 name|sortedTables
+argument_list|)
+expr_stmt|;
+comment|// Cache to use during optimization
+name|SharedWorkOptimizerCache
+name|optimizerCache
+init|=
+operator|new
+name|SharedWorkOptimizerCache
+argument_list|()
+decl_stmt|;
+comment|// Gather information about the DPP table scans and store it in the cache
+name|gatherDPPTableScanOps
+argument_list|(
+name|pctx
+argument_list|,
+name|optimizerCache
 argument_list|)
 expr_stmt|;
 comment|// Execute shared work optimization
