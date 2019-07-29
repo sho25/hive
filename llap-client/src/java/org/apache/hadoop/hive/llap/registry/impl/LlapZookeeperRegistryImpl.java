@@ -2749,7 +2749,7 @@ name|conf
 parameter_list|)
 block|{
 comment|// External LLAP clients would need to set LLAP_ZK_REGISTRY_USER to the LLAP daemon user (hive),
-comment|// rather than relying on RegistryUtils.currentUser().
+comment|// rather than relying on LlapRegistryService.currentUser().
 return|return
 name|HiveConf
 operator|.
@@ -2761,7 +2761,7 @@ name|ConfVars
 operator|.
 name|LLAP_ZK_REGISTRY_USER
 argument_list|,
-name|RegistryUtils
+name|LlapRegistryService
 operator|.
 name|currentUser
 argument_list|()

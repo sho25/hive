@@ -137,6 +137,26 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|registry
+operator|.
+name|impl
+operator|.
+name|LlapRegistryService
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|registry
 operator|.
 name|client
@@ -776,7 +796,7 @@ parameter_list|)
 block|{
 comment|// We assume that AMs and HS2 run under the same user.
 return|return
-name|RegistryUtils
+name|LlapRegistryService
 operator|.
 name|currentUser
 argument_list|()
