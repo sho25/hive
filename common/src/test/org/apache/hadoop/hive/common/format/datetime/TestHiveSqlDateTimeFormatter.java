@@ -39,16 +39,6 @@ end_import
 
 begin_import
 import|import
-name|junit
-operator|.
-name|framework
-operator|.
-name|TestCase
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -109,64 +99,6 @@ name|java
 operator|.
 name|time
 operator|.
-name|ZoneOffset
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|format
-operator|.
-name|DateTimeFormatter
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|format
-operator|.
-name|DateTimeFormatterBuilder
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|format
-operator|.
-name|ResolverStyle
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|format
-operator|.
-name|SignStyle
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
 name|temporal
 operator|.
 name|ChronoField
@@ -192,90 +124,6 @@ operator|.
 name|util
 operator|.
 name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import static
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-operator|.
-name|DAY_OF_MONTH
-import|;
-end_import
-
-begin_import
-import|import static
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-operator|.
-name|HOUR_OF_DAY
-import|;
-end_import
-
-begin_import
-import|import static
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-operator|.
-name|MINUTE_OF_HOUR
-import|;
-end_import
-
-begin_import
-import|import static
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-operator|.
-name|MONTH_OF_YEAR
-import|;
-end_import
-
-begin_import
-import|import static
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-operator|.
-name|SECOND_OF_MINUTE
-import|;
-end_import
-
-begin_import
-import|import static
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-operator|.
-name|YEAR
 import|;
 end_import
 
@@ -436,6 +284,13 @@ name|void
 name|testSetPatternWithBadPatterns
 parameter_list|()
 block|{
+name|verifyBadPattern
+argument_list|(
+literal|""
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|verifyBadPattern
 argument_list|(
 literal|"eyyyy-ddd"
@@ -685,13 +540,19 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+literal|"Format timestamp to string failed with pattern: "
+operator|+
+name|pattern
+argument_list|,
 name|expectedOutput
 argument_list|,
 name|formatter
 operator|.
 name|format
 argument_list|(
-name|toTimestamp
+name|Timestamp
+operator|.
+name|valueOf
 argument_list|(
 name|input
 argument_list|)
@@ -796,13 +657,19 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
+literal|"Format date to string failed with pattern: "
+operator|+
+name|pattern
+argument_list|,
 name|expectedOutput
 argument_list|,
 name|formatter
 operator|.
 name|format
 argument_list|(
-name|toDate
+name|Date
+operator|.
+name|valueOf
 argument_list|(
 name|input
 argument_list|)
@@ -1350,7 +1217,13 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|toTimestamp
+literal|"Parse string to timestamp failed. Pattern: "
+operator|+
+name|pattern
+argument_list|,
+name|Timestamp
+operator|.
+name|valueOf
 argument_list|(
 name|expectedOutput
 argument_list|)
@@ -1635,7 +1508,13 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-name|toDate
+literal|"Parse string to date failed. Pattern: "
+operator|+
+name|pattern
+argument_list|,
+name|Date
+operator|.
+name|valueOf
 argument_list|(
 name|expectedOutput
 argument_list|)
@@ -1656,13 +1535,6 @@ name|void
 name|testParseTimestampError
 parameter_list|()
 block|{
-name|verifyBadParseString
-argument_list|(
-literal|"yyyy"
-argument_list|,
-literal|"2019-02-03"
-argument_list|)
-expr_stmt|;
 name|verifyBadParseString
 argument_list|(
 literal|"yyyy-mm-dd  "
@@ -1694,6 +1566,7 @@ argument_list|,
 literal|"2019-912345"
 argument_list|)
 expr_stmt|;
+comment|//ddd out of range
 name|verifyBadParseString
 argument_list|(
 literal|"yyyy-mm-dd"
@@ -1751,7 +1624,13 @@ name|forParsing
 argument_list|)
 expr_stmt|;
 name|fail
-argument_list|()
+argument_list|(
+literal|"Bad pattern "
+operator|+
+name|string
+operator|+
+literal|" should have thrown IllegalArgumentException but didn't"
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -1762,6 +1641,8 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
+literal|"Expected IllegalArgumentException, got another exception."
+argument_list|,
 name|e
 operator|.
 name|getClass
@@ -1779,6 +1660,481 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testFm
+parameter_list|()
+block|{
+comment|//fm
+comment|//year (019) becomes 19 even if pattern is yyy
+name|checkFormatTs
+argument_list|(
+literal|"FMyyy-FMmm-dd FMHH12:MI:FMSS"
+argument_list|,
+literal|"2019-01-01 01:01:01"
+argument_list|,
+literal|"19-1-01 1:01:1"
+argument_list|)
+expr_stmt|;
+comment|//ff[1-9] shouldn't be affected, because leading zeroes hold information
+name|checkFormatTs
+argument_list|(
+literal|"FF5/FMFF5"
+argument_list|,
+literal|"2019-01-01 01:01:01.0333"
+argument_list|,
+literal|"03330/03330"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"FF/FMFF"
+argument_list|,
+literal|"2019-01-01 01:01:01.0333"
+argument_list|,
+literal|"0333/0333"
+argument_list|)
+expr_stmt|;
+comment|//only affects temporals that immediately follow
+name|verifyBadPattern
+argument_list|(
+literal|"yyy-mm-dd FM,HH12"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyy-mm-dd FM,HH12"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyy-mm-dd HH12 tzh:fmtzm"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"FMFMyyy-mm-dd"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"FMFXDD-MM-YYYY ff2"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testFx
+parameter_list|()
+block|{
+name|checkParseDate
+argument_list|(
+literal|"FXDD-MM-YYYY"
+argument_list|,
+literal|"01-01-1998"
+argument_list|,
+literal|"1998-01-01"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"FXDD-MM-YYYY hh12:mi:ss.ff"
+argument_list|,
+literal|"15-01-1998 11:12:13.0"
+argument_list|,
+literal|"1998-01-15 11:12:13"
+argument_list|)
+expr_stmt|;
+comment|//ff[1-9] are exempt
+name|checkParseTimestamp
+argument_list|(
+literal|"FXDD-MM-YYYY hh12:mi:ss.ff6"
+argument_list|,
+literal|"01-01-1998 00:00:00.4440"
+argument_list|,
+literal|"1998-01-01 00:00:00.444"
+argument_list|)
+expr_stmt|;
+comment|//fx can be anywhere in the pattern string
+name|checkParseTimestamp
+argument_list|(
+literal|"DD-MM-YYYYFX"
+argument_list|,
+literal|"01-01-1998"
+argument_list|,
+literal|"1998-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"DD-MM-YYYYFX"
+argument_list|,
+literal|"1-01-1998"
+argument_list|)
+expr_stmt|;
+comment|//same separators required
+name|verifyBadParseString
+argument_list|(
+literal|"FXDD-MM-YYYY"
+argument_list|,
+literal|"15/01/1998"
+argument_list|)
+expr_stmt|;
+comment|//no filling in zeroes or year digits
+name|verifyBadParseString
+argument_list|(
+literal|"FXDD-MM-YYYY"
+argument_list|,
+literal|"1-01-1998"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"FXDD-MM-YYYY"
+argument_list|,
+literal|"01-01-98"
+argument_list|)
+expr_stmt|;
+comment|//no leading or trailing whitespace
+name|verifyBadParseString
+argument_list|(
+literal|"FXDD-MM-YYYY"
+argument_list|,
+literal|"   01-01-1998   "
+argument_list|)
+expr_stmt|;
+comment|//enforce correct amount of leading zeroes
+name|verifyBadParseString
+argument_list|(
+literal|"FXyyyy-mm-dd hh24:miss"
+argument_list|,
+literal|"2018-01-01 17:005"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"FXyyyy-mm-dd sssss"
+argument_list|,
+literal|"2019-01-01 003"
+argument_list|)
+expr_stmt|;
+comment|//text case does not matter
+name|checkParseTimestamp
+argument_list|(
+literal|"\"the DATE is\" yyyy-mm-dd"
+argument_list|,
+literal|"the date is 2018-01-01"
+argument_list|,
+literal|"2018-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+comment|//AM/PM length has to match, but case doesn't
+name|checkParseTimestamp
+argument_list|(
+literal|"FXDD-MM-YYYY hh12 am"
+argument_list|,
+literal|"01-01-1998 12 PM"
+argument_list|,
+literal|"1998-01-01 12:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"FXDD-MM-YYYY hh12 A.M."
+argument_list|,
+literal|"01-01-1998 12 p.m."
+argument_list|,
+literal|"1998-01-01 12:00:00"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"FXDD-MM-YYYY hh12 am"
+argument_list|,
+literal|"01-01-1998 12 p.m."
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"FXDD-MM-YYYY hh12 a.m."
+argument_list|,
+literal|"01-01-1998 12 pm"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testFmFx
+parameter_list|()
+block|{
+name|checkParseTimestamp
+argument_list|(
+literal|"FXDD-FMMM-YYYY hh12 am"
+argument_list|,
+literal|"01-1-1998 12 PM"
+argument_list|,
+literal|"1998-01-01 12:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"FXFMDD-MM-YYYY hh12 am"
+argument_list|,
+literal|"1-01-1998 12 PM"
+argument_list|,
+literal|"1998-01-01 12:00:00"
+argument_list|)
+expr_stmt|;
+comment|//ff[1-9] unaffected
+name|checkParseTimestamp
+argument_list|(
+literal|"FXFMDD-MM-YYYY FMff2"
+argument_list|,
+literal|"1-01-1998 4"
+argument_list|,
+literal|"1998-01-01 00:00:00.4"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"FXFMDD-MM-YYYY ff2"
+argument_list|,
+literal|"1-01-1998 4"
+argument_list|,
+literal|"1998-01-01 00:00:00.4"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testText
+parameter_list|()
+block|{
+comment|// keep exact text upon format
+name|checkFormatTs
+argument_list|(
+literal|"hh24:mi \" Is \" hh12 PM\".\""
+argument_list|,
+literal|"2008-01-01 17:00:00"
+argument_list|,
+literal|"17:00  Is  05 PM."
+argument_list|)
+expr_stmt|;
+name|checkFormatDate
+argument_list|(
+literal|"\" `the _year_ is` \" yyyy\".\""
+argument_list|,
+literal|"2008-01-01"
+argument_list|,
+literal|" `the _year_ is`  2008."
+argument_list|)
+expr_stmt|;
+comment|// empty text strings work
+name|checkParseTimestamp
+argument_list|(
+literal|"\"\"yyyy\"\"-mm-dd\"\""
+argument_list|,
+literal|"2019-01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"\"\"yyyy\"\"-mm-dd\"\""
+argument_list|,
+literal|"2019-01-01"
+argument_list|,
+literal|"2019-01-01"
+argument_list|)
+expr_stmt|;
+comment|// Case doesn't matter upon parsing
+name|checkParseTimestamp
+argument_list|(
+literal|"\"Year \"YYYY \"month\" MM \"day\" DD.\"!\""
+argument_list|,
+literal|"YEaR 3000 mOnTh 3 DaY 1...!"
+argument_list|,
+literal|"3000-03-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"\"Year \"YYYY \"month\" MM \"day\" DD.\"!\""
+argument_list|,
+literal|"YEaR 3000 mOnTh 3 DaY 1...!"
+argument_list|,
+literal|"3000-03-01"
+argument_list|)
+expr_stmt|;
+comment|// Characters matter upon parsing
+name|verifyBadParseString
+argument_list|(
+literal|"\"Year! \"YYYY \"m\" MM \"d\" DD.\"!\""
+argument_list|,
+literal|"Year 3000 m 3 d 1,!"
+argument_list|)
+expr_stmt|;
+comment|// non-numeric characters in text counts as a delimiter
+name|checkParseDate
+argument_list|(
+literal|"yyyy\"m\"mm\"d\"dd"
+argument_list|,
+literal|"19m1d1"
+argument_list|,
+name|LocalDate
+operator|.
+name|now
+argument_list|()
+operator|.
+name|getYear
+argument_list|()
+operator|/
+literal|100
+operator|+
+literal|"19-01-01"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"yyyy\"[\"mm\"]\"dd"
+argument_list|,
+literal|"19[1]1"
+argument_list|,
+name|LocalDate
+operator|.
+name|now
+argument_list|()
+operator|.
+name|getYear
+argument_list|()
+operator|/
+literal|100
+operator|+
+literal|"19-01-01"
+argument_list|)
+expr_stmt|;
+comment|// single quotes are separators and not text delimiters
+name|checkParseTimestamp
+argument_list|(
+literal|"\"Y\'ear \"YYYY \' \"month\" MM \"day\" DD.\"!\""
+argument_list|,
+literal|"Y'EaR 3000 ' mOnTh 3 DaY 1...!"
+argument_list|,
+literal|"3000-03-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"\"Y\'ear \"YYYY \' \"month\" MM \"day\" DD.\"!\""
+argument_list|,
+literal|"Y'EaR 3000 ' mOnTh 3 DaY 1...!"
+argument_list|,
+literal|"3000-03-01"
+argument_list|)
+expr_stmt|;
+comment|// literal double quotes are escaped
+name|checkFormatTs
+argument_list|(
+literal|"\"the \\\"DATE\\\" is\" yyyy-mm-dd"
+argument_list|,
+literal|"2018-01-01 00:00:00"
+argument_list|,
+literal|"the \"DATE\" is 2018-01-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"\"\\\"\\\"\\\"\""
+argument_list|,
+literal|"2018-01-01 00:00:00"
+argument_list|,
+literal|"\"\"\""
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"\"the \\\"DATE\\\" is\" yyyy-mm-dd"
+argument_list|,
+literal|"the \"date\" is 2018-01-01"
+argument_list|,
+literal|"2018-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+comment|// Check variations of apostrophes, literal and non-literal double quotes
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy'\"\"mm-dd"
+argument_list|,
+literal|"2019\'01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy\'\"\"mm-dd"
+argument_list|,
+literal|"2019\'01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy'\"\"mm-dd"
+argument_list|,
+literal|"2019'01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy\'\"\"mm-dd"
+argument_list|,
+literal|"2019'01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy\'\"\\\"\"mm-dd"
+argument_list|,
+literal|"2019'\"01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy\'\"\\\"\"mm-dd"
+argument_list|,
+literal|"2019\'\"01-01"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|)
+expr_stmt|;
 block|}
 comment|/**    * Verify pattern is parsed correctly.    * Check:    * -token.temporalField for each token    * -sum of token.lengths    * -concatenation of token.strings    */
 specifier|private
@@ -1976,8 +2332,6 @@ name|String
 name|string
 parameter_list|)
 block|{
-try|try
-block|{
 name|formatter
 operator|=
 operator|new
@@ -1988,6 +2342,8 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|formatter
 operator|.
 name|parseTimestamp
@@ -1996,7 +2352,15 @@ name|string
 argument_list|)
 expr_stmt|;
 name|fail
-argument_list|()
+argument_list|(
+literal|"Parse string to timestamp should have failed.\nString: "
+operator|+
+name|string
+operator|+
+literal|"\nPattern: "
+operator|+
+name|pattern
+argument_list|)
 expr_stmt|;
 block|}
 catch|catch
@@ -2007,6 +2371,8 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
+literal|"Expected IllegalArgumentException, got another exception."
+argument_list|,
 name|e
 operator|.
 name|getClass
@@ -2024,262 +2390,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-comment|// Methods that construct datetime objects using java.time.DateTimeFormatter.
-specifier|public
-specifier|static
-name|Date
-name|toDate
-parameter_list|(
-name|String
-name|s
-parameter_list|)
-block|{
-name|LocalDate
-name|localDate
-init|=
-name|LocalDate
-operator|.
-name|parse
-argument_list|(
-name|s
-argument_list|,
-name|DATE_FORMATTER
-argument_list|)
-decl_stmt|;
-return|return
-name|Date
-operator|.
-name|ofEpochDay
-argument_list|(
-operator|(
-name|int
-operator|)
-name|localDate
-operator|.
-name|toEpochDay
-argument_list|()
-argument_list|)
-return|;
-block|}
-comment|/**    * This is effectively the old Timestamp.valueOf method.    */
-specifier|public
-specifier|static
-name|Timestamp
-name|toTimestamp
-parameter_list|(
-name|String
-name|s
-parameter_list|)
-block|{
-name|LocalDateTime
-name|localDateTime
-init|=
-name|LocalDateTime
-operator|.
-name|parse
-argument_list|(
-name|s
-operator|.
-name|trim
-argument_list|()
-argument_list|,
-name|TIMESTAMP_FORMATTER
-argument_list|)
-decl_stmt|;
-return|return
-name|Timestamp
-operator|.
-name|ofEpochSecond
-argument_list|(
-name|localDateTime
-operator|.
-name|toEpochSecond
-argument_list|(
-name|ZoneOffset
-operator|.
-name|UTC
-argument_list|)
-argument_list|,
-name|localDateTime
-operator|.
-name|getNano
-argument_list|()
-argument_list|)
-return|;
-block|}
-specifier|private
-specifier|static
-specifier|final
-name|DateTimeFormatter
-name|DATE_FORMATTER
-init|=
-name|DateTimeFormatter
-operator|.
-name|ofPattern
-argument_list|(
-literal|"yyyy-MM-dd"
-argument_list|)
-decl_stmt|;
-specifier|private
-specifier|static
-specifier|final
-name|DateTimeFormatter
-name|TIMESTAMP_FORMATTER
-decl_stmt|;
-static|static
-block|{
-name|DateTimeFormatterBuilder
-name|builder
-init|=
-operator|new
-name|DateTimeFormatterBuilder
-argument_list|()
-decl_stmt|;
-name|builder
-operator|.
-name|appendValue
-argument_list|(
-name|YEAR
-argument_list|,
-literal|1
-argument_list|,
-literal|10
-argument_list|,
-name|SignStyle
-operator|.
-name|NORMAL
-argument_list|)
-operator|.
-name|appendLiteral
-argument_list|(
-literal|'-'
-argument_list|)
-operator|.
-name|appendValue
-argument_list|(
-name|MONTH_OF_YEAR
-argument_list|,
-literal|1
-argument_list|,
-literal|2
-argument_list|,
-name|SignStyle
-operator|.
-name|NORMAL
-argument_list|)
-operator|.
-name|appendLiteral
-argument_list|(
-literal|'-'
-argument_list|)
-operator|.
-name|appendValue
-argument_list|(
-name|DAY_OF_MONTH
-argument_list|,
-literal|1
-argument_list|,
-literal|2
-argument_list|,
-name|SignStyle
-operator|.
-name|NORMAL
-argument_list|)
-operator|.
-name|optionalStart
-argument_list|()
-operator|.
-name|appendLiteral
-argument_list|(
-literal|" "
-argument_list|)
-operator|.
-name|appendValue
-argument_list|(
-name|HOUR_OF_DAY
-argument_list|,
-literal|1
-argument_list|,
-literal|2
-argument_list|,
-name|SignStyle
-operator|.
-name|NORMAL
-argument_list|)
-operator|.
-name|appendLiteral
-argument_list|(
-literal|':'
-argument_list|)
-operator|.
-name|appendValue
-argument_list|(
-name|MINUTE_OF_HOUR
-argument_list|,
-literal|1
-argument_list|,
-literal|2
-argument_list|,
-name|SignStyle
-operator|.
-name|NORMAL
-argument_list|)
-operator|.
-name|appendLiteral
-argument_list|(
-literal|':'
-argument_list|)
-operator|.
-name|appendValue
-argument_list|(
-name|SECOND_OF_MINUTE
-argument_list|,
-literal|1
-argument_list|,
-literal|2
-argument_list|,
-name|SignStyle
-operator|.
-name|NORMAL
-argument_list|)
-operator|.
-name|optionalStart
-argument_list|()
-operator|.
-name|appendFraction
-argument_list|(
-name|ChronoField
-operator|.
-name|NANO_OF_SECOND
-argument_list|,
-literal|1
-argument_list|,
-literal|9
-argument_list|,
-literal|true
-argument_list|)
-operator|.
-name|optionalEnd
-argument_list|()
-operator|.
-name|optionalEnd
-argument_list|()
-expr_stmt|;
-name|TIMESTAMP_FORMATTER
-operator|=
-name|builder
-operator|.
-name|toFormatter
-argument_list|()
-operator|.
-name|withResolverStyle
-argument_list|(
-name|ResolverStyle
-operator|.
-name|LENIENT
-argument_list|)
-expr_stmt|;
 block|}
 block|}
 end_class
