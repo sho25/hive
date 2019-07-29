@@ -17280,6 +17280,8 @@ operator|+
 literal|",dfs.adls.oauth2.credential"
 operator|+
 literal|",fs.adl.oauth2.credential"
+operator|+
+literal|",fs.azure.account.oauth2.client.secret"
 argument_list|,
 literal|"Comma separated list of configuration options which should not be read by normal user like passwords"
 argument_list|)

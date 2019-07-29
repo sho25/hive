@@ -1028,6 +1028,8 @@ argument_list|,
 literal|"dfs.adls.oauth2.credential"
 argument_list|,
 literal|"fs.adl.oauth2.credential"
+argument_list|,
+literal|"fs.azure.account.oauth2.client.secret"
 argument_list|)
 decl_stmt|;
 for|for
