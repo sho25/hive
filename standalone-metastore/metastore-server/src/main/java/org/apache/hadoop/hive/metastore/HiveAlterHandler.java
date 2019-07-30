@@ -907,6 +907,10 @@ specifier|final
 name|boolean
 name|replDataLocationChanged
 decl_stmt|;
+specifier|final
+name|boolean
+name|isReplicated
+decl_stmt|;
 if|if
 condition|(
 operator|(
@@ -1325,6 +1329,19 @@ argument_list|,
 name|environmentContext
 argument_list|)
 expr_stmt|;
+comment|// On a replica this alter table will be executed only if old and new both the databases are
+comment|// available and being replicated into. Otherwise, it will be either create or drop of table.
+name|isReplicated
+operator|=
+name|HiveMetaStore
+operator|.
+name|HMSHandler
+operator|.
+name|isDbReplicationTarget
+argument_list|(
+name|olddb
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 name|oldt
@@ -1660,6 +1677,20 @@ argument_list|,
 name|newDbName
 argument_list|)
 decl_stmt|;
+assert|assert
+operator|(
+name|isReplicated
+operator|==
+name|HiveMetaStore
+operator|.
+name|HMSHandler
+operator|.
+name|isDbReplicationTarget
+argument_list|(
+name|db
+argument_list|)
+operator|)
+assert|;
 name|Path
 name|databasePath
 init|=
@@ -2445,6 +2476,20 @@ argument_list|,
 name|newDbName
 argument_list|)
 decl_stmt|;
+assert|assert
+operator|(
+name|isReplicated
+operator|==
+name|HiveMetaStore
+operator|.
+name|HMSHandler
+operator|.
+name|isDbReplicationTarget
+argument_list|(
+name|db
+argument_list|)
+operator|)
+assert|;
 comment|// Update table stats. For partitioned table, we update stats in alterPartition()
 name|MetaStoreServerUtils
 operator|.
@@ -2765,6 +2810,8 @@ name|getWriteId
 argument_list|()
 argument_list|,
 name|handler
+argument_list|,
+name|isReplicated
 argument_list|)
 argument_list|,
 name|environmentContext
@@ -3132,6 +3179,8 @@ name|getWriteId
 argument_list|()
 argument_list|,
 name|handler
+argument_list|,
+name|isReplicated
 argument_list|)
 argument_list|,
 name|environmentContext

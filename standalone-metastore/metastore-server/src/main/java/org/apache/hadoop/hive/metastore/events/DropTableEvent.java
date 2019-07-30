@@ -106,6 +106,11 @@ specifier|final
 name|boolean
 name|deleteData
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReplicated
+decl_stmt|;
 specifier|public
 name|DropTableEvent
 parameter_list|(
@@ -120,6 +125,9 @@ name|deleteData
 parameter_list|,
 name|IHMSHandler
 name|handler
+parameter_list|,
+name|boolean
+name|isReplicated
 parameter_list|)
 block|{
 name|super
@@ -143,6 +151,12 @@ name|deleteData
 operator|=
 name|deleteData
 expr_stmt|;
+name|this
+operator|.
+name|isReplicated
+operator|=
+name|isReplicated
+expr_stmt|;
 block|}
 comment|/**    * @return the table    */
 specifier|public
@@ -162,6 +176,16 @@ parameter_list|()
 block|{
 return|return
 name|deleteData
+return|;
+block|}
+comment|/**    * @return whether this event was created by replication    */
+specifier|public
+name|boolean
+name|isReplicated
+parameter_list|()
+block|{
+return|return
+name|isReplicated
 return|;
 block|}
 block|}

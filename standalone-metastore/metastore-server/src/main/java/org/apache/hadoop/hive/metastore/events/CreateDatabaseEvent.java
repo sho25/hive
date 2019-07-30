@@ -101,6 +101,11 @@ specifier|final
 name|Database
 name|db
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReplicated
+decl_stmt|;
 specifier|public
 name|CreateDatabaseEvent
 parameter_list|(
@@ -112,6 +117,9 @@ name|status
 parameter_list|,
 name|IHMSHandler
 name|handler
+parameter_list|,
+name|boolean
+name|isReplicated
 parameter_list|)
 block|{
 name|super
@@ -127,6 +135,12 @@ name|db
 operator|=
 name|db
 expr_stmt|;
+name|this
+operator|.
+name|isReplicated
+operator|=
+name|isReplicated
+expr_stmt|;
 block|}
 comment|/**    * @return the db    */
 specifier|public
@@ -136,6 +150,16 @@ parameter_list|()
 block|{
 return|return
 name|db
+return|;
+block|}
+comment|/**    * @return where this event is caused by replication    */
+specifier|public
+name|boolean
+name|isReplicated
+parameter_list|()
+block|{
+return|return
+name|isReplicated
 return|;
 block|}
 block|}

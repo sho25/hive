@@ -115,6 +115,11 @@ specifier|private
 name|Long
 name|writeId
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReplicated
+decl_stmt|;
 specifier|public
 name|AlterTableEvent
 parameter_list|(
@@ -135,6 +140,9 @@ name|writeId
 parameter_list|,
 name|IHMSHandler
 name|handler
+parameter_list|,
+name|boolean
+name|isReplicated
 parameter_list|)
 block|{
 name|super
@@ -167,6 +175,12 @@ operator|.
 name|writeId
 operator|=
 name|writeId
+expr_stmt|;
+name|this
+operator|.
+name|isReplicated
+operator|=
+name|isReplicated
 expr_stmt|;
 block|}
 comment|/**    * @return the old table    */
@@ -206,6 +220,15 @@ parameter_list|()
 block|{
 return|return
 name|writeId
+return|;
+block|}
+specifier|public
+name|boolean
+name|isReplicated
+parameter_list|()
+block|{
+return|return
+name|isReplicated
 return|;
 block|}
 block|}

@@ -716,7 +716,9 @@ specifier|final
 name|String
 name|REPL_CHECKPOINT_KEY
 init|=
-literal|"hive.repl.ckpt.key"
+name|ReplConst
+operator|.
+name|REPL_TARGET_DB_PROPERTY
 decl_stmt|;
 specifier|public
 specifier|static

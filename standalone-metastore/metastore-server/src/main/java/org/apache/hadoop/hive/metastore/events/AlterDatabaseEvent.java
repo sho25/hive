@@ -110,6 +110,11 @@ specifier|final
 name|Database
 name|newDb
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReplicated
+decl_stmt|;
 specifier|public
 name|AlterDatabaseEvent
 parameter_list|(
@@ -124,6 +129,9 @@ name|status
 parameter_list|,
 name|IHMSHandler
 name|handler
+parameter_list|,
+name|boolean
+name|isReplicated
 parameter_list|)
 block|{
 name|super
@@ -145,6 +153,12 @@ name|newDb
 operator|=
 name|newDb
 expr_stmt|;
+name|this
+operator|.
+name|isReplicated
+operator|=
+name|isReplicated
+expr_stmt|;
 block|}
 comment|/**    * @return the old db    */
 specifier|public
@@ -164,6 +178,16 @@ parameter_list|()
 block|{
 return|return
 name|newDb
+return|;
+block|}
+comment|/**    * @return where this event is caused by replication    */
+specifier|public
+name|boolean
+name|isReplicated
+parameter_list|()
+block|{
+return|return
+name|isReplicated
 return|;
 block|}
 block|}

@@ -45,6 +45,15 @@ name|TRUE
 init|=
 literal|"true"
 decl_stmt|;
+comment|/**    * The constant string literal added as a property of database being replicated into. We choose    * this property over other properties is because this property is added right when the    * database is created as part of repl load and survives the incremental cycles.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|REPL_TARGET_DB_PROPERTY
+init|=
+literal|"hive.repl.ckpt.key"
+decl_stmt|;
 block|}
 end_class
 
