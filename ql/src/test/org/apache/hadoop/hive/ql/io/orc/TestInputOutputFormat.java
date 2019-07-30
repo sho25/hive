@@ -25522,13 +25522,11 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: open to read footer - split 1 => mock:/mocktable1/0_0
-comment|// call-2: open to read data - split 1 => mock:/mocktable1/0_0
-comment|// call-3: open to read footer - split 2 => mock:/mocktable1/0_1
-comment|// call-4: open to read data - split 2 => mock:/mocktable1/0_1
+comment|// call-1: open to read - split 1 => mock:/mocktable1/0_0
+comment|// call-2: open to read - split 2 => mock:/mocktable1/0_1
 name|assertEquals
 argument_list|(
-literal|4
+literal|2
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -26550,13 +26548,11 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: open to read footer - split 1 => mock:/mocktable3/0_0
-comment|// call-2: open to read data - split 1 => mock:/mocktable3/0_0
-comment|// call-3: open to read footer - split 2 => mock:/mocktable3/0_1
-comment|// call-4: open to read data - split 2 => mock:/mocktable3/0_1
+comment|// call-1: open to read - split 1 => mock:/mocktable3/0_0
+comment|// call-2: open to read - split 2 => mock:/mocktable3/0_1
 name|assertEquals
 argument_list|(
-literal|4
+literal|2
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -27645,17 +27641,9 @@ name|readOpsBefore
 expr_stmt|;
 block|}
 block|}
-comment|// call-1: open to read footer - split 1 => mock:/mocktable5/0_0
-comment|// call-2: open to read data - split 1 => mock:/mocktable5/0_0
-comment|// call-3: getAcidState - split 1 => mock:/mocktable5 (to compute offset for original read)
-comment|// call-4: open to read footer - split 2 => mock:/mocktable5/0_1
-comment|// call-5: open to read data - split 2 => mock:/mocktable5/0_1
-comment|// call-6: getAcidState - split 2 => mock:/mocktable5 (to compute offset for original read)
-comment|// call-7: open to read footer - split 2 => mock:/mocktable5/0_0 (to get row count)
-comment|// call-8: file status - split 2 => mock:/mocktable5/0_0
 name|assertEquals
 argument_list|(
-literal|12
+literal|10
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -28819,7 +28807,7 @@ block|}
 block|}
 name|assertEquals
 argument_list|(
-literal|12
+literal|10
 argument_list|,
 name|readOpsDelta
 argument_list|)
