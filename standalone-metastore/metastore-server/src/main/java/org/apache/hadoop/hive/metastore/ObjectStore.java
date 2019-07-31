@@ -57567,10 +57567,13 @@ init|=
 operator|new
 name|MFunction
 argument_list|(
+name|normalizeIdentifier
+argument_list|(
 name|func
 operator|.
 name|getFunctionName
 argument_list|()
+argument_list|)
 argument_list|,
 name|mdb
 argument_list|,
