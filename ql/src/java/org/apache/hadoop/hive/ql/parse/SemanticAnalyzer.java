@@ -50853,6 +50853,16 @@ name|qb
 operator|.
 name|getIsQuery
 argument_list|()
+argument_list|,
+name|qb
+operator|.
+name|isCTAS
+argument_list|()
+operator|||
+name|qb
+operator|.
+name|isMaterializedView
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|boolean
