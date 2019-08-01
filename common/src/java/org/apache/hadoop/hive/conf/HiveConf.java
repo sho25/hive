@@ -4035,6 +4035,21 @@ argument_list|,
 literal|"Whether to check client capabilities for potentially breaking API usage."
 argument_list|)
 block|,
+name|METASTORE_CLIENT_CAPABILITIES
+argument_list|(
+literal|"hive.metastore.client.capabilities"
+argument_list|,
+literal|"EXTWRITE,EXTREAD,HIVEBUCKET2,"
+operator|+
+literal|"HIVEFULLACIDREAD,HIVEFULLACIDWRITE,HIVECACHEINVALIDATE,HIVEMANAGESTATS,"
+operator|+
+literal|"HIVEMANAGEDINSERTWRITE,HIVEMANAGEDINSERTREAD,"
+operator|+
+literal|"HIVESQL,HIVEMQT,HIVEONLYMQTWRITE"
+argument_list|,
+literal|"Capabilities possessed by HiveServer"
+argument_list|)
+block|,
 name|METASTORE_CLIENT_CACHE_ENABLED
 argument_list|(
 literal|"hive.metastore.client.cache.enabled"

@@ -544,7 +544,7 @@ name|HIVE_IN_TEST
 operator|.
 name|varname
 argument_list|,
-literal|"false"
+literal|"true"
 argument_list|)
 expr_stmt|;
 name|put
