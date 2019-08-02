@@ -1043,6 +1043,11 @@ name|verifyResults
 argument_list|(
 name|expectedTables
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -2971,6 +2976,11 @@ name|verifyResults
 argument_list|(
 name|replicatedTables
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -3246,6 +3256,11 @@ operator|.
 name|verifyResults
 argument_list|(
 name|incrementalReplicatedTables
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 block|}
@@ -4298,6 +4313,11 @@ operator|.
 name|verifyResults
 argument_list|(
 name|incrementalReplicatedTables
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 block|}

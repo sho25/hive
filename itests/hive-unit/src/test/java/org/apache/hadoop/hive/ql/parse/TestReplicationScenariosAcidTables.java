@@ -3203,6 +3203,11 @@ name|String
 index|[]
 block|{ }
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 comment|// Retry with different dump should fail.
 name|replica
@@ -3390,6 +3395,11 @@ literal|"bob"
 argument_list|,
 literal|"carl"
 argument_list|)
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 block|}

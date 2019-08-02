@@ -840,6 +840,11 @@ block|{
 literal|"t2"
 block|}
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 name|tuple
 operator|=
@@ -935,6 +940,11 @@ index|[]
 block|{
 literal|"t3"
 block|}
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 block|}
@@ -2147,6 +2157,11 @@ block|{
 literal|"bangalore"
 block|}
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 name|assertTablePartitionLocation
 argument_list|(
@@ -2326,6 +2341,11 @@ block|{
 literal|"sydney"
 block|}
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 name|Path
 name|customPartitionLocation
@@ -2453,6 +2473,11 @@ block|{
 literal|"paris"
 block|}
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 comment|// change the location of the partition via alter command
 name|String
@@ -2547,6 +2572,11 @@ operator|new
 name|String
 index|[]
 block|{}
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 comment|// Changing location of one of the partitions shouldn't result in changing location of other
@@ -2951,6 +2981,11 @@ block|,
 literal|"pune"
 block|}
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 comment|// Delete one of the file and update another one.
 name|fs
@@ -3108,6 +3143,11 @@ block|{
 literal|"chennai"
 block|}
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 name|Hive
 name|hive
@@ -3222,6 +3262,11 @@ operator|new
 name|String
 index|[]
 block|{}
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 for|for
@@ -3445,6 +3490,11 @@ index|[]
 block|{
 literal|"t2"
 block|}
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 name|dumpWithClause
@@ -3741,6 +3791,11 @@ name|verifyResult
 argument_list|(
 literal|"t4"
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 comment|// Ckpt should be set on bootstrapped tables.
 name|replica
@@ -3845,6 +3900,11 @@ literal|"10"
 argument_list|,
 literal|"20"
 argument_list|)
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 block|}
@@ -4002,6 +4062,11 @@ operator|.
 name|verifyResult
 argument_list|(
 literal|"1"
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 name|dumpWithClause
@@ -4406,6 +4471,11 @@ operator|.
 name|verifyResult
 argument_list|(
 literal|"10"
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 comment|// Once the REPL LOAD is successful, the this config should be unset or else, the subsequent REPL LOAD

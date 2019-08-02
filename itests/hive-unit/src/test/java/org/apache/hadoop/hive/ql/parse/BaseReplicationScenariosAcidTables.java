@@ -1321,6 +1321,11 @@ name|verifyResult
 argument_list|(
 name|lastReplId
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 name|verifyNonAcidTableLoad
 argument_list|(
@@ -1989,6 +1994,11 @@ name|verifyResult
 argument_list|(
 name|lastReplId
 argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
+argument_list|)
 expr_stmt|;
 name|verifyIncNonAcidLoad
 argument_list|(
@@ -2062,6 +2072,11 @@ operator|.
 name|verifyResult
 argument_list|(
 name|lastReplId
+argument_list|)
+operator|.
+name|verifyReplTargetProperty
+argument_list|(
+name|replicatedDbName
 argument_list|)
 expr_stmt|;
 name|verifyInc2NonAcidLoad

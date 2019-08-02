@@ -54,6 +54,15 @@ name|REPL_TARGET_DB_PROPERTY
 init|=
 literal|"hive.repl.ckpt.key"
 decl_stmt|;
+comment|/**    * A table which is target of replication will have this property set. The property serves two    * purposes, 1. identifies the tables being replicated into and 2. records the event id of the    * last event affecting this table.    */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|REPL_TARGET_TABLE_PROPERTY
+init|=
+literal|"repl.last.id"
+decl_stmt|;
 block|}
 end_class
 

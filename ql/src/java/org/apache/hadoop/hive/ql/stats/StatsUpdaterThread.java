@@ -227,6 +227,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|repl
+operator|.
+name|ReplConst
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -1318,6 +1336,7 @@ block|}
 block|}
 annotation|@
 name|VisibleForTesting
+specifier|public
 name|boolean
 name|runOneIteration
 parameter_list|()
@@ -1590,6 +1609,52 @@ condition|)
 return|return
 literal|null
 return|;
+comment|// If the table is being replicated into,
+comment|// 1. the stats are also replicated from the source, so we don't need those to be calculated
+comment|//    on the target again
+comment|// 2. updating stats requires a writeId to be created. Hence writeIds on source and target
+comment|//    can get out of sync when stats are updated. That can cause consistency issues.
+name|String
+name|replTrgtParam
+init|=
+name|table
+operator|.
+name|getParameters
+argument_list|()
+operator|.
+name|get
+argument_list|(
+name|ReplConst
+operator|.
+name|REPL_TARGET_TABLE_PROPERTY
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|replTrgtParam
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|replTrgtParam
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping table {} since it is being replicated into"
+argument_list|,
+name|table
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
+block|}
 comment|// Note: ideally we should take a lock here to pretend to be a real reader.
 comment|//       For now, this check is going to have race potential; it may run a spurious analyze.
 name|String

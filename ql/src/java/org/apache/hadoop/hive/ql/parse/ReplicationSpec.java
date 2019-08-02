@@ -57,6 +57,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|repl
+operator|.
+name|ReplConst
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|metadata
@@ -209,7 +227,7 @@ name|needDupCopyCheck
 init|=
 literal|false
 decl_stmt|;
-comment|// Key definitions related to replication
+comment|// Key definitions related to replication.
 specifier|public
 enum|enum
 name|KEY
@@ -225,35 +243,35 @@ literal|"repl.event.id"
 argument_list|)
 block|,
 name|CURR_STATE_ID
-argument_list|(
-literal|"repl.last.id"
-argument_list|)
-block|,
-name|NOOP
-argument_list|(
-literal|"repl.noop"
-argument_list|)
-block|,
+parameter_list|(
+name|ReplConst
+operator|.
+name|REPL_TARGET_TABLE_PROPERTY
+parameter_list|)
+operator|,
+constructor|NOOP("repl.noop"
+block|)
+enum|,
 name|LAZY
 argument_list|(
 literal|"repl.lazy"
 argument_list|)
-block|,
+operator|,
 name|IS_REPLACE
 argument_list|(
 literal|"repl.is.replace"
 argument_list|)
-block|,
+operator|,
 name|VALID_WRITEID_LIST
 argument_list|(
 literal|"repl.valid.writeid.list"
 argument_list|)
-block|,
+operator|,
 name|VALID_TXN_LIST
 argument_list|(
 literal|"repl.valid.txnid.list"
 argument_list|)
-block|;
+enum|;
 specifier|private
 specifier|final
 name|String
@@ -284,6 +302,9 @@ name|keyName
 return|;
 block|}
 block|}
+end_class
+
+begin_enum
 specifier|public
 enum|enum
 name|SCOPE
@@ -294,6 +315,9 @@ name|MD_ONLY
 block|,
 name|REPL
 block|}
+end_enum
+
+begin_enum
 specifier|public
 enum|enum
 name|Type
@@ -304,7 +328,13 @@ name|INCREMENTAL_DUMP
 block|,
 name|IMPORT
 block|}
+end_enum
+
+begin_comment
 comment|/**    * Constructor to construct spec based on either the ASTNode that    * corresponds to the replication clause itself, or corresponds to    * the parent node, and will scan through the children to instantiate    * itself.    * @param node replicationClause node, or parent of replicationClause node    */
+end_comment
+
+begin_constructor
 specifier|public
 name|ReplicationSpec
 parameter_list|(
@@ -390,7 +420,13 @@ comment|// spec in the node or its immediate children. Defaults
 comment|// are to pretend replication is not happening, and the
 comment|// statement above is running as-is.
 block|}
+end_constructor
+
+begin_comment
 comment|/**    * Default ctor that is useful for determining default states    */
+end_comment
+
+begin_constructor
 specifier|public
 name|ReplicationSpec
 parameter_list|()
@@ -404,6 +440,9 @@ literal|null
 argument_list|)
 expr_stmt|;
 block|}
+end_constructor
+
+begin_constructor
 specifier|public
 name|ReplicationSpec
 parameter_list|(
@@ -432,6 +471,9 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
+end_constructor
+
+begin_constructor
 specifier|public
 name|ReplicationSpec
 parameter_list|(
@@ -508,6 +550,9 @@ operator|.
 name|DEFAULT
 expr_stmt|;
 block|}
+end_constructor
+
+begin_constructor
 specifier|public
 name|ReplicationSpec
 parameter_list|(
@@ -746,7 +791,13 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+end_constructor
+
+begin_comment
 comment|/**    * Tests if an ASTNode is a Replication Specification    */
+end_comment
+
+begin_function
 specifier|public
 specifier|static
 name|boolean
@@ -772,7 +823,13 @@ name|TOK_REPLICATION
 operator|)
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @param currReplState Current object state    * @param replacementReplState Replacement-candidate state    * @return whether or not a provided replacement candidate is newer(or equal) to the existing object state or not    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|allowReplacement
@@ -896,7 +953,13 @@ operator|)
 return|;
 block|}
 block|}
+end_function
+
+begin_comment
 comment|/**    * Determines if a current replication object (current state of dump) is allowed to    * replicate-replace-into a given metastore object (based on state_id stored in their parameters)    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|allowReplacementInto
@@ -923,7 +986,13 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * Determines if a current replication event (based on event id) is allowed to    * replicate-replace-into a given metastore object (based on state_id stored in their parameters)    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|allowEventReplacementInto
@@ -950,7 +1019,13 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * Returns a predicate filter to filter an Iterable&lt;Partition&gt; to return all partitions    * that the current replication event specification is allowed to replicate-replace-into    */
+end_comment
+
+begin_function
 specifier|public
 name|Predicate
 argument_list|<
@@ -1005,6 +1080,9 @@ block|}
 block|}
 return|;
 block|}
+end_function
+
+begin_function
 specifier|private
 name|void
 name|init
@@ -1101,6 +1179,9 @@ comment|// Ignore the exception and fall through the default currentStateId
 block|}
 block|}
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|String
@@ -1156,7 +1237,13 @@ return|return
 literal|null
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return true if this statement refers to incremental dump operation.    */
+end_comment
+
+begin_function
 specifier|public
 name|Type
 name|getReplSpecType
@@ -1168,6 +1255,9 @@ operator|.
 name|specType
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setReplSpecType
@@ -1183,7 +1273,13 @@ operator|=
 name|specType
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return true if this statement is being run for the purposes of replication    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|isInReplicationScope
@@ -1193,7 +1289,13 @@ return|return
 name|isInReplicationScope
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return true if this statement refers to metadata-only operation.    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|isMetadataOnly
@@ -1203,6 +1305,9 @@ return|return
 name|isMetadataOnly
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setIsMetadataOnly
@@ -1218,7 +1323,13 @@ operator|=
 name|isMetadataOnly
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return true if this statement refers to insert-into or insert-overwrite operation.    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|isReplace
@@ -1228,6 +1339,9 @@ return|return
 name|isReplace
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setIsReplace
@@ -1243,7 +1357,13 @@ operator|=
 name|isReplace
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return the replication state of the event that spawned this statement    */
+end_comment
+
+begin_function
 specifier|public
 name|String
 name|getReplicationState
@@ -1253,7 +1373,13 @@ return|return
 name|eventId
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return the current replication state of the wh    */
+end_comment
+
+begin_function
 specifier|public
 name|String
 name|getCurrentReplicationState
@@ -1263,6 +1389,9 @@ return|return
 name|currStateId
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setCurrentReplicationState
@@ -1278,7 +1407,13 @@ operator|=
 name|currStateId
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return whether or not the current replication action should be a noop    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|isNoop
@@ -1288,7 +1423,13 @@ return|return
 name|isNoop
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @param isNoop whether or not the current replication action should be a noop    */
+end_comment
+
+begin_function
 specifier|public
 name|void
 name|setNoop
@@ -1304,7 +1445,13 @@ operator|=
 name|isNoop
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return whether or not the current replication action is set to be lazy    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|isLazy
@@ -1314,7 +1461,13 @@ return|return
 name|isLazy
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @param isLazy whether or not the current replication action should be lazy    */
+end_comment
+
+begin_function
 specifier|public
 name|void
 name|setLazy
@@ -1330,7 +1483,13 @@ operator|=
 name|isLazy
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return the WriteIds snapshot for the current ACID/MM table being replicated    */
+end_comment
+
+begin_function
 specifier|public
 name|String
 name|getValidWriteIdList
@@ -1340,7 +1499,13 @@ return|return
 name|validWriteIdList
 return|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @param validWriteIdList WriteIds snapshot for the current ACID/MM table being replicated    */
+end_comment
+
+begin_function
 specifier|public
 name|void
 name|setValidWriteIdList
@@ -1356,6 +1521,9 @@ operator|=
 name|validWriteIdList
 expr_stmt|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|String
 name|getValidTxnList
@@ -1365,6 +1533,9 @@ return|return
 name|validTxnList
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setValidTxnList
@@ -1380,7 +1551,13 @@ operator|=
 name|validTxnList
 expr_stmt|;
 block|}
+end_function
+
+begin_comment
 comment|/**    * @return whether the current replication dumped object related to ACID/Mm table    */
+end_comment
+
+begin_function
 specifier|public
 name|boolean
 name|isTransactionalTableDump
@@ -1394,6 +1571,9 @@ literal|null
 operator|)
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|String
 name|get
@@ -1504,6 +1684,9 @@ return|return
 literal|null
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|SCOPE
 name|getScope
@@ -1545,6 +1728,9 @@ name|NO_REPL
 return|;
 block|}
 block|}
+end_function
+
+begin_function
 specifier|public
 name|boolean
 name|isMigratingToTxnTable
@@ -1554,6 +1740,9 @@ return|return
 name|isMigratingToTxnTable
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setMigratingToTxnTable
@@ -1564,6 +1753,9 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|boolean
 name|isMigratingToExternalTable
@@ -1573,6 +1765,9 @@ return|return
 name|isMigratingToExternalTable
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setMigratingToExternalTable
@@ -1583,6 +1778,9 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
+end_function
+
+begin_function
 specifier|public
 specifier|static
 name|void
@@ -1647,6 +1845,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+end_function
+
+begin_function
 specifier|public
 name|boolean
 name|needDupCopyCheck
@@ -1656,6 +1857,9 @@ return|return
 name|needDupCopyCheck
 return|;
 block|}
+end_function
+
+begin_function
 specifier|public
 name|void
 name|setNeedDupCopyCheck
@@ -1673,8 +1877,8 @@ operator|=
 name|isFirstIncPending
 expr_stmt|;
 block|}
-block|}
-end_class
+end_function
 
+unit|}
 end_unit
 
