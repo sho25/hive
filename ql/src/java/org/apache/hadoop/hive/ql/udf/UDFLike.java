@@ -926,6 +926,10 @@ name|likePatternToRegExp
 argument_list|(
 name|strLikePattern
 argument_list|)
+argument_list|,
+name|Pattern
+operator|.
+name|DOTALL
 argument_list|)
 expr_stmt|;
 block|}
