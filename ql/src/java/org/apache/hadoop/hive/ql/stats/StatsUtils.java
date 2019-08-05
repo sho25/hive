@@ -9608,6 +9608,12 @@ argument_list|()
 operator|.
 name|lengthForStringOfLength
 argument_list|(
+name|value
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
 name|woi
 operator|.
 name|getPrimitiveWritableObject
@@ -9644,6 +9650,12 @@ argument_list|()
 operator|.
 name|lengthForByteArrayOfSize
 argument_list|(
+name|value
+operator|==
+literal|null
+condition|?
+literal|0
+else|:
 name|woi
 operator|.
 name|getPrimitiveWritableObject
