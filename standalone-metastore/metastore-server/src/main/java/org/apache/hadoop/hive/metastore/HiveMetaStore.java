@@ -28854,7 +28854,7 @@ argument_list|)
 operator|&&
 name|wh
 operator|.
-name|isEmpty
+name|isEmptyDir
 argument_list|(
 name|parent
 argument_list|)
