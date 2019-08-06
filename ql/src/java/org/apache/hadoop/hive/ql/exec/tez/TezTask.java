@@ -1529,7 +1529,7 @@ name|createConfiguration
 argument_list|(
 name|conf
 argument_list|,
-literal|true
+literal|false
 argument_list|)
 decl_stmt|;
 comment|// Get all user jars from work (e.g. input format stuff).
