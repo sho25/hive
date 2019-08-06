@@ -65,6 +65,16 @@ name|java
 operator|.
 name|io
 operator|.
+name|FileNotFoundException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|io
+operator|.
 name|IOException
 import|;
 end_import
@@ -11843,7 +11853,11 @@ block|}
 name|FileStatus
 index|[]
 name|dataFiles
-init|=
+decl_stmt|;
+try|try
+block|{
+name|dataFiles
+operator|=
 name|fs
 operator|.
 name|listStatus
@@ -11857,7 +11871,28 @@ block|}
 argument_list|,
 name|originalBucketFilter
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|e
+parameter_list|)
+block|{
+comment|// HIVE-22001: If the file was not found, this means that baseOrDeltaDir (which was listed
+comment|// earlier during AcidUtils.getAcidState()) was removed sometime between the FS list call
+comment|// and now. In the case of ACID tables the file would only have been removed by the transactional
+comment|// cleaner thread, in which case this is currently an old base/delta which has already been
+comment|// compacted. So a new set of base files from the compaction should exist which
+comment|// the current call to AcidUtils.getAcidState() would use rather than this old baes/delta.
+comment|// It should be ok to ignore this FileNotFound error and skip processing of this file - the list
+comment|// of files for this old base/delta will be incomplete, but it will not matter since this base/delta
+comment|// would be ignored (in favor of the new base files) by the selection logic in AcidUtils.getAcidState().
+name|dataFiles
+operator|=
+literal|null
+expr_stmt|;
+block|}
 return|return
 name|dataFiles
 operator|!=
