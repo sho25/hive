@@ -2094,6 +2094,8 @@ name|IOException
 throws|,
 name|MetaException
 block|{
+try|try
+block|{
 name|int
 name|listCount
 init|=
@@ -2118,6 +2120,18 @@ condition|)
 block|{
 return|return
 literal|true
+return|;
+block|}
+block|}
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|fnfe
+parameter_list|)
+block|{
+comment|// File named by path doesn't exist; nothing to validate.
+return|return
+literal|false
 return|;
 block|}
 return|return
