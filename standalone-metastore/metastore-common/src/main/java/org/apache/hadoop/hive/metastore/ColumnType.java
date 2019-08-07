@@ -880,35 +880,6 @@ name|to
 argument_list|)
 return|;
 block|}
-comment|// Allow string to double/decimal conversion
-if|if
-condition|(
-name|StringTypes
-operator|.
-name|contains
-argument_list|(
-name|from
-argument_list|)
-operator|&&
-operator|(
-name|to
-operator|.
-name|equals
-argument_list|(
-name|DOUBLE_TYPE_NAME
-argument_list|)
-operator|||
-name|to
-operator|.
-name|equals
-argument_list|(
-name|DECIMAL_TYPE_NAME
-argument_list|)
-operator|)
-condition|)
-return|return
-literal|true
-return|;
 comment|// Void can go to anything
 if|if
 condition|(
