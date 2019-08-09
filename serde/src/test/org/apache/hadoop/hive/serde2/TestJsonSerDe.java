@@ -1789,7 +1789,7 @@ name|serdeConstants
 operator|.
 name|TIMESTAMP_FORMATS
 argument_list|,
-literal|"yyyy-MM-dd'T'HH:mm:ss'Z"
+literal|"yyyy-MM-dd'T'HH:mm:ss'Z'"
 argument_list|)
 expr_stmt|;
 specifier|final
