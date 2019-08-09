@@ -421,6 +421,27 @@ argument_list|)
 expr_stmt|;
 name|verifyBadPattern
 argument_list|(
+literal|"yyyy mm-MON dd"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy mm-MONTH dd"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy MON, month dd"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
 literal|"tzm"
 argument_list|,
 literal|false
@@ -431,6 +452,78 @@ argument_list|(
 literal|"tzh"
 argument_list|,
 literal|false
+argument_list|)
+expr_stmt|;
+comment|//ambiguous case for formatting
+name|verifyBadPattern
+argument_list|(
+literal|"MOnth"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"DaY"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"dAy"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"dY"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+comment|//illegal for parsing
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy-mm-dd q"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy-mm-dd d"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy-mm-dd dy"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy-mm-dd day"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy-mm-dd w"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"yyyy-mm-dd ww"
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -511,6 +604,179 @@ argument_list|,
 literal|"2017-05-05 00:00:00"
 argument_list|,
 literal|"2017-05-05 12AM"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MONTH-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-JANUARY  -01"
+argument_list|)
+expr_stmt|;
+comment|//fill to length 9
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-Month-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-January  -01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-month-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-january  -01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MON-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-JAN-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-Mon-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-Jan-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mon-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-jan-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: DAY"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"3: TUESDAY  "
+argument_list|)
+expr_stmt|;
+comment|//fill to length 9
+name|checkFormatTs
+argument_list|(
+literal|"D: Day"
+argument_list|,
+literal|"2019-01-02 00:00:00"
+argument_list|,
+literal|"4: Wednesday"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: day"
+argument_list|,
+literal|"2019-01-03 00:00:00"
+argument_list|,
+literal|"5: thursday "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: DY"
+argument_list|,
+literal|"2019-01-04 00:00:00"
+argument_list|,
+literal|"6: FRI"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: Dy"
+argument_list|,
+literal|"2019-01-05 00:00:00"
+argument_list|,
+literal|"7: Sat"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: dy"
+argument_list|,
+literal|"2019-01-06 00:00:00"
+argument_list|,
+literal|"1: sun"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: DAY"
+argument_list|,
+literal|"2019-01-07 00:00:00"
+argument_list|,
+literal|"2: MONDAY   "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mm-dd: Q WW W"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-01-01: 1 01 1"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mm-dd: Q WW W"
+argument_list|,
+literal|"2019-01-07 00:00:00"
+argument_list|,
+literal|"2019-01-07: 1 01 1"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mm-dd: Q WW W"
+argument_list|,
+literal|"2019-01-08 00:00:00"
+argument_list|,
+literal|"2019-01-08: 1 02 2"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mm-dd: Q WW W"
+argument_list|,
+literal|"2019-03-31 00:00:00"
+argument_list|,
+literal|"2019-03-31: 1 13 5"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mm-dd: Q WW W"
+argument_list|,
+literal|"2019-04-01 00:00:00"
+argument_list|,
+literal|"2019-04-01: 2 13 1"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mm-dd: Q WW W"
+argument_list|,
+literal|"2019-12-31 00:00:00"
+argument_list|,
+literal|"2019-12-31: 4 53 5"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1149,6 +1415,89 @@ argument_list|,
 literal|"2018-12-31 08:00:00"
 argument_list|)
 expr_stmt|;
+comment|//MONTH, MON : case really doesn't matter
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-MONTH-dd"
+argument_list|,
+literal|"2018-FEBRUARY-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-Month-dd"
+argument_list|,
+literal|"2018-february-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-month-dd"
+argument_list|,
+literal|"2018-FEBRUARY-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-montH-dd"
+argument_list|,
+literal|"2018-febRuary-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-MON-dd"
+argument_list|,
+literal|"2018-FEB-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-moN-dd"
+argument_list|,
+literal|"2018-FeB-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"yyyy-mon-dd"
+argument_list|,
+literal|"2018-FEB-28"
+argument_list|,
+literal|"2018-02-28 00:00:00"
+argument_list|)
+expr_stmt|;
+comment|//letters and numbers are delimiters to each other, respectively
+name|checkParseDate
+argument_list|(
+literal|"yyyy-ddMONTH"
+argument_list|,
+literal|"2018-4March"
+argument_list|,
+literal|"2018-03-04"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"yyyy-MONTHdd"
+argument_list|,
+literal|"2018-March4"
+argument_list|,
+literal|"2018-03-04"
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|int
@@ -1481,6 +1830,24 @@ argument_list|,
 literal|"2018-01-01"
 argument_list|)
 expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"dd/MonthT/yyyy"
+argument_list|,
+literal|"31/AugustT/2020"
+argument_list|,
+literal|"2020-08-31"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"dd/MonthT/yyyy"
+argument_list|,
+literal|"31/MarchT/2020"
+argument_list|,
+literal|"2020-03-31"
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -1599,6 +1966,44 @@ literal|"2000 367"
 argument_list|)
 expr_stmt|;
 comment|//ddd out of range
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-month-dd"
+argument_list|,
+literal|"2019-merch-23"
+argument_list|)
+expr_stmt|;
+comment|//invalid month of year
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-mon-dd"
+argument_list|,
+literal|"2019-mer-23"
+argument_list|)
+expr_stmt|;
+comment|//invalid month of year
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-MON-dd"
+argument_list|,
+literal|"2018-FEBRUARY-28"
+argument_list|)
+expr_stmt|;
+comment|// can't mix and match mon and month
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-MON-dd"
+argument_list|,
+literal|"2018-FEBR-28"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-MONTH-dd"
+argument_list|,
+literal|"2018-FEB-28"
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -1668,7 +2073,6 @@ name|void
 name|testFm
 parameter_list|()
 block|{
-comment|//fm
 comment|//year (019) becomes 19 even if pattern is yyy
 name|checkFormatTs
 argument_list|(
@@ -1696,6 +2100,34 @@ argument_list|,
 literal|"2019-01-01 01:01:01.0333"
 argument_list|,
 literal|"0333/0333"
+argument_list|)
+expr_stmt|;
+comment|//omit trailing spaces from character temporal elements
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-fmMonth-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-January-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: fmDAY"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"3: TUESDAY"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: fmDay"
+argument_list|,
+literal|"2019-01-02 00:00:00"
+argument_list|,
+literal|"4: Wednesday"
 argument_list|)
 expr_stmt|;
 comment|//only affects temporals that immediately follow
@@ -1876,6 +2308,16 @@ argument_list|,
 literal|"01-01-1998 12 pm"
 argument_list|)
 expr_stmt|;
+comment|//character temporals shouldn't have trailing spaces
+name|checkParseTimestamp
+argument_list|(
+literal|"FXDD-month-YYYY"
+argument_list|,
+literal|"15-March-1998"
+argument_list|,
+literal|"1998-03-15 00:00:00"
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -2031,6 +2473,25 @@ operator|/
 literal|100
 operator|+
 literal|"19-01-01"
+argument_list|)
+expr_stmt|;
+comment|// parse character temporals correctly
+name|checkParseDate
+argument_list|(
+literal|"dd/Month\"arch\"/yyyy"
+argument_list|,
+literal|"31/Marcharch/2020"
+argument_list|,
+literal|"2020-03-31"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"dd/Month\"ember\"/yyyy"
+argument_list|,
+literal|"31/Decemberember/2020"
+argument_list|,
+literal|"2020-12-31"
 argument_list|)
 expr_stmt|;
 comment|// single quotes are separators and not text delimiters
