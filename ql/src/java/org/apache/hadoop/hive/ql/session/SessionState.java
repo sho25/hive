@@ -2566,7 +2566,7 @@ name|currThreadName
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Updating thread name to {}"
 argument_list|,
@@ -2645,7 +2645,7 @@ argument_list|)
 decl_stmt|;
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"Resetting thread name to {}"
 argument_list|,
