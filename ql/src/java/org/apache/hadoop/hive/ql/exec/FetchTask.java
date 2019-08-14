@@ -405,6 +405,11 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+name|JobConf
+name|job
+init|=
+literal|null
+decl_stmt|;
 specifier|public
 name|FetchTask
 parameter_list|()
@@ -471,15 +476,24 @@ expr_stmt|;
 try|try
 block|{
 comment|// Create a file system handle
-name|JobConf
+if|if
+condition|(
 name|job
-init|=
+operator|==
+literal|null
+condition|)
+block|{
+comment|// The job config should be initilaized once per fetch task. In case of refetch, we should use the
+comment|// same config.
+name|job
+operator|=
 operator|new
 name|JobConf
 argument_list|(
 name|conf
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Operator
 argument_list|<
 name|?
