@@ -155,6 +155,22 @@ name|hive
 operator|.
 name|metastore
 operator|.
+name|ReplChangeManager
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
 name|TableType
 import|;
 end_import
@@ -1359,6 +1375,14 @@ argument_list|,
 name|conf
 argument_list|)
 decl_stmt|;
+comment|// Initialize ReplChangeManager instance since we will require it to encode file URI.
+name|ReplChangeManager
+operator|.
+name|getInstance
+argument_list|(
+name|conf
+argument_list|)
+expr_stmt|;
 name|Path
 name|cmRoot
 init|=

@@ -441,14 +441,6 @@ argument_list|,
 name|fileSystem
 argument_list|)
 decl_stmt|;
-comment|// Initialize ReplChangeManager instance since we will require it to encode file URI.
-name|ReplChangeManager
-operator|.
-name|getInstance
-argument_list|(
-name|hiveConf
-argument_list|)
-expr_stmt|;
 name|String
 name|checkSum
 init|=
