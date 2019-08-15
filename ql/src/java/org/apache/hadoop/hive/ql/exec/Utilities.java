@@ -24099,8 +24099,6 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|isMmCtas
-operator|&&
 operator|!
 name|fs
 operator|.
@@ -24116,7 +24114,7 @@ name|FILE_OP_LOGGER
 operator|.
 name|info
 argument_list|(
-literal|"Creating table directory for CTAS with no output at {}"
+literal|"Creating directory with no output at {}"
 argument_list|,
 name|specPath
 argument_list|)
