@@ -2773,6 +2773,8 @@ argument_list|(
 name|fragmentInfo
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|this
 operator|.
 name|amReporter
@@ -2800,6 +2802,25 @@ argument_list|,
 name|ta
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|Throwable
+name|thr
+parameter_list|)
+block|{
+comment|// unregisterTask can throw a RuntimeException (i.e. if task attempt not found)
+comment|// this brings down LLAP daemon if exception is not caught here
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Unregistering task from AMReporter failed"
+argument_list|,
+name|thr
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 block|}
 block|}
