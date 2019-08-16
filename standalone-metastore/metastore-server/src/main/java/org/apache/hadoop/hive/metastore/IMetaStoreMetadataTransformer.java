@@ -79,6 +79,24 @@ name|metastore
 operator|.
 name|api
 operator|.
+name|Database
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|api
+operator|.
 name|MetaException
 import|;
 end_import
@@ -136,7 +154,7 @@ specifier|public
 interface|interface
 name|IMetaStoreMetadataTransformer
 block|{
-comment|/**   * @param table A Table object to be transformed   * @param processorCapabilities A array of String capabilities received from the data processor   * @param processorId String ID used for logging purpose.   * @return Map A Map of transformed objects keyed by Table and value is list of required capabilities   * @throws HiveMetaException   */
+comment|/**   * @param tables A list of tables to be transformed.   * @param processorCapabilities A array of String capabilities received from the data processor   * @param processorId String ID used for logging purpose.   * @return Map A Map of transformed objects keyed by Table and value is list of required capabilities   * @throws HiveMetaException   */
 comment|// TODO HiveMetaException or MetaException
 specifier|public
 name|Map
@@ -205,6 +223,26 @@ name|transformCreateTable
 parameter_list|(
 name|Table
 name|table
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|processorCapabilities
+parameter_list|,
+name|String
+name|processorId
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+comment|/**   * @param db A database object to be transformed, mainly db location   * @param processorCapabilities A array of String capabilities received from the data processor   * @param processorId String ID used for logging purpose.   * @return Database An altered Database based on the processor capabilities   * @throws HiveMetaException   */
+specifier|public
+name|Database
+name|transformDatabase
+parameter_list|(
+name|Database
+name|db
 parameter_list|,
 name|List
 argument_list|<
