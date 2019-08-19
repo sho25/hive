@@ -2501,6 +2501,12 @@ expr_stmt|;
 block|}
 name|batch
 operator|.
+name|selectedInUse
+operator|=
+name|inputSelectedInUse
+expr_stmt|;
+name|batch
+operator|.
 name|size
 operator|=
 name|inputLogicalSize
