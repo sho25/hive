@@ -1136,7 +1136,9 @@ name|tbl
 parameter_list|)
 block|{
 comment|// Compaction is disabled until after first successful incremental load. Check HIVE-21197 for more detail.
-return|return
+name|boolean
+name|isCompactDisabled
+init|=
 name|ReplUtils
 operator|.
 name|isFirstIncPending
@@ -1146,6 +1148,27 @@ operator|.
 name|getParameters
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|isCompactDisabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Compaction is disabled for table "
+operator|+
+name|tbl
+operator|.
+name|getTableName
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|isCompactDisabled
 return|;
 block|}
 block|}

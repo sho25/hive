@@ -515,7 +515,9 @@ name|dbName
 argument_list|)
 decl_stmt|;
 comment|// Compaction is disabled until after first successful incremental load. Check HIVE-21197 for more detail.
-return|return
+name|boolean
+name|isReplCompactDisabled
+init|=
 name|ReplUtils
 operator|.
 name|isFirstIncPending
@@ -525,6 +527,24 @@ operator|.
 name|getParameters
 argument_list|()
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|isReplCompactDisabled
+condition|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Compaction is disabled for database "
+operator|+
+name|dbName
+argument_list|)
+expr_stmt|;
+block|}
+return|return
+name|isReplCompactDisabled
 return|;
 block|}
 catch|catch
