@@ -1191,7 +1191,11 @@ expr_stmt|;
 name|consumer
 operator|.
 name|close
-argument_list|()
+argument_list|(
+name|Duration
+operator|.
+name|ZERO
+argument_list|)
 expr_stmt|;
 name|consumer
 operator|=
@@ -1657,7 +1661,7 @@ name|Duration
 operator|.
 name|ofMillis
 argument_list|(
-literal|1000
+literal|10000
 argument_list|)
 argument_list|)
 decl_stmt|;
