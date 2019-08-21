@@ -1484,32 +1484,13 @@ operator|.
 name|dumpLocation
 argument_list|)
 expr_stmt|;
-comment|// During incremental dump with ACID bootstrap we do not dump ALLOC_WRITE_ID events. So the
-comment|// two ALLOC_WRITE_ID events corresponding aborted transactions on t1 and t2 will not be
-comment|// repliaced. Discount those.
 name|verifyIncLoad
 argument_list|(
 name|replicatedDbName
 argument_list|,
-operator|(
-operator|new
-name|Long
-argument_list|(
-name|Long
-operator|.
-name|valueOf
-argument_list|(
 name|incDump
 operator|.
 name|lastReplicationId
-argument_list|)
-operator|-
-literal|2
-argument_list|)
-operator|)
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Verify if HWM is properly set after REPL LOAD
