@@ -1630,14 +1630,7 @@ comment|// is created using field name
 name|String
 name|indicator
 init|=
-literal|"alwaysTrue"
-operator|+
-name|e
-operator|.
-name|rel
-operator|.
-name|getId
-argument_list|()
+literal|"trueLiteral"
 decl_stmt|;
 name|parentQueryFields
 operator|.
@@ -2222,7 +2215,7 @@ comment|//   else e.deptno< q.m
 comment|//   end as v
 comment|// from emp as e
 comment|// left outer join (
-comment|//   select max(deptno) as m, count(*) as c, count(deptno) as d, "alwaysTrue" as indicator
+comment|//   select max(deptno) as m, count(*) as c, count(deptno) as d, "trueLiteral" as indicator
 comment|//   group by name from emp) as q on e.name = q.name
 name|subqueryRestriction
 argument_list|(
@@ -2344,14 +2337,7 @@ expr_stmt|;
 name|String
 name|indicator
 init|=
-literal|"alwaysTrue"
-operator|+
-name|e
-operator|.
-name|rel
-operator|.
-name|getId
-argument_list|()
+literal|"trueLiteral"
 decl_stmt|;
 name|parentQueryFields
 operator|.
@@ -3039,6 +3025,11 @@ expr_stmt|;
 break|break;
 block|}
 comment|// Now the left join
+name|String
+name|trueLiteral
+init|=
+literal|"literalTrue"
+decl_stmt|;
 switch|switch
 condition|(
 name|logic
@@ -3070,14 +3061,7 @@ argument_list|(
 literal|true
 argument_list|)
 argument_list|,
-literal|"i"
-operator|+
-name|e
-operator|.
-name|rel
-operator|.
-name|getId
-argument_list|()
+name|trueLiteral
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3198,14 +3182,7 @@ argument_list|(
 literal|true
 argument_list|)
 argument_list|,
-literal|"i"
-operator|+
-name|e
-operator|.
-name|rel
-operator|.
-name|getId
-argument_list|()
+name|trueLiteral
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -3504,14 +3481,7 @@ name|field
 argument_list|(
 literal|"dt"
 argument_list|,
-literal|"i"
-operator|+
-name|e
-operator|.
-name|rel
-operator|.
-name|getId
-argument_list|()
+name|trueLiteral
 argument_list|)
 argument_list|)
 argument_list|,

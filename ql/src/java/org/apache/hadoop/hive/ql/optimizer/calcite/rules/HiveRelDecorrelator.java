@@ -4167,26 +4167,6 @@ argument_list|,
 name|i
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|constant
-operator|!=
-literal|null
-condition|)
-block|{
-comment|// Exclude constants. Aggregate({true}) occurs because Aggregate({})
-comment|// would generate 1 row even when applied to an empty table.
-name|omittedConstants
-operator|.
-name|put
-argument_list|(
-name|i
-argument_list|,
-name|constant
-argument_list|)
-expr_stmt|;
-continue|continue;
-block|}
 name|int
 name|newInputPos
 init|=
