@@ -442,6 +442,36 @@ argument_list|)
 expr_stmt|;
 name|verifyBadPattern
 argument_list|(
+literal|"iyyy-mm-dd"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+comment|// can't mix iso and Gregorian
+name|verifyBadPattern
+argument_list|(
+literal|"iyyy-id"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+comment|// missing iyyy, iw, or id
+name|verifyBadPattern
+argument_list|(
+literal|"iyyy-iw"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
+literal|"iw-id"
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|verifyBadPattern
+argument_list|(
 literal|"tzm"
 argument_list|,
 literal|false
@@ -777,6 +807,142 @@ argument_list|,
 literal|"2019-12-31 00:00:00"
 argument_list|,
 literal|"2019-12-31: 4 53 5"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IYYY-IW-ID"
+argument_list|,
+literal|"2018-12-31 00:00:00"
+argument_list|,
+literal|"2018-12-31 : 2019-01-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IYYY-IW-ID"
+argument_list|,
+literal|"2019-01-06 00:00:00"
+argument_list|,
+literal|"2019-01-06 : 2019-01-07"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IYYY-IW-ID"
+argument_list|,
+literal|"2019-01-07 00:00:00"
+argument_list|,
+literal|"2019-01-07 : 2019-02-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IYYY-IW-ID"
+argument_list|,
+literal|"2019-12-29 00:00:00"
+argument_list|,
+literal|"2019-12-29 : 2019-52-07"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IYYY-IW-ID"
+argument_list|,
+literal|"2019-12-30 00:00:00"
+argument_list|,
+literal|"2019-12-30 : 2020-01-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IYY-IW-ID"
+argument_list|,
+literal|"2019-12-30 00:00:00"
+argument_list|,
+literal|"2019-12-30 : 020-01-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : IY-IW-ID"
+argument_list|,
+literal|"2019-12-30 00:00:00"
+argument_list|,
+literal|"2019-12-30 : 20-01-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MM-DD : I-IW-ID"
+argument_list|,
+literal|"2019-12-30 00:00:00"
+argument_list|,
+literal|"2019-12-30 : 0-01-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2018-12-31 00:00:00"
+argument_list|,
+literal|"01: Monday   "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"02: Tuesday  "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2019-01-02 00:00:00"
+argument_list|,
+literal|"03: Wednesday"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2019-01-03 00:00:00"
+argument_list|,
+literal|"04: Thursday "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2019-01-04 00:00:00"
+argument_list|,
+literal|"05: Friday   "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2019-01-05 00:00:00"
+argument_list|,
+literal|"06: Saturday "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"id: Day"
+argument_list|,
+literal|"2019-01-06 00:00:00"
+argument_list|,
+literal|"07: Sunday   "
 argument_list|)
 expr_stmt|;
 block|}
@@ -1479,6 +1645,27 @@ argument_list|,
 literal|"2018-02-28 00:00:00"
 argument_list|)
 expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-MON-dd"
+argument_list|,
+literal|"2018-FEBRUARY-28"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-MON-dd"
+argument_list|,
+literal|"2018-FEBR-28"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"yyyy-MONTH-dd"
+argument_list|,
+literal|"2018-FEB-28"
+argument_list|)
+expr_stmt|;
 comment|//letters and numbers are delimiters to each other, respectively
 name|checkParseDate
 argument_list|(
@@ -1496,6 +1683,225 @@ argument_list|,
 literal|"2018-March4"
 argument_list|,
 literal|"2018-03-04"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-01-01"
+argument_list|,
+literal|"2018-12-31 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-01-07"
+argument_list|,
+literal|"2019-01-06 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-02-01"
+argument_list|,
+literal|"2019-01-07 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-52-07"
+argument_list|,
+literal|"2019-12-29 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2020-01-01"
+argument_list|,
+literal|"2019-12-30 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"020-01-04"
+argument_list|,
+name|thisYearString
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|)
+operator|+
+literal|"020-01-02 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYY-IW-ID"
+argument_list|,
+literal|"020-01-04"
+argument_list|,
+name|thisYearString
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+literal|1
+argument_list|)
+operator|+
+literal|"020-01-02 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYY-IW-ID"
+argument_list|,
+literal|"20-01-04"
+argument_list|,
+name|thisYearString
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+literal|2
+argument_list|)
+operator|+
+literal|"20-01-02 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IY-IW-ID"
+argument_list|,
+literal|"20-01-04"
+argument_list|,
+name|thisYearString
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+literal|2
+argument_list|)
+operator|+
+literal|"20-01-02 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-DAY"
+argument_list|,
+literal|"2019-01-monday"
+argument_list|,
+literal|"2018-12-31 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-Day"
+argument_list|,
+literal|"2019-01-Sunday"
+argument_list|,
+literal|"2019-01-06 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-Dy"
+argument_list|,
+literal|"2019-02-MON"
+argument_list|,
+literal|"2019-01-07 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-DY"
+argument_list|,
+literal|"2019-52-sun"
+argument_list|,
+literal|"2019-12-29 00:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-dy"
+argument_list|,
+literal|"2020-01-Mon"
+argument_list|,
+literal|"2019-12-30 00:00:00"
+argument_list|)
+expr_stmt|;
+comment|//Tests for these patterns would need changing every decade if done in the above way.
+comment|//Thursday of the first week in an ISO year always matches the Gregorian year.
+name|checkParseTimestampIso
+argument_list|(
+literal|"IY-IW-ID"
+argument_list|,
+literal|"0-01-04"
+argument_list|,
+literal|"iw, yyyy"
+argument_list|,
+literal|"01, "
+operator|+
+name|thisYearString
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+literal|3
+argument_list|)
+operator|+
+literal|"0"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestampIso
+argument_list|(
+literal|"I-IW-ID"
+argument_list|,
+literal|"0-01-04"
+argument_list|,
+literal|"iw, yyyy"
+argument_list|,
+literal|"01, "
+operator|+
+name|thisYearString
+operator|.
+name|substring
+argument_list|(
+literal|0
+argument_list|,
+literal|3
+argument_list|)
+operator|+
+literal|"0"
+argument_list|)
+expr_stmt|;
+comment|//time patterns are allowed; date patterns are not
+name|checkParseTimestamp
+argument_list|(
+literal|"IYYY-IW-ID hh24:mi:ss"
+argument_list|,
+literal|"2019-01-01 01:02:03"
+argument_list|,
+literal|"2018-12-31 01:02:03"
 argument_list|)
 expr_stmt|;
 block|}
@@ -1582,6 +1988,66 @@ operator|.
 name|parseTimestamp
 argument_list|(
 name|input
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|checkParseTimestampIso
+parameter_list|(
+name|String
+name|parsePattern
+parameter_list|,
+name|String
+name|input
+parameter_list|,
+name|String
+name|formatPattern
+parameter_list|,
+name|String
+name|expectedOutput
+parameter_list|)
+block|{
+name|formatter
+operator|=
+operator|new
+name|HiveSqlDateTimeFormatter
+argument_list|(
+name|parsePattern
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|Timestamp
+name|ts
+init|=
+name|formatter
+operator|.
+name|parseTimestamp
+argument_list|(
+name|input
+argument_list|)
+decl_stmt|;
+name|formatter
+operator|=
+operator|new
+name|HiveSqlDateTimeFormatter
+argument_list|(
+name|formatPattern
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+name|expectedOutput
+argument_list|,
+name|formatter
+operator|.
+name|format
+argument_list|(
+name|ts
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1848,6 +2314,70 @@ argument_list|,
 literal|"2020-03-31"
 argument_list|)
 expr_stmt|;
+comment|//ISO 8601
+name|checkParseDate
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-01-01"
+argument_list|,
+literal|"2018-12-31"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"IW-ID-IYYY"
+argument_list|,
+literal|"01-02-2019"
+argument_list|,
+literal|"2019-01-01"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"ID-IW-IYYY"
+argument_list|,
+literal|"02-01-2019"
+argument_list|,
+literal|"2019-01-01"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-01-07"
+argument_list|,
+literal|"2019-01-06"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-02-01"
+argument_list|,
+literal|"2019-01-07"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2019-52-07"
+argument_list|,
+literal|"2019-12-29"
+argument_list|)
+expr_stmt|;
+name|checkParseDate
+argument_list|(
+literal|"IYYY-IW-ID"
+argument_list|,
+literal|"2020-01-01"
+argument_list|,
+literal|"2019-12-30"
+argument_list|)
+expr_stmt|;
 block|}
 specifier|private
 name|void
@@ -2004,6 +2534,54 @@ argument_list|,
 literal|"2018-FEB-28"
 argument_list|)
 expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"iyyy-iw-id"
+argument_list|,
+literal|"2019-00-01"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601 week number out of range for year
+name|verifyBadParseString
+argument_list|(
+literal|"iyyy-iw-id"
+argument_list|,
+literal|"2019-53-01"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601 week number out of range for year
+name|verifyBadParseString
+argument_list|(
+literal|"iw-iyyy-id"
+argument_list|,
+literal|"53-2019-01"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601 week number out of range for year
+name|verifyBadParseString
+argument_list|(
+literal|"iw-iyyy-id"
+argument_list|,
+literal|"54-2019-01"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601 week number out of range
+name|verifyBadParseString
+argument_list|(
+literal|"iyyy-iw-id"
+argument_list|,
+literal|"2019-52-00"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601 day of week out of range
+name|verifyBadParseString
+argument_list|(
+literal|"iyyy-iw-id"
+argument_list|,
+literal|"2019-52-08"
+argument_list|)
+expr_stmt|;
+comment|//ISO 8601 day of week out of range
 block|}
 specifier|private
 name|void
@@ -2079,6 +2657,15 @@ argument_list|(
 literal|"FMyyy-FMmm-dd FMHH12:MI:FMSS"
 argument_list|,
 literal|"2019-01-01 01:01:01"
+argument_list|,
+literal|"19-1-01 1:01:1"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"FMiyy-FMiw-id FMHH12:MI:FMSS"
+argument_list|,
+literal|"2018-12-31 01:01:01"
 argument_list|,
 literal|"19-1-01 1:01:1"
 argument_list|)
@@ -2265,6 +2852,13 @@ argument_list|,
 literal|"2019-01-01 003"
 argument_list|)
 expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"FXiyyy-iw-id hh24:mi:ss"
+argument_list|,
+literal|"019-01-02 17:00:05"
+argument_list|)
+expr_stmt|;
 comment|//text case does not matter
 name|checkParseTimestamp
 argument_list|(
@@ -2342,6 +2936,22 @@ argument_list|,
 literal|"1-01-1998 12 PM"
 argument_list|,
 literal|"1998-01-01 12:00:00"
+argument_list|)
+expr_stmt|;
+name|checkParseTimestamp
+argument_list|(
+literal|"FXFMiyyy-iw-id hh24:mi:ss"
+argument_list|,
+literal|"019-01-02 17:00:05"
+argument_list|,
+literal|"2019-01-01 17:00:05"
+argument_list|)
+expr_stmt|;
+name|verifyBadParseString
+argument_list|(
+literal|"FXFMiyyy-iw-id hh24:mi:ss"
+argument_list|,
+literal|"019-01-02 17:0:05"
 argument_list|)
 expr_stmt|;
 comment|//ff[1-9] unaffected
@@ -2805,13 +3415,16 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
+name|Timestamp
+name|output
+init|=
 name|formatter
 operator|.
 name|parseTimestamp
 argument_list|(
 name|string
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|fail
 argument_list|(
 literal|"Parse string to timestamp should have failed.\nString: "
@@ -2821,6 +3434,10 @@ operator|+
 literal|"\nPattern: "
 operator|+
 name|pattern
+operator|+
+literal|", output = "
+operator|+
+name|output
 argument_list|)
 expr_stmt|;
 block|}
