@@ -8570,6 +8570,15 @@ argument_list|,
 literal|"Minimum number of OR clauses needed to transform into IN clauses"
 argument_list|)
 block|,
+name|HIVEOPT_TRANSFORM_IN_MAXNODES
+argument_list|(
+literal|"hive.optimize.transform.in.maxnodes"
+argument_list|,
+literal|16
+argument_list|,
+literal|"Maximum number of IN expressions beyond which IN will not be transformed into OR clause"
+argument_list|)
+block|,
 name|HIVECOUNTDISTINCTOPTIMIZER
 argument_list|(
 literal|"hive.optimize.countdistinct"

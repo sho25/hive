@@ -1794,6 +1794,11 @@ specifier|private
 name|int
 name|correlatedId
 decl_stmt|;
+specifier|private
+specifier|final
+name|int
+name|maxNodesForInToOrTransformation
+decl_stmt|;
 comment|//Constructor used by HiveRexExecutorImpl
 specifier|public
 name|RexNodeConverter
@@ -1850,6 +1855,9 @@ name|RowResolver
 name|outerRR
 parameter_list|,
 name|int
+name|maxNodesForInToOrTransformation
+parameter_list|,
+name|int
 name|offset
 parameter_list|,
 name|boolean
@@ -1909,6 +1917,12 @@ operator|.
 name|correlatedId
 operator|=
 name|correlatedId
+expr_stmt|;
+name|this
+operator|.
+name|maxNodesForInToOrTransformation
+operator|=
+name|maxNodesForInToOrTransformation
 expr_stmt|;
 block|}
 specifier|public
@@ -1979,6 +1993,12 @@ operator|.
 name|outerNameToPosMap
 operator|=
 literal|null
+expr_stmt|;
+name|this
+operator|.
+name|maxNodesForInToOrTransformation
+operator|=
+literal|0
 expr_stmt|;
 block|}
 specifier|public
@@ -2040,6 +2060,12 @@ operator|.
 name|outerNameToPosMap
 operator|=
 literal|null
+expr_stmt|;
+name|this
+operator|.
+name|maxNodesForInToOrTransformation
+operator|=
+literal|0
 expr_stmt|;
 block|}
 specifier|public
@@ -3731,6 +3757,45 @@ block|{
 comment|// if it is more than an single item in an IN clause,
 comment|// transform from IN [A,B,C] => OR [EQUALS [A,B], EQUALS [A,C]]
 comment|// except complex types
+comment|// Rewrite to OR is done only if number of operands are less than
+comment|// the threshold configured
+name|boolean
+name|rewriteToOr
+init|=
+literal|true
+decl_stmt|;
+if|if
+condition|(
+name|this
+operator|.
+name|maxNodesForInToOrTransformation
+operator|!=
+literal|0
+condition|)
+block|{
+if|if
+condition|(
+name|childRexNodeLst
+operator|.
+name|size
+argument_list|()
+operator|>
+name|this
+operator|.
+name|maxNodesForInToOrTransformation
+condition|)
+block|{
+name|rewriteToOr
+operator|=
+literal|false
+expr_stmt|;
+block|}
+block|}
+if|if
+condition|(
+name|rewriteToOr
+condition|)
+block|{
 name|childRexNodeLst
 operator|=
 name|rewriteInClauseChildren
@@ -3746,6 +3811,7 @@ name|SqlStdOperatorTable
 operator|.
 name|OR
 expr_stmt|;
+block|}
 block|}
 block|}
 elseif|else
