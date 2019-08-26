@@ -109,6 +109,8 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|create
+operator|.
 name|CreateDatabaseDesc
 import|;
 end_import

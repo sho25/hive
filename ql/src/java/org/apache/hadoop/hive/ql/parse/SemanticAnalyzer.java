@@ -9057,8 +9057,6 @@ name|String
 argument_list|>
 name|props
 init|=
-name|DDLSemanticAnalyzer
-operator|.
 name|getProps
 argument_list|(
 operator|(
@@ -84833,8 +84831,6 @@ name|TOK_TABLEPROPERTIES
 case|:
 name|tblProps
 operator|=
-name|DDLSemanticAnalyzer
-operator|.
 name|getProps
 argument_list|(
 operator|(
@@ -86828,8 +86824,6 @@ name|TOK_TABLEPROPERTIES
 case|:
 name|tblProps
 operator|=
-name|DDLSemanticAnalyzer
-operator|.
 name|getProps
 argument_list|(
 operator|(

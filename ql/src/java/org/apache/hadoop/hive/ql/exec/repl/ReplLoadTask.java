@@ -227,6 +227,10 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|alter
+operator|.
+name|poperties
+operator|.
 name|AlterDatabaseSetPropertiesDesc
 import|;
 end_import

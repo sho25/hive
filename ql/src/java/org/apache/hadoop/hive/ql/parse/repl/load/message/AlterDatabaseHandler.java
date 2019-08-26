@@ -111,6 +111,8 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|alter
+operator|.
 name|AbstractAlterDatabaseDesc
 import|;
 end_import
@@ -131,6 +133,10 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|alter
+operator|.
+name|owner
+operator|.
 name|AlterDatabaseSetOwnerDesc
 import|;
 end_import
@@ -150,6 +156,10 @@ operator|.
 name|ddl
 operator|.
 name|database
+operator|.
+name|alter
+operator|.
+name|poperties
 operator|.
 name|AlterDatabaseSetPropertiesDesc
 import|;

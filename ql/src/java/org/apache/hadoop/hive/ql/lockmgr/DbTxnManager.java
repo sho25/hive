@@ -387,6 +387,8 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|lock
+operator|.
 name|LockDatabaseDesc
 import|;
 end_import
@@ -406,6 +408,8 @@ operator|.
 name|ddl
 operator|.
 name|database
+operator|.
+name|unlock
 operator|.
 name|UnlockDatabaseDesc
 import|;

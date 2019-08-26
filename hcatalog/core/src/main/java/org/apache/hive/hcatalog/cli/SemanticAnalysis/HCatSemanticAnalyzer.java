@@ -89,6 +89,8 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|desc
+operator|.
 name|DescDatabaseDesc
 import|;
 end_import
@@ -108,6 +110,8 @@ operator|.
 name|ddl
 operator|.
 name|database
+operator|.
+name|drop
 operator|.
 name|DropDatabaseDesc
 import|;
@@ -129,6 +133,8 @@ name|ddl
 operator|.
 name|database
 operator|.
+name|show
+operator|.
 name|ShowDatabasesDesc
 import|;
 end_import
@@ -148,6 +154,8 @@ operator|.
 name|ddl
 operator|.
 name|database
+operator|.
+name|use
 operator|.
 name|SwitchDatabaseDesc
 import|;

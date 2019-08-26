@@ -866,14 +866,6 @@ name|db
 decl_stmt|;
 specifier|private
 specifier|static
-name|String
-name|testInjectDumpDir
-init|=
-literal|null
-decl_stmt|;
-comment|// unit tests can overwrite this to affect default dump behaviour
-specifier|private
-specifier|static
 specifier|final
 name|String
 name|dumpSchema
@@ -1462,7 +1454,6 @@ block|{
 case|case
 name|TOK_REPL_CONFIG
 case|:
-block|{
 name|Map
 argument_list|<
 name|String
@@ -1471,8 +1462,6 @@ name|String
 argument_list|>
 name|replConfigs
 init|=
-name|DDLSemanticAnalyzer
-operator|.
 name|getProps
 argument_list|(
 operator|(
@@ -1540,11 +1529,9 @@ argument_list|)
 expr_stmt|;
 block|}
 break|break;
-block|}
 case|case
 name|TOK_REPL_TABLES
 case|:
-block|{
 name|setReplDumpTablesList
 argument_list|(
 name|currNode
@@ -1553,22 +1540,18 @@ name|replScope
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|TOK_REPLACE
 case|:
-block|{
 name|setOldReplPolicy
 argument_list|(
 name|currNode
 argument_list|)
 expr_stmt|;
 break|break;
-block|}
 case|case
 name|TOK_FROM
 case|:
-block|{
 comment|// TOK_FROM subtree
 name|Tree
 name|fromNode
@@ -1708,9 +1691,7 @@ operator|++
 expr_stmt|;
 block|}
 break|break;
-block|}
 default|default:
-block|{
 throw|throw
 operator|new
 name|SemanticException
@@ -1725,7 +1706,6 @@ operator|+
 literal|" in REPL DUMP statement."
 argument_list|)
 throw|;
-block|}
 block|}
 comment|// Move to the next root node
 name|childIdx
@@ -2773,8 +2753,6 @@ name|String
 argument_list|>
 name|replConfigs
 init|=
-name|DDLSemanticAnalyzer
-operator|.
 name|getProps
 argument_list|(
 name|node
