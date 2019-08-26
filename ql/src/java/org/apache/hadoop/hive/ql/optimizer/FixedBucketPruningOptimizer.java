@@ -952,6 +952,7 @@ name|bucketField
 operator|=
 name|fs
 expr_stmt|;
+break|break;
 block|}
 block|}
 name|Preconditions
@@ -1302,6 +1303,22 @@ comment|// all of the OR branches need to be bucket-leaves
 return|return;
 block|}
 block|}
+block|}
+elseif|else
+if|if
+condition|(
+name|expr
+operator|.
+name|getOperator
+argument_list|()
+operator|==
+name|Operator
+operator|.
+name|NOT
+condition|)
+block|{
+comment|// TODO: think we can handle NOT IS_NULL?
+return|return;
 block|}
 comment|// invariant: bucket-col IN literals of type bucketField
 name|BitSet
