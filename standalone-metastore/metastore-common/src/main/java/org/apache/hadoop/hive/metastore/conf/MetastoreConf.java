@@ -2764,11 +2764,11 @@ literal|"metastore.metrics.file.frequency"
 argument_list|,
 literal|"hive.service.metrics.file.frequency"
 argument_list|,
-literal|1
+literal|60000
 argument_list|,
 name|TimeUnit
 operator|.
-name|MINUTES
+name|MILLISECONDS
 argument_list|,
 literal|"For json metric reporter, the frequency of updating JSON metrics file."
 argument_list|)
