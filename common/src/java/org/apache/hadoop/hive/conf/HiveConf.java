@@ -6571,7 +6571,7 @@ name|HIVEUSEHYBRIDGRACEHASHJOIN
 argument_list|(
 literal|"hive.mapjoin.hybridgrace.hashtable"
 argument_list|,
-literal|true
+literal|false
 argument_list|,
 literal|"Whether to use hybrid"
 operator|+
