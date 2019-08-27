@@ -2993,7 +2993,7 @@ name|SortCol
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

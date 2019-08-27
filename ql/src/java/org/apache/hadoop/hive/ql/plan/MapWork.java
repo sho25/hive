@@ -4101,7 +4101,7 @@ specifier|public
 name|void
 name|setVectorizationEnabledConditionsMet
 parameter_list|(
-name|ArrayList
+name|Collection
 argument_list|<
 name|String
 argument_list|>
@@ -4144,7 +4144,7 @@ specifier|public
 name|void
 name|setVectorizationEnabledConditionsNotMet
 parameter_list|(
-name|List
+name|Collection
 argument_list|<
 name|String
 argument_list|>

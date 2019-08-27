@@ -4284,7 +4284,7 @@ operator|.
 name|getBucketColNames
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4593,7 +4593,7 @@ name|ReduceSinkOperator
 operator|)
 name|op
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4604,7 +4604,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

@@ -25,16 +25,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -294,7 +284,7 @@ name|int
 name|totalFiles
 decl_stmt|;
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -491,7 +481,7 @@ name|int
 name|totalFiles
 parameter_list|,
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -1529,7 +1519,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the partitionCols    */
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -1545,7 +1535,7 @@ specifier|public
 name|void
 name|setPartitionCols
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

@@ -1313,7 +1313,7 @@ operator|.
 name|getDataSize
 argument_list|()
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -2218,11 +2218,6 @@ operator|new
 name|HashTableDummyDesc
 argument_list|()
 decl_stmt|;
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unchecked"
-argument_list|)
 name|HashTableDummyOperator
 name|dummyOp
 init|=

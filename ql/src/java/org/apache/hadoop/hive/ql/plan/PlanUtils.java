@@ -20,6 +20,24 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|util
+operator|.
+name|HiveStringUtils
+operator|.
+name|quoteComments
+import|;
+end_import
+
+begin_import
 import|import
 name|java
 operator|.
@@ -791,22 +809,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|MetadataTypedColumnsetSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|binarysortable
 operator|.
 name|BinarySortableSerDe
@@ -1036,24 +1038,6 @@ operator|.
 name|slf4j
 operator|.
 name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|util
-operator|.
-name|HiveStringUtils
-operator|.
-name|quoteComments
 import|;
 end_import
 
@@ -4380,13 +4364,13 @@ specifier|static
 name|ReduceSinkDesc
 name|getReduceSinkDesc
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|keyCols
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4404,7 +4388,7 @@ parameter_list|,
 name|int
 name|tag
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4510,7 +4494,7 @@ name|ReduceSinkDesc
 name|getReduceSinkDesc
 parameter_list|(
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4519,7 +4503,7 @@ parameter_list|,
 name|int
 name|numKeys
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4552,7 +4536,7 @@ parameter_list|,
 name|int
 name|tag
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4583,7 +4567,7 @@ name|valueTable
 init|=
 literal|null
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -4596,7 +4580,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -4798,13 +4782,13 @@ specifier|static
 name|ReduceSinkDesc
 name|getReduceSinkDesc
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|keyCols
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4916,7 +4900,7 @@ specifier|static
 name|ReduceSinkDesc
 name|getReduceSinkDesc
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -4925,7 +4909,7 @@ parameter_list|,
 name|int
 name|numKeys
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

@@ -1033,7 +1033,7 @@ condition|)
 block|{
 comment|// If partitioning columns of the parent RS are not assigned,
 comment|// assign partitioning columns of the child RS to the parent RS.
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

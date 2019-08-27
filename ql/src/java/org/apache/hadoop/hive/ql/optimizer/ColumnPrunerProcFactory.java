@@ -4067,7 +4067,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -5835,11 +5835,7 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
