@@ -949,6 +949,24 @@ name|Lists
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|Warehouse
+operator|.
+name|DEFAULT_DATABASE_NAME
+import|;
+end_import
+
 begin_comment
 comment|/**  * HiveSession  *  */
 end_comment
@@ -2074,6 +2092,21 @@ try|try
 block|{
 if|if
 condition|(
+operator|!
+operator|(
+name|StringUtils
+operator|.
+name|equals
+argument_list|(
+name|DEFAULT_DATABASE_NAME
+argument_list|,
+name|entry
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+operator|)
+operator|&&
 name|sessionHive
 operator|.
 name|getDatabase
