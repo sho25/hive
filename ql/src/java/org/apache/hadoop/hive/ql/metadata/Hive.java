@@ -2320,6 +2320,8 @@ block|}
 catch|catch
 parameter_list|(
 name|Exception
+decl||
+name|Error
 name|e
 parameter_list|)
 block|{
@@ -2341,6 +2343,13 @@ argument_list|,
 name|REG_FUNCS_NO
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|Exception
+condition|)
+block|{
 throw|throw
 operator|new
 name|HiveException
@@ -2348,6 +2357,13 @@ argument_list|(
 name|e
 argument_list|)
 throw|;
+block|}
+else|else
+block|{
+throw|throw
+name|e
+throw|;
+block|}
 block|}
 finally|finally
 block|{
