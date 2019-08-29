@@ -18,6 +18,10 @@ operator|.
 name|ddl
 operator|.
 name|function
+operator|.
+name|macro
+operator|.
+name|drop
 package|;
 end_package
 
@@ -28,20 +32,6 @@ operator|.
 name|io
 operator|.
 name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
-name|Path
 import|;
 end_import
 
@@ -102,7 +92,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DDL task description for DESC FUNCTION commands.  */
+comment|/**  * DDL task description for DROP TEMPORARY MACRO commands.  */
 end_comment
 
 begin_class
@@ -111,7 +101,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Describe Function"
+literal|"Drop Macro"
 argument_list|,
 name|explainLevels
 operator|=
@@ -131,7 +121,7 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|DescFunctionDesc
+name|DropMacroDesc
 implements|implements
 name|DDLDesc
 implements|,
@@ -145,87 +135,24 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|SCHEMA
-init|=
-literal|"tab_name#string"
-decl_stmt|;
-specifier|private
-specifier|final
-name|String
-name|resFile
-decl_stmt|;
 specifier|private
 specifier|final
 name|String
 name|name
 decl_stmt|;
-specifier|private
-specifier|final
-name|boolean
-name|isExtended
-decl_stmt|;
 specifier|public
-name|DescFunctionDesc
+name|DropMacroDesc
 parameter_list|(
-name|Path
-name|resFile
-parameter_list|,
 name|String
 name|name
-parameter_list|,
-name|boolean
-name|isExtended
 parameter_list|)
 block|{
 name|this
 operator|.
-name|resFile
-operator|=
-name|resFile
-operator|.
-name|toString
-argument_list|()
-expr_stmt|;
-name|this
-operator|.
 name|name
 operator|=
 name|name
 expr_stmt|;
-name|this
-operator|.
-name|isExtended
-operator|=
-name|isExtended
-expr_stmt|;
-block|}
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"result file"
-argument_list|,
-name|explainLevels
-operator|=
-block|{
-name|Level
-operator|.
-name|EXTENDED
-block|}
-argument_list|)
-specifier|public
-name|String
-name|getResFile
-parameter_list|()
-block|{
-return|return
-name|resFile
-return|;
 block|}
 annotation|@
 name|Explain
@@ -257,15 +184,6 @@ parameter_list|()
 block|{
 return|return
 name|name
-return|;
-block|}
-specifier|public
-name|boolean
-name|isExtended
-parameter_list|()
-block|{
-return|return
-name|isExtended
 return|;
 block|}
 block|}

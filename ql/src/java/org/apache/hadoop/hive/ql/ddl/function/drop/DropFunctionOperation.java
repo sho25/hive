@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|function
+operator|.
+name|drop
 package|;
 end_package
 

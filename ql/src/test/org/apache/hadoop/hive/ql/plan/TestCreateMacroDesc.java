@@ -65,6 +65,10 @@ name|ddl
 operator|.
 name|function
 operator|.
+name|macro
+operator|.
+name|create
+operator|.
 name|CreateMacroDesc
 import|;
 end_import

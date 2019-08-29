@@ -195,6 +195,8 @@ name|ddl
 operator|.
 name|function
 operator|.
+name|create
+operator|.
 name|CreateFunctionDesc
 import|;
 end_import

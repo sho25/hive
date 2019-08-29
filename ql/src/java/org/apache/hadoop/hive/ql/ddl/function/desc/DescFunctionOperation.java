@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|function
+operator|.
+name|desc
 package|;
 end_package
 
@@ -203,20 +205,6 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|fs
-operator|.
-name|Path
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
 name|hive
 operator|.
 name|ql
@@ -329,14 +317,10 @@ name|DDLUtils
 operator|.
 name|getOutputStream
 argument_list|(
-operator|new
-name|Path
-argument_list|(
 name|desc
 operator|.
 name|getResFile
 argument_list|()
-argument_list|)
 argument_list|,
 name|context
 argument_list|)

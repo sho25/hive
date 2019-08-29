@@ -35,6 +35,10 @@ name|ddl
 operator|.
 name|function
 operator|.
+name|macro
+operator|.
+name|drop
+operator|.
 name|DropMacroDesc
 import|;
 end_import
