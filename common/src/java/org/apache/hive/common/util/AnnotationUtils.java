@@ -46,7 +46,8 @@ specifier|public
 class|class
 name|AnnotationUtils
 block|{
-comment|// to avoid https://bugs.openjdk.java.net/browse/JDK-7122142
+comment|// until JDK8, this had a lock around annotationClass to avoid
+comment|// https://bugs.openjdk.java.net/browse/JDK-7122142
 specifier|public
 specifier|static
 parameter_list|<
@@ -70,11 +71,6 @@ argument_list|>
 name|annotationClass
 parameter_list|)
 block|{
-synchronized|synchronized
-init|(
-name|annotationClass
-init|)
-block|{
 return|return
 name|clazz
 operator|.
@@ -84,8 +80,8 @@ name|annotationClass
 argument_list|)
 return|;
 block|}
-block|}
-comment|// to avoid https://bugs.openjdk.java.net/browse/JDK-7122142
+comment|// until JDK8, this had a lock around annotationClass to avoid
+comment|// https://bugs.openjdk.java.net/browse/JDK-7122142
 specifier|public
 specifier|static
 parameter_list|<
@@ -106,11 +102,6 @@ argument_list|>
 name|annotationClass
 parameter_list|)
 block|{
-synchronized|synchronized
-init|(
-name|annotationClass
-init|)
-block|{
 return|return
 name|method
 operator|.
@@ -119,7 +110,6 @@ argument_list|(
 name|annotationClass
 argument_list|)
 return|;
-block|}
 block|}
 block|}
 end_class
