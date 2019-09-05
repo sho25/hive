@@ -376,6 +376,8 @@ name|vectorDesc
 operator|.
 name|getKeyExpressions
 argument_list|()
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 for|for

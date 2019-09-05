@@ -4069,6 +4069,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|keyExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|List
@@ -4308,6 +4310,8 @@ name|vecAggrExpr
 operator|.
 name|getInputExpression
 argument_list|()
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|aggregators

@@ -1415,6 +1415,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|reduceSinkKeyExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|VectorExpression
@@ -1422,6 +1424,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|reduceSinkValueExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 if|if

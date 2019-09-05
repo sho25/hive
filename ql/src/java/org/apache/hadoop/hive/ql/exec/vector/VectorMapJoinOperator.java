@@ -680,6 +680,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|bigTableFilterExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|VectorExpression
@@ -687,6 +689,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|keyExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|VectorExpression
@@ -694,6 +698,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|bigTableValueExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 comment|// Use a final variable to properly parameterize the processVectorInspector closure.

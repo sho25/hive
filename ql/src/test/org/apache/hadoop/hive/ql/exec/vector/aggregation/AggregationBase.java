@@ -1558,6 +1558,8 @@ name|vecAggrExpr
 operator|.
 name|getInputExpression
 argument_list|()
+argument_list|,
+name|hiveConf
 argument_list|)
 expr_stmt|;
 comment|// System.out.println("*VECTOR AGGREGATION EXPRESSION* " + vecAggrExpr.getClass().getSimpleName());

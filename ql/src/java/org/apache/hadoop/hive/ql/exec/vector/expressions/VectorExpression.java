@@ -436,7 +436,10 @@ comment|//----------------------------------------------------------------------
 specifier|public
 name|void
 name|transientInit
-parameter_list|()
+parameter_list|(
+name|Configuration
+name|conf
+parameter_list|)
 throws|throws
 name|HiveException
 block|{
@@ -449,6 +452,9 @@ name|doTransientInit
 parameter_list|(
 name|VectorExpression
 name|vecExpr
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|HiveException
@@ -465,6 +471,8 @@ block|}
 name|doTransientInitRecurse
 argument_list|(
 name|vecExpr
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -476,6 +484,9 @@ parameter_list|(
 name|VectorExpression
 index|[]
 name|vecExprs
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|HiveException
@@ -500,6 +511,8 @@ block|{
 name|doTransientInitRecurse
 argument_list|(
 name|vecExpr
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}
@@ -511,6 +524,9 @@ name|doTransientInitRecurse
 parameter_list|(
 name|VectorExpression
 name|vecExpr
+parameter_list|,
+name|Configuration
+name|conf
 parameter_list|)
 throws|throws
 name|HiveException
@@ -519,7 +535,9 @@ comment|// Well, don't recurse but make sure all children are initialized.
 name|vecExpr
 operator|.
 name|transientInit
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
@@ -606,7 +624,9 @@ block|}
 name|childVecExpr
 operator|.
 name|transientInit
-argument_list|()
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 block|}

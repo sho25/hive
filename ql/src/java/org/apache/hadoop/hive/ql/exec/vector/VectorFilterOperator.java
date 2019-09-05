@@ -418,6 +418,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|predicateExpression
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 try|try

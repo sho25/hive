@@ -863,6 +863,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|reduceSinkBucketExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|VectorExpression
@@ -870,6 +872,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|reduceSinkPartitionExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 if|if

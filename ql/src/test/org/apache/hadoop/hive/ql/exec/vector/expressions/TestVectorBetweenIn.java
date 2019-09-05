@@ -5174,7 +5174,9 @@ decl_stmt|;
 name|vectorExpression
 operator|.
 name|transientInit
-argument_list|()
+argument_list|(
+name|hiveConf
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

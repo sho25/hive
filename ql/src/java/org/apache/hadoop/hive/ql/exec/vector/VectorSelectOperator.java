@@ -611,6 +611,8 @@ operator|.
 name|doTransientInit
 argument_list|(
 name|vExpressions
+argument_list|,
+name|hconf
 argument_list|)
 expr_stmt|;
 name|List
