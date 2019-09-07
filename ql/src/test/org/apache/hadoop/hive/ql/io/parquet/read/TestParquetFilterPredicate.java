@@ -232,7 +232,7 @@ comment|// Column will be removed from filter
 operator|.
 name|nullSafeEquals
 argument_list|(
-literal|"a"
+literal|"stinger"
 argument_list|,
 name|PredicateLeaf
 operator|.
@@ -267,7 +267,7 @@ decl_stmt|;
 name|String
 name|expected
 init|=
-literal|"and(not(eq(a, null)), not(eq(a, Binary{\"stinger\"})))"
+literal|"and(not(eq(a, null)), not(eq(stinger, Binary{\"stinger\"})))"
 decl_stmt|;
 name|assertEquals
 argument_list|(
