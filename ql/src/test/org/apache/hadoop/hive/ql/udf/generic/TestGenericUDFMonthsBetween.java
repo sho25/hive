@@ -837,6 +837,19 @@ argument_list|,
 name|udf
 argument_list|)
 expr_stmt|;
+comment|//Test for Julian vs Gregorian dates
+name|runTestStr
+argument_list|(
+literal|"1582-10-05"
+argument_list|,
+literal|"1582-11-05"
+argument_list|,
+operator|-
+literal|1.
+argument_list|,
+name|udf
+argument_list|)
+expr_stmt|;
 block|}
 annotation|@
 name|Test
