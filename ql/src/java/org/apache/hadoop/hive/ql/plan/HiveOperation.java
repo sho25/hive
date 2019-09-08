@@ -1452,7 +1452,11 @@ name|TOK_SHOW_ROLES
 block|,
 name|HiveParser
 operator|.
-name|TOK_SHOW_SET_ROLE
+name|TOK_SHOW_CURRENT_ROLE
+block|,
+name|HiveParser
+operator|.
+name|TOK_SET_ROLE
 block|}
 argument_list|,
 literal|null

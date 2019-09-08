@@ -4,7 +4,7 @@ comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or m
 end_comment
 
 begin_comment
-comment|/** Alter Database DDL operations. */
+comment|/** Revoking DDL operation. */
 end_comment
 
 begin_package
@@ -21,9 +21,9 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|database
+name|privilege
 operator|.
-name|alter
+name|revoke
 package|;
 end_package
 
