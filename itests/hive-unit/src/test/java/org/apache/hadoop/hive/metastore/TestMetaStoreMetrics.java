@@ -831,18 +831,15 @@ argument_list|)
 expr_stmt|;
 comment|// TODO Evil!  Need to figure out a way to remove this sleep.
 comment|//initial state is one connection
-name|int
+name|long
 name|initialCount
 init|=
-operator|(
-name|Integer
-operator|)
 name|Metrics
 operator|.
 name|getRegistry
 argument_list|()
 operator|.
-name|getGauges
+name|getCounters
 argument_list|()
 operator|.
 name|get
@@ -852,7 +849,7 @@ operator|.
 name|OPEN_CONNECTIONS
 argument_list|)
 operator|.
-name|getValue
+name|getCount
 argument_list|()
 decl_stmt|;
 comment|//create two connections
@@ -887,7 +884,7 @@ operator|.
 name|getRegistry
 argument_list|()
 operator|.
-name|getGauges
+name|getCounters
 argument_list|()
 operator|.
 name|get
@@ -897,7 +894,7 @@ operator|.
 name|OPEN_CONNECTIONS
 argument_list|)
 operator|.
-name|getValue
+name|getCount
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -928,7 +925,7 @@ operator|.
 name|getRegistry
 argument_list|()
 operator|.
-name|getGauges
+name|getCounters
 argument_list|()
 operator|.
 name|get
@@ -938,7 +935,7 @@ operator|.
 name|OPEN_CONNECTIONS
 argument_list|)
 operator|.
-name|getValue
+name|getCount
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -967,7 +964,7 @@ operator|.
 name|getRegistry
 argument_list|()
 operator|.
-name|getGauges
+name|getCounters
 argument_list|()
 operator|.
 name|get
@@ -977,7 +974,7 @@ operator|.
 name|OPEN_CONNECTIONS
 argument_list|)
 operator|.
-name|getValue
+name|getCount
 argument_list|()
 argument_list|)
 expr_stmt|;

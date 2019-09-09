@@ -59959,14 +59959,6 @@ block|}
 block|}
 end_function
 
-begin_decl_stmt
-specifier|private
-specifier|static
-name|AtomicInteger
-name|openConnections
-decl_stmt|;
-end_decl_stmt
-
 begin_comment
 comment|/**    * Start Metastore based on a passed {@link HadoopThriftAuthBridge}    *    * @param port    * @param bridge    * @throws Throwable    */
 end_comment
@@ -60760,19 +60752,6 @@ name|serverSocket
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Metrics will have already been initialized if we're using them since HMSHandler
-comment|// initializes them.
-name|openConnections
-operator|=
-name|Metrics
-operator|.
-name|getOrCreateGauge
-argument_list|(
-name|MetricsConstants
-operator|.
-name|OPEN_CONNECTIONS
-argument_list|)
-expr_stmt|;
 name|TThreadPoolServer
 operator|.
 name|Args
@@ -60852,9 +60831,12 @@ name|TProtocol
 name|tProtocol1
 parameter_list|)
 block|{
-name|openConnections
+name|Metrics
 operator|.
-name|incrementAndGet
+name|getOpenConnectionsCounter
+argument_list|()
+operator|.
+name|inc
 argument_list|()
 expr_stmt|;
 return|return
@@ -60877,9 +60859,12 @@ name|TProtocol
 name|tProtocol1
 parameter_list|)
 block|{
-name|openConnections
+name|Metrics
 operator|.
-name|decrementAndGet
+name|getOpenConnectionsCounter
+argument_list|()
+operator|.
+name|dec
 argument_list|()
 expr_stmt|;
 comment|// If the IMetaStoreClient#close was called, HMSHandler#shutdown would have already
