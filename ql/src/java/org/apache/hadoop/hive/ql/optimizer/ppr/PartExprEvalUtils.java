@@ -384,7 +384,6 @@ name|PartExprEvalUtils
 block|{
 comment|/**    * Evaluate expression with partition columns    *    * @param expr    * @param rowObjectInspector    * @return value returned by the expression    * @throws HiveException    */
 specifier|static
-specifier|synchronized
 specifier|public
 name|Object
 name|evalExprWithPart
@@ -757,7 +756,6 @@ argument_list|)
 return|;
 block|}
 specifier|static
-specifier|synchronized
 specifier|public
 name|ObjectPair
 argument_list|<
@@ -882,7 +880,6 @@ argument_list|)
 return|;
 block|}
 specifier|static
-specifier|synchronized
 specifier|public
 name|Object
 name|evaluateExprOnPart
