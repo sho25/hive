@@ -123,9 +123,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
-operator|.
-name|LockedDriverState
+name|ErrorMsg
 import|;
 end_import
 
@@ -141,7 +139,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ErrorMsg
+name|DriverState
 import|;
 end_import
 
@@ -904,8 +902,8 @@ parameter_list|,
 name|boolean
 name|keepAlive
 parameter_list|,
-name|LockedDriverState
-name|lDrvState
+name|DriverState
+name|driverState
 parameter_list|)
 throws|throws
 name|LockException
@@ -1080,21 +1078,19 @@ literal|false
 decl_stmt|;
 if|if
 condition|(
-name|lDrvState
+name|driverState
 operator|!=
 literal|null
 condition|)
 block|{
-name|lDrvState
-operator|.
-name|stateLock
+name|driverState
 operator|.
 name|lock
 argument_list|()
 expr_stmt|;
 if|if
 condition|(
-name|lDrvState
+name|driverState
 operator|.
 name|isAborted
 argument_list|()
@@ -1105,9 +1101,7 @@ operator|=
 literal|true
 expr_stmt|;
 block|}
-name|lDrvState
-operator|.
-name|stateLock
+name|driverState
 operator|.
 name|unlock
 argument_list|()

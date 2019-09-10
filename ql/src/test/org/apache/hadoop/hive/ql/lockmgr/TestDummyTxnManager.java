@@ -139,9 +139,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
-operator|.
-name|LockedDriverState
+name|DriverState
 import|;
 end_import
 
@@ -682,21 +680,21 @@ name|SHARED
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|LockedDriverState
-name|lDrvState
+name|DriverState
+name|driverState
 init|=
 operator|new
-name|LockedDriverState
+name|DriverState
 argument_list|()
 decl_stmt|;
-name|LockedDriverState
-name|lDrvInp
+name|DriverState
+name|driverInterrupted
 init|=
 operator|new
-name|LockedDriverState
+name|DriverState
 argument_list|()
 decl_stmt|;
-name|lDrvInp
+name|driverInterrupted
 operator|.
 name|abort
 argument_list|()
@@ -735,7 +733,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|lDrvState
+name|driverState
 argument_list|)
 argument_list|)
 argument_list|)
@@ -765,7 +763,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|lDrvInp
+name|driverInterrupted
 argument_list|)
 argument_list|)
 argument_list|)
@@ -862,7 +860,7 @@ name|ctx
 argument_list|,
 literal|"fred"
 argument_list|,
-name|lDrvState
+name|driverState
 argument_list|)
 expr_stmt|;
 comment|// Verify
@@ -1038,7 +1036,7 @@ argument_list|)
 argument_list|,
 name|eq
 argument_list|(
-name|lDrvState
+name|driverState
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1148,7 +1146,7 @@ name|ctx
 argument_list|,
 literal|"fred"
 argument_list|,
-name|lDrvInp
+name|driverInterrupted
 argument_list|)
 expr_stmt|;
 name|Assert

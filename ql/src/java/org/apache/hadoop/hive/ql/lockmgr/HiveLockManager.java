@@ -41,9 +41,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
-operator|.
-name|LockedDriverState
+name|DriverState
 import|;
 end_import
 
@@ -99,8 +97,8 @@ parameter_list|,
 name|boolean
 name|keepAlive
 parameter_list|,
-name|LockedDriverState
-name|lDrvState
+name|DriverState
+name|driverState
 parameter_list|)
 throws|throws
 name|LockException

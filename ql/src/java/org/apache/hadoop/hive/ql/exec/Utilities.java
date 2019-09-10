@@ -1147,9 +1147,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
-operator|.
-name|LockedDriverState
+name|ErrorMsg
 import|;
 end_import
 
@@ -1165,7 +1163,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ErrorMsg
+name|DriverState
 import|;
 end_import
 
@@ -18663,12 +18661,12 @@ name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|LockedDriverState
-name|lDrvStat
+name|DriverState
+name|driverState
 init|=
-name|LockedDriverState
+name|DriverState
 operator|.
-name|getLockedDriverState
+name|getDriverState
 argument_list|()
 decl_stmt|;
 comment|// AliasToWork contains all the aliases
@@ -18792,11 +18790,11 @@ control|)
 block|{
 if|if
 condition|(
-name|lDrvStat
+name|driverState
 operator|!=
 literal|null
 operator|&&
-name|lDrvStat
+name|driverState
 operator|.
 name|isAborted
 argument_list|()
@@ -19066,11 +19064,11 @@ control|)
 block|{
 if|if
 condition|(
-name|lDrvStat
+name|driverState
 operator|!=
 literal|null
 operator|&&
-name|lDrvStat
+name|driverState
 operator|.
 name|isAborted
 argument_list|()
@@ -19179,12 +19177,12 @@ name|ExecutionException
 throws|,
 name|InterruptedException
 block|{
-name|LockedDriverState
-name|lDrvStat
+name|DriverState
+name|driverState
 init|=
-name|LockedDriverState
+name|DriverState
 operator|.
-name|getLockedDriverState
+name|getDriverState
 argument_list|()
 decl_stmt|;
 name|List
@@ -19227,11 +19225,11 @@ control|)
 block|{
 if|if
 condition|(
-name|lDrvStat
+name|driverState
 operator|!=
 literal|null
 operator|&&
-name|lDrvStat
+name|driverState
 operator|.
 name|isAborted
 argument_list|()
@@ -19307,11 +19305,11 @@ control|)
 block|{
 if|if
 condition|(
-name|lDrvStat
+name|driverState
 operator|!=
 literal|null
 operator|&&
-name|lDrvStat
+name|driverState
 operator|.
 name|isAborted
 argument_list|()

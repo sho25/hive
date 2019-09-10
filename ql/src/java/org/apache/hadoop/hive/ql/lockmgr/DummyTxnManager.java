@@ -201,9 +201,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
-operator|.
-name|LockedDriverState
+name|ErrorMsg
 import|;
 end_import
 
@@ -219,7 +217,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ErrorMsg
+name|DriverState
 import|;
 end_import
 
@@ -819,8 +817,8 @@ parameter_list|,
 name|String
 name|username
 parameter_list|,
-name|LockedDriverState
-name|lDrvState
+name|DriverState
+name|driverState
 parameter_list|)
 throws|throws
 name|LockException
@@ -1250,7 +1248,7 @@ name|lockObjects
 argument_list|,
 literal|false
 argument_list|,
-name|lDrvState
+name|driverState
 argument_list|)
 decl_stmt|;
 if|if

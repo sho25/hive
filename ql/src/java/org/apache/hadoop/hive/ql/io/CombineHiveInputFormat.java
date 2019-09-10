@@ -297,9 +297,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|Driver
-operator|.
-name|LockedDriverState
+name|DriverState
 import|;
 end_import
 
@@ -1960,12 +1958,12 @@ name|Path
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|LockedDriverState
-name|lDrvStat
+name|DriverState
+name|driverState
 init|=
-name|LockedDriverState
+name|DriverState
 operator|.
-name|getLockedDriverState
+name|getDriverState
 argument_list|()
 decl_stmt|;
 for|for
@@ -1978,11 +1976,11 @@ control|)
 block|{
 if|if
 condition|(
-name|lDrvStat
+name|driverState
 operator|!=
 literal|null
 operator|&&
-name|lDrvStat
+name|driverState
 operator|.
 name|isAborted
 argument_list|()
