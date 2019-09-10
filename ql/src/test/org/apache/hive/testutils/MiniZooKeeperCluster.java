@@ -673,6 +673,16 @@ name|void
 name|setupTestEnv
 parameter_list|()
 block|{
+comment|// With ZooKeeper 3.5 we need to whitelist the 4 letter commands we use
+name|System
+operator|.
+name|setProperty
+argument_list|(
+literal|"zookeeper.4lw.commands.whitelist"
+argument_list|,
+literal|"*"
+argument_list|)
+expr_stmt|;
 comment|// during the tests we run with 100K prealloc in the logs.
 comment|// on windows systems prealloc of 64M was seen to take ~15seconds
 comment|// resulting in test failure (client timeout on first session).
