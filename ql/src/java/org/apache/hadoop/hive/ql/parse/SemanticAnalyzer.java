@@ -78121,9 +78121,9 @@ throw|throw
 operator|new
 name|IllegalStateException
 argument_list|(
-name|SemanticAnalyzerFactory
+name|HiveOperation
 operator|.
-name|getOperation
+name|operationForToken
 argument_list|(
 name|ast
 operator|.
@@ -78142,9 +78142,9 @@ name|queryState
 operator|.
 name|setCommandType
 argument_list|(
-name|SemanticAnalyzerFactory
+name|HiveOperation
 operator|.
-name|getOperation
+name|operationForToken
 argument_list|(
 name|ast
 operator|.

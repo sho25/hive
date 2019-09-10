@@ -213,8 +213,6 @@ name|DROP_MATERIALIZED_VIEW
 block|,
 name|ALTERVIEW_PROPERTIES
 block|,
-name|DROPVIEW_PROPERTIES
-block|,
 name|LOCKTABLE
 block|,
 name|UNLOCKTABLE

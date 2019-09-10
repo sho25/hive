@@ -1095,26 +1095,6 @@ name|plan
 operator|.
 name|HiveOperation
 operator|.
-name|DROPVIEW_PROPERTIES
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|plan
-operator|.
-name|HiveOperation
-operator|.
 name|EXPORT
 import|;
 end_import
@@ -2091,8 +2071,6 @@ block|,
 name|DROPVIEW
 block|,
 name|ALTERVIEW_PROPERTIES
-block|,
-name|DROPVIEW_PROPERTIES
 block|,
 name|LOCKTABLE
 block|,
