@@ -292,6 +292,8 @@ name|VectorizedRowBatch
 operator|)
 name|row
 decl_stmt|;
+comment|// We should skip number of rows equal to offset value
+comment|// skip until sum of current read count and current batch size less than or equal offset value
 if|if
 condition|(
 name|currCount
@@ -299,7 +301,7 @@ operator|+
 name|batch
 operator|.
 name|size
-operator|<
+operator|<=
 name|offset
 condition|)
 block|{
