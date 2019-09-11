@@ -3364,7 +3364,7 @@ argument_list|,
 name|joinOp
 argument_list|)
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 argument_list|,
 literal|null

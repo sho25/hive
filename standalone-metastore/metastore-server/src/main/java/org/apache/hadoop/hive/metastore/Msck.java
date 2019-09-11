@@ -155,6 +155,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|tuple
+operator|.
+name|Pair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|conf
@@ -386,24 +402,6 @@ operator|.
 name|utils
 operator|.
 name|MetaStoreServerUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|utils
-operator|.
-name|ObjectPair
 import|;
 end_import
 
@@ -2919,7 +2917,7 @@ comment|// msck is doing a clean up of hms.  if for some reason the partition is
 comment|// deleted, then it is good.  So, the last parameter ifexists is set to true
 name|List
 argument_list|<
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Integer
 argument_list|,
@@ -2996,7 +2994,7 @@ block|}
 specifier|private
 name|List
 argument_list|<
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Integer
 argument_list|,
@@ -3018,7 +3016,7 @@ name|MetaException
 block|{
 name|List
 argument_list|<
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Integer
 argument_list|,
@@ -3113,9 +3111,9 @@ name|expr
 operator|.
 name|add
 argument_list|(
-operator|new
-name|ObjectPair
-argument_list|<>
+name|Pair
+operator|.
+name|of
 argument_list|(
 name|i
 argument_list|,

@@ -26653,7 +26653,7 @@ argument_list|,
 name|detsClauseName
 argument_list|)
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 expr_stmt|;
 block|}

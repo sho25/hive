@@ -29,11 +29,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|fs
+name|lang3
 operator|.
-name|Path
+name|tuple
+operator|.
+name|Pair
 import|;
 end_import
 
@@ -45,11 +47,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|fs
 operator|.
-name|common
-operator|.
-name|ObjectPair
+name|Path
 import|;
 end_import
 
@@ -182,7 +182,7 @@ throws|throws
 name|Exception
 function_decl|;
 comment|/**    * Get Spark shuffle memory per task, and total number of cores. This    * information can be used to estimate how many reducers a task can have.    *    * @return an object pair, the first element is the shuffle memory per task in bytes,    *  the second element is the number of total cores usable by the client    */
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Long
 argument_list|,

@@ -27,11 +27,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|fs
+name|lang3
 operator|.
-name|Path
+name|tuple
+operator|.
+name|Pair
 import|;
 end_import
 
@@ -43,11 +45,9 @@ name|apache
 operator|.
 name|hadoop
 operator|.
-name|hive
+name|fs
 operator|.
-name|common
-operator|.
-name|ObjectPair
+name|Path
 import|;
 end_import
 
@@ -671,7 +671,7 @@ name|Map
 argument_list|<
 name|ReduceSinkOperator
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SparkEdgeProperty
 argument_list|,
@@ -925,11 +925,6 @@ argument_list|>
 argument_list|>
 name|clonedPruningTableScanSet
 decl_stmt|;
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unchecked"
-argument_list|)
 specifier|public
 name|GenSparkProcContext
 parameter_list|(
@@ -1051,7 +1046,7 @@ name|LinkedHashMap
 argument_list|<
 name|ReduceSinkOperator
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SparkEdgeProperty
 argument_list|,

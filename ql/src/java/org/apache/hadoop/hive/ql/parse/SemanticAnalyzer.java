@@ -599,22 +599,6 @@ name|hive
 operator|.
 name|common
 operator|.
-name|ObjectPair
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
 name|StatsSetupConst
 import|;
 end_import
@@ -15308,7 +15292,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|String
 argument_list|,
@@ -15322,7 +15306,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|String
 argument_list|,
@@ -15792,13 +15776,9 @@ name|put
 argument_list|(
 name|alias
 argument_list|,
-operator|new
-name|ObjectPair
-argument_list|<
-name|String
-argument_list|,
-name|ReadEntity
-argument_list|>
+name|Pair
+operator|.
+name|of
 argument_list|(
 name|fullViewName
 argument_list|,
@@ -16148,7 +16128,7 @@ argument_list|(
 name|alias
 argument_list|)
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -16161,7 +16141,7 @@ argument_list|(
 name|alias
 argument_list|)
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 expr_stmt|;
 block|}
@@ -27758,7 +27738,7 @@ block|}
 comment|// This function returns the grouping sets along with the grouping expressions
 comment|// Even if rollups and cubes are present in the query, they are converted to
 comment|// grouping sets at this point
-name|ObjectPair
+name|Pair
 argument_list|<
 name|List
 argument_list|<
@@ -27914,19 +27894,9 @@ argument_list|)
 throw|;
 block|}
 return|return
-operator|new
-name|ObjectPair
-argument_list|<
-name|List
-argument_list|<
-name|ASTNode
-argument_list|>
-argument_list|,
-name|List
-argument_list|<
-name|Long
-argument_list|>
-argument_list|>
+name|Pair
+operator|.
+name|of
 argument_list|(
 name|groupByExprs
 argument_list|,
@@ -39442,7 +39412,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-name|ObjectPair
+name|Pair
 argument_list|<
 name|List
 argument_list|<
@@ -39471,7 +39441,7 @@ name|grpByExprs
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 name|List
@@ -39482,7 +39452,7 @@ name|groupingSets
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 if|if
@@ -39655,7 +39625,7 @@ range|:
 name|dests
 control|)
 block|{
-name|ObjectPair
+name|Pair
 argument_list|<
 name|List
 argument_list|<
@@ -39684,7 +39654,7 @@ name|groupingSets
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 if|if
@@ -40156,7 +40126,7 @@ operator|.
 name|getParseInfo
 argument_list|()
 decl_stmt|;
-name|ObjectPair
+name|Pair
 argument_list|<
 name|List
 argument_list|<
@@ -40185,7 +40155,7 @@ name|grpByExprs
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 name|List
@@ -40196,7 +40166,7 @@ name|groupingSets
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 comment|// Grouping sets are not allowed
@@ -40896,7 +40866,7 @@ operator|.
 name|getParseInfo
 argument_list|()
 decl_stmt|;
-name|ObjectPair
+name|Pair
 argument_list|<
 name|List
 argument_list|<
@@ -40925,7 +40895,7 @@ name|grpByExprs
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 name|List
@@ -40936,7 +40906,7 @@ name|groupingSets
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -41339,7 +41309,7 @@ operator|.
 name|getParseInfo
 argument_list|()
 decl_stmt|;
-name|ObjectPair
+name|Pair
 argument_list|<
 name|List
 argument_list|<
@@ -41368,7 +41338,7 @@ name|grpByExprs
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 name|List
@@ -41379,7 +41349,7 @@ name|groupingSets
 init|=
 name|grpByExprsGroupingSets
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 name|boolean
@@ -66108,7 +66078,7 @@ block|}
 block|}
 block|}
 specifier|private
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Integer
 argument_list|,
@@ -66161,8 +66131,9 @@ condition|)
 block|{
 comment|// Cross with outer join: currently we do not merge
 return|return
-operator|new
-name|ObjectPair
+name|Pair
+operator|.
+name|of
 argument_list|(
 operator|-
 literal|1
@@ -66311,8 +66282,9 @@ operator|)
 condition|)
 block|{
 return|return
-operator|new
-name|ObjectPair
+name|Pair
+operator|.
+name|of
 argument_list|(
 operator|-
 literal|1
@@ -66454,8 +66426,9 @@ literal|1
 condition|)
 block|{
 return|return
-operator|new
-name|ObjectPair
+name|Pair
+operator|.
+name|of
 argument_list|(
 operator|-
 literal|1
@@ -66492,8 +66465,9 @@ index|]
 condition|)
 block|{
 return|return
-operator|new
-name|ObjectPair
+name|Pair
+operator|.
+name|of
 argument_list|(
 operator|-
 literal|1
@@ -66504,8 +66478,9 @@ return|;
 block|}
 block|}
 return|return
-operator|new
-name|ObjectPair
+name|Pair
+operator|.
+name|of
 argument_list|(
 name|res
 argument_list|,
@@ -66868,7 +66843,7 @@ block|{
 comment|// Outer joins with post-filtering conditions cannot be merged
 break|break;
 block|}
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Integer
 argument_list|,
@@ -66889,7 +66864,7 @@ name|pos
 init|=
 name|mergeDetails
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 if|if
@@ -66968,7 +66943,7 @@ name|pos
 argument_list|,
 name|mergeDetails
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 argument_list|)
 expr_stmt|;

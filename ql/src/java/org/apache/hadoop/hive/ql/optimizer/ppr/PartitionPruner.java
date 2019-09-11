@@ -107,13 +107,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|lang3
 operator|.
-name|common
+name|tuple
 operator|.
-name|ObjectPair
+name|Pair
 import|;
 end_import
 
@@ -3206,7 +3206,7 @@ throws|,
 name|MetaException
 block|{
 comment|// Prepare the expression to filter on the columns.
-name|ObjectPair
+name|Pair
 argument_list|<
 name|PrimitiveObjectInspector
 argument_list|,

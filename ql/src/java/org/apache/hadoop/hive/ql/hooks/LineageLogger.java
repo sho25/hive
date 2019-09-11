@@ -139,13 +139,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|lang3
 operator|.
-name|common
+name|tuple
 operator|.
-name|ObjectPair
+name|Pair
 import|;
 end_import
 
@@ -1501,11 +1501,11 @@ name|Index
 name|index
 parameter_list|)
 block|{
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SelectOperator
 argument_list|,
@@ -1563,7 +1563,7 @@ argument_list|()
 decl_stmt|;
 for|for
 control|(
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SelectOperator
 argument_list|,
@@ -1608,7 +1608,7 @@ name|finalSelOp
 init|=
 name|pair
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 name|org
@@ -1628,7 +1628,7 @@ name|t
 init|=
 name|pair
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 name|String

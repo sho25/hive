@@ -101,13 +101,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|lang3
 operator|.
-name|common
+name|tuple
 operator|.
-name|ObjectPair
+name|Pair
 import|;
 end_import
 
@@ -363,7 +363,7 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|ColumnInfo
 argument_list|,
@@ -393,11 +393,11 @@ name|condMap
 decl_stmt|;
 comment|/**      * A map from a final select operator id to the select operator      * and the corresponding target table in case an insert into query.      */
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SelectOperator
 argument_list|,
@@ -423,7 +423,7 @@ extends|extends
 name|OperatorDesc
 argument_list|>
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|ColumnInfo
 argument_list|,
@@ -458,7 +458,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SelectOperator
 argument_list|,
@@ -626,7 +626,7 @@ name|Dependency
 name|dep
 parameter_list|)
 block|{
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|ColumnInfo
 argument_list|,
@@ -1087,13 +1087,9 @@ name|put
 argument_list|(
 name|operatorId
 argument_list|,
-operator|new
-name|ObjectPair
-argument_list|<
-name|SelectOperator
-argument_list|,
-name|Table
-argument_list|>
+name|Pair
+operator|.
+name|of
 argument_list|(
 name|sop
 argument_list|,
@@ -1104,11 +1100,11 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ObjectPair
+name|Pair
 argument_list|<
 name|SelectOperator
 argument_list|,

@@ -77,13 +77,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|lang3
 operator|.
-name|common
+name|tuple
 operator|.
-name|ObjectPair
+name|Pair
 import|;
 end_import
 
@@ -755,9 +755,9 @@ name|evaluateResultO
 argument_list|)
 return|;
 block|}
-specifier|static
 specifier|public
-name|ObjectPair
+specifier|static
+name|Pair
 argument_list|<
 name|PrimitiveObjectInspector
 argument_list|,
@@ -866,9 +866,9 @@ name|objectInspector
 argument_list|)
 decl_stmt|;
 return|return
-name|ObjectPair
+name|Pair
 operator|.
-name|create
+name|of
 argument_list|(
 operator|(
 name|PrimitiveObjectInspector
@@ -884,7 +884,7 @@ specifier|public
 name|Object
 name|evaluateExprOnPart
 parameter_list|(
-name|ObjectPair
+name|Pair
 argument_list|<
 name|PrimitiveObjectInspector
 argument_list|,
@@ -901,14 +901,14 @@ block|{
 return|return
 name|pair
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 operator|.
 name|getPrimitiveJavaObject
 argument_list|(
 name|pair
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 operator|.
 name|evaluate

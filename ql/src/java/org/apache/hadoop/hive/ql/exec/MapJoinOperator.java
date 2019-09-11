@@ -73,20 +73,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|util
-operator|.
-name|concurrent
-operator|.
-name|locks
-operator|.
-name|ReentrantLock
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -142,22 +128,6 @@ operator|.
 name|conf
 operator|.
 name|Configuration
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|ObjectPair
 import|;
 end_import
 
@@ -1296,15 +1266,6 @@ name|bucketId
 init|=
 operator|-
 literal|1
-decl_stmt|;
-specifier|private
-specifier|transient
-name|ReentrantLock
-name|subCacheLock
-init|=
-operator|new
-name|ReentrantLock
-argument_list|()
 decl_stmt|;
 comment|/** Kryo ctor. */
 specifier|protected
@@ -3962,16 +3923,6 @@ argument_list|(
 name|matchTracker
 argument_list|)
 decl_stmt|;
-name|int
-name|nonMatchedKeyCount
-init|=
-literal|0
-decl_stmt|;
-name|int
-name|nonMatchedValueCount
-init|=
-literal|0
-decl_stmt|;
 while|while
 condition|(
 name|nonMatchedIterator
@@ -4198,13 +4149,7 @@ argument_list|,
 name|outputObjInspector
 argument_list|)
 expr_stmt|;
-name|nonMatchedValueCount
-operator|++
-expr_stmt|;
 block|}
-name|nonMatchedKeyCount
-operator|++
-expr_stmt|;
 block|}
 block|}
 annotation|@
@@ -5173,7 +5118,7 @@ name|hasNext
 argument_list|()
 condition|)
 block|{
-name|ObjectPair
+name|Pair
 argument_list|<
 name|HiveKey
 argument_list|,
@@ -5191,7 +5136,7 @@ name|key
 init|=
 name|pair
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 decl_stmt|;
 name|Writable
@@ -5199,7 +5144,7 @@ name|val
 init|=
 name|pair
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 decl_stmt|;
 name|writeHelper

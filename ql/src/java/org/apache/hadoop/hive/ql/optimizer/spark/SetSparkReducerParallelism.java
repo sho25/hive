@@ -115,13 +115,13 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|commons
 operator|.
-name|hive
+name|lang3
 operator|.
-name|common
+name|tuple
 operator|.
-name|ObjectPair
+name|Pair
 import|;
 end_import
 
@@ -634,7 +634,7 @@ literal|"spark.dynamicAllocation.enabled"
 decl_stmt|;
 comment|// Spark memory per task, and total number of cores
 specifier|private
-name|ObjectPair
+name|Pair
 argument_list|<
 name|Long
 argument_list|,
@@ -1295,14 +1295,14 @@ literal|null
 operator|&&
 name|sparkMemoryAndCores
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 operator|>
 literal|0
 operator|&&
 name|sparkMemoryAndCores
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 operator|>
 literal|0
@@ -1316,7 +1316,7 @@ name|double
 operator|)
 name|sparkMemoryAndCores
 operator|.
-name|getFirst
+name|getLeft
 argument_list|()
 operator|/
 name|bytesPerReducer
@@ -1345,7 +1345,7 @@ name|numReducers
 argument_list|,
 name|sparkMemoryAndCores
 operator|.
-name|getSecond
+name|getRight
 argument_list|()
 argument_list|)
 expr_stmt|;

@@ -103,6 +103,22 @@ name|org
 operator|.
 name|apache
 operator|.
+name|commons
+operator|.
+name|lang3
+operator|.
+name|tuple
+operator|.
+name|MutablePair
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|hadoop
 operator|.
 name|fs
@@ -124,22 +140,6 @@ operator|.
 name|common
 operator|.
 name|FileUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|ObjectPair
 import|;
 end_import
 
@@ -272,7 +272,7 @@ init|=
 literal|1024
 decl_stmt|;
 specifier|private
-name|ObjectPair
+name|MutablePair
 argument_list|<
 name|HiveKey
 argument_list|,
@@ -335,7 +335,7 @@ block|{
 name|readBuffer
 operator|=
 operator|new
-name|ObjectPair
+name|MutablePair
 index|[
 name|IN_MEMORY_NUM_ROWS
 index|]
@@ -361,7 +361,7 @@ name|i
 index|]
 operator|=
 operator|new
-name|ObjectPair
+name|MutablePair
 argument_list|<
 name|HiveKey
 argument_list|,
@@ -851,7 +851,7 @@ literal|0
 return|;
 block|}
 specifier|public
-name|ObjectPair
+name|MutablePair
 argument_list|<
 name|HiveKey
 argument_list|,
@@ -984,7 +984,7 @@ name|i
 operator|++
 control|)
 block|{
-name|ObjectPair
+name|MutablePair
 argument_list|<
 name|HiveKey
 argument_list|,
@@ -999,7 +999,7 @@ index|]
 decl_stmt|;
 name|pair
 operator|.
-name|setFirst
+name|setLeft
 argument_list|(
 name|readHiveKey
 argument_list|(
@@ -1009,7 +1009,7 @@ argument_list|)
 expr_stmt|;
 name|pair
 operator|.
-name|setSecond
+name|setRight
 argument_list|(
 name|readValue
 argument_list|(
@@ -1071,7 +1071,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-name|ObjectPair
+name|MutablePair
 argument_list|<
 name|HiveKey
 argument_list|,
