@@ -897,6 +897,11 @@ name|DYNAMICVALUE
 argument_list|(
 literal|3
 argument_list|)
+block|,
+name|NULLSCALAR
+argument_list|(
+literal|4
+argument_list|)
 block|;
 specifier|private
 specifier|final

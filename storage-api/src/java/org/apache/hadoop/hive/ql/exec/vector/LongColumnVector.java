@@ -845,7 +845,7 @@ expr_stmt|;
 block|}
 comment|// Fill the column vector with nulls
 specifier|public
-name|void
+name|LongColumnVector
 name|fillWithNulls
 parameter_list|()
 block|{
@@ -871,6 +871,9 @@ index|]
 operator|=
 literal|true
 expr_stmt|;
+return|return
+name|this
+return|;
 block|}
 comment|// Simplify vector by brute-force flattening noNulls and isRepeating
 comment|// This can be used to reduce combinatorial explosion of code paths in VectorExpressions
