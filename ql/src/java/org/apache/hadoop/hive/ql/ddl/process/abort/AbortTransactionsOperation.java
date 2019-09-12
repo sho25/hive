@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|process
+operator|.
+name|abort
 package|;
 end_package
 

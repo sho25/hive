@@ -18,6 +18,10 @@ operator|.
 name|ddl
 operator|.
 name|process
+operator|.
+name|show
+operator|.
+name|compactions
 package|;
 end_package
 
