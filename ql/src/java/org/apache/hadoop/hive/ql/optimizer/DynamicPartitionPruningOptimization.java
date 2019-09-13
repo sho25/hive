@@ -2486,7 +2486,7 @@ argument_list|(
 name|newBloomFilterNodes
 argument_list|)
 expr_stmt|;
-name|ExprNodeDesc
+name|ExprNodeGenericFuncDesc
 name|andExpr
 init|=
 name|ExprNodeGenericFuncDesc
@@ -2506,6 +2506,17 @@ argument_list|,
 name|andArgs
 argument_list|)
 decl_stmt|;
+comment|// Also pass in filter as tableScan filterExpr
+name|ts
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|setFilterExpr
+argument_list|(
+name|andExpr
+argument_list|)
+expr_stmt|;
 name|desc
 operator|.
 name|setPredicate

@@ -256,7 +256,8 @@ return|;
 block|}
 if|if
 condition|(
-name|queryResultsIterator
+name|getQueryResultsIterator
+argument_list|()
 operator|.
 name|hasNext
 argument_list|()
@@ -264,7 +265,8 @@ condition|)
 block|{
 name|current
 operator|=
-name|queryResultsIterator
+name|getQueryResultsIterator
+argument_list|()
 operator|.
 name|next
 argument_list|()
@@ -467,7 +469,8 @@ name|getProgress
 parameter_list|()
 block|{
 return|return
-name|queryResultsIterator
+name|getQueryResultsIterator
+argument_list|()
 operator|.
 name|hasNext
 argument_list|()

@@ -3624,6 +3624,13 @@ literal|"testing_host"
 block|}
 argument_list|)
 decl_stmt|;
+name|Configuration
+name|conf
+init|=
+operator|new
+name|Configuration
+argument_list|()
+decl_stmt|;
 name|reader
 operator|.
 name|initialize
@@ -3639,6 +3646,8 @@ operator|.
 name|SMILE_MAPPER
 argument_list|,
 name|httpClient
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|StructObjectInspector
@@ -3890,6 +3899,8 @@ operator|.
 name|SMILE_MAPPER
 argument_list|,
 name|httpClient
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 name|pos

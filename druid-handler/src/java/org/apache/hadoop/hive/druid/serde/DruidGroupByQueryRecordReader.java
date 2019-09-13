@@ -224,7 +224,8 @@ block|{
 comment|// Results
 if|if
 condition|(
-name|queryResultsIterator
+name|getQueryResultsIterator
+argument_list|()
 operator|.
 name|hasNext
 argument_list|()
@@ -234,7 +235,8 @@ specifier|final
 name|Row
 name|row
 init|=
-name|queryResultsIterator
+name|getQueryResultsIterator
+argument_list|()
 operator|.
 name|next
 argument_list|()
@@ -433,7 +435,8 @@ throws|throws
 name|IOException
 block|{
 return|return
-name|queryResultsIterator
+name|getQueryResultsIterator
+argument_list|()
 operator|.
 name|hasNext
 argument_list|()
