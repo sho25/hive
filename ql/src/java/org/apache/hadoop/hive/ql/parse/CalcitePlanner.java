@@ -35457,21 +35457,17 @@ parameter_list|)
 block|{
 comment|// Build a map of Hive column Names (ExprNodeColumnDesc Name)
 comment|// to the positions of those projections in the input
-name|Map
+name|Multimap
 argument_list|<
 name|Integer
 argument_list|,
-name|ExprNodeDesc
+name|ExprNodeColumnDesc
 argument_list|>
 name|hashCodeTocolumnDescMap
 init|=
-operator|new
-name|HashMap
-argument_list|<
-name|Integer
-argument_list|,
-name|ExprNodeDesc
-argument_list|>
+name|ArrayListMultimap
+operator|.
+name|create
 argument_list|()
 decl_stmt|;
 name|ExprNodeDescUtils
@@ -35509,7 +35505,7 @@ name|exprNodecolName
 decl_stmt|;
 for|for
 control|(
-name|ExprNodeDesc
+name|ExprNodeColumnDesc
 name|exprDesc
 range|:
 name|hashCodeTocolumnDescMap
@@ -35520,12 +35516,7 @@ control|)
 block|{
 name|exprNodecolName
 operator|=
-operator|(
-operator|(
-name|ExprNodeColumnDesc
-operator|)
 name|exprDesc
-operator|)
 operator|.
 name|getColumn
 argument_list|()
