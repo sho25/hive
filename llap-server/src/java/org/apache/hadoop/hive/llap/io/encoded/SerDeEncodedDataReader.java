@@ -5446,6 +5446,23 @@ argument_list|)
 operator|.
 name|getLastEnd
 argument_list|()
+decl_stmt|,
+name|lastStripeLastStart
+init|=
+name|slices
+operator|.
+name|get
+argument_list|(
+name|slices
+operator|.
+name|size
+argument_list|()
+operator|-
+literal|1
+argument_list|)
+operator|.
+name|getLastStart
+argument_list|()
 decl_stmt|;
 name|Ref
 argument_list|<
@@ -5682,6 +5699,7 @@ condition|)
 block|{
 comment|// Note: we assume 0-length split is correct given now LRR interprets offsets (reading an
 comment|// extra row). Should we instead assume 1+ chars and add 1 for isUnfortunate?
+comment|// Do not read from uncachedSuffixStart as LineRecordReader skips first row
 name|FileSplit
 name|splitPart
 init|=
@@ -5693,11 +5711,11 @@ operator|.
 name|getPath
 argument_list|()
 argument_list|,
-name|uncachedSuffixStart
+name|lastStripeLastStart
 argument_list|,
 name|endOfSplit
 operator|-
-name|uncachedSuffixStart
+name|lastStripeLastStart
 argument_list|,
 name|hosts
 argument_list|,
