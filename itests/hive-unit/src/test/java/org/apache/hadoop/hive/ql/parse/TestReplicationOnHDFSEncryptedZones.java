@@ -532,6 +532,19 @@ argument_list|,
 literal|"false"
 argument_list|)
 expr_stmt|;
+name|put
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_INCLUDE_EXTERNAL_TABLES
+operator|.
+name|varname
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 argument_list|,
@@ -754,6 +767,14 @@ operator|.
 name|dumpLocation
 operator|+
 literal|"' with('hive.repl.add.raw.reserved.namespace'='true', "
+operator|+
+literal|"'hive.repl.replica.external.table.base.dir'='"
+operator|+
+name|replica
+operator|.
+name|externalTableWarehouseRoot
+operator|+
+literal|"', "
 operator|+
 literal|"'distcp.options.pugpbx'='', 'distcp.options.skipcrccheck'='')"
 argument_list|)
