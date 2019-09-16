@@ -256,6 +256,26 @@ parameter_list|)
 throws|throws
 name|MetaException
 function_decl|;
+comment|/**   * @param table A table object to be transformed prior to the alteration of a table   * @param processorCapabilities A array of String capabilities received from the data processor   * @param processorId String ID used for logging purpose.   * @return Table An altered Table based on the processor capabilities   * @throws HiveMetaException   */
+specifier|public
+name|Table
+name|transformAlterTable
+parameter_list|(
+name|Table
+name|table
+parameter_list|,
+name|List
+argument_list|<
+name|String
+argument_list|>
+name|processorCapabilities
+parameter_list|,
+name|String
+name|processorId
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
 block|}
 end_interface
 
