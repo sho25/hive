@@ -1002,7 +1002,7 @@ operator|instanceof
 name|InterruptedException
 condition|)
 block|{
-name|l4j
+name|LOG
 operator|.
 name|info
 argument_list|(
@@ -1211,7 +1211,7 @@ argument_list|()
 condition|)
 block|{
 comment|// signal new failure to map-reduce
-name|l4j
+name|LOG
 operator|.
 name|error
 argument_list|(
@@ -1333,7 +1333,7 @@ throw|;
 block|}
 else|else
 block|{
-name|l4j
+name|LOG
 operator|.
 name|error
 argument_list|(
