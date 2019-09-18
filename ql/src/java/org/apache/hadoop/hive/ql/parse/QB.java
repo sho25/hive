@@ -1810,6 +1810,39 @@ operator|==
 literal|0
 return|;
 block|}
+comment|// returns false when the query block doesn't have
+comment|// a table defined, e.g. "select 5"
+specifier|public
+name|boolean
+name|hasTableDefined
+parameter_list|()
+block|{
+return|return
+operator|!
+operator|(
+name|aliases
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|1
+operator|&&
+name|aliases
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|.
+name|equals
+argument_list|(
+name|SemanticAnalyzer
+operator|.
+name|DUMMY_TABLE
+argument_list|)
+operator|)
+return|;
+block|}
 block|}
 end_class
 
