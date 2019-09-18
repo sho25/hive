@@ -655,9 +655,8 @@ parameter_list|)
 block|{
 if|if
 condition|(
-name|resizeThreshold
-operator|<=
-name|keysAssigned
+name|checkResize
+argument_list|()
 condition|)
 block|{
 name|expandAndRehash

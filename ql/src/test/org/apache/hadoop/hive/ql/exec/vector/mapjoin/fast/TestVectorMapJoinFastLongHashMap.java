@@ -1073,7 +1073,7 @@ literal|0
 init|;
 name|i
 operator|<
-literal|18
+literal|6
 condition|;
 operator|++
 name|i

@@ -174,6 +174,15 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
+comment|// when rehashing, jump directly to 4k items
+specifier|public
+specifier|static
+specifier|final
+name|int
+name|FIRST_SIZE_UP
+init|=
+literal|4096
+decl_stmt|;
 specifier|protected
 specifier|final
 name|boolean
@@ -466,6 +475,31 @@ parameter_list|()
 block|{
 return|return
 name|keysAssigned
+return|;
+block|}
+specifier|protected
+specifier|final
+name|boolean
+name|checkResize
+parameter_list|()
+block|{
+comment|// resize small hashtables up to a higher width (4096 items), but when there are collisions
+return|return
+operator|(
+name|resizeThreshold
+operator|<=
+name|keysAssigned
+operator|)
+operator|||
+operator|(
+name|logicalHashBucketCount
+operator|<=
+name|FIRST_SIZE_UP
+operator|&&
+name|largestNumberOfSteps
+operator|>
+literal|1
+operator|)
 return|;
 block|}
 annotation|@
