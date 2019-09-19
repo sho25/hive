@@ -1347,6 +1347,8 @@ name|ddl
 operator|.
 name|view
 operator|.
+name|create
+operator|.
 name|CreateViewDesc
 import|;
 end_import
@@ -1366,6 +1368,10 @@ operator|.
 name|ddl
 operator|.
 name|view
+operator|.
+name|materialized
+operator|.
+name|update
 operator|.
 name|MaterializedViewUpdateDesc
 import|;

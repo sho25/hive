@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|view
+operator|.
+name|create
 package|;
 end_package
 

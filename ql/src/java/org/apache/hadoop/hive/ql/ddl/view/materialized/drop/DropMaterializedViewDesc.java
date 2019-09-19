@@ -18,6 +18,10 @@ operator|.
 name|ddl
 operator|.
 name|view
+operator|.
+name|materialized
+operator|.
+name|drop
 package|;
 end_package
 

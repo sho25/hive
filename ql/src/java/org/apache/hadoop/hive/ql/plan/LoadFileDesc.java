@@ -81,6 +81,8 @@ name|ddl
 operator|.
 name|view
 operator|.
+name|create
+operator|.
 name|CreateViewDesc
 import|;
 end_import
