@@ -10253,7 +10253,7 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

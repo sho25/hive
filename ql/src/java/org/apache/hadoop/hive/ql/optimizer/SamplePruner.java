@@ -225,24 +225,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|io
-operator|.
-name|AcidUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|lib
 operator|.
 name|DefaultGraphWalker
@@ -522,7 +504,7 @@ name|SamplePrunerCtx
 implements|implements
 name|NodeProcessorCtx
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -533,7 +515,7 @@ decl_stmt|;
 specifier|public
 name|SamplePrunerCtx
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -551,7 +533,7 @@ expr_stmt|;
 block|}
 comment|/**      * @return the opToSamplePruner      */
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,

@@ -61,6 +61,16 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
+import|;
+end_import
+
+begin_import
+import|import
 name|com
 operator|.
 name|google
@@ -1683,13 +1693,13 @@ name|Serializable
 argument_list|>
 name|getCreateTableTask
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>

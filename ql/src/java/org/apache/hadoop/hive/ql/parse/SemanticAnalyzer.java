@@ -275,6 +275,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|SortedSet
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|TreeMap
 import|;
 end_import
@@ -4682,7 +4692,7 @@ init|=
 literal|"$MATERIALIZATION"
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -4691,7 +4701,7 @@ argument_list|>
 name|opToPartPruner
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -4700,7 +4710,7 @@ argument_list|>
 name|opToPartList
 decl_stmt|;
 specifier|protected
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -4709,7 +4719,7 @@ argument_list|>
 name|topOps
 decl_stmt|;
 specifier|protected
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Operator
 argument_list|<
@@ -4788,6 +4798,7 @@ specifier|private
 name|UnionProcContext
 name|uCtx
 decl_stmt|;
+specifier|private
 name|List
 argument_list|<
 name|AbstractMapJoinOperator
@@ -4800,7 +4811,7 @@ argument_list|>
 name|listMapJoinOpsNoReducer
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -4835,7 +4846,7 @@ decl_stmt|;
 comment|/**    * a map for the split sampling, from alias to an instance of SplitSample    * that describes percentage and number.    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -4843,6 +4854,7 @@ name|SplitSample
 argument_list|>
 name|nameToSplitSample
 decl_stmt|;
+specifier|private
 name|Map
 argument_list|<
 name|GroupByOperator
@@ -4854,6 +4866,7 @@ argument_list|>
 argument_list|>
 name|groupOpToInputTables
 decl_stmt|;
+specifier|protected
 name|Map
 argument_list|<
 name|String
@@ -4873,12 +4886,12 @@ specifier|protected
 name|CreateViewDesc
 name|createVwDesc
 decl_stmt|;
-specifier|protected
+specifier|private
 name|MaterializedViewUpdateDesc
 name|materializedViewUpdateDesc
 decl_stmt|;
-specifier|protected
-name|ArrayList
+specifier|private
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -4930,7 +4943,7 @@ name|boolean
 name|mergeIsDirect
 decl_stmt|;
 comment|// flag for no scan during analyze ... compute statistics
-specifier|protected
+specifier|private
 name|boolean
 name|noscan
 decl_stmt|;
@@ -4966,6 +4979,7 @@ name|boolean
 name|defaultJoinMerge
 decl_stmt|;
 comment|/*    * Capture the CTE definitions in a Query.    */
+specifier|protected
 specifier|final
 name|Map
 argument_list|<
@@ -4976,17 +4990,19 @@ argument_list|>
 name|aliasToCTEs
 decl_stmt|;
 comment|/*    * Used to check recursive CTE invocations. Similar to viewsExpanded    */
-name|ArrayList
+specifier|private
+name|List
 argument_list|<
 name|String
 argument_list|>
 name|ctesExpanded
 decl_stmt|;
 comment|/*    * Whether root tasks after materialized CTE linkage have been resolved    */
+specifier|private
 name|boolean
 name|rootTasksResolved
 decl_stmt|;
-specifier|protected
+specifier|private
 name|TableMask
 name|tableMask
 decl_stmt|;
@@ -5689,7 +5705,6 @@ name|clear
 argument_list|()
 expr_stmt|;
 block|}
-specifier|public
 name|void
 name|initParseCtx
 parameter_list|(
@@ -5915,7 +5930,6 @@ name|getOpContext
 argument_list|()
 return|;
 block|}
-specifier|public
 specifier|static
 name|String
 name|genPartValueString
@@ -6129,7 +6143,7 @@ return|return
 name|returnVal
 return|;
 block|}
-specifier|public
+specifier|private
 name|void
 name|doPhase1QBExpr
 parameter_list|(
@@ -6167,7 +6181,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|public
+specifier|private
 name|void
 name|doPhase1QBExpr
 parameter_list|(
@@ -6504,7 +6518,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -6526,7 +6540,7 @@ name|SemanticException
 block|{
 comment|// Iterate over the selects search for aggregation Trees.
 comment|// Use String as keys to eliminate duplicate trees.
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -6682,7 +6696,7 @@ name|spec
 argument_list|)
 expr_stmt|;
 block|}
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -8058,7 +8072,7 @@ parameter_list|(
 name|ASTNode
 name|expressionTree
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -8424,7 +8438,7 @@ name|ASTNode
 argument_list|>
 name|doPhase1GetDistinctFuncExprs
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -8509,7 +8523,6 @@ return|return
 name|exprs
 return|;
 block|}
-specifier|public
 specifier|static
 name|String
 name|generateErrorMessage
@@ -8810,6 +8823,7 @@ name|ssampleIndex
 block|}
 return|;
 block|}
+specifier|private
 name|String
 name|findSimpleTableName
 parameter_list|(
@@ -9110,7 +9124,7 @@ argument_list|(
 name|tsampleIndex
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -10385,14 +10399,14 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|getAllInputs
 parameter_list|()
 block|{
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -10449,14 +10463,14 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
 name|getAllOutputs
 parameter_list|()
 block|{
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -11838,7 +11852,6 @@ block|,
 literal|"nls"
 block|}
 argument_list|)
-specifier|public
 name|boolean
 name|doPhase1
 parameter_list|(
@@ -12011,7 +12024,7 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -13584,7 +13597,7 @@ operator|.
 name|getChildCount
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -14659,7 +14672,7 @@ block|}
 block|}
 block|}
 block|}
-specifier|public
+specifier|private
 name|void
 name|getMaterializationMetadata
 parameter_list|(
@@ -15055,7 +15068,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|public
 name|void
 name|getMetaData
 parameter_list|(
@@ -15073,7 +15085,7 @@ literal|false
 argument_list|)
 expr_stmt|;
 block|}
-specifier|public
+specifier|private
 name|void
 name|getMetaData
 parameter_list|(
@@ -18614,19 +18626,19 @@ parameter_list|,
 name|ASTNode
 name|condn
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
 name|leftAliases
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
 name|rightAliases
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -19099,7 +19111,7 @@ operator|==
 literal|2
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20445,7 +20457,7 @@ argument_list|)
 expr_stmt|;
 name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -20746,7 +20758,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20759,7 +20771,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20800,7 +20812,7 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20813,7 +20825,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20952,9 +20964,9 @@ else|:
 literal|0
 operator|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20964,7 +20976,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20978,9 +20990,9 @@ operator|-
 name|childrenBegin
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -20990,7 +21002,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21024,7 +21036,7 @@ name|ci
 operator|++
 control|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21037,7 +21049,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21128,7 +21140,7 @@ literal|true
 decl_stmt|;
 for|for
 control|(
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21161,7 +21173,7 @@ literal|true
 decl_stmt|;
 for|for
 control|(
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21441,7 +21453,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21454,7 +21466,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21507,7 +21519,7 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21520,7 +21532,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -21741,7 +21753,6 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|public
 parameter_list|<
 name|T
 extends|extends
@@ -23919,13 +23930,13 @@ parameter_list|,
 name|ASTNode
 name|sel
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|col_list
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -24112,7 +24123,7 @@ block|{
 comment|// We got using() clause in previous join. Need to generate select list as
 comment|// per standard. For * we will have joining columns first non-repeated
 comment|// followed by other columns.
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -24138,7 +24149,7 @@ literal|0
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -24164,7 +24175,7 @@ literal|1
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -24593,7 +24604,7 @@ range|:
 name|aliases
 control|)
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -25387,6 +25398,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
+specifier|private
 specifier|static
 name|int
 name|getPositionFromInternalName
@@ -26161,7 +26173,7 @@ throws|throws
 name|SemanticException
 block|{
 comment|// If there is no "AS" clause, the output schema will be "key,value"
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -26761,7 +26773,7 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -27612,7 +27624,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|Long
@@ -27669,7 +27681,7 @@ return|return
 name|groupingSetKeys
 return|;
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|Long
@@ -27896,7 +27908,7 @@ name|groupingSets
 argument_list|)
 return|;
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|Long
@@ -28278,7 +28290,7 @@ name|bitIdx
 operator|)
 return|;
 block|}
-specifier|public
+specifier|private
 specifier|static
 name|long
 name|unsetBit
@@ -28686,7 +28698,7 @@ operator|.
 name|TOK_SELECTDI
 return|;
 block|}
-specifier|protected
+specifier|private
 name|boolean
 name|isAggregateInSelect
 parameter_list|(
@@ -29404,7 +29416,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -29595,7 +29607,7 @@ name|udtfTableAlias
 init|=
 literal|null
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -31063,7 +31075,7 @@ argument_list|,
 name|selExprList
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -31280,7 +31292,7 @@ name|TypeInfo
 argument_list|>
 name|targetTableColTypes
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -31612,7 +31624,6 @@ name|newOutputRR
 return|;
 block|}
 comment|/**    * This modifies the Select projections when the Select is part of an insert statement and    * the insert statement specifies a column list for the target table, e.g.    * create table source (a int, b int);    * create table target (x int, y int, z int);    * insert into target(z,x) select * from source    *    * Once the * is resolved to 'a,b', this list needs to rewritten to 'b,null,a' so that it looks    * as if the original query was written as    * insert into target select b, null, a from source    *    * if target schema is not specified, this is no-op    *    * @see #handleInsertStatementSpecPhase1(ASTNode, QBParseInfo, org.apache.hadoop.hive.ql.parse.SemanticAnalyzer.Phase1Ctx)    * @throws SemanticException    */
-specifier|public
 name|RowResolver
 name|handleInsertStatementSpec
 parameter_list|(
@@ -31913,7 +31924,7 @@ argument_list|)
 argument_list|)
 throw|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -32225,7 +32236,7 @@ class|class
 name|GenericUDAFInfo
 block|{
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -32242,20 +32253,20 @@ decl_stmt|;
 block|}
 comment|/**    * Convert exprNodeDesc array to ObjectInspector array.    */
 specifier|static
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
 name|getWritableObjectInspector
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|exprs
 parameter_list|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
@@ -32300,7 +32311,7 @@ parameter_list|(
 name|String
 name|aggName
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -32318,7 +32329,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
@@ -32406,7 +32417,7 @@ operator|.
 name|Mode
 name|emode
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -32437,7 +32448,7 @@ literal|null
 decl_stmt|;
 try|try
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
@@ -32854,7 +32865,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -32867,7 +32878,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -32880,7 +32891,7 @@ name|AggregationDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -33080,7 +33091,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// For each aggregation
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -33235,7 +33246,7 @@ operator|.
 name|TOK_FUNCTIONSTAR
 decl_stmt|;
 comment|// Convert children to aggParameters
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -34082,7 +34093,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -34122,7 +34133,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -34135,7 +34146,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -34390,7 +34401,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -34542,7 +34553,7 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -35298,7 +35309,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -35311,7 +35322,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -35324,7 +35335,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -35690,7 +35701,7 @@ block|}
 block|}
 block|}
 comment|// For each aggregation
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -35759,7 +35770,7 @@ name|getText
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -36238,7 +36249,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -36331,7 +36342,7 @@ argument_list|,
 name|colExprMap
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -36344,7 +36355,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -36604,7 +36615,7 @@ name|rsOp
 return|;
 block|}
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -36639,7 +36650,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -37243,7 +37254,7 @@ name|String
 argument_list|>
 name|outputValueColumnNames
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -37260,7 +37271,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -37575,7 +37586,7 @@ argument_list|,
 name|dest
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -37628,7 +37639,7 @@ argument_list|,
 name|colExprMap
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -38199,7 +38210,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -38212,7 +38223,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -38388,7 +38399,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Get partial aggregation results and store in reduceValues
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -38409,7 +38420,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -38685,7 +38696,7 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -38698,7 +38709,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -38741,7 +38752,7 @@ argument_list|,
 name|dest
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -38954,7 +38965,7 @@ name|colExprMap
 argument_list|)
 expr_stmt|;
 block|}
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -38992,7 +39003,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -41777,7 +41788,7 @@ specifier|static
 class|class
 name|SortBucketRSCtx
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -41815,7 +41826,7 @@ expr_stmt|;
 block|}
 comment|/**      * @return the partnCols      */
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -41831,7 +41842,7 @@ specifier|public
 name|void
 name|setPartnCols
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -41965,7 +41976,7 @@ name|enforceBucketing
 init|=
 literal|false
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -41976,7 +41987,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -41987,7 +41998,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>
@@ -42573,7 +42584,7 @@ name|enforceBucketing
 init|=
 literal|false
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -43014,7 +43025,7 @@ name|toSet
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -43025,7 +43036,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -43050,7 +43061,7 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -43061,7 +43072,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -43072,7 +43083,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -43421,7 +43432,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -43610,7 +43621,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -43959,7 +43970,7 @@ name|tableName
 block|}
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -48842,7 +48853,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -52404,6 +52415,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Generate the conversion SelectOperator that converts the columns into the    * types that are expected by the table_desc.    */
+specifier|private
 name|Operator
 name|genConversionSelectOperator
 parameter_list|(
@@ -52514,7 +52526,7 @@ operator|.
 name|DYNAMICPARTITIONING
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -52642,7 +52654,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -53066,7 +53078,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -53345,7 +53357,7 @@ parameter_list|,
 name|String
 name|outputTableAlias
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -53536,7 +53548,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -53548,7 +53560,7 @@ name|getColumnInfos
 argument_list|()
 decl_stmt|;
 comment|// Create the object inspector for the input columns and initialize the UDTF
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -53734,7 +53746,7 @@ argument_list|)
 throw|;
 block|}
 comment|// Generate the output column info's / row resolver using internal names.
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -54018,7 +54030,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -54151,7 +54163,7 @@ block|}
 comment|// We have to set up the bucketing columns differently for update and deletes,
 comment|// as it is always using the ROW__ID column.
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -54240,7 +54252,7 @@ name|intTypeInfo
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -54267,7 +54279,7 @@ name|rlist
 return|;
 block|}
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -54372,7 +54384,7 @@ operator|.
 name|getAllStructFieldRefs
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -54400,7 +54412,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -54610,7 +54622,7 @@ name|expressions
 return|;
 block|}
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -54744,7 +54756,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>
@@ -54787,7 +54799,7 @@ operator|.
 name|getCols
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Integer
 argument_list|>
@@ -54924,7 +54936,7 @@ name|dest
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55107,7 +55119,7 @@ block|}
 block|}
 block|}
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55558,13 +55570,13 @@ name|?
 argument_list|>
 name|input
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|partitionCols
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55623,13 +55635,13 @@ name|?
 argument_list|>
 name|input
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|partitionCols
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55688,7 +55700,7 @@ name|input
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55715,7 +55727,7 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55829,7 +55841,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -55842,7 +55854,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55855,7 +55867,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55885,7 +55897,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -55898,7 +55910,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -56496,7 +56508,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -56509,7 +56521,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -56866,7 +56878,7 @@ name|Operator
 index|[]
 name|right
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|Integer
 argument_list|>
@@ -56887,7 +56899,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -56938,7 +56950,7 @@ name|Byte
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Byte
 argument_list|,
@@ -56978,7 +56990,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Integer
 argument_list|,
@@ -57001,7 +57013,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|Byte
 argument_list|,
@@ -57149,7 +57161,7 @@ operator|.
 name|getValueIndex
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -57162,7 +57174,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -58455,7 +58467,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -58468,7 +58480,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -58481,7 +58493,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -58528,7 +58540,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// Walk over the input row resolver and copy in the output
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -58541,7 +58553,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -59268,7 +59280,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -59328,7 +59340,7 @@ operator|.
 name|length
 index|]
 decl_stmt|;
-name|HashSet
+name|Set
 argument_list|<
 name|Integer
 argument_list|>
@@ -59373,7 +59385,7 @@ argument_list|)
 decl_stmt|;
 comment|// for left-semi join, generate an additional selection& group-by
 comment|// operator before ReduceSink
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -59750,7 +59762,7 @@ specifier|private
 name|Operator
 name|insertSelectForSemijoin
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -59778,7 +59790,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -59791,7 +59803,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -60117,7 +60129,7 @@ parameter_list|(
 name|QB
 name|qb
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -60157,7 +60169,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -60170,7 +60182,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -60183,7 +60195,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -60969,9 +60981,9 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61016,7 +61028,7 @@ argument_list|(
 name|src
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61354,7 +61366,7 @@ argument_list|(
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61369,7 +61381,7 @@ argument_list|(
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61384,7 +61396,7 @@ argument_list|(
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61393,7 +61405,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Create joinTree structures to fill them up later
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -61406,7 +61418,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -61419,7 +61431,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -61432,7 +61444,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -61687,7 +61699,7 @@ literal|"number of keys in UNIQUEJOIN"
 argument_list|)
 throw|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61700,7 +61712,7 @@ name|ASTNode
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -61713,7 +61725,7 @@ name|ASTNode
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62496,9 +62508,9 @@ name|rightalias
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62508,7 +62520,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62546,7 +62558,7 @@ argument_list|(
 name|expressions
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -62566,9 +62578,9 @@ argument_list|(
 name|nullsafes
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62578,7 +62590,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62628,9 +62640,9 @@ index|]
 index|[]
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62640,7 +62652,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -62686,7 +62698,7 @@ operator|.
 name|getJoinConditionAST
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -63484,9 +63496,9 @@ assert|assert
 literal|false
 assert|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -63496,7 +63508,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -63534,7 +63546,7 @@ argument_list|(
 name|expressions
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -63554,9 +63566,9 @@ argument_list|(
 name|nullsafes
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -63566,7 +63578,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -63616,9 +63628,9 @@ index|]
 index|[]
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -63628,7 +63640,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -63679,7 +63691,7 @@ argument_list|(
 literal|2
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -65064,9 +65076,9 @@ argument_list|(
 name|baseSrc
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -65113,7 +65125,7 @@ operator|+
 literal|1
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -65167,7 +65179,7 @@ name|reordereNodeConds
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -65178,7 +65190,7 @@ operator|.
 name|getNullSafes
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -65230,9 +65242,9 @@ argument_list|)
 expr_stmt|;
 comment|// any of condition contains non-NS, non-NS
 block|}
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -65297,7 +65309,7 @@ operator|!=
 literal|0
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -65587,9 +65599,9 @@ argument_list|(
 name|newmap
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -66134,7 +66146,7 @@ literal|null
 argument_list|)
 return|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -66150,7 +66162,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -66507,6 +66519,7 @@ return|return
 literal|true
 return|;
 block|}
+specifier|private
 name|boolean
 name|shouldMerge
 parameter_list|(
@@ -67044,7 +67057,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -67278,7 +67291,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -67289,7 +67302,7 @@ operator|.
 name|getColumnInfos
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -67302,7 +67315,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -67491,7 +67504,7 @@ operator|.
 name|getParseInfo
 argument_list|()
 decl_stmt|;
-name|TreeSet
+name|SortedSet
 argument_list|<
 name|String
 argument_list|>
@@ -68075,7 +68088,7 @@ return|return
 name|commonGroupByDestGroups
 return|;
 block|}
-specifier|protected
+specifier|private
 name|List
 argument_list|<
 name|ExprNodeDesc
@@ -68449,7 +68462,7 @@ operator|.
 name|getParseInfo
 argument_list|()
 decl_stmt|;
-name|TreeSet
+name|SortedSet
 argument_list|<
 name|String
 argument_list|>
@@ -69957,7 +69970,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -69972,7 +69985,7 @@ argument_list|(
 name|leftalias
 argument_list|)
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -70890,7 +70903,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -71324,7 +71337,7 @@ name|MAX_VALUE
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -72293,7 +72306,7 @@ operator|.
 name|getDenominator
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -73919,7 +73932,6 @@ return|return
 literal|null
 return|;
 block|}
-specifier|public
 name|Operator
 name|genPlan
 parameter_list|(
@@ -73943,7 +73955,7 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|public
+specifier|private
 name|Operator
 name|genPlan
 parameter_list|(
@@ -74262,7 +74274,7 @@ condition|)
 block|{
 comment|//After processing subqueries and source tables, process
 comment|// partitioned table functions
-name|HashMap
+name|Map
 argument_list|<
 name|ASTNode
 argument_list|,
@@ -75082,6 +75094,7 @@ name|dummyPath
 return|;
 block|}
 comment|/**    * Generates the operator DAG needed to implement lateral views and attaches    * it to the TS operator.    *    * @param aliasToOpInfo    *          A mapping from a table alias to the TS operator. This function    *          replaces the operator mapping as necessary    * @param qb    * @throws SemanticException    */
+specifier|private
 name|void
 name|genLateralViewPlans
 parameter_list|(
@@ -75103,7 +75116,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -75144,7 +75157,7 @@ argument_list|()
 decl_stmt|;
 comment|// See if the alias has a lateral view. If so, chain the lateral view
 comment|// operator on
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -75672,7 +75685,7 @@ operator|new
 name|RowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -75792,7 +75805,7 @@ name|ExprNodeDesc
 argument_list|>
 name|colExprMap
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -75918,7 +75931,6 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|public
 name|Phase1Ctx
 name|initPhase1Ctx
 parameter_list|()
@@ -76339,7 +76351,7 @@ block|}
 block|}
 comment|// Walk through the AST.
 comment|// Replace all TOK_TABREF with fully qualified table name, if it is not already fully qualified.
-specifier|protected
+specifier|private
 name|String
 name|rewriteQueryWithQualifiedNames
 parameter_list|(
@@ -77422,7 +77434,7 @@ comment|// We replace all the TOK_TABREF by adding additional masking and filter
 comment|// the table needs to be masked or filtered.
 comment|// For the replacement, we leverage the methods that are used for
 comment|// unparseTranslator.
-specifier|protected
+specifier|private
 name|ASTNode
 name|rewriteASTWithMaskAndFilter
 parameter_list|(
@@ -78206,7 +78218,6 @@ return|return
 literal|true
 return|;
 block|}
-specifier|public
 name|void
 name|getHintsFromQB
 parameter_list|(
@@ -78280,7 +78291,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-specifier|public
+specifier|private
 name|void
 name|getHintsFromQB
 parameter_list|(
@@ -79523,7 +79534,7 @@ literal|"org.apache.atlas.hive.hook.HiveHook"
 argument_list|)
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|Transform
 argument_list|>
@@ -80154,7 +80165,7 @@ specifier|private
 name|void
 name|putAccessedColumnsToReadEntity
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -81248,6 +81259,7 @@ return|return
 name|tablesUsed
 return|;
 block|}
+specifier|private
 specifier|static
 name|List
 argument_list|<
@@ -81469,7 +81481,6 @@ literal|false
 argument_list|)
 return|;
 block|}
-specifier|public
 name|ExprNodeDesc
 name|genExprNodeDesc
 parameter_list|(
@@ -81534,7 +81545,6 @@ name|tcCtx
 argument_list|)
 return|;
 block|}
-specifier|public
 name|ExprNodeDesc
 name|genExprNodeDesc
 parameter_list|(
@@ -81563,7 +81573,7 @@ literal|false
 argument_list|)
 return|;
 block|}
-specifier|public
+specifier|private
 name|ExprNodeDesc
 name|genExprNodeDesc
 parameter_list|(
@@ -81607,7 +81617,6 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Generates an expression node descriptors for the expression and children of it    * with default TypeCheckCtx.    */
-specifier|public
 name|Map
 argument_list|<
 name|ASTNode
@@ -81646,7 +81655,6 @@ argument_list|)
 return|;
 block|}
 comment|/**    * Returns expression node descriptor for the expression.    * If it's evaluated already in previous operator, it can be retrieved from cache.    */
-specifier|public
 name|ExprNodeDesc
 name|genExprNodeDesc
 parameter_list|(
@@ -81828,7 +81836,6 @@ name|SuppressWarnings
 argument_list|(
 literal|"nls"
 argument_list|)
-specifier|public
 name|Map
 argument_list|<
 name|ASTNode
@@ -83619,6 +83626,7 @@ name|retValue
 return|;
 block|}
 comment|/**    * Checks to see if given partition columns has DEFAULT or CHECK constraints (whether ENABLED or DISABLED)    *  Or has NOT NULL constraints (only ENABLED)    * @param partCols partition columns    * @param defConstraints default constraints    * @param notNullConstraints not null constraints    * @param checkConstraints CHECK constraints    * @return true or false    */
+specifier|private
 name|boolean
 name|hasConstraints
 parameter_list|(
@@ -88101,7 +88109,6 @@ throw|;
 block|}
 block|}
 comment|// Process the position alias in GROUPBY and ORDERBY
-specifier|public
 name|void
 name|processPositionAlias
 parameter_list|(
@@ -91180,7 +91187,7 @@ name|AggregationExprCheck
 implements|implements
 name|ContextVisitor
 block|{
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -91196,7 +91203,7 @@ decl_stmt|;
 specifier|public
 name|AggregationExprCheck
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -91528,6 +91535,7 @@ return|return
 name|ptfDesc
 return|;
 block|}
+specifier|private
 name|Operator
 name|genPTFPlan
 parameter_list|(
@@ -91540,7 +91548,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|PTFInvocationSpec
 argument_list|>
@@ -91592,6 +91600,7 @@ name|input
 return|;
 block|}
 comment|/**    * Construct the data structures containing ExprNodeDesc for partition    * columns and order columns. Use the input definition to construct the list    * of output columns for the ReduceSinkOperator    *    * @throws SemanticException    */
+specifier|private
 name|void
 name|buildPTFReduceSinkDetails
 parameter_list|(
@@ -91601,13 +91610,13 @@ parameter_list|,
 name|RowResolver
 name|inputRR
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|partCols
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -91956,7 +91965,7 @@ argument_list|()
 expr_stmt|;
 block|}
 comment|/*        * b. Build Reduce Sink Details (keyCols, valueCols, outColNames etc.) for this ptfDesc.        */
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -91969,7 +91978,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -92111,6 +92120,7 @@ name|input
 return|;
 block|}
 comment|//--------------------------- Windowing handling: PTFInvocationSpec to PTFDesc --------------------
+specifier|private
 name|Operator
 name|genWindowingPlan
 parameter_list|(
@@ -92415,7 +92425,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -92428,7 +92438,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -92699,7 +92709,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|ArrayList
+name|List
 argument_list|<
 name|WindowExpressionSpec
 argument_list|>
@@ -92751,7 +92761,7 @@ name|pe
 argument_list|)
 throw|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|WindowExpressionSpec
 argument_list|>
@@ -93500,7 +93510,7 @@ name|NOT_ACID
 return|;
 block|}
 block|}
-specifier|protected
+specifier|private
 name|boolean
 name|updating
 parameter_list|(
@@ -93524,7 +93534,7 @@ argument_list|()
 argument_list|)
 return|;
 block|}
-specifier|protected
+specifier|private
 name|boolean
 name|deleting
 parameter_list|(
@@ -93549,7 +93559,7 @@ argument_list|)
 return|;
 block|}
 comment|// Make sure the proper transaction manager that supports ACID is being used
-specifier|protected
+specifier|private
 name|void
 name|checkAcidTxnManager
 parameter_list|(
@@ -93609,7 +93619,6 @@ argument_list|)
 throw|;
 block|}
 block|}
-specifier|public
 specifier|static
 name|ASTNode
 name|genSelectDIAST
@@ -93618,11 +93627,11 @@ name|RowResolver
 name|rr
 parameter_list|)
 block|{
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

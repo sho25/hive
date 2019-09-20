@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|List
 import|;
 end_import
 
@@ -137,7 +137,7 @@ condition|)
 block|{
 comment|// Go through the root tasks, and verify the input format of the map reduce task(s) is
 comment|// HiveSortedInputFormat
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<

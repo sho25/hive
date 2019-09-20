@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|List
 import|;
 end_import
 
@@ -55,7 +55,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Set
 import|;
 end_import
 
@@ -243,7 +243,7 @@ name|Path
 name|resFile
 decl_stmt|;
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<
@@ -268,14 +268,14 @@ name|String
 name|astStringTree
 decl_stmt|;
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 decl_stmt|;
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -289,12 +289,15 @@ specifier|private
 name|ExplainConfiguration
 name|config
 decl_stmt|;
+specifier|private
 name|boolean
 name|appendTaskType
 decl_stmt|;
+specifier|private
 name|String
 name|cboInfo
 decl_stmt|;
+specifier|private
 name|String
 name|cboPlan
 decl_stmt|;
@@ -492,7 +495,7 @@ name|resFile
 expr_stmt|;
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<
@@ -510,7 +513,7 @@ specifier|public
 name|void
 name|setRootTasks
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<
@@ -558,7 +561,7 @@ name|fetchTask
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -573,7 +576,7 @@ specifier|public
 name|void
 name|setInputs
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -588,7 +591,7 @@ name|inputs
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -603,7 +606,7 @@ specifier|public
 name|void
 name|setOutputs
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>

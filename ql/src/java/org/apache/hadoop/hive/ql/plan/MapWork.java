@@ -2211,7 +2211,7 @@ specifier|public
 name|void
 name|setNameToSplitSample
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

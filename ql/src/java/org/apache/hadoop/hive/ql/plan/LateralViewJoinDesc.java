@@ -35,6 +35,16 @@ name|java
 operator|.
 name|util
 operator|.
+name|List
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
 name|Objects
 import|;
 end_import
@@ -106,7 +116,7 @@ name|int
 name|numSelColumns
 decl_stmt|;
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -122,7 +132,7 @@ parameter_list|(
 name|int
 name|numSelColumns
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -168,7 +178,7 @@ operator|=
 literal|"outputColumnNames"
 argument_list|)
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -195,7 +205,7 @@ name|USER
 block|}
 argument_list|)
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

@@ -213,11 +213,11 @@ comment|// its list of join keys
 specifier|private
 specifier|transient
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -227,9 +227,9 @@ decl_stmt|;
 comment|// join conditions
 specifier|private
 specifier|transient
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -238,7 +238,7 @@ name|expressions
 decl_stmt|;
 comment|// key index to nullsafe join flag
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -247,9 +247,9 @@ decl_stmt|;
 comment|// filters
 specifier|private
 specifier|transient
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -266,9 +266,9 @@ decl_stmt|;
 comment|// filters for pushing
 specifier|private
 specifier|transient
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -337,7 +337,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -478,9 +478,9 @@ name|leftAliases
 expr_stmt|;
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -496,9 +496,9 @@ specifier|public
 name|void
 name|setExpressions
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -647,9 +647,9 @@ expr_stmt|;
 block|}
 comment|/**    * @return the filters    */
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -666,9 +666,9 @@ specifier|public
 name|void
 name|setFilters
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -685,9 +685,9 @@ expr_stmt|;
 block|}
 comment|/**    * @return the filters for pushing    */
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -704,9 +704,9 @@ specifier|public
 name|void
 name|setFiltersForPushing
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -848,14 +848,14 @@ parameter_list|(
 name|String
 name|alias
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
 name|columns
 parameter_list|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -908,7 +908,7 @@ name|ASTNode
 name|column
 parameter_list|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -966,7 +966,7 @@ expr_stmt|;
 block|}
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -1000,7 +1000,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -1023,7 +1023,7 @@ operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -1072,7 +1072,7 @@ block|}
 block|}
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -1087,7 +1087,7 @@ specifier|public
 name|void
 name|setNullSafes
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -1709,7 +1709,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>

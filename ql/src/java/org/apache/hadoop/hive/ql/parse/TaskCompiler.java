@@ -1388,14 +1388,14 @@ argument_list|>
 name|rootTasks
 parameter_list|,
 specifier|final
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
 specifier|final
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -3241,7 +3241,7 @@ name|Task
 name|currentTask
 parameter_list|,
 specifier|final
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>

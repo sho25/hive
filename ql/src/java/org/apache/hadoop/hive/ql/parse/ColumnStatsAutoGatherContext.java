@@ -1393,7 +1393,7 @@ operator|.
 name|getSchema
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -1424,7 +1424,7 @@ operator|.
 name|getRowResolver
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -1435,7 +1435,7 @@ operator|.
 name|getColumnInfos
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -1448,7 +1448,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>

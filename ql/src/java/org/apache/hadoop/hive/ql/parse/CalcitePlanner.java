@@ -11970,7 +11970,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -11983,7 +11983,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -12063,7 +12063,7 @@ argument_list|,
 name|selExprList
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -17486,7 +17486,7 @@ argument_list|(
 name|rightRel
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -17501,7 +17501,7 @@ argument_list|(
 name|leftalias
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -25749,7 +25749,7 @@ name|LAG_FUNC_NAME
 argument_list|)
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
@@ -26209,7 +26209,7 @@ argument_list|,
 name|detsClauseName
 argument_list|)
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -33211,7 +33211,7 @@ comment|// Use the RowResolver from the input operator to generate a input
 comment|// ObjectInspector that can be used to initialize the UDTF. Then, the
 comment|// resulting output object inspector can be used to make the RowResolver
 comment|// for the UDTF operator
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -33224,7 +33224,7 @@ argument_list|()
 decl_stmt|;
 comment|// Create the object inspector for the input columns and initialize the
 comment|// UDTF
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -33410,7 +33410,7 @@ argument_list|)
 throw|;
 block|}
 comment|// Generate the output column info's / row resolver using internal names.
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

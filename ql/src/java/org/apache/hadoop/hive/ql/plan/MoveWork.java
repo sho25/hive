@@ -35,7 +35,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
+name|List
 import|;
 end_import
 
@@ -45,7 +45,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|List
+name|Set
 import|;
 end_import
 
@@ -209,7 +209,7 @@ name|needCleanTarget
 decl_stmt|;
 comment|/**    * ReadEntitites that are passed to the hooks.    */
 specifier|protected
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -217,7 +217,7 @@ name|inputs
 decl_stmt|;
 comment|/**    * List of WriteEntities that are passed to the hooks.    */
 specifier|protected
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -233,10 +233,6 @@ name|movedParts
 decl_stmt|;
 specifier|private
 name|boolean
-name|isNoop
-decl_stmt|;
-specifier|private
-name|boolean
 name|isInReplicationScope
 init|=
 literal|false
@@ -248,13 +244,13 @@ block|{   }
 specifier|private
 name|MoveWork
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -283,13 +279,13 @@ block|}
 specifier|public
 name|MoveWork
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -380,13 +376,13 @@ block|}
 specifier|public
 name|MoveWork
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
 name|inputs
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -620,7 +616,7 @@ name|checkFileFormat
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -632,7 +628,7 @@ name|inputs
 return|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -647,7 +643,7 @@ specifier|public
 name|void
 name|setInputs
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -665,7 +661,7 @@ specifier|public
 name|void
 name|setOutputs
 parameter_list|(
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>

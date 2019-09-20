@@ -1258,7 +1258,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1281,7 +1281,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1310,7 +1310,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1323,7 +1323,7 @@ operator|.
 name|getTopOps
 argument_list|()
 decl_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1342,7 +1342,7 @@ argument_list|()
 decl_stmt|;
 comment|// (partition to bucket file names) and (partition to bucket number) for
 comment|// the big table;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Partition
 argument_list|,
@@ -1365,7 +1365,7 @@ argument_list|>
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|Partition
 argument_list|,

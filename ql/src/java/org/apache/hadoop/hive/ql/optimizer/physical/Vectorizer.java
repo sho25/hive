@@ -17942,7 +17942,7 @@ return|return
 literal|false
 return|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -24973,7 +24973,7 @@ argument_list|(
 name|keysDesc
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -26309,7 +26309,7 @@ operator|.
 name|size
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

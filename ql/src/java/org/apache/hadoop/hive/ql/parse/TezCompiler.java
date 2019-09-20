@@ -7075,13 +7075,6 @@ argument_list|>
 argument_list|>
 name|terminalOps
 decl_stmt|;
-specifier|public
-name|Set
-argument_list|<
-name|ReduceSinkOperator
-argument_list|>
-name|rsOps
-decl_stmt|;
 name|TerminalOpsInfo
 parameter_list|(
 name|Set
@@ -7092,12 +7085,6 @@ name|?
 argument_list|>
 argument_list|>
 name|terminalOps
-parameter_list|,
-name|Set
-argument_list|<
-name|ReduceSinkOperator
-argument_list|>
-name|rsOps
 parameter_list|)
 block|{
 name|this
@@ -7105,12 +7092,6 @@ operator|.
 name|terminalOps
 operator|=
 name|terminalOps
-expr_stmt|;
-name|this
-operator|.
-name|rsOps
-operator|=
-name|rsOps
 expr_stmt|;
 block|}
 block|}
@@ -7277,8 +7258,6 @@ operator|new
 name|TerminalOpsInfo
 argument_list|(
 name|workTerminalOps
-argument_list|,
-name|workRSOps
 argument_list|)
 decl_stmt|;
 comment|// A work may contain multiple semijoin edges, traverse rsOps and add for each
@@ -8287,7 +8266,7 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>

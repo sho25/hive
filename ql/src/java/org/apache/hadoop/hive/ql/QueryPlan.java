@@ -671,7 +671,7 @@ name|String
 name|optimizedQueryString
 decl_stmt|;
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<
@@ -695,7 +695,7 @@ argument_list|>
 name|reducerTimeStatsPerJobList
 decl_stmt|;
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -703,7 +703,7 @@ name|inputs
 decl_stmt|;
 comment|/**    * Note: outputs are not all determined at compile time.    * Some of the tasks can change the outputs at run time, because only at run    * time, we know what are the changes.  These tasks should keep a reference    * to the outputs here.    */
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -727,7 +727,7 @@ name|Schema
 name|resultSchema
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -5085,7 +5085,7 @@ name|done
 return|;
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<
@@ -5105,7 +5105,7 @@ specifier|public
 name|void
 name|setRootTasks
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|Task
 argument_list|<
@@ -5172,7 +5172,7 @@ name|fetchTask
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -5202,7 +5202,7 @@ name|inputs
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -5241,7 +5241,7 @@ name|resultSchema
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -5258,7 +5258,7 @@ specifier|public
 name|void
 name|setIdToTableNameMap
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

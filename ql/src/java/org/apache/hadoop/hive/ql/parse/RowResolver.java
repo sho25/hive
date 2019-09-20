@@ -179,11 +179,11 @@ name|RowSchema
 name|rowSchema
 decl_stmt|;
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -224,11 +224,11 @@ argument_list|>
 name|expressionMap
 decl_stmt|;
 specifier|private
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -285,7 +285,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -340,7 +340,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -527,7 +527,7 @@ parameter_list|)
 block|{
 comment|// we keep track of duplicate<tab alias, col alias> so that get can check
 comment|// for ambiguity
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -623,7 +623,7 @@ name|getInternalName
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -874,7 +874,7 @@ operator|.
 name|toLowerCase
 argument_list|()
 expr_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -930,7 +930,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -953,7 +953,7 @@ operator|.
 name|getKey
 argument_list|()
 decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1053,7 +1053,7 @@ name|ret
 return|;
 block|}
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -1316,7 +1316,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1507,7 +1507,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1539,7 +1539,7 @@ operator|+
 literal|"{"
 argument_list|)
 expr_stmt|;
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1628,11 +1628,11 @@ name|rowSchema
 return|;
 block|}
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2472,7 +2472,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2522,7 +2522,7 @@ name|Entry
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2537,15 +2537,7 @@ name|entrySet
 argument_list|()
 control|)
 block|{
-name|String
-name|rslvKey
-init|=
-name|ambigousColsEntry
-operator|.
-name|getKey
-argument_list|()
-decl_stmt|;
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

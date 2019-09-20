@@ -7873,7 +7873,7 @@ literal|0
 condition|)
 block|{
 comment|// adding DP ColumnInfo to the RowSchema signature
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

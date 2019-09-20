@@ -278,7 +278,7 @@ argument_list|(
 name|hconf
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ObjectInspector
 argument_list|>
@@ -291,7 +291,7 @@ name|ObjectInspector
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -396,7 +396,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// acc is short for accumulator. It's used to build the row before forwarding
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>
@@ -411,7 +411,7 @@ argument_list|()
 decl_stmt|;
 comment|// selectObjs hold the row from the select op, until receiving a row from
 comment|// the udtf op
-name|ArrayList
+name|List
 argument_list|<
 name|Object
 argument_list|>

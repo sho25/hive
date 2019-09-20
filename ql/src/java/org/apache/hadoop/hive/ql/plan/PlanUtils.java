@@ -4131,7 +4131,7 @@ name|String
 name|fieldPrefix
 parameter_list|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -4160,7 +4160,7 @@ name|FieldSchema
 argument_list|>
 name|getFieldSchemasFromColumnInfo
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

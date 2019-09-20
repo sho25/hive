@@ -3287,7 +3287,7 @@ decl_stmt|;
 name|StructObjectInspector
 name|selectListInputOI
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|WindowExpressionSpec
 argument_list|>

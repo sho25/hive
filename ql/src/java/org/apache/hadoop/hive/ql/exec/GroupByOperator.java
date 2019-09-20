@@ -1727,7 +1727,7 @@ block|}
 block|}
 block|}
 comment|// init aggregationParameterFields
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -1825,7 +1825,7 @@ argument_list|(
 name|i
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -3231,7 +3231,7 @@ name|fixedRowSize
 operator|=
 name|javaHashEntryOverHead
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -6251,7 +6251,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -6285,7 +6285,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -6304,7 +6304,7 @@ range|:
 name|aggrs
 control|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

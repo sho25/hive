@@ -27,16 +27,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|HashMap
 import|;
 end_import
@@ -2272,7 +2262,7 @@ argument_list|(
 name|stack
 argument_list|)
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -2314,7 +2304,7 @@ comment|// Dirty hack!!
 comment|// For the select path the columns are the ones at the beginning of the
 comment|// current operators schema and for the udtf path the columns are
 comment|// at the end of the operator schema.
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -2566,7 +2556,7 @@ operator|.
 name|getSchema
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -2862,7 +2852,7 @@ name|GroupByOperator
 operator|)
 name|nd
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -3700,7 +3690,7 @@ operator|.
 name|getSchema
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -3937,7 +3927,7 @@ operator|instanceof
 name|GroupByOperator
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -4447,7 +4437,7 @@ name|cond
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -4624,7 +4614,7 @@ operator|.
 name|getSchema
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

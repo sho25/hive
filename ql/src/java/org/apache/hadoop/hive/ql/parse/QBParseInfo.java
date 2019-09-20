@@ -235,7 +235,7 @@ name|hintList
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -246,7 +246,7 @@ decl_stmt|;
 comment|/**    * insclause-0 -> TOK_TAB ASTNode    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -270,7 +270,7 @@ name|nameToDestSchema
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -300,7 +300,7 @@ name|destToSelExpr
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -310,7 +310,7 @@ name|destToWhereExpr
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -399,7 +399,7 @@ decl_stmt|;
 comment|// used for the analyze command (statistics) (noscan)
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -415,7 +415,7 @@ decl_stmt|;
 comment|/**    * ClusterBy is a short name for both DistributeBy and SortBy.    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -426,7 +426,7 @@ decl_stmt|;
 comment|/**    * DistributeBy controls the hashcode of the row, which determines which    * reducer the rows will go to.    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -437,7 +437,7 @@ decl_stmt|;
 comment|/**    * SortBy controls the reduce keys, which affects the order of rows that the    * reducer receives.    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -448,11 +448,11 @@ decl_stmt|;
 comment|/**    * Maping from table/subquery aliases to all the associated lateral view nodes.    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -461,7 +461,7 @@ name|aliasToLateralViews
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -472,7 +472,7 @@ decl_stmt|;
 comment|/* Order by clause */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -485,7 +485,7 @@ comment|// KEY of SimpleEntry: offset
 comment|// VALUE of SimpleEntry: rowcount
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -505,11 +505,11 @@ decl_stmt|;
 comment|// used by GroupBy
 specifier|private
 specifier|final
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -520,7 +520,7 @@ name|destToAggregationExprs
 decl_stmt|;
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -534,11 +534,11 @@ decl_stmt|;
 comment|// used by Windowing
 specifier|private
 specifier|final
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -816,7 +816,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -832,7 +832,7 @@ name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -884,7 +884,7 @@ name|HashMap
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -932,7 +932,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -958,7 +958,7 @@ parameter_list|(
 name|String
 name|clause
 parameter_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1137,7 +1137,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1169,7 +1169,7 @@ name|ASTNode
 name|windowingExprNode
 parameter_list|)
 block|{
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1226,7 +1226,7 @@ argument_list|)
 expr_stmt|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1666,7 +1666,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1733,7 +1733,7 @@ name|destGroupingSets
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1822,7 +1822,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1854,7 +1854,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1903,7 +1903,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1917,7 +1917,7 @@ name|destToSortby
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2616,7 +2616,7 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -2662,7 +2662,7 @@ name|ASTNode
 name|lateralView
 parameter_list|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -2804,7 +2804,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2823,11 +2823,11 @@ name|destToLimit
 return|;
 block|}
 specifier|public
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
-name|LinkedHashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2842,7 +2842,7 @@ name|destToAggregationExprs
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2859,7 +2859,7 @@ name|destToDistinctFuncExprs
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -2873,7 +2873,7 @@ name|nameToSample
 return|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,

@@ -27,7 +27,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|Map
 import|;
 end_import
 
@@ -99,7 +99,7 @@ block|{
 comment|/**    * Map from tablescan operator to partition pruning predicate that is    * initialized from the ParseContext.    */
 specifier|private
 specifier|final
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -111,7 +111,7 @@ comment|/**    * Constructor.    */
 specifier|public
 name|OpWalkerCtx
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -128,7 +128,7 @@ name|opToPartPruner
 expr_stmt|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,

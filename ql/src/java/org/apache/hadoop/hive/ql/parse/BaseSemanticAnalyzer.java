@@ -1498,7 +1498,7 @@ name|Context
 name|ctx
 decl_stmt|;
 specifier|protected
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1537,7 +1537,7 @@ name|txnManager
 decl_stmt|;
 comment|/**    * ReadEntities that are passed to the hooks.    */
 specifier|protected
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -1545,7 +1545,7 @@ name|inputs
 decl_stmt|;
 comment|/**    * List of WriteEntities that are passed to the hooks.    */
 specifier|protected
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -2089,7 +2089,7 @@ throw|;
 block|}
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -4370,7 +4370,7 @@ argument_list|)
 return|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -4382,7 +4382,7 @@ name|inputs
 return|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>
@@ -11786,7 +11786,7 @@ name|HiveParser
 operator|.
 name|TOK_TABCOLVALUE_PAIR
 case|:
-name|ArrayList
+name|List
 argument_list|<
 name|Node
 argument_list|>
@@ -13694,7 +13694,7 @@ name|rootTasks
 return|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -13706,7 +13706,7 @@ name|inputs
 return|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>

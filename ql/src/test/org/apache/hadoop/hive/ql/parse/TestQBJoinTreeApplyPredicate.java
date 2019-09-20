@@ -643,9 +643,9 @@ argument_list|(
 name|children
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -655,7 +655,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -693,7 +693,7 @@ argument_list|(
 name|expressions
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|Boolean
 argument_list|>
@@ -713,9 +713,9 @@ argument_list|(
 name|nullsafes
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -725,7 +725,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -775,9 +775,9 @@ index|]
 index|[]
 argument_list|)
 expr_stmt|;
-name|ArrayList
+name|List
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -787,7 +787,7 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>

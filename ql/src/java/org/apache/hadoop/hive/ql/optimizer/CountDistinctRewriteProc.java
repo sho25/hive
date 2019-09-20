@@ -951,7 +951,7 @@ init|=
 operator|-
 literal|1
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

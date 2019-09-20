@@ -4177,7 +4177,7 @@ name|build
 argument_list|()
 decl_stmt|;
 specifier|final
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

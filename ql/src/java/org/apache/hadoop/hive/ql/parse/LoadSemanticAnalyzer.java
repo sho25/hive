@@ -85,16 +85,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashSet
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|LinkedHashMap
 import|;
 end_import
@@ -116,6 +106,16 @@ operator|.
 name|util
 operator|.
 name|Map
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Set
 import|;
 end_import
 
@@ -298,24 +298,6 @@ operator|.
 name|api
 operator|.
 name|FieldSchema
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|metastore
-operator|.
-name|api
-operator|.
-name|hive_metastoreConstants
 import|;
 end_import
 
@@ -3497,7 +3479,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|WriteEntity
 argument_list|>

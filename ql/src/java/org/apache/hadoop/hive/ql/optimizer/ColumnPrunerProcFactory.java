@@ -1380,7 +1380,7 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -1409,7 +1409,7 @@ name|key
 argument_list|)
 expr_stmt|;
 block|}
-name|ArrayList
+name|List
 argument_list|<
 name|AggregationDesc
 argument_list|>
@@ -1428,7 +1428,7 @@ range|:
 name|aggrs
 control|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -5479,7 +5479,7 @@ name|size
 argument_list|()
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
@@ -5492,7 +5492,7 @@ name|ExprNodeDesc
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|String
 argument_list|>
@@ -5505,7 +5505,7 @@ name|String
 argument_list|>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -5519,7 +5519,7 @@ operator|.
 name|getSignature
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -6036,7 +6036,7 @@ operator|.
 name|getSchema
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -6047,7 +6047,7 @@ operator|.
 name|getSignature
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>
@@ -6889,7 +6889,7 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|ArrayList
+name|List
 argument_list|<
 name|FieldNode
 argument_list|>
@@ -6900,7 +6900,7 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-name|ArrayList
+name|List
 argument_list|<
 name|ColumnInfo
 argument_list|>

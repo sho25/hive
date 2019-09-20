@@ -25,7 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|ArrayList
+name|List
 import|;
 end_import
 
@@ -50,7 +50,7 @@ name|denominator
 decl_stmt|;
 comment|/**    * The list of expressions following ON part of the TABLESAMPLE clause. This    * list is empty in case there are no expressions such as in the clause    * "FROM t TABLESAMPLE(1 OUT OF 2)". For this expression the sampling is done    * on the tables clustering column(as specified when the table was created).    * In case the table does not have any clustering column, the usage of a table    * sample clause without an ON part is disallowed by the compiler    */
 specifier|private
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -71,7 +71,7 @@ parameter_list|,
 name|String
 name|den
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -176,7 +176,7 @@ expr_stmt|;
 block|}
 comment|/**    * Gets the ON part's expression list.    *     * @return ArrayList&lt;ASTNode&gt;    */
 specifier|public
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>
@@ -192,7 +192,7 @@ specifier|public
 name|void
 name|setExprs
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ASTNode
 argument_list|>

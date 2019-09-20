@@ -745,7 +745,7 @@ class|class
 name|ParseContext
 block|{
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -754,7 +754,7 @@ argument_list|>
 name|opToPartPruner
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -763,7 +763,7 @@ argument_list|>
 name|opToPartList
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -786,7 +786,7 @@ argument_list|>
 name|opToPartToSkewedPruner
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -823,7 +823,7 @@ argument_list|>
 name|reduceSinkOperatorsAddedByEnforceBucketingSorting
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -865,7 +865,7 @@ name|HiveConf
 name|conf
 decl_stmt|;
 specifier|private
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -933,7 +933,7 @@ name|GlobalLimitCtx
 name|globalLimitCtx
 decl_stmt|;
 specifier|private
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -1108,7 +1108,7 @@ parameter_list|(
 name|QueryState
 name|queryState
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -1116,7 +1116,7 @@ name|ExprNodeDesc
 argument_list|>
 name|opToPartPruner
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -1124,7 +1124,7 @@ name|PrunedPartitionList
 argument_list|>
 name|opToPartList
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1165,7 +1165,7 @@ parameter_list|,
 name|Context
 name|ctx
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1206,7 +1206,7 @@ name|Table
 argument_list|>
 name|tabNameToTabObject
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -1217,7 +1217,7 @@ parameter_list|,
 name|GlobalLimitCtx
 name|globalLimitCtx
 parameter_list|,
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1225,7 +1225,7 @@ name|SplitSample
 argument_list|>
 name|nameToSplitSample
 parameter_list|,
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -1642,7 +1642,7 @@ return|;
 block|}
 comment|/**    * @return the opToPartPruner    */
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -1660,7 +1660,7 @@ specifier|public
 name|void
 name|setOpToPartPruner
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -1677,7 +1677,7 @@ name|opToPartPruner
 expr_stmt|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -1722,7 +1722,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the topOps    */
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1740,7 +1740,7 @@ specifier|public
 name|void
 name|setTopOps
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1757,7 +1757,7 @@ name|topOps
 expr_stmt|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1774,7 +1774,7 @@ specifier|public
 name|void
 name|setNameToSplitSample
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1836,7 +1836,7 @@ name|loadFileWork
 expr_stmt|;
 block|}
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1853,7 +1853,7 @@ specifier|public
 name|void
 name|setIdToTableNameMap
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|String
 argument_list|,
@@ -1993,7 +1993,7 @@ expr_stmt|;
 block|}
 comment|/**    * @return the opToSamplePruner    */
 specifier|public
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -2011,7 +2011,7 @@ specifier|public
 name|void
 name|setOpToSamplePruner
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
@@ -2222,7 +2222,7 @@ name|globalLimitCtx
 expr_stmt|;
 block|}
 specifier|public
-name|HashSet
+name|Set
 argument_list|<
 name|ReadEntity
 argument_list|>
@@ -2409,7 +2409,7 @@ specifier|public
 name|void
 name|setOpPartToSkewedPruner
 parameter_list|(
-name|HashMap
+name|Map
 argument_list|<
 name|TableScanOperator
 argument_list|,
