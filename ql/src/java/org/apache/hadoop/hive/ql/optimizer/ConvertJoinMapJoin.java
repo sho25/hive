@@ -6471,6 +6471,18 @@ comment|/* isSupportFullOuter */
 literal|true
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|bigTableCandidateSet
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 name|int
 name|bigTablePosition
 init|=
@@ -6865,6 +6877,25 @@ operator|=
 name|currInputStat
 expr_stmt|;
 block|}
+block|}
+if|if
+condition|(
+name|bigTablePosition
+operator|==
+operator|-
+literal|1
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"No big table selected, no MapJoin"
+argument_list|)
+expr_stmt|;
+return|return
+literal|null
+return|;
 block|}
 comment|// Check if size of data to shuffle (larger table) is less than given max size
 if|if
