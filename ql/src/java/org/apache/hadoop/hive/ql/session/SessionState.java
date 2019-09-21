@@ -6290,20 +6290,13 @@ parameter_list|()
 throws|throws
 name|IOException
 block|{
-specifier|final
-name|Set
-argument_list|<
-name|String
-argument_list|>
-name|reloadedAuxJars
-init|=
-operator|new
-name|HashSet
-argument_list|<
-name|String
-argument_list|>
-argument_list|()
-decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Reloading auxiliary JAR files"
+argument_list|)
+expr_stmt|;
 specifier|final
 name|String
 name|renewableJarPath
@@ -6320,18 +6313,29 @@ decl_stmt|;
 comment|// do nothing if this property is not specified or empty
 if|if
 condition|(
-name|renewableJarPath
-operator|==
-literal|null
-operator|||
-name|renewableJarPath
+name|StringUtils
 operator|.
-name|isEmpty
-argument_list|()
+name|isBlank
+argument_list|(
+name|renewableJarPath
+argument_list|)
 condition|)
 block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Configuration {} not specified"
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVERELOADABLEJARS
+argument_list|)
+expr_stmt|;
 return|return;
 block|}
+comment|// load jars under the hive.reloadable.aux.jars.path
+specifier|final
 name|Set
 argument_list|<
 name|String
@@ -6347,31 +6351,18 @@ argument_list|,
 name|sessionConf
 argument_list|)
 decl_stmt|;
-comment|// load jars under the hive.reloadable.aux.jars.path
-if|if
-condition|(
-operator|!
-name|jarPaths
+name|LOG
 operator|.
-name|isEmpty
-argument_list|()
-condition|)
-block|{
-name|reloadedAuxJars
-operator|.
-name|addAll
+name|info
 argument_list|(
+literal|"Auxiliary JAR files discovered for reload: {}"
+argument_list|,
 name|jarPaths
 argument_list|)
 expr_stmt|;
-block|}
 comment|// remove the previous renewable jars
 if|if
 condition|(
-name|preReloadableAuxJars
-operator|!=
-literal|null
-operator|&&
 operator|!
 name|preReloadableAuxJars
 operator|.
@@ -6398,12 +6389,8 @@ expr_stmt|;
 block|}
 if|if
 condition|(
-name|reloadedAuxJars
-operator|!=
-literal|null
-operator|&&
 operator|!
-name|reloadedAuxJars
+name|jarPaths
 operator|.
 name|isEmpty
 argument_list|()
@@ -6426,7 +6413,7 @@ operator|.
 name|getClassLoader
 argument_list|()
 argument_list|,
-name|reloadedAuxJars
+name|jarPaths
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -6467,7 +6454,7 @@ name|preReloadableAuxJars
 operator|.
 name|addAll
 argument_list|(
-name|reloadedAuxJars
+name|jarPaths
 argument_list|)
 expr_stmt|;
 block|}
