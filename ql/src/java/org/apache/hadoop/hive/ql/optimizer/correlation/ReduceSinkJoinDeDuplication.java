@@ -729,6 +729,22 @@ operator|.
 name|getConf
 argument_list|()
 operator|.
+name|isOrdering
+argument_list|()
+condition|)
+block|{
+comment|// 1-1 edge is skipped for sorted shuffle
+return|return
+literal|false
+return|;
+block|}
+if|if
+condition|(
+name|cRS
+operator|.
+name|getConf
+argument_list|()
+operator|.
 name|getKeyCols
 argument_list|()
 operator|.

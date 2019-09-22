@@ -3373,6 +3373,10 @@ name|ReduceSinkOperator
 name|reduceSinkOperator
 parameter_list|)
 block|{
+comment|// The 1-1 edge should also work for sorted cases, however depending on the details of the shuffle
+comment|// this might end up writing multiple compressed files or end up using an in-memory partitioned kv writer
+comment|// the condition about ordering = false can be removed at some point with a tweak to the unordered writer
+comment|// to never split a single output across multiple files (and never attempt a final merge)
 if|if
 condition|(
 name|reduceSinkOperator
@@ -3381,6 +3385,15 @@ name|getConf
 argument_list|()
 operator|.
 name|isForwarding
+argument_list|()
+operator|&&
+operator|!
+name|reduceSinkOperator
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isOrdering
 argument_list|()
 condition|)
 block|{

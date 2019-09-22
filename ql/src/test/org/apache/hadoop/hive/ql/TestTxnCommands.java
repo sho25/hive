@@ -8019,7 +8019,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 5<- Reducer 2 (ONE_TO_ONE_EDGE)"
+literal|"Reducer 5<- Reducer 2 (SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -8091,7 +8091,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-literal|"Reducer 7<- Reducer 2 (ONE_TO_ONE_EDGE)"
+literal|"Reducer 7<- Reducer 2 (SIMPLE_EDGE)"
 argument_list|)
 argument_list|)
 expr_stmt|;
