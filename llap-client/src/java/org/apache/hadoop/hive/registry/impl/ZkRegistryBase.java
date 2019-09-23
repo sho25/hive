@@ -1227,6 +1227,8 @@ name|namespace
 init|=
 name|getRootNamespace
 argument_list|(
+name|conf
+argument_list|,
 name|rootNs
 argument_list|,
 name|nsPrefix
@@ -1330,6 +1332,9 @@ specifier|static
 name|String
 name|getRootNamespace
 parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
 name|String
 name|userProvidedNamespace
 parameter_list|,
@@ -1341,10 +1346,12 @@ specifier|final
 name|boolean
 name|isSecure
 init|=
-name|UserGroupInformation
+name|ZookeeperUtils
 operator|.
-name|isSecurityEnabled
-argument_list|()
+name|isKerberosEnabled
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 name|String
 name|rootNs
@@ -1387,10 +1394,12 @@ specifier|final
 name|boolean
 name|isSecure
 init|=
-name|UserGroupInformation
+name|ZookeeperUtils
 operator|.
-name|isSecurityEnabled
-argument_list|()
+name|isKerberosEnabled
+argument_list|(
+name|conf
+argument_list|)
 decl_stmt|;
 return|return
 operator|new
@@ -2311,12 +2320,16 @@ block|{
 if|if
 condition|(
 operator|!
-name|UserGroupInformation
+name|ZookeeperUtils
 operator|.
-name|isSecurityEnabled
-argument_list|()
+name|isKerberosEnabled
+argument_list|(
+name|conf
+argument_list|)
 condition|)
+block|{
 return|return;
+block|}
 comment|// We are trying to check ACLs on the "workers" directory, which noone except us should be
 comment|// able to write to. Higher-level directories shouldn't matter - we don't read them.
 name|String

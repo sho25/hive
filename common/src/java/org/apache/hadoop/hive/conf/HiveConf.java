@@ -9602,6 +9602,27 @@ literal|"read MM tables with original files will fail. The default in Hive 3.0 i
 argument_list|)
 block|,
 comment|// Zookeeper related configs
+name|HIVE_SECURITY_ZOOKEEPER_AUTHENTICATION
+argument_list|(
+literal|"hive.security.zookeeper.authentication"
+argument_list|,
+literal|"DEFAULT"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"DEFAULT"
+argument_list|,
+literal|"SIMPLE"
+argument_list|)
+argument_list|,
+literal|"Whether the authentication type for Zookeeper is different from the cluster wide\n"
+operator|+
+literal|"`hadoop.security.authentication` configuration. This could be useful when cluster\n"
+operator|+
+literal|"is kerberized, but Zookeeper is not."
+argument_list|)
+block|,
 name|HIVE_ZOOKEEPER_QUORUM
 argument_list|(
 literal|"hive.zookeeper.quorum"
