@@ -1629,6 +1629,25 @@ block|}
 block|}
 return|return;
 block|}
+if|if
+condition|(
+operator|!
+name|pCtx
+operator|.
+name|getQueryProperties
+argument_list|()
+operator|.
+name|isAnalyzeCommand
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Skipping optimize operator plan for analyze command."
+argument_list|)
+expr_stmt|;
 name|optimizeOperatorPlan
 argument_list|(
 name|pCtx
@@ -1638,6 +1657,7 @@ argument_list|,
 name|outputs
 argument_list|)
 expr_stmt|;
+block|}
 comment|/*      * In case of a select, use a fetch task instead of a move task.      * If the select is from analyze table column rewrite, don't create a fetch task. Instead create      * a column stats task later.      */
 if|if
 condition|(
