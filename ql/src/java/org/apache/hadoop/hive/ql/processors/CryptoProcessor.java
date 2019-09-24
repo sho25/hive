@@ -260,10 +260,6 @@ name|DEFAULT_BIT_LENGTH
 init|=
 literal|128
 decl_stmt|;
-specifier|private
-name|HiveConf
-name|conf
-decl_stmt|;
 specifier|public
 name|CryptoProcessor
 parameter_list|(
@@ -281,12 +277,6 @@ operator|.
 name|encryptionShim
 operator|=
 name|encryptionShim
-expr_stmt|;
-name|this
-operator|.
-name|conf
-operator|=
-name|conf
 expr_stmt|;
 name|CREATE_KEY_OPTIONS
 operator|=
@@ -444,29 +434,6 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|CommandProcessorResponse
-name|returnErrorResponse
-parameter_list|(
-specifier|final
-name|String
-name|errmsg
-parameter_list|)
-block|{
-return|return
-operator|new
-name|CommandProcessorResponse
-argument_list|(
-literal|1
-argument_list|,
-literal|"Encryption Processor Helper Failed:"
-operator|+
-name|errmsg
-argument_list|,
-literal|null
-argument_list|)
-return|;
-block|}
-specifier|private
 name|void
 name|writeTestOutput
 parameter_list|(
@@ -497,6 +464,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 block|{
 name|String
 index|[]
@@ -518,12 +487,13 @@ operator|<
 literal|1
 condition|)
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
-literal|"Command arguments are empty."
+literal|"Encryption Processor Helper Failed: Command arguments are empty."
 argument_list|)
-return|;
+throw|;
 block|}
 if|if
 condition|(
@@ -532,12 +502,13 @@ operator|==
 literal|null
 condition|)
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
-literal|"Hadoop encryption shim is not initialized."
+literal|"Encryption Processor Helper Failed: Hadoop encryption shim is not initialized."
 argument_list|)
-return|;
+throw|;
 block|}
 name|String
 name|action
@@ -618,14 +589,15 @@ expr_stmt|;
 block|}
 else|else
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
-literal|"Unknown command action: "
+literal|"Encryption Processor Helper Failed: Unknown command action: "
 operator|+
 name|action
 argument_list|)
-return|;
+throw|;
 block|}
 block|}
 catch|catch
@@ -634,22 +606,23 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
+literal|"Encryption Processor Helper Failed: "
+operator|+
 name|e
 operator|.
 name|getMessage
 argument_list|()
 argument_list|)
-return|;
+throw|;
 block|}
 return|return
 operator|new
 name|CommandProcessorResponse
-argument_list|(
-literal|0
-argument_list|)
+argument_list|()
 return|;
 block|}
 comment|/**    * Creates an encryption key using the parameters passed through the 'create_key' action.    *    * @param params Parameters passed to the 'create_key' command action.    * @throws Exception If key creation failed.    */

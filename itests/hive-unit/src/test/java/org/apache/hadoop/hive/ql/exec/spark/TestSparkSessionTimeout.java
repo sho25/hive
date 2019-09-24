@@ -143,6 +143,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|processors
+operator|.
+name|CommandProcessorException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -296,6 +314,8 @@ throws|,
 name|InterruptedException
 throws|,
 name|MalformedURLException
+throws|,
+name|CommandProcessorException
 block|{
 name|String
 name|confDir
@@ -544,6 +564,8 @@ throws|,
 name|InterruptedException
 throws|,
 name|MalformedURLException
+throws|,
+name|CommandProcessorException
 block|{
 name|String
 name|confDir
@@ -627,6 +649,8 @@ throws|throws
 name|HiveException
 throws|,
 name|InterruptedException
+throws|,
+name|CommandProcessorException
 block|{
 name|conf
 operator|.
@@ -725,12 +749,6 @@ name|getInstance
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -741,17 +759,7 @@ name|tableName
 operator|+
 literal|" (col int)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -761,10 +769,6 @@ operator|+
 name|tableName
 operator|+
 literal|" order by col"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 for|for
@@ -799,12 +803,6 @@ name|isOpen
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -814,10 +812,6 @@ operator|+
 name|tableName
 operator|+
 literal|" order by col"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -831,12 +825,6 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -844,10 +832,6 @@ argument_list|(
 literal|"drop table if exists "
 operator|+
 name|tableName
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|driver

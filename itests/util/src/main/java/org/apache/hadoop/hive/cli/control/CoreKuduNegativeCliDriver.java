@@ -97,7 +97,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -530,26 +530,15 @@ name|fpath
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|int
-name|ecode
-init|=
+try|try
+block|{
 name|qt
 operator|.
 name|executeClient
 argument_list|(
 name|fname
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-if|if
-condition|(
-name|ecode
-operator|==
-literal|0
-condition|)
-block|{
+expr_stmt|;
 name|qt
 operator|.
 name|failed
@@ -559,6 +548,14 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+comment|// this is the expected behaviour
 block|}
 name|QTestProcessExecResult
 name|result

@@ -981,7 +981,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -1206,24 +1206,6 @@ operator|.
 name|mapred
 operator|.
 name|SplitLocationInfo
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|registry
-operator|.
-name|client
-operator|.
-name|binding
-operator|.
-name|RegistryUtils
 import|;
 end_import
 
@@ -2721,9 +2703,8 @@ literal|true
 decl_stmt|;
 try|try
 block|{
-name|CommandProcessorResponse
-name|cpr
-init|=
+try|try
+block|{
 name|driver
 operator|.
 name|compileAndRespond
@@ -2732,16 +2713,13 @@ name|query
 argument_list|,
 literal|false
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-condition|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
 block|{
 throw|throw
 operator|new
@@ -2749,7 +2727,7 @@ name|HiveException
 argument_list|(
 literal|"Failed to compile query: "
 operator|+
-name|cpr
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -2997,8 +2975,8 @@ argument_list|,
 name|originalMode
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|run
@@ -3008,15 +2986,12 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-condition|)
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
 block|{
 throw|throw
 operator|new
@@ -3024,7 +2999,7 @@ name|HiveException
 argument_list|(
 literal|"Failed to create temp table: "
 operator|+
-name|cpr
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -3050,8 +3025,8 @@ literal|"select * from "
 operator|+
 name|tableName
 expr_stmt|;
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|compileAndRespond
@@ -3061,15 +3036,12 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-condition|)
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
 block|{
 throw|throw
 operator|new
@@ -3077,7 +3049,7 @@ name|HiveException
 argument_list|(
 literal|"Failed to create temp table: "
 operator|+
-name|cpr
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -3175,7 +3147,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpr1
 parameter_list|)
 block|{

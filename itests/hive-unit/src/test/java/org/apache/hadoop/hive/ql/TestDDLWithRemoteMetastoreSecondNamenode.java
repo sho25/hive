@@ -229,6 +229,24 @@ name|ql
 operator|.
 name|processors
 operator|.
+name|CommandProcessorException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|processors
+operator|.
 name|CommandProcessorResponse
 import|;
 end_import
@@ -997,6 +1015,8 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+try|try
+block|{
 name|CommandProcessorResponse
 name|result
 init|=
@@ -1016,7 +1036,16 @@ argument_list|,
 name|result
 argument_list|)
 expr_stmt|;
-name|assertEquals
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+throw|throw
+operator|new
+name|RuntimeException
 argument_list|(
 literal|"Execution of ("
 operator|+
@@ -1024,14 +1053,14 @@ name|query
 operator|+
 literal|") failed with exit status: "
 operator|+
-name|result
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
 operator|+
 literal|", "
 operator|+
-name|result
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -1039,15 +1068,9 @@ operator|+
 literal|", query: "
 operator|+
 name|query
-argument_list|,
-name|result
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|,
-literal|0
 argument_list|)
-expr_stmt|;
+throw|;
+block|}
 block|}
 specifier|private
 name|String

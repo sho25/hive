@@ -87,7 +87,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -410,20 +410,20 @@ specifier|protected
 name|void
 name|assertNoPrivileges
 parameter_list|(
-name|CommandProcessorResponse
-name|ret
+name|CommandProcessorException
+name|e
 parameter_list|)
 block|{
 name|assertNotNull
 argument_list|(
-name|ret
+name|e
 argument_list|)
 expr_stmt|;
 name|assertFalse
 argument_list|(
 literal|0
 operator|==
-name|ret
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -431,7 +431,7 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-name|ret
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()

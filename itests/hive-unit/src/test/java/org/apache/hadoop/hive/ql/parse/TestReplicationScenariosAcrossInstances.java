@@ -363,7 +363,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -6006,9 +6006,8 @@ operator|.
 name|lastReplicationId
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
+try|try
+block|{
 name|replica
 operator|.
 name|runCommand
@@ -6021,10 +6020,20 @@ name|dumpLocation
 operator|+
 literal|"'"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|assertTrue
 argument_list|(
-name|response
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -6041,6 +6050,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Bootstrap load from an empty dump directory should return empty load directory error.
 name|tuple
 operator|=
@@ -6053,8 +6063,8 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-name|response
-operator|=
+try|try
+block|{
 name|replica
 operator|.
 name|runCommand
@@ -6068,9 +6078,16 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|assertTrue
 argument_list|(
-name|response
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -6087,6 +6104,7 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|primary
 operator|.
 name|run

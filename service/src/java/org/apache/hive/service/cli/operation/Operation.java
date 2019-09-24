@@ -307,7 +307,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -1803,8 +1803,8 @@ parameter_list|(
 name|String
 name|prefix
 parameter_list|,
-name|CommandProcessorResponse
-name|response
+name|CommandProcessorException
+name|e
 parameter_list|)
 block|{
 name|HiveSQLException
@@ -1817,17 +1817,17 @@ name|prefix
 operator|+
 literal|": "
 operator|+
-name|response
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
 argument_list|,
-name|response
+name|e
 operator|.
-name|getSQLState
+name|getSqlState
 argument_list|()
 argument_list|,
-name|response
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -1835,7 +1835,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|response
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -1847,7 +1847,7 @@ name|ex
 operator|.
 name|initCause
 argument_list|(
-name|response
+name|e
 operator|.
 name|getException
 argument_list|()

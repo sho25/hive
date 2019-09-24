@@ -411,7 +411,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -512,11 +512,6 @@ name|ExplainConfiguration
 argument_list|()
 expr_stmt|;
 block|}
-annotation|@
-name|SuppressWarnings
-argument_list|(
-literal|"unchecked"
-argument_list|)
 annotation|@
 name|Override
 specifier|public
@@ -1093,6 +1088,8 @@ argument_list|(
 name|config
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|Driver
 name|driver
 init|=
@@ -1108,29 +1105,15 @@ operator|.
 name|getLineageState
 argument_list|()
 argument_list|)
-decl_stmt|;
-name|CommandProcessorResponse
-name|ret
-init|=
+init|)
+block|{
 name|driver
 operator|.
 name|run
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|ret
-operator|.
-name|getResponseCode
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-comment|// Note that we need to call getResults for simple fetch optimization.
-comment|// However, we need to skip all the results.
+expr_stmt|;
 while|while
 condition|(
 name|driver
@@ -1147,18 +1130,22 @@ argument_list|)
 condition|)
 block|{           }
 block|}
-else|else
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
 block|{
 throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-name|ret
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
 argument_list|,
-name|ret
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -1557,7 +1544,7 @@ argument_list|)
 decl_stmt|;
 name|fieldList
 operator|=
-name|explTask
+name|ExplainTask
 operator|.
 name|getResultSchema
 argument_list|()

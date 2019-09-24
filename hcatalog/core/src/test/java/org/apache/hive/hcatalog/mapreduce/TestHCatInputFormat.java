@@ -496,29 +496,13 @@ name|close
 argument_list|()
 expr_stmt|;
 comment|// Now let's load this file into a new Hive table.
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists test_bad_records"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -539,17 +523,7 @@ literal|"  inputformat 'org.apache.hadoop.mapred.SequenceFileInputFormat'"
 operator|+
 literal|"  outputformat 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -562,10 +536,6 @@ name|getParent
 argument_list|()
 operator|+
 literal|"' into table test_bad_records"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|setUpComplete

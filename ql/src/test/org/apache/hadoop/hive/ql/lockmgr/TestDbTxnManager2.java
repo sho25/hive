@@ -479,7 +479,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -555,26 +555,6 @@ end_import
 
 begin_import
 import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|Logger
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|slf4j
-operator|.
-name|LoggerFactory
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|util
@@ -642,21 +622,6 @@ specifier|public
 class|class
 name|TestDbTxnManager2
 block|{
-specifier|private
-specifier|static
-specifier|final
-name|Logger
-name|LOG
-init|=
-name|LoggerFactory
-operator|.
-name|getLogger
-argument_list|(
-name|TestDbTxnManager2
-operator|.
-name|class
-argument_list|)
-decl_stmt|;
 specifier|private
 specifier|static
 name|HiveConf
@@ -935,18 +900,13 @@ literal|"T"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists T (a int, b int)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -954,7 +914,6 @@ argument_list|(
 literal|"insert into T values (1,2)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1052,8 +1011,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -1061,7 +1018,6 @@ argument_list|(
 literal|"alter table T SET TBLPROPERTIES ('transactional'='true')"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -1208,38 +1164,27 @@ literal|"R"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists T (a int, b int)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists S (a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists R (a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -1247,7 +1192,6 @@ argument_list|(
 literal|"delete from S where a in (select a from T where b = 1)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1330,8 +1274,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -1339,7 +1281,6 @@ argument_list|(
 literal|"update S set a = 7 where a in (select a from T where b = 1)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1418,8 +1359,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -1427,7 +1366,6 @@ argument_list|(
 literal|"insert into R select * from S where a in (select a from T where b = 1)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1545,9 +1483,6 @@ literal|"T"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -1555,11 +1490,6 @@ argument_list|(
 literal|"create table if not exists T (a int, b int)"
 argument_list|,
 literal|true
-argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1712,23 +1642,13 @@ literal|"T3"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists T2(a int)"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -1736,13 +1656,6 @@ argument_list|(
 literal|"create table T3(a int) stored as ORC"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -1750,11 +1663,6 @@ argument_list|(
 literal|"insert overwrite table T3 select a from T2"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -1852,8 +1760,6 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -1861,23 +1767,11 @@ argument_list|(
 literal|"drop table if exists T1"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists T2"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 block|}
@@ -1954,25 +1848,13 @@ literal|true
 argument_list|)
 expr_stmt|;
 block|}
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table T4"
-operator|+
-literal|"(name string, gpa double) partitioned by (age int) stored as ORC"
-argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
+literal|"create table T4 (name string, gpa double) partitioned by (age int) stored as ORC"
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -1980,27 +1862,13 @@ argument_list|(
 literal|"create table T5(name string, age int, gpa double)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
 argument_list|(
-literal|"INSERT OVERWRITE TABLE T4 PARTITION (age) SELECT "
-operator|+
-literal|"name, age, gpa FROM T5"
+literal|"INSERT OVERWRITE TABLE T4 PARTITION (age) SELECT  name, age, gpa FROM T5"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -2098,8 +1966,6 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -2107,23 +1973,11 @@ argument_list|(
 literal|"drop table if exists T5"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists T4"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 block|}
@@ -2146,23 +2000,13 @@ literal|"T6"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists T6(a int)"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -2170,11 +2014,6 @@ argument_list|(
 literal|"select a from T6"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -2221,8 +2060,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -2230,11 +2067,6 @@ argument_list|(
 literal|"drop table if exists T6"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|//tries to get X lock on T1 and gets Waiting state
@@ -2398,8 +2230,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -2426,11 +2256,6 @@ name|size
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
 block|}
 annotation|@
 name|Test
@@ -2451,23 +2276,13 @@ literal|"temp.T7"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create database if not exists temp"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -2475,13 +2290,6 @@ argument_list|(
 literal|"create table if not exists temp.T7(a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -2492,11 +2300,6 @@ literal|true
 argument_list|)
 expr_stmt|;
 comment|//gets SS lock on T7
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
 name|txnMgr
 operator|.
 name|acquireLocks
@@ -2529,8 +2332,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -2538,7 +2339,6 @@ argument_list|(
 literal|"drop database if exists temp"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -2714,23 +2514,13 @@ literal|"T8"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table T8(a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -2738,11 +2528,6 @@ argument_list|(
 literal|"delete from T8 where b = 89"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -2778,18 +2563,13 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"start transaction"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -2800,11 +2580,6 @@ literal|true
 argument_list|)
 expr_stmt|;
 comment|//gets S lock on T8
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
 name|txnMgr2
 operator|.
 name|acquireLocks
@@ -2819,8 +2594,6 @@ argument_list|,
 literal|"Fiddler"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -2828,7 +2601,6 @@ argument_list|(
 literal|"update T8 set a = 1 where b = 1"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -3036,8 +2808,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -3062,11 +2832,6 @@ name|locks
 operator|.
 name|size
 argument_list|()
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 block|}
@@ -3115,23 +2880,13 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table T9(a int)"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -3139,11 +2894,6 @@ argument_list|(
 literal|"select * from T9"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -3220,8 +2970,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -3229,11 +2977,6 @@ argument_list|(
 literal|"drop table T9"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 try|try
@@ -3342,23 +3085,13 @@ literal|"TAB_BLOCKED"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table TAB_BLOCKED (a int, b int) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -3366,11 +3099,6 @@ argument_list|(
 literal|"select * from TAB_BLOCKED"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -3447,8 +3175,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -3456,11 +3182,6 @@ argument_list|(
 literal|"drop table TAB_BLOCKED"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 operator|(
@@ -3619,33 +3340,18 @@ block|}
 argument_list|)
 expr_stmt|;
 comment|// Create an ACID table with DbTxnManager
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table T10 (a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table T11 (a int, b int) clustered by(b) into 2 buckets stored as orc"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|// All DML should fail with DummyTxnManager on ACID table
@@ -3654,8 +3360,8 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|compileAndRespond
@@ -3665,6 +3371,16 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|Assert
 operator|.
 name|assertEquals
@@ -3676,7 +3392,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -3686,7 +3402,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -3697,13 +3413,14 @@ literal|"This command is not allowed on an ACID table"
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|useDummyTxnManagerTemporarily
 argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|compileAndRespond
@@ -3713,6 +3430,13 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|Assert
 operator|.
 name|assertEquals
@@ -3724,7 +3448,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -3734,7 +3458,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -3745,13 +3469,14 @@ literal|"This command is not allowed on an ACID table"
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|useDummyTxnManagerTemporarily
 argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|compileAndRespond
@@ -3761,6 +3486,13 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|Assert
 operator|.
 name|assertEquals
@@ -3772,7 +3504,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -3782,7 +3514,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -3793,13 +3525,14 @@ literal|"Attempt to do update or delete using transaction manager that does not 
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|useDummyTxnManagerTemporarily
 argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
+try|try
+block|{
 name|driver
 operator|.
 name|compileAndRespond
@@ -3809,6 +3542,13 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|Assert
 operator|.
 name|assertEquals
@@ -3820,7 +3560,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -3830,7 +3570,7 @@ name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -3841,6 +3581,7 @@ literal|"Attempt to do update or delete using transaction manager that does not 
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|conf
 operator|.
 name|setVar
@@ -3927,24 +3668,14 @@ literal|"temp.T13p"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create database if not exists temp"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
 comment|// Create some ACID tables: T10, T11 - unpartitioned table, T12p, T13p - partitioned table
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -3952,13 +3683,6 @@ argument_list|(
 literal|"create table temp.T10 (a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -3966,13 +3690,6 @@ argument_list|(
 literal|"create table temp.T11 (a int, b int) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -3980,13 +3697,6 @@ argument_list|(
 literal|"create table temp.T12p (a int, b int) partitioned by (ds string, hour string) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -3994,14 +3704,7 @@ argument_list|(
 literal|"create table temp.T13p (a int, b int) partitioned by (ds string, hour string) clustered by(b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
 comment|// Successfully insert some data into ACID tables, so that we have records in COMPLETED_TXN_COMPONENTS
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4009,13 +3712,6 @@ argument_list|(
 literal|"insert into temp.T10 values (1, 1)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4023,13 +3719,6 @@ argument_list|(
 literal|"insert into temp.T10 values (2, 2)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4037,13 +3726,6 @@ argument_list|(
 literal|"insert into temp.T11 values (3, 3)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4051,13 +3733,6 @@ argument_list|(
 literal|"insert into temp.T11 values (4, 4)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4065,13 +3740,6 @@ argument_list|(
 literal|"insert into temp.T12p partition (ds='today', hour='1') values (5, 5)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4079,13 +3747,6 @@ argument_list|(
 literal|"insert into temp.T12p partition (ds='tomorrow', hour='2') values (6, 6)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4093,23 +3754,11 @@ argument_list|(
 literal|"insert into temp.T13p partition (ds='today', hour='1') values (7, 7)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into temp.T13p partition (ds='tomorrow', hour='2') values (8, 8)"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|int
@@ -4167,8 +3816,6 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4176,13 +3823,6 @@ argument_list|(
 literal|"insert into temp.T10 values (9, 9)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4190,13 +3830,6 @@ argument_list|(
 literal|"insert into temp.T11 values (10, 10)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -4204,23 +3837,11 @@ argument_list|(
 literal|"insert into temp.T12p partition (ds='today', hour='1') values (11, 11)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into temp.T13p partition (ds='today', hour='1') values (12, 12)"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4297,18 +3918,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table temp.T10"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4391,18 +4005,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T12p drop partition (ds='today', hour='1')"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4446,18 +4053,11 @@ name|count
 argument_list|)
 expr_stmt|;
 comment|// Successfully perform compaction on a table/partition, so that we have successful records in COMPLETED_COMPACTIONS
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T11 compact 'minor'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4554,18 +4154,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T12p partition (ds='tomorrow', hour='2') compact 'minor'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4676,18 +4269,11 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T11 compact 'major'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4758,18 +4344,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T12p partition (ds='tomorrow', hour='2') compact 'major'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4854,18 +4433,11 @@ literal|false
 argument_list|)
 expr_stmt|;
 comment|// Put 2 records into COMPACTION_QUEUE and do nothing
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T11 compact 'major'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4888,18 +4460,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T12p partition (ds='tomorrow', hour='2') compact 'major'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4923,18 +4488,11 @@ name|count
 argument_list|)
 expr_stmt|;
 comment|// Drop a table/partition, corresponding records in COMPACTION_QUEUE and COMPLETED_COMPACTIONS should disappear
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table temp.T11"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -4977,18 +4535,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T12p drop partition (ds='tomorrow', hour='2')"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -5032,18 +4583,11 @@ name|count
 argument_list|)
 expr_stmt|;
 comment|// Put 1 record into COMPACTION_QUEUE and do nothing
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table temp.T13p partition (ds='today', hour='1') compact 'major'"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -5147,18 +4691,11 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop database if exists temp cascade"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|count
@@ -5264,13 +4801,6 @@ literal|"nonAcidPart"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
-literal|null
-decl_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -5278,13 +4808,6 @@ argument_list|(
 literal|"create table acidPart(a int, b int) partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -5292,13 +4815,6 @@ argument_list|(
 literal|"create table nonAcidPart(a int, b int) partitioned by (p string) stored as orc TBLPROPERTIES ('transactional'='false')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -5306,11 +4822,6 @@ argument_list|(
 literal|"insert into nonAcidPart partition(p) values(1,2,3)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|LockState
@@ -5404,8 +4915,6 @@ name|rollbackTxn
 argument_list|()
 expr_stmt|;
 empty_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -5413,11 +4922,6 @@ argument_list|(
 literal|"insert into nonAcidPart partition(p=1) values(5,6)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|lockState
@@ -5505,8 +5009,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -5514,11 +5016,6 @@ argument_list|(
 literal|"insert into acidPart partition(p) values(1,2,3)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|lockState
@@ -5606,8 +5103,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -5615,11 +5110,6 @@ argument_list|(
 literal|"insert into acidPart partition(p=1) values(5,6)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|lockState
@@ -5707,8 +5197,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -5716,11 +5204,6 @@ argument_list|(
 literal|"update acidPart set b = 17 where a = 1"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|lockState
@@ -5789,8 +5272,6 @@ operator|.
 name|rollbackTxn
 argument_list|()
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -5798,11 +5279,6 @@ argument_list|(
 literal|"update acidPart set b = 17 where p = 1"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|lockState
@@ -5895,8 +5371,6 @@ literal|"tab_not_acid"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -5905,10 +5379,7 @@ literal|"create table if not exists tab_acid (a int, b int) partitioned by (p st
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -5917,26 +5388,19 @@ literal|"create table if not exists tab_not_acid (na int, nb int) partitioned by
 operator|+
 literal|"clustered by (na) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='false')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab_acid partition(p) (a,b,p) values(1,2,'foo'),(3,4,'bar')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab_not_acid partition(np) (na,nb,np) values(1,2,'blah'),(3,4,'doh')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -5948,8 +5412,6 @@ argument_list|,
 literal|"T1"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -5957,7 +5419,6 @@ argument_list|(
 literal|"select * from tab_acid inner join tab_not_acid on a = na"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -6135,8 +5596,6 @@ argument_list|,
 literal|"T2"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -6144,7 +5603,6 @@ argument_list|(
 literal|"insert into tab_not_acid partition(np='doh') values(5,6)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|LockState
@@ -6381,8 +5839,6 @@ argument_list|,
 literal|"T3"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -6390,7 +5846,6 @@ argument_list|(
 literal|"insert into tab_not_acid partition(np='blah') values(7,8)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -6658,16 +6113,13 @@ literal|"tab_not_acid"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table if not exists tab_not_acid (a int, b int)  "
+literal|"create table if not exists tab_not_acid (a int, b int) "
 operator|+
 literal|" STORED BY 'org.apache.hadoop.hive.ql.metadata.StorageHandlerMock'"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -6679,8 +6131,6 @@ argument_list|,
 literal|"T1"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -6688,7 +6138,6 @@ argument_list|(
 literal|"insert into tab_not_acid values(1,2)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -6788,8 +6237,6 @@ literal|"tab_not_acid"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -6797,7 +6244,6 @@ argument_list|(
 literal|"create table if not exists tab_not_acid (a int, b int)  "
 operator|+
 literal|" STORED BY 'org.apache.hadoop.hive.ql.metadata.StorageHandlerMock'"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -6809,8 +6255,6 @@ argument_list|,
 literal|"T1"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -6818,7 +6262,6 @@ argument_list|(
 literal|"insert overwrite table tab_not_acid values(1,2)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -7079,23 +6522,13 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists db1.t14"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7104,13 +6537,6 @@ literal|"drop table if exists db2.t14"
 argument_list|)
 expr_stmt|;
 comment|// Note that db1 and db2 have a table with common name
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7118,13 +6544,6 @@ argument_list|(
 literal|"drop table if exists db2.t15"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7132,13 +6551,6 @@ argument_list|(
 literal|"drop table if exists db2.t16"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7146,13 +6558,6 @@ argument_list|(
 literal|"drop database if exists db1"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7160,13 +6565,6 @@ argument_list|(
 literal|"drop database if exists db2"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7174,13 +6572,6 @@ argument_list|(
 literal|"create database if not exists db1"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7188,13 +6579,6 @@ argument_list|(
 literal|"create database if not exists db2"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7202,13 +6586,6 @@ argument_list|(
 literal|"create table if not exists db1.t14 (a int, b int) partitioned by (ds string) clustered by (b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7216,13 +6593,6 @@ argument_list|(
 literal|"create table if not exists db2.t14 (a int, b int) clustered by (b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -7230,23 +6600,11 @@ argument_list|(
 literal|"create table if not exists db2.t15 (a int, b int) clustered by (b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists db2.t16 (a int, b int) clustered by (b) into 2 buckets stored as orc TBLPROPERTIES ('transactional'='true')"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|// Acquire different locks at different levels
@@ -7268,8 +6626,6 @@ argument_list|(
 name|txnMgr1
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -7277,11 +6633,6 @@ argument_list|(
 literal|"insert into table db1.t14 partition (ds='today') values (1, 2)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr1
@@ -7316,8 +6667,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -7325,11 +6674,6 @@ argument_list|(
 literal|"insert into table db1.t14 partition (ds='tomorrow') values (3, 4)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -7364,8 +6708,6 @@ argument_list|(
 name|txnMgr3
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -7373,11 +6715,6 @@ argument_list|(
 literal|"select * from db2.t15"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr3
@@ -7412,8 +6749,6 @@ argument_list|(
 name|txnMgr4
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -7421,11 +6756,6 @@ argument_list|(
 literal|"select * from db2.t16"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr4
@@ -7460,8 +6790,6 @@ argument_list|(
 name|txnMgr5
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -7469,11 +6797,6 @@ argument_list|(
 literal|"select * from db2.t14"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr5
@@ -7720,18 +7043,11 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"use db1"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|locks
@@ -7874,18 +7190,11 @@ name|locks
 argument_list|)
 expr_stmt|;
 comment|// SHOW LOCKS t15
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"use db2"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|locks
@@ -7932,32 +7241,6 @@ argument_list|,
 literal|null
 argument_list|,
 name|locks
-argument_list|)
-expr_stmt|;
-block|}
-specifier|private
-name|void
-name|checkCmdOnDriver
-parameter_list|(
-name|CommandProcessorResponse
-name|cpr
-parameter_list|)
-block|{
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
-name|cpr
-operator|.
-name|toString
-argument_list|()
-argument_list|,
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-operator|==
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -8056,9 +7339,6 @@ literal|"TAB_PART"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -8067,14 +7347,7 @@ literal|"create table if not exists TAB_PART (a int, b int) "
 operator|+
 literal|"partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8082,7 +7355,6 @@ argument_list|(
 literal|"select * from TAB_PART"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -8122,8 +7394,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8131,11 +7401,8 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8143,7 +7410,6 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -8218,9 +7484,6 @@ literal|"TAB2"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -8229,14 +7492,7 @@ literal|"create table if not exists TAB_PART (a int, b int) "
 operator|+
 literal|"partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -8244,11 +7500,6 @@ argument_list|(
 literal|"create table if not exists TAB2 (a int, b int) partitioned by (p string) "
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|HiveTxnManager
@@ -8273,8 +7524,6 @@ argument_list|,
 literal|"Peter"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8282,7 +7531,6 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -8358,8 +7606,6 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8367,7 +7613,6 @@ argument_list|(
 literal|"update TAB2 set b = 9 where p = 'doh'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -8410,9 +7655,6 @@ literal|"TAB_PART"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -8421,24 +7663,14 @@ literal|"create table if not exists TAB_PART (a int, b int) "
 operator|+
 literal|"partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into TAB_PART partition(p='blah') values(1,2)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8446,7 +7678,6 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -8533,8 +7764,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8542,7 +7771,6 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -8845,9 +8073,6 @@ literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -8856,14 +8081,7 @@ literal|"create table if not exists TAB_PART (a int, b int) "
 operator|+
 literal|"partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -8871,11 +8089,6 @@ argument_list|(
 literal|"create table if not exists TAB2 (a int, b int) partitioned by (p string) "
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -8887,8 +8100,6 @@ argument_list|,
 literal|"Long Running"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8896,7 +8107,6 @@ argument_list|(
 literal|"select a from  TAB_PART where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -8982,8 +8192,6 @@ argument_list|,
 literal|"Short Running"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -8991,7 +8199,6 @@ argument_list|(
 literal|"update TAB2 set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//no such partition
@@ -9224,8 +8431,6 @@ argument_list|,
 literal|"T3"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -9233,7 +8438,6 @@ argument_list|(
 literal|"update TAB2 set b = 7 where p = 'two'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//pretend this partition exists
@@ -9505,8 +8709,6 @@ literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -9514,7 +8716,6 @@ argument_list|(
 literal|"update TAB2 set b = 17 where a = 1"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//no rows match
@@ -9722,9 +8923,6 @@ literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -9733,20 +8931,12 @@ literal|"create table if not exists TAB_PART (a int, b int) "
 operator|+
 literal|"partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into TAB_PART partition(p='blah') values(1,2)"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|HiveTxnManager
@@ -9783,8 +8973,6 @@ argument_list|,
 literal|"Unknown"
 argument_list|)
 decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -9792,7 +8980,6 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -9853,8 +9040,6 @@ argument_list|,
 name|locks
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -9862,7 +9047,6 @@ argument_list|(
 literal|"update TAB_PART set b = 7 where p = 'blah'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -10128,9 +9312,6 @@ literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -10139,14 +9320,7 @@ literal|"create table if not exists TAB2(a int, b int) clustered "
 operator|+
 literal|"by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -10154,7 +9328,6 @@ argument_list|(
 literal|"select * from TAB2 where a = 113"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -10233,8 +9406,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -10242,7 +9413,6 @@ argument_list|(
 literal|"update TAB2 set b = 17 where a = 101"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -10475,9 +9645,6 @@ literal|"select count(*) from WRITE_SET"
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -10486,20 +9653,12 @@ literal|"create table if not exists tab2 (a int, b int) "
 operator|+
 literal|"partitioned by (p string) clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab2 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//txnid:1
@@ -10522,8 +9681,6 @@ name|txnMgr2
 argument_list|)
 expr_stmt|;
 comment|//test with predicates such that partition pruning works
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -10531,7 +9688,6 @@ argument_list|(
 literal|"update tab2 set b = 7 where p='two'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -10606,8 +9762,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -10615,7 +9769,6 @@ argument_list|(
 literal|"update tab2 set b = 7 where p='one'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -10950,8 +10103,6 @@ argument_list|)
 expr_stmt|;
 comment|//================
 comment|//test with predicates such that partition pruning doesn't kick in
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -10961,19 +10112,11 @@ operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//txnid:4
@@ -10982,8 +10125,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -10991,7 +10132,6 @@ argument_list|(
 literal|"update tab1 set b = 7 where b=1"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -11081,8 +10221,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -11090,7 +10228,6 @@ argument_list|(
 literal|"update tab1 set b = 7 where b = 2"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -11523,9 +10660,6 @@ literal|"TAB1"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -11534,20 +10668,12 @@ literal|"create table if not exists tab1 (a int, b int) partitioned by (p string
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|HiveTxnManager
@@ -11568,8 +10694,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -11577,7 +10701,6 @@ argument_list|(
 literal|"update tab1 set b = 7 where b=1"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -11671,8 +10794,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -11680,7 +10801,6 @@ argument_list|(
 literal|"update tab1 set b = 7 where p='two'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -12074,9 +11194,6 @@ literal|"TAB1"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -12085,20 +11202,12 @@ literal|"create table if not exists tab1 (a int, b int) partitioned by (p string
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|HiveTxnManager
@@ -12119,8 +11228,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -12128,7 +11235,6 @@ argument_list|(
 literal|"update tab1 set b = 7 where b=1"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -12222,8 +11328,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -12231,7 +11335,6 @@ argument_list|(
 literal|"delete from tab1 where p='two' and b=2"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -12722,9 +11825,6 @@ literal|"TAB1"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -12733,20 +11833,12 @@ literal|"create table if not exists tab1 (a int, b int) partitioned by (p string
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//txnid:1
@@ -12768,8 +11860,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -12777,7 +11867,6 @@ argument_list|(
 literal|"update tab1 set b = 7 where b=2"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -12863,8 +11952,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -12872,7 +11959,6 @@ argument_list|(
 literal|"delete from tab1 where p='two' and b=2"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -13278,9 +12364,6 @@ literal|"TAB1"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -13289,20 +12372,12 @@ literal|"create table if not exists tab1 (a int, b int) partitioned by (p string
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab1 partition(p)(a,b,p) values(1,1,'one'),(2,2,'two')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|HiveTxnManager
@@ -13323,8 +12398,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -13332,7 +12405,6 @@ argument_list|(
 literal|"delete from tab1 where b=2"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//start "delete from tab1" txn
@@ -13427,19 +12499,14 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"start transaction"
 argument_list|)
-argument_list|)
 expr_stmt|;
 comment|//start explicit txn so that txnMgr knows it
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -13447,7 +12514,6 @@ argument_list|(
 literal|"select * from tab1 where b=1 and p='one'"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -13479,8 +12545,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -13488,7 +12552,6 @@ argument_list|(
 literal|"delete from tab1 where p='two' and b=2"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 operator|(
@@ -13999,9 +13062,6 @@ literal|"tab_not_acid2"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -14010,14 +13070,7 @@ literal|"create table if not exists tab1 (a int, b int) partitioned by (p string
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -14025,30 +13078,19 @@ argument_list|(
 literal|"create table if not exists tab_not_acid2 (a int, b int)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab_not_acid2 values(1,1),(2,2)"
 argument_list|)
-argument_list|)
 expr_stmt|;
 comment|//writing both acid and non-acid resources in the same txn
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"from tab_not_acid2 insert into tab1 partition(p='two')(a,b) select a,b insert into tab_not_acid2(a,b) select a,b "
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//txnid:1
@@ -14126,29 +13168,20 @@ literal|"tab_not_acid"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists tab1"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists tab_not_acid"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -14157,14 +13190,7 @@ literal|"create table if not exists tab1 (a int, b int) partitioned by (p string
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -14172,42 +13198,28 @@ argument_list|(
 literal|"create table if not exists tab_not_acid (a int, b int, p string)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab_not_acid values(1,1,'one'),(2,2,'two')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into tab1 partition(p) values(3,3,'one'),(4,4,'two')"
 argument_list|)
-argument_list|)
 expr_stmt|;
 comment|//txinid:8
 comment|//writing both acid and non-acid resources in the same txn
 comment|//tab1 write is a dynamic partition insert
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"from tab_not_acid insert into tab1 partition(p)(a,b,p) select a,b,p insert into tab_not_acid(a,b) select a,b where p='two'"
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//txnid:9
@@ -14482,23 +13494,13 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists XYZ (a int, b int)"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -14506,7 +13508,6 @@ argument_list|(
 literal|"select a from XYZ where b = 8"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -14648,8 +13649,6 @@ literal|"source2"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -14660,34 +13659,25 @@ literal|"partitioned by (p int, q int) clustered by (a) into 2  buckets "
 operator|+
 literal|"stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-argument_list|)
 expr_stmt|;
 comment|//in practice we don't really care about the data in any of these tables (except as far as
 comment|//it creates partitions, the SQL being test is not actually executed and results of the
 comment|//wrt ACID metadata is supplied manually via addDynamicPartitions().  But having data makes
 comment|//it easier to follow the intent
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into target partition(p,q) values (1,2,1,2), (3,4,1,2), (5,6,1,3), (7,8,2,2)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table source (a int, b int, p int, q int)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -14697,20 +13687,14 @@ operator|+
 comment|// I-(1/2)            D-(1/2)    I-(1/3)     U-(1/3)     D-(2/2)     I-(1/1) - new part
 literal|"(9,10,1,2),        (3,4,1,2), (11,12,1,3), (5,13,1,3), (7,8,2,2), (14,15,1,1)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table source2 (a int, b int, p int, q int)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -14720,10 +13704,7 @@ operator|+
 comment|//cc ? -:U-(1/2)     D-(1/2)         cc ? U-(1/3):-       D-(2/2)       I-(1/1) - new part 2
 literal|"(9,100,1,2),      (3,4,1,2),         (5,13,1,3),       (7,8,2,2), (14,15,2,1)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -14739,7 +13720,6 @@ comment|//deletes from p=1/q=2, p=2/q=2
 literal|"when not matched and t.a>= 8 then insert values(s.a, s.b, s.p, s.q)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//insert p=1/q=2, p=1/q=3 and new part 1/1
@@ -14905,8 +13885,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -14942,7 +13920,6 @@ comment|//if cc deletes from p=1/q=2, p=2/q=2, else delete nothing
 literal|"when not matched and t.a>= 8 then insert values(s.a, s.b, s.p, s.q)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//insert p=1/q=2, p=1/q=3 and new part 1/1
@@ -16383,8 +15360,6 @@ literal|"source"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -16395,26 +15370,19 @@ literal|"clustered by (a) into 2  buckets "
 operator|+
 literal|"stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into target values (1,2), (3,4), (5,6), (7,8)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table source (a int, b int)"
-argument_list|)
 argument_list|)
 expr_stmt|;
 if|if
@@ -16422,8 +15390,6 @@ condition|(
 name|causeConflict
 condition|)
 block|{
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -16432,13 +15398,10 @@ literal|"update target set b = 2 where a=1"
 argument_list|,
 literal|true
 argument_list|)
-argument_list|)
 expr_stmt|;
 block|}
 else|else
 block|{
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -16446,7 +15409,6 @@ argument_list|(
 literal|"insert into target values(9,10),(11,12)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -16638,8 +15600,6 @@ name|txnMgr2
 argument_list|)
 expr_stmt|;
 comment|//start a 2nd (overlapping) txn
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -16653,7 +15613,6 @@ operator|+
 literal|"when not matched then insert values(s.a,s.b)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -17156,8 +16115,6 @@ literal|"target"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -17167,7 +16124,6 @@ operator|+
 literal|"partitioned by (p int, q int) clustered by (a) into 2  buckets "
 operator|+
 literal|"stored as orc TBLPROPERTIES ('transactional'='true')"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -17182,8 +16138,6 @@ argument_list|,
 literal|"T1"
 argument_list|)
 decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -17191,7 +16145,6 @@ argument_list|(
 literal|"insert into target partition(p=1,q) values (1,2,2), (3,4,2), (5,6,3), (7,8,2)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -17354,14 +16307,11 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//now actually write to table to generate some partitions
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into target partition(p=1,q) values (1,2,2), (3,4,2), (5,6,3), (7,8,2)"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|driver
@@ -17464,8 +16414,6 @@ argument_list|,
 literal|"T1"
 argument_list|)
 decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -17473,7 +16421,6 @@ argument_list|(
 literal|"insert into target partition(p=1,q) values (10,2,2), (30,4,2), (50,6,3), (70,8,2)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -17700,8 +16647,6 @@ literal|"source"
 block|}
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -17712,30 +16657,21 @@ literal|"partitioned by (p int, q int) clustered by (a) into 2  buckets "
 operator|+
 literal|"stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into target partition(p,q) values (1,2,1,2), (3,4,1,2), (5,6,1,3), (7,8,2,2)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table source (a1 int, b1 int, p1 int, q1 int)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -17743,7 +16679,6 @@ argument_list|(
 literal|"update target set b = 2 where p=1"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -17851,8 +16786,6 @@ name|txnMgr2
 argument_list|)
 expr_stmt|;
 comment|//start a 2nd (overlapping) txn
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -17866,7 +16799,6 @@ operator|+
 literal|"when not matched then insert values(a1,b1,p1,q1)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|long
@@ -18757,19 +17689,11 @@ literal|"T2"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table T (a int, b int)"
-argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|long
@@ -18784,8 +17708,6 @@ argument_list|,
 literal|"Fifer"
 argument_list|)
 decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -18793,7 +17715,6 @@ argument_list|(
 literal|"insert into T values(1,3)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -18901,8 +17822,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -18910,7 +17829,6 @@ argument_list|(
 literal|"show tables"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -19050,8 +17968,6 @@ argument_list|(
 name|txnMgr
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -19061,13 +17977,6 @@ operator|+
 literal|"into 2  buckets stored as orc TBLPROPERTIES ('transactional'='false')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -19075,7 +17984,6 @@ argument_list|(
 literal|"insert into T2 partition(p=1) values(1,3)"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -19178,8 +18086,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|compileAndRespond
@@ -19187,7 +18093,6 @@ argument_list|(
 literal|"show tables"
 argument_list|,
 literal|true
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|txnMgr2
@@ -19344,23 +18249,13 @@ literal|"T6"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists T6(a int)"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -19368,11 +18263,6 @@ argument_list|(
 literal|"select a from T6"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -19408,8 +18298,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -19417,11 +18305,6 @@ argument_list|(
 literal|"drop table if exists T6"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|//tries to get X lock on T6 and gets Waiting state
@@ -19530,8 +18413,6 @@ argument_list|)
 expr_stmt|;
 comment|//this should block behind the X lock on  T6
 comment|//this is a contrived example, in practice this query would of course fail after drop table
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -19539,11 +18420,6 @@ argument_list|(
 literal|"select a from T6"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 operator|(
@@ -19665,9 +18541,6 @@ literal|"T7"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -19676,25 +18549,15 @@ literal|"create table if not exists T7 (a int) "
 operator|+
 literal|"partitioned by (p int) stored as orc TBLPROPERTIES ('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into T7 partition(p) values(1,1),(1,2)"
 argument_list|)
-argument_list|)
 expr_stmt|;
 comment|//create 2 partitions
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -19702,11 +18565,6 @@ argument_list|(
 literal|"select a from T7 "
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -19742,8 +18600,6 @@ argument_list|(
 name|txnMgr2
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -19751,11 +18607,6 @@ argument_list|(
 literal|"alter table T7 drop partition (p=1)"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|//tries to get X lock on T7.p=1 and gets Waiting state
@@ -19901,8 +18752,6 @@ name|txnMgr3
 argument_list|)
 expr_stmt|;
 comment|//this should block behind the X lock on  T7.p=1
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -19910,11 +18759,6 @@ argument_list|(
 literal|"select a from T7"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|//tries to get S lock on T7, S on T7.p=1 and S on T7.p=2
@@ -20348,23 +19192,13 @@ literal|"temp.T7"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create database if not exists temp"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -20372,11 +19206,6 @@ argument_list|(
 literal|"create table if not exists temp.T7(a int, b int) clustered by(b) into 2 buckets stored as orc "
 operator|+
 literal|"TBLPROPERTIES ('transactional'='true')"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 comment|// Open a base txn which allocates write ID and then committed.
@@ -20915,18 +19744,11 @@ operator|.
 name|commitTxn
 argument_list|()
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop database if exists temp cascade"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 block|}
@@ -20962,9 +19784,6 @@ literal|"Tstage"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
@@ -20973,15 +19792,8 @@ literal|"create table T (a int, b int) partitioned by (p int) "
 operator|+
 literal|"stored as orc tblproperties('transactional'='true')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
 comment|//bucketed just so that we get 2 files
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -20991,23 +19803,11 @@ operator|+
 literal|"buckets stored as orc tblproperties('transactional'='false')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into Tstage values(0,2),(1,4)"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|String
@@ -21023,8 +19823,6 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -21036,31 +19834,17 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
 argument_list|(
-literal|"ALTER TABLE T ADD if not exists PARTITION (p=0)"
-operator|+
-literal|" location '"
+literal|"ALTER TABLE T ADD if not exists PARTITION (p=0) location '"
 operator|+
 name|exportLoc
 operator|+
 literal|"/data'"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -21140,31 +19924,18 @@ literal|"T2"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table T2(a int) "
-operator|+
-literal|"stored as ORC TBLPROPERTIES ('transactional'='true')"
-argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
+literal|"create table T2(a int) stored as ORC TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into T2 values(1)"
-argument_list|)
 argument_list|)
 expr_stmt|;
 name|String
@@ -21180,8 +19951,6 @@ operator|.
 name|toString
 argument_list|()
 decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
@@ -21192,10 +19961,7 @@ name|exportLoc
 operator|+
 literal|"/2'"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -21205,11 +19971,6 @@ operator|+
 name|exportLoc
 operator|+
 literal|"/2/data' overwrite into table T2"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -21293,23 +20054,13 @@ literal|"T"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table T (a int, b int) tblproperties('transactional'='false')"
 argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|run
@@ -21317,13 +20068,6 @@ argument_list|(
 literal|"insert into T values(0,2),(1,4)"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
-argument_list|)
-expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -21333,11 +20077,6 @@ operator|+
 literal|"('transactional'='true', 'transactional_properties'='insert_only')"
 argument_list|,
 literal|true
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr
@@ -21417,55 +20156,32 @@ literal|"T"
 block|}
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table T (a int, b int) stored as"
-operator|+
-literal|" orc tblproperties('transactional'='true')"
-argument_list|)
-decl_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
+literal|"create table T (a int, b int) stored as orc tblproperties('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"insert into T values(0,2),(1,4)"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"truncate table T"
 argument_list|)
-argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
 argument_list|(
 literal|"truncate table T"
-argument_list|)
-expr_stmt|;
-name|checkCmdOnDriver
-argument_list|(
-name|cpr
 argument_list|)
 expr_stmt|;
 name|txnMgr

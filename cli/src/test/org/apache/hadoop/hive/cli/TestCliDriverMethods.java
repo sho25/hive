@@ -431,6 +431,24 @@ name|ql
 operator|.
 name|processors
 operator|.
+name|CommandProcessorException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|processors
+operator|.
 name|CommandProcessorResponse
 import|;
 end_import
@@ -584,6 +602,8 @@ specifier|public
 name|void
 name|testThatCliDriverPrintsHeaderForCommandsWithSchema
 parameter_list|()
+throws|throws
+name|CommandProcessorException
 block|{
 name|Schema
 name|mockSchema
@@ -673,6 +693,8 @@ specifier|public
 name|void
 name|testThatCliDriverPrintsNoHeaderForCommandsWithNoSchema
 parameter_list|()
+throws|throws
+name|CommandProcessorException
 block|{
 name|Schema
 name|mockSchema
@@ -824,9 +846,6 @@ decl_stmt|;
 name|String
 name|errors
 decl_stmt|;
-name|CommandProcessorResponse
-name|response
-decl_stmt|;
 try|try
 block|{
 name|CliSessionState
@@ -844,8 +863,6 @@ name|CliDriver
 argument_list|()
 decl_stmt|;
 comment|// issue a command with bad options
-name|response
-operator|=
 name|cliDriver
 operator|.
 name|processCmd
@@ -853,6 +870,21 @@ argument_list|(
 literal|"!ls --abcdefghijklmnopqrstuvwxyz123456789"
 argument_list|)
 expr_stmt|;
+name|assertTrue
+argument_list|(
+literal|"Comments with '--; should not have been stripped, so command should fail"
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+comment|// this is expected to happen
 block|}
 finally|finally
 block|{
@@ -894,20 +926,6 @@ name|assertTrue
 argument_list|(
 literal|"Comments with '--; should not have been stripped,"
 operator|+
-literal|" so command should fail"
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-argument_list|)
-expr_stmt|;
-name|assertTrue
-argument_list|(
-literal|"Comments with '--; should not have been stripped,"
-operator|+
 literal|" so we should have got an error in the output: '"
 operator|+
 name|errors
@@ -929,7 +947,7 @@ argument_list|)
 expr_stmt|;
 comment|// message kept around in for debugging
 block|}
-comment|/**    * Do the actual testing against a mocked CliDriver based on what type of schema    *    * @param mockSchema    *          Schema to throw against test    * @return Output that would have been sent to the user    * @throws CommandNeedRetryException    *           won't actually be thrown    */
+comment|/**    * Do the actual testing against a mocked CliDriver based on what type of schema    *    * @param mockSchema    *          Schema to throw against test    * @return Output that would have been sent to the user    * @throws CommandProcessorException    * @throws CommandNeedRetryException    *           won't actually be thrown    */
 specifier|private
 name|PrintStream
 name|headerPrintingTestDriver
@@ -937,6 +955,8 @@ parameter_list|(
 name|Schema
 name|mockSchema
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 block|{
 name|CliDriver
 name|cliDriver
@@ -1025,19 +1045,6 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
-name|when
-argument_list|(
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-operator|.
-name|thenReturn
-argument_list|(
-literal|0
-argument_list|)
-expr_stmt|;
 name|when
 argument_list|(
 name|proc

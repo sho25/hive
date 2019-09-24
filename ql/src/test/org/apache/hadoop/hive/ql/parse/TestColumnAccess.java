@@ -204,74 +204,25 @@ init|=
 name|createDriver
 argument_list|()
 decl_stmt|;
-name|int
-name|ret
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table t1(id1 int, name1 string)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table t2(id2 int, id1 int, name2 string)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create view v1 as select * from t1"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
 argument_list|)
 expr_stmt|;
 block|}

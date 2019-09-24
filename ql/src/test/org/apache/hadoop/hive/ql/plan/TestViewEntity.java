@@ -195,6 +195,24 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|processors
+operator|.
+name|CommandProcessorException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|session
 operator|.
 name|SessionState
@@ -449,9 +467,6 @@ name|prefix
 operator|+
 literal|"v1"
 decl_stmt|;
-name|int
-name|ret
-init|=
 name|driver
 operator|.
 name|run
@@ -462,21 +477,7 @@ name|tab1
 operator|+
 literal|"(id int)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -487,21 +488,7 @@ name|tab2
 operator|+
 literal|"(id int)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -529,18 +516,6 @@ operator|+
 name|tab2
 operator|+
 literal|") as t"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
 argument_list|)
 expr_stmt|;
 name|driver
@@ -724,9 +699,6 @@ name|prefix
 operator|+
 literal|"v"
 decl_stmt|;
-name|int
-name|ret
-init|=
 name|driver
 operator|.
 name|run
@@ -737,21 +709,7 @@ name|tab1
 operator|+
 literal|"(id int)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -763,18 +721,6 @@ operator|+
 literal|" as select * from "
 operator|+
 name|tab1
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
 argument_list|)
 expr_stmt|;
 name|driver
@@ -904,6 +850,8 @@ specifier|private
 name|void
 name|testViewInSubQueryWithWhereClause
 parameter_list|()
+throws|throws
+name|CommandProcessorException
 block|{
 name|String
 name|prefix
@@ -949,9 +897,6 @@ init|=
 literal|"'a','b','c'"
 decl_stmt|;
 comment|//drop all if exists
-name|int
-name|ret
-init|=
 name|driver
 operator|.
 name|run
@@ -960,21 +905,7 @@ literal|"drop table if exists "
 operator|+
 name|tab1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -983,21 +914,7 @@ literal|"drop view if exists "
 operator|+
 name|view1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1006,22 +923,8 @@ literal|"drop view if exists "
 operator|+
 name|view2
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
 comment|//create tab1
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1032,21 +935,7 @@ name|tab1
 operator|+
 literal|"(col1 string, col2 string, col3 string)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1061,22 +950,8 @@ name|tab1row1
 operator|+
 literal|")"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
 comment|//create view1
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1103,21 +978,7 @@ literal|" from "
 operator|+
 name|tab1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1132,22 +993,8 @@ name|tab1row2
 operator|+
 literal|")"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
 comment|//create view2
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1189,18 +1036,6 @@ operator|+
 name|view1
 operator|+
 literal|")"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
 argument_list|)
 expr_stmt|;
 comment|//select from view2
@@ -1362,9 +1197,6 @@ name|prefix
 operator|+
 literal|"v2"
 decl_stmt|;
-name|int
-name|ret
-init|=
 name|driver
 operator|.
 name|run
@@ -1375,21 +1207,7 @@ name|tab1
 operator|+
 literal|"(id int)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1402,21 +1220,7 @@ literal|" as select * from "
 operator|+
 name|tab1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1430,18 +1234,6 @@ operator|+
 name|view1
 operator|+
 literal|") x"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
 argument_list|)
 expr_stmt|;
 name|driver
@@ -1612,9 +1404,6 @@ name|prefix
 operator|+
 literal|"v2"
 decl_stmt|;
-name|int
-name|ret
-init|=
 name|driver
 operator|.
 name|run
@@ -1625,21 +1414,7 @@ name|tab1
 operator|+
 literal|"(id int)"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
 expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1652,21 +1427,7 @@ literal|" as select * from "
 operator|+
 name|tab1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
-argument_list|)
-expr_stmt|;
-name|ret
-operator|=
 name|driver
 operator|.
 name|run
@@ -1684,18 +1445,6 @@ operator|+
 name|view1
 operator|+
 literal|") x"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|"Checking command success"
-argument_list|,
-literal|0
-argument_list|,
-name|ret
 argument_list|)
 expr_stmt|;
 name|driver

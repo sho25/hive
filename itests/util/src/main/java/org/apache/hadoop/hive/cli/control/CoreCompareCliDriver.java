@@ -157,7 +157,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -773,9 +773,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// TODO: will this work?
-name|CommandProcessorResponse
-name|response
-init|=
+try|try
+block|{
 name|qt
 operator|.
 name|executeClient
@@ -784,27 +783,24 @@ name|versionFile
 argument_list|,
 name|fname
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-condition|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
 block|{
 name|qt
 operator|.
 name|failedQuery
 argument_list|(
-name|response
+name|e
 operator|.
 name|getException
 argument_list|()
 argument_list|,
-name|response
+name|e
 operator|.
 name|getResponseCode
 argument_list|()

@@ -234,6 +234,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 block|{
 name|SessionState
 name|ss
@@ -305,17 +307,13 @@ argument_list|)
 operator|+
 literal|"] [<value> [<value>]*]"
 decl_stmt|;
-return|return
+throw|throw
 operator|new
-name|CommandProcessorResponse
+name|CommandProcessorException
 argument_list|(
-literal|1
-argument_list|,
 name|message
-argument_list|,
-literal|null
 argument_list|)
-return|;
+throw|;
 block|}
 name|List
 argument_list|<
@@ -404,13 +402,9 @@ return|return
 operator|new
 name|CommandProcessorResponse
 argument_list|(
-literal|0
-argument_list|,
-literal|null
-argument_list|,
-literal|null
-argument_list|,
 name|SCHEMA
+argument_list|,
+literal|null
 argument_list|)
 return|;
 block|}

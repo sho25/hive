@@ -642,21 +642,11 @@ name|getInstance
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"show tables"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|barrier

@@ -157,7 +157,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -336,7 +336,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{
@@ -429,7 +429,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{
@@ -522,7 +522,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{
@@ -615,7 +615,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{
@@ -708,7 +708,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{
@@ -801,7 +801,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{
@@ -894,7 +894,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|CommandProcessorResponse
+name|CommandProcessorException
 name|cpe
 parameter_list|)
 block|{

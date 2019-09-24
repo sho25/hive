@@ -447,29 +447,6 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|CommandProcessorResponse
-name|returnErrorResponse
-parameter_list|(
-specifier|final
-name|String
-name|errmsg
-parameter_list|)
-block|{
-return|return
-operator|new
-name|CommandProcessorResponse
-argument_list|(
-literal|1
-argument_list|,
-literal|"Erasure Processor Helper Failed: "
-operator|+
-name|errmsg
-argument_list|,
-literal|null
-argument_list|)
-return|;
-block|}
-specifier|private
 name|void
 name|writeTestOutput
 parameter_list|(
@@ -500,6 +477,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 block|{
 name|String
 index|[]
@@ -521,12 +500,13 @@ operator|<
 literal|1
 condition|)
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
-literal|"Command arguments are empty."
+literal|"Erasure Processor Helper Failed: Command arguments are empty."
 argument_list|)
-return|;
+throw|;
 block|}
 if|if
 condition|(
@@ -535,12 +515,13 @@ operator|==
 literal|null
 condition|)
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
-literal|"Hadoop erasure shim is not initialized."
+literal|"Erasure Processor Helper Failed: Hadoop erasure shim is not initialized."
 argument_list|)
-return|;
+throw|;
 block|}
 name|String
 name|action
@@ -649,14 +630,15 @@ argument_list|)
 expr_stmt|;
 break|break;
 default|default:
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
-literal|"Unknown erasure command action: "
+literal|"Erasure Processor Helper Failed: Unknown erasure command action: "
 operator|+
 name|action
 argument_list|)
-return|;
+throw|;
 block|}
 block|}
 catch|catch
@@ -665,22 +647,23 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-return|return
-name|returnErrorResponse
+throw|throw
+operator|new
+name|CommandProcessorException
 argument_list|(
+literal|"Erasure Processor Helper Failed: "
+operator|+
 name|e
 operator|.
 name|getMessage
 argument_list|()
 argument_list|)
-return|;
+throw|;
 block|}
 return|return
 operator|new
 name|CommandProcessorResponse
-argument_list|(
-literal|0
-argument_list|)
+argument_list|()
 return|;
 block|}
 comment|/**    * Get an erasure coding policy for a Path.    * @param params Parameters passed to the command.    * @throws Exception if command failed.    */

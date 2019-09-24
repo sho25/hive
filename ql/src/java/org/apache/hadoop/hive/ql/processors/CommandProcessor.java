@@ -32,6 +32,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 function_decl|;
 block|}
 end_interface

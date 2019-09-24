@@ -157,6 +157,24 @@ name|ql
 operator|.
 name|processors
 operator|.
+name|CommandProcessorException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|processors
+operator|.
 name|CommandProcessorResponse
 import|;
 end_import
@@ -186,6 +204,8 @@ parameter_list|(
 name|String
 name|statement
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 function_decl|;
 name|QueryPlan
 name|getPlan
@@ -209,6 +229,8 @@ function_decl|;
 name|CommandProcessorResponse
 name|run
 parameter_list|()
+throws|throws
+name|CommandProcessorException
 function_decl|;
 annotation|@
 name|Override
@@ -218,6 +240,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 function_decl|;
 comment|// create some "cover" to the result?
 name|boolean

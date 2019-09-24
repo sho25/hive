@@ -272,21 +272,11 @@ name|createTable
 init|=
 literal|"create table junit_unparted_noisd(a int) stored as RCFILE"
 decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 name|createTable
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// assert that the table created has no hcat instrumentation, and that we're still able to read it.
@@ -500,21 +490,11 @@ name|createTable
 init|=
 literal|"create table junit_parted_noisd(a int) partitioned by (b string) stored as RCFILE"
 decl_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 name|createTable
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// assert that the table created has no hcat instrumentation, and that we're still able to read it.

@@ -99,7 +99,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -156,6 +156,8 @@ name|testAlterTableOwner
 parameter_list|()
 throws|throws
 name|HiveException
+throws|,
+name|CommandProcessorException
 block|{
 comment|/*      * This test verifies that the ALTER TABLE ... SET OWNER command will change the      * owner metadata of the table in HMS.      */
 name|HiveConf
@@ -202,14 +204,9 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-name|CommandProcessorResponse
-name|resp
-decl_stmt|;
 name|Table
 name|table
 decl_stmt|;
-name|resp
-operator|=
 name|driver
 operator|.
 name|run
@@ -217,34 +214,12 @@ argument_list|(
 literal|"create table t1(id int)"
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
 comment|// Changes the owner to a user and verify the change
-name|resp
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table t1 set owner user u1"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|table
@@ -284,23 +259,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Changes the owner to a group and verify the change
-name|resp
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table t1 set owner group g1"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|table
@@ -340,23 +303,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Changes the owner to a role and verify the change
-name|resp
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"alter table t1 set owner role r1"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|table

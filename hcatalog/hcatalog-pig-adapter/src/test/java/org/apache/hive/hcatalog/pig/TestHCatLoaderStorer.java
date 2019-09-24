@@ -675,12 +675,6 @@ block|}
 argument_list|)
 expr_stmt|;
 comment|// Create a table with smallint/tinyint columns, load data, and query from Hive.
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -689,17 +683,7 @@ literal|"drop table if exists "
 operator|+
 name|readTblName
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -712,17 +696,7 @@ literal|" (my_small_int smallint, my_tiny_int tinyint)"
 operator|+
 literal|" row format delimited fields terminated by '\t' stored as textfile"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -744,10 +718,6 @@ operator|+
 literal|"' into table "
 operator|+
 name|readTblName
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|PigServer
@@ -990,12 +960,6 @@ argument_list|)
 expr_stmt|;
 comment|// Ensure Pig can write correctly to smallint/tinyint columns. This means values within the
 comment|// bounds of the column type are written, and values outside throw an exception.
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -1004,17 +968,7 @@ literal|"drop table if exists "
 operator|+
 name|writeTblName
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
@@ -1024,10 +978,6 @@ operator|+
 name|writeTblName
 operator|+
 literal|" (my_small_int smallint, my_tiny_int tinyint) stored as rcfile"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Values within the column type bounds.
@@ -1282,40 +1232,18 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists test_tbl"
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
-literal|"create table test_tbl"
-operator|+
-literal|" (my_small_int smallint, my_tiny_int tinyint) stored as rcfile"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
+literal|"create table test_tbl (my_small_int smallint, my_tiny_int tinyint) stored as rcfile"
 argument_list|)
 expr_stmt|;
 name|PigServer

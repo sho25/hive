@@ -176,7 +176,7 @@ name|DeleteResourceProcessor
 implements|implements
 name|CommandProcessor
 block|{
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|Logger
@@ -194,7 +194,7 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
-specifier|public
+specifier|private
 specifier|static
 specifier|final
 name|LogHelper
@@ -215,6 +215,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 block|{
 name|SessionState
 name|ss
@@ -332,13 +334,13 @@ operator|+
 literal|"]<value> [<value>]*"
 argument_list|)
 expr_stmt|;
-return|return
+throw|throw
 operator|new
-name|CommandProcessorResponse
+name|CommandProcessorException
 argument_list|(
 literal|1
 argument_list|)
-return|;
+throw|;
 block|}
 name|CommandProcessorResponse
 name|authErrResp
@@ -421,9 +423,7 @@ block|}
 return|return
 operator|new
 name|CommandProcessorResponse
-argument_list|(
-literal|0
-argument_list|)
+argument_list|()
 return|;
 block|}
 annotation|@

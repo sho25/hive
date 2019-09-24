@@ -428,21 +428,11 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"create table test (col int)"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|String
@@ -687,21 +677,11 @@ operator|!=
 literal|null
 condition|)
 block|{
-name|Assert
-operator|.
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"drop table if exists test"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|driver

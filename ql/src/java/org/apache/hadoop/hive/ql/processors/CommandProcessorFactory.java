@@ -572,6 +572,7 @@ argument_list|)
 throw|;
 block|}
 block|}
+specifier|private
 specifier|static
 name|Logger
 name|LOG

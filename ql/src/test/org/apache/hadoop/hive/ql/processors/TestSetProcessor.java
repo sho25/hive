@@ -398,6 +398,8 @@ specifier|public
 name|void
 name|testHiddenConfigSetVarName
 parameter_list|()
+throws|throws
+name|CommandProcessorException
 block|{
 name|runSetProcessor
 argument_list|(
@@ -615,6 +617,8 @@ parameter_list|(
 name|String
 name|command
 parameter_list|)
+throws|throws
+name|CommandProcessorException
 block|{
 name|processor
 operator|.

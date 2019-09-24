@@ -779,7 +779,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -1335,8 +1335,7 @@ comment|//    try {
 comment|//      FileDump.printJsonData(conf, bucket.toString(), delta);
 comment|//    }
 comment|//    catch(FileNotFoundException ex) {
-empty_stmt|;
-comment|//this happens if you change BUCKET_COUNT
+comment|//      ; //this happens if you change BUCKET_COUNT
 comment|//    }
 name|delta
 operator|.
@@ -1562,8 +1561,8 @@ operator|+
 literal|" order by a,b"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -1577,7 +1576,7 @@ name|assertEquals
 argument_list|(
 literal|"Error didn't match: "
 operator|+
-name|cpr
+name|e
 argument_list|,
 name|ErrorMsg
 operator|.
@@ -1586,7 +1585,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getErrorCode
 argument_list|()
@@ -2379,6 +2378,8 @@ operator|.
 name|build
 argument_list|()
 decl_stmt|;
+try|try
+init|(
 name|Driver
 name|d
 init|=
@@ -2389,8 +2390,7 @@ name|qs
 argument_list|,
 literal|null
 argument_list|)
-decl_stmt|;
-try|try
+init|)
 block|{
 name|LOG
 operator|.
@@ -2410,25 +2410,21 @@ argument_list|)
 expr_stmt|;
 try|try
 block|{
-name|CommandProcessorResponse
-name|cpr
-init|=
+try|try
+block|{
 name|d
 operator|.
 name|run
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
-if|if
-condition|(
-name|cpr
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-condition|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
 block|{
 throw|throw
 operator|new
@@ -2438,7 +2434,7 @@ name|query
 operator|+
 literal|" failed: "
 operator|+
-name|cpr
+name|e
 argument_list|)
 throw|;
 block|}
@@ -2469,14 +2465,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-block|}
-finally|finally
-block|{
-name|d
-operator|.
-name|close
-argument_list|()
-expr_stmt|;
 block|}
 block|}
 block|}
@@ -4036,8 +4024,8 @@ argument_list|(
 literal|"start transaction"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr2
+name|CommandProcessorException
+name|e1
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -4057,14 +4045,14 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr2
+name|e1
 operator|.
 name|getErrorCode
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr3
+name|CommandProcessorException
+name|e2
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -4085,7 +4073,7 @@ literal|"Expected update of bucket column to fail"
 argument_list|,
 literal|"FAILED: SemanticException [Error 10302]: Updating values of bucketing columns is not supported.  Column a."
 argument_list|,
-name|cpr3
+name|e2
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -4104,19 +4092,20 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr3
+name|e2
 operator|.
 name|getErrorCode
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|cpr3
-operator|=
+name|CommandProcessorException
+name|e3
+init|=
 name|runStatementOnDriverNegative
 argument_list|(
 literal|"commit"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|//not allowed in w/o tx
 name|Assert
 operator|.
@@ -4124,7 +4113,7 @@ name|assertEquals
 argument_list|(
 literal|"Error didn't match: "
 operator|+
-name|cpr3
+name|e3
 argument_list|,
 name|ErrorMsg
 operator|.
@@ -4133,19 +4122,20 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr3
+name|e3
 operator|.
 name|getErrorCode
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|cpr3
-operator|=
+name|CommandProcessorException
+name|e4
+init|=
 name|runStatementOnDriverNegative
 argument_list|(
 literal|"rollback"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|//not allowed in w/o tx
 name|Assert
 operator|.
@@ -4153,7 +4143,7 @@ name|assertEquals
 argument_list|(
 literal|"Error didn't match: "
 operator|+
-name|cpr3
+name|e4
 argument_list|,
 name|ErrorMsg
 operator|.
@@ -4162,7 +4152,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr3
+name|e4
 operator|.
 name|getErrorCode
 argument_list|()
@@ -4173,13 +4163,14 @@ argument_list|(
 literal|"start transaction"
 argument_list|)
 expr_stmt|;
-name|cpr3
-operator|=
+name|CommandProcessorException
+name|e5
+init|=
 name|runStatementOnDriverNegative
 argument_list|(
 literal|"start transaction"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 comment|//not allowed in a tx
 name|Assert
 operator|.
@@ -4194,7 +4185,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr3
+name|e5
 operator|.
 name|getErrorCode
 argument_list|()
@@ -4474,8 +4465,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|//next command should produce an error
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -4490,7 +4481,7 @@ literal|"Txn didn't fail?"
 argument_list|,
 literal|"FAILED: SemanticException [Error 10001]: Line 1:14 Table not found 'no_such_table'"
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -6240,8 +6231,8 @@ name|run
 argument_list|()
 expr_stmt|;
 comment|//this should fail because txn aborted due to timeout
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -6260,12 +6251,12 @@ name|assertTrue
 argument_list|(
 literal|"Actual: "
 operator|+
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -6864,8 +6855,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -6875,19 +6866,21 @@ name|Table
 operator|.
 name|ACIDTBL
 operator|+
-literal|" target USING "
+literal|" target\n"
+operator|+
+literal|"USING "
 operator|+
 name|Table
 operator|.
 name|NONACIDORCTBL
 operator|+
-literal|" source\nON target.a = source.a "
+literal|" source ON target.a = source.a\n"
 operator|+
-literal|"\nWHEN MATCHED THEN UPDATE set b = 1 "
+literal|"WHEN MATCHED THEN UPDATE set b = 1\n"
 operator|+
-literal|"\nWHEN MATCHED THEN DELETE "
+literal|"WHEN MATCHED THEN DELETE\n"
 operator|+
-literal|"\nWHEN NOT MATCHED AND a< 1 THEN INSERT VALUES(1,2)"
+literal|"WHEN NOT MATCHED AND a< 1 THEN INSERT VALUES(1,2)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -6902,7 +6895,7 @@ operator|(
 operator|(
 name|HiveException
 operator|)
-name|cpr
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -6922,8 +6915,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -6958,7 +6951,7 @@ operator|(
 operator|(
 name|HiveException
 operator|)
-name|cpr
+name|e
 operator|.
 name|getException
 argument_list|()
@@ -8886,8 +8879,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e1
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -8897,15 +8890,19 @@ name|Table
 operator|.
 name|ACIDTBL
 operator|+
-literal|" target USING "
+literal|" target\n"
+operator|+
+literal|"USING "
 operator|+
 name|Table
 operator|.
 name|NONACIDORCTBL
 operator|+
-literal|"\n source ON target.a = source.a "
+literal|"\n"
 operator|+
-literal|"\nWHEN MATCHED THEN UPDATE set t = 1"
+literal|" source ON target.a = source.a\n"
+operator|+
+literal|"WHEN MATCHED THEN UPDATE set t = 1"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -8920,7 +8917,7 @@ operator|(
 operator|(
 name|HiveException
 operator|)
-name|cpr
+name|e1
 operator|.
 name|getException
 argument_list|()
@@ -8930,8 +8927,9 @@ name|getCanonicalErrorMsg
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|cpr
-operator|=
+name|CommandProcessorException
+name|e2
+init|=
 name|runStatementOnDriverNegative
 argument_list|(
 literal|"update "
@@ -8942,7 +8940,7 @@ name|ACIDTBL
 operator|+
 literal|" set t = 1"
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|Assert
 operator|.
 name|assertEquals
@@ -8955,7 +8953,7 @@ operator|(
 operator|(
 name|HiveException
 operator|)
-name|cpr
+name|e2
 operator|.
 name|getException
 argument_list|()
@@ -8975,8 +8973,8 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -8986,13 +8984,19 @@ name|Table
 operator|.
 name|ACIDTBL
 operator|+
-literal|" trgt using (select * from "
+literal|" trgt\n"
+operator|+
+literal|"using (select *\n"
+operator|+
+literal|"       from "
 operator|+
 name|Table
 operator|.
 name|NONACIDORCTBL
 operator|+
-literal|"src) sub on sub.a = target.a when not matched then insert values (sub.a,sub.b)"
+literal|" src) sub on sub.a = target.a\n"
+operator|+
+literal|"when not matched then insert values (sub.a,sub.b)"
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -9001,9 +9005,9 @@ name|assertTrue
 argument_list|(
 literal|"Error didn't match: "
 operator|+
-name|cpr
+name|e
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()

@@ -235,6 +235,24 @@ name|ql
 operator|.
 name|processors
 operator|.
+name|CommandProcessorException
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|processors
+operator|.
 name|CommandProcessorResponse
 import|;
 end_import
@@ -407,7 +425,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertNull
+name|assertTrue
 import|;
 end_import
 
@@ -419,7 +437,7 @@ name|junit
 operator|.
 name|Assert
 operator|.
-name|assertTrue
+name|fail
 import|;
 end_import
 
@@ -584,22 +602,14 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"drop database mydb cascade"
+literal|"drop database if exists mydb cascade"
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"create database mydb"
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|CommandProcessorResponse
@@ -612,16 +622,6 @@ argument_list|(
 literal|"describe database mydb"
 argument_list|)
 decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|ArrayList
 argument_list|<
 name|String
@@ -692,26 +692,6 @@ argument_list|(
 literal|"create table junit_sem_analysis (a int) partitioned by (B string) stored as TEXTFILE"
 argument_list|)
 decl_stmt|;
-name|assertEquals
-argument_list|(
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|,
-literal|0
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|null
-argument_list|,
-name|resp
-operator|.
-name|getErrorMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|Table
 name|tbl
 init|=
@@ -932,16 +912,25 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|CommandProcessorResponse
-name|resp
-init|=
+try|try
+block|{
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"use no_such_db"
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|assertEquals
 argument_list|(
 name|ErrorMsg
@@ -951,12 +940,13 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|resp
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Test
@@ -1001,10 +991,6 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1012,10 +998,6 @@ argument_list|(
 literal|"drop database "
 operator|+
 name|testDb1
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1032,10 +1014,6 @@ argument_list|()
 argument_list|)
 condition|)
 block|{
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1044,16 +1022,8 @@ literal|"drop database "
 operator|+
 name|testDb2
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
 block|}
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1062,10 +1032,6 @@ literal|"create database "
 operator|+
 name|testDb1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1080,10 +1046,6 @@ name|testDb1
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1092,10 +1054,6 @@ literal|"create database if not exists "
 operator|+
 name|testDb1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1110,10 +1068,6 @@ name|testDb1
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1122,10 +1076,6 @@ literal|"create database if not exists "
 operator|+
 name|testDb2
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
@@ -1140,10 +1090,6 @@ name|testDb2
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1152,15 +1098,7 @@ literal|"drop database "
 operator|+
 name|testDb1
 argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
@@ -1168,10 +1106,6 @@ argument_list|(
 literal|"drop database "
 operator|+
 name|testDb2
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|assertFalse
@@ -1327,32 +1261,11 @@ name|getOutputFormat
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|resp
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"create table if not exists junit_sem_analysis (a int) stored as RCFILE"
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNull
-argument_list|(
-name|resp
-operator|.
-name|getErrorMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|tbl
@@ -1468,58 +1381,83 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"drop table junit_sem_analysis"
+literal|"drop table "
+operator|+
+name|TBL_NAME
 argument_list|)
 expr_stmt|;
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"create table junit_sem_analysis (a int) partitioned by (b string) stored as RCFILE"
+literal|"create table "
+operator|+
+name|TBL_NAME
+operator|+
+literal|" (a int) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"alter table junit_sem_analysis touch"
+literal|"alter table "
+operator|+
+name|TBL_NAME
+operator|+
+literal|" touch"
 argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
+expr_stmt|;
+try|try
+block|{
+name|hcatDriver
 operator|.
-name|getResponseCode
+name|run
+argument_list|(
+literal|"alter table "
+operator|+
+name|TBL_NAME
+operator|+
+literal|" touch partition (b='12')"
+argument_list|)
+expr_stmt|;
+name|fail
+argument_list|(
+literal|"Expected that the command 'alter table "
+operator|+
+name|TBL_NAME
+operator|+
+literal|" touch partition (b='12')' would fail"
+argument_list|)
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+name|assertTrue
+argument_list|(
+name|e
+operator|.
+name|getErrorMessage
 argument_list|()
+operator|.
+name|contains
+argument_list|(
+literal|"Specified partition does not exist"
+argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"alter table junit_sem_analysis touch partition (b='12')"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|hcatDriver
-operator|.
-name|run
-argument_list|(
-literal|"drop table junit_sem_analysis"
+literal|"drop table "
+operator|+
+name|TBL_NAME
 argument_list|)
 expr_stmt|;
 block|}
@@ -1546,28 +1484,13 @@ argument_list|(
 literal|"create table junit_sem_analysis (a int, c string) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"alter table junit_sem_analysis change a a1 int"
 argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|response
-operator|=
 name|hcatDriver
 operator|.
 name|run
@@ -1575,33 +1498,11 @@ argument_list|(
 literal|"alter table junit_sem_analysis change a1 a string"
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|response
-operator|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"alter table junit_sem_analysis change a a int after c"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|hcatDriver
@@ -1635,28 +1536,13 @@ argument_list|(
 literal|"create table junit_sem_analysis (a int, c string) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"alter table junit_sem_analysis replace columns (a1 tinyint)"
 argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
 expr_stmt|;
-name|response
-operator|=
 name|hcatDriver
 operator|.
 name|run
@@ -1664,41 +1550,11 @@ argument_list|(
 literal|"alter table junit_sem_analysis add columns (d tinyint)"
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNull
-argument_list|(
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|response
-operator|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"describe extended junit_sem_analysis"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|Table
@@ -1816,24 +1672,11 @@ argument_list|(
 literal|"create table junit_sem_analysis (a int) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"alter table junit_sem_analysis clustered by (a) into 7 buckets"
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|hcatDriver
@@ -1979,14 +1822,20 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"drop table junit_sem_analysis"
+literal|"drop table "
+operator|+
+name|TBL_NAME
 argument_list|)
 expr_stmt|;
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"create table junit_sem_analysis (a int) partitioned by (b string) stored as RCFILE"
+literal|"create table "
+operator|+
+name|TBL_NAME
+operator|+
+literal|" (a int) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
 name|Table
@@ -2043,16 +1892,30 @@ name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"alter table junit_sem_analysis set fileformat INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat' OUTPUTFORMAT "
+literal|"alter table "
 operator|+
-literal|"'org.apache.hadoop.hive.ql.io.RCFileOutputFormat' inputdriver 'mydriver' outputdriver 'yourdriver'"
+name|TBL_NAME
+operator|+
+literal|" "
+operator|+
+literal|"set fileformat INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat' "
+operator|+
+literal|"OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileOutputFormat' "
+operator|+
+literal|"serde 'myserde' "
+operator|+
+literal|"inputdriver 'mydriver' "
+operator|+
+literal|"outputdriver 'yourdriver'"
 argument_list|)
 expr_stmt|;
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
-literal|"desc extended junit_sem_analysis"
+literal|"desc extended "
+operator|+
+name|TBL_NAME
 argument_list|)
 expr_stmt|;
 name|tbl
@@ -2135,24 +1998,11 @@ argument_list|(
 literal|"create table junit_sem_analysis (a int) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 literal|"alter table junit_sem_analysis add partition (b='2') location 'README.txt'"
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|driver
@@ -2186,9 +2036,6 @@ argument_list|(
 literal|"create table junit_sem_analysis (a int) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
@@ -2198,24 +2045,6 @@ operator|+
 name|TEST_DATA_DIR
 operator|+
 literal|"'"
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNull
-argument_list|(
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|hcatDriver
@@ -2246,21 +2075,30 @@ name|query
 operator|=
 literal|"create table junit_sem_analysis (a int) as select * from tbl2"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
+try|try
+block|{
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|assertEquals
 argument_list|(
 literal|40000
 argument_list|,
-name|response
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -2268,7 +2106,7 @@ argument_list|)
 expr_stmt|;
 name|assertTrue
 argument_list|(
-name|response
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -2279,6 +2117,7 @@ literal|"FAILED: SemanticException Operation not supported. Create table as Sele
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|hcatDriver
 operator|.
 name|run
@@ -2307,24 +2146,11 @@ name|query
 operator|=
 literal|"create table junit_sem_analysis (a int)"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|hcatDriver
@@ -2359,19 +2185,11 @@ literal|"INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat' OUTPUTFORM
 operator|+
 literal|"'org.apache.hadoop.hive.ql.io.RCFileOutputFormat' inputdriver 'mydriver' outputdriver 'yourdriver' "
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|Table
@@ -2452,21 +2270,27 @@ name|query
 operator|=
 literal|"create table junit_sem_analysis (a int) partitioned by (b int)  stored as RCFILE"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
+try|try
+block|{
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
 name|assertEquals
 argument_list|(
 literal|40000
 argument_list|,
-name|response
+name|e
 operator|.
 name|getResponseCode
 argument_list|()
@@ -2474,14 +2298,17 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"FAILED: SemanticException Operation not supported. HCatalog only supports partition columns of type string. For column: b Found type: int"
+literal|"FAILED: SemanticException Operation not supported. HCatalog only supports partition columns of "
+operator|+
+literal|"type string. For column: b Found type: int"
 argument_list|,
-name|response
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 annotation|@
 name|Test
@@ -2503,24 +2330,11 @@ name|query
 operator|=
 literal|"create table junit_sem_analysis (a int) partitioned by (b string)  stored as SEQUENCEFILE"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2544,24 +2358,11 @@ name|query
 operator|=
 literal|"create table junit_sem_analysis (a int) partitioned by (b string)  stored as TEXTFILE"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2585,24 +2386,11 @@ name|query
 operator|=
 literal|"create table junit_sem_analysis (a int) partitioned by (b string) clustered by (a) into 10 buckets stored as TEXTFILE"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2644,24 +2432,11 @@ name|query
 operator|=
 literal|"create table like_table like junit_sem_analysis"
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -2729,24 +2504,11 @@ name|query
 operator|=
 literal|"create table like_table like junit_sem_analysis"
 expr_stmt|;
-name|CommandProcessorResponse
-name|resp
-init|=
 name|hcatDriver
 operator|.
 name|run
 argument_list|(
 name|query
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|resp
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 comment|//    Table tbl = client.getTable(MetaStoreUtils.DEFAULT_DATABASE_NAME, likeTbl);

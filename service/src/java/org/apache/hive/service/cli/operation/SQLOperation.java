@@ -545,7 +545,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -949,10 +949,6 @@ name|IDriver
 name|driver
 init|=
 literal|null
-decl_stmt|;
-specifier|private
-name|CommandProcessorResponse
-name|response
 decl_stmt|;
 specifier|private
 name|TableSchema
@@ -1563,8 +1559,6 @@ expr_stmt|;
 comment|// In Hive server mode, we are not able to retry in the FetchTask
 comment|// case, when calling fetch queries since execute() has returned.
 comment|// For now, we disable the test attempts.
-name|response
-operator|=
 name|driver
 operator|.
 name|compileAndRespond
@@ -1572,25 +1566,6 @@ argument_list|(
 name|statement
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-literal|0
-operator|!=
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-condition|)
-block|{
-throw|throw
-name|toSQLException
-argument_list|(
-literal|"Error while compiling statement"
-argument_list|,
-name|response
-argument_list|)
-throw|;
-block|}
 if|if
 condition|(
 name|queryState
@@ -1635,7 +1610,7 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
-name|HiveSQLException
+name|CommandProcessorException
 name|e
 parameter_list|)
 block|{
@@ -1647,7 +1622,12 @@ name|ERROR
 argument_list|)
 expr_stmt|;
 throw|throw
+name|toSQLException
+argument_list|(
+literal|"Error while compiling statement"
+argument_list|,
 name|e
+argument_list|)
 throw|;
 block|}
 catch|catch
@@ -1722,32 +1702,11 @@ block|}
 comment|// In Hive server mode, we are not able to retry in the FetchTask
 comment|// case, when calling fetch queries since execute() has returned.
 comment|// For now, we disable the test attempts.
-name|response
-operator|=
 name|driver
 operator|.
 name|run
 argument_list|()
 expr_stmt|;
-if|if
-condition|(
-literal|0
-operator|!=
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-condition|)
-block|{
-throw|throw
-name|toSQLException
-argument_list|(
-literal|"Error while processing statement"
-argument_list|,
-name|response
-argument_list|)
-throw|;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -1825,6 +1784,26 @@ operator|.
 name|ERROR
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|e
+operator|instanceof
+name|CommandProcessorException
+condition|)
+block|{
+throw|throw
+name|toSQLException
+argument_list|(
+literal|"Error while compiling statement"
+argument_list|,
+operator|(
+name|CommandProcessorException
+operator|)
+name|e
+argument_list|)
+throw|;
+block|}
+elseif|else
 if|if
 condition|(
 name|e

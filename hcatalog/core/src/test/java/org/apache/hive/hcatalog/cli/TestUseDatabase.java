@@ -29,16 +29,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|io
-operator|.
-name|IOException
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
@@ -131,24 +121,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|processors
-operator|.
-name|CommandProcessorResponse
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|session
 operator|.
 name|SessionState
@@ -170,30 +142,6 @@ operator|.
 name|SemanticAnalysis
 operator|.
 name|HCatSemanticAnalyzer
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNull
 import|;
 end_import
 
@@ -255,6 +203,19 @@ name|getClass
 argument_list|()
 argument_list|)
 decl_stmt|;
+name|hcatConf
+operator|.
+name|setVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_AUTHORIZATION_MANAGER
+argument_list|,
+literal|"org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory"
+argument_list|)
+expr_stmt|;
 name|hcatConf
 operator|.
 name|set
@@ -333,9 +294,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|String
-name|query
-decl_stmt|;
 specifier|private
 specifier|final
 name|String
@@ -388,9 +346,6 @@ operator|+
 literal|" (a int) partitioned by (b string) stored as RCFILE"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|response
-decl_stmt|;
 name|String
 name|tmpDir
 init|=
@@ -417,8 +372,6 @@ name|nanoTime
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|response
-operator|=
 name|hcatDriver
 operator|.
 name|run
@@ -440,26 +393,6 @@ operator|+
 literal|"'"
 argument_list|)
 expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNull
-argument_list|(
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|response
-operator|=
 name|hcatDriver
 operator|.
 name|run
@@ -474,25 +407,11 @@ literal|"INPUTFORMAT  'org.apache.hadoop.hive.ql.io.RCFileInputFormat' "
 operator|+
 literal|"OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileOutputFormat' "
 operator|+
-literal|"serde 'org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe' inputdriver 'mydriver' outputdriver 'yourdriver'"
-argument_list|)
-expr_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|response
-operator|.
-name|getResponseCode
-argument_list|()
-argument_list|)
-expr_stmt|;
-name|assertNull
-argument_list|(
-name|response
-operator|.
-name|getErrorMessage
-argument_list|()
+literal|"serde 'org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe'"
+operator|+
+literal|"inputdriver 'mydriver'"
+operator|+
+literal|"outputdriver 'yourdriver'"
 argument_list|)
 expr_stmt|;
 name|hcatDriver

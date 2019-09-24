@@ -215,24 +215,6 @@ name|ql
 operator|.
 name|io
 operator|.
-name|AcidUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
 name|BucketCodec
 import|;
 end_import
@@ -269,7 +251,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -2416,8 +2398,8 @@ argument_list|(
 literal|"create table T (a int, b int) stored as ORC  TBLPROPERTIES ('transactional'='true')"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -2454,7 +2436,7 @@ name|assertTrue
 argument_list|(
 literal|""
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -3923,8 +3905,8 @@ operator|+
 literal|"(a,b) values(1,2),(1,3)"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -3939,23 +3921,20 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 decl_stmt|;
-name|int
-name|j
-init|=
 name|ErrorMsg
 operator|.
 name|CTAS_PARCOL_COEXISTENCE
 operator|.
 name|getErrorCode
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 comment|//this code doesn't propagate
 comment|//    Assert.assertEquals("Wrong msg", ErrorMsg.CTAS_PARCOL_COEXISTENCE.getErrorCode(), cpr.getErrorCode());
 name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()
@@ -3988,8 +3967,8 @@ operator|+
 literal|"(a,b) values(1,2),(1,3)"
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -4004,22 +3983,19 @@ operator|.
 name|NONACIDORCTBL
 argument_list|)
 decl_stmt|;
-name|int
-name|j
-init|=
 name|ErrorMsg
 operator|.
 name|CTAS_PARCOL_COEXISTENCE
 operator|.
 name|getErrorCode
 argument_list|()
-decl_stmt|;
+expr_stmt|;
 comment|//this code doesn't propagate
 name|Assert
 operator|.
 name|assertTrue
 argument_list|(
-name|cpr
+name|e
 operator|.
 name|getErrorMessage
 argument_list|()

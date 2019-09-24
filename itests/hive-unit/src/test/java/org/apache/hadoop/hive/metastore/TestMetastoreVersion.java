@@ -165,9 +165,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|processors
+name|session
 operator|.
-name|CommandProcessorResponse
+name|SessionState
 import|;
 end_import
 
@@ -183,9 +183,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|session
+name|processors
 operator|.
-name|SessionState
+name|CommandProcessorException
 import|;
 end_import
 
@@ -334,10 +334,6 @@ decl_stmt|;
 specifier|private
 name|IDriver
 name|driver
-decl_stmt|;
-specifier|private
-name|String
-name|metaStoreRoot
 decl_stmt|;
 specifier|private
 name|String
@@ -511,15 +507,6 @@ operator|+
 name|testMetastoreDB
 operator|+
 literal|";create=true"
-argument_list|)
-expr_stmt|;
-name|metaStoreRoot
-operator|=
-name|System
-operator|.
-name|getProperty
-argument_list|(
-literal|"test.tmp.dir"
 argument_list|)
 expr_stmt|;
 name|metastoreSchemaInfo
@@ -852,6 +839,8 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|driver
 operator|.
 name|run
@@ -859,6 +848,18 @@ argument_list|(
 literal|"show tables"
 argument_list|)
 expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+comment|// this is expected
+block|}
 comment|// correct version stored by Metastore during startup
 name|assertEquals
 argument_list|(
@@ -948,6 +949,8 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
+try|try
+block|{
 name|driver
 operator|.
 name|run
@@ -955,6 +958,18 @@ argument_list|(
 literal|"show tables"
 argument_list|)
 expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+comment|// this is expected
+block|}
 name|ObjectStore
 operator|.
 name|setSchemaVerified
@@ -1005,24 +1020,11 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|proc
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"show tables"
-argument_list|)
-decl_stmt|;
-name|assertTrue
-argument_list|(
-name|proc
-operator|.
-name|getResponseCode
-argument_list|()
-operator|==
-literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -1151,26 +1153,27 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|proc
-init|=
+try|try
+block|{
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"show tables"
 argument_list|)
-decl_stmt|;
-name|assertTrue
-argument_list|(
-name|proc
-operator|.
-name|getResponseCode
-argument_list|()
-operator|!=
-literal|0
-argument_list|)
 expr_stmt|;
+assert|assert
+literal|false
+assert|;
+block|}
+catch|catch
+parameter_list|(
+name|CommandProcessorException
+name|e
+parameter_list|)
+block|{
+comment|// this is expected
+block|}
 block|}
 comment|/**    * Store higher version in metastore and verify that hive works with the compatible    * version    * @throws Exception    */
 annotation|@
@@ -1290,24 +1293,11 @@ argument_list|(
 name|hiveConf
 argument_list|)
 expr_stmt|;
-name|CommandProcessorResponse
-name|proc
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 literal|"show tables"
-argument_list|)
-decl_stmt|;
-name|assertEquals
-argument_list|(
-literal|0
-argument_list|,
-name|proc
-operator|.
-name|getResponseCode
-argument_list|()
 argument_list|)
 expr_stmt|;
 block|}

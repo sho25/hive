@@ -79,7 +79,7 @@ name|ql
 operator|.
 name|processors
 operator|.
-name|CommandProcessorResponse
+name|CommandProcessorException
 import|;
 end_import
 
@@ -2404,8 +2404,8 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|//T2 is an acid table so this should fail
-name|CommandProcessorResponse
-name|cpr
+name|CommandProcessorException
+name|e
 init|=
 name|runStatementOnDriverNegative
 argument_list|(
@@ -2434,7 +2434,7 @@ operator|.
 name|getErrorCode
 argument_list|()
 argument_list|,
-name|cpr
+name|e
 operator|.
 name|getErrorCode
 argument_list|()

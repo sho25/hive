@@ -638,24 +638,11 @@ argument_list|(
 literal|"drop table bad_props_table"
 argument_list|)
 expr_stmt|;
-name|int
-name|retCode1
-init|=
 name|driver
 operator|.
 name|run
 argument_list|(
 name|createTable
-argument_list|)
-operator|.
-name|getResponseCode
-argument_list|()
-decl_stmt|;
-name|assertTrue
-argument_list|(
-name|retCode1
-operator|==
-literal|0
 argument_list|)
 expr_stmt|;
 name|boolean
