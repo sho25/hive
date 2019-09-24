@@ -1401,6 +1401,12 @@ operator|&&
 operator|!
 name|config
 operator|.
+name|isVectorization
+argument_list|()
+operator|&&
+operator|!
+name|config
+operator|.
 name|isAuthorize
 argument_list|()
 operator|&&
