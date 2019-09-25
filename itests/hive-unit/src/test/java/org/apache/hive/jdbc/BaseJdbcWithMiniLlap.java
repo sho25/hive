@@ -945,13 +945,6 @@ name|BaseJdbcWithMiniLlap
 block|{
 specifier|private
 specifier|static
-name|MiniHS2
-name|miniHS2
-init|=
-literal|null
-decl_stmt|;
-specifier|private
-specifier|static
 name|String
 name|dataFileDir
 decl_stmt|;
@@ -964,6 +957,13 @@ specifier|private
 specifier|static
 name|Path
 name|dataTypesFilePath
+decl_stmt|;
+specifier|protected
+specifier|static
+name|MiniHS2
+name|miniHS2
+init|=
+literal|null
 decl_stmt|;
 specifier|protected
 specifier|static
@@ -3844,7 +3844,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|protected
 interface|interface
 name|RowProcessor
 block|{
@@ -4137,7 +4137,7 @@ argument_list|>
 name|getInputFormat
 parameter_list|()
 function_decl|;
-specifier|private
+specifier|protected
 name|int
 name|processQuery
 parameter_list|(

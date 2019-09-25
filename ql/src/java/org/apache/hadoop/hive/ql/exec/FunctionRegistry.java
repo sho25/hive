@@ -6193,6 +6193,17 @@ name|system
 operator|.
 name|registerGenericUDTF
 argument_list|(
+literal|"get_llap_splits"
+argument_list|,
+name|GenericUDTFGetSplits2
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDTF
+argument_list|(
 literal|"get_sql_schema"
 argument_list|,
 name|GenericUDTFGetSQLSchema
