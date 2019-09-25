@@ -6049,6 +6049,17 @@ name|system
 operator|.
 name|registerGenericUDF
 argument_list|(
+literal|"datetime_legacy_hybrid_calendar"
+argument_list|,
+name|GenericUDFDatetimeLegacyHybridCalendar
+operator|.
+name|class
+argument_list|)
+expr_stmt|;
+name|system
+operator|.
+name|registerGenericUDF
+argument_list|(
 literal|"internal_interval"
 argument_list|,
 name|GenericUDFInternalInterval
