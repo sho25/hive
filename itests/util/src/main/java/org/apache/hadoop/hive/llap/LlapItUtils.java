@@ -87,11 +87,9 @@ name|org
 operator|.
 name|apache
 operator|.
-name|hadoop
+name|hive
 operator|.
-name|hbase
-operator|.
-name|zookeeper
+name|testutils
 operator|.
 name|MiniZooKeeperCluster
 import|;

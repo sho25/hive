@@ -256,6 +256,7 @@ comment|/**  * TODO: Most of the code in this class is ripped from ZooKeeper tes
 end_comment
 
 begin_class
+specifier|public
 class|class
 name|MiniZooKeeperCluster
 block|{
@@ -1608,7 +1609,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|// XXX: From o.a.zk.t.ClientBase
-specifier|private
+specifier|public
 specifier|static
 name|boolean
 name|waitForServerDown
@@ -1743,7 +1744,7 @@ literal|false
 return|;
 block|}
 comment|// XXX: From o.a.zk.t.ClientBase
-specifier|private
+specifier|public
 specifier|static
 name|boolean
 name|waitForServerUp
