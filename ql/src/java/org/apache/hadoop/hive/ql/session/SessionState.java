@@ -1101,7 +1101,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|SessionHiveMetaStoreClient
+name|Table
 import|;
 end_import
 
@@ -1119,7 +1119,7 @@ name|ql
 operator|.
 name|metadata
 operator|.
-name|Table
+name|TempTable
 import|;
 end_import
 
@@ -1554,8 +1554,6 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|SessionHiveMetaStoreClient
-operator|.
 name|TempTable
 argument_list|>
 name|tempPartitions
@@ -9334,8 +9332,6 @@ name|Map
 argument_list|<
 name|String
 argument_list|,
-name|SessionHiveMetaStoreClient
-operator|.
 name|TempTable
 argument_list|>
 name|getTempPartitions
