@@ -487,7 +487,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|ExpressionWalker
+name|SubqueryExpressionWalker
 import|;
 end_import
 
@@ -2190,7 +2190,7 @@ name|GraphWalker
 name|ogw
 init|=
 operator|new
-name|ExpressionWalker
+name|SubqueryExpressionWalker
 argument_list|(
 name|disp
 argument_list|)
