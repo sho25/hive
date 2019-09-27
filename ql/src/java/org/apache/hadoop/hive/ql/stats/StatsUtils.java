@@ -2585,6 +2585,11 @@ argument_list|,
 name|fetchColStats
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|estimateStats
+condition|)
+block|{
 name|estimateStatsForMissingCols
 argument_list|(
 name|neededColumns
@@ -2600,9 +2605,10 @@ argument_list|,
 name|schema
 argument_list|)
 expr_stmt|;
+block|}
 comment|// we should have stats for all columns (estimated or actual)
-assert|assert
-operator|(
+if|if
+condition|(
 name|neededColumns
 operator|.
 name|size
@@ -2612,8 +2618,8 @@ name|colStats
 operator|.
 name|size
 argument_list|()
-operator|)
-assert|;
+condition|)
+block|{
 name|long
 name|betterDS
 init|=
@@ -2641,6 +2647,7 @@ name|ds
 else|:
 name|betterDS
 expr_stmt|;
+block|}
 block|}
 name|stats
 operator|=
