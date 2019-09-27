@@ -2730,6 +2730,17 @@ argument_list|)
 expr_stmt|;
 name|conf
 operator|.
+name|setInt
+argument_list|(
+name|TezConfiguration
+operator|.
+name|TEZ_COUNTERS_MAX
+argument_list|,
+literal|1024
+argument_list|)
+expr_stmt|;
+name|conf
+operator|.
 name|set
 argument_list|(
 literal|"fs.defaultFS"
