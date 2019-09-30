@@ -1426,13 +1426,6 @@ name|setCmds
 operator|.
 name|add
 argument_list|(
-literal|"set hive.exec.dynamic.partition.mode=nonstrict"
-argument_list|)
-expr_stmt|;
-name|setCmds
-operator|.
-name|add
-argument_list|(
 literal|"set mapred.min.split.size=200"
 argument_list|)
 expr_stmt|;

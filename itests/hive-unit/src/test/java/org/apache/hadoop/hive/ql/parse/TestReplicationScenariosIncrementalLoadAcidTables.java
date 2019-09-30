@@ -534,13 +534,6 @@ argument_list|)
 expr_stmt|;
 name|put
 argument_list|(
-literal|"hive.exec.dynamic.partition.mode"
-argument_list|,
-literal|"nonstrict"
-argument_list|)
-expr_stmt|;
-name|put
-argument_list|(
 literal|"hive.strict.checks.bucketing"
 argument_list|,
 literal|"false"

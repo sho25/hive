@@ -3399,7 +3399,15 @@ name|DYNAMICPARTITIONINGMODE
 argument_list|(
 literal|"hive.exec.dynamic.partition.mode"
 argument_list|,
+literal|"nonstrict"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
 literal|"strict"
+argument_list|,
+literal|"nonstrict"
+argument_list|)
 argument_list|,
 literal|"In strict mode, the user must specify at least one static partition\n"
 operator|+
@@ -8711,17 +8719,15 @@ operator|+
 literal|"Since it is a new feature, it has been made configurable."
 argument_list|)
 block|,
+annotation|@
+name|Deprecated
 name|HIVEOPTSORTDYNAMICPARTITION
 argument_list|(
 literal|"hive.optimize.sort.dynamic.partition"
 argument_list|,
 literal|false
 argument_list|,
-literal|"When enabled dynamic partitioning column will be globally sorted.\n"
-operator|+
-literal|"This way we can keep only one record writer open for each partition value\n"
-operator|+
-literal|"in the reducer thereby reducing the memory pressure on reducers."
+literal|"Deprecated. Use hive.optimize.sort.dynamic.partition.threshold instead."
 argument_list|)
 block|,
 name|HIVEOPTSORTDYNAMICPARTITIONTHRESHOLD
