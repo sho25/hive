@@ -5278,24 +5278,9 @@ name|analyzeInternal
 argument_list|(
 name|ast
 argument_list|,
-operator|new
-name|PlannerContextFactory
-argument_list|()
-block|{
-annotation|@
-name|Override
-specifier|public
-name|PlannerContext
-name|create
-parameter_list|()
-block|{
-return|return
-operator|new
 name|PreCboCtx
-argument_list|()
-return|;
-block|}
-block|}
+operator|::
+operator|new
 argument_list|)
 expr_stmt|;
 block|}
@@ -13025,8 +13010,6 @@ expr_stmt|;
 comment|// if it is to create view, we do not use table alias
 name|resultSchema
 operator|=
-name|SemanticAnalyzer
-operator|.
 name|convertRowSchemaToResultSetSchema
 argument_list|(
 name|relToHiveRR
@@ -20457,9 +20440,6 @@ name|colInfo
 operator|.
 name|setSkewedCol
 argument_list|(
-operator|(
-name|SemanticAnalyzer
-operator|.
 name|isSkewedCol
 argument_list|(
 name|tableAlias
@@ -20468,11 +20448,6 @@ name|qb
 argument_list|,
 name|colName
 argument_list|)
-operator|)
-condition|?
-literal|true
-else|:
-literal|false
 argument_list|)
 expr_stmt|;
 name|rr
@@ -23157,6 +23132,8 @@ argument_list|(
 name|valuesClause
 argument_list|,
 name|inputRR
+argument_list|,
+literal|false
 argument_list|,
 literal|false
 argument_list|)
@@ -26205,8 +26182,6 @@ name|setSelExprForClause
 argument_list|(
 name|detsClauseName
 argument_list|,
-name|SemanticAnalyzer
-operator|.
 name|genSelectDIAST
 argument_list|(
 name|rr
@@ -31683,8 +31658,6 @@ name|String
 index|[]
 name|colRef
 init|=
-name|SemanticAnalyzer
-operator|.
 name|getColAlias
 argument_list|(
 name|child
@@ -31971,8 +31944,6 @@ operator|.
 name|getIsExprResolver
 argument_list|()
 operator|&&
-name|SemanticAnalyzer
-operator|.
 name|isRegex
 argument_list|(
 name|unescapeIdentifier
@@ -32098,8 +32069,6 @@ operator|.
 name|getIsExprResolver
 argument_list|()
 operator|&&
-name|SemanticAnalyzer
-operator|.
 name|isRegex
 argument_list|(
 name|unescapeIdentifier
