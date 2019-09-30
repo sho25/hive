@@ -890,8 +890,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|currTask
 parameter_list|,
@@ -946,8 +944,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|children
@@ -1935,8 +1931,6 @@ argument_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|bigKeysDirToTaskMap
@@ -1949,8 +1943,6 @@ argument_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -1973,8 +1965,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|listTasks
@@ -1985,8 +1975,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2056,8 +2044,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|skewJoinMapJoinTask
 init|=
@@ -2865,8 +2851,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 range|:
@@ -2878,8 +2862,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|oldChild
 range|:
@@ -2905,8 +2887,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2917,8 +2897,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|oldChild
 range|:
@@ -2948,8 +2926,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|oldChild
 range|:
@@ -3038,8 +3014,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -3419,8 +3393,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 parameter_list|,

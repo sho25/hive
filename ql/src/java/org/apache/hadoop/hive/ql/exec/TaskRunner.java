@@ -146,8 +146,6 @@ specifier|protected
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 decl_stmt|;
@@ -232,8 +230,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 parameter_list|,
@@ -271,8 +267,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|getTask
 parameter_list|()

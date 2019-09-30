@@ -884,8 +884,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|build
 parameter_list|(
@@ -907,8 +905,6 @@ block|{
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|evTaskRoot
 init|=
@@ -924,8 +920,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|taskChainTail
 init|=
@@ -1137,8 +1131,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|evTasks
@@ -1193,8 +1185,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|barrierTask
 init|=
@@ -1296,8 +1286,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|updateIncPendTask
 init|=
@@ -1377,8 +1365,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|barrierTask
 init|=
@@ -1659,8 +1645,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|analyzeEventLoad
@@ -1691,8 +1675,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|tasks
@@ -1718,8 +1700,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|t
 range|:
@@ -1804,8 +1784,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|getMigrationCommitTxnTask
 parameter_list|(
@@ -1832,8 +1810,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|preCursor
 parameter_list|)
@@ -1946,8 +1922,6 @@ block|}
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|updateReplIdTxnTask
 init|=
@@ -2020,8 +1994,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tableUpdateReplStateTask
 parameter_list|(
@@ -2045,8 +2017,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|preCursor
 parameter_list|)
@@ -2126,8 +2096,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|updateReplIdTask
 init|=
@@ -2199,8 +2167,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|dbUpdateReplStateTask
 parameter_list|(
@@ -2213,8 +2179,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|preCursor
 parameter_list|)
@@ -2270,8 +2234,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|updateReplIdTask
 init|=
@@ -2345,8 +2307,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|addUpdateReplStateTasks
@@ -2359,8 +2319,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|importTasks
@@ -2420,8 +2378,6 @@ comment|// Create a barrier task for dependency collection of import tasks
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|barrierTask
 init|=
@@ -2441,8 +2397,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|tasks
@@ -2455,8 +2409,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|updateReplIdTask
 decl_stmt|;

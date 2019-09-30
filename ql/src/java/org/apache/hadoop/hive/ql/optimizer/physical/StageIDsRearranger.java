@@ -387,8 +387,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 range|:
@@ -433,8 +431,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 range|:
@@ -766,8 +762,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 range|:

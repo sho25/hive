@@ -296,8 +296,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|currentTsk
 init|=

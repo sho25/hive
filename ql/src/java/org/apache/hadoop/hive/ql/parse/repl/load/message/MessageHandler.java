@@ -275,8 +275,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|handle
@@ -322,8 +320,6 @@ specifier|final
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|precursor
 decl_stmt|;
@@ -369,8 +365,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|precursor
 parameter_list|,

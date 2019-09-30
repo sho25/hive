@@ -849,8 +849,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createCreateRoleTask
 parameter_list|(
@@ -920,8 +918,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createDropRoleTask
 parameter_list|(
@@ -991,8 +987,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createShowRoleGrantTask
 parameter_list|(
@@ -1137,8 +1131,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createGrantTask
 parameter_list|(
@@ -1345,8 +1337,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createRevokeTask
 parameter_list|(
@@ -1508,8 +1498,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createShowGrantTask
 parameter_list|(
@@ -1697,8 +1685,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createGrantRoleTask
 parameter_list|(
@@ -1737,8 +1723,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createRevokeRoleTask
 parameter_list|(
@@ -1775,8 +1759,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|analyzeGrantRevokeRole
 parameter_list|(
@@ -2799,8 +2781,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createSetRoleTask
 parameter_list|(
@@ -2854,8 +2834,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createShowCurrentRoleTask
 parameter_list|(
@@ -2912,8 +2890,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createShowRolePrincipalsTask
 parameter_list|(
@@ -3012,8 +2988,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createShowRolesTask
 parameter_list|(

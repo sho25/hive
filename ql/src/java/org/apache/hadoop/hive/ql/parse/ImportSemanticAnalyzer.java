@@ -3953,8 +3953,6 @@ specifier|static
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|alterTableTask
 parameter_list|(
@@ -4028,8 +4026,6 @@ specifier|static
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|alterSinglePartition
 parameter_list|(

@@ -1381,8 +1381,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -2039,8 +2037,6 @@ argument_list|<
 name|Operator
 argument_list|<
 name|?
-extends|extends
-name|OperatorDesc
 argument_list|>
 argument_list|>
 name|tableScanOps
@@ -2379,8 +2375,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|rootTask
 range|:
@@ -2402,8 +2396,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|rootTask
 range|:
@@ -2503,8 +2495,6 @@ block|{
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|root
 init|=
@@ -2603,8 +2593,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|leafTasks
@@ -2615,8 +2603,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -2633,8 +2619,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|nonStatsLeafTasks
@@ -2649,8 +2633,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 range|:
@@ -2701,8 +2683,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 range|:
@@ -2714,8 +2694,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|cStatsTask
 range|:
@@ -2879,8 +2857,6 @@ expr_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|crtTblTask
 init|=
@@ -2945,8 +2921,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|crtViewTask
 init|=
@@ -3026,8 +3000,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|leafTasks
@@ -3038,8 +3010,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -3054,8 +3024,6 @@ expr_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|materializedViewTask
 init|=
@@ -3073,8 +3041,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 range|:
@@ -3911,8 +3877,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -3932,8 +3896,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createTask
 parameter_list|,
@@ -3995,8 +3957,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|leaves
@@ -4027,8 +3987,6 @@ comment|// Target task is supposed to be the last task
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|targetTask
 init|=
@@ -4039,8 +3997,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 range|:
@@ -4060,8 +4016,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|parentOfStatsTask
 range|:
@@ -4108,8 +4062,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|parentOfCrtTblTask
 range|:
@@ -4385,16 +4337,12 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|dependentTask
 parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 parameter_list|)
@@ -4404,8 +4352,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|parentOfStatsTask
 range|:
@@ -4428,8 +4374,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|parentOfCrtTblTask
 range|:
@@ -4730,8 +4674,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -4741,8 +4683,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|leaves
@@ -4753,8 +4693,6 @@ control|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|root
 range|:
@@ -4777,8 +4715,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 parameter_list|,
@@ -4787,8 +4723,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|leaves
@@ -4849,8 +4783,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -4898,8 +4830,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -4922,8 +4852,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|rootTask
 parameter_list|)
@@ -4939,8 +4867,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks
@@ -5102,8 +5028,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|rootTasks

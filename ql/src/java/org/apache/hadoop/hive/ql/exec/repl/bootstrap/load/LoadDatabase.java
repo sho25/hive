@@ -535,8 +535,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|dbRootTask
 init|=
@@ -853,8 +851,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|createDbTask
 parameter_list|(
@@ -932,8 +928,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|alterDbTask
 parameter_list|(
@@ -968,8 +962,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|setOwnerInfoTask
 parameter_list|(
@@ -1124,8 +1116,6 @@ specifier|static
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|alterDbTask
 parameter_list|(

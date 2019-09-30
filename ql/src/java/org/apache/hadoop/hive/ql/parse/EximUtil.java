@@ -771,8 +771,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|tasks
@@ -797,8 +795,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|openTxnTask
 init|=
@@ -852,8 +848,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|getTasks
@@ -931,8 +925,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|tasks
@@ -991,8 +983,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|getOpenTxnTask
 parameter_list|()
@@ -1008,8 +998,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|openTxnTask
 parameter_list|)

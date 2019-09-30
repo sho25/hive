@@ -1688,8 +1688,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|getCreateTableTask
 parameter_list|(

@@ -529,8 +529,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|currTask
 init|=
@@ -599,8 +597,6 @@ argument_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|fileSinkDescs
@@ -620,8 +616,6 @@ block|{
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|childTask
 init|=
@@ -801,8 +795,6 @@ argument_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|linkedFileDescTasks
@@ -829,8 +821,6 @@ argument_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -929,8 +919,6 @@ parameter_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|childTask
 parameter_list|)
@@ -940,8 +928,6 @@ block|{
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|currTask
 init|=
@@ -1049,8 +1035,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|currTask
 init|=
@@ -1183,8 +1167,6 @@ argument_list|,
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|opTaskMap
@@ -1208,8 +1190,6 @@ block|{
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mapTask
 init|=

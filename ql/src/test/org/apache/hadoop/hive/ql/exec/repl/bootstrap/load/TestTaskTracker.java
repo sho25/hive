@@ -163,8 +163,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 decl_stmt|;

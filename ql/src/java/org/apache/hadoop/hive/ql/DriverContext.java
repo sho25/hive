@@ -408,8 +408,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 name|runnable
@@ -471,8 +469,6 @@ argument_list|<
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 argument_list|>
 argument_list|()
@@ -538,8 +534,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 parameter_list|)
@@ -579,8 +573,6 @@ specifier|synchronized
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|getRunnable
 parameter_list|(
@@ -856,8 +848,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 parameter_list|)
@@ -884,8 +874,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|tsk
 parameter_list|)

@@ -1166,8 +1166,6 @@ comment|// Add ReplStateLogTask only if no pending table load tasks left for nex
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|replLogTask
 init|=
@@ -1261,8 +1259,6 @@ comment|// Add ReplStateLogTask only if no pending table load tasks left for nex
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|replLogTask
 init|=

@@ -565,8 +565,6 @@ specifier|private
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|dummyMRTask
 decl_stmt|;
@@ -1490,8 +1488,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|moveOnlyTask
 init|=
@@ -1508,8 +1504,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mergeOnlyTask
 init|=
@@ -1526,8 +1520,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mergeAndMoveTask
 init|=
@@ -1797,8 +1789,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|moveOnlyTask
 init|=
@@ -1815,8 +1805,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mergeOnlyTask
 init|=
@@ -1833,8 +1821,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mergeAndMoveTask
 init|=
@@ -2125,8 +2111,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|moveOnlyTask
 init|=
@@ -2143,8 +2127,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mergeOnlyTask
 init|=
@@ -2161,8 +2143,6 @@ decl_stmt|;
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|mergeAndMoveTask
 init|=
@@ -2521,8 +2501,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 parameter_list|,

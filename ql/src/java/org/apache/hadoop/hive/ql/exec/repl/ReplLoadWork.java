@@ -445,8 +445,6 @@ specifier|transient
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|rootTask
 decl_stmt|;
@@ -851,8 +849,6 @@ specifier|public
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|getRootTask
 parameter_list|()
@@ -868,8 +864,6 @@ parameter_list|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|rootTask
 parameter_list|)

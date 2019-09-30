@@ -1297,8 +1297,6 @@ block|{
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 name|task
 init|=
@@ -1306,8 +1304,6 @@ operator|(
 name|Task
 argument_list|<
 name|?
-extends|extends
-name|Serializable
 argument_list|>
 operator|)
 name|nd
