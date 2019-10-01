@@ -767,11 +767,7 @@ name|File
 argument_list|(
 name|queryDirectory
 argument_list|,
-name|tname
-operator|+
-literal|"."
-operator|+
-name|versionStr
+name|versionFile
 argument_list|)
 argument_list|)
 argument_list|)
