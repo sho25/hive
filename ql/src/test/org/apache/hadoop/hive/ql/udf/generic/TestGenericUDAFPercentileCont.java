@@ -781,6 +781,12 @@ name|percentile
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|agg
+operator|.
+name|isAscending
+operator|=
+literal|true
+expr_stmt|;
 for|for
 control|(
 name|int
@@ -919,6 +925,12 @@ argument_list|(
 name|percentile
 argument_list|)
 argument_list|)
+expr_stmt|;
+name|agg
+operator|.
+name|isAscending
+operator|=
+literal|true
 expr_stmt|;
 for|for
 control|(

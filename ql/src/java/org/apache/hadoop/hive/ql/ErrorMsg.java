@@ -2421,6 +2421,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|WITHIN_GROUP_NOT_ALLOWED
+argument_list|(
+literal|10421
+argument_list|,
+literal|"Not an ordered-set aggregate function: {0}. WITHIN GROUP clause is not allowed."
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
