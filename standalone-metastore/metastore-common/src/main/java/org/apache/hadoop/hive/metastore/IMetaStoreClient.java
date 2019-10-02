@@ -3904,7 +3904,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param tableName    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
+comment|/**    * rename a partition to a new partition    *    * @param dbname    *          database of the old partition    * @param tableName    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different, or trying to rename to an already existing partition name    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
 annotation|@
 name|Deprecated
 name|void
@@ -3936,7 +3936,7 @@ name|MetaException
 throws|,
 name|TException
 function_decl|;
-comment|/**    * rename a partition to a new partition    * @param catName catalog name.    * @param dbname    *          database of the old partition    * @param tableName    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
+comment|/**    * rename a partition to a new partition    * @param catName catalog name.    * @param dbname    *          database of the old partition    * @param tableName    *          table name of the old partition    * @param part_vals    *          values of the old partition    * @param newPart    *          new partition    * @throws InvalidOperationException    *           if srcFs and destFs are different, or trying to rename to an already existing partition name    * @throws MetaException    *          if error in updating metadata    * @throws TException    *          if error in communicating with metastore server    */
 name|void
 name|renamePartition
 parameter_list|(
