@@ -51,6 +51,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDF
 import|;
 end_import
@@ -482,6 +500,47 @@ name|CastStringToLong
 operator|.
 name|class
 block|}
+argument_list|)
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"boolean"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(x) - converts it's parameter to _FUNC_"
+argument_list|,
+name|extended
+operator|=
+literal|"- x is NULL -> NULL\n"
+operator|+
+literal|"- byte, short, integer, long, float, double, decimal:\n"
+operator|+
+literal|"  x == 0 -> false\n"
+operator|+
+literal|"  x != 0 -> true\n"
+operator|+
+literal|"- string:\n"
+operator|+
+literal|"  x is '', 'false', 'no', 'zero', 'off' -> false\n"
+operator|+
+literal|"  true otherwise\n"
+operator|+
+literal|"- date: always NULL\n"
+operator|+
+literal|"- timestamp\n"
+operator|+
+literal|"  seconds or nanos are 0 -> false\n"
+operator|+
+literal|"  true otherwise\n"
+operator|+
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_(0);\n"
+operator|+
+literal|"  false"
 argument_list|)
 specifier|public
 class|class

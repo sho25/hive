@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|MapredContext
 import|;
 end_import
@@ -252,6 +270,27 @@ argument_list|(
 name|deterministic
 operator|=
 literal|false
+argument_list|)
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"surrogate_key"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_() - "
+operator|+
+literal|"automatically generate numerical Ids for rows as you enter data into a table"
+argument_list|,
+name|extended
+operator|=
+literal|"Example: CREATE TABLE students \n"
+operator|+
+literal|"(`ID` BIGINT DEFAULT SURROGATE_KEY(),\n"
+operator|+
+literal|" name VARCHAR(64));"
 argument_list|)
 specifier|public
 class|class

@@ -33,6 +33,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDF
 import|;
 end_import
@@ -364,6 +382,45 @@ name|CastStringToFloat
 operator|.
 name|class
 block|}
+argument_list|)
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"float"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(x) - converts it's parameter to _FUNC_"
+argument_list|,
+name|extended
+operator|=
+literal|"- x is NULL -> NULL\n"
+operator|+
+literal|"- byte, short, integer, long, float, double, decimal, timestamp:\n"
+operator|+
+literal|"  x fits into the type _FUNC_ -> x\n"
+operator|+
+literal|"  undefined otherwise\n"
+operator|+
+literal|"- boolean:\n"
+operator|+
+literal|"  true  -> 1.0\n"
+operator|+
+literal|"  false -> 0.0\n"
+operator|+
+literal|"- string:\n"
+operator|+
+literal|"  x is a valid _FUNC_ -> x\n"
+operator|+
+literal|"  NULL otherwise\n"
+operator|+
+literal|"Example:\n "
+operator|+
+literal|"> SELECT _FUNC_(true);\n"
+operator|+
+literal|"  1.0"
 argument_list|)
 specifier|public
 class|class

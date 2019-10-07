@@ -35,6 +35,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -172,6 +190,25 @@ comment|/**  * GenericUDFEpochMilli.  */
 end_comment
 
 begin_class
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"to_epoch_milli"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(timestamp) - Converts the specified timestamp to number of milliseconds since 1970-01-01"
+argument_list|,
+name|extended
+operator|=
+literal|"Example:\n"
+operator|+
+literal|"> SELECT _FUNC_(cast('2012-02-11 04:30:00' as timestamp));"
+operator|+
+literal|"1328934600000"
+argument_list|)
 specifier|public
 class|class
 name|GenericUDFEpochMilli

@@ -195,11 +195,6 @@ end_import
 
 begin_class
 annotation|@
-name|WindowFunctionDescription
-argument_list|(
-name|description
-operator|=
-annotation|@
 name|Description
 argument_list|(
 name|name
@@ -214,7 +209,9 @@ literal|"than row counts in its numerator. PERCENT_RANK of a row is calculated a
 operator|+
 literal|"(rank of row in its partition - 1) / (number of rows in the partition - 1)"
 argument_list|)
-argument_list|,
+annotation|@
+name|WindowFunctionDescription
+argument_list|(
 name|supportsWindow
 operator|=
 literal|false

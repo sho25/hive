@@ -185,11 +185,6 @@ end_import
 
 begin_class
 annotation|@
-name|WindowFunctionDescription
-argument_list|(
-name|description
-operator|=
-annotation|@
 name|Description
 argument_list|(
 name|name
@@ -208,7 +203,9 @@ literal|"CUME_DIST(x) =  number of values in S coming before "
 operator|+
 literal|"   and including x in the specified order/ N"
 argument_list|)
-argument_list|,
+annotation|@
+name|WindowFunctionDescription
+argument_list|(
 name|supportsWindow
 operator|=
 literal|false

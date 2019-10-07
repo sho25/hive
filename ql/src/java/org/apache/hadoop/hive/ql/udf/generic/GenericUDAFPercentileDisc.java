@@ -187,11 +187,6 @@ end_comment
 
 begin_class
 annotation|@
-name|WindowFunctionDescription
-argument_list|(
-name|description
-operator|=
-annotation|@
 name|Description
 argument_list|(
 name|name
@@ -204,7 +199,9 @@ literal|"_FUNC_(input, pc) - "
 operator|+
 literal|"Returns the percentile of expr at pc (range: [0,1]) without interpolation."
 argument_list|)
-argument_list|,
+annotation|@
+name|WindowFunctionDescription
+argument_list|(
 name|supportsWindow
 operator|=
 literal|false

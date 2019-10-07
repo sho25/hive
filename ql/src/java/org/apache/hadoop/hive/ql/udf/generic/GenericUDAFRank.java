@@ -329,11 +329,6 @@ end_import
 
 begin_class
 annotation|@
-name|WindowFunctionDescription
-argument_list|(
-name|description
-operator|=
-annotation|@
 name|Description
 argument_list|(
 name|name
@@ -344,7 +339,9 @@ name|value
 operator|=
 literal|"_FUNC_(x)"
 argument_list|)
-argument_list|,
+annotation|@
+name|WindowFunctionDescription
+argument_list|(
 name|supportsWindow
 operator|=
 literal|false

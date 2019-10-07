@@ -327,11 +327,6 @@ end_import
 
 begin_class
 annotation|@
-name|WindowFunctionDescription
-argument_list|(
-name|description
-operator|=
-annotation|@
 name|Description
 argument_list|(
 name|name
@@ -348,7 +343,9 @@ literal|"specified number of groups called buckets and assigns a bucket number t
 operator|+
 literal|"in the partition."
 argument_list|)
-argument_list|,
+annotation|@
+name|WindowFunctionDescription
+argument_list|(
 name|supportsWindow
 operator|=
 literal|false

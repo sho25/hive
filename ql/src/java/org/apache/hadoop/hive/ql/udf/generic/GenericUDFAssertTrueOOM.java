@@ -51,6 +51,24 @@ name|ql
 operator|.
 name|exec
 operator|.
+name|Description
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
 name|UDFArgumentException
 import|;
 end_import
@@ -282,6 +300,19 @@ argument_list|(
 name|deterministic
 operator|=
 literal|false
+argument_list|)
+annotation|@
+name|Description
+argument_list|(
+name|name
+operator|=
+literal|"assert_true_oom"
+argument_list|,
+name|value
+operator|=
+literal|"_FUNC_(condition) - "
+operator|+
+literal|"Throw an MapJoinMemoryExhaustionError if 'condition' is not true."
 argument_list|)
 specifier|public
 class|class

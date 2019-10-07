@@ -317,11 +317,6 @@ end_import
 
 begin_class
 annotation|@
-name|WindowFunctionDescription
-argument_list|(
-name|description
-operator|=
-annotation|@
 name|Description
 argument_list|(
 name|name
@@ -334,7 +329,9 @@ literal|"_FUNC_() - The ROW_NUMBER function assigns a unique number (sequentiall
 operator|+
 literal|"from 1, as defined by ORDER BY) to each row within the partition."
 argument_list|)
-argument_list|,
+annotation|@
+name|WindowFunctionDescription
+argument_list|(
 name|supportsWindow
 operator|=
 literal|false
