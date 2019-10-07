@@ -8651,6 +8651,35 @@ argument_list|()
 operator|!=
 name|HiveParser
 operator|.
+name|TOK_NULLS_FIRST
+operator|&&
+name|directionCode
+operator|==
+name|DirectionUtils
+operator|.
+name|ASCENDING_CODE
+condition|)
+block|{
+throw|throw
+operator|new
+name|SemanticException
+argument_list|(
+literal|"create/alter bucketed table: not supported NULLS LAST for SORTED BY in ASC order"
+argument_list|)
+throw|;
+block|}
+if|if
+condition|(
+name|child
+operator|.
+name|getToken
+argument_list|()
+operator|.
+name|getType
+argument_list|()
+operator|!=
+name|HiveParser
+operator|.
 name|TOK_NULLS_LAST
 operator|&&
 name|directionCode
@@ -8664,7 +8693,7 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
-literal|"create/alter table: not supported NULLS FIRST for ORDER BY in DESC order"
+literal|"create/alter bucketed table: not supported NULLS FIRST for SORTED BY in DESC order"
 argument_list|)
 throw|;
 block|}
