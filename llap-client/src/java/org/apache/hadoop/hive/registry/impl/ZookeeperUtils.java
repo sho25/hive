@@ -39,22 +39,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|security
-operator|.
-name|UserGroupInformation
-operator|.
-name|AuthenticationMethod
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -317,7 +301,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Check if Kerberos is enabled.    */
+comment|/**    * Check if Kerberos authentication is enabled.    */
 specifier|public
 specifier|static
 name|boolean
@@ -338,19 +322,9 @@ operator|.
 name|isFromKeytab
 argument_list|()
 operator|&&
-operator|!
-name|AuthenticationMethod
-operator|.
-name|SIMPLE
-operator|.
-name|name
-argument_list|()
-operator|.
-name|equalsIgnoreCase
-argument_list|(
 name|HiveConf
 operator|.
-name|getVar
+name|getBoolVar
 argument_list|(
 name|conf
 argument_list|,
@@ -358,8 +332,7 @@ name|HiveConf
 operator|.
 name|ConfVars
 operator|.
-name|HIVE_SECURITY_ZOOKEEPER_AUTHENTICATION
-argument_list|)
+name|HIVE_ZOOKEEPER_USE_KERBEROS
 argument_list|)
 return|;
 block|}

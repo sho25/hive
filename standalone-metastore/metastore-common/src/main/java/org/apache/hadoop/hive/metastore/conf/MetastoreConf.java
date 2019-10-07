@@ -4089,6 +4089,19 @@ operator|+
 literal|"\"zookeeper\" to specify ZooKeeper based service discovery."
 argument_list|)
 block|,
+name|THRIFT_ZOOKEEPER_USE_KERBEROS
+argument_list|(
+literal|"metastore.zookeeper.kerberos.enabled"
+argument_list|,
+literal|"hive.zookeeper.kerberos.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If ZooKeeper is configured for Kerberos authentication. This could be useful when cluster\n"
+operator|+
+literal|"is kerberized, but Zookeeper is not."
+argument_list|)
+block|,
 name|THRIFT_ZOOKEEPER_CLIENT_PORT
 argument_list|(
 literal|"metastore.zookeeper.client.port"

@@ -9608,23 +9608,13 @@ literal|"read MM tables with original files will fail. The default in Hive 3.0 i
 argument_list|)
 block|,
 comment|// Zookeeper related configs
-name|HIVE_SECURITY_ZOOKEEPER_AUTHENTICATION
+name|HIVE_ZOOKEEPER_USE_KERBEROS
 argument_list|(
-literal|"hive.security.zookeeper.authentication"
+literal|"hive.zookeeper.kerberos.enabled"
 argument_list|,
-literal|"DEFAULT"
+literal|true
 argument_list|,
-operator|new
-name|StringSet
-argument_list|(
-literal|"DEFAULT"
-argument_list|,
-literal|"SIMPLE"
-argument_list|)
-argument_list|,
-literal|"Whether the authentication type for Zookeeper is different from the cluster wide\n"
-operator|+
-literal|"`hadoop.security.authentication` configuration. This could be useful when cluster\n"
+literal|"If ZooKeeper is configured for Kerberos authentication. This could be useful when cluster\n"
 operator|+
 literal|"is kerberized, but Zookeeper is not."
 argument_list|)
@@ -15443,6 +15433,17 @@ argument_list|,
 literal|10
 argument_list|,
 literal|"Specify the number of threads to use for low-level IO thread pool."
+argument_list|)
+block|,
+name|LLAP_USE_KERBEROS
+argument_list|(
+literal|"hive.llap.kerberos.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"If LLAP is configured for Kerberos authentication. This could be useful when cluster\n"
+operator|+
+literal|"is kerberized, but LLAP is not."
 argument_list|)
 block|,
 name|LLAP_KERBEROS_PRINCIPAL
