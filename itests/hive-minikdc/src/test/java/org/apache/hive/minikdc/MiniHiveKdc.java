@@ -701,6 +701,14 @@ return|return
 name|HIVE_TEST_USER_1
 return|;
 block|}
+name|String
+name|getHiveMetastoreServicePrincipal
+parameter_list|()
+block|{
+return|return
+name|HIVE_METASTORE_SERVICE_PRINCIPAL
+return|;
+block|}
 comment|/**    * Create a MiniHS2 with the hive service principal and keytab in MiniHiveKdc    * @param miniHiveKdc    * @param hiveConf    * @return new MiniHS2 instance    * @throws Exception    */
 specifier|public
 specifier|static

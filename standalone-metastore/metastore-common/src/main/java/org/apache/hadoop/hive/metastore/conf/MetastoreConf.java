@@ -85,6 +85,22 @@ begin_import
 import|import
 name|org
 operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|security
+operator|.
+name|alias
+operator|.
+name|CredentialProviderFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -403,6 +419,14 @@ name|String
 name|ACID_WRITE_SET_SERVICE_CLASS
 init|=
 literal|"org.apache.hadoop.hive.metastore.txn.AcidWriteSetService"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|METASTORE_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+init|=
+literal|"metastore.authentication.ldap.userMembershipKey"
 decl_stmt|;
 specifier|private
 specifier|static
@@ -732,6 +756,14 @@ block|,
 name|ConfVars
 operator|.
 name|USE_THRIFT_SASL
+block|,
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_AUTH_MODE
+block|,
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_PLAIN_USERNAME
 block|,
 name|ConfVars
 operator|.
@@ -2530,6 +2562,278 @@ operator|+
 literal|"The special string _HOST will be replaced automatically with the correct host name."
 argument_list|)
 block|,
+name|THRIFT_METASTORE_AUTHENTICATION
+argument_list|(
+literal|"metastore.authentication"
+argument_list|,
+literal|"hive.metastore.authentication"
+argument_list|,
+literal|"NOSASL"
+argument_list|,
+operator|new
+name|StringSetValidator
+argument_list|(
+literal|"NOSASL"
+argument_list|,
+literal|"NONE"
+argument_list|,
+literal|"LDAP"
+argument_list|,
+literal|"KERBEROS"
+argument_list|,
+literal|"CUSTOM"
+argument_list|)
+argument_list|,
+literal|"Client authentication types.\n"
+operator|+
+literal|"  NONE: no authentication check\n"
+operator|+
+literal|"  LDAP: LDAP/AD based authentication\n"
+operator|+
+literal|"  KERBEROS: Kerberos/GSSAPI authentication\n"
+operator|+
+literal|"  CUSTOM: Custom authentication provider\n"
+operator|+
+literal|"          (Use with property metastore.custom.authentication.class)\n"
+operator|+
+literal|"  CONFIG: username and password is specified in the config"
+operator|+
+literal|"  NOSASL:  Raw transport"
+argument_list|)
+block|,
+name|METASTORE_CUSTOM_AUTHENTICATION_CLASS
+argument_list|(
+literal|"metastore.custom.authentication.class"
+argument_list|,
+literal|"hive.metastore.custom.authentication.class"
+argument_list|,
+literal|""
+argument_list|,
+literal|"Custom authentication class. Used when property\n"
+operator|+
+literal|"'metastore.authentication' is set to 'CUSTOM'. Provided class\n"
+operator|+
+literal|"must be a proper implementation of the interface\n"
+operator|+
+literal|"org.apache.hadoop.hive.metastore.MetaStorePasswdAuthenticationProvider. MetaStore\n"
+operator|+
+literal|"will call its Authenticate(user, passed) method to authenticate requests.\n"
+operator|+
+literal|"The implementation may optionally implement Hadoop's\n"
+operator|+
+literal|"org.apache.hadoop.conf.Configurable class to grab MetaStore's Configuration object."
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_URL
+argument_list|(
+literal|"metastore.authentication.ldap.url"
+argument_list|,
+literal|"metastore.authentication.ldap.url"
+argument_list|,
+literal|""
+argument_list|,
+literal|"LDAP connection URL(s),\n"
+operator|+
+literal|"this value could contain URLs to multiple LDAP servers instances for HA,\n"
+operator|+
+literal|"each LDAP URL is separated by a SPACE character. URLs are used in the \n"
+operator|+
+literal|" order specified until a connection is successful."
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_BASEDN
+argument_list|(
+literal|"metastore.authentication.ldap.baseDN"
+argument_list|,
+literal|"metastore.authentication.ldap.baseDN"
+argument_list|,
+literal|""
+argument_list|,
+literal|"LDAP base DN"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_DOMAIN
+argument_list|(
+literal|"metastore.authentication.ldap.Domain"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.Domain"
+argument_list|,
+literal|""
+argument_list|,
+literal|""
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_GROUPDNPATTERN
+argument_list|(
+literal|"metastore.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.groupDNPattern"
+argument_list|,
+literal|""
+argument_list|,
+literal|"COLON-separated list of patterns to use to find DNs for group entities in this directory.\n"
+operator|+
+literal|"Use %s where the actual group name is to be substituted for.\n"
+operator|+
+literal|"For example: CN=%s,CN=Groups,DC=subdomain,DC=domain,DC=com."
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_GROUPFILTER
+argument_list|(
+literal|"metastore.authentication.ldap.groupFilter"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.groupFilter"
+argument_list|,
+literal|""
+argument_list|,
+literal|"COMMA-separated list of LDAP Group names (short name not full DNs).\n"
+operator|+
+literal|"For example: HiveAdmins,HadoopAdmins,Administrators"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_USERDNPATTERN
+argument_list|(
+literal|"metastore.authentication.ldap.userDNPattern"
+argument_list|,
+literal|"metastore.authentication.ldap.userDNPattern"
+argument_list|,
+literal|""
+argument_list|,
+literal|"COLON-separated list of patterns to use to find DNs for users in this directory.\n"
+operator|+
+literal|"Use %s where the actual group name is to be substituted for.\n"
+operator|+
+literal|"For example: CN=%s,CN=Users,DC=subdomain,DC=domain,DC=com."
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_USERFILTER
+argument_list|(
+literal|"metastore.authentication.ldap.userFilter"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.userFilter"
+argument_list|,
+literal|""
+argument_list|,
+literal|"COMMA-separated list of LDAP usernames (just short names, not full DNs).\n"
+operator|+
+literal|"For example: hiveuser,impalauser,hiveadmin,hadoopadmin"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_GUIDKEY
+argument_list|(
+literal|"metastore.authentication.ldap.guidKey"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.guidKey"
+argument_list|,
+literal|"uid"
+argument_list|,
+literal|"LDAP attribute name whose values are unique in this LDAP server.\n"
+operator|+
+literal|"For example: uid or CN."
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_GROUPMEMBERSHIP_KEY
+argument_list|(
+literal|"metastore.authentication.ldap.groupMembershipKey"
+argument_list|,
+literal|"metastore.authentication.ldap.groupMembershipKey"
+argument_list|,
+literal|"member"
+argument_list|,
+literal|"LDAP attribute name on the group object that contains the list of distinguished names\n"
+operator|+
+literal|"for the user, group, and contact objects that are members of the group.\n"
+operator|+
+literal|"For example: member, uniqueMember or memberUid"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_USERMEMBERSHIP_KEY
+argument_list|(
+name|METASTORE_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+argument_list|,
+literal|"hive."
+operator|+
+name|METASTORE_AUTHENTICATION_LDAP_USERMEMBERSHIPKEY_NAME
+argument_list|,
+literal|""
+argument_list|,
+literal|"LDAP attribute name on the user object that contains groups of which the user is\n"
+operator|+
+literal|"a direct member, except for the primary group, which is represented by the\n"
+operator|+
+literal|"primaryGroupId.\n"
+operator|+
+literal|"For example: memberOf"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_GROUPCLASS_KEY
+argument_list|(
+literal|"metastore.authentication.ldap.groupClassKey"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.groupClassKey"
+argument_list|,
+literal|"groupOfNames"
+argument_list|,
+literal|"LDAP attribute name on the group entry that is to be used in LDAP group searches.\n"
+operator|+
+literal|"For example: group, groupOfNames or groupOfUniqueNames."
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_CUSTOMLDAPQUERY
+argument_list|(
+literal|"metastore.authentication.ldap.customLDAPQuery"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.customLDAPQuery"
+argument_list|,
+literal|""
+argument_list|,
+literal|"A full LDAP query that LDAP Atn provider uses to execute against LDAP Server.\n"
+operator|+
+literal|"If this query returns a null resultset, the LDAP Provider fails the Authentication\n"
+operator|+
+literal|"request, succeeds if the user is part of the resultset."
+operator|+
+literal|"For example: (&(objectClass=group)(objectClass=top)(instanceType=4)(cn=Domain*)) \n"
+operator|+
+literal|"(&(objectClass=person)(|(sAMAccountName=admin)(|(memberOf=CN=Domain Admins,CN=Users,DC=domain,DC=com)"
+operator|+
+literal|"(memberOf=CN=Administrators,CN=Builtin,DC=domain,DC=com))))"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_BIND_USER
+argument_list|(
+literal|"metastore.authentication.ldap.binddn"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.binddn"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The user with which to bind to the LDAP server, and search for the full domain name "
+operator|+
+literal|"of the user being authenticated.\n"
+operator|+
+literal|"This should be the full domain name of the user, and should have search access across all "
+operator|+
+literal|"users in the LDAP tree.\n"
+operator|+
+literal|"If not specified, then the user being authenticated will be used as the bind user.\n"
+operator|+
+literal|"For example: CN=bindUser,CN=Users,DC=subdomain,DC=domain,DC=com"
+argument_list|)
+block|,
+name|METASTORE_PLAIN_LDAP_BIND_PASSWORD
+argument_list|(
+literal|"metastore.authentication.ldap.bindpw"
+argument_list|,
+literal|"hive.metastore.authentication.ldap.bindpw"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The password for the bind user, to be used to search for the full name of the user being authenticated.\n"
+operator|+
+literal|"If the username is specified, this parameter must also be specified."
+argument_list|)
+block|,
 name|LIMIT_PARTITION_REQUEST
 argument_list|(
 literal|"metastore.limit.partition.request"
@@ -4142,6 +4446,7 @@ argument_list|,
 literal|"Set this to true for using SSL encryption in HMS server."
 argument_list|)
 block|,
+comment|// We should somehow unify next two options.
 name|USE_THRIFT_SASL
 argument_list|(
 literal|"metastore.sasl.enabled"
@@ -4151,6 +4456,86 @@ argument_list|,
 literal|false
 argument_list|,
 literal|"If true, the metastore Thrift interface will be secured with SASL. Clients must authenticate with Kerberos."
+argument_list|)
+block|,
+name|METASTORE_CLIENT_AUTH_MODE
+argument_list|(
+literal|"metastore.client.auth.mode"
+argument_list|,
+literal|"hive.metastore.client.auth.mode"
+argument_list|,
+literal|"NOSASL"
+argument_list|,
+operator|new
+name|StringSetValidator
+argument_list|(
+literal|"NOSASL"
+argument_list|,
+literal|"PLAIN"
+argument_list|,
+literal|"KERBEROS"
+argument_list|)
+argument_list|,
+literal|"If PLAIN, clients will authenticate using plain authentication, by providing username"
+operator|+
+literal|" and password. Any other value is ignored right now but may be used later."
+argument_list|)
+block|,
+name|METASTORE_CLIENT_PLAIN_USERNAME
+argument_list|(
+literal|"metastore.client.plain.username"
+argument_list|,
+literal|"hive.metastore.client.plain.username"
+argument_list|,
+literal|""
+argument_list|,
+literal|"The username used by the metastore client when "
+operator|+
+name|METASTORE_CLIENT_AUTH_MODE
+operator|+
+literal|" is true. The password is obtained from "
+operator|+
+name|CredentialProviderFactory
+operator|.
+name|CREDENTIAL_PROVIDER_PATH
+operator|+
+literal|" using username as the "
+operator|+
+literal|"alias."
+argument_list|)
+block|,
+name|THRIFT_AUTH_CONFIG_USERNAME
+argument_list|(
+literal|"metastore.authentication.config.username"
+argument_list|,
+literal|"hive.metastore.authentication.config.username"
+argument_list|,
+literal|""
+argument_list|,
+literal|"If "
+operator|+
+name|THRIFT_METASTORE_AUTHENTICATION
+operator|+
+literal|" is set to CONFIG, username provided by "
+operator|+
+literal|"client is matched against this value."
+argument_list|)
+block|,
+name|THRIFT_AUTH_CONFIG_PASSWORD
+argument_list|(
+literal|"metastore.authentication.config.password"
+argument_list|,
+literal|"hive.metastore.authentication.config.password"
+argument_list|,
+literal|""
+argument_list|,
+literal|"If "
+operator|+
+name|THRIFT_METASTORE_AUTHENTICATION
+operator|+
+literal|" is set to CONFIG, password provided by "
+operator|+
+literal|"the client is matched against this value."
 argument_list|)
 block|,
 name|USE_THRIFT_FRAMED_TRANSPORT

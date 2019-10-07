@@ -120,6 +120,9 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
+name|initConf
+argument_list|()
+expr_stmt|;
 comment|// Test that the metastore gets bound to the configured address.
 name|MetastoreConf
 operator|.

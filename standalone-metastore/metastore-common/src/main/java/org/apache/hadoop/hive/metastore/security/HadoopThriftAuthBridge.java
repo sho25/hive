@@ -2129,6 +2129,25 @@ name|realUgi
 argument_list|)
 return|;
 block|}
+comment|/**      * Similar to the above function, except use client facing UGI.      */
+specifier|public
+name|TTransportFactory
+name|wrapTransportFactoryInClientUGI
+parameter_list|(
+name|TTransportFactory
+name|transFactory
+parameter_list|)
+block|{
+return|return
+operator|new
+name|TUGIAssumingTransportFactory
+argument_list|(
+name|transFactory
+argument_list|,
+name|clientValidationUGI
+argument_list|)
+return|;
+block|}
 comment|/**      * Wrap a TProcessor in such a way that, before processing any RPC, it      * assumes the UserGroupInformation of the user authenticated by      * the SASL transport.      */
 specifier|public
 name|TProcessor
