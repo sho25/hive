@@ -146,6 +146,15 @@ name|void
 name|finalize
 parameter_list|()
 block|{
+if|if
+condition|(
+name|vectorColumnMapping
+operator|==
+literal|null
+condition|)
+block|{
+return|return;
+block|}
 name|Mapping
 name|mapping
 init|=
