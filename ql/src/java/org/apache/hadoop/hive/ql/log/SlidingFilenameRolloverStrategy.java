@@ -376,6 +376,15 @@ name|pattern
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|void
+name|clearCurrentFileName
+parameter_list|()
+block|{
+comment|// no rename is needed
+block|}
 comment|/**    * @return Mangled file name formed by appending the current timestamp    */
 specifier|private
 specifier|static

@@ -1223,7 +1223,7 @@ name|class
 operator|.
 name|getDeclaredField
 argument_list|(
-literal|"appenders"
+literal|"createdAppenders"
 argument_list|)
 decl_stmt|;
 name|defaultsField
@@ -1428,7 +1428,7 @@ name|class
 operator|.
 name|getDeclaredField
 argument_list|(
-literal|"appenders"
+literal|"createdAppenders"
 argument_list|)
 decl_stmt|;
 name|defaultsField
