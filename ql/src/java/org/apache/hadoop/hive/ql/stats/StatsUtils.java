@@ -1754,6 +1754,24 @@ name|getName
 argument_list|()
 argument_list|)
 decl_stmt|;
+comment|// Range lower limit for date type when not defined (days, heuristic): '1999-01-01'
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|DATE_RANGE_LOWER_LIMIT
+init|=
+literal|10593
+decl_stmt|;
+comment|// Range upper limit for date type when not defined (days, heuristic): '2024-12-31'
+specifier|private
+specifier|static
+specifier|final
+name|int
+name|DATE_RANGE_UPPER_LIMIT
+init|=
+literal|20089
+decl_stmt|;
 comment|/**    * Collect table, partition and column level statistics    * @param conf    *          - hive configuration    * @param partList    *          - partition list    * @param table    *          - table    * @param tableScanOperator    *          - table scan operator    * @return statistics object    * @throws HiveException    */
 specifier|public
 specifier|static
@@ -7264,9 +7282,9 @@ name|cs
 operator|.
 name|setRange
 argument_list|(
-literal|0
+name|DATE_RANGE_LOWER_LIMIT
 argument_list|,
-literal|25201
+name|DATE_RANGE_UPPER_LIMIT
 argument_list|)
 expr_stmt|;
 block|}

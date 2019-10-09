@@ -9436,6 +9436,21 @@ operator|+
 literal|"the columns are correlated."
 argument_list|)
 block|,
+name|HIVE_STATS_RANGE_SELECTIVITY_UNIFORM_DISTRIBUTION
+argument_list|(
+literal|"hive.stats.filter.range.uniform"
+argument_list|,
+literal|true
+argument_list|,
+literal|"When estimating output rows from a condition, if a range predicate is applied over a column and the\n"
+operator|+
+literal|"minimum and maximum values for that column are available, assume uniform distribution of values\n"
+operator|+
+literal|"across that range and scales number of rows proportionally. If this is set to false, default\n"
+operator|+
+literal|"selectivity value is used."
+argument_list|)
+block|,
 comment|// in the absence of uncompressed/raw data size, total file size will be used for statistics
 comment|// annotation. But the file may be compressed, encoded and serialized which may be lesser in size
 comment|// than the actual uncompressed/raw data size. This factor will be multiplied to file size to estimate
