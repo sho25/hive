@@ -56,6 +56,15 @@ parameter_list|)
 throws|throws
 name|Exception
 function_decl|;
+name|void
+name|afterTest
+parameter_list|(
+name|QTestUtil
+name|qt
+parameter_list|)
+throws|throws
+name|Exception
+function_decl|;
 block|}
 end_interface
 
