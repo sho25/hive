@@ -2628,7 +2628,7 @@ name|METASTORE_PLAIN_LDAP_URL
 argument_list|(
 literal|"metastore.authentication.ldap.url"
 argument_list|,
-literal|"metastore.authentication.ldap.url"
+literal|"hive.metastore.authentication.ldap.url"
 argument_list|,
 literal|""
 argument_list|,
@@ -2645,7 +2645,7 @@ name|METASTORE_PLAIN_LDAP_BASEDN
 argument_list|(
 literal|"metastore.authentication.ldap.baseDN"
 argument_list|,
-literal|"metastore.authentication.ldap.baseDN"
+literal|"hive.metastore.authentication.ldap.baseDN"
 argument_list|,
 literal|""
 argument_list|,
@@ -2695,7 +2695,7 @@ name|METASTORE_PLAIN_LDAP_USERDNPATTERN
 argument_list|(
 literal|"metastore.authentication.ldap.userDNPattern"
 argument_list|,
-literal|"metastore.authentication.ldap.userDNPattern"
+literal|"hive.metastore.authentication.ldap.userDNPattern"
 argument_list|,
 literal|""
 argument_list|,
@@ -2736,7 +2736,7 @@ name|METASTORE_PLAIN_LDAP_GROUPMEMBERSHIP_KEY
 argument_list|(
 literal|"metastore.authentication.ldap.groupMembershipKey"
 argument_list|,
-literal|"metastore.authentication.ldap.groupMembershipKey"
+literal|"hive.metastore.authentication.ldap.groupMembershipKey"
 argument_list|,
 literal|"member"
 argument_list|,
