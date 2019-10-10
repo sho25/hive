@@ -976,7 +976,14 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Attempt to compact sorted table, which is not yet supported!"
+literal|"Attempt to compact sorted table "
+operator|+
+name|ci
+operator|.
+name|getFullTableName
+argument_list|()
+operator|+
+literal|", which is not yet supported!"
 argument_list|)
 expr_stmt|;
 name|msc
