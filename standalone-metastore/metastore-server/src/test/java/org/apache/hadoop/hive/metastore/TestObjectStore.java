@@ -1529,13 +1529,6 @@ expr_stmt|;
 name|setupRandomObjectStoreUrl
 argument_list|()
 expr_stmt|;
-name|Deadline
-operator|.
-name|registerIfNot
-argument_list|(
-literal|100000
-argument_list|)
-expr_stmt|;
 name|objectStore
 operator|=
 operator|new
@@ -3078,13 +3071,7 @@ name|void
 name|testPartitionOps
 parameter_list|()
 throws|throws
-name|MetaException
-throws|,
-name|InvalidObjectException
-throws|,
-name|NoSuchObjectException
-throws|,
-name|InvalidInputException
+name|Exception
 block|{
 name|Database
 name|db1
@@ -3113,6 +3100,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|createDatabase
@@ -3120,6 +3116,7 @@ argument_list|(
 name|db1
 argument_list|)
 expr_stmt|;
+block|}
 name|StorageDescriptor
 name|sd
 init|=
@@ -3218,6 +3215,15 @@ argument_list|,
 literal|"MANAGED_TABLE"
 argument_list|)
 decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|createTable
@@ -3225,6 +3231,7 @@ argument_list|(
 name|tbl1
 argument_list|)
 expr_stmt|;
+block|}
 name|HashMap
 argument_list|<
 name|String
@@ -3290,6 +3297,15 @@ argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|)
 expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|addPartition
@@ -3297,6 +3313,7 @@ argument_list|(
 name|part1
 argument_list|)
 expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|String
@@ -3340,6 +3357,15 @@ argument_list|(
 name|DEFAULT_CATALOG_NAME
 argument_list|)
 expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|addPartition
@@ -3347,19 +3373,24 @@ argument_list|(
 name|part2
 argument_list|)
 expr_stmt|;
-name|Deadline
-operator|.
-name|startTimer
-argument_list|(
-literal|"getPartition"
-argument_list|)
-expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|partitions
+decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
 init|=
+name|deadline
+argument_list|()
+init|)
+block|{
+name|partitions
+operator|=
 name|objectStore
 operator|.
 name|getPartitions
@@ -3372,7 +3403,8 @@ name|TABLE1
 argument_list|,
 literal|10
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -3421,7 +3453,18 @@ argument_list|)
 expr_stmt|;
 name|int
 name|numPartitions
+decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
 init|=
+name|deadline
+argument_list|()
+init|)
+block|{
+name|numPartitions
+operator|=
 name|objectStore
 operator|.
 name|getNumPartitionsByFilter
@@ -3434,7 +3477,8 @@ name|TABLE1
 argument_list|,
 literal|""
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -3447,6 +3491,15 @@ argument_list|,
 name|numPartitions
 argument_list|)
 expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|numPartitions
 operator|=
 name|objectStore
@@ -3462,6 +3515,7 @@ argument_list|,
 literal|"country = \"US\""
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -3471,6 +3525,15 @@ argument_list|,
 name|numPartitions
 argument_list|)
 expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|dropPartition
@@ -3499,6 +3562,7 @@ argument_list|,
 literal|10
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -3528,6 +3592,15 @@ name|getCreateTime
 argument_list|()
 argument_list|)
 expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|dropPartition
@@ -3564,6 +3637,7 @@ argument_list|,
 name|DB1
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 comment|/**    * Test the concurrent drop of same partition would leak transaction.    * https://issues.apache.org/jira/browse/HIVE-16839    *    * Note: the leak happens during a race condition, this test case tries    * to simulate the race condition on best effort, it have two threads trying    * to drop the same set of partitions    */
 annotation|@
@@ -3985,7 +4059,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Checks if the JDO cache is able to handle directSQL partition drops in one session.    * @throws MetaException    * @throws InvalidObjectException    * @throws NoSuchObjectException    * @throws SQLException    */
+comment|/**    * Checks if the JDO cache is able to handle directSQL partition drops in one session.    */
 annotation|@
 name|Test
 specifier|public
@@ -3993,13 +4067,7 @@ name|void
 name|testDirectSQLDropPartitionsCacheInSession
 parameter_list|()
 throws|throws
-name|MetaException
-throws|,
-name|InvalidObjectException
-throws|,
-name|NoSuchObjectException
-throws|,
-name|InvalidInputException
+name|Exception
 block|{
 name|createPartitionedTable
 argument_list|(
@@ -4009,19 +4077,23 @@ literal|false
 argument_list|)
 expr_stmt|;
 comment|// query the partitions with JDO
-name|Deadline
-operator|.
-name|startTimer
-argument_list|(
-literal|"getPartition"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|partitions
+decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
 init|=
+name|deadline
+argument_list|()
+init|)
+block|{
+name|partitions
+operator|=
 name|objectStore
 operator|.
 name|getPartitionsInternal
@@ -4038,7 +4110,8 @@ literal|false
 argument_list|,
 literal|true
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4052,6 +4125,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// drop partitions with directSql
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|dropPartitionsInternal
@@ -4076,6 +4158,16 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 comment|// query the partitions with JDO, checking the cache is not causing any problem
 name|partitions
 operator|=
@@ -4096,6 +4188,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4109,7 +4202,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Checks if the JDO cache is able to handle directSQL partition drops cross sessions.    * @throws MetaException    * @throws InvalidObjectException    * @throws NoSuchObjectException    * @throws SQLException    */
+comment|/**    * Checks if the JDO cache is able to handle directSQL partition drops cross sessions.    */
 annotation|@
 name|Test
 specifier|public
@@ -4117,13 +4210,7 @@ name|void
 name|testDirectSQLDropPartitionsCacheCrossSession
 parameter_list|()
 throws|throws
-name|MetaException
-throws|,
-name|InvalidObjectException
-throws|,
-name|NoSuchObjectException
-throws|,
-name|InvalidInputException
+name|Exception
 block|{
 name|ObjectStore
 name|objectStore2
@@ -4147,19 +4234,23 @@ literal|false
 argument_list|)
 expr_stmt|;
 comment|// query the partitions with JDO in the 1st session
-name|Deadline
-operator|.
-name|startTimer
-argument_list|(
-literal|"getPartition"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|Partition
 argument_list|>
 name|partitions
+decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
 init|=
+name|deadline
+argument_list|()
+init|)
+block|{
+name|partitions
+operator|=
 name|objectStore
 operator|.
 name|getPartitionsInternal
@@ -4176,7 +4267,8 @@ literal|false
 argument_list|,
 literal|true
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4190,6 +4282,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// query the partitions with JDO in the 2nd session
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|partitions
 operator|=
 name|objectStore2
@@ -4209,6 +4310,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4222,6 +4324,15 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// drop partitions with directSql in the 1st session
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|dropPartitionsInternal
@@ -4246,8 +4357,18 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 comment|// query the partitions with JDO in the 2nd session, checking the cache is not causing any
 comment|// problem
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|partitions
 operator|=
 name|objectStore2
@@ -4267,6 +4388,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 name|Assert
 operator|.
 name|assertEquals
@@ -4280,7 +4402,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-comment|/**    * Checks if the directSQL partition drop removes every connected data from the RDBMS tables.    * @throws MetaException    * @throws InvalidObjectException    * @throws NoSuchObjectException    * @throws SQLException    */
+comment|/**    * Checks if the directSQL partition drop removes every connected data from the RDBMS tables.    */
 annotation|@
 name|Test
 specifier|public
@@ -4288,15 +4410,7 @@ name|void
 name|testDirectSQLDropParitionsCleanup
 parameter_list|()
 throws|throws
-name|MetaException
-throws|,
-name|InvalidObjectException
-throws|,
-name|NoSuchObjectException
-throws|,
-name|SQLException
-throws|,
-name|InvalidInputException
+name|Exception
 block|{
 name|createPartitionedTable
 argument_list|(
@@ -4400,13 +4514,15 @@ argument_list|)
 expr_stmt|;
 comment|// Table has a serde
 comment|// drop the partitions
-name|Deadline
-operator|.
-name|startTimer
-argument_list|(
-literal|"dropPartitions"
-argument_list|)
-expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|dropPartitionsInternal
@@ -4433,6 +4549,7 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
+block|}
 comment|// Check, if every data is dropped connected to the partitions
 name|checkBackendTableSize
 argument_list|(
@@ -4528,7 +4645,7 @@ argument_list|)
 expr_stmt|;
 comment|// Table has a serde
 block|}
-comment|/**    * Creates DB1 database, TABLE1 table with 3 partitions.    * @param withPrivileges Should we create privileges as well    * @param withStatistics Should we create statitics as well    * @throws MetaException    * @throws InvalidObjectException    */
+comment|/**    * Creates DB1 database, TABLE1 table with 3 partitions.    * @param withPrivileges Should we create privileges as well    * @param withStatistics Should we create statitics as well    */
 specifier|private
 name|void
 name|createPartitionedTable
@@ -4540,13 +4657,7 @@ name|boolean
 name|withStatistics
 parameter_list|)
 throws|throws
-name|MetaException
-throws|,
-name|InvalidObjectException
-throws|,
-name|NoSuchObjectException
-throws|,
-name|InvalidInputException
+name|Exception
 block|{
 name|Database
 name|db1
@@ -4575,6 +4686,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|createDatabase
@@ -4582,6 +4702,7 @@ argument_list|(
 name|db1
 argument_list|)
 expr_stmt|;
+block|}
 name|Table
 name|tbl1
 init|=
@@ -4652,6 +4773,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|createTable
@@ -4659,6 +4789,7 @@ argument_list|(
 name|tbl1
 argument_list|)
 expr_stmt|;
+block|}
 name|PrivilegeBag
 name|privilegeBag
 init|=
@@ -4737,6 +4868,15 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|addPartition
@@ -4744,6 +4884,7 @@ argument_list|(
 name|part
 argument_list|)
 expr_stmt|;
+block|}
 if|if
 condition|(
 name|withPrivileges
@@ -5028,6 +5169,15 @@ argument_list|(
 name|partStats
 argument_list|)
 expr_stmt|;
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
+block|{
 name|objectStore
 operator|.
 name|updatePartitionColumnStatistics
@@ -5047,10 +5197,20 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 if|if
 condition|(
 name|withPrivileges
 condition|)
+block|{
+try|try
+init|(
+name|AutoCloseable
+name|c
+init|=
+name|deadline
+argument_list|()
+init|)
 block|{
 name|objectStore
 operator|.
@@ -5059,6 +5219,7 @@ argument_list|(
 name|privilegeBag
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 comment|/**    * Checks if the HMS backend db row number is as expected. If they are not, an    * {@link AssertionError} is thrown.    * @param tableName The table in which we count the rows    * @param size The expected row number    * @throws SQLException If there is a problem connecting to / querying the backend DB    */
@@ -5733,13 +5894,6 @@ name|InvalidInputException
 block|{
 try|try
 block|{
-name|Deadline
-operator|.
-name|registerIfNot
-argument_list|(
-literal|100000
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|Function
@@ -5834,13 +5988,6 @@ range|:
 name|tbls
 control|)
 block|{
-name|Deadline
-operator|.
-name|startTimer
-argument_list|(
-literal|"getPartition"
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|Partition
@@ -7265,6 +7412,24 @@ operator|.
 name|newMetastoreConf
 argument_list|()
 decl_stmt|;
+comment|// DN class initialization can reach a deadlock situation
+comment|// in case the one holding the write lock doesn't get a connection from the CP manager
+name|conf
+operator|.
+name|set
+argument_list|(
+name|dataSourceProp
+argument_list|,
+name|Integer
+operator|.
+name|toString
+argument_list|(
+literal|2
+operator|*
+name|numThreads
+argument_list|)
+argument_list|)
+expr_stmt|;
 name|MetaStoreTestUtils
 operator|.
 name|setConfForStandloneMode
@@ -7788,6 +7953,52 @@ argument_list|(
 name|cat
 argument_list|)
 expr_stmt|;
+block|}
+end_function
+
+begin_function
+name|AutoCloseable
+name|deadline
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|Deadline
+operator|.
+name|registerIfNot
+argument_list|(
+literal|100_000
+argument_list|)
+expr_stmt|;
+name|Deadline
+operator|.
+name|startTimer
+argument_list|(
+literal|"some method"
+argument_list|)
+expr_stmt|;
+return|return
+operator|new
+name|AutoCloseable
+argument_list|()
+block|{
+annotation|@
+name|Override
+specifier|public
+name|void
+name|close
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|Deadline
+operator|.
+name|stopTimer
+argument_list|()
+expr_stmt|;
+block|}
+block|}
+return|;
 block|}
 end_function
 
