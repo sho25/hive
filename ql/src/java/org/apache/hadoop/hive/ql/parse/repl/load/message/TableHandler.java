@@ -634,7 +634,6 @@ name|eventType
 argument_list|)
 expr_stmt|;
 comment|// REPL LOAD is not partition level. It is always DB or table level. So, passing null for partition specs.
-comment|// Also, REPL LOAD doesn't support external table and hence no location set as well.
 name|ImportSemanticAnalyzer
 operator|.
 name|prepareImport
