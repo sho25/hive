@@ -244,6 +244,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|MATERIALIZED_VIEWS_REGISTRY_REFRESH
+init|=
+literal|"MaterializedViewsRegistryRefresh"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|DO_AUTHORIZATION
 init|=
 literal|"doAuthorization"

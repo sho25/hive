@@ -11823,6 +11823,25 @@ operator|+
 literal|"  DUMMY: Do not cache materialized views and hence forward requests to metastore"
 argument_list|)
 block|,
+name|HIVE_SERVER2_MATERIALIZED_VIEWS_REGISTRY_REFRESH
+argument_list|(
+literal|"hive.server2.materializedviews.registry.refresh.period"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Period, specified in seconds, between successive refreshes of the registry to pull new materializations "
+operator|+
+literal|"from the metastore that may have been created by other HS2 instances."
+argument_list|)
+block|,
 comment|// HiveServer2 WebUI
 name|HIVE_SERVER2_WEBUI_BIND_HOST
 argument_list|(

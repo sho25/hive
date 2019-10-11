@@ -297,6 +297,14 @@ operator|.
 name|dropMaterializedView
 argument_list|(
 name|table
+operator|.
+name|getDbName
+argument_list|()
+argument_list|,
+name|table
+operator|.
+name|getTableName
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|DDLUtils
