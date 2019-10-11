@@ -534,7 +534,6 @@ argument_list|()
 decl_stmt|;
 static|static
 block|{
-comment|// All but decimal.
 name|SUPPORTED_PRIMITIVES
 operator|.
 name|add
@@ -551,15 +550,6 @@ argument_list|(
 name|PrimitiveCategory
 operator|.
 name|VOID
-argument_list|)
-expr_stmt|;
-name|SUPPORTED_PRIMITIVES
-operator|.
-name|add
-argument_list|(
-name|PrimitiveCategory
-operator|.
-name|BOOLEAN
 argument_list|)
 expr_stmt|;
 name|SUPPORTED_PRIMITIVES
@@ -686,6 +676,16 @@ argument_list|(
 name|PrimitiveCategory
 operator|.
 name|CHAR
+argument_list|)
+expr_stmt|;
+comment|/**      * No matter what scale/precision join keys are, they end up cast to common in query plan.      * We should be ok comparing them byte by byte. See      * {@link org.apache.hadoop.hive.ql.exec.FunctionRegistry#getCommonClassForComparison(TypeInfo, TypeInfo)}      * Q test: mapjoin_decimal_vectorized.q      */
+name|SUPPORTED_PRIMITIVES
+operator|.
+name|add
+argument_list|(
+name|PrimitiveCategory
+operator|.
+name|DECIMAL
 argument_list|)
 expr_stmt|;
 block|}
