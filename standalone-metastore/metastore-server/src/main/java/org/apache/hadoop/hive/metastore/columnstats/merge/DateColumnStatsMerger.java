@@ -343,7 +343,7 @@ name|aggregateData
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 name|void
 name|setLowValue
 parameter_list|(
@@ -442,7 +442,7 @@ name|mergedLowValue
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+specifier|public
 name|void
 name|setHighValue
 parameter_list|(

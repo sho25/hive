@@ -96,20 +96,6 @@ import|;
 end_import
 
 begin_import
-import|import
-name|com
-operator|.
-name|google
-operator|.
-name|common
-operator|.
-name|annotations
-operator|.
-name|VisibleForTesting
-import|;
-end_import
-
-begin_import
 import|import static
 name|org
 operator|.
@@ -357,8 +343,7 @@ name|aggregateData
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|VisibleForTesting
+specifier|public
 name|void
 name|setLowValue
 parameter_list|(
@@ -457,8 +442,7 @@ name|mergedLowValue
 argument_list|)
 expr_stmt|;
 block|}
-annotation|@
-name|VisibleForTesting
+specifier|public
 name|void
 name|setHighValue
 parameter_list|(
