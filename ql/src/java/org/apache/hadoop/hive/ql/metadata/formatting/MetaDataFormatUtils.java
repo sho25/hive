@@ -902,7 +902,7 @@ specifier|private
 name|MetaDataFormatUtils
 parameter_list|()
 block|{   }
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|convertToString
@@ -965,7 +965,7 @@ literal|""
 return|;
 block|}
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|String
 name|convertToString
