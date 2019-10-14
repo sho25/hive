@@ -57,6 +57,24 @@ name|org
 operator|.
 name|apache
 operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
+name|typeinfo
+operator|.
+name|TypeInfo
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
 name|parquet
 operator|.
 name|filter2
@@ -129,7 +147,7 @@ specifier|abstract
 class|class
 name|FilterPredicateLeafBuilder
 block|{
-comment|/**    * Build filter predicate with multiple constants    *    * @param op         IN or BETWEEN    * @param literals    * @param columnName    * @return    */
+comment|/**    * Build filter predicate with multiple constants    *    * @param op         IN or BETWEEN    * @param literals    * @param columnName    * @param columnType    * @return    */
 specifier|public
 name|FilterPredicate
 name|buildPredicate
@@ -147,6 +165,9 @@ name|literals
 parameter_list|,
 name|String
 name|columnName
+parameter_list|,
+name|TypeInfo
+name|columnType
 parameter_list|)
 throws|throws
 name|Exception
@@ -192,6 +213,8 @@ argument_list|,
 name|literal
 argument_list|,
 name|columnName
+argument_list|,
+name|columnType
 argument_list|)
 expr_stmt|;
 block|}
@@ -214,6 +237,8 @@ argument_list|,
 name|literal
 argument_list|,
 name|columnName
+argument_list|,
+name|columnType
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -283,6 +308,8 @@ argument_list|,
 name|min
 argument_list|,
 name|columnName
+argument_list|,
+name|columnType
 argument_list|)
 argument_list|)
 decl_stmt|;
@@ -300,6 +327,8 @@ argument_list|,
 name|max
 argument_list|,
 name|columnName
+argument_list|,
+name|columnType
 argument_list|)
 decl_stmt|;
 name|result
@@ -328,7 +357,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Build predicate with a single constant    *    * @param op         EQUALS, NULL_SAFE_EQUALS, LESS_THAN, LESS_THAN_EQUALS, IS_NULL    * @param constant    * @param columnName    * @return null or a FilterPredicate, null means no filter will be executed    */
+comment|/**    * Build predicate with a single constant    *    * @param op         EQUALS, NULL_SAFE_EQUALS, LESS_THAN, LESS_THAN_EQUALS, IS_NULL    * @param constant    * @param columnName    * @param columnType    * @return null or a FilterPredicate, null means no filter will be executed    */
 specifier|public
 specifier|abstract
 name|FilterPredicate
@@ -344,6 +373,9 @@ name|constant
 parameter_list|,
 name|String
 name|columnName
+parameter_list|,
+name|TypeInfo
+name|columnType
 parameter_list|)
 throws|throws
 name|Exception
