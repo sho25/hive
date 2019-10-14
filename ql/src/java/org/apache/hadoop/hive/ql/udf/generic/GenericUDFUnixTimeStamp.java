@@ -238,7 +238,7 @@ operator|.
 name|getQueryCurrentTimestamp
 argument_list|()
 operator|.
-name|toEpochMilli
+name|getEpochSecond
 argument_list|()
 argument_list|)
 expr_stmt|;
