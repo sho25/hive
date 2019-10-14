@@ -21,10 +21,6 @@ end_package
 
 begin_import
 import|import
-name|avro
-operator|.
-name|shaded
-operator|.
 name|com
 operator|.
 name|google
