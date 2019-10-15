@@ -1239,6 +1239,8 @@ name|ddl
 operator|.
 name|misc
 operator|.
+name|hooks
+operator|.
 name|InsertCommitHookDesc
 import|;
 end_import

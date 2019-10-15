@@ -681,11 +681,6 @@ name|HiveParser
 operator|.
 name|TOK_TRUNCATETABLE
 case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_CACHE_METADATA
-case|:
 return|return
 operator|new
 name|DDLSemanticAnalyzer

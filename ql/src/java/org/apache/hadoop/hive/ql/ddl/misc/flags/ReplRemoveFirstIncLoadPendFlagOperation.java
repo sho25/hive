@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|misc
+operator|.
+name|flags
 package|;
 end_package
 

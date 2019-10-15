@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|misc
+operator|.
+name|hooks
 package|;
 end_package
 

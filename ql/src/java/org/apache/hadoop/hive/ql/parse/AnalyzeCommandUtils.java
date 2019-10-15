@@ -109,11 +109,28 @@ name|SessionState
 import|;
 end_import
 
+begin_comment
+comment|/**  * Utilities for semantic analyzers.  */
+end_comment
+
 begin_class
 specifier|public
+specifier|final
 class|class
 name|AnalyzeCommandUtils
 block|{
+specifier|private
+name|AnalyzeCommandUtils
+parameter_list|()
+block|{
+throw|throw
+operator|new
+name|UnsupportedOperationException
+argument_list|(
+literal|"AnalyzeCommandUtils should not be instantiated"
+argument_list|)
+throw|;
+block|}
 specifier|public
 specifier|static
 name|boolean
@@ -336,7 +353,7 @@ condition|)
 block|{
 name|partSpec
 operator|=
-name|DDLSemanticAnalyzer
+name|BaseSemanticAnalyzer
 operator|.
 name|getValidatedPartSpec
 argument_list|(

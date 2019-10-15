@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|misc
+operator|.
+name|msck
 package|;
 end_package
 

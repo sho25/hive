@@ -225,6 +225,8 @@ name|ddl
 operator|.
 name|misc
 operator|.
+name|flags
+operator|.
 name|ReplRemoveFirstIncLoadPendFlagDesc
 import|;
 end_import

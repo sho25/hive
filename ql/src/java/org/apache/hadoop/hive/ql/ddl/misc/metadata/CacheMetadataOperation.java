@@ -18,6 +18,8 @@ operator|.
 name|ddl
 operator|.
 name|misc
+operator|.
+name|metadata
 package|;
 end_package
 
