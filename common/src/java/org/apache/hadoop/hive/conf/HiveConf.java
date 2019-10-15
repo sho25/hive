@@ -11827,7 +11827,7 @@ name|HIVE_SERVER2_MATERIALIZED_VIEWS_REGISTRY_REFRESH
 argument_list|(
 literal|"hive.server2.materializedviews.registry.refresh.period"
 argument_list|,
-literal|"60s"
+literal|"1500s"
 argument_list|,
 operator|new
 name|TimeValidator
