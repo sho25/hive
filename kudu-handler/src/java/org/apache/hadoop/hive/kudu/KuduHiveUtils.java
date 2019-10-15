@@ -417,10 +417,30 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-comment|// Load the default configuration.
+comment|// Use the table property if it exists.
 name|String
 name|masterAddresses
 init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|KUDU_MASTER_ADDRS_KEY
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|masterAddresses
+argument_list|)
+condition|)
+block|{
+comment|// Fall back to the default configuration.
+name|masterAddresses
+operator|=
 name|HiveConf
 operator|.
 name|getVar
@@ -433,7 +453,8 @@ name|ConfVars
 operator|.
 name|HIVE_KUDU_MASTER_ADDRESSES_DEFAULT
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|StringUtils
@@ -448,7 +469,11 @@ throw|throw
 operator|new
 name|IOException
 argument_list|(
-literal|"Kudu master addresses are not specified with "
+literal|"Kudu master addresses are not specified in the table property ("
+operator|+
+name|KUDU_MASTER_ADDRS_KEY
+operator|+
+literal|"), or default configuration ("
 operator|+
 name|HiveConf
 operator|.
@@ -457,35 +482,10 @@ operator|.
 name|HIVE_KUDU_MASTER_ADDRESSES_DEFAULT
 operator|.
 name|varname
+operator|+
+literal|")."
 argument_list|)
 throw|;
-block|}
-comment|// Override with the table configuration if it exists.
-if|if
-condition|(
-operator|!
-name|StringUtils
-operator|.
-name|isEmpty
-argument_list|(
-name|conf
-operator|.
-name|get
-argument_list|(
-name|KUDU_MASTER_ADDRS_KEY
-argument_list|)
-argument_list|)
-condition|)
-block|{
-name|masterAddresses
-operator|=
-name|conf
-operator|.
-name|get
-argument_list|(
-name|KUDU_MASTER_ADDRS_KEY
-argument_list|)
-expr_stmt|;
 block|}
 return|return
 name|masterAddresses

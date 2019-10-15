@@ -894,7 +894,7 @@ name|addDependencyJars
 argument_list|(
 name|jobConf
 argument_list|,
-name|KuduRecordWriter
+name|KuduStorageHandler
 operator|.
 name|class
 argument_list|)

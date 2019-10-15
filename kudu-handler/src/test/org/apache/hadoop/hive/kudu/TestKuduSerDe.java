@@ -1046,7 +1046,7 @@ argument_list|()
 argument_list|,
 name|containsString
 argument_list|(
-literal|"Kudu master addresses are not specified with hive.kudu.master.addresses.default"
+literal|"Kudu master addresses are not specified in the table property"
 argument_list|)
 argument_list|)
 expr_stmt|;
