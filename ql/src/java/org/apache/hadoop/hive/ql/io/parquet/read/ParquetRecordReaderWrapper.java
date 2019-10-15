@@ -591,7 +591,7 @@ operator|=
 operator|new
 name|JobConf
 argument_list|(
-name|oldJobConf
+name|jobConf
 argument_list|)
 expr_stmt|;
 name|HiveConf
