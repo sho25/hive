@@ -719,7 +719,7 @@ name|Path
 argument_list|,
 name|PartitionDesc
 argument_list|>
-name|unused2
+name|parts
 parameter_list|)
 throws|throws
 name|IOException
@@ -775,6 +775,8 @@ argument_list|,
 name|sef
 argument_list|,
 name|tracePool
+argument_list|,
+name|parts
 argument_list|)
 decl_stmt|;
 name|edc

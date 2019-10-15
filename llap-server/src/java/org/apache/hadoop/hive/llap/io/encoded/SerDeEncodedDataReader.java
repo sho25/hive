@@ -23,20 +23,6 @@ end_package
 
 begin_import
 import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
-name|impl
-operator|.
-name|MemoryManager
-import|;
-end_import
-
-begin_import
-import|import
 name|java
 operator|.
 name|io
@@ -261,6 +247,24 @@ name|common
 operator|.
 name|io
 operator|.
+name|CacheTag
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
 name|DataCache
 operator|.
 name|BooleanRef
@@ -281,7 +285,9 @@ name|common
 operator|.
 name|io
 operator|.
-name|DiskRangeList
+name|DataCache
+operator|.
+name|DiskRangeListFactory
 import|;
 end_import
 
@@ -299,9 +305,7 @@ name|common
 operator|.
 name|io
 operator|.
-name|DataCache
-operator|.
-name|DiskRangeListFactory
+name|DiskRangeList
 import|;
 end_import
 
@@ -425,7 +429,7 @@ name|hive
 operator|.
 name|llap
 operator|.
-name|LlapUtil
+name|LlapHiveUtils
 import|;
 end_import
 
@@ -1183,18 +1187,6 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|OrcUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|orc
-operator|.
 name|OrcFile
 operator|.
 name|EncodingStrategy
@@ -1249,7 +1241,7 @@ name|apache
 operator|.
 name|orc
 operator|.
-name|TypeDescription
+name|OrcUtils
 import|;
 end_import
 
@@ -1276,6 +1268,32 @@ operator|.
 name|PhysicalWriter
 operator|.
 name|OutputReceiver
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|TypeDescription
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|orc
+operator|.
+name|impl
+operator|.
+name|MemoryManager
 import|;
 end_import
 
@@ -1594,7 +1612,7 @@ name|fileKey
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
+name|CacheTag
 name|cacheTag
 decl_stmt|;
 specifier|private
@@ -2040,7 +2058,7 @@ operator|.
 name|LLAP_TRACK_CACHE_USAGE
 argument_list|)
 condition|?
-name|LlapUtil
+name|LlapHiveUtils
 operator|.
 name|getDbAndTableNameForMetrics
 argument_list|(
@@ -2050,6 +2068,8 @@ name|getPath
 argument_list|()
 argument_list|,
 literal|true
+argument_list|,
+name|parts
 argument_list|)
 else|:
 literal|null

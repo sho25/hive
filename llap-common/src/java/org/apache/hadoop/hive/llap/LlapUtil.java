@@ -2037,14 +2037,8 @@ name|UNION_SUDBIR_PREFIX
 init|=
 literal|"HIVE_UNION_SUBDIR_"
 decl_stmt|;
-specifier|public
-specifier|static
-specifier|final
-name|char
-name|DERIVED_ENTITY_PARTITION_SEPARATOR
-init|=
-literal|'/'
-decl_stmt|;
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 name|String

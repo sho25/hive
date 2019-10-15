@@ -19,6 +19,24 @@ name|cache
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|CacheTag
+import|;
+end_import
+
 begin_comment
 comment|/**  * Buffer that can be managed by LowLevelEvictionPolicy.  * We want to have cacheable and non-allocator buffers, as well as allocator buffers with no  * cache dependency, and also ones that are both. Alas, we could only achieve this if we were  * using a real programming language.  */
 end_comment
@@ -185,7 +203,7 @@ return|;
 block|}
 specifier|public
 specifier|abstract
-name|String
+name|CacheTag
 name|getTag
 parameter_list|()
 function_decl|;

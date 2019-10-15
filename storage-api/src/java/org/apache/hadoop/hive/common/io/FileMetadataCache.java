@@ -139,7 +139,7 @@ parameter_list|,
 name|InputStream
 name|is
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 throws|throws
@@ -156,7 +156,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 function_decl|;
@@ -178,7 +178,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -197,7 +197,7 @@ parameter_list|,
 name|InputStream
 name|is
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean

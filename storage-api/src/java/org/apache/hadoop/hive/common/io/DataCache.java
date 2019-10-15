@@ -166,7 +166,7 @@ parameter_list|,
 name|long
 name|baseOffset
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 function_decl|;

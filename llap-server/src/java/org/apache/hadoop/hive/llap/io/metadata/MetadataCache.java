@@ -217,11 +217,11 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|llap
+name|common
 operator|.
-name|cache
+name|io
 operator|.
-name|BuddyAllocator
+name|CacheTag
 import|;
 end_import
 
@@ -239,7 +239,7 @@ name|llap
 operator|.
 name|cache
 operator|.
-name|EvictionAwareAllocator
+name|BuddyAllocator
 import|;
 end_import
 
@@ -412,28 +412,6 @@ operator|.
 name|encoded
 operator|.
 name|OrcBatchKey
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|io
-operator|.
-name|orc
-operator|.
-name|encoded
-operator|.
-name|StoppableAllocator
 import|;
 end_import
 
@@ -1161,7 +1139,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 block|{
@@ -1221,7 +1199,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -1266,7 +1244,7 @@ parameter_list|,
 name|InputStream
 name|is
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 throws|throws
@@ -1299,7 +1277,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -1334,7 +1312,7 @@ parameter_list|,
 name|InputStream
 name|is
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -1491,7 +1469,7 @@ parameter_list|,
 name|InputStream
 name|stream
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -1849,7 +1827,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -2201,7 +2179,7 @@ parameter_list|,
 name|ByteBuffer
 name|tailBuffer
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|,
 name|AtomicBoolean
@@ -3221,7 +3199,7 @@ name|T
 name|key
 decl_stmt|;
 specifier|private
-name|String
+name|CacheTag
 name|tag
 decl_stmt|;
 specifier|public
@@ -3230,7 +3208,7 @@ parameter_list|(
 name|T
 name|key
 parameter_list|,
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 block|{
@@ -3323,7 +3301,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|String
+name|CacheTag
 name|getTag
 parameter_list|()
 block|{

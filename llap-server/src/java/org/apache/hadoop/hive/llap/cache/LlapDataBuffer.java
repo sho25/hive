@@ -19,6 +19,24 @@ name|cache
 package|;
 end_package
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
+name|io
+operator|.
+name|CacheTag
+import|;
+end_import
+
 begin_class
 specifier|public
 specifier|final
@@ -44,7 +62,7 @@ init|=
 name|UNKNOWN_CACHED_LENGTH
 decl_stmt|;
 specifier|private
-name|String
+name|CacheTag
 name|tag
 decl_stmt|;
 annotation|@
@@ -69,7 +87,7 @@ specifier|public
 name|void
 name|setTag
 parameter_list|(
-name|String
+name|CacheTag
 name|tag
 parameter_list|)
 block|{
@@ -83,7 +101,7 @@ block|}
 annotation|@
 name|Override
 specifier|public
-name|String
+name|CacheTag
 name|getTag
 parameter_list|()
 block|{
