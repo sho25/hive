@@ -1146,9 +1146,6 @@ name|getErrorMessage
 argument_list|()
 argument_list|,
 name|e
-operator|.
-name|getException
-argument_list|()
 argument_list|)
 throw|;
 block|}

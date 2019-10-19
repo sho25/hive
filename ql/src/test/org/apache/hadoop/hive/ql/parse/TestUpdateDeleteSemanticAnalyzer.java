@@ -1756,9 +1756,7 @@ expr_stmt|;
 name|task
 operator|.
 name|execute
-argument_list|(
-literal|null
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|FSDataInputStream
 name|in

@@ -183,7 +183,7 @@ literal|false
 decl_stmt|;
 comment|// sourceTask for TS is not changed (currently) but that of FS might be changed
 comment|// by various optimizers (auto.convert.join, for example)
-comment|// so this is set by DriverContext in runtime
+comment|// so this is set by TaskQueue in runtime
 specifier|private
 specifier|transient
 name|Task

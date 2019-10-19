@@ -223,7 +223,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -899,8 +899,11 @@ specifier|public
 name|SparkJobRef
 name|execute
 parameter_list|(
-name|DriverContext
-name|driverContext
+name|TaskQueue
+name|taskQueue
+parameter_list|,
+name|Context
+name|context
 parameter_list|,
 name|SparkWork
 name|sparkWork
@@ -908,21 +911,13 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
-name|Context
-name|ctx
-init|=
-name|driverContext
-operator|.
-name|getCtx
-argument_list|()
-decl_stmt|;
 name|HiveConf
 name|hiveConf
 init|=
 operator|(
 name|HiveConf
 operator|)
-name|ctx
+name|context
 operator|.
 name|getConf
 argument_list|()
@@ -949,7 +944,7 @@ name|emptyScratchDir
 decl_stmt|;
 name|emptyScratchDir
 operator|=
-name|ctx
+name|context
 operator|.
 name|getMRTmpPath
 argument_list|()
@@ -1067,7 +1062,7 @@ name|SparkPlanGenerator
 argument_list|(
 name|sc
 argument_list|,
-name|ctx
+name|context
 argument_list|,
 name|jobConf
 argument_list|,
@@ -1088,7 +1083,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|driverContext
+name|taskQueue
 operator|.
 name|isShutdown
 argument_list|()

@@ -246,10 +246,7 @@ if|if
 condition|(
 name|context
 operator|.
-name|getDriverContext
-argument_list|()
-operator|.
-name|getCtx
+name|getContext
 argument_list|()
 operator|.
 name|getExplainAnalyze

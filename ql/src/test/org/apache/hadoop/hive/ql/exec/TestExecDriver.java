@@ -191,7 +191,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -4202,11 +4202,11 @@ operator|new
 name|MapRedTask
 argument_list|()
 decl_stmt|;
-name|DriverContext
-name|dctx
+name|TaskQueue
+name|taskQueue
 init|=
 operator|new
-name|DriverContext
+name|TaskQueue
 argument_list|()
 decl_stmt|;
 name|mrtask
@@ -4224,7 +4224,7 @@ name|queryState
 argument_list|,
 literal|null
 argument_list|,
-name|dctx
+name|taskQueue
 argument_list|,
 literal|null
 argument_list|)
@@ -4235,9 +4235,7 @@ init|=
 name|mrtask
 operator|.
 name|execute
-argument_list|(
-name|dctx
-argument_list|)
+argument_list|()
 decl_stmt|;
 if|if
 condition|(

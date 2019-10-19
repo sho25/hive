@@ -1094,10 +1094,7 @@ name|Path
 argument_list|(
 name|context
 operator|.
-name|getDriverContext
-argument_list|()
-operator|.
-name|getCtx
+name|getContext
 argument_list|()
 operator|.
 name|getExternalTmpPath

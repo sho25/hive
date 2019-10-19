@@ -341,9 +341,6 @@ operator|+
 name|query
 argument_list|,
 name|e
-operator|.
-name|getException
-argument_list|()
 argument_list|)
 expr_stmt|;
 throw|throw
@@ -355,9 +352,6 @@ operator|+
 name|query
 argument_list|,
 name|e
-operator|.
-name|getException
-argument_list|()
 argument_list|)
 throw|;
 block|}

@@ -179,7 +179,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
 import|;
 end_import
 
@@ -679,16 +679,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -887,8 +877,8 @@ name|?
 argument_list|>
 name|build
 parameter_list|(
-name|DriverContext
-name|driverContext
+name|Context
+name|context
 parameter_list|,
 name|Hive
 name|hive
@@ -1097,7 +1087,7 @@ comment|// entire chain
 name|MessageHandler
 operator|.
 name|Context
-name|context
+name|mhContext
 init|=
 operator|new
 name|MessageHandler
@@ -1116,10 +1106,7 @@ name|conf
 argument_list|,
 name|hive
 argument_list|,
-name|driverContext
-operator|.
-name|getCtx
-argument_list|()
+name|context
 argument_list|,
 name|this
 operator|.
@@ -1137,7 +1124,7 @@ name|evTasks
 init|=
 name|analyzeEventLoad
 argument_list|(
-name|context
+name|mhContext
 argument_list|)
 decl_stmt|;
 if|if

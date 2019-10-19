@@ -316,10 +316,7 @@ name|wmContext
 init|=
 name|tezTask
 operator|.
-name|getDriverContext
-argument_list|()
-operator|.
-name|getCtx
+name|getContext
 argument_list|()
 operator|.
 name|getWmContext

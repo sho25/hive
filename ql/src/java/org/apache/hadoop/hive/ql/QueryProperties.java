@@ -731,7 +731,7 @@ operator|.
 name|filterWithSubQuery
 return|;
 block|}
-comment|/**    * True indicates this statement create or replaces a materialized view, not that it is a query    * against a materialized view.    * @return    */
+comment|/**    * True indicates this statement create or replaces a materialized view, not that it is a query    * against a materialized view.    */
 specifier|public
 name|boolean
 name|isMaterializedView

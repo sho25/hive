@@ -51,22 +51,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -282,10 +266,7 @@ name|Override
 specifier|public
 name|int
 name|execute
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 block|{
 name|resTasks
 operator|=
@@ -305,9 +286,7 @@ expr_stmt|;
 try|try
 block|{
 name|resolveTask
-argument_list|(
-name|driverContext
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 catch|catch
@@ -332,10 +311,7 @@ block|}
 specifier|private
 name|void
 name|resolveTask
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 throws|throws
 name|HiveException
 block|{
@@ -362,7 +338,7 @@ name|tsk
 argument_list|)
 condition|)
 block|{
-name|driverContext
+name|taskQueue
 operator|.
 name|remove
 argument_list|(
@@ -389,7 +365,7 @@ name|isMapRedTask
 argument_list|()
 condition|)
 block|{
-name|driverContext
+name|taskQueue
 operator|.
 name|incCurJobNo
 argument_list|(
@@ -439,7 +415,7 @@ block|}
 comment|// resolved task
 if|if
 condition|(
-name|driverContext
+name|taskQueue
 operator|.
 name|addToRunnable
 argument_list|(

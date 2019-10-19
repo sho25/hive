@@ -259,6 +259,22 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|Context
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|ErrorMsg
 import|;
 end_import
@@ -329,7 +345,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -759,8 +775,11 @@ specifier|public
 name|SparkJobRef
 name|submit
 parameter_list|(
-name|DriverContext
-name|driverContext
+name|TaskQueue
+name|taskQueue
+parameter_list|,
+name|Context
+name|context
 parameter_list|,
 name|SparkWork
 name|sparkWork
@@ -792,7 +811,9 @@ name|hiveSparkClient
 operator|.
 name|execute
 argument_list|(
-name|driverContext
+name|taskQueue
+argument_list|,
+name|context
 argument_list|,
 name|sparkWork
 argument_list|)

@@ -657,7 +657,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -3313,7 +3313,7 @@ argument_list|,
 literal|null
 argument_list|,
 operator|new
-name|DriverContext
+name|TaskQueue
 argument_list|(
 name|driver
 operator|.
@@ -3321,7 +3321,10 @@ name|getContext
 argument_list|()
 argument_list|)
 argument_list|,
-literal|null
+name|driver
+operator|.
+name|getContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|replLoadTask

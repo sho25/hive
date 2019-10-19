@@ -205,7 +205,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -1452,12 +1452,12 @@ name|class
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|DriverContext
-name|mockDriverContext
+name|TaskQueue
+name|mockTestQueue
 init|=
 name|mock
 argument_list|(
-name|DriverContext
+name|TaskQueue
 operator|.
 name|class
 argument_list|)
@@ -1493,7 +1493,7 @@ name|mockQueryState
 argument_list|,
 literal|null
 argument_list|,
-name|mockDriverContext
+name|mockTestQueue
 argument_list|,
 literal|null
 argument_list|)
@@ -1580,6 +1580,9 @@ argument_list|()
 argument_list|,
 name|any
 argument_list|()
+argument_list|,
+name|any
+argument_list|()
 argument_list|)
 argument_list|)
 operator|.
@@ -1608,9 +1611,7 @@ expr_stmt|;
 name|sparkTask
 operator|.
 name|execute
-argument_list|(
-name|mockDriverContext
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|verify
 argument_list|(
@@ -1645,9 +1646,7 @@ expr_stmt|;
 name|sparkTask
 operator|.
 name|execute
-argument_list|(
-name|mockDriverContext
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|verify
 argument_list|(

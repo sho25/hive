@@ -81,7 +81,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|TaskQueue
 import|;
 end_import
 
@@ -168,12 +184,15 @@ parameter_list|)
 throws|throws
 name|HiveException
 function_decl|;
-comment|/**    * Submit given<i>sparkWork</i> to SparkClient.    * @param driverContext    * @param sparkWork    * @return SparkJobRef    */
+comment|/**    * Submit given<i>sparkWork</i> to SparkClient.    * @param taskQueue    * @param sparkWork    * @return SparkJobRef    */
 name|SparkJobRef
 name|submit
 parameter_list|(
-name|DriverContext
-name|driverContext
+name|TaskQueue
+name|taskQueue
+parameter_list|,
+name|Context
+name|context
 parameter_list|,
 name|SparkWork
 name|sparkWork

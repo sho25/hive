@@ -47,7 +47,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
 import|;
 end_import
 
@@ -200,8 +200,8 @@ name|conf
 decl_stmt|;
 specifier|private
 specifier|final
-name|DriverContext
-name|driverContext
+name|Context
+name|context
 decl_stmt|;
 specifier|private
 specifier|final
@@ -239,8 +239,8 @@ parameter_list|(
 name|HiveConf
 name|conf
 parameter_list|,
-name|DriverContext
-name|driverContext
+name|Context
+name|context
 parameter_list|,
 name|DDLTask
 name|task
@@ -279,9 +279,9 @@ name|conf
 expr_stmt|;
 name|this
 operator|.
-name|driverContext
+name|context
 operator|=
-name|driverContext
+name|context
 expr_stmt|;
 name|this
 operator|.
@@ -344,12 +344,12 @@ name|conf
 return|;
 block|}
 specifier|public
-name|DriverContext
-name|getDriverContext
+name|Context
+name|getContext
 parameter_list|()
 block|{
 return|return
-name|driverContext
+name|context
 return|;
 block|}
 specifier|public

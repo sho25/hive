@@ -79,7 +79,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -457,11 +457,11 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-name|DriverContext
-name|driverCxt
+name|TaskQueue
+name|taskQueue
 init|=
 operator|new
-name|DriverContext
+name|TaskQueue
 argument_list|(
 name|driver
 operator|.
@@ -469,7 +469,7 @@ name|getContext
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|driverCxt
+name|taskQueue
 operator|.
 name|prepare
 argument_list|(
@@ -493,14 +493,11 @@ operator|.
 name|getPlan
 argument_list|()
 argument_list|,
-name|driverCxt
+name|taskQueue
 argument_list|,
 name|driver
 operator|.
 name|getContext
-argument_list|()
-operator|.
-name|getOpContext
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -513,9 +510,7 @@ argument_list|,
 name|sparkTask
 operator|.
 name|execute
-argument_list|(
-name|driverCxt
-argument_list|)
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Assert

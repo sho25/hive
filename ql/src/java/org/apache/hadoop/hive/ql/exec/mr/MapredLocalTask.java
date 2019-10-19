@@ -451,22 +451,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CompilationOpContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|Context
 import|;
 end_import
@@ -483,7 +467,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -1251,11 +1235,11 @@ parameter_list|,
 name|QueryPlan
 name|queryPlan
 parameter_list|,
-name|DriverContext
-name|driverContext
+name|TaskQueue
+name|taskQueue
 parameter_list|,
-name|CompilationOpContext
-name|opContext
+name|Context
+name|context
 parameter_list|)
 block|{
 name|super
@@ -1266,9 +1250,9 @@ name|queryState
 argument_list|,
 name|queryPlan
 argument_list|,
-name|driverContext
+name|taskQueue
 argument_list|,
-name|opContext
+name|context
 argument_list|)
 expr_stmt|;
 name|job
@@ -1360,10 +1344,7 @@ name|Override
 specifier|public
 name|int
 name|execute
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 block|{
 if|if
 condition|(
@@ -1382,9 +1363,7 @@ block|{
 comment|// send task off to another jvm
 return|return
 name|executeInChildVM
-argument_list|(
-name|driverContext
-argument_list|)
+argument_list|()
 return|;
 block|}
 else|else
@@ -1392,32 +1371,19 @@ block|{
 comment|// execute in process
 return|return
 name|executeInProcess
-argument_list|(
-name|driverContext
-argument_list|)
+argument_list|()
 return|;
 block|}
 block|}
-specifier|public
+specifier|private
 name|int
 name|executeInChildVM
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 block|{
 comment|// execute in child jvm
 try|try
 block|{
 comment|// generate the cmd line to run in the child jvm
-name|Context
-name|ctx
-init|=
-name|driverContext
-operator|.
-name|getCtx
-argument_list|()
-decl_stmt|;
 name|String
 name|hiveJar
 init|=
@@ -1469,7 +1435,7 @@ init|=
 operator|new
 name|Path
 argument_list|(
-name|ctx
+name|context
 operator|.
 name|getLocalTmpPath
 argument_list|()
@@ -1621,7 +1587,7 @@ name|generateCmdLine
 argument_list|(
 name|conf
 argument_list|,
-name|ctx
+name|context
 argument_list|)
 decl_stmt|;
 name|String
@@ -1697,7 +1663,7 @@ name|files
 expr_stmt|;
 name|workDir
 operator|=
-name|ctx
+name|context
 operator|.
 name|getLocalTmpPath
 argument_list|()
@@ -2651,10 +2617,7 @@ block|}
 specifier|public
 name|int
 name|executeInProcess
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 block|{
 comment|// check the local work
 if|if

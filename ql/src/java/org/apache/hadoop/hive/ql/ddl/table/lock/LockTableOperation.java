@@ -157,10 +157,7 @@ name|ctx
 init|=
 name|context
 operator|.
-name|getDriverContext
-argument_list|()
-operator|.
-name|getCtx
+name|getContext
 argument_list|()
 decl_stmt|;
 name|HiveTxnManager

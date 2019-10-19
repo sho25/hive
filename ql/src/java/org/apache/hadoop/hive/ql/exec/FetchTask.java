@@ -81,7 +81,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CompilationOpContext
+name|Context
 import|;
 end_import
 
@@ -97,7 +97,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -446,11 +446,11 @@ parameter_list|,
 name|QueryPlan
 name|queryPlan
 parameter_list|,
-name|DriverContext
-name|ctx
+name|TaskQueue
+name|taskQueue
 parameter_list|,
-name|CompilationOpContext
-name|opContext
+name|Context
+name|context
 parameter_list|)
 block|{
 name|super
@@ -461,16 +461,19 @@ name|queryState
 argument_list|,
 name|queryPlan
 argument_list|,
-name|ctx
+name|taskQueue
 argument_list|,
-name|opContext
+name|context
 argument_list|)
 expr_stmt|;
 name|work
 operator|.
 name|initializeForFetch
 argument_list|(
-name|opContext
+name|context
+operator|.
+name|getOpContext
+argument_list|()
 argument_list|)
 expr_stmt|;
 try|try
@@ -710,10 +713,7 @@ name|Override
 specifier|public
 name|int
 name|execute
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 block|{
 assert|assert
 literal|false

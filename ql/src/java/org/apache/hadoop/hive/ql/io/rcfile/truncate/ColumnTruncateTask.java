@@ -141,22 +141,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|CompilationOpContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|Context
 import|;
 end_import
@@ -173,7 +157,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -565,11 +549,11 @@ parameter_list|,
 name|QueryPlan
 name|queryPlan
 parameter_list|,
-name|DriverContext
-name|driverContext
+name|TaskQueue
+name|taskQueue
 parameter_list|,
-name|CompilationOpContext
-name|opContext
+name|Context
+name|context
 parameter_list|)
 block|{
 name|super
@@ -580,9 +564,9 @@ name|queryState
 argument_list|,
 name|queryPlan
 argument_list|,
-name|driverContext
+name|taskQueue
 argument_list|,
-name|opContext
+name|context
 argument_list|)
 expr_stmt|;
 name|job
@@ -630,16 +614,13 @@ name|success
 init|=
 literal|true
 decl_stmt|;
+comment|/**    * start a new map-reduce job to do the truncation, almost the same as ExecDriver.    */
 annotation|@
 name|Override
-comment|/**    * start a new map-reduce job to do the truncation, almost the same as ExecDriver.    */
 specifier|public
 name|int
 name|execute
-parameter_list|(
-name|DriverContext
-name|driverContext
-parameter_list|)
+parameter_list|()
 block|{
 name|HiveConf
 operator|.
@@ -694,10 +675,7 @@ expr_stmt|;
 name|Context
 name|ctx
 init|=
-name|driverContext
-operator|.
-name|getCtx
-argument_list|()
+name|context
 decl_stmt|;
 name|boolean
 name|ctxCreated

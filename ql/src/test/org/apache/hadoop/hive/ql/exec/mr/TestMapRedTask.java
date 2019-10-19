@@ -219,7 +219,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -236,26 +236,6 @@ operator|.
 name|ql
 operator|.
 name|QueryState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|spark
-operator|.
-name|SparkTask
 import|;
 end_import
 
@@ -494,11 +474,11 @@ argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|DriverContext
-name|dctx
+name|TaskQueue
+name|taskQueue
 init|=
 operator|new
-name|DriverContext
+name|TaskQueue
 argument_list|(
 name|ctx
 argument_list|)
@@ -584,9 +564,9 @@ name|queryState
 argument_list|,
 literal|null
 argument_list|,
-name|dctx
+name|taskQueue
 argument_list|,
-literal|null
+name|ctx
 argument_list|)
 expr_stmt|;
 name|mrTask
@@ -634,9 +614,7 @@ expr_stmt|;
 name|mrTask
 operator|.
 name|execute
-argument_list|(
-name|dctx
-argument_list|)
+argument_list|()
 expr_stmt|;
 name|ArgumentCaptor
 argument_list|<

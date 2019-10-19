@@ -53,7 +53,23 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|Context
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|TaskQueue
 import|;
 end_import
 
@@ -118,12 +134,15 @@ name|Serializable
 extends|,
 name|Closeable
 block|{
-comment|/**    * HiveSparkClient should generate Spark RDD graph by given sparkWork and driverContext,    * and submit RDD graph to Spark cluster.    * @param driverContext    * @param sparkWork    * @return SparkJobRef could be used to track spark job progress and metrics.    * @throws Exception    */
+comment|/**    * HiveSparkClient should generate Spark RDD graph by given sparkWork and taskQueue,    * and submit RDD graph to Spark cluster.    * @param taskQueue    * @param sparkWork    * @return SparkJobRef could be used to track spark job progress and metrics.    * @throws Exception    */
 name|SparkJobRef
 name|execute
 parameter_list|(
-name|DriverContext
-name|driverContext
+name|TaskQueue
+name|taskQueue
+parameter_list|,
+name|Context
+name|context
 parameter_list|,
 name|SparkWork
 name|sparkWork

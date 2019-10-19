@@ -71,7 +71,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -221,8 +221,8 @@ argument_list|)
 decl_stmt|;
 specifier|private
 specifier|final
-name|DriverContext
-name|driverCtx
+name|TaskQueue
+name|taskQueue
 decl_stmt|;
 specifier|public
 name|TaskRunner
@@ -233,8 +233,8 @@ name|?
 argument_list|>
 name|tsk
 parameter_list|,
-name|DriverContext
-name|ctx
+name|TaskQueue
+name|taskQueue
 parameter_list|)
 block|{
 name|this
@@ -251,6 +251,8 @@ operator|new
 name|TaskResult
 argument_list|()
 expr_stmt|;
+name|this
+operator|.
 name|ss
 operator|=
 name|SessionState
@@ -258,9 +260,11 @@ operator|.
 name|get
 argument_list|()
 expr_stmt|;
-name|driverCtx
+name|this
+operator|.
+name|taskQueue
 operator|=
-name|ctx
+name|taskQueue
 expr_stmt|;
 block|}
 specifier|public
@@ -474,7 +478,7 @@ argument_list|(
 name|exitVal
 argument_list|)
 expr_stmt|;
-name|driverCtx
+name|taskQueue
 operator|.
 name|releaseRunnable
 argument_list|()

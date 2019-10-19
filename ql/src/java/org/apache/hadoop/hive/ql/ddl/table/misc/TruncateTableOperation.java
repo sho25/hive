@@ -107,7 +107,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|DriverContext
+name|TaskQueue
 import|;
 end_import
 
@@ -315,11 +315,11 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
-name|DriverContext
-name|driverCxt
+name|TaskQueue
+name|taskQueue
 init|=
 operator|new
-name|DriverContext
+name|TaskQueue
 argument_list|()
 decl_stmt|;
 name|ColumnTruncateTask
@@ -340,7 +340,7 @@ argument_list|()
 argument_list|,
 literal|null
 argument_list|,
-name|driverCxt
+name|taskQueue
 argument_list|,
 literal|null
 argument_list|)
@@ -368,9 +368,7 @@ init|=
 name|taskExec
 operator|.
 name|execute
-argument_list|(
-name|driverCxt
-argument_list|)
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
