@@ -4155,7 +4155,7 @@ name|put
 argument_list|(
 name|EXTERNAL_TABLE_PURGE
 argument_list|,
-literal|"true"
+literal|"TRUE"
 argument_list|)
 expr_stmt|;
 name|params
