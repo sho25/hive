@@ -670,7 +670,8 @@ name|allocLog2
 argument_list|)
 expr_stmt|;
 block|}
-comment|/*  HIVE-22286: Disabled test until HIVE-22175 is resolved @Test */
+annotation|@
+name|Test
 specifier|public
 name|void
 name|testMTT

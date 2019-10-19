@@ -2037,6 +2037,12 @@ condition|)
 block|{
 return|return;
 block|}
+comment|// Another thread might have allocated a new arena
+name|arenaCount
+operator|=
+name|getArenaCount
+argument_list|()
+expr_stmt|;
 comment|// We called reserveMemory so we know that there's memory waiting for us somewhere.
 comment|// But that can mean that the reserved memory is fragmented thus unusable
 comment|// or we have a common class of rare race conditions related to the order of locking/checking of
@@ -2620,6 +2626,12 @@ name|msg
 argument_list|)
 throw|;
 block|}
+comment|// Another thread might have allocated a new arena for us to check
+name|arenaCount
+operator|=
+name|getArenaCount
+argument_list|()
+expr_stmt|;
 operator|++
 name|discardsAttempt
 expr_stmt|;
