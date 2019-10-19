@@ -60427,6 +60427,11 @@ literal|null
 decl_stmt|;
 try|try
 block|{
+name|pm
+operator|.
+name|flush
+argument_list|()
+expr_stmt|;
 name|openTransaction
 argument_list|()
 expr_stmt|;
