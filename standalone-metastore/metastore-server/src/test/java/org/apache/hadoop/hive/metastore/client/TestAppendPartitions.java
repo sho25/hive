@@ -3527,7 +3527,7 @@ argument_list|()
 argument_list|,
 name|metaStore
 operator|.
-name|getWarehouseRoot
+name|getExternalWarehouseRoot
 argument_list|()
 operator|+
 literal|"/test_append_part_external_table"
@@ -3936,10 +3936,11 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertEquals
+name|assertTrue
 argument_list|(
-literal|1
+literal|"Expect atleast transient_lastDdlTime to be set in params"
 argument_list|,
+operator|(
 name|partition
 operator|.
 name|getParameters
@@ -3947,6 +3948,9 @@ argument_list|()
 operator|.
 name|size
 argument_list|()
+operator|>
+literal|0
+operator|)
 argument_list|)
 expr_stmt|;
 name|Assert

@@ -431,6 +431,21 @@ name|getWhRoot
 argument_list|()
 return|;
 block|}
+comment|/**    * Returns the External MetaStore Warehouse root directory name.    *    * @return The external warehouse root directory    * @throws MetaException IO failure    */
+specifier|public
+name|Path
+name|getExternalWarehouseRoot
+parameter_list|()
+throws|throws
+name|MetaException
+block|{
+return|return
+name|warehouse
+operator|.
+name|getWhRootExternal
+argument_list|()
+return|;
+block|}
 comment|/**    * Check if a path exists.    *    * @param path The path to check    * @return true if the path exists    * @throws IOException IO failure    */
 specifier|public
 name|boolean

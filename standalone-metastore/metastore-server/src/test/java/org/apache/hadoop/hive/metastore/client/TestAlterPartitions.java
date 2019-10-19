@@ -1514,7 +1514,7 @@ name|equals
 argument_list|(
 name|metaStore
 operator|.
-name|getWarehouseRoot
+name|getExternalWarehouseRoot
 argument_list|()
 operator|+
 literal|"/testpartdb.db/testparttable/"
@@ -1678,7 +1678,7 @@ name|equals
 argument_list|(
 name|metaStore
 operator|.
-name|getWarehouseRoot
+name|getExternalWarehouseRoot
 argument_list|()
 operator|+
 literal|"/testpartdb.db/testparttable/"
