@@ -45,6 +45,18 @@ end_import
 
 begin_import
 import|import
+name|java
+operator|.
+name|util
+operator|.
+name|concurrent
+operator|.
+name|ThreadLocalRandom
+import|;
+end_import
+
+begin_import
+import|import
 name|org
 operator|.
 name|apache
@@ -1113,9 +1125,10 @@ name|jobName
 else|:
 literal|"JOB"
 operator|+
-name|Utilities
+name|ThreadLocalRandom
 operator|.
-name|randGen
+name|current
+argument_list|()
 operator|.
 name|nextInt
 argument_list|()
