@@ -779,22 +779,6 @@ name|hive
 operator|.
 name|serde2
 operator|.
-name|DelimitedJSONSerDe
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
 name|Deserializer
 import|;
 end_import
@@ -1704,54 +1688,6 @@ name|columnTypes
 argument_list|,
 name|lastColumnTakesRestOfTheLine
 argument_list|,
-literal|false
-argument_list|)
-return|;
-block|}
-specifier|public
-specifier|static
-name|TableDesc
-name|getTableDesc
-parameter_list|(
-name|Class
-argument_list|<
-name|?
-extends|extends
-name|Deserializer
-argument_list|>
-name|serdeClass
-parameter_list|,
-name|String
-name|separatorCode
-parameter_list|,
-name|String
-name|columns
-parameter_list|,
-name|String
-name|columnTypes
-parameter_list|,
-name|boolean
-name|lastColumnTakesRestOfTheLine
-parameter_list|,
-name|boolean
-name|useDelimitedJSON
-parameter_list|)
-block|{
-return|return
-name|getTableDesc
-argument_list|(
-name|serdeClass
-argument_list|,
-name|separatorCode
-argument_list|,
-name|columns
-argument_list|,
-name|columnTypes
-argument_list|,
-name|lastColumnTakesRestOfTheLine
-argument_list|,
-name|useDelimitedJSON
-argument_list|,
 literal|"TextFile"
 argument_list|)
 return|;
@@ -1780,9 +1716,6 @@ name|columnTypes
 parameter_list|,
 name|boolean
 name|lastColumnTakesRestOfTheLine
-parameter_list|,
-name|boolean
-name|useDelimitedJSON
 parameter_list|,
 name|String
 name|fileFormat
@@ -1872,23 +1805,6 @@ name|SERIALIZATION_LAST_COLUMN_TAKES_REST
 argument_list|,
 literal|"true"
 argument_list|)
-expr_stmt|;
-block|}
-comment|// It is not a very clean way, and should be modified later - due to
-comment|// compatibility reasons,
-comment|// user sees the results as json for custom scripts and has no way for
-comment|// specifying that.
-comment|// Right now, it is hard-coded in the code
-if|if
-condition|(
-name|useDelimitedJSON
-condition|)
-block|{
-name|serdeClass
-operator|=
-name|DelimitedJSONSerDe
-operator|.
-name|class
 expr_stmt|;
 block|}
 name|Class
@@ -2091,8 +2007,6 @@ argument_list|,
 name|cols
 argument_list|,
 name|colTypes
-argument_list|,
-literal|false
 argument_list|,
 literal|false
 argument_list|,
@@ -2310,8 +2224,6 @@ argument_list|,
 name|columnTypes
 argument_list|,
 name|lastColumnTakesRestOfTheLine
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// set other table properties
@@ -2854,8 +2766,6 @@ argument_list|,
 name|columnTypes
 argument_list|,
 name|lastColumnTakesRestOfTheLine
-argument_list|,
-literal|false
 argument_list|)
 expr_stmt|;
 comment|// set other table properties

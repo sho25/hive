@@ -4109,6 +4109,22 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|DelimitedJSONSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|Deserializer
 import|;
 end_import
@@ -26996,13 +27012,19 @@ expr_stmt|;
 block|}
 else|else
 block|{
+comment|// It is not a very clean way, and should be modified later - due to
+comment|// compatibility reasons, user sees the results as JSON for custom
+comment|// scripts and has no way for specifying that. Right now, it is
+comment|// hard-coded to DelimitedJSONSerDe
 name|inInfo
 operator|=
 name|PlanUtils
 operator|.
 name|getTableDesc
 argument_list|(
-name|serde
+name|DelimitedJSONSerDe
+operator|.
+name|class
 argument_list|,
 name|Integer
 operator|.
@@ -27022,8 +27044,6 @@ name|toString
 argument_list|()
 argument_list|,
 literal|false
-argument_list|,
-literal|true
 argument_list|)
 expr_stmt|;
 block|}
