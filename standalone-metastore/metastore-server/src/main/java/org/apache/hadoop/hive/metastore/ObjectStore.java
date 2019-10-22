@@ -60127,6 +60127,8 @@ argument_list|,
 name|lockingQuery
 argument_list|)
 decl_stmt|;
+try|try
+block|{
 name|query
 operator|.
 name|setUnique
@@ -60140,11 +60142,15 @@ operator|.
 name|execute
 argument_list|()
 expr_stmt|;
+block|}
+finally|finally
+block|{
 name|query
 operator|.
 name|closeAll
 argument_list|()
 expr_stmt|;
+block|}
 block|}
 argument_list|)
 operator|.
