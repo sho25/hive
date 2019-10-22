@@ -575,7 +575,7 @@ operator|.
 name|getLoginUser
 argument_list|()
 operator|.
-name|isFromKeytab
+name|hasKerberosCredentials
 argument_list|()
 operator|&&
 name|MetastoreConf

@@ -319,7 +319,7 @@ operator|.
 name|getLoginUser
 argument_list|()
 operator|.
-name|isFromKeytab
+name|hasKerberosCredentials
 argument_list|()
 operator|&&
 name|HiveConf
@@ -347,7 +347,7 @@ literal|false
 return|;
 block|}
 block|}
-comment|/**    * Dynamically sets up the JAAS configuration that uses kerberos.    *    * @param principal    * @param keyTabFile    * @throws IOException    */
+comment|/**    * Dynamically sets up the JAAS configuration that uses kerberos.    *    * @param zkPrincipal    * @param zkKeytab    * @throws IOException    */
 specifier|private
 specifier|static
 name|String
