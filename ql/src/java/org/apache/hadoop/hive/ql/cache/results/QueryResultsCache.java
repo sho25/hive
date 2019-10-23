@@ -2262,7 +2262,7 @@ block|}
 block|}
 catch|catch
 parameter_list|(
-name|IOException
+name|Exception
 name|err
 parameter_list|)
 block|{
