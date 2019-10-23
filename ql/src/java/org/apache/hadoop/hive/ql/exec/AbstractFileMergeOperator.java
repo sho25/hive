@@ -573,13 +573,6 @@ name|Path
 name|ttp
 parameter_list|)
 block|{
-if|if
-condition|(
-name|taskId
-operator|==
-literal|null
-condition|)
-block|{
 name|taskId
 operator|=
 name|Utilities
@@ -589,7 +582,6 @@ argument_list|(
 name|jc
 argument_list|)
 expr_stmt|;
-block|}
 name|tmpPath
 operator|=
 name|tp
