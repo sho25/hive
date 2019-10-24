@@ -498,6 +498,15 @@ name|COLLECTION_DELIM
 init|=
 literal|"collection.delim"
 decl_stmt|;
+comment|// actual delimiter(fieldDelimited) is replaced by REPLACEMENT_DELIM in row.
+specifier|private
+specifier|static
+specifier|final
+name|String
+name|REPLACEMENT_DELIM
+init|=
+literal|"\1"
+decl_stmt|;
 specifier|private
 name|int
 name|numColumns
@@ -561,6 +570,11 @@ init|=
 operator|new
 name|Text
 argument_list|()
+decl_stmt|;
+comment|// pattern for delimiter
+specifier|private
+name|Pattern
+name|delimiterPattern
 decl_stmt|;
 annotation|@
 name|Override
@@ -634,6 +648,19 @@ literal|"This table does not have serde property \"field.delim\"!"
 argument_list|)
 throw|;
 block|}
+name|delimiterPattern
+operator|=
+name|Pattern
+operator|.
+name|compile
+argument_list|(
+name|fieldDelimited
+argument_list|,
+name|Pattern
+operator|.
+name|LITERAL
+argument_list|)
+expr_stmt|;
 comment|// get the collection separator and map key separator
 comment|// TODO: use serdeConstants.COLLECTION_DELIM when the typo is fixed
 name|collSep
@@ -918,7 +945,7 @@ argument_list|(
 name|fieldDelimited
 argument_list|)
 argument_list|,
-literal|"\1"
+name|REPLACEMENT_DELIM
 argument_list|)
 operator|.
 name|getBytes
@@ -947,14 +974,10 @@ operator|.
 name|parseMultiDelimit
 argument_list|(
 name|rowStr
-operator|.
-name|getBytes
-argument_list|()
 argument_list|,
-name|fieldDelimited
-operator|.
-name|getBytes
-argument_list|()
+name|delimiterPattern
+argument_list|,
+name|REPLACEMENT_DELIM
 argument_list|)
 expr_stmt|;
 return|return
