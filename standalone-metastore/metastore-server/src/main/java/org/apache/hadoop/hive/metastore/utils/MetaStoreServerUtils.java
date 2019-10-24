@@ -4027,10 +4027,10 @@ comment|// The partition location already existed and may contain data. Lets try
 comment|// populate those statistics that don't require a full scan of the data.
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
-literal|"Updating partition stats fast for: "
-operator|+
+literal|"Updating partition stats fast for: {}"
+argument_list|,
 name|part
 operator|.
 name|getTableName
@@ -4063,10 +4063,10 @@ argument_list|)
 expr_stmt|;
 name|LOG
 operator|.
-name|warn
+name|info
 argument_list|(
-literal|"Updated size to "
-operator|+
+literal|"Updated size to {}"
+argument_list|,
 name|params
 operator|.
 name|get
