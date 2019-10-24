@@ -831,30 +831,25 @@ block|{
 if|if
 condition|(
 name|newLength
-operator|<
+operator|>
 literal|0
 condition|)
 block|{
-throw|throw
-operator|new
-name|RuntimeException
-argument_list|(
-literal|"Overflow of newLength. smallBuffer.length="
-operator|+
-name|smallBuffer
-operator|.
-name|length
-operator|+
-literal|", nextElemLength="
-operator|+
-name|nextElemLength
-argument_list|)
-throw|;
-block|}
 name|newLength
 operator|*=
 literal|2
 expr_stmt|;
+block|}
+else|else
+block|{
+comment|// integer overflow happened; maximize size of next smallBuffer
+name|newLength
+operator|=
+name|Integer
+operator|.
+name|MAX_VALUE
+expr_stmt|;
+block|}
 block|}
 name|smallBuffer
 operator|=
