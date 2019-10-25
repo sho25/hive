@@ -11887,7 +11887,7 @@ operator|instanceof
 name|GenericUDFOPDivide
 condition|)
 block|{
-comment|// Check possible addition of long numbers overflow during decimal64 division
+comment|// Check possible overflow during decimal64 division for intermediate result
 comment|// if yes then skip the optimization
 name|DecimalTypeInfo
 name|leftType
@@ -11905,37 +11905,21 @@ operator|.
 name|getTypeInfo
 argument_list|()
 decl_stmt|;
-name|DecimalTypeInfo
-name|rightType
-init|=
-operator|(
-name|DecimalTypeInfo
-operator|)
-name|childExprs
-operator|.
-name|get
-argument_list|(
-literal|1
-argument_list|)
-operator|.
-name|getTypeInfo
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
+operator|(
 name|leftType
 operator|.
 name|precision
 argument_list|()
-operator|>
-literal|17
-operator|||
-name|rightType
+operator|+
+name|returnDecimalTypeInfo
 operator|.
-name|precision
+name|getScale
 argument_list|()
+operator|)
 operator|>
-literal|17
+literal|18
 condition|)
 block|{
 return|return

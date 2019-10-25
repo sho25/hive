@@ -402,6 +402,10 @@ block|,
 name|Decimal64ColDivideDecimal64Scalar
 operator|.
 name|class
+block|,
+name|Decimal64ColDivideDecimal64Column
+operator|.
+name|class
 block|}
 argument_list|)
 specifier|public
