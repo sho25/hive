@@ -2953,6 +2953,16 @@ decl_stmt|;
 name|TxnType
 name|txnType
 init|=
+name|rqst
+operator|.
+name|isSetTxn_type
+argument_list|()
+condition|?
+name|rqst
+operator|.
+name|getTxn_type
+argument_list|()
+else|:
 name|TxnType
 operator|.
 name|DEFAULT
