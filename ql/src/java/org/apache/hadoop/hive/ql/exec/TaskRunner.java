@@ -338,6 +338,15 @@ argument_list|(
 name|ss
 argument_list|)
 expr_stmt|;
+name|LogUtils
+operator|.
+name|registerLoggingContext
+argument_list|(
+name|tsk
+operator|.
+name|conf
+argument_list|)
+expr_stmt|;
 name|runSequential
 argument_list|()
 expr_stmt|;
@@ -373,6 +382,11 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+name|LogUtils
+operator|.
+name|unregisterLoggingContext
+argument_list|()
+expr_stmt|;
 name|runner
 operator|=
 literal|null
