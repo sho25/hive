@@ -19031,9 +19031,8 @@ name|dbName
 argument_list|,
 name|tableName
 argument_list|,
-name|Integer
-operator|.
-name|MAX_VALUE
+operator|-
+literal|1
 argument_list|)
 control|)
 block|{
@@ -19335,9 +19334,8 @@ name|dbName
 argument_list|,
 name|tableName
 argument_list|,
-name|Integer
-operator|.
-name|MAX_VALUE
+operator|-
+literal|1
 argument_list|)
 control|)
 block|{
