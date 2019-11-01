@@ -6287,7 +6287,11 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
-comment|// At this point if we haven't found it, screw it, we don't know where it is
+block|}
+block|}
+block|}
+block|}
+block|}
 if|if
 condition|(
 name|result
@@ -6299,26 +6303,24 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Unable to find config file "
+literal|"Unable to find config file: "
 operator|+
 name|name
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-block|}
-block|}
-block|}
-block|}
+else|else
+block|{
 name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Found configuration file "
+literal|"Found configuration file: "
 operator|+
 name|result
 argument_list|)
 expr_stmt|;
+block|}
 return|return
 name|result
 return|;
