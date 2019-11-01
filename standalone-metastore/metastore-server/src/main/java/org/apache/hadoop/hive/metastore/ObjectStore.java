@@ -2767,12 +2767,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Creating catalog "
-operator|+
+literal|"Creating catalog {}"
+argument_list|,
 name|cat
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|boolean
@@ -2986,8 +2983,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Fetching catalog "
-operator|+
+literal|"Fetching catalog {}"
+argument_list|,
 name|catalogName
 argument_list|)
 expr_stmt|;
@@ -3149,8 +3146,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Dropping catalog "
-operator|+
+literal|"Dropping catalog {}"
+argument_list|,
 name|catalogName
 argument_list|)
 expr_stmt|;
@@ -3834,7 +3831,7 @@ condition|)
 block|{
 name|LOG
 operator|.
-name|warn
+name|debug
 argument_list|(
 literal|"Failed to get database {}.{}, returning NoSuchObjectException"
 argument_list|,
@@ -8806,9 +8803,6 @@ argument_list|(
 literal|"getTableMeta with filter "
 operator|+
 name|filterBuilder
-operator|.
-name|toString
-argument_list|()
 operator|+
 literal|" params: "
 operator|+
@@ -9439,12 +9433,20 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Executing getMTable for "
-operator|+
+literal|"Executing getMTable for {}"
+argument_list|,
 name|TableName
 operator|.
 name|getQualified
@@ -9457,6 +9459,7 @@ name|table
 argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
 name|mtbl
 operator|=
 operator|(
@@ -21828,24 +21831,15 @@ name|message
 argument_list|)
 expr_stmt|;
 comment|// Don't log the exception, people just get confused.
-if|if
-condition|(
-name|LOG
-operator|.
-name|isDebugEnabled
-argument_list|()
-condition|)
-block|{
 name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Full DirectSQL callstack for debugging (note: this is not an error)"
+literal|"Full DirectSQL callstack for debugging (not an error)"
 argument_list|,
 name|ex
 argument_list|)
 expr_stmt|;
-block|}
 if|if
 condition|(
 operator|!
@@ -53991,19 +53985,15 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"The current metastore transactional partition column statistics for "
+literal|"The current metastore transactional partition column "
 operator|+
+literal|"statistics for {}.{}.{} is not valid for the current query"
+argument_list|,
 name|dbName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tblName
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|partName
-operator|+
-literal|" is not valid for the current query"
 argument_list|)
 expr_stmt|;
 return|return
@@ -57719,6 +57709,7 @@ specifier|private
 name|void
 name|debugLog
 parameter_list|(
+specifier|final
 name|String
 name|message
 parameter_list|)
@@ -57735,114 +57726,16 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"{} {}"
+literal|"{}"
 argument_list|,
 name|message
 argument_list|,
-name|getCallStack
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
-block|}
-specifier|private
-specifier|static
-specifier|final
-name|int
-name|stackLimit
-init|=
-literal|3
-decl_stmt|;
-specifier|private
-name|String
-name|getCallStack
-parameter_list|()
-block|{
-name|StackTraceElement
-index|[]
-name|stackTrace
-init|=
-name|Thread
-operator|.
-name|currentThread
-argument_list|()
-operator|.
-name|getStackTrace
-argument_list|()
-decl_stmt|;
-name|int
-name|thislimit
-init|=
-name|Math
-operator|.
-name|min
-argument_list|(
-name|stackLimit
-argument_list|,
-name|stackTrace
-operator|.
-name|length
-argument_list|)
-decl_stmt|;
-name|StringBuilder
-name|sb
-init|=
 operator|new
-name|StringBuilder
-argument_list|()
-decl_stmt|;
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|" at:"
-argument_list|)
-expr_stmt|;
-comment|// Offset by 4 because the first 4 frames are just calls to get down here.
-for|for
-control|(
-name|int
-name|i
-init|=
-literal|4
-init|;
-name|i
-operator|<
-name|thislimit
-operator|+
-literal|4
-condition|;
-name|i
-operator|++
-control|)
-block|{
-name|sb
-operator|.
-name|append
-argument_list|(
-literal|"\n\t"
-argument_list|)
-expr_stmt|;
-name|sb
-operator|.
-name|append
-argument_list|(
-name|stackTrace
-index|[
-name|i
-index|]
-operator|.
-name|toString
+name|Exception
 argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-return|return
-name|sb
-operator|.
-name|toString
-argument_list|()
-return|;
 block|}
 specifier|private
 name|Function
@@ -66986,12 +66879,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"getSchemaVersionsByColumns going to execute query "
-operator|+
+literal|"getSchemaVersionsByColumns going to execute query {}"
+argument_list|,
 name|sql
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -74815,8 +74705,8 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"runtimeStat: "
-operator|+
+literal|"runtimeStat: {}"
+argument_list|,
 name|stat
 argument_list|)
 expr_stmt|;
