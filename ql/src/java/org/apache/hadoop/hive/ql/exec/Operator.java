@@ -2624,7 +2624,7 @@ name|HiveException
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"Starting group"
 argument_list|)
@@ -2692,7 +2692,7 @@ name|HiveException
 block|{
 name|LOG
 operator|.
-name|debug
+name|trace
 argument_list|(
 literal|"Ending group"
 argument_list|)
