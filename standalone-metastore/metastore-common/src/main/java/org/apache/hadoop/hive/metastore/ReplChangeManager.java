@@ -2574,7 +2574,7 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Repl policy is not set for database "
+literal|"Repl policy is not set for database: {}"
 argument_list|,
 name|db
 operator|.
