@@ -18216,7 +18216,7 @@ name|calciteJoinType
 operator|=
 name|JoinRelType
 operator|.
-name|INNER
+name|SEMI
 expr_stmt|;
 name|leftSemiJoin
 operator|=
@@ -18483,20 +18483,6 @@ literal|1
 index|]
 argument_list|,
 name|calciteJoinCond
-argument_list|,
-name|ImmutableIntList
-operator|.
-name|copyOf
-argument_list|(
-name|leftKeys
-argument_list|)
-argument_list|,
-name|ImmutableIntList
-operator|.
-name|copyOf
-argument_list|(
-name|rightKeys
-argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Create join RR: we need to check whether we need to update left RR in case

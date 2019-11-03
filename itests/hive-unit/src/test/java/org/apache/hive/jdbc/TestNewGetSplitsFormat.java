@@ -497,15 +497,19 @@ argument_list|,
 name|numSplits
 argument_list|)
 decl_stmt|;
-name|assertTrue
-argument_list|(
+if|if
+condition|(
 name|splits
 operator|.
 name|length
-operator|>
-literal|2
-argument_list|)
-expr_stmt|;
+operator|<=
+literal|1
+condition|)
+block|{
+return|return
+literal|0
+return|;
+block|}
 comment|// populate actual splits with schema and planBytes[]
 name|LlapInputSplit
 name|schemaSplit

@@ -1349,9 +1349,6 @@ name|joinType
 parameter_list|,
 name|ASTNode
 name|cond
-parameter_list|,
-name|boolean
-name|semiJoin
 parameter_list|)
 block|{
 name|ASTBuilder
@@ -1365,13 +1362,8 @@ name|joinType
 condition|)
 block|{
 case|case
-name|INNER
+name|SEMI
 case|:
-if|if
-condition|(
-name|semiJoin
-condition|)
-block|{
 name|b
 operator|=
 name|ASTBuilder
@@ -1385,9 +1377,10 @@ argument_list|,
 literal|"TOK_LEFTSEMIJOIN"
 argument_list|)
 expr_stmt|;
-block|}
-else|else
-block|{
+break|break;
+case|case
+name|INNER
+case|:
 name|b
 operator|=
 name|ASTBuilder
@@ -1401,7 +1394,6 @@ argument_list|,
 literal|"TOK_JOIN"
 argument_list|)
 expr_stmt|;
-block|}
 break|break;
 case|case
 name|LEFT

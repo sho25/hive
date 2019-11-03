@@ -760,7 +760,7 @@ block|{
 return|return;
 block|}
 block|}
-comment|// If it is not an inner join, we do not push the
+comment|// If it is not an inner join or a semi-join, we do not push the
 comment|// aggregate operator
 if|if
 condition|(

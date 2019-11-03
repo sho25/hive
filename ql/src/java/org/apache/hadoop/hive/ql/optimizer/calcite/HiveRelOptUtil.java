@@ -4243,6 +4243,12 @@ operator|!=
 name|JoinRelType
 operator|.
 name|INNER
+operator|&&
+operator|!
+name|join
+operator|.
+name|isSemiJoin
+argument_list|()
 condition|)
 block|{
 comment|// If it is not an inner, we transform it as the metadata
@@ -4951,6 +4957,11 @@ operator|==
 name|JoinRelType
 operator|.
 name|INNER
+operator|||
+name|join
+operator|.
+name|isSemiJoin
+argument_list|()
 condition|)
 block|{
 comment|// If it is nullable and it is an INNER, we just need a IS NOT NULL filter

@@ -932,11 +932,19 @@ name|leftInputPotentialFK
 operator|&&
 name|rightInputPotentialFK
 operator|&&
+operator|(
 name|joinType
 operator|==
 name|JoinRelType
 operator|.
 name|INNER
+operator|||
+name|joinType
+operator|==
+name|JoinRelType
+operator|.
+name|SEMI
+operator|)
 condition|)
 block|{
 comment|// Both inputs are referenced. Before making a decision, try to swap
@@ -1464,6 +1472,9 @@ condition|(
 name|joinType
 condition|)
 block|{
+case|case
+name|SEMI
+case|:
 case|case
 name|INNER
 case|:

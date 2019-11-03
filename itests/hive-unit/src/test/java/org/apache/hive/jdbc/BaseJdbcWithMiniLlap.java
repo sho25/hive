@@ -4298,15 +4298,6 @@ argument_list|,
 name|numSplits
 argument_list|)
 decl_stmt|;
-name|assertTrue
-argument_list|(
-name|splits
-operator|.
-name|length
-operator|>
-literal|0
-argument_list|)
-expr_stmt|;
 comment|// Fetch rows from splits
 name|boolean
 name|first

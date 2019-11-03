@@ -650,6 +650,11 @@ operator|==
 name|JoinRelType
 operator|.
 name|INNER
+operator|||
+name|join
+operator|.
+name|isSemiJoin
+argument_list|()
 decl_stmt|;
 name|boolean
 name|genPredOnRight
@@ -671,6 +676,11 @@ operator|==
 name|JoinRelType
 operator|.
 name|INNER
+operator|||
+name|join
+operator|.
+name|isSemiJoin
+argument_list|()
 decl_stmt|;
 name|RexNode
 name|newLeftPredicate
