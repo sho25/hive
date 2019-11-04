@@ -13276,23 +13276,6 @@ range|:
 name|fsOpsAll
 control|)
 block|{
-if|if
-condition|(
-operator|!
-name|fsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
-name|getTableInfo
-argument_list|()
-operator|.
-name|isSetBucketingVersion
-argument_list|()
-condition|)
-block|{
-continue|continue;
-block|}
 comment|// Look for direct parent ReduceSinkOp
 comment|// If there are more than 1 parent, bail out.
 name|Operator
