@@ -559,6 +559,7 @@ return|return
 name|nodeAcls
 return|;
 block|}
+comment|/**    * Check if Kerberos authentication is enabled.    * This is used by:    * - HMS    * In secure scenarios the HMS is logged in (by itself) using Kerberos keytab, hence    * UGI.getLoginUser().isFromKeytab() returns true.    * This makes checking against this method the tightest setting we can check against.    */
 specifier|private
 name|boolean
 name|isKerberosEnabled
@@ -575,7 +576,7 @@ operator|.
 name|getLoginUser
 argument_list|()
 operator|.
-name|hasKerberosCredentials
+name|isFromKeytab
 argument_list|()
 operator|&&
 name|MetastoreConf

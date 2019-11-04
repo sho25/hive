@@ -301,7 +301,7 @@ literal|null
 return|;
 block|}
 block|}
-comment|/**    * Check if Kerberos authentication is enabled.    */
+comment|/**    * Check if Kerberos authentication is enabled.    * This is used by:    * - LLAP daemons    * - Tez AM    * - HS2    * - LLAP status service    * Among the these Tez AM process has the lowest security setting wrt Kerberos in UGI.    * Even in secure scenarios Tez AM will return false for    * UGI.getLoginUser().hasKerberosCredentials() as it does not log in using Kerberos.    * Hence UGI.isSecurityEnabled() is the tightest setting we can check against.    */
 specifier|public
 specifier|static
 name|boolean
@@ -311,15 +311,10 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
-try|try
-block|{
 return|return
 name|UserGroupInformation
 operator|.
-name|getLoginUser
-argument_list|()
-operator|.
-name|hasKerberosCredentials
+name|isSecurityEnabled
 argument_list|()
 operator|&&
 name|HiveConf
@@ -335,17 +330,6 @@ operator|.
 name|HIVE_ZOOKEEPER_USE_KERBEROS
 argument_list|)
 return|;
-block|}
-catch|catch
-parameter_list|(
-name|IOException
-name|e
-parameter_list|)
-block|{
-return|return
-literal|false
-return|;
-block|}
 block|}
 comment|/**    * Dynamically sets up the JAAS configuration that uses kerberos.    *    * @param zkPrincipal    * @param zkKeytab    * @throws IOException    */
 specifier|private
