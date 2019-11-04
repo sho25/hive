@@ -447,6 +447,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|TableName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|ValidReadTxnList
 import|;
 end_import
@@ -9497,11 +9513,12 @@ argument_list|)
 expr_stmt|;
 comment|//easier to read logs and for assumption done in replication flow
 block|}
-comment|// Check if all the input txns are in open state. Write ID should be allocated only for open transactions.
+comment|// Check if all the input txns are in valid state.
+comment|// Write IDs should be allocated only for open and not read-only transactions.
 if|if
 condition|(
 operator|!
-name|isTxnsInOpenState
+name|isTxnsOpenAndNotReadOnly
 argument_list|(
 name|txnIds
 argument_list|,
@@ -9509,24 +9526,59 @@ name|stmt
 argument_list|)
 condition|)
 block|{
-name|ensureAllTxnsValid
+name|String
+name|errorMsg
+init|=
+literal|"Write ID allocation on "
+operator|+
+name|TableName
+operator|.
+name|getDbTable
 argument_list|(
 name|dbName
 argument_list|,
 name|tblName
-argument_list|,
+argument_list|)
+operator|+
+literal|" failed for input txns: "
+operator|+
+name|getAbortedAndReadOnlyTxns
+argument_list|(
 name|txnIds
 argument_list|,
 name|stmt
 argument_list|)
+operator|+
+name|getCommittedTxns
+argument_list|(
+name|txnIds
+argument_list|,
+name|stmt
+argument_list|)
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|errorMsg
+argument_list|)
 expr_stmt|;
 throw|throw
 operator|new
-name|RuntimeException
+name|IllegalStateException
 argument_list|(
-literal|"This should never happen for txnIds: "
+literal|"Write ID allocation failed on "
 operator|+
-name|txnIds
+name|TableName
+operator|.
+name|getDbTable
+argument_list|(
+name|dbName
+argument_list|,
+name|tblName
+argument_list|)
+operator|+
+literal|" as not all input txns in open state or read-only"
 argument_list|)
 throw|;
 block|}
@@ -9568,13 +9620,6 @@ operator|+
 literal|" t2w_database = ? and t2w_table = ?"
 operator|+
 literal|" and "
-argument_list|)
-expr_stmt|;
-name|suffix
-operator|.
-name|append
-argument_list|(
-literal|""
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -25658,10 +25703,10 @@ operator|.
 name|OPEN
 return|;
 block|}
-comment|/**    * Checks if all the txns in the list are in open state.    * @param txnIds list of txns to be evaluated for open state    * @param stmt db statement    * @return If all txns in open state, then return true else false    */
+comment|/**    * Checks if all the txns in the list are in open state and not read-only.    * @param txnIds list of txns to be evaluated for open state/read-only status    * @param stmt db statement    * @return If all the txns in open state and not read-only, then return true else false    */
 specifier|private
 name|boolean
-name|isTxnsInOpenState
+name|isTxnsOpenAndNotReadOnly
 parameter_list|(
 name|List
 argument_list|<
@@ -25693,15 +25738,8 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|StringBuilder
-name|suffix
-init|=
-operator|new
-name|StringBuilder
-argument_list|()
-decl_stmt|;
-comment|// Get the count of txns from the given list are in open state. If the returned count is same as
-comment|// the input number of txns, then it means, all are in open state.
+comment|// Get the count of txns from the given list that are in open state and not read-only.
+comment|// If the returned count is same as the input number of txns, then all txns are in open state and not read-only.
 name|prefix
 operator|.
 name|append
@@ -25710,14 +25748,16 @@ literal|"select count(*) from TXNS where txn_state = '"
 operator|+
 name|TXN_OPEN
 operator|+
-literal|"' and "
-argument_list|)
-expr_stmt|;
-name|suffix
+literal|"' and txn_type != "
+operator|+
+name|TxnType
 operator|.
-name|append
-argument_list|(
-literal|""
+name|READ_ONLY
+operator|.
+name|getValue
+argument_list|()
+operator|+
+literal|" and "
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -25730,7 +25770,9 @@ name|queries
 argument_list|,
 name|prefix
 argument_list|,
-name|suffix
+operator|new
+name|StringBuilder
+argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
@@ -25765,6 +25807,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs
 init|=
@@ -25774,7 +25818,8 @@ name|executeQuery
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 name|rs
@@ -25794,6 +25839,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 return|return
 name|count
 operator|==
@@ -25803,17 +25849,11 @@ name|size
 argument_list|()
 return|;
 block|}
-comment|/**    * Checks if all the txns in the list are in open state.    * @param dbName Database name    * @param tblName Table on which we try to allocate write id    * @param txnIds list of txns to be evaluated for open state    * @param stmt db statement    */
+comment|/**    * Get txns from the list that are either aborted or read-only.    * @param txnIds list of txns to be evaluated for aborted state/read-only status    * @param stmt db statement    */
 specifier|private
-name|void
-name|ensureAllTxnsValid
+name|String
+name|getAbortedAndReadOnlyTxns
 parameter_list|(
-name|String
-name|dbName
-parameter_list|,
-name|String
-name|tblName
-parameter_list|,
 name|List
 argument_list|<
 name|Long
@@ -25844,26 +25884,12 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|StringBuilder
-name|suffix
-init|=
-operator|new
-name|StringBuilder
-argument_list|()
-decl_stmt|;
-comment|// Check if any of the txns in the list is aborted.
+comment|// Check if any of the txns in the list are either aborted or read-only.
 name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select txn_id, txn_state from TXNS where "
-argument_list|)
-expr_stmt|;
-name|suffix
-operator|.
-name|append
-argument_list|(
-literal|""
+literal|"select txn_id, txn_state, txn_type from TXNS where "
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -25876,7 +25902,9 @@ name|queries
 argument_list|,
 name|prefix
 argument_list|,
-name|suffix
+operator|new
+name|StringBuilder
+argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
@@ -25887,48 +25915,13 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-name|Long
-name|txnId
-decl_stmt|;
-name|char
-name|txnState
-decl_stmt|;
-name|boolean
-name|isAborted
-init|=
-literal|false
-decl_stmt|;
 name|StringBuilder
-name|errorMsg
+name|txnInfo
 init|=
 operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|errorMsg
-operator|.
-name|append
-argument_list|(
-literal|"Write ID allocation on "
-argument_list|)
-operator|.
-name|append
-argument_list|(
-name|Warehouse
-operator|.
-name|getQualifiedName
-argument_list|(
-name|dbName
-argument_list|,
-name|tblName
-argument_list|)
-argument_list|)
-operator|.
-name|append
-argument_list|(
-literal|" failed for input txns: "
-argument_list|)
-expr_stmt|;
 for|for
 control|(
 name|String
@@ -25948,6 +25941,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs
 init|=
@@ -25957,7 +25952,8 @@ name|executeQuery
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 while|while
 condition|(
 name|rs
@@ -25966,17 +25962,19 @@ name|next
 argument_list|()
 condition|)
 block|{
+name|long
 name|txnId
-operator|=
+init|=
 name|rs
 operator|.
 name|getLong
 argument_list|(
 literal|1
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|char
 name|txnState
-operator|=
+init|=
 name|rs
 operator|.
 name|getString
@@ -25988,7 +25986,22 @@ name|charAt
 argument_list|(
 literal|0
 argument_list|)
-expr_stmt|;
+decl_stmt|;
+name|TxnType
+name|txnType
+init|=
+name|TxnType
+operator|.
+name|findByValue
+argument_list|(
+name|rs
+operator|.
+name|getInt
+argument_list|(
+literal|3
+argument_list|)
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
 name|txnState
@@ -25996,11 +26009,7 @@ operator|!=
 name|TXN_OPEN
 condition|)
 block|{
-name|isAborted
-operator|=
-literal|true
-expr_stmt|;
-name|errorMsg
+name|txnInfo
 operator|.
 name|append
 argument_list|(
@@ -26028,62 +26037,48 @@ literal|"}"
 argument_list|)
 expr_stmt|;
 block|}
-block|}
-block|}
-comment|// Check if any of the txns in the list is committed.
-name|boolean
-name|isCommitted
-init|=
-name|checkIfTxnsCommitted
-argument_list|(
-name|txnIds
-argument_list|,
-name|stmt
-argument_list|,
-name|errorMsg
-argument_list|)
-decl_stmt|;
+elseif|else
 if|if
 condition|(
-name|isAborted
-operator|||
-name|isCommitted
+name|txnType
+operator|==
+name|TxnType
+operator|.
+name|READ_ONLY
 condition|)
 block|{
-name|LOG
+name|txnInfo
 operator|.
-name|error
+name|append
 argument_list|(
-name|errorMsg
+literal|"{"
+argument_list|)
+operator|.
+name|append
+argument_list|(
+name|txnId
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|",read-only}"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
+block|}
+block|}
+return|return
+name|txnInfo
 operator|.
 name|toString
 argument_list|()
-argument_list|)
-expr_stmt|;
-throw|throw
-operator|new
-name|IllegalStateException
-argument_list|(
-literal|"Write ID allocation failed on "
-operator|+
-name|Warehouse
-operator|.
-name|getQualifiedName
-argument_list|(
-name|dbName
-argument_list|,
-name|tblName
-argument_list|)
-operator|+
-literal|" as not all input txns in open state"
-argument_list|)
-throw|;
+return|;
 block|}
-block|}
-comment|/**    * Checks if all the txns in the list are in committed. If yes, throw eception.    * @param txnIds list of txns to be evaluated for committed    * @param stmt db statement    * @return true if any input txn is committed, else false    */
+comment|/**    * Get txns from the list that are committed.    * @param txnIds list of txns to be evaluated for committed state    * @param stmt db statement    */
 specifier|private
-name|boolean
-name|checkIfTxnsCommitted
+name|String
+name|getCommittedTxns
 parameter_list|(
 name|List
 argument_list|<
@@ -26093,9 +26088,6 @@ name|txnIds
 parameter_list|,
 name|Statement
 name|stmt
-parameter_list|,
-name|StringBuilder
-name|errorMsg
 parameter_list|)
 throws|throws
 name|SQLException
@@ -26118,26 +26110,12 @@ operator|new
 name|StringBuilder
 argument_list|()
 decl_stmt|;
-name|StringBuilder
-name|suffix
-init|=
-operator|new
-name|StringBuilder
-argument_list|()
-decl_stmt|;
-comment|// Check if any of the txns in the list is committed. If yes, throw exception.
+comment|// Check if any of the txns in the list are committed.
 name|prefix
 operator|.
 name|append
 argument_list|(
 literal|"select ctc_txnid from COMPLETED_TXN_COMPONENTS where "
-argument_list|)
-expr_stmt|;
-name|suffix
-operator|.
-name|append
-argument_list|(
-literal|""
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -26150,7 +26128,9 @@ name|queries
 argument_list|,
 name|prefix
 argument_list|,
-name|suffix
+operator|new
+name|StringBuilder
+argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
@@ -26161,13 +26141,12 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-name|Long
-name|txnId
-decl_stmt|;
-name|boolean
-name|isCommitted
+name|StringBuilder
+name|txnInfo
 init|=
-literal|false
+operator|new
+name|StringBuilder
+argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -26188,6 +26167,8 @@ operator|+
 literal|">"
 argument_list|)
 expr_stmt|;
+try|try
+init|(
 name|ResultSet
 name|rs
 init|=
@@ -26197,7 +26178,8 @@ name|executeQuery
 argument_list|(
 name|query
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 while|while
 condition|(
 name|rs
@@ -26206,27 +26188,17 @@ name|next
 argument_list|()
 condition|)
 block|{
-name|isCommitted
-operator|=
-literal|true
-expr_stmt|;
+name|long
 name|txnId
-operator|=
+init|=
 name|rs
 operator|.
 name|getLong
 argument_list|(
 literal|1
 argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|errorMsg
-operator|!=
-literal|null
-condition|)
-block|{
-name|errorMsg
+decl_stmt|;
+name|txnInfo
 operator|.
 name|append
 argument_list|(
@@ -26247,7 +26219,10 @@ block|}
 block|}
 block|}
 return|return
-name|isCommitted
+name|txnInfo
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 comment|/**    * Used to raise an informative error when the caller expected a txn in a particular TxnStatus    * but found it in some other status    */
