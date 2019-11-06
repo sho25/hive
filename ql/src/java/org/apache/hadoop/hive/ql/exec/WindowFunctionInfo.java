@@ -85,7 +85,7 @@ decl_stmt|;
 specifier|private
 specifier|final
 name|boolean
-name|supportsWithinGroup
+name|orderedAggregate
 decl_stmt|;
 specifier|public
 name|WindowFunctionInfo
@@ -171,7 +171,7 @@ operator|.
 name|impliesOrder
 argument_list|()
 expr_stmt|;
-name|supportsWithinGroup
+name|orderedAggregate
 operator|=
 name|def
 operator|==
@@ -181,7 +181,7 @@ literal|false
 else|:
 name|def
 operator|.
-name|supportsWithinGroup
+name|orderedAggregate
 argument_list|()
 expr_stmt|;
 block|}
@@ -203,6 +203,7 @@ return|return
 name|pivotResult
 return|;
 block|}
+comment|/**    * Property for indicating that the function is a window function and an OVER clause is required when invoked.    * example:    * SELECT val, rank() OVER (ORDER BY val DESC) FROM t_table;    * @return true if the function is a window function, false otherwise    */
 specifier|public
 name|boolean
 name|isImpliesOrder
@@ -212,13 +213,14 @@ return|return
 name|impliesOrder
 return|;
 block|}
+comment|/**    * Property for indicating that the function is an Ordered-Set Aggregate function.    * A WITHIN GROUP clause is required when invoked.    * example:    * SELECT rank(1) WITHIN GROUP (ORDER BY val) FROM t_table;    * @return true if the function is a an Ordered-Set Aggregate function, false otherwise    */
 specifier|public
 name|boolean
-name|supportsWithinGroup
+name|isOrderedAggregate
 parameter_list|()
 block|{
 return|return
-name|supportsWithinGroup
+name|orderedAggregate
 return|;
 block|}
 block|}

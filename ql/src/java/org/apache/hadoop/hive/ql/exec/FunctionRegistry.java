@@ -12316,7 +12316,7 @@ block|}
 specifier|public
 specifier|static
 name|boolean
-name|supportsWithinGroup
+name|isOrderedAggregate
 parameter_list|(
 name|String
 name|functionName
@@ -12342,7 +12342,7 @@ block|{
 return|return
 name|windowInfo
 operator|.
-name|supportsWithinGroup
+name|isOrderedAggregate
 argument_list|()
 return|;
 block|}

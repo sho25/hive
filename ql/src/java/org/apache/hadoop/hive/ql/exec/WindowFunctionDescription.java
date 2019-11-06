@@ -170,7 +170,7 @@ literal|false
 function_decl|;
 comment|/**    * This property specifies whether the UDAF is an Ordered-set aggregate function.    *<ordered-set aggregate functions> ::=    *<hypothetical set function> |    *<inverse distribution function>    *    *<hypothetical set function> ::=    *<rank function type><left paren>    *<hypothetical set function value expression list><right paren>    *<within group specification>    *    *<rank function type> ::= RANK | DENSE_RANK | PERCENT_RANK | CUME_DIST    *    *<inverse distribution function> ::=    *<inverse distribution function type><left paren>    *<inverse distribution function argument><right paren>    *<within group specification>    *    *<inverse distribution function type> ::= PERCENTILE_CONT | PERCENTILE_DISC    *    * @return true if the function can be used as an ordered-set aggregate    */
 name|boolean
-name|supportsWithinGroup
+name|orderedAggregate
 parameter_list|()
 default|default
 literal|false

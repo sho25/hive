@@ -2430,6 +2430,15 @@ argument_list|,
 literal|true
 argument_list|)
 block|,
+name|WITHIN_GROUP_PARAMETER_MISMATCH
+argument_list|(
+literal|10422
+argument_list|,
+literal|"The number of hypothetical direct arguments ({0}) must match the number of ordering columns ({1})"
+argument_list|,
+literal|true
+argument_list|)
+block|,
 comment|//========================== 20000 range starts here ========================//
 name|SCRIPT_INIT_ERROR
 argument_list|(
