@@ -2017,6 +2017,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsAllHighMaxParts
@@ -3129,6 +3131,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsHighMaxParts
@@ -3486,6 +3490,8 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsWithAuthHighMaxParts
@@ -3826,6 +3832,8 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
+annotation|@
+name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsWithAuthNoTable
@@ -5288,8 +5296,6 @@ block|}
 comment|/**    * Testing listPartitionsByFilter(String,String,String,short) ->    *         get_partitions_by_filter(String,String,String,short).    */
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilter
@@ -5462,8 +5468,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterCaseInsensitive
@@ -5807,8 +5811,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterCaseSensitive
@@ -6081,8 +6083,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterInvalidFilter
@@ -6161,8 +6161,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNoTblName
@@ -6202,8 +6200,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNoDbName
@@ -6243,8 +6239,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNoTable
@@ -6279,8 +6273,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNoDb
@@ -6315,8 +6307,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNullTblName
@@ -6367,8 +6357,6 @@ block|}
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNullDbName
@@ -6419,8 +6407,6 @@ block|}
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterNullFilter
@@ -6469,8 +6455,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsByFilterEmptyFilter
@@ -6520,8 +6504,6 @@ block|}
 comment|/**    * Testing listPartitionSpecsByFilter(String,String,String,int) ->    *         get_part_specs_by_filter(String,String,String,int).    */
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionsSpecsByFilter
@@ -6747,8 +6729,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterInvalidFilter
@@ -6821,8 +6801,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNoTblName
@@ -6859,8 +6837,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNoDbName
@@ -6897,8 +6873,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNoTable
@@ -6930,8 +6904,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNoDb
@@ -6970,8 +6942,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNullTblName
@@ -7008,8 +6978,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNullDbName
@@ -7039,8 +7007,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterNullFilter
@@ -7089,8 +7055,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionSpecsByFilterEmptyFilter
@@ -7140,8 +7104,6 @@ block|}
 comment|/**    * Testing getNumPartitionsByFilter(String,String,String) ->    *         get_num_partitions_by_filter(String,String,String).    */
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilter
@@ -7288,8 +7250,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterInvalidFilter
@@ -7323,8 +7283,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNoTblName
@@ -7358,8 +7316,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNoDbName
@@ -7393,8 +7349,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNoTable
@@ -7423,8 +7377,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNoDb
@@ -7460,8 +7412,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNullTblName
@@ -7495,8 +7445,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNullDbName
@@ -7523,8 +7471,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testGetNumPartitionsByFilterNullFilter
@@ -8868,8 +8814,6 @@ block|}
 comment|/**    * Testing listPartitionValues(PartitionValuesRequest) ->    *         get_partition_values(PartitionValuesRequest).    */
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValues
@@ -8955,8 +8899,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesEmptySchema
@@ -9037,8 +8979,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNoDbName
@@ -9112,8 +9052,6 @@ name|NoSuchObjectException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNoTblName
@@ -9187,8 +9125,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNoTable
@@ -9257,8 +9193,6 @@ name|MetaException
 operator|.
 name|class
 argument_list|)
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNoDb
@@ -9266,13 +9200,6 @@ parameter_list|()
 throws|throws
 name|Exception
 block|{
-name|client
-operator|.
-name|dropDatabase
-argument_list|(
-name|DB_NAME
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|FieldSchema
@@ -9327,8 +9254,6 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNullDbName
@@ -9499,8 +9424,6 @@ block|}
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNullSchema
@@ -9554,8 +9477,6 @@ block|}
 block|}
 annotation|@
 name|Test
-annotation|@
-name|ConditionalIgnoreOnSessionHiveMetastoreClient
 specifier|public
 name|void
 name|testListPartitionValuesNullRequest

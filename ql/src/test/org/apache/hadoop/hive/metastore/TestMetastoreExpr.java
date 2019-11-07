@@ -1638,7 +1638,8 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
-specifier|private
+comment|/**    * Helper class for building an expression.    */
+specifier|public
 specifier|static
 class|class
 name|ExprBuilder
