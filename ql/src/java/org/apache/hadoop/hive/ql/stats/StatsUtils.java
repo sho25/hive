@@ -12807,6 +12807,11 @@ argument_list|(
 name|newDV
 argument_list|)
 expr_stmt|;
+name|cs
+operator|.
+name|setFilterColumn
+argument_list|()
+expr_stmt|;
 name|oldDV
 operator|=
 name|newDV
