@@ -2725,12 +2725,9 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Failed to compile query: "
-operator|+
+literal|"Failed to compile query"
+argument_list|,
 name|e
-operator|.
-name|getException
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -2913,7 +2910,7 @@ argument_list|()
 operator|.
 name|replaceAll
 argument_list|(
-literal|"[^A-Za-z0-9 ]"
+literal|"-"
 argument_list|,
 literal|""
 argument_list|)
@@ -2997,12 +2994,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Failed to create temp table: "
+literal|"Failed to create temp table ["
 operator|+
+name|tableName
+operator|+
+literal|"]"
+argument_list|,
 name|e
-operator|.
-name|getException
-argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -3047,12 +3045,13 @@ throw|throw
 operator|new
 name|HiveException
 argument_list|(
-literal|"Failed to create temp table: "
+literal|"Failed to select from table ["
 operator|+
+name|tableName
+operator|+
+literal|"]"
+argument_list|,
 name|e
-operator|.
-name|getException
-argument_list|()
 argument_list|)
 throw|;
 block|}
