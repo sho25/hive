@@ -150,6 +150,11 @@ name|REPL_INCREMENTAL_LOAD
 argument_list|(
 literal|16
 argument_list|)
+block|,
+name|SCHEDULED_QUERY_MAINT
+argument_list|(
+literal|17
+argument_list|)
 block|;
 specifier|private
 specifier|final
@@ -296,6 +301,12 @@ literal|16
 case|:
 return|return
 name|REPL_INCREMENTAL_LOAD
+return|;
+case|case
+literal|17
+case|:
+return|return
+name|SCHEDULED_QUERY_MAINT
 return|;
 default|default:
 return|return

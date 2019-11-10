@@ -405,6 +405,15 @@ name|MATERIALIZED_VIEW_DISTRIBUTE_COLUMNS
 init|=
 literal|"materializedview.distribute.columns"
 decl_stmt|;
+comment|/**  A named lock is acquired prior to executing the query; enabling to run queries in parallel which might interfere with eachother. */
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|HIVE_QUERY_EXCLUSIVE_LOCK
+init|=
+literal|"hive.query.exclusive.lock"
+decl_stmt|;
 block|}
 end_class
 

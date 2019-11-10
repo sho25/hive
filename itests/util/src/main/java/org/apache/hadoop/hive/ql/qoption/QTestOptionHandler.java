@@ -35,11 +35,16 @@ name|QTestUtil
 import|;
 end_import
 
+begin_comment
+comment|/**  * Qtest options might be usefull to prepare the test environment or do some extra checks/cleanup.  */
+end_comment
+
 begin_interface
 specifier|public
 interface|interface
 name|QTestOptionHandler
 block|{
+comment|/**    * For a matching option; the arguments are supplied to the handler by this method.     */
 name|void
 name|processArguments
 parameter_list|(
@@ -47,6 +52,7 @@ name|String
 name|arguments
 parameter_list|)
 function_decl|;
+comment|/**    * Invoked before the actual test is executed.    *     * At the time of this call all the options for the actual test is already processed.    */
 name|void
 name|beforeTest
 parameter_list|(
@@ -56,6 +62,7 @@ parameter_list|)
 throws|throws
 name|Exception
 function_decl|;
+comment|/**    * Invoked right after the test is executed.    *     * Can be used to cleanup things and/or clear internal state of the handler.    */
 name|void
 name|afterTest
 parameter_list|(

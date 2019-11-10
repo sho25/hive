@@ -119,6 +119,10 @@ name|QTestUtil
 import|;
 end_import
 
+begin_comment
+comment|/**  * Provides facilities to invoke {@link QTestOptionHandler}-s.  *   * Enables to dispatch option arguments to a specific option handler.  * The option invocation format is '--! qt:<optionName>:<optionArgs>   *   * Please refer to specific implementations of {@link QTestOptionHandler} for more detailed information about them.   */
+end_comment
+
 begin_class
 specifier|public
 class|class

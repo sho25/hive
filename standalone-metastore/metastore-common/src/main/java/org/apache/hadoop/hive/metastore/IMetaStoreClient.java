@@ -7021,6 +7021,50 @@ parameter_list|()
 throws|throws
 name|TException
 function_decl|;
+comment|/**    * Returns details about a scheduled query by name.    *     * @throws NoSuchObjectException if an object by the given name dosen't exists.    */
+name|ScheduledQuery
+name|getScheduledQuery
+parameter_list|(
+name|ScheduledQueryKey
+name|scheduleKey
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
+comment|/**    * Carries out maintenance of scheduled queries (insert/update/drop).    */
+name|void
+name|scheduledQueryMaintenance
+parameter_list|(
+name|ScheduledQueryMaintenanceRequest
+name|request
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Checks whenever a query is available for execution.    *    * @return optionally a scheduled query to be processed.    */
+name|ScheduledQueryPollResponse
+name|scheduledQueryPoll
+parameter_list|(
+name|ScheduledQueryPollRequest
+name|request
+parameter_list|)
+throws|throws
+name|MetaException
+throws|,
+name|TException
+function_decl|;
+comment|/**    * Registers the progress a scheduled query being executed.    */
+name|void
+name|scheduledQueryProgress
+parameter_list|(
+name|ScheduledQueryProgressInfo
+name|info
+parameter_list|)
+throws|throws
+name|TException
+function_decl|;
 block|}
 end_interface
 

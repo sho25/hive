@@ -115,6 +115,22 @@ name|hive
 operator|.
 name|common
 operator|.
+name|ZooKeeperHiveHelper
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|common
+operator|.
 name|classification
 operator|.
 name|InterfaceAudience
@@ -156,22 +172,6 @@ operator|.
 name|type
 operator|.
 name|TimestampTZUtil
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|common
-operator|.
-name|ZooKeeperHiveHelper
 import|;
 end_import
 
@@ -9497,9 +9497,6 @@ name|HIVE_STATS_IN_MIN_RATIO
 argument_list|(
 literal|"hive.stats.filter.in.min.ratio"
 argument_list|,
-operator|(
-name|float
-operator|)
 literal|0.0f
 argument_list|,
 literal|"Output estimation of an IN filter can't be lower than this ratio"
@@ -17519,7 +17516,72 @@ literal|"hive.query.planmapper.link.relnodes"
 argument_list|,
 literal|true
 argument_list|,
-literal|"Wether to link Calcite nodes to runtime statistics."
+literal|"Whether to link Calcite nodes to runtime statistics."
+argument_list|)
+block|,
+name|HIVE_SCHEDULED_QUERIES_EXECUTOR_ENABLED
+argument_list|(
+literal|"hive.scheduled.queries.executor.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Controls whether HS2 will run scheduled query executor."
+argument_list|)
+block|,
+name|HIVE_SCHEDULED_QUERIES_NAMESPACE
+argument_list|(
+literal|"hive.scheduled.queries.namespace"
+argument_list|,
+literal|"hive"
+argument_list|,
+literal|"Sets the scheduled query namespace to be used. New scheduled queries are created in this namespace;"
+operator|+
+literal|"and execution is also bound to the namespace"
+argument_list|)
+block|,
+name|HIVE_SCHEDULED_QUERIES_EXECUTOR_IDLE_SLEEP_TIME
+argument_list|(
+literal|"hive.scheduled.queries.executor.idle.sleep.time"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"Time to sleep between quering for the presence of a scheduled query."
+argument_list|)
+block|,
+name|HIVE_SCHEDULED_QUERIES_EXECUTOR_PROGRESS_REPORT_INTERVAL
+argument_list|(
+literal|"hive.scheduled.queries.executor.progress.report.interval"
+argument_list|,
+literal|"60s"
+argument_list|,
+operator|new
+name|TimeValidator
+argument_list|(
+name|TimeUnit
+operator|.
+name|SECONDS
+argument_list|)
+argument_list|,
+literal|"While scheduled queries are in flight; "
+operator|+
+literal|"a background update happens periodically to report the actual state of the query"
+argument_list|)
+block|,
+name|HIVE_SECURITY_AUTHORIZATION_SCHEDULED_QUERIES_SUPPORTED
+argument_list|(
+literal|"hive.security.authorization.scheduled.queries.supported"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enable this if the configured authorizer is able to handle scheduled query related calls."
 argument_list|)
 block|,
 name|HIVE_QUERY_RESULTS_CACHE_ENABLED
@@ -23645,6 +23707,8 @@ block|,
 literal|"hive\\.vectorized\\..*"
 block|,
 literal|"hive\\.query\\.reexecution\\..*"
+block|,
+literal|"hive\\.query\\.exclusive\\.lock"
 block|,
 literal|"reexec\\.overlay\\..*"
 block|,

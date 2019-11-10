@@ -321,6 +321,12 @@ name|LLAP_CLUSTER_INFO
 block|,
 name|LLAP_CACHE_PURGE
 block|,
+name|CREATE_SCHEDULED_QUERY
+block|,
+name|ALTER_SCHEDULED_QUERY
+block|,
+name|DROP_SCHEDULED_QUERY
+block|,
 comment|// ==== Hive command operation types starts here ==== //
 name|SET
 block|,

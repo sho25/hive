@@ -1888,6 +1888,99 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testParseCreateScheduledQuery
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"create scheduled query asd cron '123' as select 1"
+argument_list|)
+expr_stmt|;
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"create scheduled query asd cron '123' executed as 'x' as select 1"
+argument_list|)
+expr_stmt|;
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"create scheduled query asd cron '123' executed as 'x' defined as select 1"
+argument_list|)
+expr_stmt|;
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"create scheduled query asd cron '123' executed as 'x' disabled defined as select 1"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testParseAlterScheduledQuery
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"alter scheduled query asd cron '123'"
+argument_list|)
+expr_stmt|;
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"alter scheduled query asd disabled"
+argument_list|)
+expr_stmt|;
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"alter scheduled query asd defined as select 22"
+argument_list|)
+expr_stmt|;
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"alter scheduled query asd executed as 'joe'"
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testParseDropScheduledQuery
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|parseDriver
+operator|.
+name|parse
+argument_list|(
+literal|"drop scheduled query asd"
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 end_class
 

@@ -2418,6 +2418,45 @@ literal|false
 argument_list|,
 literal|false
 argument_list|)
+block|,
+name|CREATE_SCHEDULED_QUERY
+argument_list|(
+literal|"CREATE SCHEDULED QUERY"
+argument_list|,
+name|HiveParser
+operator|.
+name|TOK_CREATE_SCHEDULED_QUERY
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
+name|ALTER_SCHEDULED_QUERY
+argument_list|(
+literal|"ALTER SCHEDULED QUERY"
+argument_list|,
+name|HiveParser
+operator|.
+name|TOK_ALTER_SCHEDULED_QUERY
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+block|,
+name|DROP_SCHEDULED_QUERY
+argument_list|(
+literal|"DROP SCHEDULED QUERY"
+argument_list|,
+name|HiveParser
+operator|.
+name|TOK_DROP_SCHEDULED_QUERY
+argument_list|,
+literal|null
+argument_list|,
+literal|null
+argument_list|)
 block|;
 specifier|private
 specifier|final

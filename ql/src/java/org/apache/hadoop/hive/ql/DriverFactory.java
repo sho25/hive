@@ -382,7 +382,7 @@ literal|")"
 argument_list|)
 throw|;
 block|}
-specifier|private
+specifier|public
 specifier|static
 name|QueryState
 name|getNewQueryState
