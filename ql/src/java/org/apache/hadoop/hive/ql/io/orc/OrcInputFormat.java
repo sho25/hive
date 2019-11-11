@@ -10381,6 +10381,10 @@ argument_list|)
 operator|.
 name|maxLength
 argument_list|(
+name|context
+operator|.
+name|isAcid
+condition|?
 name|AcidUtils
 operator|.
 name|getLogicalLength
@@ -10389,6 +10393,11 @@ name|fs
 argument_list|,
 name|file
 argument_list|)
+else|:
+name|file
+operator|.
+name|getLen
+argument_list|()
 argument_list|)
 argument_list|)
 decl_stmt|;
