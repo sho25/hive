@@ -3758,9 +3758,6 @@ name|getFileStatusRecurse
 argument_list|(
 name|path
 argument_list|,
-operator|-
-literal|1
-argument_list|,
 name|fileSys
 argument_list|)
 return|;
@@ -3836,9 +3833,6 @@ operator|.
 name|getFileStatusRecurse
 argument_list|(
 name|tablePath
-argument_list|,
-operator|-
-literal|1
 argument_list|,
 name|fileSys
 argument_list|)
