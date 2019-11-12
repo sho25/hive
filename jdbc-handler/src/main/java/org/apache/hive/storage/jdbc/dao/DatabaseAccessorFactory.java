@@ -161,6 +161,16 @@ name|DB2DatabaseAccessor
 argument_list|()
 expr_stmt|;
 break|break;
+case|case
+name|DERBY
+case|:
+name|accessor
+operator|=
+operator|new
+name|DerbyDatabaseAccessor
+argument_list|()
+expr_stmt|;
+break|break;
 default|default:
 name|accessor
 operator|=
