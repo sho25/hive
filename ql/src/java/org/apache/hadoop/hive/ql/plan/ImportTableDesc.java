@@ -181,7 +181,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
 operator|.
 name|CreateTableDesc
 import|;

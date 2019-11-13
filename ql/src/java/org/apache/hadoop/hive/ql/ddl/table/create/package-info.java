@@ -4,7 +4,7 @@ comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or m
 end_comment
 
 begin_comment
-comment|/** Table creation related DDL operation descriptions and operations. */
+comment|/** Create table DDL operation. */
 end_comment
 
 begin_package
@@ -23,7 +23,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
 package|;
 end_package
 

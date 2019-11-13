@@ -313,7 +313,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
+operator|.
+name|like
 operator|.
 name|CreateTableLikeDesc
 import|;
@@ -335,7 +337,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|drop
 operator|.
 name|DropTableDesc
 import|;

@@ -599,11 +599,6 @@ block|}
 case|case
 name|HiveParser
 operator|.
-name|TOK_DROPTABLE
-case|:
-case|case
-name|HiveParser
-operator|.
 name|TOK_DESCTABLE
 case|:
 case|case
@@ -630,11 +625,6 @@ case|case
 name|HiveParser
 operator|.
 name|TOK_SHOW_TBLPROPERTIES
-case|:
-case|case
-name|HiveParser
-operator|.
-name|TOK_SHOW_CREATETABLE
 case|:
 case|case
 name|HiveParser

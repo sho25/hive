@@ -391,7 +391,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|drop
 operator|.
 name|DropTableDesc
 import|;

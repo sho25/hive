@@ -353,7 +353,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
+operator|.
+name|show
 operator|.
 name|ShowCreateTableOperation
 import|;

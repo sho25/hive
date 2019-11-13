@@ -19,7 +19,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
 package|;
 end_package
 
@@ -316,6 +316,24 @@ operator|.
 name|io
 operator|.
 name|AcidUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|metadata
+operator|.
+name|Hive
 import|;
 end_import
 
@@ -1161,10 +1179,7 @@ argument_list|()
 decl_stmt|;
 try|try
 block|{
-name|context
-operator|.
-name|getDb
-argument_list|()
+name|Hive
 operator|.
 name|listFilesInsideAcidDirectory
 argument_list|(

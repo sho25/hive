@@ -19,7 +19,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
+operator|.
+name|like
 package|;
 end_package
 
@@ -248,6 +250,28 @@ operator|.
 name|ddl
 operator|.
 name|DDLUtils
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|table
+operator|.
+name|create
+operator|.
+name|CreateTableOperation
 import|;
 end_import
 

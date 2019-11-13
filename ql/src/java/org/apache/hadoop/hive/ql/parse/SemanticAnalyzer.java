@@ -1235,7 +1235,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
 operator|.
 name|CreateTableDesc
 import|;
@@ -1257,7 +1257,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
+operator|.
+name|like
 operator|.
 name|CreateTableLikeDesc
 import|;

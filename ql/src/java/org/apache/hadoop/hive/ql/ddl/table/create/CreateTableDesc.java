@@ -19,7 +19,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|creation
+name|create
 package|;
 end_package
 
