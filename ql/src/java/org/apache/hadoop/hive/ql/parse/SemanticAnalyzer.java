@@ -84349,24 +84349,6 @@ condition|)
 block|{
 if|if
 condition|(
-name|partCols
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"Partition columns are not supported on temporary tables"
-argument_list|)
-throw|;
-block|}
-if|if
-condition|(
 name|location
 operator|==
 literal|null
@@ -84866,29 +84848,6 @@ condition|(
 name|isTemporary
 condition|)
 block|{
-if|if
-condition|(
-name|likeTable
-operator|.
-name|getPartCols
-argument_list|()
-operator|.
-name|size
-argument_list|()
-operator|>
-literal|0
-condition|)
-block|{
-throw|throw
-operator|new
-name|SemanticException
-argument_list|(
-literal|"Partition columns are not supported on temporary tables "
-operator|+
-literal|"and source table in CREATE TABLE LIKE is partitioned."
-argument_list|)
-throw|;
-block|}
 name|updateDefaultTblProps
 argument_list|(
 name|likeTable
