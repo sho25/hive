@@ -1390,6 +1390,17 @@ operator|.
 name|SECONDS
 argument_list|)
 expr_stmt|;
+name|hiveConf
+operator|.
+name|setBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SCHEDULED_QUERIES_EXECUTOR_ENABLED
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
 name|this
 operator|.
 name|miniClusterType
