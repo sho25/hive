@@ -2272,6 +2272,17 @@ name|add
 argument_list|(
 name|ConfVars
 operator|.
+name|LLAP_LRFU_BP_WRAPPER_SIZE
+operator|.
+name|varname
+argument_list|)
+expr_stmt|;
+name|llapDaemonVarsSetLocal
+operator|.
+name|add
+argument_list|(
+name|ConfVars
+operator|.
 name|LLAP_CACHE_ALLOW_SYNTHETIC_FILEID
 operator|.
 name|varname
@@ -15070,7 +15081,7 @@ name|LLAP_LRFU_LAMBDA
 argument_list|(
 literal|"hive.llap.io.lrfu.lambda"
 argument_list|,
-literal|0.000001f
+literal|0.1f
 argument_list|,
 literal|"Lambda for ORC low-level cache LRFU cache policy. Must be in [0, 1]. 0 makes LRFU\n"
 operator|+
@@ -15081,6 +15092,19 @@ operator|+
 literal|" operations, currently) that cause the combined recency-frequency of a block in cache\n"
 operator|+
 literal|" to be halved."
+argument_list|)
+block|,
+name|LLAP_LRFU_BP_WRAPPER_SIZE
+argument_list|(
+literal|"hive.llap.io.lrfu.bp.wrapper.size"
+argument_list|,
+literal|64
+argument_list|,
+literal|"thread local queue "
+operator|+
+literal|"used to amortize the lock contention, the idea hear is to try locking as soon we reach max size / 2 "
+operator|+
+literal|"and block when max queue size reached"
 argument_list|)
 block|,
 name|LLAP_CACHE_ALLOW_SYNTHETIC_FILEID
