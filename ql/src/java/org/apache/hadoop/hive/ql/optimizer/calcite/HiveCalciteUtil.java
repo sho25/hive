@@ -4247,7 +4247,7 @@ name|parentOforiginalProjRel
 init|=
 name|rootRel
 decl_stmt|;
-name|HiveProject
+name|RelNode
 name|originalProjRel
 init|=
 literal|null
@@ -4264,13 +4264,14 @@ condition|(
 name|tmpRel
 operator|instanceof
 name|HiveProject
+operator|||
+name|tmpRel
+operator|instanceof
+name|HiveTableFunctionScan
 condition|)
 block|{
 name|originalProjRel
 operator|=
-operator|(
-name|HiveProject
-operator|)
 name|tmpRel
 expr_stmt|;
 break|break;
