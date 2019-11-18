@@ -624,6 +624,11 @@ operator|.
 name|getOrder
 argument_list|()
 argument_list|,
+name|reduceSinkDesc
+operator|.
+name|getNullOrder
+argument_list|()
+argument_list|,
 name|groupByKeyColumns
 argument_list|)
 decl_stmt|;
