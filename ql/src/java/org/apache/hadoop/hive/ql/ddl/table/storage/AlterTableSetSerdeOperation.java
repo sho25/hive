@@ -405,7 +405,7 @@ argument_list|()
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 throw|;

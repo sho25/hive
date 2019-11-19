@@ -914,7 +914,7 @@ control|(
 name|int
 name|i
 init|=
-literal|1
+literal|2
 init|;
 name|i
 operator|<

@@ -286,7 +286,7 @@ block|{
 try|try
 block|{
 comment|// this doesn't always work, since some JDBC drivers (e.g.,
-comment|// Oracle's) return a blank string from getTableName.
+comment|// Oracle's) return a blank string from getDbTableName.
 name|String
 name|table
 init|=

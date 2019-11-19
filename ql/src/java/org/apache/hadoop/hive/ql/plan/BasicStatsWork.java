@@ -637,7 +637,11 @@ operator|.
 name|getTableSpecs
 argument_list|()
 operator|.
-name|tableName
+name|getTableName
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
 return|;
 block|}
 elseif|else
@@ -659,7 +663,7 @@ operator|.
 name|getCtasCreateTableDesc
 argument_list|()
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 return|;
 block|}

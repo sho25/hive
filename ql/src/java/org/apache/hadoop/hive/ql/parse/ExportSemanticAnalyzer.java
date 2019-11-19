@@ -746,7 +746,8 @@ literal|null
 else|:
 name|ts
 operator|.
-name|tableName
+name|getTableName
+argument_list|()
 argument_list|,
 name|mmCtx
 argument_list|)

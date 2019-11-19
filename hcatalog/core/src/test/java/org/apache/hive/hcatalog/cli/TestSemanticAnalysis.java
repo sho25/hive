@@ -2512,7 +2512,7 @@ name|query
 argument_list|)
 expr_stmt|;
 comment|//    Table tbl = client.getTable(MetaStoreUtils.DEFAULT_DATABASE_NAME, likeTbl);
-comment|//    assertEquals(likeTbl,tbl.getTableName());
+comment|//    assertEquals(likeTbl,tbl.getDbTableName());
 comment|//    List<FieldSchema> cols = tbl.getSd().getCols();
 comment|//    assertEquals(1, cols.size());
 comment|//    assertEquals(new FieldSchema("a", "int", null), cols.get(0));

@@ -488,7 +488,7 @@ argument_list|()
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|,
 literal|null
@@ -510,7 +510,7 @@ literal|"DDLTask: Alter Table is skipped as table {} is newer than update"
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -530,7 +530,7 @@ name|getTable
 argument_list|(
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -1073,7 +1073,7 @@ name|alterTable
 argument_list|(
 name|alterTable
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|,
 name|table

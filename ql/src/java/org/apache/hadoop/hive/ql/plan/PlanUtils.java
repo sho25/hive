@@ -2401,7 +2401,7 @@ if|if
 condition|(
 name|crtTblDesc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 operator|!=
 literal|null
@@ -2436,7 +2436,7 @@ name|META_TABLE_NAME
 argument_list|,
 name|crtTblDesc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 expr_stmt|;

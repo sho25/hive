@@ -1021,7 +1021,11 @@ literal|"partitions cannot be null for partitionTable :"
 operator|+
 name|tableSpec
 operator|.
-name|tableName
+name|getTableName
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
 argument_list|)
 throw|;
 block|}
@@ -1816,7 +1820,11 @@ literal|"partitions cannot be null for partitionTable :"
 operator|+
 name|tableSpec
 operator|.
-name|tableName
+name|getTableName
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
 argument_list|)
 throw|;
 block|}

@@ -43,11 +43,9 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|ql
+name|common
 operator|.
-name|ddl
-operator|.
-name|DDLDesc
+name|TableName
 import|;
 end_import
 
@@ -63,9 +61,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|exec
+name|ddl
 operator|.
-name|Utilities
+name|DDLDesc
 import|;
 end_import
 
@@ -189,7 +187,7 @@ literal|1L
 decl_stmt|;
 specifier|private
 specifier|final
-name|String
+name|TableName
 name|tableName
 decl_stmt|;
 specifier|private
@@ -205,7 +203,7 @@ decl_stmt|;
 specifier|public
 name|AlterTableDropConstraintDesc
 parameter_list|(
-name|String
+name|TableName
 name|tableName
 parameter_list|,
 name|ReplicationSpec
@@ -221,19 +219,7 @@ name|this
 operator|.
 name|tableName
 operator|=
-name|String
-operator|.
-name|join
-argument_list|(
-literal|"."
-argument_list|,
-name|Utilities
-operator|.
-name|getDbTableName
-argument_list|(
 name|tableName
-argument_list|)
-argument_list|)
 expr_stmt|;
 name|this
 operator|.
@@ -247,6 +233,15 @@ name|constraintName
 operator|=
 name|constraintName
 expr_stmt|;
+block|}
+specifier|public
+name|TableName
+name|getTableName
+parameter_list|()
+block|{
+return|return
+name|tableName
+return|;
 block|}
 annotation|@
 name|Explain
@@ -273,11 +268,14 @@ block|}
 argument_list|)
 specifier|public
 name|String
-name|getTableName
+name|getDbTableName
 parameter_list|()
 block|{
 return|return
 name|tableName
+operator|.
+name|getNotEmptyDbTable
+argument_list|()
 return|;
 block|}
 specifier|public

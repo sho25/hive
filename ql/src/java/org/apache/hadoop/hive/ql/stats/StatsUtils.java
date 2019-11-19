@@ -11842,6 +11842,8 @@ return|return
 name|result
 return|;
 block|}
+annotation|@
+name|Deprecated
 specifier|public
 specifier|static
 name|String
@@ -11863,6 +11865,8 @@ name|tabName
 argument_list|)
 return|;
 block|}
+annotation|@
+name|Deprecated
 specifier|private
 specifier|static
 name|String

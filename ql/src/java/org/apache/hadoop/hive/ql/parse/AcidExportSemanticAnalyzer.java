@@ -137,6 +137,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|TableName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|metastore
 operator|.
 name|Warehouse
@@ -882,6 +898,7 @@ argument_list|)
 assert|;
 comment|//need to create the table "manually" rather than creating a task since it has to exist to
 comment|// compile the insert into T...
+specifier|final
 name|String
 name|newTableName
 init|=
@@ -891,6 +908,17 @@ name|exportTable
 argument_list|)
 decl_stmt|;
 comment|//this is db.table
+specifier|final
+name|TableName
+name|newTableNameRef
+init|=
+name|HiveTableName
+operator|.
+name|of
+argument_list|(
+name|newTableName
+argument_list|)
+decl_stmt|;
 name|Map
 argument_list|<
 name|String
@@ -1282,7 +1310,7 @@ init|=
 operator|new
 name|AlterTableSetPropertiesDesc
 argument_list|(
-name|newTableName
+name|newTableNameRef
 argument_list|,
 literal|null
 argument_list|,

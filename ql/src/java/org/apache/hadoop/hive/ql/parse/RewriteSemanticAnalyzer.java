@@ -89,6 +89,22 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|common
+operator|.
+name|TableName
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|conf
 operator|.
 name|HiveConf
@@ -1080,8 +1096,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|String
-index|[]
+name|TableName
 name|tableName
 decl_stmt|;
 switch|switch
@@ -1148,14 +1163,14 @@ operator|.
 name|getTable
 argument_list|(
 name|tableName
-index|[
-literal|0
-index|]
+operator|.
+name|getDb
+argument_list|()
 argument_list|,
 name|tableName
-index|[
-literal|1
-index|]
+operator|.
+name|getTable
+argument_list|()
 argument_list|,
 name|throwException
 argument_list|)
@@ -1173,10 +1188,10 @@ name|error
 argument_list|(
 literal|"Failed to find table "
 operator|+
-name|getDotName
-argument_list|(
 name|tableName
-argument_list|)
+operator|.
+name|getNotEmptyDbTable
+argument_list|()
 operator|+
 literal|" got exception "
 operator|+
@@ -1196,10 +1211,10 @@ name|INVALID_TABLE
 operator|.
 name|getMsg
 argument_list|(
-name|getDotName
-argument_list|(
 name|tableName
-argument_list|)
+operator|.
+name|getNotEmptyDbTable
+argument_list|()
 argument_list|)
 argument_list|,
 name|e
@@ -1218,10 +1233,10 @@ name|error
 argument_list|(
 literal|"Failed to find table "
 operator|+
-name|getDotName
-argument_list|(
 name|tableName
-argument_list|)
+operator|.
+name|getNotEmptyDbTable
+argument_list|()
 operator|+
 literal|" got exception "
 operator|+

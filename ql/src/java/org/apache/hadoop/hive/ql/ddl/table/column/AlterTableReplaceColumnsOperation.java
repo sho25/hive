@@ -516,7 +516,7 @@ name|CANNOT_REPLACE_COLUMNS
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 throw|;
@@ -599,7 +599,7 @@ name|REPLACE_CANNOT_DROP_COLUMNS
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 throw|;
@@ -676,7 +676,7 @@ name|REPLACE_CANNOT_DROP_COLUMNS
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 throw|;

@@ -479,7 +479,11 @@ literal|"Swapping export of "
 operator|+
 name|tableSpec
 operator|.
-name|tableName
+name|getTableName
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
 operator|+
 literal|" to "
 operator|+

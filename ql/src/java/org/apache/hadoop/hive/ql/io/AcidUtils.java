@@ -11609,18 +11609,20 @@ block|{
 return|return
 name|TableName
 operator|.
-name|getDbTable
+name|fromString
 argument_list|(
-name|dbName
-operator|.
-name|toLowerCase
-argument_list|()
-argument_list|,
 name|tableName
+argument_list|,
+literal|null
+argument_list|,
+name|dbName
+argument_list|)
+operator|.
+name|getNotEmptyDbTable
+argument_list|()
 operator|.
 name|toLowerCase
 argument_list|()
-argument_list|)
 return|;
 block|}
 comment|/**    * General facility to place a metadta file into a dir created by acid/compactor write.    *    * Load Data commands against Acid tables write {@link AcidBaseFileType#ORIGINAL_BASE} type files    * into delta_x_x/ (or base_x in case there is Overwrite clause).  {@link MetaDataFile} is a    * small JSON file in this directory that indicates that these files don't have Acid metadata    * columns and so the values for these columns need to be assigned at read time/compaction.    */

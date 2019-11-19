@@ -784,6 +784,15 @@ argument_list|(
 name|table
 argument_list|)
 decl_stmt|;
+specifier|final
+name|String
+name|dbTableName
+init|=
+name|desc
+operator|.
+name|getDbTableName
+argument_list|()
+decl_stmt|;
 try|try
 init|(
 name|DataOutputStream
@@ -812,10 +821,7 @@ name|debug
 argument_list|(
 literal|"DDLTask: got data for {}"
 argument_list|,
-name|desc
-operator|.
-name|getTableName
-argument_list|()
+name|dbTableName
 argument_list|)
 expr_stmt|;
 name|List
@@ -956,10 +962,7 @@ operator|.
 name|getColumnPath
 argument_list|()
 argument_list|,
-name|desc
-operator|.
-name|getTableName
-argument_list|()
+name|dbTableName
 argument_list|,
 name|table
 argument_list|,
@@ -988,10 +991,7 @@ name|debug
 argument_list|(
 literal|"DDLTask: written data for {}"
 argument_list|,
-name|desc
-operator|.
-name|getTableName
-argument_list|()
+name|dbTableName
 argument_list|)
 expr_stmt|;
 block|}
@@ -1011,10 +1011,7 @@ name|ErrorMsg
 operator|.
 name|GENERIC_ERROR
 argument_list|,
-name|desc
-operator|.
-name|getTableName
-argument_list|()
+name|dbTableName
 argument_list|)
 throw|;
 block|}
@@ -1043,6 +1040,17 @@ name|desc
 operator|.
 name|getTableName
 argument_list|()
+operator|.
+name|getDb
+argument_list|()
+argument_list|,
+name|desc
+operator|.
+name|getTableName
+argument_list|()
+operator|.
+name|getTable
+argument_list|()
 argument_list|,
 literal|false
 argument_list|)
@@ -1064,7 +1072,7 @@ name|INVALID_TABLE
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 throw|;
@@ -1149,7 +1157,7 @@ argument_list|)
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 throw|;
@@ -1632,7 +1640,7 @@ name|HiveException
 throws|,
 name|MetaException
 block|{
-comment|// when column name is specified in describe table DDL, colPath will be table_name.column_name
+comment|// when column name is specified in describe table DDL, colPath will be db_name.table_name.column_name
 name|String
 name|colName
 init|=
@@ -1646,7 +1654,7 @@ argument_list|(
 literal|"\\."
 argument_list|)
 index|[
-literal|1
+literal|2
 index|]
 decl_stmt|;
 name|List
@@ -1675,7 +1683,7 @@ name|getDbTableName
 argument_list|(
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 decl_stmt|;

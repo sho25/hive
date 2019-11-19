@@ -1747,7 +1747,7 @@ name|extractTableName
 argument_list|(
 name|descTable
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -2016,7 +2016,7 @@ name|getDbTableName
 argument_list|(
 name|alterTable
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 index|[

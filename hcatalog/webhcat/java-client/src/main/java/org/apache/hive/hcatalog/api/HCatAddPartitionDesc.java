@@ -331,7 +331,7 @@ block|}
 comment|/**    * Gets the table name.    *    * @return the table name    */
 annotation|@
 name|Deprecated
-comment|// @deprecated in favour of {@link HCatPartition.#getTableName()}. To be removed in Hive 0.16.
+comment|// @deprecated in favour of {@link HCatPartition.#getDbTableName()}. To be removed in Hive 0.16.
 specifier|public
 name|String
 name|getTableName

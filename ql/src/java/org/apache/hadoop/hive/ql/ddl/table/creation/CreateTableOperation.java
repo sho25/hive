@@ -624,7 +624,7 @@ literal|"DDLTask: Create Table is skipped as table {} is newer than update"
 argument_list|,
 name|desc
 operator|.
-name|getTableName
+name|getDbTableName
 argument_list|()
 argument_list|)
 expr_stmt|;
