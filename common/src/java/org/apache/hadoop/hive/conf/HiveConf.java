@@ -4058,13 +4058,7 @@ name|METASTORE_CLIENT_CAPABILITIES
 argument_list|(
 literal|"hive.metastore.client.capabilities"
 argument_list|,
-literal|"EXTWRITE,EXTREAD,HIVEBUCKET2,"
-operator|+
-literal|"HIVEFULLACIDREAD,HIVEFULLACIDWRITE,HIVECACHEINVALIDATE,HIVEMANAGESTATS,"
-operator|+
-literal|"HIVEMANAGEDINSERTWRITE,HIVEMANAGEDINSERTREAD,"
-operator|+
-literal|"HIVESQL,HIVEMQT,HIVEONLYMQTWRITE"
+literal|""
 argument_list|,
 literal|"Capabilities possessed by HiveServer"
 argument_list|)
@@ -22608,7 +22602,26 @@ if|if
 condition|(
 name|isLoadHiveServer2Config
 argument_list|()
-operator|&&
+condition|)
+block|{
+comment|// set the hardcoded value first, so anything in hiveserver2-site.xml can override it
+name|set
+argument_list|(
+name|ConfVars
+operator|.
+name|METASTORE_CLIENT_CAPABILITIES
+operator|.
+name|varname
+argument_list|,
+literal|"EXTWRITE,EXTREAD,HIVEBUCKET2,HIVEFULLACIDREAD,"
+operator|+
+literal|"HIVEFULLACIDWRITE,HIVECACHEINVALIDATE,HIVEMANAGESTATS,HIVEMANAGEDINSERTWRITE,HIVEMANAGEDINSERTREAD,"
+operator|+
+literal|"HIVESQL,HIVEMQT,HIVEONLYMQTWRITE"
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
 name|hiveServer2SiteUrl
 operator|!=
 literal|null
@@ -22619,6 +22632,7 @@ argument_list|(
 name|hiveServer2SiteUrl
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 name|String
 name|val
