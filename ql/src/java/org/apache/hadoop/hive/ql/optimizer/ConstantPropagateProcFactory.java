@@ -3479,39 +3479,43 @@ block|}
 comment|// If both sides are constants, there is nothing to propagate
 name|ExprNodeColumnDesc
 name|c
-init|=
-name|ExprNodeDescUtils
-operator|.
-name|getColumnExpr
-argument_list|(
-name|lOperand
-argument_list|)
 decl_stmt|;
 if|if
 condition|(
-literal|null
-operator|==
-name|c
+name|lOperand
+operator|instanceof
+name|ExprNodeColumnDesc
 condition|)
 block|{
 name|c
 operator|=
-name|ExprNodeDescUtils
-operator|.
-name|getColumnExpr
-argument_list|(
-name|rOperand
-argument_list|)
+operator|(
+name|ExprNodeColumnDesc
+operator|)
+name|lOperand
 expr_stmt|;
 block|}
+elseif|else
 if|if
 condition|(
-literal|null
-operator|==
-name|c
+name|rOperand
+operator|instanceof
+name|ExprNodeColumnDesc
 condition|)
 block|{
-comment|// we need a column expression on other side.
+name|c
+operator|=
+operator|(
+name|ExprNodeColumnDesc
+operator|)
+name|rOperand
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// we need a column expression on other side
+comment|// NOTE: we also cannot rely on column expressions wrapped inside casts as casting might
+comment|// truncate information
 return|return;
 block|}
 name|ColumnInfo
