@@ -218,7 +218,7 @@ argument_list|()
 decl_stmt|;
 comment|// We care only about open/aborted txns below currentTxn and hence the size should be determined
 comment|// for the exceptions list. The currentTxn will be missing in openTxns list only in rare case like
-comment|// txn is aborted by AcidHouseKeeperService and compactor actually cleans up the aborted txns.
+comment|// txn is read-only or aborted by AcidHouseKeeperService and compactor actually cleans up the aborted txns.
 comment|// So, for such cases, we get negative value for sizeToHwm with found position for currentTxn, and so,
 comment|// we just negate it to get the size.
 name|int
@@ -230,6 +230,10 @@ operator|>
 literal|0
 operator|)
 condition|?
+name|Math
+operator|.
+name|abs
+argument_list|(
 name|Collections
 operator|.
 name|binarySearch
@@ -237,6 +241,7 @@ argument_list|(
 name|openTxns
 argument_list|,
 name|currentTxn
+argument_list|)
 argument_list|)
 else|:
 name|openTxns
@@ -246,18 +251,17 @@ argument_list|()
 decl_stmt|;
 name|sizeToHwm
 operator|=
-operator|(
+name|Math
+operator|.
+name|min
+argument_list|(
 name|sizeToHwm
-operator|<
-literal|0
-operator|)
-condition|?
-operator|(
-operator|-
-name|sizeToHwm
-operator|)
-else|:
-name|sizeToHwm
+argument_list|,
+name|openTxns
+operator|.
+name|size
+argument_list|()
+argument_list|)
 expr_stmt|;
 name|long
 index|[]

@@ -2397,7 +2397,7 @@ decl_stmt|;
 comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id, txn_state from TXNS where txn_id<= "
+literal|"select txn_id, txn_state, txn_type from TXNS where txn_id<= "
 operator|+
 name|hwm
 operator|+
@@ -2455,15 +2455,8 @@ argument_list|(
 literal|1
 argument_list|)
 decl_stmt|;
-name|openList
-operator|.
-name|add
-argument_list|(
-name|txnId
-argument_list|)
-expr_stmt|;
 name|char
-name|c
+name|txnState
 init|=
 name|rs
 operator|.
@@ -2479,7 +2472,7 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|c
+name|txnState
 operator|==
 name|TXN_OPEN
 condition|)
@@ -2496,10 +2489,40 @@ name|txnId
 argument_list|)
 expr_stmt|;
 block|}
-elseif|else
+name|TxnType
+name|txnType
+init|=
+name|TxnType
+operator|.
+name|findByValue
+argument_list|(
+name|rs
+operator|.
+name|getInt
+argument_list|(
+literal|3
+argument_list|)
+argument_list|)
+decl_stmt|;
 if|if
 condition|(
-name|c
+name|txnType
+operator|!=
+name|TxnType
+operator|.
+name|READ_ONLY
+condition|)
+block|{
+name|openList
+operator|.
+name|add
+argument_list|(
+name|txnId
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|txnState
 operator|==
 name|TXN_ABORTED
 condition|)
@@ -2516,6 +2539,7 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 name|LOG
