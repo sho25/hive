@@ -484,35 +484,6 @@ argument_list|,
 literal|false
 argument_list|)
 expr_stmt|;
-comment|//ambiguous case for formatting
-name|verifyBadPattern
-argument_list|(
-literal|"MOnth"
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|verifyBadPattern
-argument_list|(
-literal|"DaY"
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|verifyBadPattern
-argument_list|(
-literal|"dAy"
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
-name|verifyBadPattern
-argument_list|(
-literal|"dY"
-argument_list|,
-literal|false
-argument_list|)
-expr_stmt|;
 comment|//illegal for parsing
 name|verifyBadPattern
 argument_list|(
@@ -648,7 +619,25 @@ expr_stmt|;
 comment|//fill to length 9
 name|checkFormatTs
 argument_list|(
+literal|"YYYY-MOnth-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-JANUARY  -01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
 literal|"YYYY-Month-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-January  -01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MoNTH-DD"
 argument_list|,
 literal|"2019-01-01 00:00:00"
 argument_list|,
@@ -666,7 +655,25 @@ argument_list|)
 expr_stmt|;
 name|checkFormatTs
 argument_list|(
+literal|"YYYY-mONTH-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-january  -01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
 literal|"YYYY-MON-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-JAN-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-MOn-DD"
 argument_list|,
 literal|"2019-01-01 00:00:00"
 argument_list|,
@@ -684,7 +691,25 @@ argument_list|)
 expr_stmt|;
 name|checkFormatTs
 argument_list|(
+literal|"YYYY-MoN-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-Jan-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
 literal|"YYYY-mon-DD"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"2019-jan-01"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"YYYY-mON-DD"
 argument_list|,
 literal|"2019-01-01 00:00:00"
 argument_list|,
@@ -703,6 +728,15 @@ expr_stmt|;
 comment|//fill to length 9
 name|checkFormatTs
 argument_list|(
+literal|"D: DAy"
+argument_list|,
+literal|"2019-01-01 00:00:00"
+argument_list|,
+literal|"3: TUESDAY  "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
 literal|"D: Day"
 argument_list|,
 literal|"2019-01-02 00:00:00"
@@ -712,7 +746,25 @@ argument_list|)
 expr_stmt|;
 name|checkFormatTs
 argument_list|(
+literal|"D: DaY"
+argument_list|,
+literal|"2019-01-02 00:00:00"
+argument_list|,
+literal|"4: Wednesday"
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
 literal|"D: day"
+argument_list|,
+literal|"2019-01-03 00:00:00"
+argument_list|,
+literal|"5: thursday "
+argument_list|)
+expr_stmt|;
+name|checkFormatTs
+argument_list|(
+literal|"D: dAY"
 argument_list|,
 literal|"2019-01-03 00:00:00"
 argument_list|,
