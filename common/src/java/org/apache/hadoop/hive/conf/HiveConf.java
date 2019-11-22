@@ -3760,6 +3760,15 @@ operator|+
 literal|"if query explicitly uses table alias \"select r1.x..\"."
 argument_list|)
 block|,
+name|HIVE_PROTO_EVENTS_QUEUE_CAPACITY
+argument_list|(
+literal|"hive.hook.proto.queue.capacity"
+argument_list|,
+literal|64
+argument_list|,
+literal|"Queue capacity for the proto events logging threads."
+argument_list|)
+block|,
 name|HIVE_PROTO_EVENTS_BASE_PATH
 argument_list|(
 literal|"hive.hook.proto.base-directory"
