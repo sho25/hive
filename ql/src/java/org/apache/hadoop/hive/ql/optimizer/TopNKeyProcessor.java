@@ -475,6 +475,20 @@ return|return
 literal|null
 return|;
 block|}
+comment|// Currently, per partitioning top n key is not supported
+comment|// in TopNKey operator
+if|if
+condition|(
+name|reduceSinkDesc
+operator|.
+name|isPTFReduceSink
+argument_list|()
+condition|)
+block|{
+return|return
+literal|null
+return|;
+block|}
 comment|// Check whether the group by operator is in hash mode
 if|if
 condition|(
