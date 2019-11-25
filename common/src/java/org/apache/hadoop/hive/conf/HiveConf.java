@@ -16574,24 +16574,6 @@ argument_list|,
 literal|"llap.daemon.service.ssl"
 argument_list|)
 block|,
-name|LLAP_DAEMON_WEB_XFRAME_ENABLED
-argument_list|(
-literal|"hive.llap.daemon.web.xframe.enabled"
-argument_list|,
-literal|true
-argument_list|,
-literal|"Whether to enable xframe on LLAP daemon webUI\n"
-argument_list|)
-block|,
-name|LLAP_DAEMON_WEB_XFRAME_VALUE
-argument_list|(
-literal|"hive.llap.daemon.web.xframe.value"
-argument_list|,
-literal|"SAMEORIGIN"
-argument_list|,
-literal|"Configuration to allow the user to set the x_frame-options value\n"
-argument_list|)
-block|,
 name|LLAP_CLIENT_CONSISTENT_SPLITS
 argument_list|(
 literal|"hive.llap.client.consistent.splits"
