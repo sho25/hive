@@ -21792,6 +21792,116 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+specifier|protected
+name|String
+name|isWithinCheckInterval
+parameter_list|(
+name|String
+name|expr
+parameter_list|,
+name|long
+name|interval
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+name|String
+name|condition
+decl_stmt|;
+switch|switch
+condition|(
+name|dbProduct
+condition|)
+block|{
+case|case
+name|DERBY
+case|:
+name|condition
+operator|=
+literal|" {fn TIMESTAMPDIFF(sql_tsi_second, "
+operator|+
+name|expr
+operator|+
+literal|", current_timestamp)}<= "
+operator|+
+name|interval
+expr_stmt|;
+break|break;
+case|case
+name|MYSQL
+case|:
+case|case
+name|POSTGRES
+case|:
+name|condition
+operator|=
+name|expr
+operator|+
+literal|" => current_timestamp - interval '"
+operator|+
+name|interval
+operator|+
+literal|"' second"
+expr_stmt|;
+break|break;
+case|case
+name|SQLSERVER
+case|:
+name|condition
+operator|=
+literal|"DATEDIFF(second, "
+operator|+
+name|expr
+operator|+
+literal|", current_timestamp)<= "
+operator|+
+name|interval
+expr_stmt|;
+break|break;
+case|case
+name|ORACLE
+case|:
+name|condition
+operator|=
+name|expr
+operator|+
+literal|" => current_timestamp - numtodsinterval("
+operator|+
+name|interval
+operator|+
+literal|" , 'second')"
+expr_stmt|;
+break|break;
+default|default:
+name|String
+name|msg
+init|=
+literal|"Unknown database product: "
+operator|+
+name|dbProduct
+operator|.
+name|toString
+argument_list|()
+decl_stmt|;
+name|LOG
+operator|.
+name|error
+argument_list|(
+name|msg
+argument_list|)
+expr_stmt|;
+throw|throw
+operator|new
+name|MetaException
+argument_list|(
+name|msg
+argument_list|)
+throw|;
+block|}
+return|return
+name|condition
+return|;
+block|}
 comment|/**    * Determine the String that should be used to quote identifiers.    * @param conn Active connection    * @return quotes    * @throws SQLException    */
 specifier|protected
 name|String

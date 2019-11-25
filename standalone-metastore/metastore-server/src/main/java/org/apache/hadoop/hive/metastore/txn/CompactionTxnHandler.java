@@ -303,7 +303,7 @@ specifier|public
 name|CompactionTxnHandler
 parameter_list|()
 block|{   }
-comment|/**    * This will look through the completed_txn_components table and look for partitions or tables    * that may be ready for compaction.  Also, look through txns and txn_components tables for    * aborted transactions that we should add to the list.    * @param maxAborted Maximum number of aborted queries to allow before marking this as a    *                   potential compaction.    * @return list of CompactionInfo structs.  These will not have id, type,    * or runAs set since these are only potential compactions not actual ones.    */
+comment|/**    * This will look through the completed_txn_components table and look for partitions or tables    * that may be ready for compaction.  Also, look through txns and txn_components tables for    * aborted transactions that we should add to the list.    * @param abortedThreshold  number of aborted queries forming a potential compaction request.    * @return list of CompactionInfo structs.  These will not have id, type,    * or runAs set since these are only potential compactions not actual ones.    */
 annotation|@
 name|Override
 annotation|@
@@ -318,7 +318,39 @@ argument_list|>
 name|findPotentialCompactions
 parameter_list|(
 name|int
-name|maxAborted
+name|abortedThreshold
+parameter_list|)
+throws|throws
+name|MetaException
+block|{
+return|return
+name|findPotentialCompactions
+argument_list|(
+name|abortedThreshold
+argument_list|,
+operator|-
+literal|1
+argument_list|)
+return|;
+block|}
+annotation|@
+name|Override
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
+specifier|public
+name|Set
+argument_list|<
+name|CompactionInfo
+argument_list|>
+name|findPotentialCompactions
+parameter_list|(
+name|int
+name|abortedThreshold
+parameter_list|,
+name|long
+name|checkInterval
 parameter_list|)
 throws|throws
 name|MetaException
@@ -373,9 +405,62 @@ comment|// Check for completed transactions
 name|String
 name|s
 init|=
-literal|"select distinct ctc_database, ctc_table, "
+literal|"select distinct tc.ctc_database, tc.ctc_table, tc.ctc_partition "
 operator|+
-literal|"ctc_partition from COMPLETED_TXN_COMPONENTS"
+literal|"from COMPLETED_TXN_COMPONENTS tc "
+operator|+
+operator|(
+name|checkInterval
+operator|>
+literal|0
+condition|?
+literal|"left join ( "
+operator|+
+literal|"  select c1.* from COMPLETED_COMPACTIONS c1 "
+operator|+
+literal|"  inner join ( "
+operator|+
+literal|"    select max(cc_id) cc_id from COMPLETED_COMPACTIONS "
+operator|+
+literal|"    group by cc_database, cc_table, cc_partition"
+operator|+
+literal|"  ) c2 "
+operator|+
+literal|"  on c1.cc_id = c2.cc_id "
+operator|+
+literal|"  where c1.cc_state IN ("
+operator|+
+name|quoteChar
+argument_list|(
+name|ATTEMPTED_STATE
+argument_list|)
+operator|+
+literal|","
+operator|+
+name|quoteChar
+argument_list|(
+name|FAILED_STATE
+argument_list|)
+operator|+
+literal|")"
+operator|+
+literal|") c "
+operator|+
+literal|"on tc.ctc_database = c.cc_database and tc.ctc_table = c.cc_table "
+operator|+
+literal|"  and (tc.ctc_partition = c.cc_partition or (tc.ctc_partition is null and c.cc_partition is null)) "
+operator|+
+literal|"where c.cc_id is not null or "
+operator|+
+name|isWithinCheckInterval
+argument_list|(
+literal|"tc.ctc_timestamp"
+argument_list|,
+name|checkInterval
+argument_list|)
+else|:
+literal|""
+operator|)
 decl_stmt|;
 name|LOG
 operator|.
@@ -475,7 +560,7 @@ literal|"group by tc_database, tc_table, tc_partition "
 operator|+
 literal|"having count(*)> "
 operator|+
-name|maxAborted
+name|abortedThreshold
 expr_stmt|;
 name|LOG
 operator|.
@@ -598,7 +683,7 @@ name|e
 argument_list|,
 literal|"findPotentialCompactions(maxAborted:"
 operator|+
-name|maxAborted
+name|abortedThreshold
 operator|+
 literal|")"
 argument_list|)
@@ -629,7 +714,9 @@ block|{
 return|return
 name|findPotentialCompactions
 argument_list|(
-name|maxAborted
+name|abortedThreshold
+argument_list|,
+name|checkInterval
 argument_list|)
 return|;
 block|}

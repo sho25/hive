@@ -764,7 +764,7 @@ name|void
 name|performTimeOuts
 parameter_list|()
 function_decl|;
-comment|/**    * This will look through the completed_txn_components table and look for partitions or tables    * that may be ready for compaction.  Also, look through txns and txn_components tables for    * aborted transactions that we should add to the list.    * @param maxAborted Maximum number of aborted queries to allow before marking this as a    *                   potential compaction.    * @return list of CompactionInfo structs.  These will not have id, type,    * or runAs set since these are only potential compactions not actual ones.    */
+comment|/**    * This will look through the completed_txn_components table and look for partitions or tables    * that may be ready for compaction.  Also, look through txns and txn_components tables for    * aborted transactions that we should add to the list.    * @param abortedThreshold  number of aborted queries forming a potential compaction request.    * @return list of CompactionInfo structs.  These will not have id, type,    * or runAs set since these are only potential compactions not actual ones.    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -776,7 +776,26 @@ argument_list|>
 name|findPotentialCompactions
 parameter_list|(
 name|int
-name|maxAborted
+name|abortedThreshold
+parameter_list|)
+throws|throws
+name|MetaException
+function_decl|;
+annotation|@
+name|RetrySemantics
+operator|.
+name|ReadOnly
+name|Set
+argument_list|<
+name|CompactionInfo
+argument_list|>
+name|findPotentialCompactions
+parameter_list|(
+name|int
+name|abortedThreshold
+parameter_list|,
+name|long
+name|checkInterval
 parameter_list|)
 throws|throws
 name|MetaException
