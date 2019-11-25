@@ -23678,7 +23678,7 @@ name|keyExpressions
 init|=
 name|vContext
 operator|.
-name|getVectorExpressions
+name|getVectorExpressionsUpConvertDecimal64
 argument_list|(
 name|keyColumns
 argument_list|)
