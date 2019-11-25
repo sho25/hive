@@ -288,7 +288,15 @@ operator|=
 block|{
 name|Level
 operator|.
+name|DEFAULT
+block|,
+name|Level
+operator|.
 name|EXTENDED
+block|,
+name|Level
+operator|.
+name|USER
 block|}
 argument_list|)
 specifier|public
