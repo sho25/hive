@@ -9824,6 +9824,15 @@ argument_list|,
 literal|"Whether Hive supports transactional stats (accurate stats for transactional tables)"
 argument_list|)
 block|,
+name|HIVE_TXN_READONLY_ENABLED
+argument_list|(
+literal|"hive.txn.readonly.enabled"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Enables read-only transaction classification and related optimizations"
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.TXN_TIMEOUT      */
 annotation|@
 name|Deprecated

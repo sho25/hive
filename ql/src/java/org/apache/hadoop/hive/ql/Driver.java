@@ -3300,6 +3300,11 @@ name|AcidUtils
 operator|.
 name|getTxnType
 argument_list|(
+name|driverContext
+operator|.
+name|getConf
+argument_list|()
+argument_list|,
 name|tree
 argument_list|)
 argument_list|)

@@ -14931,6 +14931,9 @@ specifier|static
 name|TxnType
 name|getTxnType
 parameter_list|(
+name|Configuration
+name|conf
+parameter_list|,
 name|ASTNode
 name|tree
 parameter_list|)
@@ -14945,6 +14948,17 @@ argument_list|()
 decl_stmt|;
 return|return
 operator|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|HIVE_TXN_READONLY_ENABLED
+argument_list|)
+operator|&&
 name|tree
 operator|.
 name|getToken
