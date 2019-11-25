@@ -143,6 +143,70 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|VectorizedExpressions
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFDatetimeLegacyHybridCalendarDate
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|exec
+operator|.
+name|vector
+operator|.
+name|expressions
+operator|.
+name|VectorUDFDatetimeLegacyHybridCalendarTimestamp
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|metadata
 operator|.
 name|HiveException
@@ -300,7 +364,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * GenericUDFToProlepticGregorian.  */
+comment|/**  * GenericUDFDatetimeLegacyHybridCalendar.  */
 end_comment
 
 begin_class
@@ -313,21 +377,48 @@ literal|"datetime_legacy_hybrid_calendar"
 argument_list|,
 name|value
 operator|=
-literal|"_FUNC_(date/timestamp) - Converts a date/timestamp to new proleptic Gregorian calendar \n"
+literal|"_FUNC_(date/timestamp) - Converts a date/timestamp to legacy hybrid Julian-Gregorian "
 operator|+
-literal|"assuming that its internal days/milliseconds since epoch is calculated using legacy Gregorian-Julian hybrid calendar."
+literal|"calendar\n"
+operator|+
+literal|"assuming that its internal days/milliseconds since epoch is calculated using the "
+operator|+
+literal|"proleptic Gregorian calendar."
 argument_list|,
 name|extended
 operator|=
-literal|"Converts a date/timestamp to new proleptic Gregorian calendar (ISO 8601 standard), which is produced \n"
+literal|"Converts a date/timestamp to legacy Gregorian-Julian hybrid calendar, i.e., "
 operator|+
-literal|"by extending the Gregorian calendar backward to dates preceding its official introduction in 1582, assuming \n"
+literal|"calendar that supports both\n"
 operator|+
-literal|"that its internal days/milliseconds since epoch is calculated using legacy Gregorian-Julian hybrid calendar, \n"
+literal|"the Julian and Gregorian calendar systems with the support of a single discontinuity, "
 operator|+
-literal|"i.e., calendar that supports both the Julian and Gregorian calendar systems with the support of a single \n"
+literal|"which corresponds by\n"
 operator|+
-literal|"discontinuity, which corresponds by default to the Gregorian date when the Gregorian calendar was instituted."
+literal|"default to the Gregorian date when the Gregorian calendar was instituted; assuming "
+operator|+
+literal|"that its internal\n"
+operator|+
+literal|"days/milliseconds since epoch is calculated using new proleptic Gregorian calendar "
+operator|+
+literal|"(ISO 8601 standard), which\n"
+operator|+
+literal|"is produced by extending the Gregorian calendar backward to dates preceding its "
+operator|+
+literal|"official introduction in 1582.\n"
+argument_list|)
+annotation|@
+name|VectorizedExpressions
+argument_list|(
+block|{
+name|VectorUDFDatetimeLegacyHybridCalendarTimestamp
+operator|.
+name|class
+block|,
+name|VectorUDFDatetimeLegacyHybridCalendarDate
+operator|.
+name|class
+block|}
 argument_list|)
 specifier|public
 class|class
