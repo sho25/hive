@@ -996,11 +996,15 @@ init|=
 literal|0
 decl_stmt|;
 specifier|private
+specifier|volatile
 name|boolean
 name|isClosed
 init|=
 literal|false
-decl_stmt|,
+decl_stmt|;
+specifier|private
+specifier|volatile
+name|boolean
 name|isInterrupted
 init|=
 literal|false
