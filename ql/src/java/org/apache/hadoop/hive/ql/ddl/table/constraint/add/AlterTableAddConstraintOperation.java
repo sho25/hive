@@ -19,7 +19,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
+operator|.
+name|add
 package|;
 end_package
 
@@ -144,6 +146,28 @@ operator|.
 name|table
 operator|.
 name|AbstractAlterTableWithConstraintsDesc
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|ddl
+operator|.
+name|table
+operator|.
+name|constraint
+operator|.
+name|Constraints
 import|;
 end_import
 

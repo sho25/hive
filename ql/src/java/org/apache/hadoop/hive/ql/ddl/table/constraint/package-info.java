@@ -23,7 +23,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
 package|;
 end_package
 

@@ -314,9 +314,6 @@ operator|.
 name|handles
 argument_list|(
 name|tree
-operator|.
-name|getType
-argument_list|()
 argument_list|)
 condition|)
 block|{

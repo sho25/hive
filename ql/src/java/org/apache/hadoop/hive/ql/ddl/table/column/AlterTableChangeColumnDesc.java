@@ -105,7 +105,7 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
 operator|.
 name|Constraints
 import|;

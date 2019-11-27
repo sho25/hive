@@ -151,9 +151,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
 operator|.
-name|AlterTableAddConstraintDesc
+name|Constraints
 import|;
 end_import
 
@@ -173,9 +173,11 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
 operator|.
-name|Constraints
+name|add
+operator|.
+name|AlterTableAddConstraintDesc
 import|;
 end_import
 

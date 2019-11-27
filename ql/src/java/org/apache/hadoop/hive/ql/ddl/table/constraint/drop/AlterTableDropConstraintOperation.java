@@ -19,7 +19,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
+operator|.
+name|drop
 package|;
 end_package
 

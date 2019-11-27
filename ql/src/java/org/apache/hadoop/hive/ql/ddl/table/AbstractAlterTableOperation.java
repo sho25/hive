@@ -269,7 +269,9 @@ name|ddl
 operator|.
 name|table
 operator|.
-name|constaint
+name|constraint
+operator|.
+name|add
 operator|.
 name|AlterTableAddConstraintOperation
 import|;
