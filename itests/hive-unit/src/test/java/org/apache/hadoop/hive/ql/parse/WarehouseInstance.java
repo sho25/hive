@@ -1773,7 +1773,7 @@ block|{
 throw|throw
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 throw|;
 block|}

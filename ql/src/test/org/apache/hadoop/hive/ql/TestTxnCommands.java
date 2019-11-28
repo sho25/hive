@@ -4067,7 +4067,7 @@ literal|"FAILED: SemanticException [Error 10302]: Updating values of bucketing c
 argument_list|,
 name|e2
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -4475,7 +4475,7 @@ literal|"FAILED: SemanticException [Error 10001]: Line 1:14 Table not found 'no_
 argument_list|,
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -6245,12 +6245,12 @@ literal|"Actual: "
 operator|+
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains
@@ -6889,7 +6889,7 @@ name|HiveException
 operator|)
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|)
 operator|.
@@ -6945,7 +6945,7 @@ name|HiveException
 operator|)
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|)
 operator|.
@@ -8911,7 +8911,7 @@ name|HiveException
 operator|)
 name|e1
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|)
 operator|.
@@ -8947,7 +8947,7 @@ name|HiveException
 operator|)
 name|e2
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|)
 operator|.
@@ -9001,7 +9001,7 @@ name|e
 argument_list|,
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains

@@ -938,7 +938,7 @@ literal|"%s"
 argument_list|,
 name|cpr
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|)
 return|;

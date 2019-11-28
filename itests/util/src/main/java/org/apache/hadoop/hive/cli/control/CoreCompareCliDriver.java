@@ -792,7 +792,7 @@ name|failedQuery
 argument_list|(
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 argument_list|,
 name|e

@@ -2438,7 +2438,7 @@ literal|""
 argument_list|,
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains
@@ -3936,7 +3936,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains
@@ -3997,7 +3997,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains

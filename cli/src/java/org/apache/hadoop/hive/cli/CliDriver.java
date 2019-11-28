@@ -2231,7 +2231,7 @@ literal|", cause: "
 operator|+
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;

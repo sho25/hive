@@ -511,7 +511,7 @@ name|assertThat
 argument_list|(
 name|cpe
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|Matchers

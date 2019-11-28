@@ -399,7 +399,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|instanceof
 name|HiveException
@@ -411,7 +411,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|.
 name|getMessage
@@ -429,7 +429,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|.
 name|getMessage

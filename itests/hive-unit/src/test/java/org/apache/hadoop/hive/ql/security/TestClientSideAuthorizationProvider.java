@@ -1368,7 +1368,7 @@ name|assertTrue
 argument_list|(
 name|ret
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|indexOf

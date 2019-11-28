@@ -1819,7 +1819,7 @@ literal|": "
 operator|+
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|e
@@ -1837,7 +1837,7 @@ if|if
 condition|(
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|!=
 literal|null
@@ -1849,7 +1849,7 @@ name|initCause
 argument_list|(
 name|e
 operator|.
-name|getException
+name|getCause
 argument_list|()
 argument_list|)
 expr_stmt|;

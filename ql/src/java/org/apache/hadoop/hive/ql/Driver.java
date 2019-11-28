@@ -7534,7 +7534,7 @@ if|if
 condition|(
 name|cpe
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|==
 literal|null
@@ -7550,7 +7550,7 @@ name|out
 argument_list|,
 name|cpe
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|cpe
@@ -7605,7 +7605,7 @@ name|out
 argument_list|,
 name|cpe
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|cpe
@@ -7629,7 +7629,7 @@ if|if
 condition|(
 name|cpe
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|instanceof
 name|HiveException
@@ -7643,7 +7643,7 @@ name|HiveException
 operator|)
 name|cpe
 operator|.
-name|getException
+name|getCause
 argument_list|()
 decl_stmt|;
 name|mdf
@@ -7656,7 +7656,7 @@ name|out
 argument_list|,
 name|cpe
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|rc
@@ -7703,7 +7703,7 @@ name|getErrorMsg
 argument_list|(
 name|cpe
 operator|.
-name|getException
+name|getCause
 argument_list|()
 operator|.
 name|getMessage
@@ -7720,7 +7720,7 @@ name|out
 argument_list|,
 name|cpe
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|,
 name|canonicalMsg
@@ -7739,7 +7739,7 @@ name|stringifyException
 argument_list|(
 name|cpe
 operator|.
-name|getException
+name|getCause
 argument_list|()
 argument_list|)
 argument_list|)

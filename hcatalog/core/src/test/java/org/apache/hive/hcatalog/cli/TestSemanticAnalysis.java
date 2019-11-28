@@ -1441,7 +1441,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains
@@ -2108,7 +2108,7 @@ name|assertTrue
 argument_list|(
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|.
 name|contains
@@ -2304,7 +2304,7 @@ literal|"type string. For column: b Found type: int"
 argument_list|,
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;

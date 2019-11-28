@@ -2176,7 +2176,7 @@ literal|" cpr.errMsg="
 operator|+
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|+
 literal|" for table "
@@ -2603,7 +2603,7 @@ literal|" cpr.errMsg="
 operator|+
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 argument_list|)
 expr_stmt|;

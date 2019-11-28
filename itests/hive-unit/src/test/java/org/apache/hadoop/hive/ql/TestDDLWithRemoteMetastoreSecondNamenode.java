@@ -1062,7 +1062,7 @@ literal|", "
 operator|+
 name|e
 operator|.
-name|getErrorMessage
+name|getMessage
 argument_list|()
 operator|+
 literal|", query: "
