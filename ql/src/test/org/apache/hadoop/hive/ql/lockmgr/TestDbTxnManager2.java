@@ -738,8 +738,6 @@ argument_list|()
 operator|.
 name|build
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 name|driver2
@@ -760,8 +758,6 @@ argument_list|)
 operator|.
 name|build
 argument_list|()
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 name|TxnDbUtil

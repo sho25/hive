@@ -1374,12 +1374,6 @@ name|newDriver
 argument_list|(
 name|queryState
 argument_list|,
-name|getParentSession
-argument_list|()
-operator|.
-name|getUserName
-argument_list|()
-argument_list|,
 name|queryInfo
 argument_list|)
 expr_stmt|;

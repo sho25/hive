@@ -670,8 +670,6 @@ name|build
 argument_list|()
 argument_list|,
 literal|null
-argument_list|,
-literal|null
 argument_list|)
 return|;
 block|}

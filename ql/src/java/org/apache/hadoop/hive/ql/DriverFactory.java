@@ -174,8 +174,6 @@ name|conf
 argument_list|)
 argument_list|,
 literal|null
-argument_list|,
-literal|null
 argument_list|)
 return|;
 block|}
@@ -186,9 +184,6 @@ name|newDriver
 parameter_list|(
 name|QueryState
 name|queryState
-parameter_list|,
-name|String
-name|userName
 parameter_list|,
 name|QueryInfo
 name|queryInfo
@@ -220,8 +215,6 @@ operator|new
 name|Driver
 argument_list|(
 name|queryState
-argument_list|,
-name|userName
 argument_list|,
 name|queryInfo
 argument_list|)
@@ -310,8 +303,6 @@ operator|new
 name|ReExecDriver
 argument_list|(
 name|queryState
-argument_list|,
-name|userName
 argument_list|,
 name|queryInfo
 argument_list|,

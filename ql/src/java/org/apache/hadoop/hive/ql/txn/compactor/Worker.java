@@ -2195,8 +2195,6 @@ operator|new
 name|Driver
 argument_list|(
 name|queryState
-argument_list|,
-name|userName
 argument_list|)
 init|)
 block|{

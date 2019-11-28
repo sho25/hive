@@ -781,11 +781,6 @@ argument_list|(
 name|conf
 argument_list|)
 argument_list|,
-name|q
-operator|.
-name|getUser
-argument_list|()
-argument_list|,
 literal|null
 argument_list|)
 init|)

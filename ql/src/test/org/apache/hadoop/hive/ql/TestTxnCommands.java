@@ -2379,8 +2379,6 @@ operator|new
 name|Driver
 argument_list|(
 name|qs
-argument_list|,
-literal|null
 argument_list|)
 init|)
 block|{

@@ -708,9 +708,6 @@ parameter_list|(
 name|QueryState
 name|queryState
 parameter_list|,
-name|String
-name|userName
-parameter_list|,
 name|QueryInfo
 name|queryInfo
 parameter_list|,
@@ -733,8 +730,6 @@ operator|new
 name|Driver
 argument_list|(
 name|queryState
-argument_list|,
-name|userName
 argument_list|,
 name|queryInfo
 argument_list|,
