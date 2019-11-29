@@ -594,9 +594,6 @@ operator|new
 name|Path
 argument_list|(
 name|srcUri
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 operator|.
 name|getName
@@ -643,9 +640,6 @@ operator|new
 name|Path
 argument_list|(
 name|srcUri
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 argument_list|,
 operator|new

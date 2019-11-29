@@ -7187,7 +7187,7 @@ name|resourceValue
 init|=
 name|uri
 operator|.
-name|toString
+name|getPath
 argument_list|()
 decl_stmt|;
 name|downloadedValues
