@@ -536,6 +536,14 @@ index|[
 name|i
 index|]
 operator|.
+name|postInit
+argument_list|()
+expr_stmt|;
+name|qt
+index|[
+name|i
+index|]
+operator|.
 name|newSession
 argument_list|()
 expr_stmt|;

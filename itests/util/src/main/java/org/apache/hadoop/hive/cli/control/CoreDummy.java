@@ -57,6 +57,22 @@ name|QFileVersionHandler
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|QTestUtil
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -112,6 +128,17 @@ name|void
 name|shutdown
 parameter_list|()
 block|{   }
+annotation|@
+name|Override
+specifier|protected
+name|QTestUtil
+name|getQt
+parameter_list|()
+block|{
+return|return
+literal|null
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

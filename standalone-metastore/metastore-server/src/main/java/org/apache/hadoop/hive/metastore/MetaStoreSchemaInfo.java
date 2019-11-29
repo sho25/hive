@@ -726,11 +726,9 @@ name|dbType
 operator|+
 name|SQL_FILE_EXTENSION
 decl_stmt|;
-comment|// check if the file exists
-if|if
-condition|(
-operator|!
-operator|(
+name|File
+name|scriptFile
+init|=
 operator|new
 name|File
 argument_list|(
@@ -743,10 +741,15 @@ name|separatorChar
 operator|+
 name|createScript
 argument_list|)
+decl_stmt|;
+comment|// check if the file exists
+if|if
+condition|(
+operator|!
+name|scriptFile
 operator|.
 name|exists
 argument_list|()
-operator|)
 condition|)
 block|{
 throw|throw
@@ -755,7 +758,10 @@ name|HiveMetaException
 argument_list|(
 literal|"Unable to find create user file, expected: "
 operator|+
-name|createScript
+name|scriptFile
+operator|.
+name|getAbsolutePath
+argument_list|()
 argument_list|)
 throw|;
 block|}

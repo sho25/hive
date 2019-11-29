@@ -160,6 +160,11 @@ range|:
 name|qts
 control|)
 block|{
+name|util
+operator|.
+name|postInit
+argument_list|()
+expr_stmt|;
 comment|// derby fails creating multiple stats aggregator concurrently
 name|util
 operator|.

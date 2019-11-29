@@ -222,7 +222,7 @@ name|builder
 decl_stmt|;
 specifier|private
 name|String
-name|pasword
+name|password
 init|=
 literal|"reallySimplePassword"
 decl_stmt|;
@@ -281,9 +281,14 @@ literal|null
 argument_list|,
 literal|"testUser"
 argument_list|,
-name|pasword
+name|password
 argument_list|,
 name|scriptFile
+argument_list|)
+operator|.
+name|setVerbose
+argument_list|(
+literal|false
 argument_list|)
 expr_stmt|;
 block|}
@@ -324,7 +329,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-name|pasword
+name|password
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -358,7 +363,7 @@ argument_list|)
 operator|.
 name|contains
 argument_list|(
-name|pasword
+name|password
 argument_list|)
 argument_list|)
 expr_stmt|;
