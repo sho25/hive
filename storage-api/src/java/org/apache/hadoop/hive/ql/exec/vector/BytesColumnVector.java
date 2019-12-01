@@ -297,6 +297,13 @@ index|]
 operator|=
 literal|null
 expr_stmt|;
+name|length
+index|[
+name|idx
+index|]
+operator|=
+literal|0
+expr_stmt|;
 block|}
 name|buffer
 operator|=
