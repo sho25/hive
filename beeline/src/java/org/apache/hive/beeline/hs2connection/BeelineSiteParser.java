@@ -466,6 +466,7 @@ name|BEELINE_CONNECTION_NAMED_JDBC_URL_PREFIX
 argument_list|)
 condition|)
 block|{
+comment|// using conf.get(key) to help with variable substitution
 name|props
 operator|.
 name|setProperty
@@ -480,10 +481,12 @@ name|length
 argument_list|()
 argument_list|)
 argument_list|,
-name|kv
+name|conf
 operator|.
-name|getValue
-argument_list|()
+name|get
+argument_list|(
+name|key
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -651,10 +654,12 @@ name|length
 argument_list|()
 argument_list|)
 argument_list|,
-name|kv
+name|conf
 operator|.
-name|getValue
-argument_list|()
+name|get
+argument_list|(
+name|key
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
