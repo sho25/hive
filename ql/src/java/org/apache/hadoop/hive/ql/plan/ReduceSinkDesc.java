@@ -1702,10 +1702,6 @@ block|,
 name|Level
 operator|.
 name|EXTENDED
-block|,
-name|Level
-operator|.
-name|USER
 block|}
 argument_list|)
 specifier|public
@@ -1820,10 +1816,6 @@ block|,
 name|Level
 operator|.
 name|EXTENDED
-block|,
-name|Level
-operator|.
-name|USER
 block|}
 argument_list|)
 specifier|public
