@@ -10119,6 +10119,17 @@ operator|+
 literal|"a major compaction."
 argument_list|)
 block|,
+name|HIVE_COMPACTOR_WAIT_TIMEOUT
+argument_list|(
+literal|"hive.compactor.wait.timeout"
+argument_list|,
+literal|300000L
+argument_list|,
+literal|"Time out in "
+operator|+
+literal|"milliseconds for blocking compaction. It's value has to be higher than 2000 milliseconds. "
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.COMPACTOR_INITIATOR_FAILED_THRESHOLD      */
 annotation|@
 name|Deprecated
