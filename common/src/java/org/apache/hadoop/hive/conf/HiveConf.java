@@ -7664,6 +7664,28 @@ operator|+
 literal|"on reading parquet files from other tools"
 argument_list|)
 block|,
+name|HIVE_PARQUET_DATE_PROLEPTIC_GREGORIAN
+argument_list|(
+literal|"hive.parquet.date.proleptic.gregorian"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Should we write date using the proleptic Gregorian calendar instead of the hybrid Julian Gregorian?\n"
+operator|+
+literal|"Hybrid is the default."
+argument_list|)
+block|,
+name|HIVE_PARQUET_DATE_PROLEPTIC_GREGORIAN_DEFAULT
+argument_list|(
+literal|"hive.parquet.date.proleptic.gregorian.default"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This value controls whether date type in Parquet files was written using the hybrid or proleptic\n"
+operator|+
+literal|"calendar. Hybrid is the default."
+argument_list|)
+block|,
 name|HIVE_AVRO_TIMESTAMP_SKIP_CONVERSION
 argument_list|(
 literal|"hive.avro.timestamp.skip.conversion"
@@ -7679,6 +7701,28 @@ operator|+
 literal|"it to false will treat legacy timestamps as UTC-normalized. This flag will not affect "
 operator|+
 literal|"timestamps written after this change."
+argument_list|)
+block|,
+name|HIVE_AVRO_PROLEPTIC_GREGORIAN
+argument_list|(
+literal|"hive.avro.proleptic.gregorian"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Should we write date and timestamp using the proleptic Gregorian calendar instead of the hybrid Julian Gregorian?\n"
+operator|+
+literal|"Hybrid is the default."
+argument_list|)
+block|,
+name|HIVE_AVRO_PROLEPTIC_GREGORIAN_DEFAULT
+argument_list|(
+literal|"hive.avro.proleptic.gregorian.default"
+argument_list|,
+literal|false
+argument_list|,
+literal|"This value controls whether date and timestamp type in Avro files was written using the hybrid or proleptic\n"
+operator|+
+literal|"calendar. Hybrid is the default."
 argument_list|)
 block|,
 name|HIVE_INT_TIMESTAMP_CONVERSION_IN_SECONDS

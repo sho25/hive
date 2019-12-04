@@ -379,6 +379,9 @@ parameter_list|,
 name|ZoneId
 name|writerTimezone
 parameter_list|,
+name|boolean
+name|skipProlepticConversion
+parameter_list|,
 name|Type
 name|type
 parameter_list|,
@@ -397,6 +400,8 @@ argument_list|,
 name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
+argument_list|,
+name|skipProlepticConversion
 argument_list|,
 name|type
 argument_list|,

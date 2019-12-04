@@ -8926,7 +8926,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|"(EQUALS ts 2015-03-17 12:34:56.0)"
+literal|"(EQUALS ts 2015-03-17 05:34:56.0)"
 argument_list|,
 name|leaf
 operator|.

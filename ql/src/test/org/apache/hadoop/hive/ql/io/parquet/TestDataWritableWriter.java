@@ -1328,6 +1328,8 @@ argument_list|(
 name|mockRecordConsumer
 argument_list|,
 name|fileSchema
+argument_list|,
+literal|false
 argument_list|)
 decl_stmt|;
 name|hiveParquetWriter

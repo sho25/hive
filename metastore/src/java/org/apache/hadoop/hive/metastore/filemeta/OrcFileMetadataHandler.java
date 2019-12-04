@@ -283,6 +283,8 @@ argument_list|(
 name|sarg
 argument_list|,
 name|metadata
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}

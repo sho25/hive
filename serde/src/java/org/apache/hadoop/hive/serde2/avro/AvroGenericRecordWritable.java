@@ -283,6 +283,12 @@ name|writerTimezone
 init|=
 literal|null
 decl_stmt|;
+specifier|private
+name|Boolean
+name|writerProleptic
+init|=
+literal|null
+decl_stmt|;
 comment|/**    * Unique Id determine which record reader created this record    */
 specifier|private
 name|UID
@@ -342,6 +348,9 @@ name|AvroGenericRecordWritable
 parameter_list|(
 name|ZoneId
 name|writerTimezone
+parameter_list|,
+name|Boolean
+name|writerProleptic
 parameter_list|)
 block|{
 name|this
@@ -349,6 +358,12 @@ operator|.
 name|writerTimezone
 operator|=
 name|writerTimezone
+expr_stmt|;
+name|this
+operator|.
+name|writerProleptic
+operator|=
+name|writerProleptic
 expr_stmt|;
 block|}
 annotation|@
@@ -792,6 +807,15 @@ parameter_list|()
 block|{
 return|return
 name|writerTimezone
+return|;
+block|}
+specifier|public
+name|Boolean
+name|getWriterProleptic
+parameter_list|()
+block|{
+return|return
+name|writerProleptic
 return|;
 block|}
 block|}

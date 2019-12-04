@@ -406,6 +406,12 @@ name|writerTimezone
 init|=
 literal|null
 decl_stmt|;
+specifier|protected
+name|boolean
+name|skipProlepticConversion
+init|=
+literal|false
+decl_stmt|;
 comment|/**    * Total number of values read.    */
 specifier|protected
 name|long
@@ -537,6 +543,9 @@ parameter_list|,
 name|ZoneId
 name|writerTimezone
 parameter_list|,
+name|boolean
+name|skipProlepticConversion
+parameter_list|,
 name|Type
 name|parquetType
 parameter_list|,
@@ -584,6 +593,12 @@ operator|.
 name|writerTimezone
 operator|=
 name|writerTimezone
+expr_stmt|;
+name|this
+operator|.
+name|skipProlepticConversion
+operator|=
+name|skipProlepticConversion
 expr_stmt|;
 name|this
 operator|.

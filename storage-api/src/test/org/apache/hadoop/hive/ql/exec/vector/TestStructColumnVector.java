@@ -692,6 +692,13 @@ argument_list|(
 literal|true
 argument_list|)
 expr_stmt|;
+name|x2
+operator|.
+name|setUsingProlepticCalendar
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
 name|StructColumnVector
 name|x
 init|=
@@ -904,6 +911,13 @@ decl_stmt|;
 name|x2
 operator|.
 name|setIsUTC
+argument_list|(
+literal|true
+argument_list|)
+expr_stmt|;
+name|x2
+operator|.
+name|setUsingProlepticCalendar
 argument_list|(
 literal|true
 argument_list|)

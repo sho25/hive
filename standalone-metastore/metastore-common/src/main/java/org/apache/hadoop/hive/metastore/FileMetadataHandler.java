@@ -152,7 +152,7 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-specifier|private
+specifier|protected
 name|Configuration
 name|conf
 decl_stmt|;

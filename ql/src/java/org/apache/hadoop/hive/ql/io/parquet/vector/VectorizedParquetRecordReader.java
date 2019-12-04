@@ -3144,6 +3144,8 @@ name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
 argument_list|,
+name|skipProlepticConversion
+argument_list|,
 literal|0
 argument_list|)
 expr_stmt|;
@@ -3201,6 +3203,8 @@ argument_list|,
 name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
+argument_list|,
+name|skipProlepticConversion
 argument_list|,
 literal|0
 argument_list|)
@@ -3411,6 +3415,9 @@ parameter_list|,
 name|ZoneId
 name|writerTimezone
 parameter_list|,
+name|boolean
+name|skipProlepticConversion
+parameter_list|,
 name|int
 name|depth
 parameter_list|)
@@ -3509,6 +3516,8 @@ argument_list|,
 name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
+argument_list|,
+name|skipProlepticConversion
 argument_list|,
 name|type
 argument_list|,
@@ -3616,6 +3625,8 @@ argument_list|,
 name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
+argument_list|,
+name|skipProlepticConversion
 argument_list|,
 name|depth
 operator|+
@@ -3741,6 +3752,8 @@ argument_list|,
 name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
+argument_list|,
+name|skipProlepticConversion
 argument_list|,
 name|getElementType
 argument_list|(
@@ -3891,6 +3904,8 @@ name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
 argument_list|,
+name|skipProlepticConversion
+argument_list|,
 name|kvTypes
 operator|.
 name|get
@@ -3929,6 +3944,8 @@ argument_list|,
 name|skipTimestampConversion
 argument_list|,
 name|writerTimezone
+argument_list|,
+name|skipProlepticConversion
 argument_list|,
 name|kvTypes
 operator|.

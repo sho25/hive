@@ -444,6 +444,14 @@ specifier|public
 specifier|static
 specifier|final
 name|String
+name|WRITER_PROLEPTIC
+init|=
+literal|"writer.proleptic"
+decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
 name|AVRO_PROP_LOGICAL_TYPE
 init|=
 literal|"logicalType"
@@ -988,7 +996,9 @@ name|avroSerializer
 operator|=
 operator|new
 name|AvroSerializer
-argument_list|()
+argument_list|(
+name|configuration
+argument_list|)
 expr_stmt|;
 name|this
 operator|.
