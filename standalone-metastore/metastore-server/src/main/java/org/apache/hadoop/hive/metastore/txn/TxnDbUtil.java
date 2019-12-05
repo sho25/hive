@@ -331,6 +331,7 @@ expr_stmt|;
 block|}
 specifier|public
 specifier|static
+specifier|synchronized
 name|void
 name|prepDb
 parameter_list|(
