@@ -11037,7 +11037,7 @@ literal|"Unexpected 1 compaction state"
 argument_list|,
 name|TxnStore
 operator|.
-name|CLEANING_RESPONSE
+name|SUCCEEDED_RESPONSE
 argument_list|,
 name|resp
 operator|.

@@ -3747,6 +3747,13 @@ name|driver
 operator|.
 name|run
 argument_list|(
+literal|"insert into temp.T12p partition (ds='tomorrow', hour='2') values (13, 13)"
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|run
+argument_list|(
 literal|"insert into temp.T13p partition (ds='today', hour='1') values (7, 7)"
 argument_list|)
 expr_stmt|;
@@ -3793,7 +3800,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|4
+literal|5
 argument_list|,
 name|count
 argument_list|)
@@ -4251,7 +4258,22 @@ argument_list|,
 name|count
 argument_list|)
 expr_stmt|;
-comment|// Fail compaction, so that we have failed records in COMPLETED_COMPACTIONS
+comment|// Fail compaction, so that we have failed records in COMPLETED_COMPACTIONS.
+comment|// Tables need at least 2 delta files to compact, and minor compaction was just run, so insert
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"insert into temp.T11 values (14, 14)"
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"insert into temp.T12p partition (ds='tomorrow', hour='2') values (15, 15)"
+argument_list|)
+expr_stmt|;
 name|conf
 operator|.
 name|setBoolVar
