@@ -58104,7 +58104,9 @@ name|message
 argument_list|,
 operator|new
 name|Exception
-argument_list|()
+argument_list|(
+literal|"Debug Dump Stack Trace (Not an Exception)"
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
