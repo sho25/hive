@@ -6917,6 +6917,8 @@ decl_stmt|;
 name|long
 name|logicalLen
 init|=
+name|isAcid
+condition|?
 name|AcidUtils
 operator|.
 name|getLogicalLength
@@ -6925,6 +6927,11 @@ name|fs
 argument_list|,
 name|fileStatus
 argument_list|)
+else|:
+name|fileStatus
+operator|.
+name|getLen
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
