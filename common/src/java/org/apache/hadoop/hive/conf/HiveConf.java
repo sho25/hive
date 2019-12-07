@@ -9296,9 +9296,15 @@ name|float
 operator|)
 literal|20.0
 argument_list|,
-literal|"Standard error expressed in percentage. Provides a tradeoff between accuracy and compute cost. \n"
+literal|"The standard error allowed for NDV estimates, expressed in percentage. This provides a tradeoff \n"
 operator|+
-literal|"A lower value for error indicates higher accuracy and a higher compute cost."
+literal|"between accuracy and compute cost. A lower value for the error indicates higher accuracy and a \n"
+operator|+
+literal|"higher compute cost. (NDV means the number of distinct values.). It only affects the FM-Sketch \n"
+operator|+
+literal|"(not the HLL algorithm which is the default), where it computes the number of necessary\n"
+operator|+
+literal|" bitvectors to achieve the accuracy."
 argument_list|)
 block|,
 comment|/**      * @deprecated Use MetastoreConf.STATS_NDV_TUNER      */
