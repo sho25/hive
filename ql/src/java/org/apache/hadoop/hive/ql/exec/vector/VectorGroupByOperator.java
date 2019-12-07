@@ -1146,6 +1146,25 @@ index|]
 argument_list|)
 expr_stmt|;
 block|}
+if|if
+condition|(
+name|this
+operator|instanceof
+name|ProcessingModeHashAggregate
+condition|)
+block|{
+comment|// Check if we should turn into streaming mode
+operator|(
+operator|(
+name|ProcessingModeHashAggregate
+operator|)
+name|this
+operator|)
+operator|.
+name|checkHashModeEfficiency
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 comment|/**      * Evaluates the aggregators on the current batch.      * The aggregationBatchInfo must have been prepared      * by calling {@link #prepareBatchAggregationBufferSets} first.      */
 specifier|protected
@@ -1974,10 +1993,6 @@ operator|+=
 name|batch
 operator|.
 name|size
-expr_stmt|;
-comment|// Check if we should turn into streaming mode
-name|checkHashModeEfficiency
-argument_list|()
 expr_stmt|;
 block|}
 annotation|@
