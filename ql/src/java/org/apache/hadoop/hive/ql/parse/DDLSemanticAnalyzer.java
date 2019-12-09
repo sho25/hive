@@ -16593,7 +16593,7 @@ comment|// FIXME: is it ok to have a completely new querystate?
 name|QueryState
 name|newQueryState
 init|=
-name|Driver
+name|QueryState
 operator|.
 name|getNewQueryState
 argument_list|(
