@@ -5350,13 +5350,18 @@ argument_list|(
 name|ast
 argument_list|)
 expr_stmt|;
+name|this
+operator|.
+name|setAST
+argument_list|(
+name|ast
+argument_list|)
+expr_stmt|;
 if|if
 condition|(
 operator|!
 name|genResolvedParseTree
 argument_list|(
-name|ast
-argument_list|,
 name|cboCtx
 argument_list|)
 condition|)
@@ -5714,9 +5719,6 @@ argument_list|)
 name|Operator
 name|genOPTree
 parameter_list|(
-name|ASTNode
-name|ast
-parameter_list|,
 name|PlannerContext
 name|plannerCtx
 parameter_list|)
@@ -5732,6 +5734,26 @@ name|boolean
 name|skipCalcitePlan
 init|=
 literal|false
+decl_stmt|;
+comment|// Save original AST in case CBO tampers with the contents of ast to guarantee fail-safe behavior.
+specifier|final
+name|ASTNode
+name|originalAst
+init|=
+operator|(
+name|ASTNode
+operator|)
+name|ParseDriver
+operator|.
+name|adaptor
+operator|.
+name|dupTree
+argument_list|(
+name|this
+operator|.
+name|getAST
+argument_list|()
+argument_list|)
 decl_stmt|;
 if|if
 condition|(
@@ -5783,7 +5805,10 @@ comment|// did remove those and gave CBO the proper AST. That is kinda hacky.
 name|ASTNode
 name|queryForCbo
 init|=
-name|ast
+name|this
+operator|.
+name|getAST
+argument_list|()
 decl_stmt|;
 if|if
 condition|(
@@ -5850,7 +5875,10 @@ condition|)
 block|{
 name|handleMultiDestQuery
 argument_list|(
-name|ast
+name|this
+operator|.
+name|getAST
+argument_list|()
 argument_list|,
 name|cboCtx
 argument_list|)
@@ -6016,7 +6044,10 @@ name|newAST
 operator|=
 name|fixUpAfterCbo
 argument_list|(
-name|ast
+name|this
+operator|.
+name|getAST
+argument_list|()
 argument_list|,
 name|newAST
 argument_list|,
@@ -6515,6 +6546,15 @@ name|Exception
 name|e
 parameter_list|)
 block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"CBO failed, skipping CBO. "
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 name|boolean
 name|isMissingStats
 init|=
@@ -6549,15 +6589,6 @@ expr_stmt|;
 block|}
 else|else
 block|{
-name|LOG
-operator|.
-name|error
-argument_list|(
-literal|"CBO failed, skipping CBO. "
-argument_list|,
-name|e
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|e
@@ -6771,6 +6802,7 @@ name|disableSemJoinReordering
 operator|=
 literal|false
 expr_stmt|;
+comment|// Make sure originalAst is used from here on.
 if|if
 condition|(
 name|reAnalyzeAST
@@ -6788,12 +6820,17 @@ argument_list|()
 expr_stmt|;
 comment|// Assumption: At this point Parse Tree gen& resolution will always
 comment|// be true (since we started out that way).
+name|this
+operator|.
+name|setAST
+argument_list|(
+name|originalAst
+argument_list|)
+expr_stmt|;
 name|super
 operator|.
 name|genResolvedParseTree
 argument_list|(
-name|ast
-argument_list|,
 operator|new
 name|PlannerContext
 argument_list|()
@@ -6861,11 +6898,7 @@ operator|=
 name|super
 operator|.
 name|genOPTree
-argument_list|(
-name|ast
-argument_list|,
-name|plannerCtx
-argument_list|)
+argument_list|()
 expr_stmt|;
 block|}
 return|return
