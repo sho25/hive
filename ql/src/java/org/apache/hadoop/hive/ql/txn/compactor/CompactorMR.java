@@ -1689,6 +1689,9 @@ name|su
 parameter_list|,
 name|IMetaStoreClient
 name|msc
+parameter_list|,
+name|Directory
+name|dir
 parameter_list|)
 throws|throws
 name|IOException
@@ -1794,48 +1797,10 @@ argument_list|,
 name|ci
 argument_list|)
 decl_stmt|;
-comment|// Figure out and encode what files we need to read.  We do this here (rather than in
-comment|// getSplits below) because as part of this we discover our minimum and maximum transactions,
+comment|// Figure out and encode what files we need to read.  We do this before getSplits
+comment|// because as part of this we discover our minimum and maximum transactions,
 comment|// and discovering that in getSplits is too late as we then have no way to pass it to our
 comment|// mapper.
-name|AcidUtils
-operator|.
-name|Directory
-name|dir
-init|=
-name|AcidUtils
-operator|.
-name|getAcidState
-argument_list|(
-literal|null
-argument_list|,
-operator|new
-name|Path
-argument_list|(
-name|sd
-operator|.
-name|getLocation
-argument_list|()
-argument_list|)
-argument_list|,
-name|conf
-argument_list|,
-name|writeIds
-argument_list|,
-name|Ref
-operator|.
-name|from
-argument_list|(
-literal|false
-argument_list|)
-argument_list|,
-literal|true
-argument_list|,
-literal|null
-argument_list|,
-literal|false
-argument_list|)
-decl_stmt|;
 name|List
 argument_list|<
 name|AcidUtils

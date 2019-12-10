@@ -1467,6 +1467,8 @@ argument_list|,
 name|su
 argument_list|,
 name|msc
+argument_list|,
+name|dir
 argument_list|)
 expr_stmt|;
 block|}
@@ -1540,6 +1542,8 @@ argument_list|,
 name|su
 argument_list|,
 name|msc
+argument_list|,
+name|dir
 argument_list|)
 expr_stmt|;
 return|return
