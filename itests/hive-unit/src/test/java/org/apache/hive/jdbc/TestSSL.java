@@ -2477,6 +2477,11 @@ block|}
 comment|/**    * Verify the HS2 can't connect to HMS if the certificate doesn't match    * @throws Exception    */
 annotation|@
 name|Test
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-22621: test case is unstable"
+argument_list|)
 specifier|public
 name|void
 name|testMetastoreConnectionWrongCertCN
