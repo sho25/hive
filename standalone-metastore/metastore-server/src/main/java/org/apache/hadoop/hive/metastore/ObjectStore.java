@@ -3928,12 +3928,10 @@ argument_list|,
 name|ex
 argument_list|)
 expr_stmt|;
-throw|throw
-operator|new
-name|NoSuchObjectException
-argument_list|(
-name|name
-operator|+
+specifier|final
+name|String
+name|errorMessage
+init|=
 operator|(
 name|ex
 operator|==
@@ -3950,6 +3948,20 @@ name|getMessage
 argument_list|()
 operator|)
 operator|)
+decl_stmt|;
+throw|throw
+operator|new
+name|NoSuchObjectException
+argument_list|(
+literal|"database "
+operator|+
+name|catalogName
+operator|+
+literal|"."
+operator|+
+name|name
+operator|+
+name|errorMessage
 argument_list|)
 throw|;
 block|}
