@@ -101,6 +101,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|rules
 operator|.
 name|TestName
@@ -152,6 +162,11 @@ comment|/**  * Tests statistics replication for ACID tables.  */
 end_comment
 
 begin_class
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-22626 should fix this"
+argument_list|)
 specifier|public
 class|class
 name|TestStatsReplicationScenariosACIDNoAutogather
