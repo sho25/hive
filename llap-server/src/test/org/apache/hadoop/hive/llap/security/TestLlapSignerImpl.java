@@ -195,6 +195,16 @@ begin_import
 import|import
 name|org
 operator|.
+name|junit
+operator|.
+name|Ignore
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -237,6 +247,11 @@ argument_list|(
 name|timeout
 operator|=
 literal|10000
+argument_list|)
+annotation|@
+name|Ignore
+argument_list|(
+literal|"HIVE-22621: test case is unstable"
 argument_list|)
 specifier|public
 name|void
