@@ -923,6 +923,21 @@ literal|"Not implemented"
 argument_list|)
 throw|;
 block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isCopy
+parameter_list|()
+block|{
+throw|throw
+operator|new
+name|RuntimeException
+argument_list|(
+literal|"Not implemented"
+argument_list|)
+throw|;
+block|}
 block|}
 end_class
 

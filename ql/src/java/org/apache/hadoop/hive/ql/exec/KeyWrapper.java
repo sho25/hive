@@ -103,6 +103,12 @@ index|[]
 name|getKeyArray
 parameter_list|()
 function_decl|;
+specifier|public
+specifier|abstract
+name|boolean
+name|isCopy
+parameter_list|()
+function_decl|;
 block|}
 end_class
 

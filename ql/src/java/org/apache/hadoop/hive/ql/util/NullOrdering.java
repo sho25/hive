@@ -76,7 +76,7 @@ name|TOK_NULLS_FIRST
 argument_list|,
 name|NullValueOption
 operator|.
-name|MAXVALUE
+name|MINVALUE
 argument_list|,
 literal|'a'
 argument_list|)
@@ -91,7 +91,7 @@ name|TOK_NULLS_LAST
 argument_list|,
 name|NullValueOption
 operator|.
-name|MINVALUE
+name|MAXVALUE
 argument_list|,
 literal|'z'
 argument_list|)

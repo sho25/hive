@@ -379,6 +379,16 @@ name|Object
 index|[]
 name|keys
 decl_stmt|;
+comment|// true means this instance is a copy of another ListKeyWrapper instance. It was created using the copyKey() and the
+comment|//   keys array contains StandardObjects created by ObjectInspectorUtils.copyToStandardObject()
+comment|//   currentStructEqualComparer should be used for equality check
+comment|// false means this instance was created by the KeyWrapperFactory.getKeyWrapper() method.
+comment|//   newKeyStructEqualComparer should be used for equality check
+specifier|private
+specifier|final
+name|boolean
+name|isCopy
+decl_stmt|;
 annotation|@
 name|Override
 specifier|public
@@ -459,6 +469,12 @@ name|setEqualComparer
 argument_list|(
 name|isCopy
 argument_list|)
+expr_stmt|;
+name|this
+operator|.
+name|isCopy
+operator|=
+name|isCopy
 expr_stmt|;
 block|}
 specifier|private
@@ -746,6 +762,17 @@ parameter_list|()
 block|{
 return|return
 name|keys
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isCopy
+parameter_list|()
+block|{
+return|return
+name|isCopy
 return|;
 block|}
 specifier|private
@@ -1246,6 +1273,17 @@ name|key
 expr_stmt|;
 return|return
 name|singleEleArray
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|boolean
+name|isCopy
+parameter_list|()
+block|{
+return|return
+name|isCopy
 return|;
 block|}
 block|}
