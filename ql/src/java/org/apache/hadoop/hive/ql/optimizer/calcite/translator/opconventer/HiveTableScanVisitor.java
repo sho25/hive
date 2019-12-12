@@ -761,6 +761,19 @@ name|colInfos
 argument_list|)
 argument_list|)
 decl_stmt|;
+name|ts
+operator|.
+name|setBucketingVersion
+argument_list|(
+name|tsd
+operator|.
+name|getTableMetadata
+argument_list|()
+operator|.
+name|getBucketingVersion
+argument_list|()
+argument_list|)
+expr_stmt|;
 comment|//now that we let Calcite process subqueries we might have more than one
 comment|// tablescan with same alias.
 if|if

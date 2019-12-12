@@ -6907,7 +6907,7 @@ name|aggregationTrees
 return|;
 block|}
 comment|/**    * This method figures out if current AST is for INSERT INTO    * @param qbp qbParseInfo    * @param dest destination clause    * @return true or false    */
-specifier|private
+specifier|protected
 name|boolean
 name|isInsertInto
 parameter_list|(
