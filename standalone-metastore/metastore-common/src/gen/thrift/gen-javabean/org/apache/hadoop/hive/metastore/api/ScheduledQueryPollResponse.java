@@ -1067,7 +1067,7 @@ name|thrift
 operator|.
 name|meta_data
 operator|.
-name|FieldValueMetaData
+name|StructMetaData
 argument_list|(
 name|org
 operator|.
@@ -1081,7 +1081,9 @@ name|TType
 operator|.
 name|STRUCT
 argument_list|,
-literal|"ScheduledQueryKey"
+name|ScheduledQueryKey
+operator|.
+name|class
 argument_list|)
 argument_list|)
 argument_list|)
@@ -1316,9 +1318,13 @@ name|this
 operator|.
 name|scheduleKey
 operator|=
+operator|new
+name|ScheduledQueryKey
+argument_list|(
 name|other
 operator|.
 name|scheduleKey
+argument_list|)
 expr_stmt|;
 block|}
 name|this
@@ -3065,6 +3071,19 @@ name|TException
 block|{
 comment|// check for required fields
 comment|// check for sub-struct validity
+if|if
+condition|(
+name|scheduleKey
+operator|!=
+literal|null
+condition|)
+block|{
+name|scheduleKey
+operator|.
+name|validate
+argument_list|()
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|void
