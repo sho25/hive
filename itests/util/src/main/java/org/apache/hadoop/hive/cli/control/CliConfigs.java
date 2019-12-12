@@ -1046,18 +1046,6 @@ argument_list|)
 expr_stmt|;
 name|excludeQuery
 argument_list|(
-literal|"results_cache_invalidation.q"
-argument_list|)
-expr_stmt|;
-comment|// unstable; will be enabled by HIVE-22624
-name|excludeQuery
-argument_list|(
-literal|"results_cache_lifetime.q"
-argument_list|)
-expr_stmt|;
-comment|// unstable; will be enabled by HIVE-22624
-name|excludeQuery
-argument_list|(
 literal|"bucket_map_join_tez1.q"
 argument_list|)
 expr_stmt|;
