@@ -21837,7 +21837,7 @@ name|condition
 operator|=
 name|expr
 operator|+
-literal|" => current_timestamp - interval '"
+literal|">= current_timestamp - interval '"
 operator|+
 name|interval
 operator|+
@@ -21865,7 +21865,7 @@ name|condition
 operator|=
 name|expr
 operator|+
-literal|" => current_timestamp - numtodsinterval("
+literal|">= current_timestamp - numtodsinterval("
 operator|+
 name|interval
 operator|+
