@@ -258,6 +258,7 @@ argument_list|>
 name|srcTables
 decl_stmt|;
 specifier|private
+specifier|static
 name|Set
 argument_list|<
 name|String
@@ -654,6 +655,13 @@ argument_list|(
 literal|","
 argument_list|)
 decl_stmt|;
+synchronized|synchronized
+init|(
+name|QTestUtil
+operator|.
+name|class
+init|)
+block|{
 for|for
 control|(
 name|String
@@ -703,6 +711,7 @@ argument_list|(
 name|string
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 block|}
