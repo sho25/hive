@@ -611,11 +611,6 @@ case|:
 case|case
 name|HiveParser
 operator|.
-name|TOK_SHOWCOLUMNS
-case|:
-case|case
-name|HiveParser
-operator|.
 name|TOK_SHOW_TABLESTATUS
 case|:
 case|case

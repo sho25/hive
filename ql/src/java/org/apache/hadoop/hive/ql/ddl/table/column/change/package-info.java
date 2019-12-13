@@ -4,7 +4,7 @@ comment|/*  * Licensed to the Apache Software Foundation (ASF) under one  * or m
 end_comment
 
 begin_comment
-comment|/** Table column related DDL operation descriptions and operations. */
+comment|/** Change columns DDL operation. */
 end_comment
 
 begin_package
@@ -24,6 +24,8 @@ operator|.
 name|table
 operator|.
 name|column
+operator|.
+name|change
 package|;
 end_package
 

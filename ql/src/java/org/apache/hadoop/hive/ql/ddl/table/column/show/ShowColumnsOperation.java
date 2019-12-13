@@ -20,6 +20,8 @@ operator|.
 name|table
 operator|.
 name|column
+operator|.
+name|show
 package|;
 end_package
 
