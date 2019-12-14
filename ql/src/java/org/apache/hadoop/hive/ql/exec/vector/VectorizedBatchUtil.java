@@ -3649,7 +3649,7 @@ name|source
 decl_stmt|;
 return|return
 operator|new
-name|DecimalColumnVector
+name|Decimal64ColumnVector
 argument_list|(
 name|dec64ColVector
 operator|.
