@@ -15699,7 +15699,7 @@ operator|!=
 literal|0
 condition|)
 block|{
-name|int
+name|long
 name|restColumnsDefaultSize
 init|=
 name|StatsUtils
