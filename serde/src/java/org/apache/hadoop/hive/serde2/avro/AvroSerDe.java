@@ -596,7 +596,7 @@ expr_stmt|;
 block|}
 name|LOG
 operator|.
-name|info
+name|debug
 argument_list|(
 literal|"AvroSerde::initialize(): Preset value of avro.schema.literal == "
 operator|+
