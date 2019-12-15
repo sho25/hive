@@ -4316,6 +4316,11 @@ name|getName
 argument_list|()
 argument_list|)
 operator|.
+name|setFromConfiguration
+argument_list|(
+name|conf
+argument_list|)
+operator|.
 name|build
 argument_list|()
 decl_stmt|;
