@@ -20,6 +20,8 @@ operator|.
 name|table
 operator|.
 name|partition
+operator|.
+name|add
 package|;
 end_package
 

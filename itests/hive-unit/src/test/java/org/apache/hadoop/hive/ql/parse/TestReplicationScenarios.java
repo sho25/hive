@@ -787,6 +787,8 @@ name|table
 operator|.
 name|partition
 operator|.
+name|add
+operator|.
 name|AlterTableAddPartitionDesc
 import|;
 end_import

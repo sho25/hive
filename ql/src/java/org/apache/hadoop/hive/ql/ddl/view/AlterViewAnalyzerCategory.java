@@ -17,7 +17,7 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|table
+name|view
 package|;
 end_package
 
@@ -98,7 +98,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Alter Table category helper. It derives the actual type of the command from the root element, by selecting the type  * of the second child, as the Alter Table commands have this structure: tableName command partitionSpec?  */
+comment|/**  * Alter View category helper. It derives the actual type of the command from the root element, by selecting the type  * of the second child, as the Alter View commands have this structure: viewName command partitionSpec?  */
 end_comment
 
 begin_class
@@ -109,11 +109,11 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|TOK_ALTERTABLE
+name|TOK_ALTERVIEW
 argument_list|)
 specifier|public
 class|class
-name|AlterTableAnalyzerCategory
+name|AlterViewAnalyzerCategory
 implements|implements
 name|DDLSemanticAnalyzerCategory
 block|{

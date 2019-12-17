@@ -79,6 +79,8 @@ name|table
 operator|.
 name|partition
 operator|.
+name|drop
+operator|.
 name|AlterTableDropPartitionDesc
 import|;
 end_import

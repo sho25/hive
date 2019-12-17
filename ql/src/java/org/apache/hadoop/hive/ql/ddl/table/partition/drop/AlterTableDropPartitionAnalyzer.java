@@ -18,6 +18,10 @@ operator|.
 name|ddl
 operator|.
 name|table
+operator|.
+name|partition
+operator|.
+name|drop
 package|;
 end_package
 
@@ -33,11 +37,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ddl
-operator|.
-name|DDLSemanticAnalyzerFactory
-operator|.
-name|DDLSemanticAnalyzerCategory
+name|QueryState
 import|;
 end_import
 
@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ASTNode
+name|HiveParser
 import|;
 end_import
 
@@ -93,12 +93,12 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|HiveParser
+name|SemanticException
 import|;
 end_import
 
 begin_comment
-comment|/**  * Alter Table category helper. It derives the actual type of the command from the root element, by selecting the type  * of the second child, as the Alter Table commands have this structure: tableName command partitionSpec?  */
+comment|/**  * Analyzer for drop partition commands for tables.  */
 end_comment
 
 begin_class
@@ -109,34 +109,38 @@ name|type
 operator|=
 name|HiveParser
 operator|.
-name|TOK_ALTERTABLE
+name|TOK_ALTERTABLE_DROPPARTS
 argument_list|)
 specifier|public
 class|class
-name|AlterTableAnalyzerCategory
-implements|implements
-name|DDLSemanticAnalyzerCategory
+name|AlterTableDropPartitionAnalyzer
+extends|extends
+name|AbstractDropPartitionAnalyzer
 block|{
+specifier|public
+name|AlterTableDropPartitionAnalyzer
+parameter_list|(
+name|QueryState
+name|queryState
+parameter_list|)
+throws|throws
+name|SemanticException
+block|{
+name|super
+argument_list|(
+name|queryState
+argument_list|)
+expr_stmt|;
+block|}
 annotation|@
 name|Override
-specifier|public
-name|int
-name|getType
-parameter_list|(
-name|ASTNode
-name|root
-parameter_list|)
+specifier|protected
+name|boolean
+name|expectView
+parameter_list|()
 block|{
 return|return
-name|root
-operator|.
-name|getChild
-argument_list|(
-literal|1
-argument_list|)
-operator|.
-name|getType
-argument_list|()
+literal|false
 return|;
 block|}
 block|}
