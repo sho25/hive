@@ -207,7 +207,7 @@ name|put
 argument_list|(
 name|HADOOP23VERSIONNAME
 argument_list|,
-literal|"org.apache.hadoop.hive.thrift.HadoopThriftAuthBridge23"
+literal|"org.apache.hadoop.hive.metastore.security.HadoopThriftAuthBridge23"
 argument_list|)
 expr_stmt|;
 block|}
