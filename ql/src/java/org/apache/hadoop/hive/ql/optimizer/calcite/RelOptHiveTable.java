@@ -4899,6 +4899,19 @@ name|isEmpty
 argument_list|()
 condition|)
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Calculating column statistics for {}, projIndxSet: {}, allowMissingStats: {}"
+argument_list|,
+name|name
+argument_list|,
+name|projIndxLst
+argument_list|,
+name|allowMissingStats
+argument_list|)
+expr_stmt|;
 name|updateColStats
 argument_list|(
 name|projIndxSet
