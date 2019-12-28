@@ -23,22 +23,6 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|codec
-operator|.
-name|binary
-operator|.
-name|Base64
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
 name|lang
 operator|.
 name|StringUtils
@@ -482,6 +466,16 @@ operator|.
 name|util
 operator|.
 name|ArrayList
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Base64
 import|;
 end_import
 
@@ -3103,12 +3097,13 @@ condition|)
 block|{
 comment|// Set on the server side.
 comment|// @see org.apache.hive.service.cli.operation.SQLOperation#prepare
-name|String
-name|guid64
-init|=
+return|return
 name|Base64
 operator|.
-name|encodeBase64URLSafeString
+name|getUrlEncoder
+argument_list|()
+operator|.
+name|encodeToString
 argument_list|(
 name|stmtHandle
 operator|.
@@ -3121,9 +3116,6 @@ argument_list|)
 operator|.
 name|trim
 argument_list|()
-decl_stmt|;
-return|return
-name|guid64
 return|;
 block|}
 return|return
