@@ -9314,7 +9314,7 @@ operator|.
 name|getType
 argument_list|()
 operator|==
-name|rs
+name|ResultSet
 operator|.
 name|TYPE_FORWARD_ONLY
 condition|)

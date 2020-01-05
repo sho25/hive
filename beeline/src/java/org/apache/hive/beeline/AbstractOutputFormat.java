@@ -30,6 +30,8 @@ name|AbstractOutputFormat
 implements|implements
 name|OutputFormat
 block|{
+annotation|@
+name|Override
 specifier|public
 name|int
 name|print

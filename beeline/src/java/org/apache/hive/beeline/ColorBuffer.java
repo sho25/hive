@@ -1038,6 +1038,8 @@ name|attr
 return|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|int
 name|compareTo
