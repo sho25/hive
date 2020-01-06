@@ -13382,6 +13382,12 @@ argument_list|()
 operator|.
 name|isCTAS
 argument_list|()
+operator|&&
+name|getQB
+argument_list|()
+operator|.
+name|hasTableDefined
+argument_list|()
 condition|)
 block|{
 name|calcitePreCboPlan
