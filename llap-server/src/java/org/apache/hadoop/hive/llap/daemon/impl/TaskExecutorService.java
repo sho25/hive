@@ -2527,29 +2527,6 @@ argument_list|(
 name|task
 argument_list|)
 expr_stmt|;
-comment|// Wait queue could have been re-ordered in the mean time because of concurrent task
-comment|// submission. So remove the specific task instead of the head task.
-if|if
-condition|(
-name|waitQueue
-operator|.
-name|remove
-argument_list|(
-name|task
-argument_list|)
-condition|)
-block|{
-name|metrics
-operator|.
-name|setExecutorNumQueuedRequests
-argument_list|(
-name|waitQueue
-operator|.
-name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-block|}
 name|lastKillTimeMs
 operator|=
 literal|null
@@ -4083,6 +4060,29 @@ name|get
 argument_list|()
 argument_list|)
 expr_stmt|;
+comment|// Wait queue could have been re-ordered in the mean time because of concurrent task
+comment|// submission. So remove the specific task instead of the head task.
+if|if
+condition|(
+name|waitQueue
+operator|.
+name|remove
+argument_list|(
+name|taskWrapper
+argument_list|)
+condition|)
+block|{
+name|metrics
+operator|.
+name|setExecutorNumQueuedRequests
+argument_list|(
+name|waitQueue
+operator|.
+name|size
+argument_list|()
+argument_list|)
+expr_stmt|;
+block|}
 block|}
 specifier|private
 name|boolean
