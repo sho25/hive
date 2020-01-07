@@ -179,6 +179,8 @@ name|table
 operator|.
 name|info
 operator|.
+name|desc
+operator|.
 name|DescTableDesc
 import|;
 end_import
@@ -201,6 +203,10 @@ name|table
 operator|.
 name|info
 operator|.
+name|show
+operator|.
+name|status
+operator|.
 name|ShowTableStatusDesc
 import|;
 end_import
@@ -222,6 +228,10 @@ operator|.
 name|table
 operator|.
 name|info
+operator|.
+name|show
+operator|.
+name|tables
 operator|.
 name|ShowTablesDesc
 import|;

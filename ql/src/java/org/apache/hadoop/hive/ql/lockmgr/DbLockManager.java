@@ -175,13 +175,7 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ddl
-operator|.
-name|table
-operator|.
-name|lock
-operator|.
-name|ShowLocksOperation
+name|ErrorMsg
 import|;
 end_import
 
@@ -197,7 +191,15 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ErrorMsg
+name|ddl
+operator|.
+name|table
+operator|.
+name|lock
+operator|.
+name|show
+operator|.
+name|ShowLocksOperation
 import|;
 end_import
 

@@ -20,6 +20,8 @@ operator|.
 name|table
 operator|.
 name|info
+operator|.
+name|desc
 package|;
 end_package
 
@@ -730,7 +732,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Operation process of dropping a table.  */
+comment|/**  * Operation process of describing a table.  */
 end_comment
 
 begin_class

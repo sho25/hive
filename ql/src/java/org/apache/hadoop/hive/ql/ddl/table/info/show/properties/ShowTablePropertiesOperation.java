@@ -20,6 +20,10 @@ operator|.
 name|table
 operator|.
 name|info
+operator|.
+name|show
+operator|.
+name|properties
 package|;
 end_package
 

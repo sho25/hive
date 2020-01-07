@@ -17,9 +17,11 @@ name|ql
 operator|.
 name|ddl
 operator|.
-name|table
+name|view
 operator|.
-name|info
+name|materialized
+operator|.
+name|show
 package|;
 end_package
 
@@ -35,11 +37,15 @@ end_import
 
 begin_import
 import|import
-name|java
+name|org
 operator|.
-name|util
+name|apache
 operator|.
-name|Map
+name|hadoop
+operator|.
+name|fs
+operator|.
+name|Path
 import|;
 end_import
 
@@ -100,7 +106,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * DDL task description for SHOW TABLE STATUS commands.  */
+comment|/**  * DDL task description for SHOW MATERIALIZED VIEWS commands.  */
 end_comment
 
 begin_class
@@ -109,7 +115,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"Show Table Status"
+literal|"Show Materialized Views"
 argument_list|,
 name|explainLevels
 operator|=
@@ -129,7 +135,7 @@ block|}
 argument_list|)
 specifier|public
 class|class
-name|ShowTableStatusDesc
+name|ShowMaterializedViewsDesc
 implements|implements
 name|DDLDesc
 implements|,
@@ -149,7 +155,7 @@ specifier|final
 name|String
 name|SCHEMA
 init|=
-literal|"tab_name#string"
+literal|"mv_name,rewrite_enabled,mode#string:string:string"
 decl_stmt|;
 specifier|private
 specifier|final
@@ -166,20 +172,10 @@ specifier|final
 name|String
 name|pattern
 decl_stmt|;
-specifier|private
-specifier|final
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
-decl_stmt|;
 specifier|public
-name|ShowTableStatusDesc
+name|ShowMaterializedViewsDesc
 parameter_list|(
-name|String
+name|Path
 name|resFile
 parameter_list|,
 name|String
@@ -190,43 +186,13 @@ name|pattern
 parameter_list|)
 block|{
 name|this
-argument_list|(
-name|resFile
-argument_list|,
-name|dbName
-argument_list|,
-name|pattern
-argument_list|,
-literal|null
-argument_list|)
-expr_stmt|;
-block|}
-specifier|public
-name|ShowTableStatusDesc
-parameter_list|(
-name|String
-name|resFile
-parameter_list|,
-name|String
-name|dbName
-parameter_list|,
-name|String
-name|pattern
-parameter_list|,
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|partSpec
-parameter_list|)
-block|{
-name|this
 operator|.
 name|resFile
 operator|=
 name|resFile
+operator|.
+name|toString
+argument_list|()
 expr_stmt|;
 name|this
 operator|.
@@ -239,12 +205,6 @@ operator|.
 name|pattern
 operator|=
 name|pattern
-expr_stmt|;
-name|this
-operator|.
-name|partSpec
-operator|=
-name|partSpec
 expr_stmt|;
 block|}
 annotation|@
@@ -261,15 +221,6 @@ parameter_list|()
 block|{
 return|return
 name|pattern
-return|;
-block|}
-specifier|public
-name|String
-name|getResFile
-parameter_list|()
-block|{
-return|return
-name|resFile
 return|;
 block|}
 annotation|@
@@ -289,12 +240,11 @@ block|}
 argument_list|)
 specifier|public
 name|String
-name|getResFileString
+name|getResFile
 parameter_list|()
 block|{
 return|return
-name|getResFile
-argument_list|()
+name|resFile
 return|;
 block|}
 annotation|@
@@ -302,7 +252,7 @@ name|Explain
 argument_list|(
 name|displayName
 operator|=
-literal|"database"
+literal|"database name"
 argument_list|,
 name|explainLevels
 operator|=
@@ -327,43 +277,6 @@ parameter_list|()
 block|{
 return|return
 name|dbName
-return|;
-block|}
-annotation|@
-name|Explain
-argument_list|(
-name|displayName
-operator|=
-literal|"partition"
-argument_list|,
-name|explainLevels
-operator|=
-block|{
-name|Level
-operator|.
-name|USER
-block|,
-name|Level
-operator|.
-name|DEFAULT
-block|,
-name|Level
-operator|.
-name|EXTENDED
-block|}
-argument_list|)
-specifier|public
-name|Map
-argument_list|<
-name|String
-argument_list|,
-name|String
-argument_list|>
-name|getPartSpec
-parameter_list|()
-block|{
-return|return
-name|partSpec
 return|;
 block|}
 block|}

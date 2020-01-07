@@ -409,6 +409,8 @@ name|table
 operator|.
 name|info
 operator|.
+name|desc
+operator|.
 name|DescTableDesc
 import|;
 end_import
