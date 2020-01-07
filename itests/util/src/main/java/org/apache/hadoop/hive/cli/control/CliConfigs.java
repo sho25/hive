@@ -1088,22 +1088,10 @@ expr_stmt|;
 comment|// Disabled in HIVE-20662. Enable in HIVE-20663.
 name|excludeQuery
 argument_list|(
-literal|"cbo_limit.q"
-argument_list|)
-expr_stmt|;
-comment|//Disabled in HIVE-20860. Enable in HIVE-20972
-name|excludeQuery
-argument_list|(
 literal|"rfc5424_parser_file_pruning.q"
 argument_list|)
 expr_stmt|;
 comment|// Disabled in HIVE-21427
-name|excludeQuery
-argument_list|(
-literal|"cbo_rp_limit.q"
-argument_list|)
-expr_stmt|;
-comment|// Disabled in HIVE-21657
 name|setResultsDir
 argument_list|(
 literal|"ql/src/test/results/clientpositive/llap"
