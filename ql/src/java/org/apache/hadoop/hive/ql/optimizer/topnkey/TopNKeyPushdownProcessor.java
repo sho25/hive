@@ -898,17 +898,6 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
-comment|// Check grouping sets
-if|if
-condition|(
-name|groupByDesc
-operator|.
-name|isGroupingSetsPresent
-argument_list|()
-condition|)
-block|{
-return|return;
-block|}
 name|CommonKeyPrefix
 name|commonKeyPrefix
 init|=
