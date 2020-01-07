@@ -6929,6 +6929,13 @@ argument_list|(
 name|parentDirPath
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|dirSnapshot
+operator|==
+literal|null
+condition|)
+block|{
 name|FileStatus
 name|parentDirFStatus
 init|=
@@ -6955,13 +6962,6 @@ name|parentDirPath
 argument_list|)
 expr_stmt|;
 block|}
-if|if
-condition|(
-name|dirSnapshot
-operator|==
-literal|null
-condition|)
-block|{
 name|dirSnapshot
 operator|=
 operator|new

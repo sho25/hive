@@ -28844,7 +28844,7 @@ block|}
 block|}
 name|assertEquals
 argument_list|(
-literal|7
+literal|6
 argument_list|,
 name|readOpsDelta
 argument_list|)
@@ -29437,7 +29437,7 @@ block|}
 block|}
 name|assertEquals
 argument_list|(
-literal|7
+literal|6
 argument_list|,
 name|readOpsDelta
 argument_list|)
