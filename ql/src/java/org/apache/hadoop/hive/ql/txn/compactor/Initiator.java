@@ -1727,7 +1727,11 @@ argument_list|)
 decl_stmt|;
 name|CompactionType
 name|compactionType
-init|=
+decl_stmt|;
+try|try
+block|{
+name|compactionType
+operator|=
 name|ugi
 operator|.
 name|doAs
@@ -1763,7 +1767,10 @@ return|;
 block|}
 block|}
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+finally|finally
+block|{
 try|try
 block|{
 name|FileSystem
@@ -1798,6 +1805,7 @@ argument_list|,
 name|exception
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 return|return
 name|compactionType
