@@ -147,7 +147,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|lang
 operator|.
 name|builder
 operator|.
@@ -163,7 +163,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|lang
 operator|.
 name|builder
 operator|.

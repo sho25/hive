@@ -211,7 +211,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|lang
 operator|.
 name|StringUtils
 import|;

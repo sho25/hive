@@ -1365,7 +1365,7 @@ name|e
 parameter_list|)
 block|{
 comment|// Has to use full name to make sure it does not conflict with
-comment|// org.apache.commons.lang3.StringUtils
+comment|// org.apache.commons.lang.StringUtils
 name|LOG
 operator|.
 name|error

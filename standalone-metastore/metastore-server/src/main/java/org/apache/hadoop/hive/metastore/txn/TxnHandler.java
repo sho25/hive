@@ -373,7 +373,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|lang
 operator|.
 name|ArrayUtils
 import|;
@@ -387,7 +387,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|lang
 operator|.
 name|NotImplementedException
 import|;
@@ -29735,9 +29735,7 @@ comment|//the idea is that this will use LockHandle.dbConn
 throw|throw
 operator|new
 name|NotImplementedException
-argument_list|(
-literal|"acquireLock(String, LockHandle) is not implemented"
-argument_list|)
+argument_list|()
 throw|;
 block|}
 specifier|private
@@ -29862,9 +29860,7 @@ comment|//would need a list of (stmt,rs) pairs - 1 for each key
 throw|throw
 operator|new
 name|NotImplementedException
-argument_list|(
-literal|"addKey(String) is not implemented, would require a list of (stmt,rs) pairs / key"
-argument_list|)
+argument_list|()
 throw|;
 block|}
 annotation|@

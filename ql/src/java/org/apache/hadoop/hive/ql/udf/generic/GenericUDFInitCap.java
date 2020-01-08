@@ -53,7 +53,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|text
+name|lang
 operator|.
 name|WordUtils
 import|;
@@ -92,24 +92,6 @@ operator|.
 name|exec
 operator|.
 name|UDFArgumentException
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|Utilities
 import|;
 end_import
 
@@ -445,10 +427,6 @@ operator|.
 name|capitalizeFully
 argument_list|(
 name|val
-argument_list|,
-name|Utilities
-operator|.
-name|COMMON_WHITESPACE_CHARS
 argument_list|)
 decl_stmt|;
 name|output

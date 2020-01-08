@@ -175,7 +175,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang3
+name|lang
 operator|.
 name|StringUtils
 import|;
@@ -3170,7 +3170,7 @@ name|mesg
 expr_stmt|;
 block|}
 comment|// Has to use full name to make sure it does not conflict with
-comment|// org.apache.commons.lang3.StringUtils
+comment|// org.apache.commons.lang.StringUtils
 name|console
 operator|.
 name|printError
