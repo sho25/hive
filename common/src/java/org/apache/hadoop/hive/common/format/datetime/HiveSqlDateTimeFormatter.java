@@ -57,23 +57,9 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang
+name|lang3
 operator|.
 name|StringUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|commons
-operator|.
-name|lang
-operator|.
-name|WordUtils
 import|;
 end_import
 
@@ -6432,7 +6418,7 @@ name|substring
 parameter_list|)
 block|{
 return|return
-name|WordUtils
+name|StringUtils
 operator|.
 name|capitalize
 argument_list|(
