@@ -1174,30 +1174,17 @@ operator|instanceof
 name|Completer
 argument_list|)
 expr_stmt|;
-comment|//comletor add space after last delimeter
 name|List
 argument_list|<
 name|CharSequence
 argument_list|>
 name|testList
 init|=
-operator|new
-name|ArrayList
-argument_list|<
-name|CharSequence
-argument_list|>
-argument_list|(
 name|Arrays
 operator|.
 name|asList
 argument_list|(
-operator|new
-name|String
-index|[]
-block|{
 literal|")"
-block|}
-argument_list|)
 argument_list|)
 decl_stmt|;
 name|completors
@@ -1216,7 +1203,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|") "
+literal|")"
 argument_list|,
 name|testList
 operator|.

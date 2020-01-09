@@ -125,16 +125,6 @@ end_import
 
 begin_import
 import|import
-name|jline
-operator|.
-name|internal
-operator|.
-name|Log
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|apache
