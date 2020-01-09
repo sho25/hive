@@ -16103,6 +16103,8 @@ operator|.
 name|size
 argument_list|()
 operator|+
+literal|" partitions"
+operator|+
 literal|" in table "
 operator|+
 name|tbl
@@ -16113,6 +16115,8 @@ operator|+
 literal|" with loadPath="
 operator|+
 name|loadPath
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
@@ -16290,7 +16294,7 @@ try|try
 block|{
 if|if
 condition|(
-name|isAcid
+name|isTxnTable
 condition|)
 block|{
 name|List

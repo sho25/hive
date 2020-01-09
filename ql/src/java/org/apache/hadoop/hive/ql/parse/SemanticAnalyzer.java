@@ -42493,6 +42493,13 @@ name|getOutputFileFormatClass
 argument_list|()
 argument_list|,
 name|dest
+argument_list|,
+name|AcidUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|dest_tab
+argument_list|)
 argument_list|)
 else|:
 name|AcidUtils
@@ -46045,7 +46052,7 @@ name|NOT_ACID
 decl_stmt|;
 if|if
 condition|(
-name|destTableIsFullAcid
+name|destTableIsTransactional
 condition|)
 block|{
 name|acidOp
@@ -46058,9 +46065,10 @@ name|getOutputFileFormatClass
 argument_list|()
 argument_list|,
 name|dest
+argument_list|,
+name|isMmTable
 argument_list|)
 expr_stmt|;
-comment|//todo: should this be done for MM?  is it ok to use CombineHiveInputFormat with MM
 name|checkAcidConstraints
 argument_list|()
 expr_stmt|;
@@ -46808,7 +46816,7 @@ name|NOT_ACID
 decl_stmt|;
 if|if
 condition|(
-name|destTableIsFullAcid
+name|destTableIsTransactional
 condition|)
 block|{
 name|acidOp
@@ -46821,9 +46829,10 @@ name|getOutputFileFormatClass
 argument_list|()
 argument_list|,
 name|dest
+argument_list|,
+name|isMmTable
 argument_list|)
 expr_stmt|;
-comment|//todo: should this be done for MM?  is it ok to use CombineHiveInputFormat with MM?
 name|checkAcidConstraints
 argument_list|()
 expr_stmt|;
@@ -47396,8 +47405,8 @@ name|getTblProps
 argument_list|()
 expr_stmt|;
 block|}
-if|if
-condition|(
+name|destTableIsTransactional
+operator|=
 name|tblProps
 operator|!=
 literal|null
@@ -47408,6 +47417,10 @@ name|isTablePropertyTransactional
 argument_list|(
 name|tblProps
 argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|destTableIsTransactional
 condition|)
 block|{
 try|try
@@ -48475,7 +48488,7 @@ name|NOT_ACID
 decl_stmt|;
 if|if
 condition|(
-name|destTableIsFullAcid
+name|destTableIsTransactional
 condition|)
 block|{
 name|acidOp
@@ -48488,9 +48501,10 @@ name|getOutputFileFormatClass
 argument_list|()
 argument_list|,
 name|dest
+argument_list|,
+name|isMmTable
 argument_list|)
 expr_stmt|;
-comment|//todo: should this be done for MM?  is it ok to use CombineHiveInputFormat with MM
 name|checkAcidConstraints
 argument_list|()
 expr_stmt|;
@@ -55254,7 +55268,7 @@ if|if
 condition|(
 name|AcidUtils
 operator|.
-name|isFullAcidTable
+name|isTransactionalTable
 argument_list|(
 name|dest_tab
 argument_list|)
@@ -55275,6 +55289,13 @@ name|getOutputFileFormatClass
 argument_list|()
 argument_list|,
 name|dest
+argument_list|,
+name|AcidUtils
+operator|.
+name|isInsertOnlyTable
+argument_list|(
+name|dest_tab
+argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
@@ -92297,8 +92318,24 @@ name|of
 parameter_list|,
 name|String
 name|dest
+parameter_list|,
+name|boolean
+name|isMM
 parameter_list|)
 block|{
+comment|// no need for any checks in the case of insert-only
+if|if
+condition|(
+name|isMM
+condition|)
+block|{
+return|return
+name|getAcidType
+argument_list|(
+name|dest
+argument_list|)
+return|;
+block|}
 if|if
 condition|(
 name|SessionState

@@ -13319,6 +13319,156 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|//todo: Concurrent insert/update of same partition - should pass
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testMultiInsertOnDynamicallyPartitionedMmTable
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+name|dropTable
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"tabMmDp"
+block|,
+literal|"tab_not_acid"
+block|}
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create table if not exists tabMmDp (a int, b int) partitioned by (p string) "
+operator|+
+literal|"stored as orc "
+operator|+
+literal|"TBLPROPERTIES ('transactional'='true', 'transactional_properties'='insert_only')"
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"create table if not exists tab_not_acid (a int, b int, p string)"
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"insert into tab_not_acid values (1 ,1, 'one'), (2, 2, 'two')"
+argument_list|)
+expr_stmt|;
+comment|// insert 2 rows twice into the MM table
+name|driver
+operator|.
+name|run
+argument_list|(
+literal|"from tab_not_acid "
+operator|+
+literal|"insert into tabMmDp select a,b,p "
+operator|+
+literal|"insert into tabMmDp select a,b,p"
+argument_list|)
+expr_stmt|;
+comment|//txnid: 6 (2 drops, 2 creates, 2 inserts)
+specifier|final
+name|String
+name|completedTxnComponentsContents
+init|=
+name|TxnDbUtil
+operator|.
+name|queryToString
+argument_list|(
+name|conf
+argument_list|,
+literal|"select * from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+decl_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|completedTxnComponentsContents
+argument_list|,
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|conf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|completedTxnComponentsContents
+argument_list|,
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|conf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=6"
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|completedTxnComponentsContents
+argument_list|,
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|conf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=6 "
+operator|+
+literal|"and ctc_table='tabmmdp'"
+argument_list|)
+argument_list|)
+expr_stmt|;
+comment|// ctc_update_delete value should be "N" for both partitions since these are inserts
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+name|completedTxnComponentsContents
+argument_list|,
+literal|2
+argument_list|,
+name|TxnDbUtil
+operator|.
+name|countQueryAgent
+argument_list|(
+name|conf
+argument_list|,
+literal|"select count(*) from COMPLETED_TXN_COMPONENTS where ctc_txnid=6 "
+operator|+
+literal|"and ctc_table='tabmmdp' and ctc_update_delete='N'"
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
 specifier|private
 name|List
 argument_list|<
