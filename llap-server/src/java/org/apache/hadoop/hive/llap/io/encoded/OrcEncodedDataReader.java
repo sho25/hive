@@ -1417,6 +1417,24 @@ name|Lists
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|LlapHiveUtils
+operator|.
+name|throwIfCacheOnlyRead
+import|;
+end_import
+
 begin_comment
 comment|/**  * This produces EncodedColumnBatch via ORC EncodedDataImpl.  * It serves as Consumer for EncodedColumnBatch too, for the high-level cache scenario where  * it inserts itself into the pipeline to put the data in cache, before passing it to the real  * consumer. It also serves as ConsumerFeedback that receives processed EncodedColumnBatch-es.  */
 end_comment
@@ -1713,6 +1731,11 @@ argument_list|,
 name|PartitionDesc
 argument_list|>
 name|parts
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReadCacheOnly
 decl_stmt|;
 specifier|private
 name|Supplier
@@ -2193,6 +2216,19 @@ operator|.
 name|setSchemaEvolution
 argument_list|(
 name|evolution
+argument_list|)
+expr_stmt|;
+name|isReadCacheOnly
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|jobConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_IO_CACHE_ONLY
 argument_list|)
 expr_stmt|;
 block|}
@@ -3208,6 +3244,8 @@ argument_list|,
 name|useCodecPool
 argument_list|,
 name|cacheTag
+argument_list|,
+name|isReadCacheOnly
 argument_list|)
 expr_stmt|;
 name|stripeReader
@@ -4060,6 +4098,11 @@ operator|.
 name|METADATA_CACHE_MISS
 argument_list|)
 expr_stmt|;
+name|throwIfCacheOnlyRead
+argument_list|(
+name|isReadCacheOnly
+argument_list|)
+expr_stmt|;
 block|}
 name|ensureOrcReader
 argument_list|()
@@ -4694,6 +4737,11 @@ argument_list|(
 name|LlapIOCounters
 operator|.
 name|METADATA_CACHE_MISS
+argument_list|)
+expr_stmt|;
+name|throwIfCacheOnlyRead
+argument_list|(
+name|isReadCacheOnly
 argument_list|)
 expr_stmt|;
 block|}

@@ -15023,6 +15023,17 @@ argument_list|,
 literal|"Whether the LLAP IO layer is enabled."
 argument_list|)
 block|,
+name|LLAP_IO_CACHE_ONLY
+argument_list|(
+literal|"hive.llap.io.cache.only"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Whether the query should read from cache only. If set to "
+operator|+
+literal|"true and a cache miss happens during the read an exception will occur. Primarily used for testing."
+argument_list|)
+block|,
 name|LLAP_IO_ROW_WRAPPER_ENABLED
 argument_list|(
 literal|"hive.llap.io.row.wrapper.enabled"

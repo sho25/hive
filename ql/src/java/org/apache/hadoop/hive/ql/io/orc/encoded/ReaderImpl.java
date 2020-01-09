@@ -197,6 +197,9 @@ name|useCodecPool
 parameter_list|,
 name|CacheTag
 name|tag
+parameter_list|,
+name|boolean
+name|isReadCacheOnly
 parameter_list|)
 throws|throws
 name|IOException
@@ -232,6 +235,8 @@ argument_list|,
 name|useCodecPool
 argument_list|,
 name|tag
+argument_list|,
+name|isReadCacheOnly
 argument_list|)
 return|;
 block|}

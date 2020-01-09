@@ -1383,6 +1383,24 @@ name|Lists
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|LlapHiveUtils
+operator|.
+name|throwIfCacheOnlyRead
+import|;
+end_import
+
 begin_class
 specifier|public
 class|class
@@ -1691,6 +1709,11 @@ name|FileReaderYieldReturn
 name|currentFileRead
 init|=
 literal|null
+decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReadCacheOnly
 decl_stmt|;
 comment|/**    * Data from cache currently being processed. We store it here so that we could decref    * it in case of failures. We remove each slice from the data after it has been sent to    * the consumer, at which point the consumer is responsible for it.    */
 specifier|private
@@ -2173,6 +2196,19 @@ operator|.
 name|setSchemaEvolution
 argument_list|(
 name|evolution
+argument_list|)
+expr_stmt|;
+name|isReadCacheOnly
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|jobConf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_IO_CACHE_ONLY
 argument_list|)
 expr_stmt|;
 block|}
@@ -5365,6 +5401,20 @@ argument_list|,
 name|gotAllData
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|gotAllData
+operator|.
+name|value
+condition|)
+block|{
+name|throwIfCacheOnlyRead
+argument_list|(
+name|isReadCacheOnly
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|cachedData

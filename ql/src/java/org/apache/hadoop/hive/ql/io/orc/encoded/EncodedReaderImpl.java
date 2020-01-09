@@ -833,6 +833,24 @@ name|Cleaner
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|llap
+operator|.
+name|LlapHiveUtils
+operator|.
+name|throwIfCacheOnlyRead
+import|;
+end_import
+
 begin_comment
 comment|/**  * Encoded reader implementation.  *  * Note about refcounts on cache blocks.  * When we get or put blocks into cache, they are "locked" (refcount++), so they cannot be evicted.  * We send the MemoryBuffer-s to caller as part of RG data; one MemoryBuffer can be used for many  * RGs (e.g. a dictionary, or multiple RGs per block). Also, we want to "unlock" MemoryBuffer-s in  * cache as soon as possible. This is how we deal with this:  *  * For dictionary case:  * 1) There's a separate refcount on the ColumnStreamData object we send to the caller. In the  *    dictionary case, it's increased per RG, and callers don't release MBs if the containing  *    ColumnStreamData is not ready to be released. This is done because dictionary can have many  *    buffers; decrefing all of them for all RGs is more expensive; plus, decrefing in cache  *    may be more expensive due to cache policy/etc.  *  * For non-dictionary case:  * 1) All the ColumnStreamData-s for normal data always have refcount 1; we return them once.  * 2) At all times, every MB in such cases has +1 refcount for each time we return it as part of CSD.  * 3) When caller is done, it therefore decrefs SB to 0, and decrefs all the MBs involved.  * 4) Additionally, we keep an extra +1 refcount "for the fetching thread". That way, if we return  *    the MB to caller, and he decrefs it, the MB can't be evicted and will be there if we want to  *    reuse it for some other RG.  * 5) As we read (we always read RGs in order and forward in each stream; we assume they are stored  *    physically in order in the file; AND that CBs are not shared between streams), we note which  *    MBs cannot possibly be reused anymore (next RG starts in the next CB). We decref the refcount  *    from (4) in such case.  * 6) Given that RG end boundaries in ORC are estimates, we can request data from cache and then  *    not use it; thus, at the end we go thru all the MBs, and release those not released by (5).  */
 end_comment
@@ -1096,6 +1114,11 @@ specifier|private
 name|StoppableAllocator
 name|allocator
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|isReadCacheOnly
+decl_stmt|;
 specifier|public
 name|EncodedReaderImpl
 parameter_list|(
@@ -1148,6 +1171,9 @@ name|useCodecPool
 parameter_list|,
 name|CacheTag
 name|tag
+parameter_list|,
+name|boolean
+name|isReadCacheOnly
 parameter_list|)
 throws|throws
 name|IOException
@@ -1283,6 +1309,12 @@ operator|.
 name|tag
 operator|=
 name|tag
+expr_stmt|;
+name|this
+operator|.
+name|isReadCacheOnly
+operator|=
+name|isReadCacheOnly
 expr_stmt|;
 if|if
 condition|(
@@ -3955,6 +3987,20 @@ argument_list|,
 name|isAllInCache
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+operator|!
+name|isAllInCache
+operator|.
+name|value
+condition|)
+block|{
+name|throwIfCacheOnlyRead
+argument_list|(
+name|isReadCacheOnly
+argument_list|)
+expr_stmt|;
+block|}
 if|if
 condition|(
 name|LOG
