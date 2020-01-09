@@ -78363,7 +78363,7 @@ name|lookupInfo
 operator|=
 name|createLookupInfoForQuery
 argument_list|(
-name|ast
+name|astToAnalyze
 argument_list|)
 expr_stmt|;
 if|if
@@ -78426,7 +78426,7 @@ name|adaptor
 operator|.
 name|dupTree
 argument_list|(
-name|ast
+name|astToAnalyze
 argument_list|)
 expr_stmt|;
 block|}
@@ -78434,7 +78434,7 @@ else|else
 block|{
 name|astForMasking
 operator|=
-name|ast
+name|astToAnalyze
 expr_stmt|;
 block|}
 comment|// 2. Gen OP Tree from resolved Parse Tree
@@ -78588,7 +78588,7 @@ name|lookupInfo
 operator|=
 name|createLookupInfoForQuery
 argument_list|(
-name|ast
+name|astToAnalyze
 argument_list|)
 expr_stmt|;
 if|if
