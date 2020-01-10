@@ -3444,7 +3444,7 @@ literal|"select count(*) from TXNS"
 argument_list|)
 argument_list|)
 expr_stmt|;
-comment|// Initiate a minor compaction request on the table.
+comment|// Initiate a major compaction request on the table.
 name|runStatementOnDriver
 argument_list|(
 literal|"alter table "
@@ -3460,6 +3460,13 @@ comment|// Run worker.
 name|runWorker
 argument_list|(
 name|hiveConf
+argument_list|)
+expr_stmt|;
+name|verifyDirAndResult
+argument_list|(
+literal|2
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Run Cleaner.
@@ -3516,6 +3523,13 @@ name|hiveConf
 argument_list|,
 literal|"select count(*) from TXNS"
 argument_list|)
+argument_list|)
+expr_stmt|;
+name|verifyDirAndResult
+argument_list|(
+literal|0
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 block|}
@@ -3959,6 +3973,27 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+name|verifyDirAndResult
+argument_list|(
+name|expectedDeltas
+argument_list|,
+literal|false
+argument_list|)
+expr_stmt|;
+block|}
+specifier|private
+name|void
+name|verifyDirAndResult
+parameter_list|(
+name|int
+name|expectedDeltas
+parameter_list|,
+name|boolean
+name|expectBaseDir
+parameter_list|)
+throws|throws
+name|Exception
+block|{
 name|FileSystem
 name|fs
 init|=
@@ -4008,6 +4043,11 @@ name|sawDeltaTimes
 init|=
 literal|0
 decl_stmt|;
+name|int
+name|sawBaseTimes
+init|=
+literal|0
+decl_stmt|;
 for|for
 control|(
 name|int
@@ -4025,10 +4065,8 @@ name|i
 operator|++
 control|)
 block|{
-name|Assert
-operator|.
-name|assertTrue
-argument_list|(
+if|if
+condition|(
 name|status
 index|[
 name|i
@@ -4044,8 +4082,8 @@ name|matches
 argument_list|(
 literal|"delta_.*"
 argument_list|)
-argument_list|)
-expr_stmt|;
+condition|)
+block|{
 name|sawDeltaTimes
 operator|++
 expr_stmt|;
@@ -4083,8 +4121,10 @@ argument_list|)
 expr_stmt|;
 name|Assert
 operator|.
-name|assertTrue
+name|assertEquals
 argument_list|(
+literal|"000000_0"
+argument_list|,
 name|files
 index|[
 literal|0
@@ -4095,13 +4135,15 @@ argument_list|()
 operator|.
 name|getName
 argument_list|()
-operator|.
-name|equals
-argument_list|(
-literal|"000000_0"
-argument_list|)
 argument_list|)
 expr_stmt|;
+block|}
+else|else
+block|{
+name|sawBaseTimes
+operator|++
+expr_stmt|;
+block|}
 block|}
 name|Assert
 operator|.
@@ -4112,6 +4154,37 @@ argument_list|,
 name|sawDeltaTimes
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|expectBaseDir
+condition|)
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"1 base directory expected"
+argument_list|,
+literal|1
+argument_list|,
+name|sawBaseTimes
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|Assert
+operator|.
+name|assertEquals
+argument_list|(
+literal|"0 base directories expected"
+argument_list|,
+literal|0
+argument_list|,
+name|sawBaseTimes
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Verify query result
 name|int
 index|[]

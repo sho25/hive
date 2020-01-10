@@ -100,11 +100,12 @@ specifier|final
 class|class
 name|QueryCompactorFactory
 block|{
+comment|/**    * Factory class, no need to expose constructor.    */
 specifier|private
 name|QueryCompactorFactory
 parameter_list|()
 block|{   }
-comment|/**    * Get an instance of {@link QueryCompactor}.    * @param table the table, on which the compaction should be running, must be not null.    * @param configuration the hive configuration, must be not null.    * @param compactionInfo provides insight about the type of compaction, must be not null.    * @return {@link QueryCompactor} or null.    */
+comment|/**    * Get an instance of {@link QueryCompactor}. At the moment the following implementors can be fetched:    *<p>    * {@link MajorQueryCompactor} - handles query based major compaction    *<br>    * {@link MinorQueryCompactor} - handles query based minor compaction    *<br>    * {@link MmMajorQueryCompactor} - handles query based minor compaction for micro-managed tables    *<br>    *</p>    * @param table the table, on which the compaction should be running, must be not null.    * @param configuration the hive configuration, must be not null.    * @param compactionInfo provides insight about the type of compaction, must be not null.    * @return {@link QueryCompactor} or null.    */
 specifier|static
 name|QueryCompactor
 name|getQueryCompactor
@@ -160,15 +161,40 @@ name|MajorQueryCompactor
 argument_list|()
 return|;
 block|}
-else|else
-block|{
-throw|throw
-operator|new
-name|RuntimeException
+elseif|else
+if|if
+condition|(
+operator|!
+name|compactionInfo
+operator|.
+name|isMajorCompaction
+argument_list|()
+operator|&&
+literal|"tez"
+operator|.
+name|equalsIgnoreCase
 argument_list|(
-literal|"Query based compaction is not currently supported for minor compactions"
+name|HiveConf
+operator|.
+name|getVar
+argument_list|(
+name|configuration
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_EXECUTION_ENGINE
 argument_list|)
-throw|;
+argument_list|)
+condition|)
+block|{
+comment|// query based minor compaction is only supported on tez
+return|return
+operator|new
+name|MinorQueryCompactor
+argument_list|()
+return|;
 block|}
 block|}
 if|if

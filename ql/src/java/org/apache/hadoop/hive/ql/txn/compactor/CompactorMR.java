@@ -97,16 +97,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|UUID
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|regex
 operator|.
 name|Matcher
@@ -1284,6 +1274,10 @@ name|set
 argument_list|(
 name|TMP_LOCATION
 argument_list|,
+name|QueryCompactor
+operator|.
+name|Util
+operator|.
 name|generateTmpPath
 argument_list|(
 name|sd
@@ -1797,10 +1791,28 @@ argument_list|,
 name|ci
 argument_list|)
 decl_stmt|;
-comment|// Figure out and encode what files we need to read.  We do this before getSplits
-comment|// because as part of this we discover our minimum and maximum transactions,
-comment|// and discovering that in getSplits is too late as we then have no way to pass it to our
-comment|// mapper.
+if|if
+condition|(
+operator|!
+name|QueryCompactor
+operator|.
+name|Util
+operator|.
+name|isEnoughToCompact
+argument_list|(
+name|ci
+operator|.
+name|isMajorCompaction
+argument_list|()
+argument_list|,
+name|dir
+argument_list|,
+name|sd
+argument_list|)
+condition|)
+block|{
+return|return;
+block|}
 name|List
 argument_list|<
 name|AcidUtils
@@ -2192,35 +2204,6 @@ operator|.
 name|gatherStats
 argument_list|()
 expr_stmt|;
-block|}
-specifier|private
-name|String
-name|generateTmpPath
-parameter_list|(
-name|StorageDescriptor
-name|sd
-parameter_list|)
-block|{
-return|return
-name|sd
-operator|.
-name|getLocation
-argument_list|()
-operator|+
-literal|"/"
-operator|+
-name|TMPDIR
-operator|+
-literal|"_"
-operator|+
-name|UUID
-operator|.
-name|randomUUID
-argument_list|()
-operator|.
-name|toString
-argument_list|()
-return|;
 block|}
 comment|/**    * @param baseDir if not null, it's either table/partition root folder or base_xxxx.    *                If it's base_xxxx, it's in dirsToSearch, else the actual original files    *                (all leaves recursively) are in the dirsToSearch list    */
 specifier|private
