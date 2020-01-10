@@ -1137,6 +1137,24 @@ name|hive
 operator|.
 name|serde2
 operator|.
+name|avro
+operator|.
+name|AvroSerDe
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|serde2
+operator|.
 name|objectinspector
 operator|.
 name|ConstantObjectInspector
@@ -8277,11 +8295,32 @@ operator|.
 name|getDynPartCtx
 argument_list|()
 decl_stmt|;
+comment|// HIVE-22595: For Avro tables with external schema URL, Utilities.getDPColOffset() gives
+comment|// wrong results unless AvroSerDe.initialize() is called to update the table properties.
+comment|// To be safe just disable this check for Avro tables.
 if|if
 condition|(
 name|dpCtx
 operator|!=
 literal|null
+operator|&&
+name|fsdesc
+operator|.
+name|getTableInfo
+argument_list|()
+operator|.
+name|getSerdeClassName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|AvroSerDe
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
+argument_list|)
 condition|)
 block|{
 comment|// Assume only 1 parent for FS operator
