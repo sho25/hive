@@ -872,7 +872,10 @@ operator|.
 name|arrayOffset
 argument_list|()
 argument_list|,
-name|result
+name|bb
+operator|.
+name|remaining
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -919,7 +922,10 @@ name|b
 argument_list|,
 literal|0
 argument_list|,
-name|result
+name|bb
+operator|.
+name|remaining
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|bb
