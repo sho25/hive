@@ -424,10 +424,6 @@ name|HiveConf
 name|conf
 decl_stmt|;
 specifier|protected
-name|RawStore
-name|rs
-decl_stmt|;
-specifier|protected
 name|AtomicBoolean
 name|stop
 decl_stmt|;

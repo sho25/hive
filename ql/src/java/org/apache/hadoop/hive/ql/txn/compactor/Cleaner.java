@@ -237,20 +237,6 @@ name|hadoop
 operator|.
 name|fs
 operator|.
-name|FileStatus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|fs
-operator|.
 name|FileSystem
 import|;
 end_import
@@ -560,6 +546,26 @@ operator|.
 name|atomic
 operator|.
 name|AtomicBoolean
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|HiveMetaStore
+operator|.
+name|HMSHandler
+operator|.
+name|getMSForConf
 import|;
 end_import
 
@@ -1366,6 +1372,8 @@ throws|throws
 name|IOException
 throws|,
 name|NoSuchObjectException
+throws|,
+name|MetaException
 block|{
 name|Path
 name|locPath
@@ -1601,7 +1609,10 @@ decl_stmt|;
 name|Database
 name|db
 init|=
-name|rs
+name|getMSForConf
+argument_list|(
+name|conf
+argument_list|)
 operator|.
 name|getDatabase
 argument_list|(
@@ -1615,7 +1626,7 @@ operator|.
 name|dbname
 argument_list|)
 decl_stmt|;
-name|Boolean
+name|boolean
 name|isSourceOfRepl
 init|=
 name|ReplChangeManager
