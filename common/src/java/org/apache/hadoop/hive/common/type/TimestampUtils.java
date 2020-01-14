@@ -805,6 +805,24 @@ name|DateTimeParseException
 name|eTZ
 parameter_list|)
 block|{
+try|try
+block|{
+comment|// Try HH:mm:ss format (For Hour, Minute& Second UDF).
+return|return
+name|Timestamp
+operator|.
+name|getTimestampFromTime
+argument_list|(
+name|s
+argument_list|)
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|DateTimeParseException
+name|e
+parameter_list|)
+block|{
 comment|// Last attempt
 return|return
 name|Timestamp
@@ -822,6 +840,7 @@ name|toEpochMilli
 argument_list|()
 argument_list|)
 return|;
+block|}
 block|}
 block|}
 block|}
