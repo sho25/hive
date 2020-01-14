@@ -10977,14 +10977,15 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// TODO: in these methods, do we really need to deepcopy?
-name|deepCopyPartitions
+comment|//deepCopyPartitions(r.getPartitions(), result);
+name|result
+operator|.
+name|addAll
 argument_list|(
 name|r
 operator|.
 name|getPartitions
 argument_list|()
-argument_list|,
-name|result
 argument_list|)
 expr_stmt|;
 return|return
