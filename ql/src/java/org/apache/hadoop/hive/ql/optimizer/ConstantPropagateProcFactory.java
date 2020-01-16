@@ -9347,7 +9347,7 @@ block|}
 comment|// Note: the following code (removing folded constants in exprs) is deeply coupled with
 comment|//    ColumnPruner optimizer.
 comment|// Assuming ColumnPrunner will remove constant columns so we don't deal with output columns.
-comment|//    Except one case that the join operator is followed by a redistribution (RS operator).
+comment|//    Except one case that the join operator is followed by a redistribution (RS operator) -- skipping filter ops
 if|if
 condition|(
 name|op
@@ -9359,10 +9359,56 @@ name|size
 argument_list|()
 operator|==
 literal|1
-operator|&&
+condition|)
+block|{
+name|Node
+name|ndRecursive
+init|=
 name|op
+decl_stmt|;
+while|while
+condition|(
+name|ndRecursive
 operator|.
-name|getChildOperators
+name|getChildren
+argument_list|()
+operator|.
+name|size
+argument_list|()
+operator|==
+literal|1
+operator|&&
+name|ndRecursive
+operator|.
+name|getChildren
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+operator|instanceof
+name|FilterOperator
+condition|)
+block|{
+name|ndRecursive
+operator|=
+name|ndRecursive
+operator|.
+name|getChildren
+argument_list|()
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+expr_stmt|;
+block|}
+if|if
+condition|(
+name|ndRecursive
+operator|.
+name|getChildren
 argument_list|()
 operator|.
 name|get
@@ -9377,12 +9423,13 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Skip JOIN-RS structure."
+literal|"Skip JOIN-FIL(*)-RS structure."
 argument_list|)
 expr_stmt|;
 return|return
 literal|null
 return|;
+block|}
 block|}
 if|if
 condition|(
