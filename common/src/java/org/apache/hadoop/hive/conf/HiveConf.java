@@ -21862,15 +21862,24 @@ name|retval
 argument_list|)
 condition|)
 block|{
+if|if
+condition|(
 name|LOG
 operator|.
-name|info
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
 argument_list|(
 literal|"Using the default value passed in for log id: {}"
 argument_list|,
 name|defaultValue
 argument_list|)
 expr_stmt|;
+block|}
 name|retval
 operator|=
 name|defaultValue
