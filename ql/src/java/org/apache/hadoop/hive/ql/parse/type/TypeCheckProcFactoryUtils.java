@@ -16,6 +16,8 @@ operator|.
 name|ql
 operator|.
 name|parse
+operator|.
+name|type
 package|;
 end_package
 
@@ -70,6 +72,24 @@ operator|.
 name|exec
 operator|.
 name|FunctionRegistry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|parse
+operator|.
+name|SemanticException
 import|;
 end_import
 
@@ -297,13 +317,13 @@ class|class
 name|TypeCheckProcFactoryUtils
 block|{
 specifier|static
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>
 name|rewriteInToOR
 parameter_list|(
-name|ArrayList
+name|List
 argument_list|<
 name|ExprNodeDesc
 argument_list|>

@@ -207,7 +207,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|TypeCheckProcFactory
+name|type
+operator|.
+name|ExprNodeTypeCheck
 import|;
 end_import
 
@@ -226,22 +228,6 @@ operator|.
 name|plan
 operator|.
 name|ExprNodeDesc
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde2
-operator|.
-name|SerDeException
 import|;
 end_import
 
@@ -493,9 +479,10 @@ block|{
 comment|// or the old_pruner_pred and the new_ppr_pred
 name|pruner_pred
 operator|=
-name|TypeCheckProcFactory
+name|ExprNodeTypeCheck
 operator|.
-name|DefaultExprProcessor
+name|getExprNodeDefaultExprProcessor
+argument_list|()
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(
@@ -639,9 +626,10 @@ block|{
 comment|// or the old_pruner_pred and the new_ppr_pred
 name|pruner_pred
 operator|=
-name|TypeCheckProcFactory
+name|ExprNodeTypeCheck
 operator|.
-name|DefaultExprProcessor
+name|getExprNodeDefaultExprProcessor
+argument_list|()
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(

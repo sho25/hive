@@ -615,6 +615,7 @@ expr_stmt|;
 block|}
 block|}
 comment|/**    * Register a translation for an identifier.    *    * @param node    *          source node (which must be an identifier) to be replaced    */
+specifier|public
 name|void
 name|addIdentifierTranslation
 parameter_list|(
@@ -682,6 +683,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Register a "copy" translation in which a node will be translated into    * whatever the translation turns out to be for another node (after    * previously registered translations have already been performed).  Deferred    * translations are performed in the order they are registered, and follow    * the same rules regarding overlap as non-copy translations.    *    * @param targetNode node whose subtree is to be replaced    *    * @param sourceNode the node providing the replacement text    *    */
+specifier|public
 name|void
 name|addCopyTranslation
 parameter_list|(

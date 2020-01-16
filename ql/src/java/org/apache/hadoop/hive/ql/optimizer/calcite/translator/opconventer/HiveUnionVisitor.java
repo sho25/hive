@@ -223,7 +223,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ParseUtils
+name|SemanticException
 import|;
 end_import
 
@@ -241,7 +241,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|SemanticException
+name|type
+operator|.
+name|ExprNodeTypeCheck
 import|;
 end_import
 
@@ -1041,7 +1043,10 @@ condition|)
 block|{
 name|column
 operator|=
-name|ParseUtils
+name|ExprNodeTypeCheck
+operator|.
+name|getExprNodeDefaultExprProcessor
+argument_list|()
 operator|.
 name|createConversionCast
 argument_list|(

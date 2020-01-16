@@ -713,7 +713,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|TypeCheckProcFactory
+name|type
+operator|.
+name|ExprNodeTypeCheck
 import|;
 end_import
 
@@ -4974,9 +4976,10 @@ name|partitionCols
 operator|.
 name|add
 argument_list|(
-name|TypeCheckProcFactory
+name|ExprNodeTypeCheck
 operator|.
-name|DefaultExprProcessor
+name|getExprNodeDefaultExprProcessor
+argument_list|()
 operator|.
 name|getFuncExprNodeDesc
 argument_list|(

@@ -153,24 +153,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|conf
-operator|.
-name|HiveConf
-operator|.
-name|ConfVars
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|metastore
 operator|.
 name|api
@@ -681,7 +663,7 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|ParseUtils
+name|SemanticException
 import|;
 end_import
 
@@ -699,7 +681,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|SemanticException
+name|type
+operator|.
+name|ExprNodeTypeCheck
 import|;
 end_import
 
@@ -1772,7 +1756,10 @@ name|bucketColumns
 operator|.
 name|add
 argument_list|(
-name|ParseUtils
+name|ExprNodeTypeCheck
+operator|.
+name|getExprNodeDefaultExprProcessor
+argument_list|()
 operator|.
 name|createConversionCast
 argument_list|(

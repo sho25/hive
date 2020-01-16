@@ -100,22 +100,6 @@ name|serialVersionUID
 init|=
 literal|1L
 decl_stmt|;
-specifier|public
-specifier|static
-enum|enum
-name|SubqueryType
-block|{
-name|IN
-block|,
-name|EXISTS
-block|,
-name|SCALAR
-block|,
-name|SOME
-block|,
-name|ALL
-block|}
-empty_stmt|;
 comment|/**    * RexNode corresponding to subquery.    */
 specifier|private
 name|RelNode

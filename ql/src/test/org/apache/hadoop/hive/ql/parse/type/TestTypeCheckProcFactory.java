@@ -16,56 +16,10 @@ operator|.
 name|ql
 operator|.
 name|parse
+operator|.
+name|type
 package|;
 end_package
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNotNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|assertNull
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
-operator|.
-name|mockito
-operator|.
-name|Mockito
-operator|.
-name|when
-import|;
-end_import
 
 begin_import
 import|import
@@ -110,6 +64,8 @@ operator|.
 name|ql
 operator|.
 name|parse
+operator|.
+name|type
 operator|.
 name|TypeCheckProcFactory
 operator|.
@@ -201,6 +157,16 @@ name|org
 operator|.
 name|junit
 operator|.
+name|Assert
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|junit
+operator|.
 name|Before
 import|;
 end_import
@@ -260,6 +226,16 @@ operator|.
 name|mockito
 operator|.
 name|Mock
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|mockito
+operator|.
+name|Mockito
 import|;
 end_import
 
@@ -494,8 +470,9 @@ argument_list|)
 expr_stmt|;
 name|testSubject
 operator|=
-operator|new
-name|DefaultExprProcessor
+name|ExprNodeTypeCheck
+operator|.
+name|getExprNodeDefaultExprProcessor
 argument_list|()
 expr_stmt|;
 block|}
@@ -507,6 +484,8 @@ name|Object
 name|constValue
 parameter_list|)
 block|{
+name|Mockito
+operator|.
 name|when
 argument_list|(
 name|nodeDesc
@@ -520,6 +499,8 @@ argument_list|(
 name|constValue
 argument_list|)
 expr_stmt|;
+name|Mockito
+operator|.
 name|when
 argument_list|(
 name|typeInfo
@@ -548,11 +529,15 @@ argument_list|,
 name|nodeDesc
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertNotNull
 argument_list|(
 name|result
 argument_list|)
 expr_stmt|;
+name|Assert
+operator|.
 name|assertEquals
 argument_list|(
 name|expectedValue
@@ -572,6 +557,8 @@ name|Object
 name|constValue
 parameter_list|)
 block|{
+name|Mockito
+operator|.
 name|when
 argument_list|(
 name|nodeDesc
@@ -585,6 +572,8 @@ argument_list|(
 name|constValue
 argument_list|)
 expr_stmt|;
+name|Mockito
+operator|.
 name|when
 argument_list|(
 name|typeInfo
@@ -613,6 +602,8 @@ argument_list|,
 name|nodeDesc
 argument_list|)
 decl_stmt|;
+name|Assert
+operator|.
 name|assertNull
 argument_list|(
 name|result

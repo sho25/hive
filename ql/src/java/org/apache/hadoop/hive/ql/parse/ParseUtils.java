@@ -397,6 +397,26 @@ name|hive
 operator|.
 name|ql
 operator|.
+name|parse
+operator|.
+name|type
+operator|.
+name|TypeCheckProcFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
 name|plan
 operator|.
 name|ExprNodeDesc
@@ -890,54 +910,6 @@ expr_stmt|;
 block|}
 return|return
 name|colNames
-return|;
-block|}
-comment|/**    * @param column  column expression to convert    * @param tableFieldTypeInfo TypeInfo to convert to    * @return Expression converting column to the type specified by tableFieldTypeInfo    */
-specifier|public
-specifier|static
-name|ExprNodeDesc
-name|createConversionCast
-parameter_list|(
-name|ExprNodeDesc
-name|column
-parameter_list|,
-name|PrimitiveTypeInfo
-name|tableFieldTypeInfo
-parameter_list|)
-throws|throws
-name|SemanticException
-block|{
-comment|// Get base type, since type string may be parameterized
-name|String
-name|baseType
-init|=
-name|TypeInfoUtils
-operator|.
-name|getBaseName
-argument_list|(
-name|tableFieldTypeInfo
-operator|.
-name|getTypeName
-argument_list|()
-argument_list|)
-decl_stmt|;
-comment|// If the type cast UDF is for a parameterized type, then it should implement
-comment|// the SettableUDF interface so that we can pass in the params.
-comment|// Not sure if this is the cleanest solution, but there does need to be a way
-comment|// to provide the type params to the type cast.
-return|return
-name|TypeCheckProcFactory
-operator|.
-name|DefaultExprProcessor
-operator|.
-name|getFuncExprNodeDescWithUdfData
-argument_list|(
-name|baseType
-argument_list|,
-name|tableFieldTypeInfo
-argument_list|,
-name|column
-argument_list|)
 return|;
 block|}
 specifier|public

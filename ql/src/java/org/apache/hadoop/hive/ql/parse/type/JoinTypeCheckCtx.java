@@ -15,11 +15,9 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|optimizer
+name|parse
 operator|.
-name|calcite
-operator|.
-name|translator
+name|type
 package|;
 end_package
 
@@ -100,6 +98,8 @@ operator|.
 name|ql
 operator|.
 name|parse
+operator|.
+name|type
 operator|.
 name|TypeCheckCtx
 import|;

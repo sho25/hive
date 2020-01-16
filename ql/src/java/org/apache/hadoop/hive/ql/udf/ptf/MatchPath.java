@@ -293,7 +293,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|TypeCheckCtx
+name|type
+operator|.
+name|ExprNodeTypeCheck
 import|;
 end_import
 
@@ -311,7 +313,9 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|TypeCheckProcFactory
+name|type
+operator|.
+name|TypeCheckCtx
 import|;
 end_import
 
@@ -3753,7 +3757,7 @@ name|ExprNodeDesc
 argument_list|>
 name|map
 init|=
-name|TypeCheckProcFactory
+name|ExprNodeTypeCheck
 operator|.
 name|genExprNode
 argument_list|(
