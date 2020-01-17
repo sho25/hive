@@ -13907,6 +13907,23 @@ name|intLockId
 init|=
 literal|0
 decl_stmt|;
+name|long
+name|lastHB
+init|=
+operator|(
+name|isValidTxn
+argument_list|(
+name|txnid
+argument_list|)
+condition|?
+literal|0
+else|:
+name|getDbTime
+argument_list|(
+name|dbConn
+argument_list|)
+operator|)
+decl_stmt|;
 for|for
 control|(
 name|LockComponent
@@ -14068,14 +14085,6 @@ name|LOCK_SEMI_SHARED
 expr_stmt|;
 break|break;
 block|}
-name|long
-name|now
-init|=
-name|getDbTime
-argument_list|(
-name|dbConn
-argument_list|)
-decl_stmt|;
 name|rows
 operator|.
 name|add
@@ -14135,16 +14144,7 @@ operator|+
 literal|", "
 operator|+
 comment|//for locks associated with a txn, we always heartbeat txn and timeout based on that
-operator|(
-name|isValidTxn
-argument_list|(
-name|txnid
-argument_list|)
-condition|?
-literal|0
-else|:
-name|now
-operator|)
+name|lastHB
 operator|+
 literal|", "
 operator|+
