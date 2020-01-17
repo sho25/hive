@@ -14285,6 +14285,11 @@ control|)
 block|{
 if|if
 condition|(
+name|input
+operator|.
+name|isDummy
+argument_list|()
+operator|||
 operator|!
 name|input
 operator|.
