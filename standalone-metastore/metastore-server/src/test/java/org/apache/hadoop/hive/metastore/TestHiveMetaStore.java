@@ -16414,7 +16414,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"invDBName.invTableName table not found"
+literal|"Specified catalog.database.table does not exist : hive.invdbname.invtablename"
 argument_list|)
 argument_list|)
 expr_stmt|;

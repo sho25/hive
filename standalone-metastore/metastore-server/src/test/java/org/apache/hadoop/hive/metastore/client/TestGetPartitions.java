@@ -2380,7 +2380,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|NoSuchObjectException
+name|TException
 operator|.
 name|class
 argument_list|)
@@ -2413,7 +2413,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|NoSuchObjectException
+name|TException
 operator|.
 name|class
 argument_list|)
@@ -2970,6 +2970,14 @@ expr_stmt|;
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
+comment|// null DB would throw NPE wrapped up in MetaException
 specifier|public
 name|void
 name|testGetPartitionWithAuthInfoNullDbName
@@ -3032,6 +3040,14 @@ block|}
 block|}
 annotation|@
 name|Test
+argument_list|(
+name|expected
+operator|=
+name|MetaException
+operator|.
+name|class
+argument_list|)
+comment|// null table would throw NPE wrapped up in MetaException
 specifier|public
 name|void
 name|testGetPartitionWithAuthInfoNullTblName
@@ -3771,7 +3787,7 @@ name|Test
 argument_list|(
 name|expected
 operator|=
-name|NoSuchObjectException
+name|TException
 operator|.
 name|class
 argument_list|)
