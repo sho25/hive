@@ -76470,7 +76470,11 @@ name|colTypes
 decl_stmt|;
 if|if
 condition|(
-name|isCBOExecuted
+name|this
+operator|.
+name|ctx
+operator|.
+name|isCboSucceeded
 argument_list|()
 operator|&&
 name|this
