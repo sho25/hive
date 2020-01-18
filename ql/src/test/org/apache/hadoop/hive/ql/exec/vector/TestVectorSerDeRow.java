@@ -1251,15 +1251,15 @@ name|BINARY_SORTABLE
 case|:
 name|deserializeRead
 operator|=
-operator|new
 name|BinarySortableDeserializeRead
+operator|.
+name|ascendingNullsFirst
 argument_list|(
 name|source
 operator|.
 name|typeInfos
 argument_list|()
 argument_list|,
-comment|/* useExternalBuffer */
 literal|false
 argument_list|)
 expr_stmt|;
@@ -2898,8 +2898,9 @@ condition|)
 block|{
 name|deserializeRead
 operator|=
-operator|new
 name|BinarySortableDeserializeRead
+operator|.
+name|ascendingNullsFirst
 argument_list|(
 name|source
 operator|.

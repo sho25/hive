@@ -1454,6 +1454,15 @@ name|TEZ_INIT_OPERATORS
 argument_list|)
 expr_stmt|;
 block|}
+specifier|public
+name|TableDesc
+name|getKeyTableDesc
+parameter_list|()
+block|{
+return|return
+name|keyTableDesc
+return|;
+block|}
 annotation|@
 name|Override
 specifier|public

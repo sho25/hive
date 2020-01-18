@@ -2743,13 +2743,22 @@ argument_list|<
 name|BinarySortableDeserializeRead
 argument_list|>
 argument_list|(
-operator|new
 name|BinarySortableDeserializeRead
+operator|.
+name|with
 argument_list|(
 name|smallTableKeyTypeInfos
 argument_list|,
-comment|/* useExternalBuffer */
 literal|true
+argument_list|,
+name|getConf
+argument_list|()
+operator|.
+name|getKeyTblDesc
+argument_list|()
+operator|.
+name|getProperties
+argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

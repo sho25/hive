@@ -145,6 +145,24 @@ name|VectorMapJoinHashMultiSetResult
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|plan
+operator|.
+name|TableDesc
+import|;
+end_import
+
 begin_comment
 comment|/*  * An multi-key hash map based on the BytesBytesMultiHashMultiSet.  */
 end_comment
@@ -231,6 +249,9 @@ name|originalTableContainer
 parameter_list|,
 name|ReusableGetAdaptor
 name|hashMapRowGetter
+parameter_list|,
+name|TableDesc
+name|tableDesc
 parameter_list|)
 block|{
 name|super
@@ -246,6 +267,8 @@ operator|new
 name|VectorMapJoinOptimizedStringCommon
 argument_list|(
 name|isOuterJoin
+argument_list|,
+name|tableDesc
 argument_list|)
 expr_stmt|;
 block|}

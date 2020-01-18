@@ -5164,6 +5164,11 @@ name|String
 name|invalidAutomaticRewritingMaterializationReason
 decl_stmt|;
 specifier|private
+specifier|final
+name|NullOrdering
+name|defaultNullOrder
+decl_stmt|;
+specifier|private
 specifier|static
 specifier|final
 name|CommonToken
@@ -5573,6 +5578,15 @@ expr_stmt|;
 name|disableJoinMerge
 operator|=
 name|defaultJoinMerge
+expr_stmt|;
+name|defaultNullOrder
+operator|=
+name|NullOrdering
+operator|.
+name|defaultNullOrder
+argument_list|(
+name|conf
+argument_list|)
 expr_stmt|;
 block|}
 annotation|@
@@ -36700,6 +36714,8 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+name|defaultNullOrder
 argument_list|)
 argument_list|,
 operator|new
@@ -38025,6 +38041,8 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+name|defaultNullOrder
 argument_list|)
 decl_stmt|;
 name|ReduceSinkOperator
@@ -38695,6 +38713,8 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+name|defaultNullOrder
 argument_list|)
 argument_list|,
 operator|new
@@ -56169,6 +56189,8 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
+name|defaultNullOrder
+argument_list|,
 name|numReducers
 argument_list|,
 name|acidOp
@@ -58827,6 +58849,8 @@ operator|.
 name|Operation
 operator|.
 name|NOT_ACID
+argument_list|,
+name|defaultNullOrder
 argument_list|)
 decl_stmt|;
 name|ReduceSinkOperator
