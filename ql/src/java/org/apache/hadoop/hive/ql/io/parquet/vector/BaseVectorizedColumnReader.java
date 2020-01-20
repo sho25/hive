@@ -249,7 +249,7 @@ name|parquet
 operator|.
 name|schema
 operator|.
-name|DecimalMetadata
+name|Type
 import|;
 end_import
 
@@ -263,7 +263,9 @@ name|parquet
 operator|.
 name|schema
 operator|.
-name|Type
+name|LogicalTypeAnnotation
+operator|.
+name|DecimalLogicalTypeAnnotation
 import|;
 end_import
 
@@ -1339,22 +1341,17 @@ name|Type
 name|type
 parameter_list|)
 block|{
-name|DecimalMetadata
-name|decimalMetadata
-init|=
-name|type
-operator|.
-name|asPrimitiveType
-argument_list|()
-operator|.
-name|getDecimalMetadata
-argument_list|()
-decl_stmt|;
 if|if
 condition|(
-name|decimalMetadata
-operator|==
-literal|null
+operator|!
+operator|(
+name|type
+operator|.
+name|getLogicalTypeAnnotation
+argument_list|()
+operator|instanceof
+name|DecimalLogicalTypeAnnotation
+operator|)
 condition|)
 block|{
 throw|throw

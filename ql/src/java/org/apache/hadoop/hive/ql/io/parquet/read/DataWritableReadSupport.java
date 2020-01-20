@@ -519,7 +519,7 @@ name|parquet
 operator|.
 name|schema
 operator|.
-name|MessageType
+name|LogicalTypeAnnotation
 import|;
 end_import
 
@@ -533,7 +533,7 @@ name|parquet
 operator|.
 name|schema
 operator|.
-name|OriginalType
+name|MessageType
 import|;
 end_import
 
@@ -1107,9 +1107,10 @@ argument_list|)
 operator|.
 name|as
 argument_list|(
-name|OriginalType
+name|LogicalTypeAnnotation
 operator|.
-name|LIST
+name|listType
+argument_list|()
 argument_list|)
 operator|.
 name|addFields
