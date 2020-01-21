@@ -1136,6 +1136,22 @@ name|Configuration
 name|conf
 parameter_list|)
 block|{
+if|if
+condition|(
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
+argument_list|)
+condition|)
+block|{
 name|MDC
 operator|.
 name|put
@@ -1176,22 +1192,6 @@ name|HIVEQUERYID
 argument_list|)
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|HiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|conf
-argument_list|,
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|HIVE_SERVER2_LOGGING_OPERATION_ENABLED
-argument_list|)
-condition|)
-block|{
 name|MDC
 operator|.
 name|put
@@ -1212,6 +1212,23 @@ name|HIVE_SERVER2_LOGGING_OPERATION_LEVEL
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Thread context registration is done."
+argument_list|)
+expr_stmt|;
+block|}
+else|else
+block|{
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Thread context registration is skipped."
+argument_list|)
+expr_stmt|;
 block|}
 block|}
 comment|/**    * Unregister logging context    */
@@ -1221,10 +1238,34 @@ name|void
 name|unregisterLoggingContext
 parameter_list|()
 block|{
+comment|// Remove the keys added, don't use clear, as it may clear all other things which are not intended to be removed.
 name|MDC
 operator|.
-name|clear
-argument_list|()
+name|remove
+argument_list|(
+name|SESSIONID_LOG_KEY
+argument_list|)
+expr_stmt|;
+name|MDC
+operator|.
+name|remove
+argument_list|(
+name|QUERYID_LOG_KEY
+argument_list|)
+expr_stmt|;
+name|MDC
+operator|.
+name|remove
+argument_list|(
+name|OPERATIONLOG_LEVEL_KEY
+argument_list|)
+expr_stmt|;
+name|l4j
+operator|.
+name|info
+argument_list|(
+literal|"Unregistered logging context."
+argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Get path of the log file for user to see on the WebUI.    */
