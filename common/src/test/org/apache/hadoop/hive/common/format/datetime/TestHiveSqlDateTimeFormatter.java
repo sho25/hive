@@ -22,14 +22,96 @@ package|;
 end_package
 
 begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|fail
+import|;
+end_import
+
+begin_import
 import|import
-name|com
+name|java
 operator|.
-name|sun
+name|time
 operator|.
-name|tools
+name|Instant
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
-name|javac
+name|time
+operator|.
+name|LocalDateTime
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|ZoneOffset
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|temporal
+operator|.
+name|ChronoField
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|time
+operator|.
+name|temporal
+operator|.
+name|TemporalField
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|Arrays
+import|;
+end_import
+
+begin_import
+import|import
+name|java
 operator|.
 name|util
 operator|.
@@ -75,60 +157,6 @@ end_import
 
 begin_import
 import|import
-name|java
-operator|.
-name|time
-operator|.
-name|LocalDate
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|LocalDateTime
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|ChronoField
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|time
-operator|.
-name|temporal
-operator|.
-name|TemporalField
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|ArrayList
-import|;
-end_import
-
-begin_import
-import|import
 name|org
 operator|.
 name|junit
@@ -138,26 +166,16 @@ import|;
 end_import
 
 begin_import
-import|import static
-name|org
+import|import
+name|com
 operator|.
-name|junit
+name|google
 operator|.
-name|Assert
+name|common
 operator|.
-name|assertEquals
-import|;
-end_import
-
-begin_import
-import|import static
-name|org
+name|base
 operator|.
-name|junit
-operator|.
-name|Assert
-operator|.
-name|fail
+name|Optional
 import|;
 end_import
 
@@ -185,13 +203,9 @@ name|verifyPatternParsing
 argument_list|(
 literal|" ---yyyy-\'-:-  -,.;/MM-dd--"
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|List
+name|Arrays
 operator|.
-name|of
+name|asList
 argument_list|(
 literal|null
 argument_list|,
@@ -215,7 +229,6 @@ argument_list|,
 literal|null
 argument_list|)
 argument_list|)
-argument_list|)
 expr_stmt|;
 name|verifyPatternParsing
 argument_list|(
@@ -225,13 +238,9 @@ literal|25
 argument_list|,
 literal|"ymmdddhh24::mi:ss A.M. pm"
 argument_list|,
-operator|new
-name|ArrayList
-argument_list|<>
-argument_list|(
-name|List
+name|Arrays
 operator|.
-name|of
+name|asList
 argument_list|(
 name|ChronoField
 operator|.
@@ -272,7 +281,6 @@ argument_list|,
 name|ChronoField
 operator|.
 name|AMPM_OF_DAY
-argument_list|)
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -861,7 +869,14 @@ argument_list|,
 literal|"2019-12-31: 4 53 5"
 argument_list|)
 expr_stmt|;
-comment|//ISO 8601
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testFormatTimestampIso8601
+parameter_list|()
+block|{
 name|checkFormatTs
 argument_list|(
 literal|"YYYY-MM-DD : IYYY-IW-ID"
@@ -1020,6 +1035,24 @@ argument_list|(
 name|pattern
 argument_list|,
 literal|false
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1137,6 +1170,24 @@ argument_list|(
 name|pattern
 argument_list|,
 literal|false
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -1168,28 +1219,6 @@ name|void
 name|testParseTimestamp
 parameter_list|()
 block|{
-name|String
-name|thisYearString
-init|=
-name|String
-operator|.
-name|valueOf
-argument_list|(
-name|LocalDateTime
-operator|.
-name|now
-argument_list|()
-operator|.
-name|getYear
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|int
-name|firstTwoDigits
-init|=
-name|getFirstTwoDigits
-argument_list|()
-decl_stmt|;
 comment|//y
 name|checkParseTimestamp
 argument_list|(
@@ -1197,16 +1226,7 @@ literal|"y-mm-dd"
 argument_list|,
 literal|"0-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|3
-argument_list|)
-operator|+
-literal|"0-02-03 00:00:00"
+literal|"1970-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1215,16 +1235,7 @@ literal|"yy-mm-dd"
 argument_list|,
 literal|"00-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|2
-argument_list|)
-operator|+
-literal|"00-02-03 00:00:00"
+literal|"1900-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1233,16 +1244,7 @@ literal|"yyy-mm-dd"
 argument_list|,
 literal|"000-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"000-02-03 00:00:00"
+literal|"1000-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1251,16 +1253,7 @@ literal|"yyyy-mm-dd"
 argument_list|,
 literal|"000-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"000-02-03 00:00:00"
+literal|"1000-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1269,16 +1262,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"0-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|3
-argument_list|)
-operator|+
-literal|"0-02-03 00:00:00"
+literal|"1970-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1287,16 +1271,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"000-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"000-02-03 00:00:00"
+literal|"1000-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 comment|//rr, rrrr
@@ -1306,11 +1281,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"00-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"00-02-03 00:00:00"
+literal|"2000-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1319,11 +1290,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"49-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"49-02-03 00:00:00"
+literal|"2049-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1332,9 +1299,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"50-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"50-02-03 00:00:00"
+literal|"1950-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1343,9 +1308,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"99-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"99-02-03 00:00:00"
+literal|"1999-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1354,11 +1317,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"00-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"00-02-03 00:00:00"
+literal|"2000-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1367,11 +1326,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"49-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"49-02-03 00:00:00"
+literal|"2049-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1380,9 +1335,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"50-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"50-02-03 00:00:00"
+literal|"1950-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1391,9 +1344,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"99-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"99-02-03 00:00:00"
+literal|"1999-02-03 00:00:00"
 argument_list|)
 expr_stmt|;
 comment|//everything else
@@ -1502,7 +1453,7 @@ literal|"TZM/YYY-MM-TZH/DD"
 argument_list|,
 literal|"0/333-01-11/02"
 argument_list|,
-literal|"2333-01-02 00:00:00"
+literal|"1333-01-02 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1737,7 +1688,14 @@ argument_list|,
 literal|"2018-03-04"
 argument_list|)
 expr_stmt|;
-comment|//ISO 8601
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testParseTimestampISO8601
+parameter_list|()
+block|{
 name|checkParseTimestamp
 argument_list|(
 literal|"IYYY-IW-ID"
@@ -1789,16 +1747,7 @@ literal|"IYYY-IW-ID"
 argument_list|,
 literal|"020-01-04"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"020-01-02 00:00:00"
+literal|"1020-01-06 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1807,16 +1756,7 @@ literal|"IYY-IW-ID"
 argument_list|,
 literal|"020-01-04"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"020-01-02 00:00:00"
+literal|"1020-01-06 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1825,16 +1765,7 @@ literal|"IYY-IW-ID"
 argument_list|,
 literal|"20-01-04"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|2
-argument_list|)
-operator|+
-literal|"20-01-02 00:00:00"
+literal|"1920-01-01 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1843,16 +1774,7 @@ literal|"IY-IW-ID"
 argument_list|,
 literal|"20-01-04"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|2
-argument_list|)
-operator|+
-literal|"20-01-02 00:00:00"
+literal|"1920-01-01 00:00:00"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestamp
@@ -1900,7 +1822,6 @@ argument_list|,
 literal|"2019-12-30 00:00:00"
 argument_list|)
 expr_stmt|;
-comment|//Tests for these patterns would need changing every decade if done in the above way.
 comment|//Thursday of the first week in an ISO year always matches the Gregorian year.
 name|checkParseTimestampIso
 argument_list|(
@@ -1910,18 +1831,7 @@ literal|"0-01-04"
 argument_list|,
 literal|"iw, yyyy"
 argument_list|,
-literal|"01, "
-operator|+
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|3
-argument_list|)
-operator|+
-literal|"0"
+literal|"01, 1970"
 argument_list|)
 expr_stmt|;
 name|checkParseTimestampIso
@@ -1932,18 +1842,7 @@ literal|"0-01-04"
 argument_list|,
 literal|"iw, yyyy"
 argument_list|,
-literal|"01, "
-operator|+
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|3
-argument_list|)
-operator|+
-literal|"0"
+literal|"01, 1970"
 argument_list|)
 expr_stmt|;
 comment|//time patterns are allowed; date patterns are not
@@ -1956,47 +1855,6 @@ argument_list|,
 literal|"2018-12-31 01:02:03"
 argument_list|)
 expr_stmt|;
-block|}
-specifier|private
-name|int
-name|getFirstTwoDigits
-parameter_list|()
-block|{
-name|int
-name|thisYear
-init|=
-name|LocalDateTime
-operator|.
-name|now
-argument_list|()
-operator|.
-name|getYear
-argument_list|()
-decl_stmt|;
-name|int
-name|firstTwoDigits
-init|=
-name|thisYear
-operator|/
-literal|100
-decl_stmt|;
-if|if
-condition|(
-name|thisYear
-operator|%
-literal|100
-operator|<
-literal|50
-condition|)
-block|{
-name|firstTwoDigits
-operator|-=
-literal|1
-expr_stmt|;
-block|}
-return|return
-name|firstTwoDigits
-return|;
 block|}
 specifier|private
 name|void
@@ -2020,6 +1878,24 @@ argument_list|(
 name|pattern
 argument_list|,
 literal|true
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2069,6 +1945,24 @@ argument_list|(
 name|parsePattern
 argument_list|,
 literal|true
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Timestamp
@@ -2089,6 +1983,24 @@ argument_list|(
 name|formatPattern
 argument_list|,
 literal|false
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2111,28 +2023,6 @@ name|void
 name|testParseDate
 parameter_list|()
 block|{
-name|String
-name|thisYearString
-init|=
-name|String
-operator|.
-name|valueOf
-argument_list|(
-name|LocalDateTime
-operator|.
-name|now
-argument_list|()
-operator|.
-name|getYear
-argument_list|()
-argument_list|)
-decl_stmt|;
-name|int
-name|firstTwoDigits
-init|=
-name|getFirstTwoDigits
-argument_list|()
-decl_stmt|;
 comment|//y
 name|checkParseDate
 argument_list|(
@@ -2140,16 +2030,7 @@ literal|"y-mm-dd"
 argument_list|,
 literal|"0-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|3
-argument_list|)
-operator|+
-literal|"0-02-03"
+literal|"1970-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2158,16 +2039,7 @@ literal|"yy-mm-dd"
 argument_list|,
 literal|"00-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|2
-argument_list|)
-operator|+
-literal|"00-02-03"
+literal|"1900-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2176,16 +2048,7 @@ literal|"yyy-mm-dd"
 argument_list|,
 literal|"000-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"000-02-03"
+literal|"1000-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2194,16 +2057,7 @@ literal|"yyyy-mm-dd"
 argument_list|,
 literal|"000-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"000-02-03"
+literal|"1000-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2212,16 +2066,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"0-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|3
-argument_list|)
-operator|+
-literal|"0-02-03"
+literal|"1970-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2230,16 +2075,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"000-02-03"
 argument_list|,
-name|thisYearString
-operator|.
-name|substring
-argument_list|(
-literal|0
-argument_list|,
-literal|1
-argument_list|)
-operator|+
-literal|"000-02-03"
+literal|"1000-02-03"
 argument_list|)
 expr_stmt|;
 comment|//rr, rrrr
@@ -2249,11 +2085,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"00-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"00-02-03"
+literal|"2000-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2262,11 +2094,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"49-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"49-02-03"
+literal|"2049-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2275,9 +2103,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"50-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"50-02-03"
+literal|"1950-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2286,9 +2112,7 @@ literal|"rr-mm-dd"
 argument_list|,
 literal|"99-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"99-02-03"
+literal|"1999-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2297,11 +2121,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"00-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"00-02-03"
+literal|"2000-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2310,11 +2130,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"49-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|1
-operator|+
-literal|"49-02-03"
+literal|"2049-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2323,9 +2139,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"50-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"50-02-03"
+literal|"1950-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2334,9 +2148,7 @@ literal|"rrrr-mm-dd"
 argument_list|,
 literal|"99-02-03"
 argument_list|,
-name|firstTwoDigits
-operator|+
-literal|"99-02-03"
+literal|"1999-02-03"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -2366,7 +2178,14 @@ argument_list|,
 literal|"2020-03-31"
 argument_list|)
 expr_stmt|;
-comment|//ISO 8601
+block|}
+annotation|@
+name|Test
+specifier|public
+name|void
+name|testParseDateISO8601
+parameter_list|()
+block|{
 name|checkParseDate
 argument_list|(
 literal|"IYYY-IW-ID"
@@ -2453,6 +2272,24 @@ argument_list|(
 name|pattern
 argument_list|,
 literal|true
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -2656,6 +2493,24 @@ argument_list|(
 name|string
 argument_list|,
 name|forParsing
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|fail
@@ -2996,7 +2851,7 @@ literal|"FXFMiyyy-iw-id hh24:mi:ss"
 argument_list|,
 literal|"019-01-02 17:00:05"
 argument_list|,
-literal|"2019-01-01 17:00:05"
+literal|"1019-01-05 17:00:05"
 argument_list|)
 expr_stmt|;
 name|verifyBadParseString
@@ -3105,17 +2960,7 @@ literal|"yyyy\"m\"mm\"d\"dd"
 argument_list|,
 literal|"19m1d1"
 argument_list|,
-name|LocalDate
-operator|.
-name|now
-argument_list|()
-operator|.
-name|getYear
-argument_list|()
-operator|/
-literal|100
-operator|+
-literal|"19-01-01"
+literal|"1919-01-01"
 argument_list|)
 expr_stmt|;
 name|checkParseDate
@@ -3124,17 +2969,7 @@ literal|"yyyy\"[\"mm\"]\"dd"
 argument_list|,
 literal|"19[1]1"
 argument_list|,
-name|LocalDate
-operator|.
-name|now
-argument_list|()
-operator|.
-name|getYear
-argument_list|()
-operator|/
-literal|100
-operator|+
-literal|"19-01-01"
+literal|"1919-01-01"
 argument_list|)
 expr_stmt|;
 comment|// parse character temporals correctly
@@ -3267,7 +3102,7 @@ parameter_list|(
 name|String
 name|pattern
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|TemporalField
 argument_list|>
@@ -3305,7 +3140,7 @@ parameter_list|,
 name|String
 name|expectedPattern
 parameter_list|,
-name|ArrayList
+name|List
 argument_list|<
 name|TemporalField
 argument_list|>
@@ -3320,6 +3155,24 @@ argument_list|(
 name|pattern
 argument_list|,
 literal|false
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|assertEquals
@@ -3463,6 +3316,24 @@ argument_list|(
 name|pattern
 argument_list|,
 literal|true
+argument_list|,
+name|Optional
+operator|.
+name|of
+argument_list|(
+name|LocalDateTime
+operator|.
+name|ofInstant
+argument_list|(
+name|Instant
+operator|.
+name|EPOCH
+argument_list|,
+name|ZoneOffset
+operator|.
+name|UTC
+argument_list|)
+argument_list|)
 argument_list|)
 expr_stmt|;
 try|try
