@@ -9808,6 +9808,15 @@ operator|+
 literal|"DROP TABLE etc. when the table is being written to"
 argument_list|)
 block|,
+name|HIVE_TXN_READ_LOCKS
+argument_list|(
+literal|"hive.txn.read.locks"
+argument_list|,
+literal|true
+argument_list|,
+literal|"flag to turn off the strict read lock when set to false"
+argument_list|)
+block|,
 name|TXN_OVERWRITE_X_LOCK
 argument_list|(
 literal|"hive.txn.xlock.iow"

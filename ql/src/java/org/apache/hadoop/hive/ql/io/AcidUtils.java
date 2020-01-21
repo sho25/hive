@@ -14275,6 +14275,19 @@ argument_list|<>
 argument_list|()
 decl_stmt|;
 comment|// For each source to read, get a shared lock
+name|boolean
+name|skipReadLock
+init|=
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_TXN_READ_LOCKS
+argument_list|)
+decl_stmt|;
 for|for
 control|(
 name|ReadEntity
@@ -14308,6 +14321,8 @@ name|needsLock
 argument_list|(
 name|input
 argument_list|)
+operator|||
+name|skipReadLock
 condition|)
 block|{
 comment|// We don't want to acquire read locks during update or delete as we'll be acquiring write
