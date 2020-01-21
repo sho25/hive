@@ -10081,6 +10081,17 @@ operator|+
 literal|"value will increase the load on the NameNode."
 argument_list|)
 block|,
+name|HIVE_COMPACTOR_REQUEST_QUEUE
+argument_list|(
+literal|"hive.compactor.request.queue"
+argument_list|,
+literal|1
+argument_list|,
+literal|"Enables parallelization of the checkForCompaction operation, that includes many file metadata checks\n"
+operator|+
+literal|"and may be expensive"
+argument_list|)
+block|,
 name|HIVE_COMPACTOR_DELTA_NUM_THRESHOLD
 argument_list|(
 literal|"hive.compactor.delta.num.threshold"
