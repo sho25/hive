@@ -1046,7 +1046,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link JavaUtils#txnIdToString(long)}  * and {@link JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  *  * Note on HIVE_LOCKS.hl_last_heartbeat.  * For locks that are part of transaction, we set this 0 (would rather set it to NULL but  * Currently the DB schema has this NOT NULL) and only update/read heartbeat from corresponding  * transaction in TXNS.  *  * In general there can be multiple metastores where this logic can execute, thus the DB is  * used to ensure proper mutexing of operations.  * Select ... For Update (or equivalent: either MsSql with(updlock) or actual Update stmt) is  * used to properly sequence operations.  Most notably:  * 1. various sequence IDs are generated with aid of this mutex  * 2. ensuring that each (Hive) Transaction state is transitioned atomically.  Transaction state  *  includes its actual state (Open, Aborted) as well as it's lock list/component list.  Thus all  *  per transaction ops, either start by update/delete of the relevant TXNS row or do S4U on that row.  *  This allows almost all operations to run at READ_COMMITTED and minimizes DB deadlocks.  * 3. checkLock() - this is mutexted entirely since we must ensure that while we check if some lock  *  can be granted, no other (strictly speaking "earlier") lock can change state.  *  * The exception to his is Derby which doesn't support proper S4U.  Derby is always running embedded  * (this is the only supported configuration for Derby)  * in the same JVM as HiveMetaStoreHandler thus we use JVM wide lock to properly sequnce the operations.  *  * {@link #derbyLock}   * If we ever decide to run remote Derby server, according to  * https://db.apache.org/derby/docs/10.0/manuals/develop/develop78.html all transactions will be  * seriazlied, so that would also work though has not been tested.  *  * General design note:  * It's imperative that any operation on a txn (e.g. commit), ensure (atomically) that this txn is  * still valid and active.  In the code this is usually achieved at the same time the txn record  * is locked for some operation.  *   * Note on retry logic:  * Metastore has retry logic in both {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}  * and {@link org.apache.hadoop.hive.metastore.RetryingHMSHandler}.  The retry logic there is very  * generic and is not aware whether the operations are idempotent or not.  (This is separate from  * retry logic here in TxnHander which can/does retry DB errors intelligently).  The worst case is  * when an op here issues a successful commit against the RDBMS but the calling stack doesn't  * receive the ack and retries.  (If an op fails before commit, it's trivially idempotent)  * Thus the ops here need to be made idempotent as much as possible or  * the metstore call stack should have logic not to retry.  There are {@link RetrySemantics}  * annotations to document the behavior.  */
+comment|/**  * A handler to answer transaction related calls that come into the metastore  * server.  *  * Note on log messages:  Please include txnid:X and lockid info using  * {@link JavaUtils#txnIdToString(long)}  * and {@link JavaUtils#lockIdToString(long)} in all messages.  * The txnid:X and lockid:Y matches how Thrift object toString() methods are generated,  * so keeping the format consistent makes grep'ing the logs much easier.  *  * Note on HIVE_LOCKS.hl_last_heartbeat.  * For locks that are part of transaction, we set this 0 (would rather set it to NULL but  * Currently the DB schema has this NOT NULL) and only update/read heartbeat from corresponding  * transaction in TXNS.  *  * In general there can be multiple metastores where this logic can execute, thus the DB is  * used to ensure proper mutexing of operations.  * Select ... For Update (or equivalent: either MsSql with(updlock) or actual Update stmt) is  * used to properly sequence operations.  Most notably:  * 1. various sequence IDs are generated with aid of this mutex  * 2. ensuring that each (Hive) Transaction state is transitioned atomically.  Transaction state  *  includes its actual state (Open, Aborted) as well as it's lock list/component list.  Thus all  *  per transaction ops, either start by update/delete of the relevant TXNS row or do S4U on that row.  *  This allows almost all operations to run at READ_COMMITTED and minimizes DB deadlocks.  * 3. checkLock() - this is mutexted entirely since we must ensure that while we check if some lock  *  can be granted, no other (strictly speaking "earlier") lock can change state.  *  * The exception to his is Derby which doesn't support proper S4U.  Derby is always running embedded  * (this is the only supported configuration for Derby)  * in the same JVM as HiveMetaStoreHandler thus we use JVM wide lock to properly sequnce the operations.  *  * {@link #derbyLock}   * If we ever decide to run remote Derby server, according to  * https://db.apache.org/derby/docs/10.0/manuals/develop/develop78.html all transactions will be  * seriazlied, so that would also work though has not been tested.  *  * General design note:  * It's imperative that any operation on a txn (e.g. commit), ensure (atomically) that this txn is  * still valid and active.  In the code this is usually achieved at the same time the txn record  * is locked for some operation.  *  * Note on retry logic:  * Metastore has retry logic in both {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}  * and {@link org.apache.hadoop.hive.metastore.RetryingHMSHandler}.  The retry logic there is very  * generic and is not aware whether the operations are idempotent or not.  (This is separate from  * retry logic here in TxnHander which can/does retry DB errors intelligently).  The worst case is  * when an op here issues a successful commit against the RDBMS but the calling stack doesn't  * receive the ack and retries.  (If an op fails before commit, it's trivially idempotent)  * Thus the ops here need to be made idempotent as much as possible or  * the metstore call stack should have logic not to retry.  There are {@link RetrySemantics}  * annotations to document the behavior.  */
 end_comment
 
 begin_class
@@ -1919,7 +1919,7 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" - 1 FROM \"NEXT_TXN_ID\""
 decl_stmt|;
 name|LOG
 operator|.
@@ -2007,9 +2007,9 @@ decl_stmt|;
 comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id, txn_state, txn_user, txn_host, txn_started, txn_last_heartbeat from "
+literal|"SELECT \"TXN_ID\", \"TXN_STATE\", \"TXN_USER\", \"TXN_HOST\", \"TXN_STARTED\", \"TXN_LAST_HEARTBEAT\" FROM "
 operator|+
-literal|"TXNS where txn_id<= "
+literal|"\"TXNS\" WHERE \"TXN_ID\"<= "
 operator|+
 name|hwm
 expr_stmt|;
@@ -2309,7 +2309,7 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" - 1 FROM \"NEXT_TXN_ID\""
 decl_stmt|;
 name|LOG
 operator|.
@@ -2397,11 +2397,11 @@ decl_stmt|;
 comment|//need the WHERE clause below to ensure consistent results with READ_COMMITTED
 name|s
 operator|=
-literal|"select txn_id, txn_state, txn_type from TXNS where txn_id<= "
+literal|"SELECT \"TXN_ID\", \"TXN_STATE\", \"TXN_TYPE\" FROM \"TXNS\" WHERE \"TXN_ID\"<= "
 operator|+
 name|hwm
 operator|+
-literal|" order by txn_id"
+literal|" ORDER BY \"TXN_ID\""
 expr_stmt|;
 name|LOG
 operator|.
@@ -3133,7 +3133,7 @@ name|sqlGenerator
 operator|.
 name|addForUpdateClause
 argument_list|(
-literal|"select ntxn_next from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" FROM \"NEXT_TXN_ID\""
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -3187,7 +3187,7 @@ argument_list|)
 decl_stmt|;
 name|s
 operator|=
-literal|"update NEXT_TXN_ID set ntxn_next = "
+literal|"UPDATE \"NEXT_TXN_ID\" SET \"NTXN_NEXT\" = "
 operator|+
 operator|(
 name|first
@@ -3361,7 +3361,9 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"TXNS (txn_id, txn_state, txn_started, txn_last_heartbeat, txn_user, txn_host, txn_type)"
+literal|"\"TXNS\" (\"TXN_ID\", \"TXN_STATE\", \"TXN_STARTED\", \"TXN_LAST_HEARTBEAT\", "
+operator|+
+literal|"\"TXN_USER\", \"TXN_HOST\", \"TXN_TYPE\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -3385,7 +3387,7 @@ block|}
 comment|// Need to register minimum open txnid for current transactions into MIN_HISTORY table.
 name|s
 operator|=
-literal|"select min(txn_id) from TXNS where txn_state = "
+literal|"SELECT MIN(\"TXN_ID\") FROM \"TXNS\" WHERE \"TXN_STATE\" = "
 operator|+
 name|quoteChar
 argument_list|(
@@ -3493,7 +3495,7 @@ name|sqlGenerator
 operator|.
 name|createInsertValuesStmt
 argument_list|(
-literal|"MIN_HISTORY_LEVEL (mhl_txnid, mhl_min_open_txnid)"
+literal|"\"MIN_HISTORY_LEVEL\" (\"MHL_TXNID\", \"MHL_MIN_OPEN_TXNID\")"
 argument_list|,
 name|rows
 argument_list|)
@@ -3653,7 +3655,7 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"REPL_TXN_MAP (RTM_REPL_POLICY, RTM_SRC_TXN_ID, RTM_TARGET_TXN_ID)"
+literal|"\"REPL_TXN_MAP\" (\"RTM_REPL_POLICY\", \"RTM_SRC_TXN_ID\", \"RTM_TARGET_TXN_ID\")"
 argument_list|,
 name|rowsRepl
 argument_list|,
@@ -3817,14 +3819,14 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select RTM_TARGET_TXN_ID from REPL_TXN_MAP where "
+literal|"SELECT \"RTM_TARGET_TXN_ID\" FROM \"REPL_TXN_MAP\" WHERE "
 argument_list|)
 expr_stmt|;
 name|suffix
 operator|.
 name|append
 argument_list|(
-literal|" and RTM_REPL_POLICY = ?"
+literal|" AND \"RTM_REPL_POLICY\" = ?"
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -3841,7 +3843,7 @@ name|suffix
 argument_list|,
 name|sourceTxnIdList
 argument_list|,
-literal|"RTM_SRC_TXN_ID"
+literal|"\"RTM_SRC_TXN_ID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -4196,11 +4198,11 @@ block|{
 name|String
 name|s
 init|=
-literal|"delete from REPL_TXN_MAP where RTM_SRC_TXN_ID = "
+literal|"DELETE FROM \"REPL_TXN_MAP\" WHERE \"RTM_SRC_TXN_ID\" = "
 operator|+
 name|sourceTxnId
 operator|+
-literal|" and RTM_REPL_POLICY = ?"
+literal|" AND \"RTM_REPL_POLICY\" = ?"
 decl_stmt|;
 try|try
 init|(
@@ -4734,7 +4736,7 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"select TXN_ID, TXN_TYPE from TXNS where TXN_STATE = "
+literal|"SELECT \"TXN_ID\", \"TXN_TYPE\" from \"TXNS\" where \"TXN_STATE\" = "
 argument_list|)
 operator|.
 name|append
@@ -4747,7 +4749,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" and TXN_TYPE != "
+literal|" and \"TXN_TYPE\" != "
 argument_list|)
 operator|.
 name|append
@@ -4781,7 +4783,7 @@ argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
-literal|"TXN_ID"
+literal|"\"TXN_ID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -5335,9 +5337,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select \"PARAM_VALUE\" from \"DATABASE_PARAMS\" where \"PARAM_KEY\" = "
+literal|"SELECT \"PARAM_VALUE\" FROM \"DATABASE_PARAMS\" WHERE \"PARAM_KEY\" = "
 operator|+
-literal|"'repl.last.id' and \"DB_ID\" = "
+literal|"'repl.last.id' AND \"DB_ID\" = "
 operator|+
 name|dbId
 argument_list|)
@@ -5353,7 +5355,7 @@ condition|)
 block|{
 name|query
 operator|=
-literal|"insert into \"DATABASE_PARAMS\" values ( "
+literal|"INSERT INTO \"DATABASE_PARAMS\" VALUES ( "
 operator|+
 name|dbId
 operator|+
@@ -5364,11 +5366,11 @@ else|else
 block|{
 name|query
 operator|=
-literal|"update \"DATABASE_PARAMS\" set \"PARAM_VALUE\" = ? where \"DB_ID\" = "
+literal|"UPDATE \"DATABASE_PARAMS\" SET \"PARAM_VALUE\" = ? WHERE \"DB_ID\" = "
 operator|+
 name|dbId
 operator|+
-literal|" and \"PARAM_KEY\" = 'repl.last.id'"
+literal|" AND \"PARAM_KEY\" = 'repl.last.id'"
 expr_stmt|;
 block|}
 name|close
@@ -5456,7 +5458,7 @@ return|return;
 block|}
 name|query
 operator|=
-literal|"select \"TBL_ID\" from \"TBLS\" where \"TBL_NAME\" = ? and \"DB_ID\" = "
+literal|"SELECT \"TBL_ID\" FROM \"TBLS\" WHERE \"TBL_NAME\" = ? AND \"DB_ID\" = "
 operator|+
 name|dbId
 expr_stmt|;
@@ -5566,9 +5568,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select \"PARAM_VALUE\" from \"TABLE_PARAMS\" where \"PARAM_KEY\" = "
+literal|"SELECT \"PARAM_VALUE\" FROM \"TABLE_PARAMS\" WHERE \"PARAM_KEY\" = "
 operator|+
-literal|"'repl.last.id' and \"TBL_ID\" = "
+literal|"'repl.last.id' AND \"TBL_ID\" = "
 operator|+
 name|tblId
 argument_list|)
@@ -5584,7 +5586,7 @@ condition|)
 block|{
 name|query
 operator|=
-literal|"insert into \"TABLE_PARAMS\" values ( "
+literal|"INSERT INTO \"TABLE_PARAMS\" VALUES ( "
 operator|+
 name|tblId
 operator|+
@@ -5595,11 +5597,11 @@ else|else
 block|{
 name|query
 operator|=
-literal|"update \"TABLE_PARAMS\" set \"PARAM_VALUE\" = ? where \"TBL_ID\" = "
+literal|"UPDATE \"TABLE_PARAMS\" SET \"PARAM_VALUE\" = ? WHERE \"TBL_ID\" = "
 operator|+
 name|tblId
 operator|+
-literal|" and \"PARAM_KEY\" = 'repl.last.id'"
+literal|" AND \"PARAM_KEY\" = 'repl.last.id'"
 expr_stmt|;
 block|}
 name|rs
@@ -5755,7 +5757,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select \"PART_ID\" from \"PARTITIONS\" where \"TBL_ID\" = "
+literal|"SELECT \"PART_ID\" FROM \"PARTITIONS\" WHERE \"TBL_ID\" = "
 operator|+
 name|tblId
 operator|+
@@ -5954,9 +5956,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select \"PARAM_VALUE\" from \"PARTITION_PARAMS\" where \"PARAM_KEY\" "
+literal|"SELECT \"PARAM_VALUE\" FROM \"PARTITION_PARAMS\" WHERE \"PARAM_KEY\" "
 operator|+
-literal|" = 'repl.last.id' and \"PART_ID\" = "
+literal|" = 'repl.last.id' AND \"PART_ID\" = "
 operator|+
 name|partId
 argument_list|)
@@ -5972,7 +5974,7 @@ condition|)
 block|{
 name|query
 operator|=
-literal|"insert into \"PARTITION_PARAMS\" values ( "
+literal|"INSERT INTO \"PARTITION_PARAMS\" VALUES ( "
 operator|+
 name|partId
 operator|+
@@ -5983,13 +5985,13 @@ else|else
 block|{
 name|query
 operator|=
-literal|"update \"PARTITION_PARAMS\" set \"PARAM_VALUE\" = ? "
+literal|"UPDATE \"PARTITION_PARAMS\" SET \"PARAM_VALUE\" = ? "
 operator|+
-literal|" where \"PART_ID\" = "
+literal|" WHERE \"PART_ID\" = "
 operator|+
 name|partId
 operator|+
-literal|" and \"PARAM_KEY\" = 'repl.last.id'"
+literal|" AND \"PARAM_KEY\" = 'repl.last.id'"
 expr_stmt|;
 block|}
 name|rs
@@ -6132,7 +6134,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-comment|/**    * Concurrency/isolation notes:    * This is mutexed with {@link #openTxns(OpenTxnRequest)} and other {@link #commitTxn(CommitTxnRequest)}    * operations using select4update on NEXT_TXN_ID.  Also, mutexes on TXNX table for specific txnid:X    * see more notes below.    * In order to prevent lost updates, we need to determine if any 2 transactions overlap.  Each txn    * is viewed as an interval [M,N]. M is the txnid and N is taken from the same NEXT_TXN_ID sequence    * so that we can compare commit time of txn T with start time of txn S.  This sequence can be thought of    * as a logical time counter.  If S.commitTime< T.startTime, T and S do NOT overlap.    *    * Motivating example:    * Suppose we have multi-statment transactions T and S both of which are attempting x = x + 1    * In order to prevent lost update problem, the the non-overlapping txns must lock in the snapshot    * that they read appropriately.  In particular, if txns do not overlap, then one follows the other    * (assumig they write the same entity), and thus the 2nd must see changes of the 1st.  We ensure    * this by locking in snapshot after     * {@link #openTxns(OpenTxnRequest)} call is made (see org.apache.hadoop.hive.ql.Driver.acquireLocksAndOpenTxn)    * and mutexing openTxn() with commit().  In other words, once a S.commit() starts we must ensure    * that txn T which will be considered a later txn, locks in a snapshot that includes the result    * of S's commit (assuming no other txns).    * As a counter example, suppose we have S[3,3] and T[4,4] (commitId=txnid means no other transactions    * were running in parallel).  If T and S both locked in the same snapshot (for example commit of    * txnid:2, which is possible if commitTxn() and openTxnx() is not mutexed)    * 'x' would be updated to the same value by both, i.e. lost update.     */
+comment|/**    * Concurrency/isolation notes:    * This is mutexed with {@link #openTxns(OpenTxnRequest)} and other {@link #commitTxn(CommitTxnRequest)}    * operations using select4update on NEXT_TXN_ID.  Also, mutexes on TXNX table for specific txnid:X    * see more notes below.    * In order to prevent lost updates, we need to determine if any 2 transactions overlap.  Each txn    * is viewed as an interval [M,N]. M is the txnid and N is taken from the same NEXT_TXN_ID sequence    * so that we can compare commit time of txn T with start time of txn S.  This sequence can be thought of    * as a logical time counter.  If S.commitTime< T.startTime, T and S do NOT overlap.    *    * Motivating example:    * Suppose we have multi-statment transactions T and S both of which are attempting x = x + 1    * In order to prevent lost update problem, the the non-overlapping txns must lock in the snapshot    * that they read appropriately.  In particular, if txns do not overlap, then one follows the other    * (assumig they write the same entity), and thus the 2nd must see changes of the 1st.  We ensure    * this by locking in snapshot after    * {@link #openTxns(OpenTxnRequest)} call is made (see org.apache.hadoop.hive.ql.Driver.acquireLocksAndOpenTxn)    * and mutexing openTxn() with commit().  In other words, once a S.commit() starts we must ensure    * that txn T which will be considered a later txn, locks in a snapshot that includes the result    * of S's commit (assuming no other txns).    * As a counter example, suppose we have S[3,3] and T[4,4] (commitId=txnid means no other transactions    * were running in parallel).  If T and S both locked in the same snapshot (for example commit of    * txnid:2, which is possible if commitTxn() and openTxnx() is not mutexed)    * 'x' would be updated to the same value by both, i.e. lost update.    */
 annotation|@
 name|Override
 annotation|@
@@ -6432,11 +6434,11 @@ else|else
 block|{
 name|conflictSQLSuffix
 operator|=
-literal|"from TXN_COMPONENTS where tc_txnid="
+literal|"FROM \"TXN_COMPONENTS\" WHERE \"TC_TXNID\"="
 operator|+
 name|txnid
 operator|+
-literal|" and tc_operation_type IN("
+literal|" AND \"TC_OPERATION_TYPE\" IN("
 operator|+
 name|quoteChar
 argument_list|(
@@ -6472,7 +6474,7 @@ name|addLimitClause
 argument_list|(
 literal|1
 argument_list|,
-literal|"tc_operation_type "
+literal|"\"TC_OPERATION_TYPE\" "
 operator|+
 name|conflictSQLSuffix
 argument_list|)
@@ -6501,7 +6503,7 @@ name|rs
 argument_list|)
 expr_stmt|;
 comment|//if here it means currently committing txn performed update/delete and we should check WW conflict
-comment|/**            * This S4U will mutex with other commitTxn() and openTxns().             * -1 below makes txn intervals look like [3,3] [4,4] if all txns are serial            * Note: it's possible to have several txns have the same commit id.  Suppose 3 txns start            * at the same time and no new txns start until all 3 commit.            * We could've incremented the sequence for commitId is well but it doesn't add anything functionally.            */
+comment|/**            * This S4U will mutex with other commitTxn() and openTxns().            * -1 below makes txn intervals look like [3,3] [4,4] if all txns are serial            * Note: it's possible to have several txns have the same commit id.  Suppose 3 txns start            * at the same time and no new txns start until all 3 commit.            * We could've incremented the sequence for commitId is well but it doesn't add anything functionally.            */
 name|commitIdRs
 operator|=
 name|stmt
@@ -6512,7 +6514,7 @@ name|sqlGenerator
 operator|.
 name|addForUpdateClause
 argument_list|(
-literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" - 1 FROM \"NEXT_TXN_ID\""
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6556,13 +6558,13 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"insert into WRITE_SET (ws_database, ws_table, ws_partition, ws_txnid, ws_commit_id, ws_operation_type)"
+literal|"INSERT INTO \"WRITE_SET\" (\"WS_DATABASE\", \"WS_TABLE\", \"WS_PARTITION\", \"WS_TXNID\", \"WS_COMMIT_ID\", \"WS_OPERATION_TYPE\")"
 operator|+
-literal|" select distinct tc_database, tc_table, tc_partition, tc_txnid, "
+literal|" SELECT DISTINCT \"TC_DATABASE\", \"TC_TABLE\", \"TC_PARTITION\", \"TC_TXNID\", "
 operator|+
 name|commitId
 operator|+
-literal|", tc_operation_type "
+literal|", \"TC_OPERATION_TYPE\" "
 operator|+
 name|conflictSQLSuffix
 argument_list|)
@@ -6580,32 +6582,32 @@ name|addLimitClause
 argument_list|(
 literal|1
 argument_list|,
-literal|"committed.ws_txnid, committed.ws_commit_id, committed.ws_database,"
+literal|"\"COMMITTED\".\"WS_TXNID\", \"COMMITTED\".\"WS_COMMIT_ID\", "
 operator|+
-literal|"committed.ws_table, committed.ws_partition, cur.ws_commit_id cur_ws_commit_id, "
+literal|"\"COMMITTED\".\"WS_DATABASE\", \"COMMITTED\".\"WS_TABLE\", \"COMMITTED\".\"WS_PARTITION\", "
 operator|+
-literal|"cur.ws_operation_type cur_op, committed.ws_operation_type committed_op "
+literal|"\"CUR\".\"WS_COMMIT_ID\" \"CUR_WS_COMMIT_ID\", \"CUR\".\"WS_OPERATION_TYPE\" \"CUR_OP\", "
 operator|+
-literal|"from WRITE_SET committed INNER JOIN WRITE_SET cur "
+literal|"\"COMMITTED\".\"WS_OPERATION_TYPE\" \"COMMITTED_OP\" FROM \"WRITE_SET\" \"COMMITTED\" INNER JOIN \"WRITE_SET\" \"CUR\" "
 operator|+
-literal|"ON committed.ws_database=cur.ws_database and committed.ws_table=cur.ws_table "
+literal|"ON \"COMMITTED\".\"WS_DATABASE\"=\"CUR\".\"WS_DATABASE\" AND \"COMMITTED\".\"WS_TABLE\"=\"CUR\".\"WS_TABLE\" "
 operator|+
 comment|//For partitioned table we always track writes at partition level (never at table)
 comment|//and for non partitioned - always at table level, thus the same table should never
 comment|//have entries with partition key and w/o
-literal|"and (committed.ws_partition=cur.ws_partition or (committed.ws_partition is null and cur.ws_partition is null)) "
+literal|"AND (\"COMMITTED\".\"WS_PARTITION\"=\"CUR\".\"WS_PARTITION\" OR (\"COMMITTED\".\"WS_PARTITION\" IS NULL AND \"CUR\".\"WS_PARTITION\" IS NULL)) "
 operator|+
-literal|"where cur.ws_txnid<= committed.ws_commit_id"
+literal|"WHERE \"CUR\".\"WS_TXNID\"<= \"COMMITTED\".\"WS_COMMIT_ID\""
 operator|+
 comment|//txns overlap; could replace ws_txnid
 comment|// with txnid, though any decent DB should infer this
-literal|" and cur.ws_txnid="
+literal|" AND \"CUR\".\"WS_TXNID\"="
 operator|+
 name|txnid
 operator|+
 comment|//make sure RHS of join only has rows we just inserted as
 comment|// part of this commitTxn() op
-literal|" and committed.ws_txnid<> "
+literal|" AND \"COMMITTED\".\"WS_TXNID\"<> "
 operator|+
 name|txnid
 operator|+
@@ -6617,7 +6619,7 @@ comment|//equivalent to an update of X but won't be in conflict unless D+D is in
 comment|//The same happens when Hive splits U=I+D early so it looks like 2 branches of a
 comment|//multi-insert stmt (an Insert and a Delete branch).  It also 'feels'
 comment|// un-serializable to allow concurrent deletes
-literal|" and (committed.ws_operation_type IN("
+literal|" and (\"COMMITTED\".\"WS_OPERATION_TYPE\" IN("
 operator|+
 name|quoteChar
 argument_list|(
@@ -6639,7 +6641,7 @@ operator|.
 name|sqlConst
 argument_list|)
 operator|+
-literal|") AND cur.ws_operation_type IN("
+literal|") AND \"CUR\".\"WS_OPERATION_TYPE\" IN("
 operator|+
 name|quoteChar
 argument_list|(
@@ -6907,21 +6909,21 @@ comment|// Move the record from txn_components into completed_txn_components so 
 comment|// knows where to look to compact.
 name|s
 operator|=
-literal|"insert into COMPLETED_TXN_COMPONENTS (ctc_txnid, ctc_database, "
+literal|"INSERT INTO \"COMPLETED_TXN_COMPONENTS\" (\"CTC_TXNID\", \"CTC_DATABASE\", "
 operator|+
-literal|"ctc_table, ctc_partition, ctc_writeid, ctc_update_delete) select tc_txnid,"
+literal|"\"CTC_TABLE\", \"CTC_PARTITION\", \"CTC_WRITEID\", \"CTC_UPDATE_DELETE\") SELECT \"TC_TXNID\","
 operator|+
-literal|" tc_database, tc_table, tc_partition, tc_writeid, '"
+literal|" \"TC_DATABASE\", \"TC_TABLE\", \"TC_PARTITION\", \"TC_WRITEID\", '"
 operator|+
 name|isUpdateDelete
 operator|+
-literal|"' from TXN_COMPONENTS where tc_txnid = "
+literal|"' FROM \"TXN_COMPONENTS\" WHERE \"TC_TXNID\" = "
 operator|+
 name|txnid
 operator|+
 comment|//we only track compactor activity in TXN_COMPONENTS to handle the case where the
 comment|//compactor txn aborts - so don't bother copying it to COMPLETED_TXN_COMPONENTS
-literal|" AND tc_operation_type<> "
+literal|" AND \"TC_OPERATION_TYPE\"<> "
 operator|+
 name|quoteChar
 argument_list|(
@@ -7101,11 +7103,11 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"COMPLETED_TXN_COMPONENTS "
+literal|"\"COMPLETED_TXN_COMPONENTS\" "
 operator|+
-literal|"(ctc_txnid,"
+literal|"(\"CTC_TXNID\","
 operator|+
-literal|" ctc_database, ctc_table, ctc_partition, ctc_writeid, ctc_update_delete)"
+literal|" \"CTC_DATABASE\", \"CTC_TABLE\", \"CTC_PARTITION\", \"CTC_WRITEID\", \"CTC_UPDATE_DELETE\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -7143,7 +7145,7 @@ block|}
 comment|// cleanup all txn related metadata
 name|s
 operator|=
-literal|"delete from TXN_COMPONENTS where tc_txnid = "
+literal|"DELETE FROM \"TXN_COMPONENTS\" WHERE \"TC_TXNID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -7167,7 +7169,7 @@ argument_list|)
 expr_stmt|;
 name|s
 operator|=
-literal|"delete from HIVE_LOCKS where hl_txnid = "
+literal|"DELETE FROM \"HIVE_LOCKS\" WHERE \"HL_TXNID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -7191,7 +7193,7 @@ argument_list|)
 expr_stmt|;
 name|s
 operator|=
-literal|"delete from TXNS where txn_id = "
+literal|"DELETE FROM \"TXNS\" WHERE \"TXN_ID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -7215,7 +7217,7 @@ argument_list|)
 expr_stmt|;
 name|s
 operator|=
-literal|"delete from MIN_HISTORY_LEVEL where mhl_txnid = "
+literal|"DELETE FROM \"MIN_HISTORY_LEVEL\" WHERE \"MHL_TXNID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -7250,7 +7252,7 @@ argument_list|)
 expr_stmt|;
 name|s
 operator|=
-literal|"delete from MATERIALIZATION_REBUILD_LOCKS where mrl_txn_id = "
+literal|"DELETE FROM \"MATERIALIZATION_REBUILD_LOCKS\" WHERE \"MRL_TXN_ID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -7374,9 +7376,9 @@ throw|;
 block|}
 name|s
 operator|=
-literal|"UPDATE TABLE_PARAMS SET"
+literal|"UPDATE \"TABLE_PARAMS\" SET"
 operator|+
-literal|" PARAM_VALUE = "
+literal|" \"PARAM_VALUE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -7389,7 +7391,7 @@ name|getValue
 argument_list|()
 argument_list|)
 operator|+
-literal|" WHERE TBL_ID = "
+literal|" WHERE \"TBL_ID\" = "
 operator|+
 name|rqst
 operator|.
@@ -7399,7 +7401,7 @@ operator|.
 name|getTableId
 argument_list|()
 operator|+
-literal|" AND PARAM_KEY = "
+literal|" AND \"PARAM_KEY\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -7816,7 +7818,7 @@ comment|// idempotent case and just return.
 name|String
 name|sql
 init|=
-literal|"select nwi_next from NEXT_WRITE_ID where nwi_database = ? and nwi_table = ?"
+literal|"SELECT \"NWI_NEXT\" FROM \"NEXT_WRITE_ID\" WHERE \"NWI_DATABASE\" = ? AND NWI_TABLE = ?"
 decl_stmt|;
 name|pStmt
 operator|=
@@ -8036,7 +8038,7 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"TXN_TO_WRITE_ID (t2w_txnid, t2w_database, t2w_table, t2w_writeid)"
+literal|"\"TXN_TO_WRITE_ID\" (\"T2W_TXNID\", \"T2W_DATABASE\", \"T2W_TABLE\", \"T2W_WRITEID\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -8109,7 +8111,7 @@ decl_stmt|;
 comment|// First allocation of write id (hwm+1) should add the table to the next_write_id meta table.
 name|sql
 operator|=
-literal|"insert into NEXT_WRITE_ID (nwi_database, nwi_table, nwi_next) values (?, ?, "
+literal|"INSERT INTO \"NEXT_WRITE_ID\" (\"NWI_DATABASE\", \"NWI_TABLE\", \"NWI_NEXT\") VALUES (?, ?, "
 operator|+
 name|Long
 operator|.
@@ -8515,7 +8517,7 @@ decl_stmt|;
 name|String
 name|s
 init|=
-literal|"select t2w_txnid from TXN_TO_WRITE_ID where  t2w_database = ? and t2w_table = ? and t2w_writeid = "
+literal|"SELECT \"T2W_TXNID\" FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ? AND \"T2W_WRITEID\" = "
 operator|+
 name|writeId
 decl_stmt|;
@@ -8989,7 +8991,7 @@ comment|// The writeHWM = min(NEXT_WRITE_ID.nwi_next-1, max(TXN_TO_WRITE_ID.t2w_
 name|String
 name|s
 init|=
-literal|"select max(t2w_writeid) from TXN_TO_WRITE_ID where t2w_txnid<= "
+literal|"SELECT MAX(\"T2W_WRITEID\") FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_TXNID\"<= "
 operator|+
 name|Long
 operator|.
@@ -8998,7 +9000,7 @@ argument_list|(
 name|txnHwm
 argument_list|)
 operator|+
-literal|" and t2w_database = ? and t2w_table = ?"
+literal|" AND \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ?"
 decl_stmt|;
 name|pst
 operator|=
@@ -9084,7 +9086,7 @@ comment|// Need to subtract 1 as nwi_next would be the next write id to be alloc
 comment|// allocated write id.
 name|s
 operator|=
-literal|"select nwi_next-1 from NEXT_WRITE_ID where nwi_database = ? and nwi_table = ?"
+literal|"SELECT \"NWI_NEXT\"-1 FROM \"NEXT_WRITE_ID\" WHERE \"NWI_DATABASE\" = ? AND \"NWI_TABLE\" = ?"
 expr_stmt|;
 name|closeStmt
 argument_list|(
@@ -9176,7 +9178,7 @@ comment|// on write id. The sorting is needed as exceptions list in ValidWriteId
 comment|// using binary search.
 name|s
 operator|=
-literal|"select t2w_txnid, t2w_writeid from TXN_TO_WRITE_ID where t2w_writeid<= "
+literal|"SELECT \"T2W_TXNID\", \"T2W_WRITEID\" FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_WRITEID\"<= "
 operator|+
 name|Long
 operator|.
@@ -9185,7 +9187,7 @@ argument_list|(
 name|writeIdHwm
 argument_list|)
 operator|+
-literal|" and t2w_database = ? and t2w_table = ? order by t2w_writeid asc"
+literal|" AND \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ? ORDER BY \"T2W_WRITEID\" ASC"
 expr_stmt|;
 name|closeStmt
 argument_list|(
@@ -9876,11 +9878,11 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select t2w_txnid, t2w_writeid from TXN_TO_WRITE_ID where"
+literal|"SELECT \"T2W_TXNID\", \"T2W_WRITEID\" FROM \"TXN_TO_WRITE_ID\" WHERE"
 operator|+
-literal|" t2w_database = ? and t2w_table = ?"
+literal|" \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ?"
 operator|+
-literal|" and "
+literal|" AND "
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -9897,7 +9899,7 @@ name|suffix
 argument_list|,
 name|txnIds
 argument_list|,
-literal|"t2w_txnid"
+literal|"\"T2W_TXNID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -10151,7 +10153,7 @@ name|sqlGenerator
 operator|.
 name|addForUpdateClause
 argument_list|(
-literal|"select nwi_next from NEXT_WRITE_ID where nwi_database = ? and nwi_table = ?"
+literal|"SELECT \"NWI_NEXT\" FROM \"NEXT_WRITE_ID\" WHERE \"NWI_DATABASE\" = ? AND \"NWI_TABLE\" = ?"
 argument_list|)
 decl_stmt|;
 name|closeStmt
@@ -10233,7 +10235,7 @@ literal|1
 expr_stmt|;
 name|s
 operator|=
-literal|"insert into NEXT_WRITE_ID (nwi_database, nwi_table, nwi_next) values (?, ?, "
+literal|"INSERT INTO \"NEXT_WRITE_ID\" (\"NWI_DATABASE\", \"NWI_TABLE\", \"NWI_NEXT\") VALUES (?, ?, "
 operator|+
 name|Long
 operator|.
@@ -10325,7 +10327,7 @@ expr_stmt|;
 comment|// Update the NEXT_WRITE_ID for the given table after incrementing by number of write ids allocated
 name|s
 operator|=
-literal|"update NEXT_WRITE_ID set nwi_next = "
+literal|"UPDATE \"NEXT_WRITE_ID\" SET \"NWI_NEXT\" = "
 operator|+
 name|Long
 operator|.
@@ -10336,7 +10338,7 @@ operator|+
 name|numOfWriteIds
 argument_list|)
 operator|+
-literal|" where nwi_database = ? and nwi_table = ?"
+literal|" WHERE \"NWI_DATABASE\" = ? AND \"NWI_TABLE\" = ?"
 expr_stmt|;
 name|closeStmt
 argument_list|(
@@ -10410,7 +10412,7 @@ condition|)
 block|{
 name|s
 operator|=
-literal|"delete from TXN_TO_WRITE_ID where t2w_database = ? and t2w_table = ?"
+literal|"DELETE FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ?"
 expr_stmt|;
 name|closeStmt
 argument_list|(
@@ -10557,7 +10559,7 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"TXN_TO_WRITE_ID (t2w_txnid, t2w_database, t2w_table, t2w_writeid)"
+literal|"\"TXN_TO_WRITE_ID\" (\"T2W_TXNID\", \"T2W_DATABASE\", \"T2W_TABLE\", \"T2W_WRITEID\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -10832,7 +10834,7 @@ comment|// allocated here
 name|String
 name|s
 init|=
-literal|"insert into NEXT_WRITE_ID (nwi_database, nwi_table, nwi_next) values (?, ?, "
+literal|"INSERT INTO \"NEXT_WRITE_ID\" (\"NWI_DATABASE\", \"NWI_TABLE\", \"NWI_NEXT\") VALUES (?, ?, "
 operator|+
 name|Long
 operator|.
@@ -11253,7 +11255,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select ntxn_next - 1 from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" - 1 FROM \"NEXT_TXN_ID\""
 argument_list|)
 expr_stmt|;
 if|if
@@ -11294,7 +11296,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select min(txn_id) from TXNS where txn_state="
+literal|"SELECT MIN(\"TXN_ID\") FROM \"TXNS\" WHERE \"TXN_STATE\"="
 operator|+
 name|quoteChar
 argument_list|(
@@ -11370,7 +11372,7 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"delete from WRITE_SET where ws_commit_id< "
+literal|"DELETE FROM \"WRITE_SET\" WHERE \"WS_COMMIT_ID\"< "
 operator|+
 name|commitHighWaterMark
 argument_list|)
@@ -11598,7 +11600,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|"select ctc_update_delete from COMPLETED_TXN_COMPONENTS where ctc_update_delete='Y' AND ("
+literal|"SELECT \"CTC_UPDATE_DELETE\" FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_UPDATE_DELETE\" ='Y' AND ("
 argument_list|)
 expr_stmt|;
 name|int
@@ -11753,7 +11755,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|" (ctc_database=? AND ctc_table=?"
+literal|" (\"CTC_DATABASE\"=? AND \"CTC_TABLE\"=?"
 argument_list|)
 expr_stmt|;
 name|params
@@ -11780,7 +11782,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|" AND (ctc_writeid> "
+literal|" AND (\"CTC_WRITEID\"> "
 operator|+
 name|tblValidWriteIdList
 operator|.
@@ -11803,7 +11805,7 @@ literal|0
 condition|?
 literal|") "
 else|:
-literal|" OR ctc_writeid IN("
+literal|" OR \"CTC_WRITEID\" IN("
 operator|+
 name|StringUtils
 operator|.
@@ -11847,7 +11849,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|") AND ctc_txnid<= "
+literal|") AND \"CTC_TXNID\"<= "
 operator|+
 name|currentValidTxnList
 operator|.
@@ -11870,7 +11872,7 @@ literal|0
 condition|?
 literal|" "
 else|:
-literal|" AND ctc_txnid NOT IN("
+literal|" AND \"CTC_TXNID\" NOT IN("
 operator|+
 name|StringUtils
 operator|.
@@ -12129,9 +12131,9 @@ decl_stmt|;
 name|String
 name|selectQ
 init|=
-literal|"select mrl_txn_id from MATERIALIZATION_REBUILD_LOCKS where"
+literal|"SELECT \"MRL_TXN_ID\" FROM \"MATERIALIZATION_REBUILD_LOCKS\" WHERE"
 operator|+
-literal|" mrl_db_name = ? AND mrl_tbl_name = ?"
+literal|" \"MRL_DB_NAME\" = ? AND \"MRL_TBL_NAME\" = ?"
 decl_stmt|;
 name|pst
 operator|=
@@ -12219,9 +12221,9 @@ block|}
 name|String
 name|insertQ
 init|=
-literal|"insert into MATERIALIZATION_REBUILD_LOCKS "
+literal|"INSERT INTO \"MATERIALIZATION_REBUILD_LOCKS\" "
 operator|+
-literal|"(mrl_txn_id, mrl_db_name, mrl_tbl_name, mrl_last_heartbeat) values ("
+literal|"(\"MRL_TXN_ID\", \"MRL_DB_NAME\", \"MRL_TBL_NAME\", \"MRL_LAST_HEARTBEAT\") VALUES ("
 operator|+
 name|txnId
 operator|+
@@ -12423,9 +12425,9 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"update MATERIALIZATION_REBUILD_LOCKS"
+literal|"UPDATE \"MATERIALIZATION_REBUILD_LOCKS\""
 operator|+
-literal|" set mrl_last_heartbeat = "
+literal|" SET \"MRL_LAST_HEARTBEAT\" = "
 operator|+
 name|Instant
 operator|.
@@ -12435,13 +12437,13 @@ operator|.
 name|toEpochMilli
 argument_list|()
 operator|+
-literal|" where mrl_txn_id = "
+literal|" WHERE \"MRL_TXN_ID\" = "
 operator|+
 name|txnId
 operator|+
-literal|" AND mrl_db_name = ?"
+literal|" AND \"MRL_DB_NAME\" = ?"
 operator|+
-literal|" AND mrl_tbl_name = ?"
+literal|" AND \"MRL_TBL_NAME\" = ?"
 decl_stmt|;
 name|pst
 operator|=
@@ -12735,7 +12737,7 @@ expr_stmt|;
 name|String
 name|selectQ
 init|=
-literal|"select mrl_txn_id, mrl_last_heartbeat from MATERIALIZATION_REBUILD_LOCKS"
+literal|"SELECT \"MRL_TXN_ID\", \"MRL_LAST_HEARTBEAT\" FROM \"MATERIALIZATION_REBUILD_LOCKS\""
 decl_stmt|;
 name|LOG
 operator|.
@@ -12834,9 +12836,9 @@ block|{
 name|String
 name|deleteQ
 init|=
-literal|"delete from MATERIALIZATION_REBUILD_LOCKS where"
+literal|"DELETE FROM \"MATERIALIZATION_REBUILD_LOCKS\" WHERE"
 operator|+
-literal|" mrl_txn_id IN("
+literal|" \"MRL_TXN_ID\" IN("
 operator|+
 name|StringUtils
 operator|.
@@ -12960,7 +12962,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * As much as possible (i.e. in absence of retries) we want both operations to be done on the same    * connection (but separate transactions).  This avoid some flakiness in BONECP where if you    * perform an operation on 1 connection and immediately get another from the pool, the 2nd one    * doesn't see results of the first.    *     * Retry-by-caller note: If the call to lock is from a transaction, then in the worst case    * there will be a duplicate set of locks but both sets will belong to the same txn so they     * will not conflict with each other.  For locks w/o txn context (i.e. read-only query), this    * may lead to deadlock (at least a long wait).  (e.g. 1st call creates locks in {@code LOCK_WAITING}    * mode and response gets lost.  Then {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}    * retries, and enqueues another set of locks in LOCK_WAITING.  The 2nd LockResponse is delivered    * to the DbLockManager, which will keep dong {@link #checkLock(CheckLockRequest)} until the 1st    * set of locks times out.    */
+comment|/**    * As much as possible (i.e. in absence of retries) we want both operations to be done on the same    * connection (but separate transactions).  This avoid some flakiness in BONECP where if you    * perform an operation on 1 connection and immediately get another from the pool, the 2nd one    * doesn't see results of the first.    *    * Retry-by-caller note: If the call to lock is from a transaction, then in the worst case    * there will be a duplicate set of locks but both sets will belong to the same txn so they    * will not conflict with each other.  For locks w/o txn context (i.e. read-only query), this    * may lead to deadlock (at least a long wait).  (e.g. 1st call creates locks in {@code LOCK_WAITING}    * mode and response gets lost.  Then {@link org.apache.hadoop.hive.metastore.RetryingMetaStoreClient}    * retries, and enqueues another set of locks in LOCK_WAITING.  The 2nd LockResponse is delivered    * to the DbLockManager, which will keep dong {@link #checkLock(CheckLockRequest)} until the 1st    * set of locks times out.    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -13090,7 +13092,7 @@ block|{
 name|String
 name|query
 init|=
-literal|"select TXN_TYPE from TXNS where TXN_ID = "
+literal|"SELECT \"TXN_TYPE\" FROM \"TXNS\" WHERE \"TXN_ID\" = "
 operator|+
 name|txnId
 operator|+
@@ -13099,7 +13101,7 @@ name|txnState
 operator|!=
 literal|null
 condition|?
-literal|" and TXN_STATE = "
+literal|" AND \"TXN_STATE\" = "
 operator|+
 name|quoteChar
 argument_list|(
@@ -13310,7 +13312,7 @@ name|sqlGenerator
 operator|.
 name|addForUpdateClause
 argument_list|(
-literal|"select nl_next from NEXT_LOCK_ID"
+literal|"SELECT \"NL_NEXT\" FROM \"NEXT_LOCK_ID\""
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -13376,7 +13378,7 @@ argument_list|)
 decl_stmt|;
 name|s
 operator|=
-literal|"update NEXT_LOCK_ID set nl_next = "
+literal|"UPDATE \"NEXT_LOCK_ID\" SET \"NL_NEXT\" = "
 operator|+
 operator|(
 name|extLockId
@@ -13638,9 +13640,9 @@ comment|// may return empty result sets.
 comment|// Get the write id allocated by this txn for the given table writes
 name|s
 operator|=
-literal|"select t2w_writeid from TXN_TO_WRITE_ID where"
+literal|"SELECT \"T2W_WRITEID\" FROM \"TXN_TO_WRITE_ID\" WHERE"
 operator|+
-literal|" t2w_database = ? and t2w_table = ? and t2w_txnid = "
+literal|" \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ? AND \"T2W_TXNID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -13843,7 +13845,7 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"TXN_COMPONENTS (tc_txnid, tc_database, tc_table, tc_partition, tc_operation_type, tc_writeid)"
+literal|"\"TXN_COMPONENTS\" (\"TC_TXNID\", \"TC_DATABASE\", \"TC_TABLE\", \"TC_PARTITION\", \"TC_OPERATION_TYPE\", \"TC_WRITEID\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -14326,11 +14328,11 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"HIVE_LOCKS (hl_lock_ext_id, hl_lock_int_id, hl_txnid, hl_db, "
+literal|"\"HIVE_LOCKS\" (\"HL_LOCK_EXT_ID\", \"HL_LOCK_INT_ID\", \"HL_TXNID\", \"HL_DB\", "
 operator|+
-literal|"hl_table, hl_partition,hl_lock_state, hl_lock_type, "
+literal|"\"HL_TABLE\", \"HL_PARTITION\", \"HL_LOCK_STATE\", \"HL_LOCK_TYPE\", "
 operator|+
-literal|"hl_last_heartbeat, hl_user, hl_host, hl_agent_info)"
+literal|"\"HL_LAST_HEARTBEAT\", \"HL_USER\", \"HL_HOST\", \"HL_AGENT_INFO\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -14648,7 +14650,7 @@ argument_list|)
 return|;
 block|}
 block|}
-comment|/**    * Why doesn't this get a txnid as parameter?  The caller should either know the txnid or know there isn't one.    * Either way getTxnIdFromLockId() will not be needed.  This would be a Thrift change.    *    * Also, when lock acquisition returns WAITING, it's retried every 15 seconds (best case, see DbLockManager.backoff(),    * in practice more often)    * which means this is heartbeating way more often than hive.txn.timeout and creating extra load on DB.    *    * The clients that operate in blocking mode, can't heartbeat a lock until the lock is acquired.    * We should make CheckLockRequest include timestamp or last request to skip unnecessary heartbeats. Thrift change.    *    * {@link #checkLock(java.sql.Connection, long)}  must run at SERIALIZABLE (make sure some lock we are checking    * against doesn't move from W to A in another txn) but this method can heartbeat in    * separate txn at READ_COMMITTED.    *     * Retry-by-caller note:    * Retryable because {@link #checkLock(Connection, long)} is    */
+comment|/**    * Why doesn't this get a txnid as parameter?  The caller should either know the txnid or know there isn't one.    * Either way getTxnIdFromLockId() will not be needed.  This would be a Thrift change.    *    * Also, when lock acquisition returns WAITING, it's retried every 15 seconds (best case, see DbLockManager.backoff(),    * in practice more often)    * which means this is heartbeating way more often than hive.txn.timeout and creating extra load on DB.    *    * The clients that operate in blocking mode, can't heartbeat a lock until the lock is acquired.    * We should make CheckLockRequest include timestamp or last request to skip unnecessary heartbeats. Thrift change.    *    * {@link #checkLock(java.sql.Connection, long)}  must run at SERIALIZABLE (make sure some lock we are checking    * against doesn't move from W to A in another txn) but this method can heartbeat in    * separate txn at READ_COMMITTED.    *    * Retry-by-caller note:    * Retryable because {@link #checkLock(Connection, long)} is    */
 annotation|@
 name|Override
 annotation|@
@@ -14919,13 +14921,13 @@ comment|//hl_txnid<> 0 means it's associated with a transaction
 name|String
 name|s
 init|=
-literal|"delete from HIVE_LOCKS where hl_lock_ext_id = "
+literal|"DELETE FROM \"HIVE_LOCKS\" WHERE \"HL_LOCK_EXT_ID\" = "
 operator|+
 name|extLockId
 operator|+
-literal|" AND (hl_txnid = 0 OR"
+literal|" AND (\"HL_TXNID\" = 0 OR"
 operator|+
-literal|" (hl_txnid<> 0 AND hl_lock_state = '"
+literal|" (\"HL_TXNID\"<> 0 AND \"HL_LOCK_STATE\" = '"
 operator|+
 name|LOCK_WAITING
 operator|+
@@ -15281,11 +15283,11 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select hl_lock_ext_id, hl_txnid, hl_db, hl_table, hl_partition, hl_lock_state, "
+literal|"SELECT \"HL_LOCK_EXT_ID\", \"HL_TXNID\", \"HL_DB\", \"HL_TABLE\", \"HL_PARTITION\", \"HL_LOCK_STATE\", "
 operator|+
-literal|"hl_lock_type, hl_last_heartbeat, hl_acquired_at, hl_user, hl_host, hl_lock_int_id,"
+literal|"\"HL_LOCK_TYPE\", \"HL_LAST_HEARTBEAT\", \"HL_ACQUIRED_AT\", \"HL_USER\", \"HL_HOST\", \"HL_LOCK_INT_ID\","
 operator|+
-literal|"hl_blockedby_ext_id, hl_blockedby_int_id, hl_agent_info from HIVE_LOCKS"
+literal|"\"HL_BLOCKEDBY_EXT_ID\", \"HL_BLOCKEDBY_INT_ID\", \"HL_AGENT_INFO\" FROM \"HIVE_LOCKS\""
 decl_stmt|;
 comment|// Some filters may have been specified in the SHOW LOCKS statement. Add them to the query.
 name|String
@@ -15347,7 +15349,7 @@ name|filter
 operator|.
 name|append
 argument_list|(
-literal|"hl_db=?"
+literal|"\"HL_DB\"=?"
 argument_list|)
 expr_stmt|;
 name|params
@@ -15393,7 +15395,7 @@ name|filter
 operator|.
 name|append
 argument_list|(
-literal|"hl_table=?"
+literal|"\"HL_TABLE\"=?"
 argument_list|)
 expr_stmt|;
 name|params
@@ -15439,7 +15441,7 @@ name|filter
 operator|.
 name|append
 argument_list|(
-literal|"hl_partition=?"
+literal|"\"HL_PARTITION\"=?"
 argument_list|)
 expr_stmt|;
 name|params
@@ -16315,21 +16317,21 @@ argument_list|,
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"update TXNS set txn_last_heartbeat = "
+literal|"UPDATE \"TXNS\" SET \"TXN_LAST_HEARTBEAT\" = "
 operator|+
 name|getDbTime
 argument_list|(
 name|dbConn
 argument_list|)
 operator|+
-literal|" where txn_state = "
+literal|" WHERE \"TXN_STATE\" = "
 operator|+
 name|quoteChar
 argument_list|(
 name|TXN_OPEN
 argument_list|)
 operator|+
-literal|" and "
+literal|" AND "
 argument_list|)
 argument_list|,
 operator|new
@@ -16340,7 +16342,7 @@ argument_list|)
 argument_list|,
 name|txnIds
 argument_list|,
-literal|"txn_id"
+literal|"\"TXN_ID\""
 argument_list|,
 literal|true
 argument_list|,
@@ -16560,7 +16562,7 @@ name|sqlGenerator
 operator|.
 name|addForUpdateClause
 argument_list|(
-literal|"select ncq_next from NEXT_COMPACTION_QUEUE_ID"
+literal|"SELECT \"NCQ_NEXT\" FROM \"NEXT_COMPACTION_QUEUE_ID\""
 argument_list|)
 decl_stmt|;
 name|LOG
@@ -16618,7 +16620,7 @@ argument_list|)
 decl_stmt|;
 name|s
 operator|=
-literal|"update NEXT_COMPACTION_QUEUE_ID set ncq_next = "
+literal|"UPDATE \"NEXT_COMPACTION_QUEUE_ID\" SET \"NCQ_NEXT\" = "
 operator|+
 operator|(
 name|id
@@ -16698,9 +16700,9 @@ expr_stmt|;
 name|String
 name|query
 init|=
-literal|"select t2w_txnid from TXN_TO_WRITE_ID where"
+literal|"SELECT \"T2W_TXNID\" FROM \"TXN_TO_WRITE_ID\" WHERE"
 operator|+
-literal|" t2w_database = ? and t2w_table = ? and t2w_writeid = "
+literal|" \"T2W_DATABASE\" = ? AND \"T2W_TABLE\" = ? AND \"T2W_WRITEID\" = "
 operator|+
 name|writeId
 decl_stmt|;
@@ -16971,12 +16973,12 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"select cq_id, cq_state from COMPACTION_QUEUE where"
+literal|"SELECT \"CQ_ID\", \"CQ_STATE\" FROM \"COMPACTION_QUEUE\" WHERE"
 argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" cq_state IN("
+literal|" \"CQ_STATE\" IN("
 argument_list|)
 operator|.
 name|append
@@ -17002,12 +17004,12 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|") AND cq_database=?"
+literal|") AND \"CQ_DATABASE\"=?"
 argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" AND cq_table=?"
+literal|" AND \"CQ_TABLE\"=?"
 argument_list|)
 operator|.
 name|append
@@ -17049,7 +17051,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"cq_partition is null"
+literal|"\"CQ_PARTITION\" is null"
 argument_list|)
 expr_stmt|;
 block|}
@@ -17059,7 +17061,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"cq_partition=?"
+literal|"\"CQ_PARTITION\"=?"
 argument_list|)
 expr_stmt|;
 name|params
@@ -17217,9 +17219,9 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"insert into COMPACTION_QUEUE (cq_id, cq_database, "
+literal|"INSERT INTO \"COMPACTION_QUEUE\" (\"CQ_ID\", \"CQ_DATABASE\", "
 operator|+
-literal|"cq_table, "
+literal|"\"CQ_TABLE\", "
 argument_list|)
 decl_stmt|;
 name|String
@@ -17240,14 +17242,14 @@ name|buf
 operator|.
 name|append
 argument_list|(
-literal|"cq_partition, "
+literal|"\"CQ_PARTITION\", "
 argument_list|)
 expr_stmt|;
 name|buf
 operator|.
 name|append
 argument_list|(
-literal|"cq_state, cq_type"
+literal|"\"CQ_STATE\", \"CQ_TYPE\""
 argument_list|)
 expr_stmt|;
 if|if
@@ -17264,7 +17266,7 @@ name|buf
 operator|.
 name|append
 argument_list|(
-literal|", cq_tblproperties"
+literal|", \"CQ_TBLPROPERTIES\""
 argument_list|)
 expr_stmt|;
 block|}
@@ -17281,7 +17283,7 @@ name|buf
 operator|.
 name|append
 argument_list|(
-literal|", cq_run_as"
+literal|", \"CQ_RUN_AS\""
 argument_list|)
 expr_stmt|;
 name|buf
@@ -17606,7 +17608,7 @@ name|dbConn
 argument_list|,
 name|e
 argument_list|,
-literal|"compact("
+literal|"COMPACT("
 operator|+
 name|rqst
 operator|+
@@ -17797,14 +17799,14 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select cq_database, cq_table, cq_partition, cq_state, cq_type, cq_worker_id, "
+literal|"SELECT \"CQ_DATABASE\", \"CQ_TABLE\", \"CQ_PARTITION\", \"CQ_STATE\", \"CQ_TYPE\", \"CQ_WORKER_ID\", "
 operator|+
 comment|//-1 because 'null' literal doesn't work for all DBs...
-literal|"cq_start, -1 cc_end, cq_run_as, cq_hadoop_job_id, cq_id from COMPACTION_QUEUE union all "
+literal|"\"CQ_START\", -1 \"CC_END\", \"CQ_RUN_AS\", \"CQ_HADOOP_JOB_ID\", \"CQ_ID\" FROM \"COMPACTION_QUEUE\" UNION ALL "
 operator|+
-literal|"select cc_database, cc_table, cc_partition, cc_state, cc_type, cc_worker_id, "
+literal|"SELECT \"CC_DATABASE\", \"CC_TABLE\", \"CC_PARTITION\", \"CC_STATE\", \"CC_TYPE\", \"CC_WORKER_ID\", "
 operator|+
-literal|"cc_start, cc_end, cc_run_as, cc_hadoop_job_id, cc_id from COMPLETED_COMPACTIONS"
+literal|"\"CC_START\", \"CC_END\", \"CC_RUN_AS\", \"CC_HADOOP_JOB_ID\", \"CC_ID\" FROM \"COMPLETED_COMPACTIONS\""
 decl_stmt|;
 comment|//todo: sort by cq_id?
 comment|//what I want is order by cc_end desc, cc_start asc (but derby has a bug https://issues.apache.org/jira/browse/DERBY-6013)
@@ -18481,7 +18483,7 @@ name|createInsertValuesPreparedStmt
 argument_list|(
 name|dbConn
 argument_list|,
-literal|"TXN_COMPONENTS (tc_txnid, tc_database, tc_table, tc_partition, tc_operation_type, tc_writeid)"
+literal|"\"TXN_COMPONENTS\" (\"TC_TXNID\", \"TC_DATABASE\", \"TC_TABLE\", \"TC_PARTITION\", \"TC_OPERATION_TYPE\", \"TC_WRITEID\")"
 argument_list|,
 name|rows
 argument_list|,
@@ -18761,7 +18763,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXN_COMPONENTS where tc_database='"
+literal|"DELETE FROM \"TXN_COMPONENTS\" WHERE \"TC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -18799,7 +18801,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_TXN_COMPONENTS where ctc_database='"
+literal|"DELETE FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -18837,7 +18839,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPACTION_QUEUE where cq_database='"
+literal|"DELETE FROM \"COMPACTION_QUEUE\" WHERE \"CQ_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -18875,7 +18877,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_COMPACTIONS where cc_database='"
+literal|"DELETE FROM \"COMPLETED_COMPACTIONS\" WHERE \"CC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -18913,7 +18915,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXN_TO_WRITE_ID where t2w_database='"
+literal|"DELETE FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -18954,7 +18956,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from NEXT_WRITE_ID where nwi_database='"
+literal|"DELETE FROM \"NEXT_WRITE_ID\" WHERE \"NWI_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19042,7 +19044,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXN_COMPONENTS where tc_database='"
+literal|"DELETE FROM \"TXN_COMPONENTS\" WHERE \"TC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19056,7 +19058,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and tc_table='"
+literal|"' AND \"TC_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19094,7 +19096,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_TXN_COMPONENTS where ctc_database='"
+literal|"DELETE FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19108,7 +19110,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and ctc_table='"
+literal|"' AND \"CTC_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19146,7 +19148,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPACTION_QUEUE where cq_database='"
+literal|"DELETE FROM \"COMPACTION_QUEUE\" WHERE \"CQ_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19160,7 +19162,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and cq_table='"
+literal|"' AND \"CQ_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19198,7 +19200,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_COMPACTIONS where cc_database='"
+literal|"DELETE FROM \"COMPLETED_COMPACTIONS\" WHERE \"CC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19212,7 +19214,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and cc_table='"
+literal|"' AND \"CC_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19250,7 +19252,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXN_TO_WRITE_ID where t2w_database='"
+literal|"DELETE FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19267,7 +19269,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and t2w_table='"
+literal|"' AND \"T2W_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19308,7 +19310,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from NEXT_WRITE_ID where nwi_database='"
+literal|"DELETE FROM \"NEXT_WRITE_ID\" WHERE \"NWI_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19325,7 +19327,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and nwi_table='"
+literal|"' AND \"NWI_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19465,7 +19467,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXN_COMPONENTS where tc_database='"
+literal|"DELETE FROM \"TXN_COMPONENTS\" WHERE \"TC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19479,7 +19481,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and tc_table='"
+literal|"' AND \"TC_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19493,7 +19495,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and tc_partition='"
+literal|"' AND \"TC_PARTITION\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19531,7 +19533,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_TXN_COMPONENTS where ctc_database='"
+literal|"DELETE FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19545,7 +19547,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and ctc_table='"
+literal|"' AND \"CTC_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19559,7 +19561,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and ctc_partition='"
+literal|"' AND \"CTC_PARTITION\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19597,7 +19599,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPACTION_QUEUE where cq_database='"
+literal|"DELETE FROM \"COMPACTION_QUEUE\" WHERE \"CQ_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19611,7 +19613,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and cq_table='"
+literal|"' AND \"CQ_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19625,7 +19627,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and cq_partition='"
+literal|"' AND \"CQ_PARTITION\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19663,7 +19665,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_COMPACTIONS where cc_database='"
+literal|"DELETE FROM \"COMPLETED_COMPACTIONS\" WHERE \"CC_DATABASE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19677,7 +19679,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and cc_table='"
+literal|"' AND \"CC_TABLE\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -19691,7 +19693,7 @@ name|buff
 operator|.
 name|append
 argument_list|(
-literal|"' and cc_partition='"
+literal|"' AND \"CC_PARTITION\"='"
 argument_list|)
 expr_stmt|;
 name|buff
@@ -20057,12 +20059,12 @@ decl_stmt|;
 name|String
 name|update
 init|=
-literal|"update TXN_COMPONENTS set "
+literal|"UPDATE \"TXN_COMPONENTS\" SET "
 decl_stmt|;
 name|String
 name|where
 init|=
-literal|" where "
+literal|" WHERE "
 decl_stmt|;
 if|if
 condition|(
@@ -20073,7 +20075,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"TC_PARTITION = "
+literal|"\"TC_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20084,7 +20086,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"TC_PARTITION = "
+literal|"\"TC_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20103,7 +20105,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"TC_TABLE = "
+literal|"\"TC_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20117,7 +20119,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"TC_TABLE = "
+literal|"\"TC_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20139,7 +20141,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"TC_DATABASE = "
+literal|"\"TC_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20151,7 +20153,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"TC_DATABASE = "
+literal|"\"TC_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20173,11 +20175,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update COMPLETED_TXN_COMPONENTS set "
+literal|"UPDATE \"COMPLETED_TXN_COMPONENTS\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20188,7 +20190,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CTC_PARTITION = "
+literal|"\"CTC_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20199,7 +20201,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"CTC_PARTITION = "
+literal|"\"CTC_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20218,7 +20220,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CTC_TABLE = "
+literal|"\"CTC_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20232,7 +20234,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"CTC_TABLE = "
+literal|"\"CTC_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20288,11 +20290,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update HIVE_LOCKS set "
+literal|"UPDATE \"HIVE_LOCKS\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20303,7 +20305,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"HL_PARTITION = "
+literal|"\"HL_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20314,7 +20316,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"HL_PARTITION = "
+literal|"\"HL_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20333,7 +20335,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"HL_TABLE = "
+literal|"\"HL_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20347,7 +20349,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"HL_TABLE = "
+literal|"\"HL_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20369,7 +20371,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"HL_DB = "
+literal|"\"HL_DB\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20381,7 +20383,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"HL_DB = "
+literal|"\"HL_DB\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20403,11 +20405,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update COMPACTION_QUEUE set "
+literal|"UPDATE \"COMPACTION_QUEUE\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20418,7 +20420,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CQ_PARTITION = "
+literal|"\"CQ_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20429,7 +20431,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"CQ_PARTITION = "
+literal|"\"CQ_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20448,7 +20450,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CQ_TABLE = "
+literal|"\"CQ_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20462,7 +20464,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"CQ_TABLE = "
+literal|"\"CQ_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20484,7 +20486,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CQ_DATABASE = "
+literal|"\"CQ_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20496,7 +20498,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"CQ_DATABASE = "
+literal|"\"CQ_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20518,11 +20520,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update COMPLETED_COMPACTIONS set "
+literal|"UPDATE \"COMPLETED_COMPACTIONS\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20533,7 +20535,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CC_PARTITION = "
+literal|"\"CC_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20544,7 +20546,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"CC_PARTITION = "
+literal|"\"CC_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20563,7 +20565,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CC_TABLE = "
+literal|"\"CC_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20577,7 +20579,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"CC_TABLE = "
+literal|"\"CC_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20599,7 +20601,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"CC_DATABASE = "
+literal|"\"CC_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20611,7 +20613,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"CC_DATABASE = "
+literal|"\"CC_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20633,11 +20635,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update WRITE_SET set "
+literal|"UPDATE \"WRITE_SET\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20648,7 +20650,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"WS_PARTITION = "
+literal|"\"WS_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20659,7 +20661,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"WS_PARTITION = "
+literal|"\"WS_PARTITION\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20678,7 +20680,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"WS_TABLE = "
+literal|"\"WS_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20692,7 +20694,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"WS_TABLE = "
+literal|"\"WS_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20714,7 +20716,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"WS_DATABASE = "
+literal|"\"WS_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20726,7 +20728,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"WS_DATABASE = "
+literal|"\"WS_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20748,11 +20750,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update TXN_TO_WRITE_ID set "
+literal|"UPDATE \"TXN_TO_WRITE_ID\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20763,7 +20765,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"T2W_TABLE = "
+literal|"\"T2W_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20777,7 +20779,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"T2W_TABLE = "
+literal|"\"T2W_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20799,7 +20801,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"T2W_DATABASE = "
+literal|"\"T2W_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20811,7 +20813,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"T2W_DATABASE = "
+literal|"\"T2W_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20833,11 +20835,11 @@ argument_list|)
 expr_stmt|;
 name|update
 operator|=
-literal|"update NEXT_WRITE_ID set "
+literal|"UPDATE \"NEXT_WRITE_ID\" SET "
 expr_stmt|;
 name|where
 operator|=
-literal|" where "
+literal|" WHERE "
 expr_stmt|;
 if|if
 condition|(
@@ -20848,7 +20850,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"NWI_TABLE = "
+literal|"\"NWI_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20862,7 +20864,7 @@ literal|", "
 expr_stmt|;
 name|where
 operator|+=
-literal|"NWI_TABLE = "
+literal|"\"NWI_TABLE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20884,7 +20886,7 @@ condition|)
 block|{
 name|update
 operator|+=
-literal|"NWI_DATABASE = "
+literal|"\"NWI_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -20896,7 +20898,7 @@ argument_list|)
 expr_stmt|;
 name|where
 operator|+=
-literal|"NWI_DATABASE = "
+literal|"\"NWI_DATABASE\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -21123,7 +21125,7 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select count(*) from HIVE_LOCKS"
+literal|"SELECT COUNT(*) FROM \"HIVE_LOCKS\""
 decl_stmt|;
 name|LOG
 operator|.
@@ -22357,7 +22359,7 @@ name|rs
 operator|.
 name|getLong
 argument_list|(
-literal|"hl_lock_ext_id"
+literal|"HL_LOCK_EXT_ID"
 argument_list|)
 expr_stmt|;
 comment|// can't be null
@@ -22367,7 +22369,7 @@ name|rs
 operator|.
 name|getLong
 argument_list|(
-literal|"hl_lock_int_id"
+literal|"HL_LOCK_INT_ID"
 argument_list|)
 expr_stmt|;
 comment|// can't be null
@@ -22377,7 +22379,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_db"
+literal|"HL_DB"
 argument_list|)
 expr_stmt|;
 comment|// can't be null
@@ -22388,7 +22390,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_table"
+literal|"HL_TABLE"
 argument_list|)
 decl_stmt|;
 name|table
@@ -22411,7 +22413,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_partition"
+literal|"HL_PARTITION"
 argument_list|)
 decl_stmt|;
 name|partition
@@ -22433,7 +22435,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_lock_state"
+literal|"HL_LOCK_STATE"
 argument_list|)
 operator|.
 name|charAt
@@ -22473,7 +22475,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_lock_state"
+literal|"HL_LOCK_STATE"
 argument_list|)
 operator|.
 name|charAt
@@ -22489,7 +22491,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_lock_type"
+literal|"HL_LOCK_TYPE"
 argument_list|)
 operator|.
 name|charAt
@@ -22539,7 +22541,7 @@ name|rs
 operator|.
 name|getString
 argument_list|(
-literal|"hl_lock_type"
+literal|"HL_LOCK_TYPE"
 argument_list|)
 operator|.
 name|charAt
@@ -22555,7 +22557,7 @@ name|rs
 operator|.
 name|getLong
 argument_list|(
-literal|"hl_txnid"
+literal|"HL_TXNID"
 argument_list|)
 expr_stmt|;
 comment|//returns 0 if value is NULL
@@ -23382,21 +23384,21 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"update TXNS set txn_state = "
+literal|"UPDATE \"TXNS\" SET \"TXN_STATE\" = "
 operator|+
 name|quoteChar
 argument_list|(
 name|TXN_ABORTED
 argument_list|)
 operator|+
-literal|" where txn_state = "
+literal|" WHERE \"TXN_STATE\" = "
 operator|+
 name|quoteChar
 argument_list|(
 name|TXN_OPEN
 argument_list|)
 operator|+
-literal|" and "
+literal|" AND "
 argument_list|)
 expr_stmt|;
 if|if
@@ -23410,7 +23412,7 @@ name|suffix
 operator|.
 name|append
 argument_list|(
-literal|" and txn_last_heartbeat< "
+literal|" AND \"TXN_LAST_HEARTBEAT\"< "
 argument_list|)
 operator|.
 name|append
@@ -23443,7 +23445,7 @@ name|suffix
 argument_list|,
 name|txnids
 argument_list|,
-literal|"txn_id"
+literal|"\"TXN_ID\""
 argument_list|,
 literal|true
 argument_list|,
@@ -23506,7 +23508,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"delete from MIN_HISTORY_LEVEL where "
+literal|"DELETE FROM \"MIN_HISTORY_LEVEL\" WHERE "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -23530,7 +23532,7 @@ name|suffix
 argument_list|,
 name|txnids
 argument_list|,
-literal|"mhl_txnid"
+literal|"\"MHL_TXNID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -23629,7 +23631,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"delete from HIVE_LOCKS where "
+literal|"DELETE FROM \"HIVE_LOCKS\" WHERE "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -23653,7 +23655,7 @@ name|suffix
 argument_list|,
 name|txnids
 argument_list|,
-literal|"hl_txnid"
+literal|"\"HL_TXNID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -23729,7 +23731,7 @@ operator|!=
 literal|0
 return|;
 block|}
-comment|/**    * Lock acquisition is meant to be fair, so every lock can only block on some lock with smaller    * hl_lock_ext_id by only checking earlier locks.    *    * For any given SQL statement all locks required by it are grouped under single extLockId and are    * granted all at once or all locks wait.    *    * This is expected to run at READ_COMMITTED.    *    * If there is a concurrent commitTxn/rollbackTxn, those can only remove rows from HIVE_LOCKS.    * If they happen to be for the same txnid, there will be a WW conflict (in MS DB), if different txnid,    * checkLock() will in the worst case keep locks in Waiting state a little longer.    */
+comment|/**    * hl_lock_ext_id by only checking earlier locks.    * Lock acquisition is meant to be fair, so every lock can only block on some lock with smaller    *    * For any given SQL statement all locks required by it are grouped under single extLockId and are    * granted all at once or all locks wait.    *    * This is expected to run at READ_COMMITTED.    *    * If there is a concurrent commitTxn/rollbackTxn, those can only remove rows from HIVE_LOCKS.    * If they happen to be for the same txnid, there will be a WW conflict (in MS DB), if different txnid,    * checkLock() will in the worst case keep locks in Waiting state a little longer.    */
 annotation|@
 name|RetrySemantics
 operator|.
@@ -23857,11 +23859,11 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|"select hl_lock_ext_id, "
+literal|"SELECT \"HL_LOCK_EXT_ID\", "
 operator|+
-literal|"hl_lock_int_id, hl_db, hl_table, hl_partition, hl_lock_state, "
+literal|"\"HL_LOCK_INT_ID\", \"HL_DB\", \"HL_TABLE\", \"HL_PARTITION\", \"HL_LOCK_STATE\", "
 operator|+
-literal|"hl_lock_type, hl_txnid from HIVE_LOCKS where hl_db in ("
+literal|"\"HL_LOCK_TYPE\", \"HL_TXNID\" FROM \"HIVE_LOCKS\" WHERE \"HL_DB\" IN ("
 argument_list|)
 decl_stmt|;
 name|Set
@@ -23986,11 +23988,11 @@ init|=
 operator|new
 name|StringBuilder
 argument_list|(
-literal|" ws_database, ws_table, ws_partition, "
+literal|" \"WS_DATABASE\", \"WS_TABLE\", \"WS_PARTITION\", "
 operator|+
-literal|"ws_txnid, ws_commit_id "
+literal|"\"WS_TXNID\", \"WS_COMMIT_ID\" "
 operator|+
-literal|"from WRITE_SET where ws_commit_id>= "
+literal|"FROM \"WRITE_SET\" WHERE WS_COMMIT_ID>= "
 operator|+
 name|writeSet
 operator|.
@@ -24001,7 +24003,7 @@ argument_list|)
 operator|.
 name|txnId
 operator|+
-literal|" and ("
+literal|" AND ("
 argument_list|)
 decl_stmt|;
 comment|//see commitTxn() for more info on this inequality
@@ -24017,7 +24019,7 @@ name|sb
 operator|.
 name|append
 argument_list|(
-literal|"(ws_database = "
+literal|"(\"WS_DATABASE\" = "
 argument_list|)
 operator|.
 name|append
@@ -24032,7 +24034,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" and ws_table = "
+literal|" AND \"WS_TABLE\" = "
 argument_list|)
 operator|.
 name|append
@@ -24047,7 +24049,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|" and ws_partition "
+literal|" AND \"WS_PARTITION\" "
 argument_list|)
 operator|.
 name|append
@@ -24058,7 +24060,7 @@ name|partition
 operator|==
 literal|null
 condition|?
-literal|"is null"
+literal|"IS NULL"
 else|:
 literal|"= "
 operator|+
@@ -24072,7 +24074,7 @@ argument_list|)
 operator|.
 name|append
 argument_list|(
-literal|") or "
+literal|") OR "
 argument_list|)
 expr_stmt|;
 block|}
@@ -24398,7 +24400,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|" and (hl_table is null or hl_table in("
+literal|" AND (\"HL_TABLE\" IS NULL OR \"HL_TABLE\" IN("
 argument_list|)
 expr_stmt|;
 name|first
@@ -24515,7 +24517,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|" and (hl_partition is null or hl_partition in("
+literal|" AND (\"HL_PARTITION\" IS NULL OR \"HL_PARTITION\" IN("
 argument_list|)
 expr_stmt|;
 name|first
@@ -24581,7 +24583,7 @@ name|query
 operator|.
 name|append
 argument_list|(
-literal|" and hl_lock_ext_id< "
+literal|" AND \"HL_LOCK_EXT_ID\"< "
 argument_list|)
 operator|.
 name|append
@@ -24945,9 +24947,9 @@ expr_stmt|;
 name|String
 name|sqlText
 init|=
-literal|"update HIVE_LOCKS"
+literal|"UPDATE \"HIVE_LOCKS\""
 operator|+
-literal|" set HL_BLOCKEDBY_EXT_ID="
+literal|" SET \"HL_BLOCKEDBY_EXT_ID\"="
 operator|+
 name|locks
 index|[
@@ -24956,7 +24958,7 @@ index|]
 operator|.
 name|extLockId
 operator|+
-literal|", HL_BLOCKEDBY_INT_ID="
+literal|", \"HL_BLOCKEDBY_INT_ID\"="
 operator|+
 name|locks
 index|[
@@ -24965,13 +24967,13 @@ index|]
 operator|.
 name|intLockId
 operator|+
-literal|" where HL_LOCK_EXT_ID="
+literal|" WHERE \"HL_LOCK_EXT_ID\"="
 operator|+
 name|info
 operator|.
 name|extLockId
 operator|+
-literal|" and HL_LOCK_INT_ID="
+literal|" AND \"HL_LOCK_INT_ID\"="
 operator|+
 name|info
 operator|.
@@ -25211,14 +25213,14 @@ decl_stmt|;
 name|String
 name|s
 init|=
-literal|"update HIVE_LOCKS set hl_lock_state = '"
+literal|"UPDATE \"HIVE_LOCKS\" SET \"HL_LOCK_STATE\" = '"
 operator|+
 name|LOCK_ACQUIRED
 operator|+
 literal|"', "
 operator|+
 comment|//if lock is part of txn, heartbeat info is in txn record
-literal|"hl_last_heartbeat = "
+literal|"\"HL_LAST_HEARTBEAT\" = "
 operator|+
 operator|(
 name|isValidTxn
@@ -25231,13 +25233,13 @@ else|:
 name|now
 operator|)
 operator|+
-literal|", hl_acquired_at = "
+literal|", \"HL_ACQUIRED_AT\" = "
 operator|+
 name|now
 operator|+
-literal|",HL_BLOCKEDBY_EXT_ID=NULL,HL_BLOCKEDBY_INT_ID=null"
+literal|",\"HL_BLOCKEDBY_EXT_ID\"=NULL,\"HL_BLOCKEDBY_INT_ID\"=NULL"
 operator|+
-literal|" where hl_lock_ext_id = "
+literal|" WHERE \"HL_LOCK_EXT_ID\" = "
 operator|+
 name|extLockId
 decl_stmt|;
@@ -25310,7 +25312,7 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select hl_lock_int_id from HIVE_LOCKS where hl_lock_ext_id = "
+literal|"SELECT \"HL_LOCK_INT_ID\" FROM \"HIVE_LOCKS\" WHERE \"HL_LOCK_EXT_ID\" = "
 operator|+
 name|extLockId
 argument_list|)
@@ -25702,11 +25704,11 @@ decl_stmt|;
 name|String
 name|s
 init|=
-literal|"update HIVE_LOCKS set hl_last_heartbeat = "
+literal|"UPDATE \"HIVE_LOCKS\" SET \"HL_LAST_HEARTBEAT\" = "
 operator|+
 name|now
 operator|+
-literal|" where hl_lock_ext_id = "
+literal|" WHERE \"HL_LOCK_EXT_ID\" = "
 operator|+
 name|extLockId
 decl_stmt|;
@@ -25840,15 +25842,15 @@ decl_stmt|;
 name|String
 name|s
 init|=
-literal|"update TXNS set txn_last_heartbeat = "
+literal|"UPDATE \"TXNS\" SET \"TXN_LAST_HEARTBEAT\" = "
 operator|+
 name|now
 operator|+
-literal|" where txn_id = "
+literal|" WHERE \"TXN_ID\" = "
 operator|+
 name|txnid
 operator|+
-literal|" and txn_state = '"
+literal|" AND \"TXN_STATE\" = '"
 operator|+
 name|TXN_OPEN
 operator|+
@@ -25955,7 +25957,7 @@ block|{
 name|String
 name|s
 init|=
-literal|"select txn_state from TXNS where txn_id = "
+literal|"SELECT \"TXN_STATE\" FROM \"TXNS\" WHERE \"TXN_ID\" = "
 operator|+
 name|txnid
 decl_stmt|;
@@ -26000,7 +26002,7 @@ name|addLimitClause
 argument_list|(
 literal|1
 argument_list|,
-literal|"1 from COMPLETED_TXN_COMPONENTS where CTC_TXNID = "
+literal|"1 FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_TXNID\" = "
 operator|+
 name|txnid
 argument_list|)
@@ -26134,11 +26136,11 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select count(*) from TXNS where txn_state = '"
+literal|"SELECT COUNT(*) FROM \"TXNS\" WHERE \"TXN_STATE\" = '"
 operator|+
 name|TXN_OPEN
 operator|+
-literal|"' and txn_type != "
+literal|"' AND \"TXN_TYPE\" != "
 operator|+
 name|TxnType
 operator|.
@@ -26147,7 +26149,7 @@ operator|.
 name|getValue
 argument_list|()
 operator|+
-literal|" and "
+literal|" AND "
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -26166,7 +26168,7 @@ argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
-literal|"txn_id"
+literal|"\"TXN_ID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -26279,7 +26281,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select txn_id, txn_state, txn_type from TXNS where "
+literal|"SELECT \"TXN_ID\", \"TXN_STATE\", \"TXN_TYPE\" FROM \"TXNS\" WHERE "
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -26298,7 +26300,7 @@ argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
-literal|"txn_id"
+literal|"\"TXN_ID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -26505,7 +26507,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"select ctc_txnid from COMPLETED_TXN_COMPONENTS where "
+literal|"SELECT \"CTC_TXNID\" FROM \"COMPLETED_TXN_COMPONENTS\" WHERE "
 argument_list|)
 expr_stmt|;
 name|TxnUtils
@@ -26524,7 +26526,7 @@ argument_list|()
 argument_list|,
 name|txnIds
 argument_list|,
-literal|"ctc_txnid"
+literal|"\"CTC_TXNID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -26751,7 +26753,7 @@ comment|// We need to check whether this transaction is valid and open
 name|String
 name|s
 init|=
-literal|"select txn_state from TXNS where txn_id = "
+literal|"SELECT \"TXN_STATE\" FROM \"TXNS\" WHERE \"TXN_ID\" = "
 operator|+
 name|txnid
 decl_stmt|;
@@ -26791,7 +26793,7 @@ block|{
 comment|// todo: add LIMIT 1 instead of count - should be more efficient
 name|s
 operator|=
-literal|"select count(*) from COMPLETED_TXN_COMPONENTS where CTC_TXNID = "
+literal|"SELECT COUNT(*) FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_TXNID\" = "
 operator|+
 name|txnid
 expr_stmt|;
@@ -26968,11 +26970,11 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select hl_lock_ext_id, hl_lock_int_id, hl_db, hl_table, "
+literal|"SELECT \"HL_LOCK_EXT_ID\", \"HL_LOCK_INT_ID\", \"HL_DB\", \"HL_TABLE\", "
 operator|+
-literal|"hl_partition, hl_lock_state, hl_lock_type, hl_txnid from HIVE_LOCKS where "
+literal|"\"HL_PARTITION\", \"HL_LOCK_STATE\", \"HL_LOCK_TYPE\", \"HL_TXNID\" FROM \"HIVE_LOCKS\" WHERE "
 operator|+
-literal|"hl_lock_ext_id = "
+literal|"\"HL_LOCK_EXT_ID\" = "
 operator|+
 name|extLockId
 decl_stmt|;
@@ -27094,11 +27096,11 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select hl_lock_ext_id, hl_lock_int_id, hl_db, hl_table, "
+literal|"SELECT \"HL_LOCK_EXT_ID\", \"HL_LOCK_INT_ID\", \"HL_DB\", \"HL_TABLE\", "
 operator|+
-literal|"hl_partition, hl_lock_state, hl_lock_type, hl_txnid from HIVE_LOCKS where "
+literal|"\"HL_PARTITION\", \"HL_LOCK_STATE\", \"HL_LOCK_TYPE\", \"HL_TXNID\" FROM \"HIVE_LOCKS\" WHERE "
 operator|+
-literal|"hl_lock_ext_id = "
+literal|"\"HL_LOCK_EXT_ID\" = "
 operator|+
 name|extLockId
 decl_stmt|;
@@ -27246,11 +27248,11 @@ comment|//doing a SELECT first is less efficient but makes it easier to debug th
 name|String
 name|s
 init|=
-literal|"select distinct hl_lock_ext_id from HIVE_LOCKS where hl_last_heartbeat< "
+literal|"SELECT DISTINCT \"HL_LOCK_EXT_ID\" FROM \"HIVE_LOCKS\" WHERE \"HL_LAST_HEARTBEAT\"< "
 operator|+
 name|maxHeartbeatTime
 operator|+
-literal|" and hl_txnid = 0"
+literal|" AND \"HL_TXNID\" = 0"
 decl_stmt|;
 comment|//when txnid is<> 0, the lock is
 comment|//associated with a txn and is handled by performTimeOuts()
@@ -27348,7 +27350,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"delete from HIVE_LOCKS where hl_last_heartbeat< "
+literal|"DELETE FROM \"HIVE_LOCKS\" WHERE \"HL_LAST_HEARTBEAT\"< "
 argument_list|)
 expr_stmt|;
 name|prefix
@@ -27362,7 +27364,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|" and hl_txnid = 0 and "
+literal|" AND \"HL_TXNID\" = 0 AND "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -27386,7 +27388,7 @@ name|suffix
 argument_list|,
 name|extLockIDs
 argument_list|,
-literal|"hl_lock_ext_id"
+literal|"\"HL_LOCK_EXT_ID\""
 argument_list|,
 literal|true
 argument_list|,
@@ -27605,11 +27607,11 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|" txn_id from TXNS where txn_state = '"
+literal|" \"TXN_ID\" FROM \"TXNS\" WHERE \"TXN_STATE\" = '"
 operator|+
 name|TXN_OPEN
 operator|+
-literal|"' and txn_last_heartbeat<  "
+literal|"' AND \"TXN_LAST_HEARTBEAT\"<  "
 operator|+
 operator|(
 name|now
@@ -27617,7 +27619,7 @@ operator|-
 name|timeout
 operator|)
 operator|+
-literal|" and txn_type != "
+literal|" AND \"TXN_TYPE\" != "
 operator|+
 name|TxnType
 operator|.
@@ -27974,7 +27976,7 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select count(*) from TXNS where txn_state = '"
+literal|"SELECT COUNT(*) FROM \"TXNS\" WHERE \"TXN_STATE\" = '"
 operator|+
 name|TXN_OPEN
 operator|+
@@ -29390,14 +29392,14 @@ name|sqlGenerator
 operator|.
 name|addForUpdateClause
 argument_list|(
-literal|"select MT_COMMENT from AUX_TABLE where MT_KEY1="
+literal|"SELECT \"MT_COMMENT\" FROM \"AUX_TABLE\" WHERE \"MT_KEY1\"="
 operator|+
 name|quoteString
 argument_list|(
 name|key
 argument_list|)
 operator|+
-literal|" and MT_KEY2=0"
+literal|" and \"MT_KEY2\"=0"
 argument_list|)
 decl_stmt|;
 name|lockInternal
@@ -29468,7 +29470,7 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"insert into AUX_TABLE(MT_KEY1,MT_KEY2) values("
+literal|"INSERT INTO \"AUX_TABLE\" (\"MT_KEY1\", \"MT_KEY2\") VALUES("
 operator|+
 name|quoteString
 argument_list|(

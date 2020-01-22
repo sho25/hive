@@ -11290,7 +11290,7 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"insert into TXNS (txn_id, txn_state, txn_started, txn_last_heartbeat, "
+literal|"INSERT INTO \"TXNS\" (\"TXN_ID\", \"TXN_STATE\", \"TXN_STARTED\", \"TXN_LAST_HEARTBEAT\", "
 operator|+
 literal|"txn_user, txn_host) values (1, 'o', "
 operator|+
@@ -11309,11 +11309,11 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"insert into HIVE_LOCKS (hl_lock_ext_id, hl_lock_int_id, hl_txnid, "
+literal|"INSERT INTO \"HIVE_LOCKS\" (\"HL_LOCK_EXT_ID\", \"HL_LOCK_INT_ID\", \"HL_TXNID\", "
 operator|+
-literal|"hl_db, hl_table, hl_partition, hl_lock_state, hl_lock_type, hl_last_heartbeat, "
+literal|"\"HL_DB\", \"HL_TABLE\", \"HL_PARTITION\", \"HL_LOCK_STATE\", \"HL_LOCK_TYPE\", \"HL_LAST_HEARTBEAT\", "
 operator|+
-literal|"hl_user, hl_host) values (1, 1, 1, 'mydb', 'mytable', 'mypartition', '"
+literal|"\"HL_USER\", \"HL_HOST\") VALUES (1, 1, 1, 'MYDB', 'MYTABLE', 'MYPARTITION', '"
 operator|+
 name|tHndlr
 operator|.
@@ -11808,7 +11808,7 @@ expr_stmt|;
 block|}
 block|}
 block|}
-comment|/**    * This cannnot be run against Derby (thus in UT) but it can run againt MySQL.    * 1. add to metastore/pom.xml    *<dependency>    *<groupId>mysql</groupId>    *<artifactId>mysql-connector-java</artifactId>    *<version>5.1.30</version>    *</dependency>    * 2. Hack in the c'tor of this class    *     conf.setVar(HiveConf.ConfVars.METASTORECONNECTURLKEY, "jdbc:mysql://localhost/metastore");    *      conf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_USER_NAME, "hive");    *      conf.setVar(HiveConf.ConfVars.METASTOREPWD, "hive");    *      conf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_DRIVER, "com.mysql.jdbc.Driver");    * 3. Remove TxnDbUtil.prepDb(); in TxnHandler.checkQFileTestHack()    *          */
+comment|/**    * This cannnot be run against Derby (thus in UT) but it can run againt MySQL.    * 1. add to metastore/pom.xml    *<dependency>    *<groupId>mysql</groupId>    *<artifactId>mysql-connector-java</artifactId>    *<version>5.1.30</version>    *</dependency>    * 2. Hack in the c'tor of this class    *     conf.setVar(HiveConf.ConfVars.METASTORECONNECTURLKEY, "jdbc:mysql://localhost/metastore");    *      conf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_USER_NAME, "hive");    *      conf.setVar(HiveConf.ConfVars.METASTOREPWD, "hive");    *      conf.setVar(HiveConf.ConfVars.METASTORE_CONNECTION_DRIVER, "com.mysql.jdbc.Driver");    * 3. Remove TxnDbUtil.prepDb(); in TxnHandler.checkQFileTestHack()    *    */
 annotation|@
 name|Ignore
 argument_list|(
@@ -11844,7 +11844,7 @@ argument_list|(
 literal|0
 argument_list|)
 decl_stmt|;
-comment|/**      * counter = 0;      * Thread1 counter=1, lock, wait 3s, check counter(should be 2), counter=3, unlock       * Thread2 counter=2, lock (and block), inc counter, should be 4      */
+comment|/**      * counter = 0;      * Thread1 counter=1, lock, wait 3s, check counter(should be 2), counter=3, unlock      * Thread2 counter=2, lock (and block), inc counter, should be 4      */
 name|Thread
 name|t1
 init|=
@@ -12478,7 +12478,7 @@ name|countQueryAgent
 argument_list|(
 name|conf
 argument_list|,
-literal|"select count(*) from TXNS where TXN_ID>= "
+literal|"SELECT COUNT(*) FROM \"TXNS\" WHERE \"TXN_ID\">= "
 operator|+
 name|txnList
 operator|.
@@ -12487,7 +12487,7 @@ argument_list|(
 literal|0
 argument_list|)
 operator|+
-literal|" and TXN_ID<= "
+literal|" and \"TXN_ID\"<= "
 operator|+
 name|txnList
 operator|.
@@ -12631,17 +12631,17 @@ name|queryToString
 argument_list|(
 name|conf
 argument_list|,
-literal|"select RTM_TARGET_TXN_ID from REPL_TXN_MAP where "
+literal|"SELECT \"RTM_TARGET_TXN_ID\" FROM \"REPL_TXN_MAP\" WHERE "
 operator|+
-literal|" RTM_SRC_TXN_ID>=  "
+literal|" \"RTM_SRC_TXN_ID\">=  "
 operator|+
 name|startTxnId
 operator|+
-literal|"and RTM_SRC_TXN_ID<=  "
+literal|"AND \"RTM_SRC_TXN_ID\"<=  "
 operator|+
 name|endTxnId
 operator|+
-literal|" and RTM_REPL_POLICY = \'"
+literal|" AND \"RTM_REPL_POLICY\" = \'"
 operator|+
 name|replPolicy
 operator|+
@@ -12743,7 +12743,7 @@ name|queryToString
 argument_list|(
 name|conf
 argument_list|,
-literal|"select ntxn_next from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" FROM \"NEXT_TXN_ID\""
 argument_list|)
 operator|.
 name|split
@@ -12828,7 +12828,7 @@ name|queryToString
 argument_list|(
 name|conf
 argument_list|,
-literal|"select ntxn_next from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" FROM \"NEXT_TXN_ID\""
 argument_list|)
 operator|.
 name|split
@@ -13293,7 +13293,7 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"update TXNS set txn_last_heartbeat = txn_last_heartbeat + 1"
+literal|"UPDATE \"TXNS\" SET \"TXN_LAST_HEARTBEAT\" = \"TXN_LAST_HEARTBEAT\" + 1"
 argument_list|)
 expr_stmt|;
 block|}
@@ -13319,7 +13319,7 @@ name|stmt
 operator|.
 name|executeUpdate
 argument_list|(
-literal|"update HIVE_LOCKS set hl_last_heartbeat = hl_last_heartbeat + 1"
+literal|"UPDATE \"HIVE_LOCKS\" SET \"HL_LAST_HEARTBEAT\" = \"HL_LAST_HEARTBEAT\" + 1"
 argument_list|)
 expr_stmt|;
 block|}
