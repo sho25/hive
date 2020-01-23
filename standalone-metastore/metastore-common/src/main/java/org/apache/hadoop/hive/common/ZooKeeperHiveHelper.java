@@ -997,6 +997,7 @@ block|}
 block|}
 block|}
 specifier|public
+specifier|synchronized
 name|boolean
 name|isDeregisteredWithZooKeeper
 parameter_list|()
@@ -1006,6 +1007,7 @@ name|deregisteredWithZooKeeper
 return|;
 block|}
 specifier|private
+specifier|synchronized
 name|void
 name|setDeregisteredWithZooKeeper
 parameter_list|(

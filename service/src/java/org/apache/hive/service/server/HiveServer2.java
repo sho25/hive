@@ -4370,11 +4370,6 @@ operator|!
 name|activePassiveHA
 condition|)
 block|{
-synchronized|synchronized
-init|(
-name|this
-init|)
-block|{
 if|if
 condition|(
 name|zooKeeperHelper
@@ -4388,7 +4383,6 @@ operator|.
 name|isDeregisteredWithZooKeeper
 argument_list|()
 return|;
-block|}
 block|}
 block|}
 return|return
