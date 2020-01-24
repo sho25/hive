@@ -137,6 +137,22 @@ name|PlanMapper
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|tez
+operator|.
+name|dag
+operator|.
+name|api
+operator|.
+name|TezConfiguration
+import|;
+end_import
+
 begin_comment
 comment|/**  * Re-Executes a query only adding an extra overlay  */
 end_comment
@@ -270,6 +286,37 @@ operator|.
 name|getConf
 argument_list|()
 decl_stmt|;
+comment|// we unset the queue name intentionally in TezSessionState#startSessionAndContainers
+comment|// as a result reexec create new session in the default queue and create problem
+name|String
+name|queueName
+init|=
+name|conf
+operator|.
+name|get
+argument_list|(
+name|TezConfiguration
+operator|.
+name|TEZ_QUEUE_NAME
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|queueName
+operator|!=
+literal|null
+condition|)
+block|{
+name|conf
+operator|.
+name|set
+argument_list|(
+literal|"reexec.overlay.tez.queue.name"
+argument_list|,
+name|queueName
+argument_list|)
+expr_stmt|;
+block|}
 name|subtree
 operator|=
 name|conf
