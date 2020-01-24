@@ -171,7 +171,7 @@ name|apache
 operator|.
 name|commons
 operator|.
-name|lang
+name|lang3
 operator|.
 name|StringUtils
 import|;
@@ -1545,7 +1545,7 @@ name|e
 parameter_list|)
 block|{
 comment|// Has to use full name to make sure it does not conflict with
-comment|// org.apache.commons.lang.StringUtils
+comment|// org.apache.commons.lang3.StringUtils
 throw|throw
 operator|new
 name|SemanticException
