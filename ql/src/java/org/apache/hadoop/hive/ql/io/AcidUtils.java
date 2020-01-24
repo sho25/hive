@@ -14298,7 +14298,6 @@ name|ArrayList
 argument_list|<>
 argument_list|()
 decl_stmt|;
-comment|// For each source to read, get a shared lock
 name|boolean
 name|skipReadLock
 init|=
@@ -14312,6 +14311,20 @@ operator|.
 name|HIVE_TXN_READ_LOCKS
 argument_list|)
 decl_stmt|;
+name|boolean
+name|skipNonAcidReadLock
+init|=
+operator|!
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_TXN_NONACID_READ_LOCKS
+argument_list|)
+decl_stmt|;
+comment|// For each source to read, get a shared lock
 for|for
 control|(
 name|ReadEntity
@@ -14491,6 +14504,23 @@ continue|continue;
 block|}
 if|if
 condition|(
+name|skipNonAcidReadLock
+operator|&&
+operator|!
+name|AcidUtils
+operator|.
+name|isTransactionalTable
+argument_list|(
+name|t
+argument_list|)
+condition|)
+block|{
+comment|// skip read-locks for non-transactional tables
+comment|// read-locks don't protect non-transactional tables data consistency
+continue|continue;
+block|}
+if|if
+condition|(
 name|t
 operator|!=
 literal|null
@@ -14521,12 +14551,9 @@ name|LOG
 operator|.
 name|debug
 argument_list|(
-literal|"Adding lock component to lock request "
-operator|+
+literal|"Adding lock component to lock request {} "
+argument_list|,
 name|comp
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|lockComponents

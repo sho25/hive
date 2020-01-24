@@ -9808,13 +9808,28 @@ operator|+
 literal|"DROP TABLE etc. when the table is being written to"
 argument_list|)
 block|,
+name|HIVE_TXN_NONACID_READ_LOCKS
+argument_list|(
+literal|"hive.txn.nonacid.read.locks"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Flag to turn off the read locks for non-ACID tables, when set to false.\n"
+operator|+
+literal|"Could be exercised to improve the performance of non-ACID tables in clusters where read locking "
+operator|+
+literal|"is enabled globally to support ACID. Can cause issues with concurrent DDL operations, or slow S3 writes."
+argument_list|)
+block|,
 name|HIVE_TXN_READ_LOCKS
 argument_list|(
 literal|"hive.txn.read.locks"
 argument_list|,
 literal|true
 argument_list|,
-literal|"flag to turn off the strict read lock when set to false"
+literal|"Flag to turn off the read locks, when set to false. Although its not recommended, \n"
+operator|+
+literal|"but in performance critical scenarios this option may be exercised."
 argument_list|)
 block|,
 name|TXN_OVERWRITE_X_LOCK
@@ -9825,7 +9840,7 @@ literal|true
 argument_list|,
 literal|"Ensures commands with OVERWRITE (such as INSERT OVERWRITE) acquire Exclusive locks for\n"
 operator|+
-literal|"transactional tables.  This ensures that inserts (w/o overwrite) running concurrently\n"
+literal|"transactional tables. This ensures that inserts (w/o overwrite) running concurrently\n"
 operator|+
 literal|"are not hidden by the INSERT OVERWRITE."
 argument_list|)
