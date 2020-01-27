@@ -7729,6 +7729,12 @@ block|}
 if|if
 condition|(
 name|fetchColStats
+operator|&&
+operator|!
+name|colStatsToRetrieve
+operator|.
+name|isEmpty
+argument_list|()
 condition|)
 block|{
 try|try
