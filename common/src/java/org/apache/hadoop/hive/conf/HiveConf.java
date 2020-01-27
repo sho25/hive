@@ -17681,6 +17681,15 @@ operator|+
 literal|"a background update happens periodically to report the actual state of the query"
 argument_list|)
 block|,
+name|HIVE_SCHEDULED_QUERIES_CREATE_AS_ENABLED
+argument_list|(
+literal|"hive.scheduled.queries.create.as.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"This option sets the default behaviour of newly created scheduled queries."
+argument_list|)
+block|,
 name|HIVE_SECURITY_AUTHORIZATION_SCHEDULED_QUERIES_SUPPORTED
 argument_list|(
 literal|"hive.security.authorization.scheduled.queries.supported"

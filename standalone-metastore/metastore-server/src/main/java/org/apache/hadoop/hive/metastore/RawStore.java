@@ -3838,6 +3838,8 @@ name|timeoutSecs
 parameter_list|)
 throws|throws
 name|InvalidOperationException
+throws|,
+name|MetaException
 function_decl|;
 block|}
 end_interface

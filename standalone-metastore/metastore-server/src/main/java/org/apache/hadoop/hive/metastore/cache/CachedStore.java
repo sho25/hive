@@ -19712,6 +19712,8 @@ name|timeoutSecs
 parameter_list|)
 throws|throws
 name|InvalidOperationException
+throws|,
+name|MetaException
 block|{
 return|return
 name|rawStore

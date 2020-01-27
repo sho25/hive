@@ -811,7 +811,7 @@ argument_list|()
 operator|==
 name|QueryState
 operator|.
-name|ERRORED
+name|FAILED
 condition|)
 block|{
 comment|// Query is done, notify any waiters

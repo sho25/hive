@@ -628,7 +628,14 @@ name|ret
 operator|.
 name|setEnabled
 argument_list|(
-literal|true
+name|conf
+operator|.
+name|getBoolVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SCHEDULED_QUERIES_CREATE_AS_ENABLED
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|ret
@@ -1152,7 +1159,18 @@ throw|throw
 operator|new
 name|HiveAccessControlException
 argument_list|(
-literal|"authorization of scheduled queries is not enabled - only owners may change scheduled queries"
+literal|"Authorization of scheduled queries is not enabled - only owners may change scheduled queries (currentUser: "
+operator|+
+name|currentUser
+operator|+
+literal|", owner: "
+operator|+
+name|schq
+operator|.
+name|getUser
+argument_list|()
+operator|+
+literal|")"
 argument_list|)
 throw|;
 block|}

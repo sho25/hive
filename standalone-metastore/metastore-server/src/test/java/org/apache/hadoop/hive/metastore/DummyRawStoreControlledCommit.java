@@ -7404,6 +7404,8 @@ parameter_list|(
 name|ScheduledQueryPollRequest
 name|request
 parameter_list|)
+throws|throws
+name|MetaException
 block|{
 return|return
 name|objectStore
@@ -7451,6 +7453,8 @@ name|info
 parameter_list|)
 throws|throws
 name|InvalidOperationException
+throws|,
+name|MetaException
 block|{
 name|objectStore
 operator|.
@@ -7511,6 +7515,8 @@ name|timeoutSecs
 parameter_list|)
 throws|throws
 name|InvalidOperationException
+throws|,
+name|MetaException
 block|{
 return|return
 name|objectStore

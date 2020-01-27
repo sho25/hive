@@ -2945,7 +2945,7 @@ argument_list|)
 block|,
 name|RUNTIME_STATS_CLEAN_FREQUENCY
 argument_list|(
-literal|"runtime.stats.clean.frequency"
+literal|"metastore.runtime.stats.clean.frequency"
 argument_list|,
 literal|"hive.metastore.runtime.stats.clean.frequency"
 argument_list|,
@@ -2960,7 +2960,7 @@ argument_list|)
 block|,
 name|RUNTIME_STATS_MAX_AGE
 argument_list|(
-literal|"runtime.stats.max.age"
+literal|"metastore.runtime.stats.max.age"
 argument_list|,
 literal|"hive.metastore.runtime.stats.max.age"
 argument_list|,
@@ -2975,9 +2975,20 @@ argument_list|,
 literal|"Stat entries which are older than this are removed."
 argument_list|)
 block|,
+name|SCHEDULED_QUERIES_ENABLED
+argument_list|(
+literal|"metastore.scheduled.queries.enabled"
+argument_list|,
+literal|"hive.metastore.scheduled.queries.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Wheter scheduled query metastore requests be processed"
+argument_list|)
+block|,
 name|SCHEDULED_QUERIES_EXECUTION_PROGRESS_TIMEOUT
 argument_list|(
-literal|"scheduled.queries.execution.timeout"
+literal|"metastore.scheduled.queries.execution.timeout"
 argument_list|,
 literal|"hive.metastore.scheduled.queries.progress.timeout"
 argument_list|,
@@ -2992,7 +3003,7 @@ argument_list|)
 block|,
 name|SCHEDULED_QUERIES_EXECUTION_MAINT_TASK_FREQUENCY
 argument_list|(
-literal|"scheduled.queries.execution.maint.task.frequency"
+literal|"metastore.scheduled.queries.execution.maint.task.frequency"
 argument_list|,
 literal|"hive.metastore.scheduled.queries.execution.clean.frequency"
 argument_list|,
@@ -3009,7 +3020,7 @@ argument_list|)
 block|,
 name|SCHEDULED_QUERIES_EXECUTION_MAX_AGE
 argument_list|(
-literal|"scheduled.queries.execution.max.age"
+literal|"metastore.scheduled.queries.execution.max.age"
 argument_list|,
 literal|"hive.metastore.scheduled.queries.execution.max.age"
 argument_list|,

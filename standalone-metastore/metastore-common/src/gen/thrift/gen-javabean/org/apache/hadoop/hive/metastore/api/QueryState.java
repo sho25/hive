@@ -74,7 +74,7 @@ argument_list|(
 literal|1
 argument_list|)
 block|,
-name|ERRORED
+name|FAILED
 argument_list|(
 literal|2
 argument_list|)
@@ -149,7 +149,7 @@ case|case
 literal|2
 case|:
 return|return
-name|ERRORED
+name|FAILED
 return|;
 case|case
 literal|3
