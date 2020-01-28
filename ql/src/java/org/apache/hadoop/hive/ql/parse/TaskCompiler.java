@@ -4987,11 +4987,6 @@ name|ConfVars
 operator|.
 name|HIVEOPTREDUCEDEDUPLICATION
 argument_list|)
-operator|||
-name|parseContext
-operator|.
-name|hasAcidWrite
-argument_list|()
 condition|)
 block|{
 comment|// Dynamic sort partition adds an extra RS therefore need to de-dup
@@ -5184,11 +5179,6 @@ argument_list|,
 name|pCtx
 operator|.
 name|getViewProjectToTableSchema
-argument_list|()
-argument_list|,
-name|pCtx
-operator|.
-name|getAcidSinks
 argument_list|()
 argument_list|)
 decl_stmt|;

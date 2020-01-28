@@ -1394,11 +1394,6 @@ name|ConfVars
 operator|.
 name|HIVEOPTREDUCEDEDUPLICATION
 argument_list|)
-operator|||
-name|pctx
-operator|.
-name|hasAcidWrite
-argument_list|()
 condition|)
 block|{
 name|transformations

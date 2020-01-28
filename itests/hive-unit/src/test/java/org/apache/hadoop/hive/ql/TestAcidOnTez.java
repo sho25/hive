@@ -5506,6 +5506,7 @@ argument_list|,
 name|confForTez
 argument_list|)
 expr_stmt|;
+comment|//make sure both buckets are not empty
 name|runStatementOnDriver
 argument_list|(
 literal|"insert into "
@@ -5520,9 +5521,10 @@ name|makeValuesClause
 argument_list|(
 name|values
 argument_list|)
+argument_list|,
+name|confForTez
 argument_list|)
 expr_stmt|;
-comment|//make sure both buckets are not empty
 name|runStatementOnDriver
 argument_list|(
 literal|"drop table if exists T"

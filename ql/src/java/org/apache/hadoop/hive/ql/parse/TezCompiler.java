@@ -2512,13 +2512,6 @@ name|ConfVars
 operator|.
 name|HIVEOPTREDUCEDEDUPLICATION
 argument_list|)
-operator|||
-name|procCtx
-operator|.
-name|parseContext
-operator|.
-name|hasAcidWrite
-argument_list|()
 condition|)
 block|{
 name|perfLogger
