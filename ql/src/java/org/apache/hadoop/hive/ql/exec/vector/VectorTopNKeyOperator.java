@@ -342,9 +342,6 @@ decl_stmt|;
 specifier|private
 specifier|transient
 name|TopNKeyFilter
-argument_list|<
-name|VectorHashKeyWrapperBase
-argument_list|>
 name|topNKeyFilter
 decl_stmt|;
 specifier|public
@@ -495,7 +492,6 @@ name|topNKeyFilter
 operator|=
 operator|new
 name|TopNKeyFilter
-argument_list|<>
 argument_list|(
 name|conf
 operator|.
@@ -873,6 +869,15 @@ parameter_list|)
 throws|throws
 name|HiveException
 block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Closing TopNKeyFilter: {}."
+argument_list|,
+name|topNKeyFilter
+argument_list|)
+expr_stmt|;
 name|topNKeyFilter
 operator|.
 name|clear

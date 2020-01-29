@@ -661,6 +661,18 @@ return|return
 literal|0
 return|;
 block|}
+specifier|public
+name|List
+argument_list|<
+name|VectorHashKeyWrapperBaseComparator
+argument_list|>
+name|getComparators
+parameter_list|()
+block|{
+return|return
+name|comparators
+return|;
+block|}
 block|}
 end_class
 

@@ -8976,6 +8976,17 @@ argument_list|,
 literal|"Whether to enable top n key optimizer."
 argument_list|)
 block|,
+name|HIVE_MAX_TOPN_ALLOWED
+argument_list|(
+literal|"hive.optimize.topnkey.max"
+argument_list|,
+literal|128
+argument_list|,
+literal|"Maximum topN value allowed by top n key optimizer.\n"
+operator|+
+literal|"If the LIMIT is greater than this value then top n key optimization won't be used."
+argument_list|)
+block|,
 name|HIVE_SHARED_WORK_OPTIMIZATION
 argument_list|(
 literal|"hive.optimize.shared.work"
