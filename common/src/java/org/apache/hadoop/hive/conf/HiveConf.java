@@ -13379,7 +13379,7 @@ name|HIVE_SERVER2_SESSION_CHECK_INTERVAL
 argument_list|(
 literal|"hive.server2.session.check.interval"
 argument_list|,
-literal|"6h"
+literal|"15m"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -13413,7 +13413,7 @@ name|HIVE_SERVER2_IDLE_SESSION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.session.timeout"
 argument_list|,
-literal|"7d"
+literal|"4h"
 argument_list|,
 operator|new
 name|TimeValidator
@@ -13430,7 +13430,7 @@ name|HIVE_SERVER2_IDLE_OPERATION_TIMEOUT
 argument_list|(
 literal|"hive.server2.idle.operation.timeout"
 argument_list|,
-literal|"5d"
+literal|"2h"
 argument_list|,
 operator|new
 name|TimeValidator
