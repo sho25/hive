@@ -48,17 +48,21 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Dispatcher interface for Operators Used in operator graph walking to dispatch  * process/visitor functions for operators.  */
+comment|/**  * Base class for processing operators which is no-op. The specific processors  * can register their own context with the dispatcher.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|Dispatcher
+name|SemanticNodeProcessor
+extends|extends
+name|NodeProcessor
 block|{
-comment|/**    * Dispatcher function.    *    * @param nd    *          operator to process.    * @param stack    *          operator stack to process.    * @param nodeOutputs    *          The argument list of outputs from processing other nodes that are    *          passed to this dispatcher from the walker.    * @return Object The return object from the processing call.    * @throws SemanticException    */
+comment|/**    * Generic process for all ops that don't have specific implementations.    *     * @param nd    *          operator to process    * @param procCtx    *          operator processor context    * @param nodeOutputs    *          A variable argument list of outputs from other nodes in the walk    * @return Object to be returned by the process call    * @throws SemanticException    */
+annotation|@
+name|Override
 name|Object
-name|dispatch
+name|process
 parameter_list|(
 name|Node
 name|nd
@@ -68,6 +72,9 @@ argument_list|<
 name|Node
 argument_list|>
 name|stack
+parameter_list|,
+name|NodeProcessorCtx
+name|procCtx
 parameter_list|,
 name|Object
 modifier|...

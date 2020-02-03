@@ -54,9 +54,13 @@ end_comment
 begin_interface
 specifier|public
 interface|interface
+name|SemanticRule
+extends|extends
 name|Rule
 block|{
 comment|/**    * @return the cost of the rule - the lower the cost, the better the rule    *         matches    * @throws SemanticException    */
+annotation|@
+name|Override
 name|int
 name|cost
 parameter_list|(
@@ -70,6 +74,8 @@ throws|throws
 name|SemanticException
 function_decl|;
 comment|/**    * @return the name of the rule - may be useful for debugging    */
+annotation|@
+name|Override
 name|String
 name|getName
 parameter_list|()

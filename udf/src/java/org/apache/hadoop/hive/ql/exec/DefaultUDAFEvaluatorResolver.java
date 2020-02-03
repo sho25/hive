@@ -291,7 +291,7 @@ block|}
 name|Method
 name|m
 init|=
-name|FunctionRegistry
+name|MethodUtils
 operator|.
 name|getMethodInternal
 argument_list|(

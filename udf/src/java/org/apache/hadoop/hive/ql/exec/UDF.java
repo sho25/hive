@@ -38,7 +38,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * A User-defined function (UDF) for use with Hive.  *<p>  * New UDF classes need to inherit from this UDF class (or from {@link  * org.apache.hadoop.hive.ql.udf.generic.GenericUDF GenericUDF} which provides more flexibility at  * the cost of more complexity).  *<p>  * Requirements for all classes extending this UDF are:  *<ul>  *<li>Implement one or more methods named {@code evaluate} which will be called by Hive (the exact  * way in which Hive resolves the method to call can be configured by setting a custom {@link  * UDFMethodResolver}). The following are some examples:  *<ul>  *<li>{@code public int evaluate();}</li>  *<li>{@code public int evaluate(int a);}</li>  *<li>{@code public double evaluate(int a, double b);}</li>  *<li>{@code public String evaluate(String a, int b, Text c);}</li>  *<li>{@code public Text evaluate(String a);}</li>  *<li>{@code public String evaluate(List<Integer> a);} (Note that Hive Arrays are represented as  * {@link java.util.List Lists} in Hive.  * So an {@code ARRAY<int>} column would be passed in as a {@code List<Integer>}.)</li>  *</ul>  *</li>  *<li>{@code evaluate} should never be a void method. However it can return {@code null} if  * needed.  *<li>Return types as well as method arguments can be either Java primitives or the corresponding  * {@link org.apache.hadoop.io.Writable Writable} class.</li>  *</ul>  * One instance of this class will be instantiated per JVM and it will not be called concurrently.  *  * @see Description  * @see UDFType  *  * @deprecated use {@link org.apache.hadoop.hive.ql.udf.generic.GenericUDF}  */
+comment|/**  * A User-defined function (UDF) for use with Hive.  *<p>  * New UDF classes need to inherit from this UDF class (or from  * org.apache.hadoop.hive.ql.udf.generic.GenericUDF GenericUDF which provides more flexibility at  * the cost of more complexity).  *<p>  * Requirements for all classes extending this UDF are:  *<ul>  *<li>Implement one or more methods named {@code evaluate} which will be called by Hive (the exact  * way in which Hive resolves the method to call can be configured by setting a custom {@link  * UDFMethodResolver}). The following are some examples:  *<ul>  *<li>{@code public int evaluate();}</li>  *<li>{@code public int evaluate(int a);}</li>  *<li>{@code public double evaluate(int a, double b);}</li>  *<li>{@code public String evaluate(String a, int b, Text c);}</li>  *<li>{@code public Text evaluate(String a);}</li>  *<li>{@code public String evaluate(List<Integer> a);} (Note that Hive Arrays are represented as  * {@link java.util.List Lists} in Hive.  * So an {@code ARRAY<int>} column would be passed in as a {@code List<Integer>}.)</li>  *</ul>  *</li>  *<li>{@code evaluate} should never be a void method. However it can return {@code null} if  * needed.  *<li>Return types as well as method arguments can be either Java primitives or the corresponding  * {@link org.apache.hadoop.io.Writable Writable} class.</li>  *</ul>  * One instance of this class will be instantiated per JVM and it will not be called concurrently.  *  * @see Description  * @see UDFType  *  * @deprecated use org.apache.hadoop.hive.ql.udf.generic.GenericUDF  */
 end_comment
 
 begin_class
@@ -118,7 +118,7 @@ return|return
 name|rslv
 return|;
 block|}
-comment|/**    * This can be overridden to include JARs required by this UDF.    *    * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF#getRequiredJars()    *      GenericUDF.getRequiredJars()    *    * @return an array of paths to files to include, {@code null} by default.    */
+comment|/**    * This can be overridden to include JARs required by this UDF.    *    * @return an array of paths to files to include, {@code null} by default.    */
 specifier|public
 name|String
 index|[]
@@ -129,7 +129,7 @@ return|return
 literal|null
 return|;
 block|}
-comment|/**    * This can be overridden to include files required by this UDF.    *    * @see org.apache.hadoop.hive.ql.udf.generic.GenericUDF#getRequiredFiles()    *      GenericUDF.getRequiredFiles()    *    * @return an array of paths to files to include, {@code null} by default.    */
+comment|/**    * This can be overridden to include files required by this UDF.    *    * @return an array of paths to files to include, {@code null} by default.    */
 specifier|public
 name|String
 index|[]

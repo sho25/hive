@@ -25,17 +25,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|Collection
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
-name|HashMap
+name|Stack
 import|;
 end_import
 
@@ -58,31 +48,34 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Interface for operator graph walker.  */
+comment|/**  * Dispatcher interface for Operators Used in operator graph walking to dispatch  * process/visitor functions for operators.  */
 end_comment
 
 begin_interface
 specifier|public
 interface|interface
-name|GraphWalker
+name|SemanticDispatcher
+extends|extends
+name|Dispatcher
 block|{
-comment|/**    * starting point for walking.    *     * @param startNodes    *          list of starting operators    * @param nodeOutput    *          If this parameter is not null, the call to the function returns    *          the map from node to objects returned by the processors.    * @throws SemanticException    */
-name|void
-name|startWalking
-parameter_list|(
-name|Collection
-argument_list|<
-name|Node
-argument_list|>
-name|startNodes
-parameter_list|,
-name|HashMap
-argument_list|<
-name|Node
-argument_list|,
+comment|/**    * Dispatcher function.    *    * @param nd    *          operator to process.    * @param stack    *          operator stack to process.    * @param nodeOutputs    *          The argument list of outputs from processing other nodes that are    *          passed to this dispatcher from the walker.    * @return Object The return object from the processing call.    * @throws SemanticException    */
+annotation|@
+name|Override
 name|Object
+name|dispatch
+parameter_list|(
+name|Node
+name|nd
+parameter_list|,
+name|Stack
+argument_list|<
+name|Node
 argument_list|>
-name|nodeOutput
+name|stack
+parameter_list|,
+name|Object
+modifier|...
+name|nodeOutputs
 parameter_list|)
 throws|throws
 name|SemanticException

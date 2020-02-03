@@ -118,7 +118,7 @@ throws|throws
 name|UDFArgumentException
 block|{
 return|return
-name|FunctionRegistry
+name|MethodUtils
 operator|.
 name|getMethodInternal
 argument_list|(
