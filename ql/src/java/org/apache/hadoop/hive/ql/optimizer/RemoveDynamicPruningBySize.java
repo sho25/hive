@@ -117,7 +117,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -238,7 +238,7 @@ specifier|public
 class|class
 name|RemoveDynamicPruningBySize
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|static
 specifier|final

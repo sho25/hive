@@ -56,7 +56,7 @@ specifier|public
 class|class
 name|TypeRule
 implements|implements
-name|Rule
+name|SemanticRule
 block|{
 specifier|private
 name|Class

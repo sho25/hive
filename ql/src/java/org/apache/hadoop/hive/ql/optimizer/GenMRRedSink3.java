@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|HashMap
@@ -163,7 +153,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -286,7 +276,7 @@ specifier|public
 class|class
 name|GenMRRedSink3
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|GenMRRedSink3

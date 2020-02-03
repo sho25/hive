@@ -313,7 +313,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -595,7 +595,7 @@ name|AbstractSMBJoinProc
 extends|extends
 name|AbstractBucketJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|AbstractSMBJoinProc

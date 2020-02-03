@@ -147,7 +147,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -379,7 +379,7 @@ specifier|static
 class|class
 name|FilterPCR
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -945,7 +945,7 @@ specifier|static
 class|class
 name|DefaultPCR
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -980,7 +980,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFilterProc
 parameter_list|()
 block|{
@@ -992,7 +992,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{

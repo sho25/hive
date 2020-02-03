@@ -84,7 +84,7 @@ comment|/**    * Constructor.    *    * @param disp    * dispatcher to call for 
 specifier|public
 name|ForwardWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

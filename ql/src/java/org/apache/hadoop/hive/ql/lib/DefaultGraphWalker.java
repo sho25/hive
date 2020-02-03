@@ -136,7 +136,7 @@ specifier|public
 class|class
 name|DefaultGraphWalker
 implements|implements
-name|GraphWalker
+name|SemanticGraphWalker
 block|{
 comment|/**    * opStack keeps the nodes that have been visited, but have not been    * dispatched yet    */
 specifier|protected
@@ -193,14 +193,14 @@ argument_list|()
 decl_stmt|;
 specifier|protected
 specifier|final
-name|Dispatcher
+name|SemanticDispatcher
 name|dispatcher
 decl_stmt|;
 comment|/**    * Constructor.    *    * @param disp    *          dispatcher to call for each op encountered    */
 specifier|public
 name|DefaultGraphWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

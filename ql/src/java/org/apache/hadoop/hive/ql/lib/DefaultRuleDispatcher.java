@@ -66,15 +66,15 @@ specifier|public
 class|class
 name|DefaultRuleDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|procRules
 decl_stmt|;
@@ -85,21 +85,21 @@ name|procCtx
 decl_stmt|;
 specifier|private
 specifier|final
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|defaultProc
 decl_stmt|;
 comment|/**    * Constructor.    *     * @param defaultProc    *          default processor to be fired if no rule matches    * @param rules    *          operator processor that handles actual processing of the node    * @param procCtx    *          operator processor context, which is opaque to the dispatcher    */
 specifier|public
 name|DefaultRuleDispatcher
 parameter_list|(
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|defaultProc
 parameter_list|,
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|rules
 parameter_list|,
@@ -149,7 +149,7 @@ name|SemanticException
 block|{
 comment|// find the firing rule
 comment|// find the rule from the stack specified
-name|Rule
+name|SemanticRule
 name|rule
 init|=
 literal|null
@@ -163,7 +163,7 @@ name|MAX_VALUE
 decl_stmt|;
 for|for
 control|(
-name|Rule
+name|SemanticRule
 name|r
 range|:
 name|procRules
@@ -207,7 +207,7 @@ name|r
 expr_stmt|;
 block|}
 block|}
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|proc
 decl_stmt|;
 if|if

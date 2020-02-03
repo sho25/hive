@@ -1253,7 +1253,7 @@ name|inputType
 argument_list|)
 expr_stmt|;
 comment|// narrow down the possible choices based on type affinity
-name|FunctionRegistry
+name|MethodUtils
 operator|.
 name|filterMethodsByTypeAffinity
 argument_list|(
@@ -1516,7 +1516,7 @@ try|try
 block|{
 name|result
 operator|=
-name|FunctionRegistry
+name|MethodUtils
 operator|.
 name|getMethodInternal
 argument_list|(

@@ -265,7 +265,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -485,7 +485,7 @@ specifier|static
 class|class
 name|DefaultRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -564,7 +564,7 @@ specifier|static
 class|class
 name|ReduceSinkRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1035,7 +1035,7 @@ specifier|static
 class|class
 name|TableScanRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|boolean
@@ -1482,7 +1482,7 @@ specifier|static
 class|class
 name|GroupByRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1693,7 +1693,7 @@ specifier|static
 class|class
 name|PTFRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1923,7 +1923,7 @@ specifier|static
 class|class
 name|SelectRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|// For bucket columns
 comment|// If all the columns match to the parent, put them in the bucket cols
@@ -2405,7 +2405,7 @@ specifier|static
 class|class
 name|JoinRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2844,7 +2844,7 @@ specifier|static
 class|class
 name|MultiParentRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3041,7 +3041,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getTableScanRule
 parameter_list|()
 block|{
@@ -3053,7 +3053,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getReduceSinkRule
 parameter_list|()
 block|{
@@ -3065,7 +3065,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSelectRule
 parameter_list|()
 block|{
@@ -3077,7 +3077,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultRule
 parameter_list|()
 block|{
@@ -3089,7 +3089,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getMultiParentRule
 parameter_list|()
 block|{
@@ -3101,7 +3101,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGroupByRule
 parameter_list|()
 block|{
@@ -3113,7 +3113,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getPTFRule
 parameter_list|()
 block|{
@@ -3125,7 +3125,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinRule
 parameter_list|()
 block|{

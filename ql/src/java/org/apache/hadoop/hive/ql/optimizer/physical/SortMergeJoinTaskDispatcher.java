@@ -383,7 +383,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -652,7 +652,7 @@ name|SortMergeJoinTaskDispatcher
 extends|extends
 name|AbstractJoinTaskDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|public
 name|SortMergeJoinTaskDispatcher

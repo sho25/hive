@@ -1198,8 +1198,15 @@ name|ErrorMsg
 operator|.
 name|ALTER_TABLE_NON_NATIVE
 operator|.
-name|getMsg
+name|format
 argument_list|(
+name|AlterTableType
+operator|.
+name|NON_NATIVE_TABLE_ALLOWED
+operator|.
+name|toString
+argument_list|()
+argument_list|,
 name|tbl
 operator|.
 name|getTableName

@@ -273,7 +273,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -544,7 +544,7 @@ specifier|public
 class|class
 name|GenTezWork
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|static

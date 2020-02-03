@@ -89,7 +89,7 @@ comment|/**    * Constructor.    *     * @param disp    *          dispatcher to
 specifier|public
 name|PreOrderWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

@@ -151,7 +151,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -187,7 +187,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -223,7 +223,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -259,7 +259,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -1259,7 +1259,7 @@ specifier|static
 class|class
 name|ColumnExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1448,7 +1448,7 @@ specifier|static
 class|class
 name|GenericFuncExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3293,7 +3293,7 @@ specifier|static
 class|class
 name|FieldExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3410,7 +3410,7 @@ specifier|static
 class|class
 name|DefaultExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3481,7 +3481,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultExprProcessor
 parameter_list|()
 block|{
@@ -3493,7 +3493,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGenericFuncProcessor
 parameter_list|()
 block|{
@@ -3505,7 +3505,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFieldProcessor
 parameter_list|()
 block|{
@@ -3517,7 +3517,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getColumnProcessor
 parameter_list|()
 block|{
@@ -3570,18 +3570,18 @@ argument_list|)
 decl_stmt|;
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|exprRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -3656,7 +3656,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -3670,7 +3670,7 @@ argument_list|,
 name|pprCtx
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|egw
 init|=
 operator|new

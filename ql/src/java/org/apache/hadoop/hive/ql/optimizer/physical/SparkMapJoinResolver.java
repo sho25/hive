@@ -345,7 +345,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -655,7 +655,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|Dispatcher
+name|SemanticDispatcher
 name|dispatcher
 init|=
 operator|new
@@ -807,7 +807,7 @@ argument_list|)
 class|class
 name|SparkMapJoinTaskDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|private
 specifier|final

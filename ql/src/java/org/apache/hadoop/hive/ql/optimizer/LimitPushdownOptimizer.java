@@ -153,24 +153,6 @@ name|ql
 operator|.
 name|exec
 operator|.
-name|OperatorUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
 name|ReduceSinkOperator
 import|;
 end_import
@@ -225,7 +207,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -243,7 +225,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -279,7 +261,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -315,7 +297,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -452,18 +434,18 @@ name|SemanticException
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -541,7 +523,7 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -554,7 +536,7 @@ argument_list|,
 name|context
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -602,7 +584,7 @@ specifier|static
 class|class
 name|TopNReducer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -891,7 +873,7 @@ specifier|static
 class|class
 name|TopNPropagator
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override

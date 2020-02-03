@@ -515,7 +515,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -533,7 +533,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -569,7 +569,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -605,7 +605,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -5257,18 +5257,18 @@ comment|// the operator stack.
 comment|// The dispatcher generates the plan from the operator tree
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -5379,7 +5379,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -5399,7 +5399,7 @@ name|pactx
 argument_list|)
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -5454,7 +5454,7 @@ specifier|static
 class|class
 name|CurrentMapJoin
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|/**      * Store the current mapjoin in the context.      */
 annotation|@
@@ -6031,7 +6031,7 @@ specifier|static
 class|class
 name|MapJoinFS
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|/**      * Store the current mapjoin in a list of mapjoins followed by a filesink.      */
 annotation|@
@@ -6137,7 +6137,7 @@ specifier|static
 class|class
 name|MapJoinDefault
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|/**      * Store the mapjoin in a rejected list.      */
 annotation|@
@@ -6204,7 +6204,7 @@ specifier|static
 class|class
 name|Default
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|/**      * Nothing to do.      */
 annotation|@
@@ -6239,7 +6239,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getMapJoinFS
 parameter_list|()
 block|{
@@ -6251,7 +6251,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getMapJoinDefault
 parameter_list|()
 block|{
@@ -6263,7 +6263,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefault
 parameter_list|()
 block|{
@@ -6275,7 +6275,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getCurrentMapJoin
 parameter_list|()
 block|{

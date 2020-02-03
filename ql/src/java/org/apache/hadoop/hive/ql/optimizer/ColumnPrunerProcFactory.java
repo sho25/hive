@@ -531,7 +531,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -1173,7 +1173,7 @@ specifier|static
 class|class
 name|ColumnPrunerFilterProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1318,7 +1318,7 @@ specifier|static
 class|class
 name|ColumnPrunerGroupByProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1928,7 +1928,7 @@ specifier|static
 class|class
 name|ColumnPrunerScriptProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3426,7 +3426,7 @@ specifier|static
 class|class
 name|ColumnPrunerDefaultProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3518,7 +3518,7 @@ specifier|static
 class|class
 name|ColumnPrunerTableScanProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -4005,7 +4005,7 @@ specifier|static
 class|class
 name|ColumnPrunerReduceSinkProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -4448,7 +4448,7 @@ specifier|static
 class|class
 name|ColumnPrunerLateralViewJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -5040,7 +5040,7 @@ specifier|static
 class|class
 name|ColumnPrunerSelectProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -6393,7 +6393,7 @@ specifier|static
 class|class
 name|ColumnPrunerJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -6473,7 +6473,7 @@ specifier|static
 class|class
 name|ColumnPrunerMapJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -6565,7 +6565,7 @@ specifier|static
 class|class
 name|ColumnPrunerUnionProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override

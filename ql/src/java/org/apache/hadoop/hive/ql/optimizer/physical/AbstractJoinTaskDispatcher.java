@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|List
@@ -193,7 +183,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -281,7 +271,7 @@ specifier|abstract
 class|class
 name|AbstractJoinTaskDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|protected
 specifier|final

@@ -79,22 +79,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ErrorMsg
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|exec
 operator|.
 name|FileSinkOperator
@@ -187,25 +171,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|lib
-operator|.
-name|GraphWalker
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -259,7 +225,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -277,7 +243,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -384,18 +350,18 @@ comment|// create a walker which walks the tree in a BFS manner while maintainin
 comment|// the operator stack.
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -505,7 +471,7 @@ argument_list|(
 name|pCtx
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new

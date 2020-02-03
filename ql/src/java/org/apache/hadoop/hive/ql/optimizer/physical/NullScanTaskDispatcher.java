@@ -35,16 +35,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -385,7 +375,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -403,7 +393,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -439,7 +429,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -475,7 +465,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -652,7 +642,7 @@ specifier|public
 class|class
 name|NullScanTaskDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|static
 specifier|final
@@ -677,9 +667,9 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|rules
 decl_stmt|;
@@ -691,9 +681,9 @@ name|context
 parameter_list|,
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|rules
 parameter_list|)
@@ -1453,7 +1443,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest
 comment|// matching rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -1466,7 +1456,7 @@ argument_list|,
 name|walkerCtx
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new

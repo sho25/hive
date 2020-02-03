@@ -51,7 +51,7 @@ block|{
 specifier|public
 name|PreOrderOnceWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

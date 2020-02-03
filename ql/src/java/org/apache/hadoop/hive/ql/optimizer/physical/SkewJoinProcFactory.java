@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|Stack
@@ -109,7 +99,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -201,7 +191,7 @@ name|SkewJoinProcFactory
 block|{
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
@@ -213,7 +203,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinProc
 parameter_list|()
 block|{
@@ -229,7 +219,7 @@ specifier|static
 class|class
 name|SkewJoinJoinProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|Object
@@ -326,7 +316,7 @@ specifier|static
 class|class
 name|SkewJoinDefaultProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|Object

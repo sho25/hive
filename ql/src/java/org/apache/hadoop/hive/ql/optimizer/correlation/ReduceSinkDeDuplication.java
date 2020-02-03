@@ -275,7 +275,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -293,7 +293,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -329,7 +329,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -365,7 +365,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -606,18 +606,18 @@ comment|// If multiple rules can be matched with same cost, last rule will be ch
 comment|// see DefaultRuleDispatcher#dispatch()
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -706,7 +706,7 @@ block|}
 comment|// TODO RS+JOIN
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -722,7 +722,7 @@ argument_list|,
 name|cppCtx
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -797,7 +797,7 @@ name|ReduceSinkDeduplicateProcFactory
 block|{
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getReducerReducerProc
 parameter_list|()
 block|{
@@ -809,7 +809,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGroupbyReducerProc
 parameter_list|()
 block|{
@@ -821,7 +821,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinReducerProc
 parameter_list|()
 block|{
@@ -833,7 +833,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
@@ -849,7 +849,7 @@ specifier|static
 class|class
 name|DefaultProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -887,7 +887,7 @@ specifier|static
 class|class
 name|AbsctractReducerReducerProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override

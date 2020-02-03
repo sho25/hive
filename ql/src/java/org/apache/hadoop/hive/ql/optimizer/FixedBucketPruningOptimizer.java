@@ -297,7 +297,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -316,24 +316,6 @@ operator|.
 name|lib
 operator|.
 name|NodeProcessorCtx
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|metadata
-operator|.
-name|HiveException
 import|;
 end_import
 
@@ -390,28 +372,6 @@ operator|.
 name|PrunerOperatorFactory
 operator|.
 name|FilterPruner
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|calcite
-operator|.
-name|reloperators
-operator|.
-name|HiveExcept
 import|;
 end_import
 
@@ -685,7 +645,7 @@ specifier|public
 class|class
 name|NoopWalker
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override

@@ -63,7 +63,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -296,7 +296,7 @@ block|}
 comment|/**    * Instantiate column processor.    *    * @return    */
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getColumnProcessor
 parameter_list|()
 block|{

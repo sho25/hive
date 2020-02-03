@@ -4589,7 +4589,7 @@ specifier|static
 class|class
 name|DynamicValuePredicateProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -4738,18 +4738,18 @@ comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|exprRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -4777,7 +4777,7 @@ name|DynamicValuePredicateProc
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -4790,7 +4790,7 @@ argument_list|,
 name|ctx
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|egw
 init|=
 operator|new
@@ -5018,7 +5018,7 @@ specifier|static
 class|class
 name|DynamicPartitionPrunerProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|/**      * process simply remembers all the dynamic partition pruning expressions      * found      */
 annotation|@
@@ -5157,18 +5157,18 @@ comment|// the operator stack. The dispatcher
 comment|// generates the plan from the operator tree
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|exprRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -5198,7 +5198,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -5211,7 +5211,7 @@ argument_list|,
 name|ctx
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|egw
 init|=
 operator|new

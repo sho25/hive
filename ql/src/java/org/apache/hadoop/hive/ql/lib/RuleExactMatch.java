@@ -56,7 +56,7 @@ specifier|public
 class|class
 name|RuleExactMatch
 implements|implements
-name|Rule
+name|SemanticRule
 block|{
 specifier|private
 specifier|final

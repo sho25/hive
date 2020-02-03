@@ -57,16 +57,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|lang
 operator|.
 name|annotation
@@ -1517,7 +1507,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -8039,7 +8029,7 @@ block|}
 class|class
 name|VectorizationDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 annotation|@
 name|Override
@@ -14975,7 +14965,7 @@ name|HIVE_TEST_VECTORIZATION_SUPPRESS_EXPLAIN_EXECUTION_MODE
 argument_list|)
 expr_stmt|;
 comment|// create dispatcher and graph walker
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new

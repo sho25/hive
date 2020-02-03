@@ -217,7 +217,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -235,7 +235,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -271,7 +271,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -307,7 +307,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -433,18 +433,18 @@ comment|// Go through all joins - it should only contain selects and filters bet
 comment|// tablescan and join operators.
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -471,7 +471,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -485,7 +485,7 @@ argument_list|,
 name|smbJoinContext
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -573,18 +573,18 @@ argument_list|)
 expr_stmt|;
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -652,7 +652,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -666,7 +666,7 @@ argument_list|,
 name|smbJoinContext
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -716,7 +716,7 @@ name|pctx
 return|;
 block|}
 specifier|private
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSortedMergeBucketMapjoinProc
 parameter_list|(
 name|ParseContext
@@ -732,7 +732,7 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSortedMergeJoinProc
 parameter_list|(
 name|ParseContext
@@ -748,13 +748,13 @@ argument_list|)
 return|;
 block|}
 specifier|private
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
 return|return
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -792,13 +792,13 @@ block|}
 comment|// check if the join operator encountered is a candidate for being converted
 comment|// to a sort-merge join
 specifier|private
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getCheckCandidateJoin
 parameter_list|()
 block|{
 return|return
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@

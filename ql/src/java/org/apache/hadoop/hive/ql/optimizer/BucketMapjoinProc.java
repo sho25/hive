@@ -131,7 +131,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -185,24 +185,6 @@ name|ql
 operator|.
 name|parse
 operator|.
-name|QBJoinTree
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
 name|SemanticException
 import|;
 end_import
@@ -232,7 +214,7 @@ name|BucketMapjoinProc
 extends|extends
 name|AbstractBucketJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|BucketMapjoinProc

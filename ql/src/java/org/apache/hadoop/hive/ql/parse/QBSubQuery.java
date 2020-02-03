@@ -157,7 +157,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -1034,7 +1034,7 @@ decl_stmt|;
 name|String
 name|parentQueryNewAlias
 decl_stmt|;
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|defaultExprProcessor
 decl_stmt|;
 name|Stack
@@ -2246,12 +2246,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"SubQuery can contain only 1 item in Select List."
@@ -2543,12 +2548,17 @@ throw|throw
 operator|new
 name|CalciteSubquerySemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"Correlated Sub Queries cannot contain Windowing clauses."
@@ -2602,12 +2612,17 @@ throw|throw
 operator|new
 name|CalciteSubquerySemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"A predicate on EXISTS/NOT EXISTS SubQuery with implicit Aggregation(no Group By clause) "
@@ -2906,12 +2921,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"SubQuery can contain only 1 item in Select List."
@@ -3024,12 +3044,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"An Exists predicate on SubQuery with implicit Aggregation(no Group By clause) "
@@ -3059,12 +3084,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"A Not Exists predicate on SubQuery with implicit Aggregation(no Group By clause) "
@@ -3086,12 +3116,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"Correlated Sub Queries cannot contain Windowing clauses."
@@ -3130,12 +3165,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 literal|"For Exists/Not Exists operator SubQuery must be Correlated."
@@ -3192,12 +3232,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|INVALID_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQueryAST
 argument_list|,
 name|errorMsg
@@ -3401,12 +3446,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|parentQueryExpression
 argument_list|,
 literal|"Correlating expression contains ambiguous column references."
@@ -3726,12 +3776,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|conjunctAST
 argument_list|,
 literal|"SubQuery expression refers to Outer query expressions only."

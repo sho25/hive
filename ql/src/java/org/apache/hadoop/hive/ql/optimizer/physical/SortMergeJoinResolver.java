@@ -55,7 +55,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -137,7 +137,7 @@ throws|throws
 name|SemanticException
 block|{
 comment|// create dispatcher and graph walker
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new

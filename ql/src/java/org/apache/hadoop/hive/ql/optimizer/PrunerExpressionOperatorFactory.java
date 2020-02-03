@@ -89,7 +89,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -235,7 +235,7 @@ specifier|static
 class|class
 name|GenericFuncExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -503,7 +503,7 @@ specifier|static
 class|class
 name|FieldExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -667,7 +667,7 @@ specifier|abstract
 class|class
 name|ColumnExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -740,7 +740,7 @@ specifier|static
 class|class
 name|DefaultExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -809,7 +809,7 @@ comment|/**    * Instantiate default expression processor.    * @return    */
 specifier|public
 specifier|static
 specifier|final
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultExprProcessor
 parameter_list|()
 block|{
@@ -823,7 +823,7 @@ comment|/**    * Instantiate generic function processor.    *    * @return    */
 specifier|public
 specifier|static
 specifier|final
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGenericFuncProcessor
 parameter_list|()
 block|{
@@ -837,7 +837,7 @@ comment|/**    * Instantiate field processor.    *    * @return    */
 specifier|public
 specifier|static
 specifier|final
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFieldProcessor
 parameter_list|()
 block|{

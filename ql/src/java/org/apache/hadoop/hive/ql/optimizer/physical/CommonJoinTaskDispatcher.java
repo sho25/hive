@@ -425,7 +425,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -462,24 +462,6 @@ operator|.
 name|optimizer
 operator|.
 name|MapJoinProcessor
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|parse
-operator|.
-name|ParseContext
 import|;
 end_import
 
@@ -680,7 +662,7 @@ name|CommonJoinTaskDispatcher
 extends|extends
 name|AbstractJoinTaskDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 name|HashMap
 argument_list|<

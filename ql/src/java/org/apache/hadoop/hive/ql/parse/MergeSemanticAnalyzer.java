@@ -2724,7 +2724,7 @@ block|{
 return|return
 literal|" at "
 operator|+
-name|ErrorMsg
+name|ASTErrorUtils
 operator|.
 name|renderPosition
 argument_list|(

@@ -243,7 +243,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -487,7 +487,7 @@ specifier|static
 class|class
 name|MapRedUnion
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -618,7 +618,7 @@ specifier|static
 class|class
 name|MapUnion
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -742,7 +742,7 @@ specifier|static
 class|class
 name|UnknownUnion
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -984,7 +984,7 @@ specifier|static
 class|class
 name|UnionNoProcessFile
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 name|void
@@ -1655,7 +1655,7 @@ specifier|static
 class|class
 name|NoUnion
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1689,7 +1689,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getMapRedUnion
 parameter_list|()
 block|{
@@ -1701,7 +1701,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getMapUnion
 parameter_list|()
 block|{
@@ -1713,7 +1713,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getUnknownUnion
 parameter_list|()
 block|{
@@ -1725,7 +1725,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getNoUnion
 parameter_list|()
 block|{
@@ -1737,7 +1737,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getUnionNoProcessFile
 parameter_list|()
 block|{

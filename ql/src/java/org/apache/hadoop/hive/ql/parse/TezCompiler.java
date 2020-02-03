@@ -811,7 +811,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -847,7 +847,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -883,7 +883,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -937,7 +937,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -4249,18 +4249,18 @@ comment|// create a walker which walks the tree in a DFS manner while maintainin
 comment|// the operator stack.
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -4347,7 +4347,7 @@ expr_stmt|;
 block|}
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -4388,7 +4388,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -4969,18 +4969,18 @@ comment|// create a walker which walks the tree in a DFS manner while maintainin
 comment|// the operator stack.
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -5008,7 +5008,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -5049,7 +5049,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -5144,18 +5144,18 @@ argument_list|)
 expr_stmt|;
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -5187,7 +5187,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -5228,7 +5228,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -5364,18 +5364,18 @@ comment|// the operator stack.
 comment|// The dispatcher generates the plan from the operator tree
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -5563,7 +5563,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -5602,7 +5602,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -6627,7 +6627,7 @@ specifier|static
 class|class
 name|SMBJoinOpProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -6702,18 +6702,18 @@ name|SemanticException
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -6763,7 +6763,7 @@ name|SMBJoinOpProcContext
 argument_list|()
 decl_stmt|;
 comment|// The dispatcher finds SMB and if there is semijoin optimization before it, removes it.
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -6804,7 +6804,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -7350,18 +7350,18 @@ name|SemanticException
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -7423,7 +7423,7 @@ operator|.
 name|parseContext
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -7464,7 +7464,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -7488,7 +7488,7 @@ specifier|static
 class|class
 name|CollectAll
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 name|PlanMapper
@@ -7671,7 +7671,7 @@ specifier|static
 class|class
 name|MarkRuntimeStatsAsIncorrect
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 name|PlanMapper
@@ -7988,18 +7988,18 @@ name|SemanticException
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -8069,7 +8069,7 @@ name|MarkRuntimeStatsAsIncorrect
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -8110,7 +8110,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -8133,7 +8133,7 @@ specifier|private
 class|class
 name|SemiJoinRemovalProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|final
@@ -8822,7 +8822,7 @@ specifier|static
 class|class
 name|DynamicPruningRemovalRedundantProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -9073,9 +9073,9 @@ name|SemanticException
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
@@ -9165,7 +9165,7 @@ operator|.
 name|parseContext
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -9206,7 +9206,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -9454,18 +9454,18 @@ return|return;
 block|}
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -9530,7 +9530,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -9571,7 +9571,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new

@@ -197,7 +197,7 @@ comment|/**    * Constructor with keeping all the ancestors in the operator stac
 specifier|public
 name|LevelOrderWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{
@@ -219,7 +219,7 @@ comment|/**    * Constructor with specified number of ancestor levels to keep in
 specifier|public
 name|LevelOrderWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|,
 name|int

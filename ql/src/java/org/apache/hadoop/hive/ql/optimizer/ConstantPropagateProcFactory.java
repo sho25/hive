@@ -455,7 +455,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -6932,7 +6932,7 @@ specifier|static
 class|class
 name|ConstantPropagateFilterProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -7256,7 +7256,7 @@ specifier|static
 class|class
 name|ConstantPropagateGroupByProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -7524,7 +7524,7 @@ specifier|static
 class|class
 name|ConstantPropagateDefaultProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -7732,7 +7732,7 @@ specifier|static
 class|class
 name|ConstantPropagateSelectProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -8197,7 +8197,7 @@ specifier|static
 class|class
 name|ConstantPropagateFileSinkProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -8481,7 +8481,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFileSinkProc
 parameter_list|()
 block|{
@@ -8497,7 +8497,7 @@ specifier|static
 class|class
 name|ConstantPropagateStopProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -8593,7 +8593,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getStopProc
 parameter_list|()
 block|{
@@ -8609,7 +8609,7 @@ specifier|static
 class|class
 name|ConstantPropagateReduceSinkProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -9238,7 +9238,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getReduceSinkProc
 parameter_list|()
 block|{
@@ -9254,7 +9254,7 @@ specifier|static
 class|class
 name|ConstantPropagateJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -9721,7 +9721,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinProc
 parameter_list|()
 block|{
@@ -9737,7 +9737,7 @@ specifier|static
 class|class
 name|ConstantPropagateTableScanProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -9887,7 +9887,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getTableScanProc
 parameter_list|()
 block|{

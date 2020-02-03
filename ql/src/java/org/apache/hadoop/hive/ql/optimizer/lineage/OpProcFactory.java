@@ -563,7 +563,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -842,7 +842,7 @@ name|TransformLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1152,7 +1152,7 @@ name|TableScanLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1497,7 +1497,7 @@ name|JoinLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|final
@@ -2189,7 +2189,7 @@ name|LateralViewJoinLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2430,7 +2430,7 @@ name|SelectLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|final
@@ -2790,7 +2790,7 @@ name|GroupByLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|final
@@ -3585,7 +3585,7 @@ name|UnionLineage
 extends|extends
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|SuppressWarnings
@@ -3776,7 +3776,7 @@ specifier|static
 class|class
 name|ReduceSinkLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|final
@@ -4287,7 +4287,7 @@ specifier|static
 class|class
 name|FilterLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -4509,7 +4509,7 @@ specifier|static
 class|class
 name|DefaultLineage
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|SuppressWarnings
@@ -4682,7 +4682,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinProc
 parameter_list|()
 block|{
@@ -4694,7 +4694,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLateralViewJoinProc
 parameter_list|()
 block|{
@@ -4706,7 +4706,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getTSProc
 parameter_list|()
 block|{
@@ -4718,7 +4718,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getTransformProc
 parameter_list|()
 block|{
@@ -4730,7 +4730,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSelProc
 parameter_list|()
 block|{
@@ -4742,7 +4742,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGroupByProc
 parameter_list|()
 block|{
@@ -4754,7 +4754,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getUnionProc
 parameter_list|()
 block|{
@@ -4766,7 +4766,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getReduceSinkProc
 parameter_list|()
 block|{
@@ -4778,7 +4778,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
@@ -4790,7 +4790,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFilterProc
 parameter_list|()
 block|{

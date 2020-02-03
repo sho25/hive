@@ -367,7 +367,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -1417,7 +1417,7 @@ name|ScriptPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2548,7 +2548,7 @@ name|UDTFPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2676,7 +2676,7 @@ name|LateralViewForwardPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2797,7 +2797,7 @@ name|TableScanPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2949,7 +2949,7 @@ name|FilterPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3389,7 +3389,7 @@ name|SimpleFilterPPD
 extends|extends
 name|FilterPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3549,7 +3549,7 @@ name|JoinerPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -4218,7 +4218,7 @@ name|ReduceSinkPPD
 extends|extends
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -4743,7 +4743,7 @@ specifier|static
 class|class
 name|DefaultPPD
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -6397,7 +6397,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFilterProc
 parameter_list|()
 block|{
@@ -6409,7 +6409,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFilterSyntheticJoinPredicateProc
 parameter_list|()
 block|{
@@ -6421,7 +6421,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinProc
 parameter_list|()
 block|{
@@ -6433,7 +6433,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getTSProc
 parameter_list|()
 block|{
@@ -6445,7 +6445,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
@@ -6457,7 +6457,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getPTFProc
 parameter_list|()
 block|{
@@ -6469,7 +6469,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSCRProc
 parameter_list|()
 block|{
@@ -6481,7 +6481,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLIMProc
 parameter_list|()
 block|{
@@ -6493,7 +6493,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLVFProc
 parameter_list|()
 block|{
@@ -6505,7 +6505,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getUDTFProc
 parameter_list|()
 block|{
@@ -6517,7 +6517,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLVJProc
 parameter_list|()
 block|{
@@ -6529,7 +6529,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getRSProc
 parameter_list|()
 block|{

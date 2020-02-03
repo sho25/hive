@@ -23,16 +23,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -162,7 +152,7 @@ specifier|public
 class|class
 name|TaskGraphWalker
 implements|implements
-name|GraphWalker
+name|SemanticGraphWalker
 block|{
 specifier|public
 class|class
@@ -267,7 +257,7 @@ argument_list|()
 decl_stmt|;
 specifier|private
 specifier|final
-name|Dispatcher
+name|SemanticDispatcher
 name|dispatcher
 decl_stmt|;
 specifier|private
@@ -279,7 +269,7 @@ comment|/**    * Constructor.    *    * @param disp    *          dispatcher to 
 specifier|public
 name|TaskGraphWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

@@ -303,7 +303,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -834,7 +834,7 @@ operator|new
 name|PreOrderWalker
 argument_list|(
 operator|new
-name|Dispatcher
+name|SemanticDispatcher
 argument_list|()
 block|{
 annotation|@

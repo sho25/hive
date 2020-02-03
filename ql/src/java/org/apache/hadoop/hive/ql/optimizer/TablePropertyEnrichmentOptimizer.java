@@ -205,7 +205,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -223,7 +223,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -259,7 +259,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -313,7 +313,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -692,7 +692,7 @@ specifier|static
 class|class
 name|Processor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1034,9 +1034,9 @@ argument_list|)
 expr_stmt|;
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
@@ -1079,7 +1079,7 @@ name|getConf
 argument_list|()
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -1116,7 +1116,7 @@ name|values
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|walker
 init|=
 operator|new

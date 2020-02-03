@@ -157,24 +157,6 @@ name|hadoop
 operator|.
 name|hive
 operator|.
-name|accumulo
-operator|.
-name|serde
-operator|.
-name|AccumuloSerDeParameters
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
 name|common
 operator|.
 name|type
@@ -233,7 +215,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -251,7 +233,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -287,7 +269,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -305,7 +287,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -416,26 +398,6 @@ operator|.
 name|generic
 operator|.
 name|GenericUDFToString
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|udf
-operator|.
-name|generic
-operator|.
-name|GenericUDFBridge
 import|;
 end_import
 
@@ -576,22 +538,6 @@ operator|.
 name|generic
 operator|.
 name|GenericUDFOPPlus
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|serde
-operator|.
-name|serdeConstants
 import|;
 end_import
 
@@ -1027,7 +973,7 @@ argument_list|,
 literal|"rid"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -1038,9 +984,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -1048,7 +994,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -1416,7 +1362,7 @@ argument_list|,
 literal|"rid"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -1427,9 +1373,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -1437,7 +1383,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -1938,7 +1884,7 @@ argument_list|,
 literal|"rid"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -1949,9 +1895,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -1959,7 +1905,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -2339,7 +2285,7 @@ argument_list|,
 literal|"rid"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -2350,9 +2296,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -2360,7 +2306,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -2754,7 +2700,7 @@ argument_list|,
 literal|"rid"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -2765,9 +2711,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -2775,7 +2721,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -3060,7 +3006,7 @@ argument_list|,
 literal|"key"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -3071,9 +3017,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -3081,7 +3027,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -3395,7 +3341,7 @@ argument_list|,
 literal|"rid"
 argument_list|)
 decl_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -3406,9 +3352,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -3416,7 +3362,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -3742,7 +3688,7 @@ literal|10
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -3753,9 +3699,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -3763,7 +3709,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -4174,7 +4120,7 @@ literal|10
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -4185,9 +4131,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -4195,7 +4141,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -4485,7 +4431,7 @@ literal|10
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -4496,9 +4442,9 @@ argument_list|,
 name|Collections
 operator|.
 expr|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 operator|>
 name|emptyMap
 argument_list|()
@@ -4506,7 +4452,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new

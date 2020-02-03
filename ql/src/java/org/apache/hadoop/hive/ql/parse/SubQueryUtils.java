@@ -810,12 +810,17 @@ throw|throw
 operator|new
 name|CalciteSubquerySemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subqueryExprNode
 operator|.
 name|getChild
@@ -938,12 +943,17 @@ throw|throw
 operator|new
 name|CalciteSubquerySemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|outerQueryExpr
 argument_list|,
 literal|"IN/EXISTS/SOME/ALL subqueries are not allowed in LHS"
@@ -1486,12 +1496,17 @@ throw|throw
 operator|new
 name|SemanticException
 argument_list|(
+name|ASTErrorUtils
+operator|.
+name|getMsg
+argument_list|(
 name|ErrorMsg
 operator|.
 name|UNSUPPORTED_SUBQUERY_EXPRESSION
 operator|.
 name|getMsg
-argument_list|(
+argument_list|()
+argument_list|,
 name|subQuery
 argument_list|,
 literal|"Only SubQuery expressions that are top level conjuncts are allowed"

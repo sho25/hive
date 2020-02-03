@@ -171,7 +171,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -190,28 +190,6 @@ operator|.
 name|lib
 operator|.
 name|NodeProcessorCtx
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|optimizer
-operator|.
-name|stats
-operator|.
-name|annotation
-operator|.
-name|StatsRulesProcFactory
 import|;
 end_import
 
@@ -400,7 +378,7 @@ specifier|public
 class|class
 name|SetReducerParallelism
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|private
 specifier|static

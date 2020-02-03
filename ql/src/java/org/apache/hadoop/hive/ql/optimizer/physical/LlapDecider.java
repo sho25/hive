@@ -145,16 +145,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -567,7 +557,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -585,7 +575,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -621,7 +611,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -657,7 +647,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -917,20 +907,6 @@ begin_import
 import|import
 name|org
 operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|util
-operator|.
-name|StringUtils
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
 name|slf4j
 operator|.
 name|Logger
@@ -1023,7 +999,7 @@ block|}
 class|class
 name|LlapDecisionDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|private
 specifier|final
@@ -1066,9 +1042,9 @@ specifier|private
 specifier|final
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|rules
 decl_stmt|;
@@ -2493,27 +2469,27 @@ block|}
 specifier|private
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|getRules
 parameter_list|()
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -2535,7 +2511,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -2599,7 +2575,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -2697,7 +2673,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -2806,7 +2782,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -2932,7 +2908,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -3025,7 +3001,7 @@ name|SemanticException
 block|{
 comment|// lets take a look at the operators. we're checking for user
 comment|// code in those. we will not run that in llap.
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -3038,7 +3014,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -3599,7 +3575,7 @@ name|pctx
 return|;
 block|}
 comment|// create dispatcher and graph walker
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new

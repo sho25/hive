@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -68,26 +58,6 @@ operator|.
 name|util
 operator|.
 name|Stack
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
-name|exec
-operator|.
-name|spark
-operator|.
-name|SparkUtilities
 import|;
 end_import
 
@@ -199,7 +169,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -446,7 +416,7 @@ specifier|private
 class|class
 name|SparkDynamicPartitionPruningDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 annotation|@
 name|Override

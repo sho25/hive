@@ -207,7 +207,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -243,7 +243,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -279,7 +279,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -333,7 +333,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -680,18 +680,18 @@ block|{
 comment|// 1. Trigger transformation
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|opRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -717,7 +717,7 @@ name|StructInTransformer
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -730,7 +730,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -782,7 +782,7 @@ specifier|private
 class|class
 name|StructInTransformer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -944,18 +944,18 @@ name|SemanticException
 block|{
 name|Map
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|exprRules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -978,7 +978,7 @@ argument_list|)
 expr_stmt|;
 comment|// The dispatcher fires the processor corresponding to the closest matching
 comment|// rule and passes the context along
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new
@@ -991,7 +991,7 @@ argument_list|,
 literal|null
 argument_list|)
 decl_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|egw
 init|=
 operator|new
@@ -1064,7 +1064,7 @@ specifier|private
 class|class
 name|StructInExprProcessor
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 comment|/** TableInfo is populated in PASS 1 of process(). It contains the information required      * to generate an IN clause of the following format:      * STRUCT(T1.a, T1.b) IN (const STRUCT(1, 2), const STRUCT(2, 3))      * In the above e.g. please note that all elements of the struct come from the same table.      * The populated TableStructInfo is used to generate the IN clause in PASS 2 of process().      * The table struct information class has the following fields:      * 1. Expression Node Descriptor for the Left Hand Side of the IN clause for the table      * 2. 2-D List of expression node descriptors which corresponds to the elements of IN clause      */
 class|class

@@ -61,7 +61,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -98,7 +98,7 @@ comment|/**    * constructor of the walker - the dispatcher is passed.    *     
 specifier|public
 name|GenMapRedWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

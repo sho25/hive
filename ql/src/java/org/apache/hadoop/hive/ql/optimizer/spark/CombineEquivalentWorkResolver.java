@@ -213,7 +213,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -435,7 +435,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -677,7 +677,7 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// use a pre-order walker so that DPP sink works are visited (and combined) first
-name|GraphWalker
+name|SemanticGraphWalker
 name|taskWalker
 init|=
 operator|new
@@ -717,7 +717,7 @@ block|}
 class|class
 name|EquivalentWorkMatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|private
 name|Comparator

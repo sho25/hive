@@ -129,7 +129,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -194,7 +194,7 @@ name|SortedMergeBucketMapjoinProc
 extends|extends
 name|AbstractSMBJoinProc
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 specifier|public
 name|SortedMergeBucketMapjoinProc

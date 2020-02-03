@@ -555,7 +555,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -1786,7 +1786,7 @@ name|TableScanStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1986,7 +1986,7 @@ name|SelectStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2299,7 +2299,7 @@ name|FilterStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -8703,7 +8703,7 @@ name|GroupByStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -11204,7 +11204,7 @@ name|JoinStatsRule
 extends|extends
 name|FilterStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -16699,7 +16699,7 @@ name|LimitStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -17003,7 +17003,7 @@ name|ReduceSinkStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -17387,7 +17387,7 @@ name|UDTFStatsRule
 extends|extends
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -17667,7 +17667,7 @@ specifier|static
 class|class
 name|DefaultStatsRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -17981,7 +17981,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getTableScanRule
 parameter_list|()
 block|{
@@ -17993,7 +17993,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSelectRule
 parameter_list|()
 block|{
@@ -18005,7 +18005,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFilterRule
 parameter_list|()
 block|{
@@ -18017,7 +18017,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGroupByRule
 parameter_list|()
 block|{
@@ -18029,7 +18029,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinRule
 parameter_list|()
 block|{
@@ -18041,7 +18041,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLimitRule
 parameter_list|()
 block|{
@@ -18053,7 +18053,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getReduceSinkRule
 parameter_list|()
 block|{
@@ -18065,7 +18065,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getUDTFRule
 parameter_list|()
 block|{
@@ -18077,7 +18077,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultRule
 parameter_list|()
 block|{

@@ -257,7 +257,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -574,7 +574,7 @@ specifier|static
 class|class
 name|DefaultInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -816,7 +816,7 @@ name|JoinInferrer
 extends|extends
 name|DefaultInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1790,7 +1790,7 @@ name|SelectInferrer
 extends|extends
 name|DefaultInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -2427,7 +2427,7 @@ name|FileSinkInferrer
 extends|extends
 name|DefaultInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3111,7 +3111,7 @@ name|MultiGroupByInferrer
 extends|extends
 name|GroupByInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3281,7 +3281,7 @@ name|GroupByInferrer
 extends|extends
 name|DefaultInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -3761,7 +3761,7 @@ name|ForwardingInferrer
 extends|extends
 name|DefaultInferrer
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|SuppressWarnings
@@ -3823,7 +3823,7 @@ block|}
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
@@ -3835,7 +3835,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getJoinProc
 parameter_list|()
 block|{
@@ -3847,7 +3847,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getSelProc
 parameter_list|()
 block|{
@@ -3859,7 +3859,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getGroupByProc
 parameter_list|()
 block|{
@@ -3871,7 +3871,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFileSinkProc
 parameter_list|()
 block|{
@@ -3883,7 +3883,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getFilterProc
 parameter_list|()
 block|{
@@ -3895,7 +3895,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLimitProc
 parameter_list|()
 block|{
@@ -3907,7 +3907,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLateralViewForwardProc
 parameter_list|()
 block|{
@@ -3919,7 +3919,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getLateralViewJoinProc
 parameter_list|()
 block|{
@@ -3931,7 +3931,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getForwardProc
 parameter_list|()
 block|{
@@ -3943,7 +3943,7 @@ return|;
 block|}
 specifier|public
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getMultiGroupByProc
 parameter_list|()
 block|{

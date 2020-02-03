@@ -25,16 +25,6 @@ begin_import
 import|import
 name|java
 operator|.
-name|io
-operator|.
-name|Serializable
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
 name|util
 operator|.
 name|ArrayList
@@ -223,7 +213,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Dispatcher
+name|SemanticDispatcher
 import|;
 end_import
 
@@ -241,7 +231,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|GraphWalker
+name|SemanticGraphWalker
 import|;
 end_import
 
@@ -277,7 +267,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -313,7 +303,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|Rule
+name|SemanticRule
 import|;
 end_import
 
@@ -512,7 +502,7 @@ specifier|public
 class|class
 name|Serializer
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|private
 specifier|final
@@ -797,7 +787,7 @@ parameter_list|)
 throws|throws
 name|SemanticException
 block|{
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 literal|null
@@ -818,18 +808,18 @@ argument_list|()
 decl_stmt|;
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|rules
 init|=
 operator|new
 name|LinkedHashMap
 argument_list|<
-name|Rule
+name|SemanticRule
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 argument_list|()
 decl_stmt|;
@@ -851,7 +841,7 @@ literal|"%"
 argument_list|)
 argument_list|,
 operator|new
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|()
 block|{
 annotation|@
@@ -906,7 +896,7 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-name|GraphWalker
+name|SemanticGraphWalker
 name|ogw
 init|=
 operator|new
@@ -1113,7 +1103,7 @@ specifier|public
 class|class
 name|DefaultRule
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -1164,7 +1154,7 @@ name|getConf
 argument_list|()
 expr_stmt|;
 comment|// create dispatcher and graph walker
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 init|=
 operator|new

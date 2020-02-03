@@ -72,7 +72,7 @@ comment|/**    * Constructor.    *    * @param disp    * dispatcher to call for 
 specifier|public
 name|ExpressionWalker
 parameter_list|(
-name|Dispatcher
+name|SemanticDispatcher
 name|disp
 parameter_list|)
 block|{

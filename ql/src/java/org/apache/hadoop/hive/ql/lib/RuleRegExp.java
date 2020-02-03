@@ -130,7 +130,7 @@ specifier|public
 class|class
 name|RuleRegExp
 implements|implements
-name|Rule
+name|SemanticRule
 block|{
 specifier|private
 specifier|final

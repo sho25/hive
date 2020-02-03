@@ -88,7 +88,7 @@ specifier|public
 class|class
 name|CostLessRuleDispatcher
 implements|implements
-name|Dispatcher
+name|SemanticDispatcher
 block|{
 specifier|private
 specifier|final
@@ -96,7 +96,7 @@ name|SetMultimap
 argument_list|<
 name|Integer
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|procRules
 decl_stmt|;
@@ -107,21 +107,21 @@ name|procCtx
 decl_stmt|;
 specifier|private
 specifier|final
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|defaultProc
 decl_stmt|;
 comment|/**    * Constructor.    *    * @param defaultProc default processor to be fired if no rule matches    * @param rules       Map mapping the node's type to processor    * @param procCtx     operator processor context, which is opaque to the dispatcher    */
 specifier|public
 name|CostLessRuleDispatcher
 parameter_list|(
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|defaultProc
 parameter_list|,
 name|SetMultimap
 argument_list|<
 name|Integer
 argument_list|,
-name|NodeProcessor
+name|SemanticNodeProcessor
 argument_list|>
 name|rules
 parameter_list|,
@@ -182,7 +182,7 @@ operator|.
 name|getType
 argument_list|()
 decl_stmt|;
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|processor
 init|=
 name|this

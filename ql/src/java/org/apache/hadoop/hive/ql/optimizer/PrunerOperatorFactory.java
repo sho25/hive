@@ -135,7 +135,7 @@ name|ql
 operator|.
 name|lib
 operator|.
-name|NodeProcessor
+name|SemanticNodeProcessor
 import|;
 end_import
 
@@ -248,7 +248,7 @@ specifier|abstract
 class|class
 name|FilterPruner
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -681,7 +681,7 @@ specifier|static
 class|class
 name|DefaultPruner
 implements|implements
-name|NodeProcessor
+name|SemanticNodeProcessor
 block|{
 annotation|@
 name|Override
@@ -718,7 +718,7 @@ comment|/**    * Instantiate default processor.    *    * It's not supposed to b
 specifier|public
 specifier|final
 specifier|static
-name|NodeProcessor
+name|SemanticNodeProcessor
 name|getDefaultProc
 parameter_list|()
 block|{
