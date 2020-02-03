@@ -1329,6 +1329,15 @@ name|e
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|ci
+operator|.
+name|errorMessage
+operator|=
+name|e
+operator|.
+name|getMessage
+argument_list|()
+expr_stmt|;
 name|txnHandler
 operator|.
 name|markFailed

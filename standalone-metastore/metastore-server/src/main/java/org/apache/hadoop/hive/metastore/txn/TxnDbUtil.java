@@ -573,7 +573,9 @@ literal|" CQ_HIGHEST_WRITE_ID bigint,"
 operator|+
 literal|" CQ_META_INFO varchar(2048) for bit data,"
 operator|+
-literal|" CQ_HADOOP_JOB_ID varchar(32))"
+literal|" CQ_HADOOP_JOB_ID varchar(32),"
+operator|+
+literal|" CQ_ERROR_MESSAGE clob)"
 argument_list|)
 expr_stmt|;
 name|stmt
@@ -622,7 +624,9 @@ literal|" CC_HIGHEST_WRITE_ID bigint,"
 operator|+
 literal|" CC_META_INFO varchar(2048) for bit data,"
 operator|+
-literal|" CC_HADOOP_JOB_ID varchar(32))"
+literal|" CC_HADOOP_JOB_ID varchar(32),"
+operator|+
+literal|" CC_ERROR_MESSAGE clob)"
 argument_list|)
 expr_stmt|;
 name|stmt

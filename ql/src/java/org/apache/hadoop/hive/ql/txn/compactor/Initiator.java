@@ -1134,6 +1134,15 @@ argument_list|,
 name|t
 argument_list|)
 expr_stmt|;
+name|ci
+operator|.
+name|errorMessage
+operator|=
+name|t
+operator|.
+name|getMessage
+argument_list|()
+expr_stmt|;
 name|txnHandler
 operator|.
 name|markFailed
@@ -3107,6 +3116,20 @@ operator|+
 literal|" attempts to compact it failed."
 argument_list|)
 expr_stmt|;
+name|ci
+operator|.
+name|errorMessage
+operator|=
+literal|"Compaction is not initiated since last "
+operator|+
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|COMPACTOR_INITIATOR_FAILED_THRESHOLD
+operator|+
+literal|" consecutive compaction attempts failed)"
+expr_stmt|;
 name|txnHandler
 operator|.
 name|markFailed
@@ -3129,16 +3152,49 @@ name|LOG
 operator|.
 name|error
 argument_list|(
-literal|"Caught exception while checking compaction eligibility "
-operator|+
-name|StringUtils
-operator|.
-name|stringifyException
-argument_list|(
+literal|"Caught exception while checking compaction eligibility."
+argument_list|,
 name|e
 argument_list|)
+expr_stmt|;
+try|try
+block|{
+name|ci
+operator|.
+name|errorMessage
+operator|=
+name|e
+operator|.
+name|getMessage
+argument_list|()
+expr_stmt|;
+name|txnHandler
+operator|.
+name|markFailed
+argument_list|(
+name|ci
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|MetaException
+name|ex
+parameter_list|)
+block|{
+name|LOG
+operator|.
+name|error
+argument_list|(
+literal|"Caught exception while marking compaction as failed."
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
 block|}
 return|return
 literal|true

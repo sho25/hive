@@ -2016,7 +2016,11 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = ?"
+literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, "
+operator|+
+literal|"CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, "
+operator|+
+literal|"CQ_HADOOP_JOB_ID, CQ_ERROR_MESSAGE from COMPACTION_QUEUE WHERE CQ_ID = ?"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -2159,7 +2163,13 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
+literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, "
+operator|+
+literal|"CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, "
+operator|+
+literal|"CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID, CC_ERROR_MESSAGE) "
+operator|+
+literal|"VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)"
 argument_list|)
 expr_stmt|;
 name|info
@@ -5741,6 +5751,15 @@ name|rs
 init|=
 literal|null
 decl_stmt|;
+comment|// the error message related to the failure is wrapped inside CompactionInfo
+comment|// fetch this info, since ci will be reused in subsequent queries
+name|String
+name|errorMessage
+init|=
+name|ci
+operator|.
+name|errorMessage
+decl_stmt|;
 try|try
 block|{
 name|dbConn
@@ -5765,7 +5784,11 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, CQ_HADOOP_JOB_ID from COMPACTION_QUEUE WHERE CQ_ID = ?"
+literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, "
+operator|+
+literal|"CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, "
+operator|+
+literal|"CQ_HADOOP_JOB_ID, CQ_ERROR_MESSAGE from COMPACTION_QUEUE WHERE CQ_ID = ?"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -5961,9 +5984,29 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID) VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)"
+literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, "
+operator|+
+literal|"CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, "
+operator|+
+literal|"CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID, CC_ERROR_MESSAGE) "
+operator|+
+literal|"VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)"
 argument_list|)
 expr_stmt|;
+if|if
+condition|(
+name|errorMessage
+operator|!=
+literal|null
+condition|)
+block|{
+name|ci
+operator|.
+name|errorMessage
+operator|=
+name|errorMessage
+expr_stmt|;
+block|}
 name|CompactionInfo
 operator|.
 name|insertIntoCompletedCompactions

@@ -155,9 +155,9 @@ specifier|final
 name|String
 name|SCHEMA
 init|=
-literal|"compactionid,dbname,tabname,partname,type,state,hostname,workerid,starttime,duration,hadoopjobid#"
+literal|"compactionid,dbname,tabname,partname,type,state,hostname,workerid,starttime,duration,hadoopjobid,errormessage#"
 operator|+
-literal|"string:string:string:string:string:string:string:string:string:string:string"
+literal|"string:string:string:string:string:string:string:string:string:string:string:string"
 decl_stmt|;
 specifier|private
 name|String

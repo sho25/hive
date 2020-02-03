@@ -17802,11 +17802,15 @@ init|=
 literal|"SELECT \"CQ_DATABASE\", \"CQ_TABLE\", \"CQ_PARTITION\", \"CQ_STATE\", \"CQ_TYPE\", \"CQ_WORKER_ID\", "
 operator|+
 comment|//-1 because 'null' literal doesn't work for all DBs...
-literal|"\"CQ_START\", -1 \"CC_END\", \"CQ_RUN_AS\", \"CQ_HADOOP_JOB_ID\", \"CQ_ID\" FROM \"COMPACTION_QUEUE\" UNION ALL "
+literal|"\"CQ_START\", -1 \"CC_END\", \"CQ_RUN_AS\", \"CQ_HADOOP_JOB_ID\", \"CQ_ID\", \"CQ_ERROR_MESSAGE\" "
+operator|+
+literal|"FROM \"COMPACTION_QUEUE\" UNION ALL "
 operator|+
 literal|"SELECT \"CC_DATABASE\", \"CC_TABLE\", \"CC_PARTITION\", \"CC_STATE\", \"CC_TYPE\", \"CC_WORKER_ID\", "
 operator|+
-literal|"\"CC_START\", \"CC_END\", \"CC_RUN_AS\", \"CC_HADOOP_JOB_ID\", \"CC_ID\" FROM \"COMPLETED_COMPACTIONS\""
+literal|"\"CC_START\", \"CC_END\", \"CC_RUN_AS\", \"CC_HADOOP_JOB_ID\", \"CC_ID\", \"CC_ERROR_MESSAGE\""
+operator|+
+literal|" FROM \"COMPLETED_COMPACTIONS\""
 decl_stmt|;
 comment|//todo: sort by cq_id?
 comment|//what I want is order by cc_end desc, cc_start asc (but derby has a bug https://issues.apache.org/jira/browse/DERBY-6013)
@@ -18047,6 +18051,18 @@ operator|.
 name|getLong
 argument_list|(
 literal|11
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|e
+operator|.
+name|setErrorMessage
+argument_list|(
+name|rs
+operator|.
+name|getString
+argument_list|(
+literal|12
 argument_list|)
 argument_list|)
 expr_stmt|;
