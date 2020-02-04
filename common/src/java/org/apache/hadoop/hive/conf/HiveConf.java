@@ -12277,7 +12277,7 @@ name|HIVE_SERVER2_TEZ_INITIALIZE_DEFAULT_SESSIONS
 argument_list|(
 literal|"hive.server2.tez.initialize.default.sessions"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"This flag is used in HiveServer2 to enable a user to use HiveServer2 without\n"
 operator|+
