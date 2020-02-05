@@ -175,6 +175,42 @@ name|SQLException
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|DatabaseProduct
+operator|.
+name|MYSQL
+import|;
+end_import
+
+begin_import
+import|import static
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|metastore
+operator|.
+name|DatabaseProduct
+operator|.
+name|determineDatabaseProduct
+import|;
+end_import
+
 begin_comment
 comment|/**  * DataSourceProvider for the dbcp connection pool.  */
 end_comment
@@ -660,6 +696,9 @@ decl_stmt|;
 comment|// This doesn't get used, but it's still necessary, see
 comment|// https://git1-us-west.apache.org/repos/asf?p=commons-dbcp.git;a=blob;f=doc/ManualPoolingDataSourceExample.java;
 comment|// h=f45af2b8481f030b27364e505984c0eef4f35cdb;hb=refs/heads/DBCP_1_5_x_BRANCH
+name|PoolableConnectionFactory
+name|poolableConnFactory
+init|=
 operator|new
 name|PoolableConnectionFactory
 argument_list|(
@@ -675,7 +714,25 @@ literal|false
 argument_list|,
 literal|true
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+name|determineDatabaseProduct
+argument_list|(
+name|driverUrl
+argument_list|)
+operator|==
+name|MYSQL
+condition|)
+block|{
+name|poolableConnFactory
+operator|.
+name|setValidationQuery
+argument_list|(
+literal|"SET @@session.sql_mode=ANSI_QUOTES"
+argument_list|)
 expr_stmt|;
+block|}
 return|return
 operator|new
 name|PoolingDataSource
