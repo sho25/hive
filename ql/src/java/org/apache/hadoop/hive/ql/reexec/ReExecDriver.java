@@ -882,14 +882,14 @@ name|void
 name|setOperationId
 parameter_list|(
 name|String
-name|guid64
+name|operationId
 parameter_list|)
 block|{
 name|coreDriver
 operator|.
 name|setOperationId
 argument_list|(
-name|guid64
+name|operationId
 argument_list|)
 expr_stmt|;
 block|}

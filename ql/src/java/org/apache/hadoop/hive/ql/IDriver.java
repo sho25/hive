@@ -223,7 +223,7 @@ name|void
 name|setOperationId
 parameter_list|(
 name|String
-name|guid64
+name|operationId
 parameter_list|)
 function_decl|;
 name|CommandProcessorResponse
