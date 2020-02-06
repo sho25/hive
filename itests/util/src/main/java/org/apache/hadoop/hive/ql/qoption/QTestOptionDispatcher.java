@@ -65,7 +65,7 @@ name|java
 operator|.
 name|util
 operator|.
-name|HashMap
+name|LinkedHashMap
 import|;
 end_import
 
@@ -120,7 +120,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Provides facilities to invoke {@link QTestOptionHandler}-s.  *   * Enables to dispatch option arguments to a specific option handler.  * The option invocation format is '--! qt:<optionName>:<optionArgs>   *   * Please refer to specific implementations of {@link QTestOptionHandler} for more detailed information about them.   */
+comment|/**  * Provides facilities to invoke {@link QTestOptionHandler}-s.  *  * Enables to dispatch option arguments to a specific option handler.  * The option invocation format is '--! qt:<optionName>:<optionArgs>  *  * Please refer to specific implementations of {@link QTestOptionHandler} for more detailed information about them.  */
 end_comment
 
 begin_class
@@ -137,7 +137,7 @@ argument_list|>
 name|handlers
 init|=
 operator|new
-name|HashMap
+name|LinkedHashMap
 argument_list|<
 name|String
 argument_list|,

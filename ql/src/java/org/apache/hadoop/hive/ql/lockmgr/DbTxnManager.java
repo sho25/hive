@@ -923,6 +923,14 @@ argument_list|(
 name|CLASS_NAME
 argument_list|)
 decl_stmt|;
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|GLOBAL_LOCKS
+init|=
+literal|"__GLOBAL_LOCKS"
+decl_stmt|;
 specifier|private
 specifier|volatile
 name|DbLockManager
@@ -2253,7 +2261,7 @@ name|compBuilder
 operator|.
 name|setDbName
 argument_list|(
-literal|"__GLOBAL_LOCKS"
+name|GLOBAL_LOCKS
 argument_list|)
 expr_stmt|;
 name|compBuilder

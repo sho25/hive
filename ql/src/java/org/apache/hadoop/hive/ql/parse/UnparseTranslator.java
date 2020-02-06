@@ -429,6 +429,7 @@ argument_list|)
 expr_stmt|;
 block|}
 comment|/**    * Register a translation for an tabName.    *    * @param node    *          source node (which must be an tabName) to be replaced    */
+specifier|public
 name|void
 name|addTableNameTranslation
 parameter_list|(
