@@ -75966,6 +75966,15 @@ name|ret
 operator|.
 name|setQuery
 argument_list|(
+literal|"/* schedule: "
+operator|+
+name|schq
+operator|.
+name|getScheduleName
+argument_list|()
+operator|+
+literal|" */"
+operator|+
 name|schq
 operator|.
 name|getQuery
