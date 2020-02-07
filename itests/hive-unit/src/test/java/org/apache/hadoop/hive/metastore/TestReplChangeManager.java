@@ -2196,6 +2196,15 @@ argument_list|)
 decl_stmt|;
 name|fs
 operator|.
+name|delete
+argument_list|(
+name|dirDb
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
+name|fs
+operator|.
 name|mkdirs
 argument_list|(
 name|dirDb

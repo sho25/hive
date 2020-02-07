@@ -303,6 +303,22 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|hdfs
+operator|.
+name|protocol
+operator|.
+name|EncryptionZone
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|io
 operator|.
 name|LongWritable
@@ -1732,7 +1748,7 @@ parameter_list|)
 throws|throws
 name|IOException
 function_decl|;
-comment|/**      * create encryption zone by path and keyname      * @param path HDFS path to create encryption zone      * @param keyName keyname      * @throws IOException      */
+comment|/**      * Create encryption zone by path and keyname.      * @param path HDFS path to create encryption zone      * @param keyName keyname      * @throws IOException      */
 annotation|@
 name|VisibleForTesting
 specifier|public
@@ -1744,6 +1760,16 @@ name|path
 parameter_list|,
 name|String
 name|keyName
+parameter_list|)
+throws|throws
+name|IOException
+function_decl|;
+comment|/**      * Get encryption zone by path.      * @param path HDFS path to create encryption zone.      * @throws IOException      */
+name|EncryptionZone
+name|getEncryptionZoneForPath
+parameter_list|(
+name|Path
+name|path
 parameter_list|)
 throws|throws
 name|IOException
@@ -1893,6 +1919,22 @@ name|keyName
 parameter_list|)
 block|{
 comment|/* not supported */
+block|}
+annotation|@
+name|Override
+specifier|public
+name|EncryptionZone
+name|getEncryptionZoneForPath
+parameter_list|(
+name|Path
+name|path
+parameter_list|)
+throws|throws
+name|IOException
+block|{
+return|return
+literal|null
+return|;
 block|}
 annotation|@
 name|Override

@@ -3556,6 +3556,28 @@ argument_list|,
 literal|"Root dir for ChangeManager, used for deleted files."
 argument_list|)
 block|,
+name|REPLCMENCRYPTEDDIR
+argument_list|(
+literal|"metastore.repl.cm.encryptionzone.rootdir"
+argument_list|,
+literal|"hive.repl.cm.encryptionzone.rootdir"
+argument_list|,
+literal|".cmroot"
+argument_list|,
+literal|"Root dir for ChangeManager if encryption zones are enabled, used for deleted files."
+argument_list|)
+block|,
+name|REPLCMFALLBACKNONENCRYPTEDDIR
+argument_list|(
+literal|"metastore.repl.cm.nonencryptionzone.rootdir"
+argument_list|,
+literal|"hive.repl.cm.nonencryptionzone.rootdir"
+argument_list|,
+literal|"/user/${system:user.name}/cmroot/"
+argument_list|,
+literal|"Root dir for ChangeManager for non encrypted paths if hive.repl.cmrootdir is encrypted."
+argument_list|)
+block|,
 name|REPLCMRETIAN
 argument_list|(
 literal|"metastore.repl.cm.retain"

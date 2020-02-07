@@ -12193,7 +12193,7 @@ argument_list|()
 operator|&&
 name|ReplChangeManager
 operator|.
-name|isSourceOfReplication
+name|shouldEnableCm
 argument_list|(
 name|Hive
 operator|.
@@ -12207,6 +12207,11 @@ operator|.
 name|getDbName
 argument_list|()
 argument_list|)
+argument_list|,
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|replaceFiles
@@ -16837,7 +16842,7 @@ argument_list|()
 operator|&&
 name|ReplChangeManager
 operator|.
-name|isSourceOfReplication
+name|shouldEnableCm
 argument_list|(
 name|Hive
 operator|.
@@ -16851,6 +16856,11 @@ operator|.
 name|getDbName
 argument_list|()
 argument_list|)
+argument_list|,
+name|tbl
+operator|.
+name|getTTable
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|replaceFiles

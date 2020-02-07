@@ -1541,6 +1541,32 @@ argument_list|,
 literal|"false"
 argument_list|)
 expr_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|ConfVars
+operator|.
+name|REPLCMENABLED
+operator|.
+name|varname
+argument_list|,
+literal|"true"
+argument_list|)
+expr_stmt|;
+name|System
+operator|.
+name|setProperty
+argument_list|(
+name|ConfVars
+operator|.
+name|REPLCMDIR
+operator|.
+name|varname
+argument_list|,
+literal|"cmroot"
+argument_list|)
+expr_stmt|;
 name|con
 operator|=
 name|getConnection
@@ -17850,6 +17876,20 @@ operator|.
 name|execute
 argument_list|(
 literal|"set hive.metastore.dml.events = true"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.repl.cm.enabled = true"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"set hive.repl.cmrootdir = cmroot"
 argument_list|)
 expr_stmt|;
 name|stmt

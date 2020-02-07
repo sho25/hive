@@ -6797,7 +6797,7 @@ literal|null
 operator|)
 return|;
 block|}
-specifier|private
+specifier|public
 name|EncryptionZone
 name|getEncryptionZoneForPath
 parameter_list|(
