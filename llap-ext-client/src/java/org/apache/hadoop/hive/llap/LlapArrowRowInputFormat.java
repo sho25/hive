@@ -111,8 +111,52 @@ name|IOException
 import|;
 end_import
 
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|arrow
+operator|.
+name|memory
+operator|.
+name|BufferAllocator
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
+name|ql
+operator|.
+name|io
+operator|.
+name|arrow
+operator|.
+name|RootAllocatorFactory
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
+name|util
+operator|.
+name|UUID
+import|;
+end_import
+
 begin_comment
-comment|/*  * Adapts an Arrow batch reader to a row reader  */
+comment|/*  * Adapts an Arrow batch reader to a row reader  * Only used for testing  */
 end_comment
 
 begin_class
@@ -138,6 +182,37 @@ name|long
 name|arrowAllocatorLimit
 parameter_list|)
 block|{
+name|BufferAllocator
+name|allocator
+init|=
+name|RootAllocatorFactory
+operator|.
+name|INSTANCE
+operator|.
+name|getOrCreateRootAllocator
+argument_list|(
+name|arrowAllocatorLimit
+argument_list|)
+operator|.
+name|newChildAllocator
+argument_list|(
+comment|//allocator name, use UUID for testing
+name|UUID
+operator|.
+name|randomUUID
+argument_list|()
+operator|.
+name|toString
+argument_list|()
+argument_list|,
+comment|//No use for reservation, allocators claim memory from the same pool,
+comment|//but allocate/releases are tracked per-allocator
+literal|0
+argument_list|,
+comment|//Limit passed in by client
+name|arrowAllocatorLimit
+argument_list|)
+decl_stmt|;
 name|baseInputFormat
 operator|=
 operator|new
@@ -145,7 +220,7 @@ name|LlapBaseInputFormat
 argument_list|(
 literal|true
 argument_list|,
-name|arrowAllocatorLimit
+name|allocator
 argument_list|)
 expr_stmt|;
 block|}
