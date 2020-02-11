@@ -405,30 +405,30 @@ comment|// Check for completed transactions
 name|String
 name|s
 init|=
-literal|"select distinct tc.ctc_database, tc.ctc_table, tc.ctc_partition "
+literal|"SELECT DISTINCT \"TC\".\"CTC_DATABASE\", \"TC\".\"CTC_TABLE\", \"TC\".\"CTC_PARTITION\" "
 operator|+
-literal|"from COMPLETED_TXN_COMPONENTS tc "
+literal|"FROM \"COMPLETED_TXN_COMPONENTS\" TC "
 operator|+
 operator|(
 name|checkInterval
 operator|>
 literal|0
 condition|?
-literal|"left join ( "
+literal|"LEFT JOIN ( "
 operator|+
-literal|"  select c1.* from COMPLETED_COMPACTIONS c1 "
+literal|"  SELECT \"C1\".* FROM \"COMPLETED_COMPACTIONS\" \"C1\" "
 operator|+
-literal|"  inner join ( "
+literal|"  INNER JOIN ( "
 operator|+
-literal|"    select max(cc_id) cc_id from COMPLETED_COMPACTIONS "
+literal|"    SELECT MAX(\"CC_ID\") \"CC_ID\" FROM \"COMPLETED_COMPACTIONS\" "
 operator|+
-literal|"    group by cc_database, cc_table, cc_partition"
+literal|"    GROUP BY \"CC_DATABASE\", \"CC_TABLE\", \"CC_PARTITION\""
 operator|+
-literal|"  ) c2 "
+literal|"  ) \"C2\" "
 operator|+
-literal|"  on c1.cc_id = c2.cc_id "
+literal|"  ON \"C1\".\"CC_ID\" = \"C2\".\"CC_ID\" "
 operator|+
-literal|"  where c1.cc_state IN ("
+literal|"  WHERE \"C1\".\"CC_STATE\" IN ("
 operator|+
 name|quoteChar
 argument_list|(
@@ -444,17 +444,17 @@ argument_list|)
 operator|+
 literal|")"
 operator|+
-literal|") c "
+literal|") \"C\" "
 operator|+
-literal|"on tc.ctc_database = c.cc_database and tc.ctc_table = c.cc_table "
+literal|"ON \"TC\".\"CTC_DATABASE\" = \"C\".\"CC_DATABASE\" AND \"TC\".\"CTC_TABLE\" = \"C\".\"CC_TABLE\" "
 operator|+
-literal|"  and (tc.ctc_partition = c.cc_partition or (tc.ctc_partition is null and c.cc_partition is null)) "
+literal|"  AND (\"TC\".\"CTC_PARTITION\" = \"C\".\"CC_PARTITION\" OR (\"TC\".\"CTC_PARTITION\" IS NULL AND \"C\".\"CC_PARTITION\" IS NULL)) "
 operator|+
-literal|"where c.cc_id is not null or "
+literal|"WHERE \"C\".\"CC_ID\" IS NOT NULL OR "
 operator|+
 name|isWithinCheckInterval
 argument_list|(
-literal|"tc.ctc_timestamp"
+literal|"\"TC\".\"CTC_TIMESTAMP\""
 argument_list|,
 name|checkInterval
 argument_list|)
@@ -546,19 +546,19 @@ expr_stmt|;
 comment|// Check for aborted txns
 name|s
 operator|=
-literal|"select tc_database, tc_table, tc_partition "
+literal|"SELECT \"TC_DATABASE\", \"TC_TABLE\", \"TC_PARTITION\" "
 operator|+
-literal|"from TXNS, TXN_COMPONENTS "
+literal|"FROM \"TXNS\", \"TXN_COMPONENTS\" "
 operator|+
-literal|"where txn_id = tc_txnid and txn_state = '"
+literal|"WHERE \"TXN_ID\" = \"TC_TXNID\" AND \"TXN_STATE\" = '"
 operator|+
 name|TXN_ABORTED
 operator|+
 literal|"' "
 operator|+
-literal|"group by tc_database, tc_table, tc_partition "
+literal|"GROUP BY \"TC_DATABASE\", \"TC_TABLE\", \"TC_PARTITION\" "
 operator|+
-literal|"having count(*)> "
+literal|"HAVING COUNT(*)> "
 operator|+
 name|abortedThreshold
 expr_stmt|;
@@ -782,9 +782,9 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select cq_id, cq_database, cq_table, cq_partition, "
+literal|"SELECT \"CQ_ID\", \"CQ_DATABASE\", \"CQ_TABLE\", \"CQ_PARTITION\", "
 operator|+
-literal|"cq_type, cq_tblproperties from COMPACTION_QUEUE where cq_state = '"
+literal|"\"CQ_TYPE\", \"CQ_TBLPROPERTIES\" FROM \"COMPACTION_QUEUE\" WHERE \"CQ_STATE\" = '"
 operator|+
 name|INITIATED_STATE
 operator|+
@@ -936,27 +936,27 @@ argument_list|)
 decl_stmt|;
 name|s
 operator|=
-literal|"update COMPACTION_QUEUE set cq_worker_id = '"
+literal|"UPDATE \"COMPACTION_QUEUE\" SET \"CQ_WORKER_ID\" = '"
 operator|+
 name|workerId
 operator|+
 literal|"', "
 operator|+
-literal|"cq_start = "
+literal|"\"CQ_START\" = "
 operator|+
 name|now
 operator|+
-literal|", cq_state = '"
+literal|", \"CQ_STATE\" = '"
 operator|+
 name|WORKING_STATE
 operator|+
-literal|"' where cq_id = "
+literal|"' WHERE \"CQ_ID\" = "
 operator|+
 name|info
 operator|.
 name|id
 operator|+
-literal|" AND cq_state='"
+literal|" AND \"CQ_STATE\"='"
 operator|+
 name|INITIATED_STATE
 operator|+
@@ -1202,13 +1202,13 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"update COMPACTION_QUEUE set cq_state = '"
+literal|"UPDATE \"COMPACTION_QUEUE\" SET \"CQ_STATE\" = '"
 operator|+
 name|READY_FOR_CLEANING
 operator|+
 literal|"', "
 operator|+
-literal|"cq_worker_id = null where cq_id = "
+literal|"\"CQ_WORKER_ID\" = NULL WHERE \"CQ_ID\" = "
 operator|+
 name|info
 operator|.
@@ -1436,9 +1436,9 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select cq_id, cq_database, cq_table, cq_partition, "
+literal|"SELECT \"CQ_ID\", \"CQ_DATABASE\", \"CQ_TABLE\", \"CQ_PARTITION\", "
 operator|+
-literal|"cq_type, cq_run_as, cq_highest_write_id from COMPACTION_QUEUE where cq_state = '"
+literal|"\"CQ_TYPE\", \"CQ_RUN_AS\", \"CQ_HIGHEST_WRITE_ID\" FROM \"COMPACTION_QUEUE\" WHERE \"CQ_STATE\" = '"
 operator|+
 name|READY_FOR_CLEANING
 operator|+
@@ -1842,7 +1842,7 @@ block|{
 name|String
 name|s
 init|=
-literal|"select ntxn_next from NEXT_TXN_ID"
+literal|"SELECT \"NTXN_NEXT\" FROM \"NEXT_TXN_ID\""
 decl_stmt|;
 name|LOG
 operator|.
@@ -1896,7 +1896,7 @@ argument_list|)
 decl_stmt|;
 name|s
 operator|=
-literal|"select min(mhl_min_open_txnid) from MIN_HISTORY_LEVEL"
+literal|"SELECT MIN(\"MHL_MIN_OPEN_TXNID\") FROM \"MIN_HISTORY_LEVEL\""
 expr_stmt|;
 name|LOG
 operator|.
@@ -2016,11 +2016,13 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, "
+literal|"SELECT \"CQ_ID\", \"CQ_DATABASE\", \"CQ_TABLE\", \"CQ_PARTITION\", "
 operator|+
-literal|"CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, "
+literal|"\"CQ_STATE\", \"CQ_TYPE\", \"CQ_TBLPROPERTIES\", \"CQ_WORKER_ID\", \"CQ_START\", \"CQ_RUN_AS\", "
 operator|+
-literal|"CQ_HADOOP_JOB_ID, CQ_ERROR_MESSAGE from COMPACTION_QUEUE WHERE CQ_ID = ?"
+literal|"\"CQ_HIGHEST_WRITE_ID\", \"CQ_META_INFO\", \"CQ_HADOOP_JOB_ID\", \"CQ_ERROR_MESSAGE\" "
+operator|+
+literal|"FROM \"COMPACTION_QUEUE\" WHERE \"CQ_ID\" = ?"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -2163,13 +2165,15 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, "
+literal|"INSERT INTO \"COMPLETED_COMPACTIONS\"(\"CC_ID\", \"CC_DATABASE\", "
 operator|+
-literal|"CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, "
+literal|"\"CC_TABLE\", \"CC_PARTITION\", \"CC_STATE\", \"CC_TYPE\", \"CC_TBLPROPERTIES\", \"CC_WORKER_ID\", "
 operator|+
-literal|"CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID, CC_ERROR_MESSAGE) "
+literal|"\"CC_START\", \"CC_END\", \"CC_RUN_AS\", \"CC_HIGHEST_WRITE_ID\", \"CC_META_INFO\", "
 operator|+
-literal|"VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)"
+literal|"\"CC_HADOOP_JOB_ID\", \"CC_ERROR_MESSAGE\")"
+operator|+
+literal|" VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)"
 argument_list|)
 expr_stmt|;
 name|info
@@ -2204,9 +2208,9 @@ comment|// again but only up to the highest write ID include in this compaction 
 comment|//highestWriteId will be NULL in upgrade scenarios
 name|s
 operator|=
-literal|"delete from COMPLETED_TXN_COMPONENTS where ctc_database = ? and "
+literal|"DELETE FROM \"COMPLETED_TXN_COMPONENTS\" WHERE \"CTC_DATABASE\" = ? AND "
 operator|+
-literal|"ctc_table = ?"
+literal|"\"CTC_TABLE\" = ?"
 expr_stmt|;
 if|if
 condition|(
@@ -2219,7 +2223,7 @@ condition|)
 block|{
 name|s
 operator|+=
-literal|" and ctc_partition = ?"
+literal|" AND \"CTC_PARTITION\" = ?"
 expr_stmt|;
 block|}
 if|if
@@ -2233,7 +2237,7 @@ condition|)
 block|{
 name|s
 operator|+=
-literal|" and ctc_writeid<= ?"
+literal|" AND \"CTC_WRITEID\"<= ?"
 expr_stmt|;
 block|}
 name|pStmt
@@ -2356,11 +2360,13 @@ block|}
 comment|/**          * compaction may remove data from aborted txns above tc_writeid bit it only guarantees to          * remove it up to (inclusive) tc_writeid, so it's critical to not remove metadata about          * aborted TXN_COMPONENTS above tc_writeid (and consequently about aborted txns).          * See {@link ql.txn.compactor.Cleaner.removeFiles()}          */
 name|s
 operator|=
-literal|"select distinct txn_id from TXNS, TXN_COMPONENTS where txn_id = tc_txnid and txn_state = '"
+literal|"SELECT DISTINCT \"TXN_ID\" FROM \"TXNS\", \"TXN_COMPONENTS\" WHERE \"TXN_ID\" = \"TC_TXNID\" "
+operator|+
+literal|"AND \"TXN_STATE\" = '"
 operator|+
 name|TXN_ABORTED
 operator|+
-literal|"' and tc_database = ? and tc_table = ?"
+literal|"' AND \"TC_DATABASE\" = ? AND \"TC_TABLE\" = ?"
 expr_stmt|;
 if|if
 condition|(
@@ -2372,7 +2378,7 @@ literal|0
 condition|)
 name|s
 operator|+=
-literal|" and tc_writeid<= ?"
+literal|" AND \"TC_WRITEID\"<= ?"
 expr_stmt|;
 if|if
 condition|(
@@ -2384,7 +2390,7 @@ literal|null
 condition|)
 name|s
 operator|+=
-literal|" and tc_partition = ?"
+literal|" AND \"TC_PARTITION\" = ?"
 expr_stmt|;
 name|pStmt
 operator|=
@@ -2581,7 +2587,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXN_COMPONENTS where "
+literal|"DELETE FROM \"TXN_COMPONENTS\" WHERE "
 argument_list|)
 expr_stmt|;
 comment|//because 1 txn may include different partitions/tables even in auto commit mode
@@ -2589,14 +2595,14 @@ name|suffix
 operator|.
 name|append
 argument_list|(
-literal|" and tc_database = ?"
+literal|" AND \"TC_DATABASE\" = ?"
 argument_list|)
 expr_stmt|;
 name|suffix
 operator|.
 name|append
 argument_list|(
-literal|" and tc_table = ?"
+literal|" AND \"TC_TABLE\" = ?"
 argument_list|)
 expr_stmt|;
 if|if
@@ -2612,7 +2618,7 @@ name|suffix
 operator|.
 name|append
 argument_list|(
-literal|" and tc_partition = ?"
+literal|" AND \"TC_PARTITION\" = ?"
 argument_list|)
 expr_stmt|;
 block|}
@@ -2637,7 +2643,7 @@ name|suffix
 argument_list|,
 name|questions
 argument_list|,
-literal|"tc_txnid"
+literal|"\"TC_TXNID\""
 argument_list|,
 literal|true
 argument_list|,
@@ -2985,7 +2991,7 @@ comment|// if lesser than both NEXT_TXN_ID.ntxn_next and min(MIN_HISTORY_LEVEL .
 name|String
 name|s
 init|=
-literal|"select min(txn_id) from TXNS where txn_state = "
+literal|"SELECT MIN(\"TXN_ID\") FROM \"TXNS\" WHERE \"TXN_STATE\" = "
 operator|+
 name|quoteChar
 argument_list|(
@@ -3054,7 +3060,7 @@ comment|// As all txns below min_uncommitted_txnid are either committed or empty
 comment|// to cleanup the entries less than min_uncommitted_txnid from the TXN_TO_WRITE_ID table.
 name|s
 operator|=
-literal|"delete from TXN_TO_WRITE_ID where t2w_txnid< "
+literal|"DELETE FROM \"TXN_TO_WRITE_ID\" WHERE \"T2W_TXNID\"< "
 operator|+
 name|minUncommittedTxnId
 expr_stmt|;
@@ -3237,11 +3243,11 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"select txn_id from TXNS where "
+literal|"SELECT \"TXN_ID\" FROM \"TXNS\" WHERE "
 operator|+
-literal|"txn_id not in (select tc_txnid from TXN_COMPONENTS) and "
+literal|"\"TXN_ID\" NOT IN (SELECT \"TC_TXNID\" FROM \"TXN_COMPONENTS\") AND "
 operator|+
-literal|"txn_state = '"
+literal|"\"TXN_STATE\" = '"
 operator|+
 name|TXN_ABORTED
 operator|+
@@ -3352,7 +3358,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"delete from TXNS where "
+literal|"DELETE FROM \"TXNS\" WHERE "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -3376,7 +3382,7 @@ name|suffix
 argument_list|,
 name|txnids
 argument_list|,
-literal|"txn_id"
+literal|"\"TXN_ID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -3574,15 +3580,15 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"update COMPACTION_QUEUE set cq_worker_id = null, cq_start = null, cq_state = '"
+literal|"UPDATE \"COMPACTION_QUEUE\" SET \"CQ_WORKER_ID\" = NULL, \"CQ_START\" = NULL, \"CQ_STATE\" = '"
 operator|+
 name|INITIATED_STATE
 operator|+
-literal|"' where cq_state = '"
+literal|"' WHERE \"CQ_STATE\" = '"
 operator|+
 name|WORKING_STATE
 operator|+
-literal|"' and cq_worker_id like '"
+literal|"' AND \"CQ_WORKER_ID\" LIKE '"
 operator|+
 name|hostname
 operator|+
@@ -3766,15 +3772,15 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"update COMPACTION_QUEUE set cq_worker_id = null, cq_start = null, cq_state = '"
+literal|"UPDATE \"COMPACTION_QUEUE\" SET \"CQ_WORKER_ID\" = NULL, \"CQ_START\" = NULL, \"CQ_STATE\" = '"
 operator|+
 name|INITIATED_STATE
 operator|+
-literal|"' where cq_state = '"
+literal|"' WHERE \"CQ_STATE\" = '"
 operator|+
 name|WORKING_STATE
 operator|+
-literal|"' and cq_start< "
+literal|"' AND \"CQ_START\"< "
 operator|+
 name|latestValidStart
 decl_stmt|;
@@ -4381,13 +4387,13 @@ expr_stmt|;
 name|String
 name|sqlText
 init|=
-literal|"UPDATE COMPACTION_QUEUE SET CQ_HIGHEST_WRITE_ID = "
+literal|"UPDATE \"COMPACTION_QUEUE\" SET \"CQ_HIGHEST_WRITE_ID\" = "
 operator|+
 name|ci
 operator|.
 name|highestWriteId
 operator|+
-literal|", cq_run_as = "
+literal|", \"CQ_RUN_AS\" = "
 operator|+
 name|quoteString
 argument_list|(
@@ -4396,7 +4402,7 @@ operator|.
 name|runAs
 argument_list|)
 operator|+
-literal|" WHERE CQ_ID = "
+literal|" WHERE \"CQ_ID\" = "
 operator|+
 name|ci
 operator|.
@@ -4450,13 +4456,13 @@ block|}
 comment|/*We make an entry in TXN_COMPONENTS for the partition/table that the compactor is         * working on in case this txn aborts and so we need to ensure that its TXNS entry is         * not removed until Cleaner has removed all files that this txn may have written, i.e.         * make it work the same way as any other write.  TC_WRITEID is set to the highest         * WriteId that this compactor run considered since there compactor doesn't allocate         * a new write id (so as not to invalidate result set caches/materialized views) but         * we need to set it to something to that markCleaned() only cleans TXN_COMPONENTS up to         * the level to which aborted files/data has been cleaned.*/
 name|sqlText
 operator|=
-literal|"insert into TXN_COMPONENTS("
+literal|"INSERT INTO \"TXN_COMPONENTS\"("
 operator|+
-literal|"TC_TXNID, "
+literal|"\"TC_TXNID\", "
 operator|+
-literal|"TC_DATABASE, "
+literal|"\"TC_DATABASE\", "
 operator|+
-literal|"TC_TABLE, "
+literal|"\"TC_TABLE\", "
 operator|+
 operator|(
 name|ci
@@ -4467,12 +4473,12 @@ literal|null
 condition|?
 literal|""
 else|:
-literal|"TC_PARTITION, "
+literal|"\"TC_PARTITION\", "
 operator|)
 operator|+
-literal|"TC_WRITEID, "
+literal|"\"TC_WRITEID\", "
 operator|+
-literal|"TC_OPERATION_TYPE)"
+literal|"\"TC_OPERATION_TYPE\")"
 operator|+
 literal|" VALUES("
 operator|+
@@ -4885,9 +4891,9 @@ name|stmt
 operator|.
 name|executeQuery
 argument_list|(
-literal|"select cc_id, cc_database, cc_table, cc_partition, cc_state from "
+literal|"SELECT \"CC_ID\", \"CC_DATABASE\", \"CC_TABLE\", \"CC_PARTITION\", \"CC_STATE\" "
 operator|+
-literal|"COMPLETED_COMPACTIONS order by cc_database, cc_table, cc_partition, cc_id desc"
+literal|"FROM \"COMPLETED_COMPACTIONS\" ORDER BY \"CC_DATABASE\", \"CC_TABLE\", \"CC_PARTITION\", \"CC_ID\" DESC"
 argument_list|)
 expr_stmt|;
 name|String
@@ -5060,7 +5066,7 @@ name|prefix
 operator|.
 name|append
 argument_list|(
-literal|"delete from COMPLETED_COMPACTIONS where "
+literal|"DELETE FROM \"COMPLETED_COMPACTIONS\" WHERE "
 argument_list|)
 expr_stmt|;
 name|suffix
@@ -5132,7 +5138,7 @@ name|suffix
 argument_list|,
 name|questions
 argument_list|,
-literal|"cc_id"
+literal|"\"CC_ID\""
 argument_list|,
 literal|false
 argument_list|,
@@ -5472,11 +5478,11 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CC_STATE from COMPLETED_COMPACTIONS where "
+literal|"SELECT \"CC_STATE\" FROM \"COMPLETED_COMPACTIONS\" WHERE "
 operator|+
-literal|"CC_DATABASE = ? and "
+literal|"\"CC_DATABASE\" = ? AND "
 operator|+
-literal|"CC_TABLE = ? "
+literal|"\"CC_TABLE\" = ? "
 operator|+
 operator|(
 name|ci
@@ -5485,19 +5491,19 @@ name|partName
 operator|!=
 literal|null
 condition|?
-literal|"and CC_PARTITION = ?"
+literal|"AND \"CC_PARTITION\" = ?"
 else|:
 literal|""
 operator|)
 operator|+
-literal|" and CC_STATE != "
+literal|" AND \"CC_STATE\" != "
 operator|+
 name|quoteChar
 argument_list|(
 name|ATTEMPTED_STATE
 argument_list|)
 operator|+
-literal|" order by CC_ID desc"
+literal|" ORDER BY \"CC_ID\" DESC"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -5784,11 +5790,13 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"select CQ_ID, CQ_DATABASE, CQ_TABLE, CQ_PARTITION, CQ_STATE, CQ_TYPE, "
+literal|"SELECT \"CQ_ID\", \"CQ_DATABASE\", \"CQ_TABLE\", \"CQ_PARTITION\", "
 operator|+
-literal|"CQ_TBLPROPERTIES, CQ_WORKER_ID, CQ_START, CQ_RUN_AS, CQ_HIGHEST_WRITE_ID, CQ_META_INFO, "
+literal|"\"CQ_STATE\", \"CQ_TYPE\", \"CQ_TBLPROPERTIES\", \"CQ_WORKER_ID\", \"CQ_START\", \"CQ_RUN_AS\", "
 operator|+
-literal|"CQ_HADOOP_JOB_ID, CQ_ERROR_MESSAGE from COMPACTION_QUEUE WHERE CQ_ID = ?"
+literal|"\"CQ_HIGHEST_WRITE_ID\", \"CQ_META_INFO\", \"CQ_HADOOP_JOB_ID\", \"CQ_ERROR_MESSAGE\" "
+operator|+
+literal|"FROM \"COMPACTION_QUEUE\" WHERE \"CQ_ID\" = ?"
 argument_list|)
 expr_stmt|;
 name|pStmt
@@ -5829,7 +5837,7 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"delete from COMPACTION_QUEUE where cq_id = ?"
+literal|"DELETE FROM \"COMPACTION_QUEUE\" WHERE \"CQ_ID\" = ?"
 decl_stmt|;
 name|pStmt
 operator|=
@@ -5984,11 +5992,13 @@ name|dbConn
 operator|.
 name|prepareStatement
 argument_list|(
-literal|"insert into COMPLETED_COMPACTIONS(CC_ID, CC_DATABASE, CC_TABLE, "
+literal|"INSERT INTO \"COMPLETED_COMPACTIONS\" "
 operator|+
-literal|"CC_PARTITION, CC_STATE, CC_TYPE, CC_TBLPROPERTIES, CC_WORKER_ID, CC_START, CC_END, CC_RUN_AS, "
+literal|"(\"CC_ID\", \"CC_DATABASE\", \"CC_TABLE\", \"CC_PARTITION\", \"CC_STATE\", \"CC_TYPE\", "
 operator|+
-literal|"CC_HIGHEST_WRITE_ID, CC_META_INFO, CC_HADOOP_JOB_ID, CC_ERROR_MESSAGE) "
+literal|"\"CC_TBLPROPERTIES\", \"CC_WORKER_ID\", \"CC_START\", \"CC_END\", \"CC_RUN_AS\", "
+operator|+
+literal|"\"CC_HIGHEST_WRITE_ID\", \"CC_META_INFO\", \"CC_HADOOP_JOB_ID\", \"CC_ERROR_MESSAGE\") "
 operator|+
 literal|"VALUES(?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)"
 argument_list|)
@@ -6224,14 +6234,14 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"update COMPACTION_QUEUE set CQ_HADOOP_JOB_ID = "
+literal|"UPDATE \"COMPACTION_QUEUE\" SET \"CQ_HADOOP_JOB_ID\" = "
 operator|+
 name|quoteString
 argument_list|(
 name|hadoopJobId
 argument_list|)
 operator|+
-literal|" WHERE CQ_ID = "
+literal|" WHERE \"CQ_ID\" = "
 operator|+
 name|id
 decl_stmt|;
