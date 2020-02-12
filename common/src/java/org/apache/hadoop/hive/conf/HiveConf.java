@@ -3463,6 +3463,19 @@ argument_list|,
 literal|"Maximum number of dynamic partitions allowed to be created in each mapper/reducer node."
 argument_list|)
 block|,
+name|DYNAMICPARTITIONCONVERT
+argument_list|(
+literal|"hive.exec.dynamic.partition.type.conversion"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Whether to check and cast a dynamic partition column before creating the partition "
+operator|+
+literal|"directory. For example, if partition p is type int and we insert string '001', then if "
+operator|+
+literal|"this value is true, directory p=1 will be created; if false, p=001"
+argument_list|)
+block|,
 name|MAXCREATEDFILES
 argument_list|(
 literal|"hive.exec.max.created.files"
