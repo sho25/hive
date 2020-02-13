@@ -303,6 +303,10 @@ name|table
 operator|.
 name|storage
 operator|.
+name|set
+operator|.
+name|location
+operator|.
 name|AlterTableSetLocationDesc
 import|;
 end_import

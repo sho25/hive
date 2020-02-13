@@ -159,6 +159,8 @@ name|table
 operator|.
 name|storage
 operator|.
+name|compact
+operator|.
 name|AlterTableCompactDesc
 import|;
 end_import

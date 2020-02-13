@@ -145,7 +145,7 @@ begin_class
 annotation|@
 name|DDLType
 argument_list|(
-name|type
+name|types
 operator|=
 name|HiveParser
 operator|.

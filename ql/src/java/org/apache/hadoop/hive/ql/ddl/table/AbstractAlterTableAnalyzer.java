@@ -983,7 +983,7 @@ name|WriteType
 name|determineAlterTableWriteType
 parameter_list|(
 name|Table
-name|tab
+name|table
 parameter_list|,
 name|AbstractAlterTableDesc
 name|desc
@@ -1040,7 +1040,7 @@ name|AcidUtils
 operator|.
 name|isTransactionalTable
 argument_list|(
-name|tab
+name|table
 argument_list|)
 operator|&&
 name|convertingToAcid
@@ -1068,7 +1068,7 @@ name|void
 name|validateAlterTableType
 parameter_list|(
 name|Table
-name|tbl
+name|table
 parameter_list|,
 name|AlterTableType
 name|op
@@ -1081,7 +1081,7 @@ name|SemanticException
 block|{
 if|if
 condition|(
-name|tbl
+name|table
 operator|.
 name|isView
 argument_list|()
@@ -1174,7 +1174,7 @@ block|}
 block|}
 if|if
 condition|(
-name|tbl
+name|table
 operator|.
 name|isNonNative
 argument_list|()
@@ -1207,7 +1207,7 @@ operator|.
 name|toString
 argument_list|()
 argument_list|,
-name|tbl
+name|table
 operator|.
 name|getTableName
 argument_list|()
