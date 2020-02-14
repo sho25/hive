@@ -3396,7 +3396,6 @@ argument_list|(
 name|overflowBatch
 argument_list|,
 name|outputColumn
-operator|++
 argument_list|,
 name|typeName
 argument_list|,
@@ -3405,6 +3404,7 @@ operator|.
 name|getDataTypePhysicalVariation
 argument_list|(
 name|outputColumn
+operator|++
 argument_list|)
 argument_list|)
 expr_stmt|;
