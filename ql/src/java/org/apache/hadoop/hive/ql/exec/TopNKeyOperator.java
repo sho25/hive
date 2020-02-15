@@ -474,14 +474,8 @@ argument_list|,
 name|currentKeyObjectInspectors
 argument_list|,
 name|columnSortOrder
-operator|.
-name|toString
-argument_list|()
 argument_list|,
 name|nullSortOrder
-operator|.
-name|toString
-argument_list|()
 argument_list|)
 expr_stmt|;
 name|this
