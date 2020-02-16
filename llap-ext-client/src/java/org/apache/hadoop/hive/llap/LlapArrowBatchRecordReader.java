@@ -392,29 +392,8 @@ operator|>
 literal|0
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|vectorSchemaRoot
-operator|.
-name|getFieldVectors
-argument_list|()
-operator|.
-name|get
-argument_list|(
-literal|0
-argument_list|)
-operator|.
-name|getValueCount
-argument_list|()
-operator|==
-literal|0
-condition|)
-block|{
-comment|//An empty batch will appear at the end of the stream
-return|return
-literal|false
-return|;
-block|}
+comment|// We should continue even if FieldVectors are empty. The next read might have the
+comment|// data. We should stop only when loadNextBatch returns false.
 name|value
 operator|.
 name|setVectorSchemaRoot
