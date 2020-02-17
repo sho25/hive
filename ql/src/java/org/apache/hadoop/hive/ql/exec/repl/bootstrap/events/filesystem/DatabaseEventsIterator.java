@@ -1065,7 +1065,15 @@ name|currentPath
 operator|.
 name|contains
 argument_list|(
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
 name|FUNCTIONS_ROOT_DIR_NAME
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
 argument_list|)
 condition|)
 block|{
