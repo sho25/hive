@@ -85,23 +85,7 @@ name|ql
 operator|.
 name|session
 operator|.
-name|SessionState
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|shims
-operator|.
-name|ShimLoader
+name|ISessionAuthState
 import|;
 end_import
 
@@ -307,7 +291,7 @@ specifier|public
 name|void
 name|setSessionState
 parameter_list|(
-name|SessionState
+name|ISessionAuthState
 name|ss
 parameter_list|)
 block|{

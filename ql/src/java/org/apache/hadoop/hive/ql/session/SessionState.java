@@ -1445,6 +1445,8 @@ begin_class
 specifier|public
 class|class
 name|SessionState
+implements|implements
+name|ISessionAuthState
 block|{
 specifier|private
 specifier|static
@@ -1948,6 +1950,8 @@ operator|new
 name|AtomicLong
 argument_list|()
 decl_stmt|;
+annotation|@
+name|Override
 specifier|public
 name|HiveConf
 name|getConf
@@ -9287,6 +9291,8 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+annotation|@
+name|Override
 specifier|public
 name|String
 name|getUserName

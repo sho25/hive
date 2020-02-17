@@ -75,7 +75,7 @@ name|ql
 operator|.
 name|session
 operator|.
-name|SessionState
+name|ISessionAuthState
 import|;
 end_import
 
@@ -115,7 +115,7 @@ specifier|public
 name|void
 name|setSessionState
 parameter_list|(
-name|SessionState
+name|ISessionAuthState
 name|ss
 parameter_list|)
 function_decl|;
