@@ -3573,7 +3573,7 @@ literal|"metastore.repl.cm.nonencryptionzone.rootdir"
 argument_list|,
 literal|"hive.repl.cm.nonencryptionzone.rootdir"
 argument_list|,
-literal|"/user/${system:user.name}/cmroot/"
+literal|""
 argument_list|,
 literal|"Root dir for ChangeManager for non encrypted paths if hive.repl.cmrootdir is encrypted."
 argument_list|)
