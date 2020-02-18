@@ -206,7 +206,7 @@ block|{
 return|return
 literal|0
 return|;
-comment|// dropping not existing view is handled by DDLSemanticAnalyzer
+comment|// dropping not existing view is handled by DropViewAnalyzer
 block|}
 if|if
 condition|(

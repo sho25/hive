@@ -292,7 +292,7 @@ block|{
 return|return
 literal|0
 return|;
-comment|// dropping not existing table is handled by DDLSemanticAnalyzer
+comment|// dropping not existing table is handled by DropTableAnalyzer
 block|}
 if|if
 condition|(

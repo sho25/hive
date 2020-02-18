@@ -361,6 +361,8 @@ name|table
 operator|.
 name|misc
 operator|.
+name|properties
+operator|.
 name|AlterTableSetPropertiesDesc
 import|;
 end_import
@@ -1370,7 +1372,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 comment|// Now make a task to drop temp table
-comment|// {@link DDLSemanticAnalyzer#analyzeDropTable(ASTNode ast, TableType expectedType)
+comment|// {@link DropTableAnalyzer#analyzeInternal(ASTNode ast)
 name|ReplicationSpec
 name|replicationSpec
 init|=

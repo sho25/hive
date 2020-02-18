@@ -241,6 +241,8 @@ name|table
 operator|.
 name|misc
 operator|.
+name|properties
+operator|.
 name|AlterTableSetPropertiesDesc
 import|;
 end_import

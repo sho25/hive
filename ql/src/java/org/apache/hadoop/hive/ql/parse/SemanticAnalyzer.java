@@ -1325,7 +1325,9 @@ name|table
 operator|.
 name|misc
 operator|.
-name|AlterTableUnsetPropertiesDesc
+name|preinsert
+operator|.
+name|PreInsertTableDesc
 import|;
 end_import
 
@@ -1347,7 +1349,9 @@ name|table
 operator|.
 name|misc
 operator|.
-name|PreInsertTableDesc
+name|properties
+operator|.
+name|AlterTableUnsetPropertiesDesc
 import|;
 end_import
 
@@ -4818,7 +4822,7 @@ import|;
 end_import
 
 begin_comment
-comment|/**  * Implementation of the semantic analyzer. It generates the query plan.  * There are other specific semantic analyzers for some hive operations such as  * DDLSemanticAnalyzer for ddl operations.  */
+comment|/**  * Implementation of the semantic analyzer. It generates the query plan.  * There are other specific semantic analyzers for some hive operations such as  * various analyzers for DDL commands.  */
 end_comment
 
 begin_class

@@ -591,7 +591,7 @@ parameter_list|()
 throws|throws
 name|HiveException
 block|{
-comment|// ifExists is currently verified in DDLSemanticAnalyzer
+comment|// ifExists is currently verified in AlterTableDropPartitionAnalyzer
 name|TableName
 name|tablenName
 init|=

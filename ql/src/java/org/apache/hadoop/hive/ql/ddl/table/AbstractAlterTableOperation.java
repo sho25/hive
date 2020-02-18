@@ -732,7 +732,7 @@ expr_stmt|;
 block|}
 else|else
 block|{
-comment|// DDLSemanticAnalyzer has already checked if partial partition specs are allowed,
+comment|// AbstractBaseAlterTableAnalyzer has already checked if partial partition specs are allowed,
 comment|// thus we should not need to check it here.
 name|partitions
 operator|=
@@ -1256,7 +1256,7 @@ throw|;
 block|}
 comment|// This is kind of hacky - the read entity contains the old table, whereas the write entity contains the new
 comment|// table. This is needed for rename - both the old and the new table names are passed
-comment|// Don't acquire locks for any of these, we have already asked for them in DDLSemanticAnalyzer.
+comment|// Don't acquire locks for any of these, we have already asked for them in AbstractBaseAlterTableAnalyzer.
 if|if
 condition|(
 name|partitions

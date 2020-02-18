@@ -20,6 +20,8 @@ operator|.
 name|table
 operator|.
 name|misc
+operator|.
+name|truncate
 package|;
 end_package
 

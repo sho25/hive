@@ -95,6 +95,8 @@ name|table
 operator|.
 name|misc
 operator|.
+name|truncate
+operator|.
 name|TruncateTableDesc
 import|;
 end_import

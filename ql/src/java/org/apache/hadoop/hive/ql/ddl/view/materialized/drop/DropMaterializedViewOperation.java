@@ -226,7 +226,7 @@ block|{
 return|return
 literal|0
 return|;
-comment|// dropping not existing materialized view is handled by DDLSemanticAnalyzer
+comment|// dropping not existing materialized view is handled by DropMaterializedViewAnalyzer
 block|}
 if|if
 condition|(

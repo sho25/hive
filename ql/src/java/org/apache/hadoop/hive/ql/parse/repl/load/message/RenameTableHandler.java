@@ -113,6 +113,8 @@ name|table
 operator|.
 name|misc
 operator|.
+name|rename
+operator|.
 name|AlterTableRenameDesc
 import|;
 end_import
