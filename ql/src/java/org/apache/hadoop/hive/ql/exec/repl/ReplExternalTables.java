@@ -728,6 +728,17 @@ name|ConfVars
 operator|.
 name|REPL_DUMP_METADATA_ONLY
 argument_list|)
+operator|||
+name|hiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPL_DUMP_METADATA_ONLY_FOR_EXTERNAL_TABLE
+argument_list|)
 expr_stmt|;
 if|if
 condition|(

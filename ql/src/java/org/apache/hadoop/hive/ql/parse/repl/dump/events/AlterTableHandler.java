@@ -1174,17 +1174,15 @@ comment|// as well, since that won't be accurate. So reset them to what they wou
 comment|// empty table.
 if|if
 condition|(
+name|Utils
+operator|.
+name|shouldDumpMetaDataOnly
+argument_list|(
+name|qlMdTableAfter
+argument_list|,
 name|withinContext
 operator|.
 name|hiveConf
-operator|.
-name|getBoolVar
-argument_list|(
-name|HiveConf
-operator|.
-name|ConfVars
-operator|.
-name|REPL_DUMP_METADATA_ONLY
 argument_list|)
 condition|)
 block|{

@@ -2996,6 +2996,15 @@ operator|+
 literal|"This config makes hive.repl.include.external.tables config ineffective."
 argument_list|)
 block|,
+name|REPL_DUMP_METADATA_ONLY_FOR_EXTERNAL_TABLE
+argument_list|(
+literal|"hive.repl.dump.metadata.only.for.external.table"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Indicates whether external table replication dump only metadata information or data + metadata"
+argument_list|)
+block|,
 name|REPL_BOOTSTRAP_ACID_TABLES
 argument_list|(
 literal|"hive.repl.bootstrap.acid.tables"
