@@ -174,14 +174,14 @@ operator|.
 name|class
 argument_list|)
 decl_stmt|;
-comment|// when rehashing, jump directly to 4k items
+comment|// when rehashing, jump directly to 1M items
 specifier|public
 specifier|static
 specifier|final
 name|int
 name|FIRST_SIZE_UP
 init|=
-literal|4096
+literal|1048576
 decl_stmt|;
 specifier|protected
 specifier|final
