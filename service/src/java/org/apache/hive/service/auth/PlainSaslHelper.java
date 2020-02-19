@@ -223,11 +223,11 @@ name|hive
 operator|.
 name|service
 operator|.
-name|cli
+name|rpc
 operator|.
 name|thrift
 operator|.
-name|ThriftCLIService
+name|TCLIService
 import|;
 end_import
 
@@ -391,7 +391,9 @@ specifier|static
 name|TProcessorFactory
 name|getPlainProcessorFactory
 parameter_list|(
-name|ThriftCLIService
+name|TCLIService
+operator|.
+name|Iface
 name|service
 parameter_list|)
 block|{
@@ -1107,12 +1109,16 @@ name|TProcessorFactory
 block|{
 specifier|private
 specifier|final
-name|ThriftCLIService
+name|TCLIService
+operator|.
+name|Iface
 name|service
 decl_stmt|;
 name|SQLPlainProcessorFactory
 parameter_list|(
-name|ThriftCLIService
+name|TCLIService
+operator|.
+name|Iface
 name|service
 parameter_list|)
 block|{

@@ -345,11 +345,11 @@ name|hive
 operator|.
 name|service
 operator|.
-name|cli
+name|rpc
 operator|.
 name|thrift
 operator|.
-name|ThriftCLIService
+name|TCLIService
 import|;
 end_import
 
@@ -1150,7 +1150,9 @@ specifier|public
 name|TProcessorFactory
 name|getAuthProcFactory
 parameter_list|(
-name|ThriftCLIService
+name|TCLIService
+operator|.
+name|Iface
 name|service
 parameter_list|)
 throws|throws
