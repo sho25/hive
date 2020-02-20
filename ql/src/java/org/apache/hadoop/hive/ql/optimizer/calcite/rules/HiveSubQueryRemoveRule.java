@@ -3942,12 +3942,10 @@ name|subQuery
 parameter_list|)
 block|{
 return|return
-name|RexUtil
-operator|.
-name|eq
-argument_list|(
 name|subQuery
-argument_list|,
+operator|.
+name|equals
+argument_list|(
 name|this
 operator|.
 name|subQuery

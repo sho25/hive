@@ -3088,7 +3088,7 @@ block|{
 return|return
 name|RexUtil
 operator|.
-name|simplifyAnds
+name|composeConjunction
 argument_list|(
 name|cluster
 operator|.
@@ -4310,7 +4310,7 @@ name|x
 init|=
 name|RexUtil
 operator|.
-name|simplifyAnds
+name|composeConjunction
 argument_list|(
 name|cluster
 operator|.
@@ -4318,8 +4318,6 @@ name|getRexBuilder
 argument_list|()
 argument_list|,
 name|predicates
-argument_list|,
-literal|true
 argument_list|)
 decl_stmt|;
 if|if
@@ -4366,6 +4364,11 @@ operator|.
 name|rel
 argument_list|,
 name|x
+argument_list|,
+name|ImmutableSet
+operator|.
+name|of
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|stack
