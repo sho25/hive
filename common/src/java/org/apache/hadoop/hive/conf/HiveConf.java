@@ -14539,6 +14539,17 @@ operator|+
 literal|"not apply to external tables, the ones using storage handlers, etc."
 argument_list|)
 block|,
+name|HIVE_ACID_DIRECT_INSERT_ENABLED
+argument_list|(
+literal|"hive.acid.direct.insert.enabled"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Enable writing the data files directly to the table's final destination instead of the staging directory."
+operator|+
+literal|"This optimization only applies on INSERT operations on ACID tables."
+argument_list|)
+block|,
 comment|// role names are case-insensitive
 name|USERS_IN_ADMIN_ROLE
 argument_list|(

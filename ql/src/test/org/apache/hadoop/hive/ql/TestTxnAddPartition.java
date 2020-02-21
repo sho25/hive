@@ -1319,7 +1319,7 @@ operator|+
 name|getWarehouseDir
 argument_list|()
 operator|+
-literal|"/tstage/p=1/delta_0000001_0000001_0000/bucket_00001'"
+literal|"/tstage/p=1/delta_0000001_0000001_0000/bucket_00001_0'"
 argument_list|)
 expr_stmt|;
 block|}

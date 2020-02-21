@@ -11519,6 +11519,9 @@ name|stmtId
 parameter_list|,
 name|boolean
 name|isInsertOverwrite
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 throws|throws
 name|HiveException
@@ -11620,6 +11623,8 @@ argument_list|,
 name|isTxnTable
 argument_list|,
 name|newFiles
+argument_list|,
+name|isDirectInsert
 argument_list|)
 decl_stmt|;
 name|AcidUtils
@@ -11821,6 +11826,9 @@ argument_list|<
 name|Path
 argument_list|>
 name|newFiles
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 throws|throws
 name|HiveException
@@ -12009,6 +12017,8 @@ operator|(
 operator|(
 name|isMmTableWrite
 operator|||
+name|isDirectInsert
+operator|||
 name|isFullAcidTable
 operator|)
 operator|&&
@@ -12029,7 +12039,7 @@ name|IGNORE
 operator|)
 condition|)
 block|{
-comment|// MM insert query, move itself is a no-op.
+comment|// MM insert query or direct insert; move itself is a no-op.
 if|if
 condition|(
 name|Utilities
@@ -12054,14 +12064,18 @@ literal|" to "
 operator|+
 name|newPartPath
 operator|+
-literal|" (MM)"
+literal|" (MM = "
+operator|+
+name|isMmTableWrite
+operator|+
+literal|", Direct insert = "
+operator|+
+name|isDirectInsert
+operator|+
+literal|")"
 argument_list|)
 expr_stmt|;
 block|}
-assert|assert
-operator|!
-name|isAcidIUDoperation
-assert|;
 if|if
 condition|(
 name|newFiles
@@ -12069,6 +12083,20 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|isMmTableWrite
+operator|&&
+operator|!
+name|isDirectInsert
+condition|)
+block|{
+name|isInsertOverwrite
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|listFilesCreatedByQuery
 argument_list|(
 name|loadPath
@@ -12077,11 +12105,7 @@ name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
-name|isMmTableWrite
-condition|?
 name|isInsertOverwrite
-else|:
-literal|false
 argument_list|,
 name|newFiles
 argument_list|)
@@ -12129,10 +12153,6 @@ condition|(
 name|isMmTableWrite
 condition|)
 block|{
-assert|assert
-operator|!
-name|isAcidIUDoperation
-assert|;
 comment|// We will load into MM directory, and hide previous directories if needed.
 name|destPath
 operator|=
@@ -14729,6 +14749,9 @@ name|isMmTable
 parameter_list|,
 name|boolean
 name|isInsertOverwrite
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 throws|throws
 name|HiveException
@@ -14762,6 +14785,9 @@ if|if
 condition|(
 operator|!
 name|isMmTable
+operator|||
+operator|!
+name|isDirectInsert
 condition|)
 block|{
 name|List
@@ -14857,7 +14883,7 @@ name|leafStatus
 init|=
 name|Utilities
 operator|.
-name|getMmDirectoryCandidates
+name|getDirectInsertDirectoryCandidates
 argument_list|(
 name|fs
 argument_list|,
@@ -15090,6 +15116,9 @@ name|operation
 parameter_list|,
 name|boolean
 name|isInsertOverwrite
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 throws|throws
 name|HiveException
@@ -15153,6 +15182,8 @@ argument_list|()
 argument_list|)
 argument_list|,
 name|isInsertOverwrite
+argument_list|,
+name|isDirectInsert
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -15665,6 +15696,8 @@ argument_list|,
 name|isTxnTable
 argument_list|,
 name|newFiles
+argument_list|,
+name|isDirectInsert
 argument_list|)
 decl_stmt|;
 comment|// if the partition already existed before the loading, no need to add it again to the
@@ -16560,6 +16593,9 @@ name|stmtId
 parameter_list|,
 name|boolean
 name|isInsertOverwrite
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 throws|throws
 name|HiveException
@@ -16684,6 +16720,8 @@ operator|(
 operator|(
 name|isMmTable
 operator|||
+name|isDirectInsert
+operator|||
 name|isFullAcidTable
 operator|)
 operator|&&
@@ -16747,6 +16785,20 @@ operator|!=
 literal|null
 condition|)
 block|{
+if|if
+condition|(
+operator|!
+name|isMmTable
+operator|&&
+operator|!
+name|isDirectInsert
+condition|)
+block|{
+name|isInsertOverwrite
+operator|=
+literal|false
+expr_stmt|;
+block|}
 name|listFilesCreatedByQuery
 argument_list|(
 name|loadPath
@@ -16755,11 +16807,7 @@ name|writeId
 argument_list|,
 name|stmtId
 argument_list|,
-name|isMmTable
-condition|?
 name|isInsertOverwrite
-else|:
-literal|false
 argument_list|,
 name|newFiles
 argument_list|)
@@ -16787,10 +16835,6 @@ condition|(
 name|isMmTable
 condition|)
 block|{
-assert|assert
-operator|!
-name|isAcidIUDoperation
-assert|;
 comment|// We will load into MM directory, and hide previous directories if needed.
 name|destPath
 operator|=

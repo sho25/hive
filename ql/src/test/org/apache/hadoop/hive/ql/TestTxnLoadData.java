@@ -642,7 +642,7 @@ block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":0}\t2\t2"
 block|,
-literal|"t/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|}
 decl_stmt|;
@@ -681,7 +681,7 @@ block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":0}\t2\t2"
 block|,
-literal|"t/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|}
 decl_stmt|;
@@ -886,7 +886,7 @@ block|,
 block|{
 literal|"{\"writeid\":9,\"bucketid\":536870912,\"rowid\":0}\t2\t2"
 block|,
-literal|"t/delta_0000009_0000009_0000/bucket_00000"
+literal|"t/delta_0000009_0000009_0000/bucket_00000_0"
 block|}
 block|}
 decl_stmt|;
@@ -1048,13 +1048,13 @@ comment|//normal insert
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t0\t2"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t0\t4"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 comment|//Load Data
@@ -2182,13 +2182,13 @@ block|{
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t3\t4"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
@@ -2375,13 +2375,13 @@ block|{
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t3\t4"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|}
 decl_stmt|;
@@ -2519,7 +2519,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;

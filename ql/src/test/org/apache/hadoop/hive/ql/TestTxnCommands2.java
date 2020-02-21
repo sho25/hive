@@ -3710,7 +3710,7 @@ argument_list|()
 operator|.
 name|matches
 argument_list|(
-literal|"bucket_00000"
+literal|"bucket_00000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -6474,7 +6474,7 @@ name|Assert
 operator|.
 name|assertEquals
 argument_list|(
-literal|"bucket_00000"
+literal|"bucket_00000_0"
 argument_list|,
 name|buckets
 index|[

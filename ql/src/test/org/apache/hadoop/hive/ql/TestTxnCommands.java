@@ -9251,7 +9251,7 @@ block|,
 block|{
 literal|"{\"writeid\":10000001,\"bucketid\":536936448,\"rowid\":0}\t1\t17"
 block|,
-literal|"nonacidorctbl/delta_10000001_10000001_0000/bucket_00001"
+literal|"nonacidorctbl/delta_10000001_10000001_0000/bucket_00001_0"
 block|}
 block|}
 decl_stmt|;

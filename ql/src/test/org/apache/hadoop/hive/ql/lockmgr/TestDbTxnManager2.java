@@ -10413,6 +10413,13 @@ name|driver
 operator|.
 name|run
 argument_list|(
+literal|"drop table if exists tab1"
+argument_list|)
+expr_stmt|;
+name|driver
+operator|.
+name|run
+argument_list|(
 literal|"create table if not exists tab1 (a int, b int) partitioned by (p string) "
 operator|+
 literal|"clustered by (a) into 2  buckets stored as orc TBLPROPERTIES ('transactional'='true')"

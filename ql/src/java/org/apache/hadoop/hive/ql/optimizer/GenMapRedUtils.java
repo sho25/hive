@@ -8358,6 +8358,11 @@ name|fsInputDesc
 operator|.
 name|isMmTable
 argument_list|()
+argument_list|,
+name|fsInputDesc
+operator|.
+name|isDirectInsert
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|ConditionalTask
@@ -10635,6 +10640,9 @@ name|fsopFinalDir
 parameter_list|,
 name|boolean
 name|isMmFsop
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 block|{
 comment|// find the move task
@@ -10694,6 +10702,8 @@ expr_stmt|;
 if|if
 condition|(
 name|isMmFsop
+operator|||
+name|isDirectInsert
 condition|)
 block|{
 name|srcDir
@@ -10879,6 +10889,14 @@ name|getConf
 argument_list|()
 operator|.
 name|isMmTable
+argument_list|()
+argument_list|,
+name|fsOp
+operator|.
+name|getConf
+argument_list|()
+operator|.
+name|isDirectInsert
 argument_list|()
 argument_list|)
 decl_stmt|;
@@ -11233,6 +11251,14 @@ operator|.
 name|isMmTable
 argument_list|()
 decl_stmt|;
+name|boolean
+name|isDirectInsert
+init|=
+name|fileSinkDesc
+operator|.
+name|isDirectInsert
+argument_list|()
+decl_stmt|;
 if|if
 condition|(
 name|chDir
@@ -11245,10 +11271,18 @@ operator|.
 name|getMergeInputDirName
 argument_list|()
 expr_stmt|;
+comment|/**        * Skip temporary file generation for:        * 1. MM Tables        * 2. INSERT operation on full ACID table        */
 if|if
 condition|(
+operator|(
 operator|!
 name|isMmTable
+operator|)
+operator|&&
+operator|(
+operator|!
+name|isDirectInsert
+operator|)
 condition|)
 block|{
 comment|// generate the temporary file
@@ -11420,13 +11454,9 @@ operator|.
 name|getFinalDirName
 argument_list|()
 argument_list|,
-name|fsOp
-operator|.
-name|getConf
-argument_list|()
-operator|.
 name|isMmTable
-argument_list|()
+argument_list|,
+name|isDirectInsert
 argument_list|)
 expr_stmt|;
 block|}

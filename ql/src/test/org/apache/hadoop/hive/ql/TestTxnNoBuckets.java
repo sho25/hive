@@ -413,6 +413,14 @@ specifier|private
 specifier|static
 specifier|final
 name|String
+name|NO_BUCKETS_TBL_NAME
+init|=
+literal|"nobuckets"
+decl_stmt|;
+specifier|private
+specifier|static
+specifier|final
+name|String
 name|TEST_DATA_DIR
 init|=
 operator|new
@@ -608,12 +616,23 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"drop table if exists nobuckets"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"drop table if exists %s"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table nobuckets (c1 integer, c2 integer, c3 integer) stored "
+literal|"create table "
+operator|+
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|" (c1 integer, c2 integer, c3 integer) stored "
 operator|+
 literal|"as orc tblproperties('transactional'='true', 'transactional_properties'='default')"
 argument_list|)
@@ -621,7 +640,14 @@ expr_stmt|;
 name|String
 name|stmt
 init|=
-literal|"insert into nobuckets select * from tmp"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"insert into %s select * from tmp"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 decl_stmt|;
 name|runStatementOnDriver
 argument_list|(
@@ -636,7 +662,14 @@ name|rs
 init|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from nobuckets order by ROW__ID"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from %s order by ROW__ID"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -721,7 +754,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -769,7 +804,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -817,7 +854,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00001_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -865,7 +904,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00001_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -886,7 +927,14 @@ name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"explain  update nobuckets set c3 = 17 where c3 in(0,1)"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"explain  update %s set c3 = 17 where c3 in(0,1)"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -914,14 +962,28 @@ expr_stmt|;
 block|}
 name|runStatementOnDriver
 argument_list|(
-literal|"update nobuckets set c3 = 17 where c3 in(0,1)"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"update %s set c3 = 17 where c3 in(0,1)"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from nobuckets order by INPUT__FILE__NAME, ROW__ID"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from %s order by INPUT__FILE__NAME, ROW__ID"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -991,7 +1053,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1039,7 +1103,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00001_0"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1088,7 +1154,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000002_0000002_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000002_0000002_0000/bucket_00000"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1137,7 +1205,9 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"nobuckets/delta_0000002_0000002_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 argument_list|)
 expr_stmt|;
@@ -1157,42 +1227,54 @@ name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"ts/delete_delta_0000002_0000002_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delete_delta_0000002_0000002_0000/bucket_00000"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"ts/delete_delta_0000002_0000002_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delete_delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"nobuckets/delta_0000001_0000001_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00001_0"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"nobuckets/delta_0000002_0000002_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000002_0000002_0000/bucket_00000"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"nobuckets/delta_0000002_0000002_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 comment|//check that we get the right files on disk
@@ -1203,14 +1285,25 @@ argument_list|,
 name|getWarehouseDir
 argument_list|()
 operator|+
-literal|"/nobuckets"
+literal|"/"
+operator|+
+name|NO_BUCKETS_TBL_NAME
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
 argument_list|)
 expr_stmt|;
 comment|//todo: it would be nice to check the contents of the files... could use orc.FileDump - it has
 comment|// methods to print to a supplied stream but those are package private
 name|runStatementOnDriver
 argument_list|(
-literal|"alter table nobuckets compact 'major'"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"alter table %s compact 'major'"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|TestTxnCommands2
@@ -1224,7 +1317,14 @@ name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from nobuckets order by INPUT__FILE__NAME, ROW__ID"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from %s order by INPUT__FILE__NAME, ROW__ID"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1260,25 +1360,33 @@ block|{
 block|{
 literal|"{\"writeid\":2,\"bucketid\":536870912,\"rowid\":0}\t0\t0\t17"
 block|,
-literal|"nobuckets/base_0000002_v0000025/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00000"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":2,\"bucketid\":536936448,\"rowid\":0}\t1\t1\t17"
 block|,
-literal|"nobuckets/base_0000002_v0000025/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00001"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536936448,\"rowid\":1}\t2\t2\t2"
 block|,
-literal|"nobuckets/base_0000002_v0000025/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00001"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t3\t3\t3"
 block|,
-literal|"nobuckets/base_0000002_v0000025/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00000"
 block|}
 block|}
 decl_stmt|;
@@ -1297,7 +1405,11 @@ else|:
 literal|", INPUT__FILE__NAME"
 operator|)
 operator|+
-literal|" from nobuckets order by c1, c2, c3"
+literal|" from "
+operator|+
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|" order by c1, c2, c3"
 argument_list|,
 name|shouldVectorize
 argument_list|()
@@ -1316,56 +1428,72 @@ name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"obuckets/delete_delta_0000002_0000002_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delete_delta_0000002_0000002_0000/bucket_00000"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"obuckets/delete_delta_0000002_0000002_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delete_delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"house/nobuckets/delta_0000001_0000001_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"house/nobuckets/delta_0000001_0000001_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000001_0000001_0000/bucket_00001_0"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"house/nobuckets/delta_0000002_0000002_0000/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000002_0000002_0000/bucket_00000"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"house/nobuckets/delta_0000002_0000002_0000/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/delta_0000002_0000002_0000/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"/warehouse/nobuckets/base_0000002_v0000025/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00000"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"/warehouse/nobuckets/base_0000002_v0000025/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|assertExpectedFileSet
@@ -1375,7 +1503,11 @@ argument_list|,
 name|getWarehouseDir
 argument_list|()
 operator|+
-literal|"/nobuckets"
+literal|"/"
+operator|+
+name|NO_BUCKETS_TBL_NAME
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
 argument_list|)
 expr_stmt|;
 name|TestTxnCommands2
@@ -1389,7 +1521,14 @@ name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select c1, c2, c3 from nobuckets order by c1, c2, c3"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select c1, c2, c3 from %s order by c1, c2, c3"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|int
@@ -1454,14 +1593,18 @@ name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"/warehouse/nobuckets/base_0000002_v0000025/bucket_00000"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00000"
 argument_list|)
 expr_stmt|;
 name|expectedFiles
 operator|.
 name|add
 argument_list|(
-literal|"/warehouse/nobuckets/base_0000002_v0000025/bucket_00001"
+name|NO_BUCKETS_TBL_NAME
+operator|+
+literal|"/base_0000002_v0000025/bucket_00001"
 argument_list|)
 expr_stmt|;
 name|assertExpectedFileSet
@@ -1471,7 +1614,11 @@ argument_list|,
 name|getWarehouseDir
 argument_list|()
 operator|+
-literal|"/nobuckets"
+literal|"/"
+operator|+
+name|NO_BUCKETS_TBL_NAME
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
 argument_list|)
 expr_stmt|;
 block|}
@@ -1630,20 +1777,36 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"drop table if exists nobuckets"
+literal|"drop table if exists "
+operator|+
+name|NO_BUCKETS_TBL_NAME
 argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"create table nobuckets (c1 integer, c2 integer) partitioned by (c3 integer) stored "
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"create table %s (c1 integer, c2 integer) partitioned by (c3 integer) stored "
 operator|+
 literal|"as orc tblproperties('transactional'='true', 'transactional_properties'='default')"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|String
 name|stmt
 init|=
-literal|"insert into nobuckets partition(c3) select * from tmp"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"insert into %s partition(c3) select * from tmp"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 decl_stmt|;
 name|runStatementOnDriver
 argument_list|(
@@ -1658,7 +1821,14 @@ name|rs
 init|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from nobuckets order by ROW__ID"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from %s order by ROW__ID"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 decl_stmt|;
 name|Assert
@@ -1702,7 +1872,14 @@ name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select * from nobuckets where c2 in (0,3)"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select * from %s where c2 in (0,3)"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -1719,14 +1896,28 @@ argument_list|)
 expr_stmt|;
 name|runStatementOnDriver
 argument_list|(
-literal|"update nobuckets set c2 = 17 where c2 in(0,3)"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"update %s set c2 = 17 where c2 in(0,3)"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from nobuckets order by INPUT__FILE__NAME, ROW__ID"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select ROW__ID, c1, c2, c3, INPUT__FILE__NAME from %s order by INPUT__FILE__NAME, ROW__ID"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|LOG
@@ -1756,7 +1947,14 @@ name|rs
 operator|=
 name|runStatementOnDriver
 argument_list|(
-literal|"select * from nobuckets where c2=17"
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"select * from %s where c2=17"
+argument_list|,
+name|NO_BUCKETS_TBL_NAME
+argument_list|)
 argument_list|)
 expr_stmt|;
 name|Assert
@@ -2265,31 +2463,31 @@ block|{
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":0}\t1\t2"
 block|,
-literal|"/delta_0000001_0000001_0001/bucket_00000"
+literal|"/delta_0000001_0000001_0001/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870913,\"rowid\":1}\t3\t4"
 block|,
-literal|"/delta_0000001_0000001_0001/bucket_00000"
+literal|"/delta_0000001_0000001_0001/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870914,\"rowid\":0}\t5\t6"
 block|,
-literal|"/delta_0000001_0000001_0002/bucket_00000"
+literal|"/delta_0000001_0000001_0002/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870915,\"rowid\":0}\t9\t10"
 block|,
-literal|"/delta_0000001_0000001_0003/bucket_00000"
+literal|"/delta_0000001_0000001_0003/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536936450,\"rowid\":0}\t7\t8"
 block|,
-literal|"/delta_0000001_0000001_0002/bucket_00001"
+literal|"/delta_0000001_0000001_0002/bucket_00001_0"
 block|}
 block|,     }
 decl_stmt|;
@@ -3554,7 +3752,7 @@ literal|"{\"writeid\":10000001,\"bucketid\":536870912,\"rowid\":0}\t0\t15"
 block|,
 literal|"bucket_00000"
 block|,
-literal|"bucket_00000"
+literal|"bucket_00000_0"
 block|}
 block|,
 block|{
@@ -3562,7 +3760,7 @@ literal|"{\"writeid\":10000003,\"bucketid\":536870912,\"rowid\":0}\t0\t17"
 block|,
 literal|"bucket_00000"
 block|,
-literal|"bucket_00000"
+literal|"bucket_00000_0"
 block|}
 block|,
 block|{
@@ -3610,7 +3808,7 @@ literal|"{\"writeid\":10000001,\"bucketid\":536870912,\"rowid\":1}\t1\t16"
 block|,
 literal|"bucket_00000"
 block|,
-literal|"bucket_00000"
+literal|"bucket_00000_0"
 block|}
 block|}
 decl_stmt|;
@@ -4953,49 +5151,49 @@ block|{
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t1\t4\t1"
 block|,
-literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t1\t1\t4\t3"
 block|,
-literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":0}\t1\t1\t5\t1"
 block|,
-literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":1}\t1\t1\t5\t3"
 block|,
-literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t2\t4\t2"
 block|,
-literal|"t/p=1/q=2/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=1/q=2/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t1\t2\t4\t4"
 block|,
-literal|"t/p=1/q=2/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=1/q=2/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":0}\t1\t2\t5\t2"
 block|,
-literal|"t/p=1/q=2/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/p=1/q=2/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":1}\t1\t2\t5\t4"
 block|,
-literal|"t/p=1/q=2/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/p=1/q=2/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|}
 decl_stmt|;
@@ -5041,25 +5239,25 @@ block|{
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t1\t4\t1"
 block|,
-literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t1\t1\t4\t3"
 block|,
-literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":0}\t1\t1\t5\t1"
 block|,
-literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":3,\"bucketid\":536870912,\"rowid\":1}\t1\t1\t5\t3"
 block|,
-literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000"
+literal|"t/p=1/q=1/delta_0000003_0000003_0000/bucket_00000_0"
 block|}
 block|,
 block|{
@@ -5302,13 +5500,13 @@ comment|//this proves data is written in Acid layout so T was made Acid
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t1\t2"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":1}\t3\t4"
 block|,
-literal|"t/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|}
 decl_stmt|;

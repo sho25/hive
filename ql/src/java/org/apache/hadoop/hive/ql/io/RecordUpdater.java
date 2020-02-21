@@ -37,6 +37,20 @@ name|apache
 operator|.
 name|hadoop
 operator|.
+name|fs
+operator|.
+name|Path
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
 name|hive
 operator|.
 name|serde2
@@ -118,6 +132,12 @@ function_decl|;
 comment|/**    * Returns the number of rows in memory before flush().    *    * @return - buffered row count    */
 name|long
 name|getBufferedRowCount
+parameter_list|()
+function_decl|;
+comment|/**    * Returns the path of the file this updater wrote to    */
+specifier|public
+name|Path
+name|getUpdatedFilePath
 parameter_list|()
 function_decl|;
 block|}

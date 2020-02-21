@@ -197,6 +197,10 @@ specifier|private
 name|boolean
 name|isInsertOverwrite
 decl_stmt|;
+specifier|private
+name|boolean
+name|isDirectInsert
+decl_stmt|;
 comment|// TODO: the below seem like they should just be combined into partitionDesc
 specifier|private
 name|Table
@@ -1052,6 +1056,32 @@ name|isInsertOverwrite
 operator|=
 name|v
 expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setIsDirectInsert
+parameter_list|(
+name|boolean
+name|isDirectInsert
+parameter_list|)
+block|{
+name|this
+operator|.
+name|isDirectInsert
+operator|=
+name|isDirectInsert
+expr_stmt|;
+block|}
+specifier|public
+name|boolean
+name|isDirectInsert
+parameter_list|()
+block|{
+return|return
+name|this
+operator|.
+name|isDirectInsert
+return|;
 block|}
 comment|/**    * @return the lbCtx    */
 specifier|public

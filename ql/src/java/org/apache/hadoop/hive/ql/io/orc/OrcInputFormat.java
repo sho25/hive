@@ -15024,6 +15024,14 @@ parameter_list|,
 name|Path
 index|[]
 name|deltaDirectory
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|deltasToAttemptId
 parameter_list|)
 throws|throws
 name|IOException
@@ -15176,6 +15184,8 @@ argument_list|,
 name|deltaDirectory
 argument_list|,
 name|mergerOptions
+argument_list|,
+name|deltasToAttemptId
 argument_list|)
 return|;
 block|}

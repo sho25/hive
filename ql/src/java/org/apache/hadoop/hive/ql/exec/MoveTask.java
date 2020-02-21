@@ -2891,6 +2891,11 @@ name|tbd
 operator|.
 name|isInsertOverwrite
 argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|isDirectInsert
+argument_list|()
 argument_list|)
 expr_stmt|;
 if|if
@@ -3617,6 +3622,11 @@ name|tbd
 operator|.
 name|isInsertOverwrite
 argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|isDirectInsert
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Partition
@@ -3933,6 +3943,11 @@ argument_list|,
 name|tbd
 operator|.
 name|isInsertOverwrite
+argument_list|()
+argument_list|,
+name|tbd
+operator|.
+name|isDirectInsert
 argument_list|()
 argument_list|)
 decl_stmt|;

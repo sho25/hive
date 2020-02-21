@@ -5627,6 +5627,8 @@ argument_list|,
 name|deleteDeltas
 argument_list|,
 name|mergerOptions
+argument_list|,
+literal|null
 argument_list|)
 expr_stmt|;
 name|this
@@ -7780,6 +7782,8 @@ name|isCompacting
 argument_list|(
 literal|false
 argument_list|)
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 for|for

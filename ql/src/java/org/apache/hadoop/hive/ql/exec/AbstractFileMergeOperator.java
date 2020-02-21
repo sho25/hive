@@ -1166,7 +1166,7 @@ comment|// There's always just one file that we have merged.
 comment|// The union/DP/etc. should already be account for in the path.
 name|Utilities
 operator|.
-name|writeMmCommitManifest
+name|writeCommitManifest
 argument_list|(
 name|Lists
 operator|.
@@ -1610,7 +1610,7 @@ comment|// We don't expect missing buckets from mere (actually there should be n
 comment|// so just pass null as bucketing context. Union suffix should also be accounted for.
 name|Utilities
 operator|.
-name|handleMmTableFinalPath
+name|handleDirectInsertTableFinalPath
 argument_list|(
 name|outputDir
 operator|.
@@ -1636,6 +1636,8 @@ argument_list|,
 name|reporter
 argument_list|,
 name|isMmTable
+argument_list|,
+literal|false
 argument_list|,
 literal|false
 argument_list|,

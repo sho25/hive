@@ -1919,7 +1919,7 @@ block|{
 block|{
 literal|"{\"writeid\":1,\"bucketid\":536870912,\"rowid\":0}\t0\t0"
 block|,
-literal|"t/p=10/delta_0000001_0000001_0000/bucket_00000"
+literal|"t/p=10/delta_0000001_0000001_0000/bucket_00000_0"
 block|}
 block|,
 block|{

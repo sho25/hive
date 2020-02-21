@@ -1718,15 +1718,6 @@ parameter_list|)
 throws|throws
 name|IOException
 block|{
-name|AcidUtils
-operator|.
-name|BUCKET_DIGIT_PATTERN
-operator|.
-name|matcher
-argument_list|(
-literal|"foo"
-argument_list|)
-expr_stmt|;
 if|if
 condition|(
 name|isBucketed

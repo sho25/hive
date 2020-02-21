@@ -12287,7 +12287,7 @@ name|m
 operator|=
 name|AcidUtils
 operator|.
-name|BUCKET_DIGIT_PATTERN
+name|BUCKET_PATTERN
 operator|.
 name|matcher
 argument_list|(
@@ -12310,7 +12310,9 @@ argument_list|(
 name|m
 operator|.
 name|group
-argument_list|()
+argument_list|(
+literal|1
+argument_list|)
 argument_list|)
 return|;
 block|}
@@ -20905,10 +20907,15 @@ name|fdesc
 operator|.
 name|isMmTable
 argument_list|()
+operator|||
+name|fdesc
+operator|.
+name|isDirectInsert
+argument_list|()
 condition|)
 block|{
+comment|// No need to create for MM tables, or ACID insert
 continue|continue;
-comment|// No need to create for MM tables
 block|}
 name|Path
 name|tempDir
@@ -22949,7 +22956,7 @@ specifier|public
 specifier|static
 name|Path
 index|[]
-name|getMmDirectoryCandidates
+name|getDirectInsertDirectoryCandidates
 parameter_list|(
 name|FileSystem
 name|fs
@@ -23058,7 +23065,7 @@ operator|)
 condition|)
 block|{
 return|return
-name|getMmDirectoryCandidatesRecursive
+name|getDirectInsertDirectoryCandidatesRecursive
 argument_list|(
 name|fs
 argument_list|,
@@ -23071,7 +23078,7 @@ argument_list|)
 return|;
 block|}
 return|return
-name|getMmDirectoryCandidatesGlobStatus
+name|getDirectInsertDirectoryCandidatesGlobStatus
 argument_list|(
 name|fs
 argument_list|,
@@ -23197,7 +23204,7 @@ specifier|private
 specifier|static
 name|Path
 index|[]
-name|getMmDirectoryCandidatesRecursive
+name|getDirectInsertDirectoryCandidatesRecursive
 parameter_list|(
 name|FileSystem
 name|fs
@@ -23593,7 +23600,7 @@ specifier|private
 specifier|static
 name|Path
 index|[]
-name|getMmDirectoryCandidatesGlobStatus
+name|getDirectInsertDirectoryCandidatesGlobStatus
 parameter_list|(
 name|FileSystem
 name|fs
@@ -23740,7 +23747,7 @@ block|}
 specifier|private
 specifier|static
 name|void
-name|tryDeleteAllMmFiles
+name|tryDeleteAllDirectInsertFiles
 parameter_list|(
 name|FileSystem
 name|fs
@@ -23778,7 +23785,7 @@ name|Path
 index|[]
 name|files
 init|=
-name|getMmDirectoryCandidates
+name|getDirectInsertDirectoryCandidates
 argument_list|(
 name|fs
 argument_list|,
@@ -23856,7 +23863,7 @@ block|}
 specifier|public
 specifier|static
 name|void
-name|writeMmCommitManifest
+name|writeCommitManifest
 parameter_list|(
 name|List
 argument_list|<
@@ -24142,7 +24149,7 @@ block|}
 specifier|public
 specifier|static
 name|void
-name|handleMmTableFinalPath
+name|handleDirectInsertTableFinalPath
 parameter_list|(
 name|Path
 name|specPath
@@ -24182,6 +24189,9 @@ name|isMmCtas
 parameter_list|,
 name|boolean
 name|isInsertOverwrite
+parameter_list|,
+name|boolean
+name|isDirectInsert
 parameter_list|)
 throws|throws
 name|IOException
@@ -24235,7 +24245,7 @@ argument_list|,
 name|stmtId
 argument_list|)
 decl_stmt|;
-name|tryDeleteAllMmFiles
+name|tryDeleteAllDirectInsertFiles
 argument_list|(
 name|fs
 argument_list|,
@@ -24441,7 +24451,7 @@ name|Path
 index|[]
 name|files
 init|=
-name|getMmDirectoryCandidates
+name|getDirectInsertDirectoryCandidates
 argument_list|(
 name|fs
 argument_list|,
@@ -24464,7 +24474,7 @@ name|ArrayList
 argument_list|<
 name|Path
 argument_list|>
-name|mmDirectories
+name|directInsertDirectories
 init|=
 operator|new
 name|ArrayList
@@ -24497,7 +24507,7 @@ argument_list|,
 name|path
 argument_list|)
 expr_stmt|;
-name|mmDirectories
+name|directInsertDirectories
 operator|.
 name|add
 argument_list|(
@@ -24708,10 +24718,10 @@ control|(
 name|Path
 name|path
 range|:
-name|mmDirectories
+name|directInsertDirectories
 control|)
 block|{
-name|cleanMmDirectory
+name|cleanDirectInsertDirectory
 argument_list|(
 name|path
 argument_list|,
@@ -24746,7 +24756,7 @@ throw|;
 block|}
 if|if
 condition|(
-name|mmDirectories
+name|directInsertDirectories
 operator|.
 name|isEmpty
 argument_list|()
@@ -24765,8 +24775,14 @@ condition|)
 block|{
 return|return;
 block|}
+if|if
+condition|(
+operator|!
+name|isDirectInsert
+condition|)
+block|{
 comment|// Create fake file statuses to avoid querying the file system. removeTempOrDuplicateFiles
-comment|// doesn't need tocheck anything except path and directory status for MM directories.
+comment|// doesn't need to check anything except path and directory status for MM directories.
 name|FileStatus
 index|[]
 name|finalResults
@@ -24774,7 +24790,7 @@ init|=
 operator|new
 name|FileStatus
 index|[
-name|mmDirectories
+name|directInsertDirectories
 operator|.
 name|size
 argument_list|()
@@ -24789,7 +24805,7 @@ literal|0
 init|;
 name|i
 operator|<
-name|mmDirectories
+name|directInsertDirectories
 operator|.
 name|size
 argument_list|()
@@ -24806,7 +24822,7 @@ operator|=
 operator|new
 name|PathOnlyFileStatus
 argument_list|(
-name|mmDirectories
+name|directInsertDirectories
 operator|.
 name|get
 argument_list|(
@@ -24892,6 +24908,7 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
+block|}
 specifier|private
 specifier|static
 specifier|final
@@ -24927,7 +24944,7 @@ block|}
 specifier|private
 specifier|static
 name|void
-name|cleanMmDirectory
+name|cleanDirectInsertDirectory
 parameter_list|(
 name|Path
 name|dir
@@ -25006,7 +25023,7 @@ operator|-
 literal|1
 argument_list|)
 expr_stmt|;
-name|cleanMmDirectory
+name|cleanDirectInsertDirectory
 argument_list|(
 name|childPath
 argument_list|,
@@ -25079,6 +25096,24 @@ block|{
 continue|continue;
 comment|// A good file.
 block|}
+if|if
+condition|(
+operator|!
+name|childPath
+operator|.
+name|getName
+argument_list|()
+operator|.
+name|equals
+argument_list|(
+name|AcidUtils
+operator|.
+name|OrcAcidVersion
+operator|.
+name|ACID_FORMAT
+argument_list|)
+condition|)
+block|{
 name|deleteUncommitedFile
 argument_list|(
 name|childPath
@@ -25086,6 +25121,7 @@ argument_list|,
 name|fs
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 elseif|else
 if|if
@@ -25143,8 +25179,8 @@ name|unionSuffix
 argument_list|)
 condition|)
 block|{
-comment|// Found the right union directory; treat it as "our" MM directory.
-name|cleanMmDirectory
+comment|// Found the right union directory; treat it as "our" directory.
+name|cleanDirectInsertDirectory
 argument_list|(
 name|childPath
 argument_list|,

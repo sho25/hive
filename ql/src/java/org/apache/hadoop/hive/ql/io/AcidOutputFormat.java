@@ -251,6 +251,10 @@ specifier|private
 name|long
 name|maximumWriteId
 decl_stmt|;
+specifier|private
+name|String
+name|attemptId
+decl_stmt|;
 comment|/**      * actual bucketId (as opposed to bucket property via BucketCodec)      */
 specifier|private
 name|int
@@ -628,6 +632,24 @@ return|return
 name|this
 return|;
 block|}
+specifier|public
+name|Options
+name|attemptId
+parameter_list|(
+name|String
+name|attemptId
+parameter_list|)
+block|{
+name|this
+operator|.
+name|attemptId
+operator|=
+name|attemptId
+expr_stmt|;
+return|return
+name|this
+return|;
+block|}
 comment|/**      * @since 1.3.0      * This can be set to -1 to make the system generate old style (delta_xxxx_yyyy) file names.      * This is primarily needed for testing to make sure 1.3 code can still read files created      * by older code.  Also used by Comactor.      */
 specifier|public
 name|Options
@@ -818,6 +840,15 @@ parameter_list|()
 block|{
 return|return
 name|bucketId
+return|;
+block|}
+specifier|public
+name|String
+name|getAttemptId
+parameter_list|()
+block|{
+return|return
+name|attemptId
 return|;
 block|}
 specifier|public

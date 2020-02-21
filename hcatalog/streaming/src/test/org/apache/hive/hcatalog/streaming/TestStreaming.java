@@ -3138,7 +3138,7 @@ argument_list|)
 operator|.
 name|endsWith
 argument_list|(
-literal|"streamingnobuckets/delta_0000001_0000001_0000/bucket_00000"
+literal|"streamingnobuckets/delta_0000001_0000001_0000/bucket_00000_0"
 argument_list|)
 argument_list|)
 expr_stmt|;

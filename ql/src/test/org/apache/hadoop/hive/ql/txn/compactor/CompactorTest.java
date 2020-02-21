@@ -3165,8 +3165,16 @@ name|Path
 name|baseDirectory
 parameter_list|,
 name|Path
-modifier|...
+index|[]
 name|deltaDirectory
+parameter_list|,
+name|Map
+argument_list|<
+name|String
+argument_list|,
+name|String
+argument_list|>
+name|deltaToAttemptId
 parameter_list|)
 throws|throws
 name|IOException
