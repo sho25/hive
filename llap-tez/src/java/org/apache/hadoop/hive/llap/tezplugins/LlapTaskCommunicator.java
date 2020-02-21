@@ -4770,6 +4770,9 @@ name|registerPingingNode
 parameter_list|(
 name|LlapNodeId
 name|nodeId
+parameter_list|,
+name|String
+name|uniqueId
 parameter_list|)
 block|{
 name|long
@@ -4831,9 +4834,11 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Added new pinging node: [{}]"
+literal|"Added new pinging node: [{}] with uniqueId: {}"
 argument_list|,
 name|nodeId
+argument_list|,
+name|uniqueId
 argument_list|)
 expr_stmt|;
 block|}
@@ -4978,6 +4983,8 @@ decl_stmt|;
 name|registerPingingNode
 argument_list|(
 name|nodeId
+argument_list|,
+name|uniqueId
 argument_list|)
 expr_stmt|;
 name|BiMap
@@ -5214,7 +5221,6 @@ argument_list|)
 expr_stmt|;
 block|}
 block|}
-block|}
 if|if
 condition|(
 operator|!
@@ -5233,6 +5239,57 @@ operator|+
 name|error
 argument_list|)
 expr_stmt|;
+for|for
+control|(
+name|Map
+operator|.
+name|Entry
+argument_list|<
+name|ContainerId
+argument_list|,
+name|TezTaskAttemptID
+argument_list|>
+name|entry
+range|:
+name|biMap
+operator|.
+name|entrySet
+argument_list|()
+control|)
+block|{
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Sending a kill for attempt {}, due to a ping from node with same host and same port but "
+operator|+
+literal|"registered with different unique ID"
+argument_list|,
+name|entry
+operator|.
+name|getValue
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|getContext
+argument_list|()
+operator|.
+name|taskKilled
+argument_list|(
+name|entry
+operator|.
+name|getValue
+argument_list|()
+argument_list|,
+name|TaskAttemptEndReason
+operator|.
+name|NODE_FAILED
+argument_list|,
+literal|"Node with same host and port but with new unique ID pinged"
+argument_list|)
+expr_stmt|;
+block|}
+block|}
 block|}
 block|}
 else|else
