@@ -94466,6 +94466,7 @@ argument_list|>
 name|getNonTransactionalTables
 parameter_list|()
 block|{
+comment|// views have been expanded by CBO already and can be ignored
 return|return
 name|tablesFromReadEntities
 argument_list|(
@@ -94474,6 +94475,17 @@ argument_list|)
 operator|.
 name|stream
 argument_list|()
+operator|.
+name|filter
+argument_list|(
+name|table
+lambda|->
+operator|!
+name|table
+operator|.
+name|isView
+argument_list|()
+argument_list|)
 operator|.
 name|filter
 argument_list|(
