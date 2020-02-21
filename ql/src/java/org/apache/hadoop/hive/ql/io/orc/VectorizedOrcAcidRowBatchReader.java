@@ -1455,6 +1455,15 @@ operator|.
 name|MAX_VALUE
 argument_list|)
 expr_stmt|;
+name|deleteEventReaderOptions
+operator|.
+name|searchArgument
+argument_list|(
+literal|null
+argument_list|,
+literal|null
+argument_list|)
+expr_stmt|;
 name|keyInterval
 operator|=
 name|findMinMaxKeys
