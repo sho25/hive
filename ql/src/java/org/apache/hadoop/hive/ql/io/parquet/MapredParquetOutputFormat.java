@@ -800,6 +800,8 @@ argument_list|(
 name|columnNames
 argument_list|,
 name|columnTypes
+argument_list|,
+name|jobConf
 argument_list|)
 argument_list|,
 name|jobConf

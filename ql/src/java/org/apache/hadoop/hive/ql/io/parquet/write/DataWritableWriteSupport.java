@@ -227,6 +227,10 @@ specifier|private
 name|boolean
 name|defaultDateProleptic
 decl_stmt|;
+specifier|private
+name|Configuration
+name|conf
+decl_stmt|;
 specifier|public
 specifier|static
 name|void
@@ -289,6 +293,10 @@ name|Configuration
 name|configuration
 parameter_list|)
 block|{
+name|conf
+operator|=
+name|configuration
+expr_stmt|;
 name|schema
 operator|=
 name|getSchema
@@ -387,6 +395,8 @@ argument_list|,
 name|schema
 argument_list|,
 name|defaultDateProleptic
+argument_list|,
+name|conf
 argument_list|)
 expr_stmt|;
 block|}

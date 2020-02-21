@@ -7736,6 +7736,36 @@ operator|+
 literal|"Set this flag to true to interpret the value as seconds to be consistent with float/double."
 argument_list|)
 block|,
+name|HIVE_PARQUET_WRITE_INT64_TIMESTAMP
+argument_list|(
+literal|"hive.parquet.write.int64.timestamp"
+argument_list|,
+literal|false
+argument_list|,
+literal|"Write parquet timestamps as int64/LogicalTypes instead of int96/OriginalTypes. Note:"
+operator|+
+literal|"Timestamps will be time zone agnostic (NEVER converted to a different time zone)."
+argument_list|)
+block|,
+name|HIVE_PARQUET_TIMESTAMP_TIME_UNIT
+argument_list|(
+literal|"hive.parquet.timestamp.time.unit"
+argument_list|,
+literal|"millis"
+argument_list|,
+operator|new
+name|StringSet
+argument_list|(
+literal|"nanos"
+argument_list|,
+literal|"micros"
+argument_list|,
+literal|"millis"
+argument_list|)
+argument_list|,
+literal|"Store parquet int64/LogicalTypes timestamps in this time unit."
+argument_list|)
+block|,
 name|HIVE_ORC_BASE_DELTA_RATIO
 argument_list|(
 literal|"hive.exec.orc.base.delta.ratio"
