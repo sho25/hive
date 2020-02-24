@@ -23,7 +23,7 @@ name|nio
 operator|.
 name|charset
 operator|.
-name|Charset
+name|StandardCharsets
 import|;
 end_import
 
@@ -63,7 +63,9 @@ name|java
 operator|.
 name|util
 operator|.
-name|Random
+name|concurrent
+operator|.
+name|ThreadLocalRandom
 import|;
 end_import
 
@@ -144,6 +146,20 @@ operator|.
 name|retry
 operator|.
 name|ExponentialBackoffRetry
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|curator
+operator|.
+name|utils
+operator|.
+name|ZKPaths
 import|;
 end_import
 
@@ -291,9 +307,6 @@ argument_list|(
 name|ZooKeeperHiveClientHelper
 operator|.
 name|class
-operator|.
-name|getName
-argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Pattern for key1=value1;key2=value2
@@ -539,6 +552,7 @@ return|return
 name|zooKeeperClient
 return|;
 block|}
+comment|/**    * Get a list of all HiveServer2 server hosts.    *    * @param connParams The current JDBC connection parameters    * @param zooKeeperClient The client to use to connect to ZooKeeper    * @return A list of HiveServer2 hosts    * @throws ZooKeeperHiveClientException Failed to communicate to ZooKeeper    */
 specifier|private
 specifier|static
 name|List
@@ -547,15 +561,42 @@ name|String
 argument_list|>
 name|getServerHosts
 parameter_list|(
+specifier|final
 name|JdbcConnectionParams
 name|connParams
 parameter_list|,
+specifier|final
 name|CuratorFramework
 name|zooKeeperClient
 parameter_list|)
 throws|throws
-name|Exception
+name|ZooKeeperHiveClientException
 block|{
+specifier|final
+name|String
+name|zookeeperNamespace
+init|=
+name|getZooKeeperNamespace
+argument_list|(
+name|connParams
+argument_list|)
+decl_stmt|;
+specifier|final
+name|String
+name|zkPath
+init|=
+name|ZKPaths
+operator|.
+name|makePath
+argument_list|(
+literal|null
+argument_list|,
+name|zookeeperNamespace
+argument_list|)
+decl_stmt|;
+try|try
+block|{
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -569,14 +610,40 @@ argument_list|()
 operator|.
 name|forPath
 argument_list|(
-literal|"/"
-operator|+
-name|getZooKeeperNamespace
-argument_list|(
-name|connParams
-argument_list|)
+name|zkPath
 argument_list|)
 decl_stmt|;
+name|LOG
+operator|.
+name|info
+argument_list|(
+literal|"Discovered HiveServer2 hosts in ZooKeeper [{}]: {}"
+argument_list|,
+name|zkPath
+argument_list|,
+name|serverHosts
+argument_list|)
+expr_stmt|;
+if|if
+condition|(
+name|serverHosts
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|warn
+argument_list|(
+literal|"Did not find any HiveServer2 hosts in ZooKeeper [{}]. "
+operator|+
+literal|"Check that the Hive ZooKeeper namespace is configured correctly."
+argument_list|,
+name|zkPath
+argument_list|)
+expr_stmt|;
+block|}
 comment|// Remove the znodes we've already tried from this list
 name|serverHosts
 operator|.
@@ -588,25 +655,35 @@ name|getRejectedHostZnodePaths
 argument_list|()
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|serverHosts
+name|LOG
 operator|.
-name|isEmpty
-argument_list|()
-condition|)
+name|debug
+argument_list|(
+literal|"Servers in ZooKeeper after removing rejected: {}"
+argument_list|,
+name|serverHosts
+argument_list|)
+expr_stmt|;
+return|return
+name|serverHosts
+return|;
+block|}
+catch|catch
+parameter_list|(
+name|Exception
+name|e
+parameter_list|)
 block|{
 throw|throw
 operator|new
 name|ZooKeeperHiveClientException
 argument_list|(
-literal|"Tried all existing HiveServer2 uris from ZooKeeper."
+literal|"Unable to retrive HS2 host information from ZooKeeper"
+argument_list|,
+name|e
 argument_list|)
 throw|;
 block|}
-return|return
-name|serverHosts
-return|;
 block|}
 specifier|private
 specifier|static
@@ -625,6 +702,7 @@ parameter_list|)
 throws|throws
 name|Exception
 block|{
+specifier|final
 name|String
 name|zooKeeperNamespace
 init|=
@@ -656,21 +734,21 @@ argument_list|()
 operator|.
 name|forPath
 argument_list|(
-literal|"/"
-operator|+
+name|ZKPaths
+operator|.
+name|makePath
+argument_list|(
+literal|null
+argument_list|,
 name|zooKeeperNamespace
-operator|+
-literal|"/"
-operator|+
+argument_list|,
 name|serverNode
 argument_list|)
-argument_list|,
-name|Charset
-operator|.
-name|forName
-argument_list|(
-literal|"UTF-8"
 argument_list|)
+argument_list|,
+name|StandardCharsets
+operator|.
+name|UTF_8
 argument_list|)
 decl_stmt|;
 comment|// If dataStr is not null and dataStr is not a KV pattern,
@@ -726,7 +804,7 @@ throw|throw
 operator|new
 name|ZooKeeperHiveClientException
 argument_list|(
-literal|"Unable to read HiveServer2 uri from ZooKeeper: "
+literal|"Unable to parse HiveServer2 URI from ZooKeeper data: "
 operator|+
 name|dataStr
 argument_list|)
@@ -812,6 +890,7 @@ argument_list|(
 name|connParams
 argument_list|)
 expr_stmt|;
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -825,7 +904,24 @@ argument_list|,
 name|zooKeeperClient
 argument_list|)
 decl_stmt|;
-comment|// Now pick a server node randomly
+if|if
+condition|(
+name|serverHosts
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|ZooKeeperHiveClientException
+argument_list|(
+literal|"No more HiveServer2 URIs from ZooKeeper to attempt"
+argument_list|)
+throw|;
+block|}
+comment|// Pick a server node randomly
+specifier|final
 name|String
 name|serverNode
 init|=
@@ -833,8 +929,9 @@ name|serverHosts
 operator|.
 name|get
 argument_list|(
-operator|new
-name|Random
+name|ThreadLocalRandom
+operator|.
+name|current
 argument_list|()
 operator|.
 name|nextInt
@@ -858,6 +955,16 @@ expr_stmt|;
 block|}
 catch|catch
 parameter_list|(
+name|ZooKeeperHiveClientException
+name|zkhce
+parameter_list|)
+block|{
+throw|throw
+name|zkhce
+throw|;
+block|}
+catch|catch
+parameter_list|(
 name|Exception
 name|e
 parameter_list|)
@@ -874,7 +981,6 @@ throw|;
 block|}
 finally|finally
 block|{
-comment|// Close the client connection with ZooKeeper
 if|if
 condition|(
 name|zooKeeperClient
@@ -1259,6 +1365,7 @@ argument_list|(
 name|connParams
 argument_list|)
 expr_stmt|;
+specifier|final
 name|List
 argument_list|<
 name|String
@@ -1272,6 +1379,22 @@ argument_list|,
 name|zooKeeperClient
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|serverHosts
+operator|.
+name|isEmpty
+argument_list|()
+condition|)
+block|{
+throw|throw
+operator|new
+name|ZooKeeperHiveClientException
+argument_list|(
+literal|"No more HiveServer2 URIs from ZooKeeper to attempt"
+argument_list|)
+throw|;
+block|}
 specifier|final
 name|List
 argument_list|<
@@ -1282,11 +1405,16 @@ init|=
 operator|new
 name|ArrayList
 argument_list|<>
+argument_list|(
+name|serverHosts
+operator|.
+name|size
 argument_list|()
+argument_list|)
 decl_stmt|;
-comment|// For each node
 for|for
 control|(
+specifier|final
 name|String
 name|serverNode
 range|:
@@ -1341,7 +1469,6 @@ throw|;
 block|}
 finally|finally
 block|{
-comment|// Close the client connection with ZooKeeper
 if|if
 condition|(
 name|zooKeeperClient
