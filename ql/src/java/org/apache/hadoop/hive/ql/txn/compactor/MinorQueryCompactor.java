@@ -457,26 +457,6 @@ argument_list|,
 literal|false
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-operator|!
-name|Util
-operator|.
-name|isEnoughToCompact
-argument_list|(
-name|compactionInfo
-operator|.
-name|isMajorCompaction
-argument_list|()
-argument_list|,
-name|dir
-argument_list|,
-name|storageDescriptor
-argument_list|)
-condition|)
-block|{
-return|return;
-block|}
 comment|// Set up the session for driver.
 name|HiveConf
 name|conf
