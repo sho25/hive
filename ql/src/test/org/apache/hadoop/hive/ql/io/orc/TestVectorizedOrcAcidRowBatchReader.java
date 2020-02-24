@@ -7618,6 +7618,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 name|root

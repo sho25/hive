@@ -3760,6 +3760,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -3928,6 +3930,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -4039,6 +4043,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+specifier|final
 name|MockFileSystem
 name|fs
 init|=
@@ -4130,6 +4135,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -4208,8 +4215,10 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs1
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -4285,7 +4294,7 @@ literal|1000
 index|]
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -4295,7 +4304,9 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs1
 argument_list|,
 operator|new
 name|MockPath
@@ -4521,6 +4532,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -4718,6 +4731,7 @@ name|conf
 argument_list|)
 decl_stmt|;
 comment|// Case 1: Test with just originals => Single split strategy with two splits.
+specifier|final
 name|MockFileSystem
 name|fs
 init|=
@@ -4779,6 +4793,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -4941,8 +4957,10 @@ argument_list|)
 expr_stmt|;
 comment|// Case 2: Test with originals and base => Single split strategy with two splits on compacted
 comment|// base since the presence of a base will make the originals obsolete.
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs1
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -5028,7 +5046,7 @@ literal|"host1"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -5038,12 +5056,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs1
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs1
 argument_list|,
 literal|"mock:/a"
 argument_list|)
@@ -5186,8 +5206,10 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Case 3: Test with originals and deltas => Two split strategies with two splits for each.
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs3
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -5313,7 +5335,7 @@ literal|"host1"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -5323,12 +5345,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs3
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs3
 argument_list|,
 literal|"mock:/a"
 argument_list|)
@@ -5590,8 +5614,10 @@ comment|// When split-update is enabled, we do not need to account for buckets t
 comment|// The reason why we are able to do so is because the valid user data has already been considered
 comment|// as base for the covered buckets. Hence, the uncovered buckets do not have any relevant
 comment|// data and we can just ignore them.
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs4
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -5677,7 +5703,7 @@ literal|"host1"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -5687,12 +5713,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs4
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs4
 argument_list|,
 literal|"mock:/a"
 argument_list|)
@@ -5881,8 +5909,10 @@ argument_list|)
 expr_stmt|;
 comment|// Case 5: Test with originals, compacted_base, insert_deltas, delete_deltas (exhaustive test)
 comment|// This should just generate one strategy with splits for base and insert_deltas.
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs5
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -6048,7 +6078,7 @@ literal|"host1"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -6058,12 +6088,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs5
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs5
 argument_list|,
 literal|"mock:/a"
 argument_list|)
@@ -6776,6 +6808,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -7007,6 +7041,7 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
+specifier|final
 name|MockFileSystem
 name|fs
 init|=
@@ -7138,6 +7173,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new
@@ -7245,8 +7282,10 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs0
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -7362,7 +7401,7 @@ literal|"host2"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -7372,12 +7411,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs0
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs0
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
@@ -7465,8 +7506,10 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs1
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -7622,7 +7665,7 @@ literal|"host2"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -7632,12 +7675,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs1
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs1
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
@@ -7725,8 +7770,10 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs2
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -7882,7 +7929,7 @@ literal|"host2"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -7892,12 +7939,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs2
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs2
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
@@ -7985,8 +8034,10 @@ argument_list|(
 name|conf
 argument_list|)
 expr_stmt|;
-name|fs
-operator|=
+specifier|final
+name|MockFileSystem
+name|fs3
+init|=
 operator|new
 name|MockFileSystem
 argument_list|(
@@ -8182,7 +8233,7 @@ literal|"host2"
 argument_list|)
 argument_list|)
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|gen
 operator|=
 operator|new
@@ -8192,12 +8243,14 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
-name|fs
+parameter_list|()
+lambda|->
+name|fs3
 argument_list|,
 operator|new
 name|MockPath
 argument_list|(
-name|fs
+name|fs3
 argument_list|,
 literal|"mock:/a/b"
 argument_list|)
@@ -9191,6 +9244,7 @@ operator|.
 name|Context
 name|context
 parameter_list|,
+specifier|final
 name|MockFileSystem
 name|fs
 parameter_list|,
@@ -9208,6 +9262,8 @@ name|FileGenerator
 argument_list|(
 name|context
 argument_list|,
+parameter_list|()
+lambda|->
 name|fs
 argument_list|,
 operator|new

@@ -9979,6 +9979,17 @@ argument_list|,
 literal|"Whether Hive supports transactional stats (accurate stats for transactional tables)"
 argument_list|)
 block|,
+name|HIVE_TXN_ACID_DIR_CACHE_DURATION
+argument_list|(
+literal|"hive.txn.acid.dir.cache.duration"
+argument_list|,
+literal|120
+argument_list|,
+literal|"Enable dir cache for ACID tables specified in minutes."
+operator|+
+literal|"0 indicates cache is disabled. "
+argument_list|)
+block|,
 name|HIVE_TXN_READONLY_ENABLED
 argument_list|(
 literal|"hive.txn.readonly.enabled"
