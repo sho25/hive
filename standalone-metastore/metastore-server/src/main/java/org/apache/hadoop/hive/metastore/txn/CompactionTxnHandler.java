@@ -407,7 +407,7 @@ name|s
 init|=
 literal|"SELECT DISTINCT \"TC\".\"CTC_DATABASE\", \"TC\".\"CTC_TABLE\", \"TC\".\"CTC_PARTITION\" "
 operator|+
-literal|"FROM \"COMPLETED_TXN_COMPONENTS\" TC "
+literal|"FROM \"COMPLETED_TXN_COMPONENTS\" \"TC\" "
 operator|+
 operator|(
 name|checkInterval
@@ -2085,7 +2085,7 @@ expr_stmt|;
 name|String
 name|s
 init|=
-literal|"delete from COMPACTION_QUEUE where cq_id = ?"
+literal|"delete from \"COMPACTION_QUEUE\" where \"CQ_ID\" = ?"
 decl_stmt|;
 name|pStmt
 operator|=
