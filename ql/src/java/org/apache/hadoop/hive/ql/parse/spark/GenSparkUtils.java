@@ -2807,13 +2807,49 @@ decl_stmt|;
 name|Path
 name|tmpDir
 init|=
+literal|null
+decl_stmt|;
+comment|// The dest path (output location of the final job) may be an -mr-1000X dir, in case all below are true:
+comment|// -target table location FS is not HDFS but either blob storage or local FS
+comment|// -HIVE_BLOBSTORE_USE_BLOBSTORE_AS_SCRATCHDIR is set to false (default)
+comment|// -HIVE_BLOBSTORE_OPTIMIZATIONS_ENABLED is false
+comment|// In such case we shouldn't request an external tmp dir as it will end up inside the mr temp dir
+if|if
+condition|(
+name|baseCtx
+operator|.
+name|isMRTmpFileURI
+argument_list|(
+name|dest
+operator|.
+name|toUri
+argument_list|()
+operator|.
+name|getPath
+argument_list|()
+argument_list|)
+condition|)
+block|{
+name|tmpDir
+operator|=
+name|baseCtx
+operator|.
+name|getMRTmpPath
+argument_list|()
+expr_stmt|;
+block|}
+else|else
+block|{
+name|tmpDir
+operator|=
 name|baseCtx
 operator|.
 name|getExternalTmpPath
 argument_list|(
 name|dest
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
 comment|// Change all the linked file sink descriptors
 if|if
 condition|(
