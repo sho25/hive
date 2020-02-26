@@ -16108,6 +16108,17 @@ argument_list|,
 literal|"Whether to use FQDN of the AM machine when submitting work to LLAP."
 argument_list|)
 block|,
+name|LLAP_DAEMON_EXEC_USE_FQDN
+argument_list|(
+literal|"hive.llap.exec.use.fqdn"
+argument_list|,
+literal|true
+argument_list|,
+literal|"On non-kerberized clusters, where the hostnames are stable but ip address changes, setting this config\n"
+operator|+
+literal|" to false will use ip address of llap daemon in execution context instead of FQDN"
+argument_list|)
+block|,
 comment|// Not used yet - since the Writable RPC engine does not support this policy.
 name|LLAP_DAEMON_AM_LIVENESS_CONNECTION_SLEEP_BETWEEN_RETRIES_MS
 argument_list|(
