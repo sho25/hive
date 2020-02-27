@@ -633,6 +633,15 @@ name|stmt
 operator|.
 name|execute
 argument_list|(
+literal|"CREATE INDEX COMPLETED_COMPACTIONS_RES ON COMPLETED_COMPACTIONS ("
+operator|+
+literal|"CC_DATABASE,CC_TABLE,CC_PARTITION)"
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
 literal|"CREATE TABLE AUX_TABLE ("
 operator|+
 literal|" MT_KEY1 varchar(128) NOT NULL,"
