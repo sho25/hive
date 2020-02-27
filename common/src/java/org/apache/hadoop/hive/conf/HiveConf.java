@@ -9432,6 +9432,15 @@ operator|+
 literal|" bitvectors to achieve the accuracy."
 argument_list|)
 block|,
+name|HIVE_STATS_ESTIMATORS_ENABLE
+argument_list|(
+literal|"hive.stats.estimators.enable"
+argument_list|,
+literal|true
+argument_list|,
+literal|"Estimators are able to provide more accurate column statistic infos for UDF results."
+argument_list|)
+block|,
 comment|/**      * @deprecated Use MetastoreConf.STATS_NDV_TUNER      */
 annotation|@
 name|Deprecated

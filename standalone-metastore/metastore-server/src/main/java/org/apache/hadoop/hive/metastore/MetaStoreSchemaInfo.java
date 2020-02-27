@@ -71,6 +71,18 @@ begin_import
 import|import
 name|java
 operator|.
+name|nio
+operator|.
+name|file
+operator|.
+name|NoSuchFileException
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|sql
 operator|.
 name|Connection
@@ -670,10 +682,9 @@ operator|+
 name|SQL_FILE_EXTENSION
 decl_stmt|;
 comment|// check if the file exists
-if|if
-condition|(
-operator|!
-operator|(
+name|File
+name|file
+init|=
 operator|new
 name|File
 argument_list|(
@@ -686,10 +697,14 @@ name|separatorChar
 operator|+
 name|initScriptName
 argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|file
 operator|.
 name|exists
 argument_list|()
-operator|)
 condition|)
 block|{
 throw|throw
@@ -699,6 +714,15 @@ argument_list|(
 literal|"Unknown version specified for initialization: "
 operator|+
 name|toVersion
+argument_list|,
+operator|new
+name|NoSuchFileException
+argument_list|(
+name|file
+operator|.
+name|getAbsolutePath
+argument_list|()
+argument_list|)
 argument_list|)
 throw|;
 block|}
