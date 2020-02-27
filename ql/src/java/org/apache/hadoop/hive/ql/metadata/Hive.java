@@ -13788,24 +13788,6 @@ argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;
-if|if
-condition|(
-name|srcFs
-operator|.
-name|exists
-argument_list|(
-name|acidDir
-argument_list|)
-operator|&&
-name|srcFs
-operator|.
-name|isDirectory
-argument_list|(
-name|acidDir
-argument_list|)
-condition|)
-block|{
-comment|// list out all the files in the path
 name|listFilesInsideAcidDirectory
 argument_list|(
 name|acidDir
@@ -13816,7 +13798,11 @@ name|newFiles
 argument_list|)
 expr_stmt|;
 block|}
-else|else
+catch|catch
+parameter_list|(
+name|FileNotFoundException
+name|e
+parameter_list|)
 block|{
 name|LOG
 operator|.
@@ -13827,8 +13813,6 @@ operator|+
 name|acidDir
 argument_list|)
 expr_stmt|;
-return|return;
-block|}
 block|}
 catch|catch
 parameter_list|(
@@ -13853,7 +13837,6 @@ name|e
 argument_list|)
 throw|;
 block|}
-return|return;
 block|}
 specifier|private
 name|void
