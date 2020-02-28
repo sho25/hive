@@ -77936,6 +77936,9 @@ block|}
 name|boolean
 name|genResolvedParseTree
 parameter_list|(
+name|ASTNode
+name|ast
+parameter_list|,
 name|PlannerContext
 name|plannerCtx
 parameter_list|)
@@ -77947,6 +77950,12 @@ name|child
 init|=
 name|ast
 decl_stmt|;
+name|this
+operator|.
+name|ast
+operator|=
+name|ast
+expr_stmt|;
 name|viewsExpanded
 operator|=
 operator|new
@@ -78518,21 +78527,12 @@ block|}
 name|Operator
 name|genOPTree
 parameter_list|(
+name|ASTNode
+name|ast
+parameter_list|,
 name|PlannerContext
 name|plannerCtx
 parameter_list|)
-throws|throws
-name|SemanticException
-block|{
-comment|// Parameters are not utilized when CBO is disabled.
-return|return
-name|genOPTree
-argument_list|()
-return|;
-block|}
-name|Operator
-name|genOPTree
-parameter_list|()
 throws|throws
 name|SemanticException
 block|{
@@ -78851,9 +78851,8 @@ argument_list|)
 name|void
 name|analyzeInternal
 parameter_list|(
-specifier|final
 name|ASTNode
-name|astToAnalyze
+name|ast
 parameter_list|,
 name|Supplier
 argument_list|<
@@ -78871,6 +78870,7 @@ argument_list|(
 literal|"Starting Semantic Analysis"
 argument_list|)
 expr_stmt|;
+comment|// 1. Generate Resolved Parse tree from syntax tree
 name|boolean
 name|needsTransform
 init|=
@@ -78880,7 +78880,7 @@ decl_stmt|;
 comment|//change the location of position alias process here
 name|processPositionAlias
 argument_list|(
-name|astToAnalyze
+name|ast
 argument_list|)
 expr_stmt|;
 name|PlannerContext
@@ -78891,19 +78891,13 @@ operator|.
 name|get
 argument_list|()
 decl_stmt|;
-name|this
-operator|.
-name|setAST
-argument_list|(
-name|astToAnalyze
-argument_list|)
-expr_stmt|;
-comment|// 1. Generate Resolved Parse tree from syntax tree
 if|if
 condition|(
 operator|!
 name|genResolvedParseTree
 argument_list|(
+name|ast
+argument_list|,
 name|plannerCtx
 argument_list|)
 condition|)
@@ -79074,7 +79068,7 @@ name|lookupInfo
 operator|=
 name|createLookupInfoForQuery
 argument_list|(
-name|astToAnalyze
+name|ast
 argument_list|)
 expr_stmt|;
 if|if
@@ -79137,7 +79131,7 @@ name|adaptor
 operator|.
 name|dupTree
 argument_list|(
-name|astToAnalyze
+name|ast
 argument_list|)
 expr_stmt|;
 block|}
@@ -79145,7 +79139,7 @@ else|else
 block|{
 name|astForMasking
 operator|=
-name|astToAnalyze
+name|ast
 expr_stmt|;
 block|}
 comment|// 2. Gen OP Tree from resolved Parse Tree
@@ -79154,6 +79148,8 @@ name|sinkOp
 init|=
 name|genOPTree
 argument_list|(
+name|ast
+argument_list|,
 name|plannerCtx
 argument_list|)
 decl_stmt|;
@@ -79240,15 +79236,10 @@ argument_list|(
 name|rewrittenAST
 argument_list|)
 expr_stmt|;
-name|this
-operator|.
-name|setAST
-argument_list|(
-name|rewrittenAST
-argument_list|)
-expr_stmt|;
 name|genResolvedParseTree
 argument_list|(
+name|rewrittenAST
+argument_list|,
 name|plannerCtx
 argument_list|)
 expr_stmt|;
@@ -79274,6 +79265,8 @@ name|sinkOp
 operator|=
 name|genOPTree
 argument_list|(
+name|rewrittenAST
+argument_list|,
 name|plannerCtx
 argument_list|)
 expr_stmt|;
@@ -79299,7 +79292,7 @@ name|lookupInfo
 operator|=
 name|createLookupInfoForQuery
 argument_list|(
-name|astToAnalyze
+name|ast
 argument_list|)
 expr_stmt|;
 if|if
