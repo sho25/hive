@@ -1299,6 +1299,20 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
+comment|// Fetch partition statistics only for describe extended or formatted.
+if|if
+condition|(
+name|desc
+operator|.
+name|isExtended
+argument_list|()
+operator|||
+name|desc
+operator|.
+name|isFormatted
+argument_list|()
+condition|)
+block|{
 if|if
 condition|(
 name|table
@@ -1608,6 +1622,7 @@ argument_list|(
 name|tblProps
 argument_list|)
 expr_stmt|;
+block|}
 block|}
 block|}
 specifier|private
