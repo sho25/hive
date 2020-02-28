@@ -9101,6 +9101,33 @@ operator|+
 literal|"If the LIMIT is greater than this value then top n key optimization won't be used."
 argument_list|)
 block|,
+name|HIVE_TOPN_EFFICIENCY_THRESHOLD
+argument_list|(
+literal|"hive.optimize.topnkey.efficiency.threshold"
+argument_list|,
+literal|0.6f
+argument_list|,
+literal|"Disable topN key filter if the ratio between forwarded and total rows reaches this limit."
+argument_list|)
+block|,
+name|HIVE_TOPN_EFFICIENCY_CHECK_BATCHES
+argument_list|(
+literal|"hive.optimize.topnkey.efficiency.check.nbatches"
+argument_list|,
+literal|8
+argument_list|,
+literal|"Check topN key filter efficiency after a specific number of batches."
+argument_list|)
+block|,
+name|HIVE_TOPN_MAX_NUMBER_OF_PARTITIONS
+argument_list|(
+literal|"hive.optimize.topnkey.partitions.max"
+argument_list|,
+literal|64
+argument_list|,
+literal|"Limit the maximum number of partitions used by the top N key operator."
+argument_list|)
+block|,
 name|HIVE_SHARED_WORK_OPTIMIZATION
 argument_list|(
 literal|"hive.optimize.shared.work"
