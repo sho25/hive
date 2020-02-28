@@ -7480,26 +7480,6 @@ parameter_list|)
 throws|throws
 name|MetaException
 block|{
-if|if
-condition|(
-name|node
-operator|.
-name|operator
-operator|==
-name|Operator
-operator|.
-name|LIKE
-condition|)
-block|{
-name|filterBuffer
-operator|.
-name|setError
-argument_list|(
-literal|"LIKE is not supported for SQL filter pushdown"
-argument_list|)
-expr_stmt|;
-return|return;
-block|}
 name|int
 name|partColCount
 init|=
@@ -7531,7 +7511,6 @@ name|hasError
 argument_list|()
 condition|)
 return|return;
-comment|// We skipped 'like', other ops should all work as long as the types are right.
 name|String
 name|colTypeStr
 init|=
@@ -8112,6 +8091,25 @@ name|add
 argument_list|(
 name|nodeValue
 argument_list|)
+expr_stmt|;
+block|}
+comment|// The following syntax is required for using LIKE clause wildcards '_' and '%' as literals.
+if|if
+condition|(
+name|node
+operator|.
+name|operator
+operator|==
+name|Operator
+operator|.
+name|LIKE
+condition|)
+block|{
+name|nodeValue0
+operator|=
+name|nodeValue0
+operator|+
+literal|" ESCAPE '\\' "
 expr_stmt|;
 block|}
 name|filterBuffer

@@ -5771,7 +5771,7 @@ name|DB_NAME
 argument_list|,
 name|tableName
 argument_list|,
-literal|"mOnTh like \"m.*\""
+literal|"mOnTh like \"m%\""
 argument_list|,
 operator|(
 name|short
@@ -5804,7 +5804,7 @@ name|DB_NAME
 argument_list|,
 name|tableName
 argument_list|,
-literal|"yYyY=\"2018\" AND mOnTh like \"m.*\""
+literal|"yYyY=\"2018\" AND mOnTh like \"m%\""
 argument_list|,
 operator|(
 name|short
@@ -6073,7 +6073,7 @@ name|DB_NAME
 argument_list|,
 name|tableName
 argument_list|,
-literal|"month like \"M.*\""
+literal|"month like \"M%\""
 argument_list|,
 operator|(
 name|short
