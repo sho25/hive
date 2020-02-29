@@ -7096,7 +7096,9 @@ literal|"org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe,"
 operator|+
 literal|"org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe,"
 operator|+
-literal|"org.apache.hadoop.hive.serde2.lazybinary.LazyBinarySerDe"
+literal|"org.apache.hadoop.hive.serde2.lazybinary.LazyBinarySerDe,"
+operator|+
+literal|"org.apache.hadoop.hive.serde2.OpenCSVSerde"
 argument_list|,
 literal|"SerDes retrieving schema from metastore. This is an internal parameter."
 argument_list|)
