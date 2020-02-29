@@ -2528,9 +2528,9 @@ name|sessionTriggerProvider
 operator|.
 name|setSessions
 argument_list|(
-name|Collections
-operator|.
-name|unmodifiableList
+operator|new
+name|LinkedList
+argument_list|<>
 argument_list|(
 name|openSessions
 argument_list|)
