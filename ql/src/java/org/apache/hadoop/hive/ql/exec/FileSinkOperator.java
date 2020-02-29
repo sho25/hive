@@ -8184,6 +8184,7 @@ argument_list|(
 name|clazz
 argument_list|)
 decl_stmt|;
+comment|// let empty file generation for mm/acid table as a quick and dirty workaround for HIVE-22941
 if|if
 condition|(
 operator|!
@@ -8191,9 +8192,23 @@ name|isTez
 operator|||
 name|isStreaming
 operator|||
+operator|(
 name|this
 operator|.
 name|isInsertOverwrite
+operator|&&
+operator|(
+name|conf
+operator|.
+name|isMmTable
+argument_list|()
+operator|||
+name|conf
+operator|.
+name|isFullAcidTable
+argument_list|()
+operator|)
+operator|)
 condition|)
 block|{
 name|createBucketFiles
