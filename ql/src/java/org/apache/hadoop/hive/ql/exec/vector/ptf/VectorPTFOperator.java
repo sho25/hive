@@ -1955,11 +1955,13 @@ name|batch
 argument_list|)
 expr_stmt|;
 block|}
-comment|// If we are only processing a PARTITION BY, reset our evaluators.
+comment|// If we are only processing a PARTITION BY and isLastGroupBatch, reset our evaluators.
 if|if
 condition|(
 operator|!
 name|isPartitionOrderBy
+operator|&&
+name|isLastGroupBatch
 condition|)
 block|{
 name|groupBatches
