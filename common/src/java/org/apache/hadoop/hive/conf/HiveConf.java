@@ -14761,7 +14761,7 @@ name|TEZ_OPTIMIZE_BUCKET_PRUNING
 argument_list|(
 literal|"hive.tez.bucket.pruning"
 argument_list|,
-literal|false
+literal|true
 argument_list|,
 literal|"When pruning is enabled, filters on bucket columns will be processed by \n"
 operator|+
