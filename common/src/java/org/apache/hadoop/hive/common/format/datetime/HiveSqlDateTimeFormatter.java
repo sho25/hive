@@ -5139,7 +5139,7 @@ return|return
 name|s
 return|;
 block|}
-comment|/**    * Get the integer value of a temporal substring.    */
+comment|/**    * Get the integer value of a numeric temporal substring.    *    * @param substring the next parseable substring of the input string    * @param token Token representing the next element of the pattern    * @return int value of temporal    * @throws IllegalArgumentException if substring is not parseable or if its value is outside of    * token's allowed range (e.g. token is hh/hh12 (range: 1-12) and substring is "0")    */
 specifier|private
 name|int
 name|parseNumericTemporal
@@ -5186,7 +5186,6 @@ else|:
 name|PM
 return|;
 block|}
-elseif|else
 if|if
 condition|(
 name|token
@@ -5196,7 +5195,10 @@ operator|==
 name|ChronoField
 operator|.
 name|HOUR_OF_AMPM
-operator|&&
+condition|)
+block|{
+if|if
+condition|(
 literal|"12"
 operator|.
 name|equals
@@ -5205,12 +5207,31 @@ name|substring
 argument_list|)
 condition|)
 block|{
-name|substring
-operator|=
-literal|"0"
-expr_stmt|;
+return|return
+literal|0
+return|;
 block|}
-elseif|else
+if|if
+condition|(
+literal|"0"
+operator|.
+name|equals
+argument_list|(
+name|substring
+argument_list|)
+condition|)
+block|{
+throw|throw
+operator|new
+name|IllegalArgumentException
+argument_list|(
+literal|"Value of hour of day (hh/hh12) in input is 0. "
+operator|+
+literal|"The value should be between 1 and 12."
+argument_list|)
+throw|;
+block|}
+block|}
 if|if
 condition|(
 name|token

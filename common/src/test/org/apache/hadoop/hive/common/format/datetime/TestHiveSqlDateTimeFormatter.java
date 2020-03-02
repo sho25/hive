@@ -2387,6 +2387,14 @@ expr_stmt|;
 comment|//ddd out of range
 name|verifyBadParseString
 argument_list|(
+literal|"yyyy-mm-dd hh12 p.m. ss"
+argument_list|,
+literal|"2020-01-01 0 am 00"
+argument_list|)
+expr_stmt|;
+comment|//hh12 range is 1-12
+name|verifyBadParseString
+argument_list|(
 literal|"yyyy-month-dd"
 argument_list|,
 literal|"2019-merch-23"
