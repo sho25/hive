@@ -883,8 +883,6 @@ argument_list|(
 name|primaryDbName
 argument_list|,
 literal|null
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -949,10 +947,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1023,10 +1017,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1067,8 +1057,6 @@ init|=
 name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 literal|null
 argument_list|)
@@ -1122,8 +1110,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1152,10 +1138,6 @@ init|=
 name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|,
 literal|null
 argument_list|)
@@ -1361,8 +1343,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 name|withConfigs
 argument_list|)
@@ -1799,8 +1779,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 name|callerInjectedBehavior
@@ -1881,10 +1859,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2189,8 +2163,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 name|callerInjectedBehavior
@@ -2285,10 +2257,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2361,8 +2329,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2455,10 +2421,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|long
@@ -2570,8 +2532,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2649,10 +2609,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2734,8 +2690,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replicaNonAcid
@@ -2828,10 +2782,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replicaNonAcid
@@ -2921,29 +2871,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
-argument_list|)
-decl_stmt|;
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|tuple2
-init|=
-name|primary
-operator|.
-name|run
-argument_list|(
-literal|"use "
-operator|+
-name|primaryDbName
-argument_list|)
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Inject a behavior where REPL LOAD failed when try to load table "t2", it fails.
@@ -3142,18 +3069,6 @@ operator|.
 name|verifyReplTargetProperty
 argument_list|(
 name|replicatedDbName
-argument_list|)
-expr_stmt|;
-comment|// Retry with different dump should fail.
-name|replica
-operator|.
-name|loadFailure
-argument_list|(
-name|replicatedDbName
-argument_list|,
-name|tuple2
-operator|.
-name|dumpLocation
 argument_list|)
 expr_stmt|;
 comment|// Verify if no create table on t1. Only table t2 should  be created in retry.
@@ -3753,8 +3668,6 @@ operator|.
 name|dump
 argument_list|(
 literal|"`*`"
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|primary
@@ -4055,10 +3968,6 @@ operator|.
 name|dump
 argument_list|(
 literal|"`*`"
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 comment|// Due to the limitation that we can only have one instance of Persistence Manager Factory in a JVM

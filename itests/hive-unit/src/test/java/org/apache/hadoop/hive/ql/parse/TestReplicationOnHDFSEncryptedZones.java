@@ -748,8 +748,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -937,8 +935,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica

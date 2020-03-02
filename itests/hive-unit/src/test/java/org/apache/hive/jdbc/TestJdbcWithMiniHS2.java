@@ -8270,6 +8270,12 @@ operator|new
 name|Path
 argument_list|(
 name|testPathName
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|testDbName
 argument_list|)
 decl_stmt|;
 name|FileSystem

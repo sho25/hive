@@ -281,22 +281,6 @@ name|hive
 operator|.
 name|ql
 operator|.
-name|ErrorMsg
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|hive
-operator|.
-name|ql
-operator|.
 name|exec
 operator|.
 name|repl
@@ -734,8 +718,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -795,10 +777,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -969,8 +947,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Allow create function only on f1. Create should fail for the second function.
@@ -1405,8 +1381,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1455,10 +1429,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1565,8 +1535,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1649,8 +1617,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1841,8 +1807,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1913,10 +1877,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2388,8 +2348,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// each table creation itself takes more than one task, give we are giving a max of 1, we should hit multiple runs.
@@ -2570,8 +2528,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2729,8 +2685,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|Collections
 operator|.
 name|singletonList
@@ -2836,8 +2790,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|Collections
 operator|.
 name|singletonList
@@ -2926,34 +2878,13 @@ argument_list|(
 literal|"create table table4 (i int, j int)"
 argument_list|)
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
 name|primaryDbName
 operator|+
-literal|" from "
-operator|+
-name|bootstrapTuple
-operator|.
-name|lastReplicationId
-operator|+
-literal|" to "
-operator|+
-name|Long
-operator|.
-name|parseLong
-argument_list|(
-name|bootstrapTuple
-operator|.
-name|lastReplicationId
-argument_list|)
-operator|+
-literal|100L
-operator|+
-literal|" limit 100 "
-operator|+
-literal|"with ('hive.repl.dump.metadata.only'='true')"
+literal|" with ('hive.repl.dump.metadata.only'='true')"
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3049,17 +2980,11 @@ argument_list|(
 literal|"drop table renamed_table1"
 argument_list|)
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
 name|primaryDbName
-operator|+
-literal|" from "
-operator|+
-name|incrementalOneTuple
-operator|.
-name|lastReplicationId
 operator|+
 literal|" with ('hive.repl.dump.metadata.only'='true')"
 argument_list|)
@@ -3224,8 +3149,6 @@ name|dump
 argument_list|(
 name|dbName
 argument_list|,
-literal|null
-argument_list|,
 name|Collections
 operator|.
 name|singletonList
@@ -3314,10 +3237,6 @@ name|dump
 argument_list|(
 name|dbName
 argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
-argument_list|,
 name|Collections
 operator|.
 name|singletonList
@@ -3401,6 +3320,48 @@ parameter_list|()
 throws|throws
 name|Throwable
 block|{
+comment|//Clear the repl base dir
+name|Path
+name|replBootstrapDumpDir
+init|=
+operator|new
+name|Path
+argument_list|(
+name|primary
+operator|.
+name|hiveConf
+operator|.
+name|get
+argument_list|(
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|REPLDIR
+operator|.
+name|getHiveName
+argument_list|()
+argument_list|)
+argument_list|,
+literal|"*"
+argument_list|)
+decl_stmt|;
+name|replBootstrapDumpDir
+operator|.
+name|getFileSystem
+argument_list|(
+name|primary
+operator|.
+name|hiveConf
+argument_list|)
+operator|.
+name|delete
+argument_list|(
+name|replBootstrapDumpDir
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 name|String
 name|randomOne
 init|=
@@ -3527,8 +3488,6 @@ operator|.
 name|dump
 argument_list|(
 literal|"`*`"
-argument_list|,
-literal|null
 argument_list|,
 name|Collections
 operator|.
@@ -3852,8 +3811,6 @@ name|dump
 argument_list|(
 literal|"`*`"
 argument_list|,
-literal|null
-argument_list|,
 name|Collections
 operator|.
 name|singletonList
@@ -3916,10 +3873,6 @@ operator|.
 name|dump
 argument_list|(
 literal|"`*`"
-argument_list|,
-name|bootstrapTuple
-operator|.
-name|lastReplicationId
 argument_list|,
 name|Arrays
 operator|.
@@ -4439,8 +4392,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Run load on primary itself
@@ -4572,9 +4523,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapTuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Run load on primary itself
@@ -4754,9 +4706,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|incrementalOneTuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Run load on primary itself
@@ -4923,8 +4876,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Bootstrap load in replica
@@ -4990,9 +4941,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapTuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Second incremental dump
@@ -5054,9 +5006,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|firstIncremental
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// First incremental load
@@ -5236,8 +5189,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Bootstrap load in replica
@@ -5313,9 +5264,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapTuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Second incremental dump
@@ -5382,9 +5334,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|firstIncremental
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// First incremental load
@@ -5590,8 +5543,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|Path
@@ -5700,8 +5651,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 name|Collections
 operator|.
@@ -5868,8 +5817,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -5903,9 +5850,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|replica
@@ -5963,9 +5911,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Incremental load to existing database with empty dump directory should set the repl id to the last event at src.
@@ -5992,7 +5941,7 @@ operator|.
 name|lastReplicationId
 argument_list|)
 expr_stmt|;
-comment|// Incremental load to non existing db should return database not exist error.
+comment|// Bootstrap load from an empty dump directory should return empty load directory error.
 name|tuple
 operator|=
 name|primary
@@ -6001,9 +5950,10 @@ name|dump
 argument_list|(
 literal|"someJunkDB"
 argument_list|,
-name|tuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 expr_stmt|;
 try|try
@@ -6043,7 +5993,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"org.apache.hadoop.hive.ql.ddl.DDLTask. Database does not exist: someJunkDB"
+literal|"semanticException no data to load in path"
 operator|.
 name|toLowerCase
 argument_list|()
@@ -6051,7 +6001,7 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Bootstrap load from an empty dump directory should return empty load directory error.
+comment|// Incremental load to non existing db should return database not exist error.
 name|tuple
 operator|=
 name|primary
@@ -6059,8 +6009,6 @@ operator|.
 name|dump
 argument_list|(
 literal|"someJunkDB"
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 try|try
@@ -6097,7 +6045,7 @@ argument_list|()
 operator|.
 name|contains
 argument_list|(
-literal|"semanticException no data to load in path"
+literal|"org.apache.hadoop.hive.ql.ddl.DDLTask. Database does not exist: someJunkDB"
 operator|.
 name|toLowerCase
 argument_list|()
@@ -6136,8 +6084,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -6211,9 +6157,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapTuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|replica
@@ -6340,9 +6287,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|incremental
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|Path
@@ -6496,8 +6444,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Bootstrap Repl A -> B
@@ -6544,8 +6490,6 @@ operator|.
 name|dumpFailure
 argument_list|(
 name|replicatedDbName
-argument_list|,
-literal|null
 argument_list|)
 operator|.
 name|run
@@ -6564,8 +6508,6 @@ operator|.
 name|dumpFailure
 argument_list|(
 name|replicatedDbName
-argument_list|,
-literal|null
 argument_list|)
 expr_stmt|;
 comment|//can not dump the db before first successful incremental load is done.
@@ -6581,9 +6523,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuplePrimary
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 name|replica
@@ -6609,8 +6552,6 @@ operator|.
 name|dump
 argument_list|(
 name|replicatedDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|String
@@ -6822,9 +6763,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuplePrimary
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Incremental Repl A -> B with alters on db/table/partition
@@ -6862,9 +6804,10 @@ name|dump
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tupleReplica
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 decl_stmt|;
 comment|// Check if DB in B have ckpt property is set to bootstrap dump location used in B and missing for table/partition.
@@ -7106,8 +7049,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Bootstrap Repl A -> B and then export table t1
@@ -7384,8 +7325,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -7482,39 +7421,6 @@ operator|.
 name|dumpLocation
 argument_list|)
 expr_stmt|;
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|tuple_2
-init|=
-name|primary
-operator|.
-name|run
-argument_list|(
-literal|"use "
-operator|+
-name|primaryDbName
-argument_list|)
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
-argument_list|,
-literal|null
-argument_list|)
-decl_stmt|;
-comment|// Retry with different dump should fail.
-name|replica
-operator|.
-name|loadFailure
-argument_list|(
-name|replicatedDbName
-argument_list|,
-name|tuple_2
-operator|.
-name|dumpLocation
-argument_list|)
-expr_stmt|;
 comment|// Retry with same dump with which it was already loaded also fails.
 name|replica
 operator|.
@@ -7591,29 +7497,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
-argument_list|)
-decl_stmt|;
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|tuple2
-init|=
-name|primary
-operator|.
-name|run
-argument_list|(
-literal|"use "
-operator|+
-name|primaryDbName
-argument_list|)
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Need to drop the primary DB as metastore is shared by both primary/replica. So, constraints
@@ -7897,27 +7780,6 @@ literal|"t2"
 argument_list|)
 operator|.
 name|size
-argument_list|()
-argument_list|)
-expr_stmt|;
-comment|// Retry with different dump should fail.
-name|replica
-operator|.
-name|loadFailure
-argument_list|(
-name|replicatedDbName
-argument_list|,
-name|tuple2
-operator|.
-name|dumpLocation
-argument_list|,
-literal|null
-argument_list|,
-name|ErrorMsg
-operator|.
-name|REPL_BOOTSTRAP_LOAD_PATH_NOT_VALID
-operator|.
-name|getErrorCode
 argument_list|()
 argument_list|)
 expr_stmt|;
@@ -8533,29 +8395,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
-argument_list|)
-decl_stmt|;
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|tuple2
-init|=
-name|primary
-operator|.
-name|run
-argument_list|(
-literal|"use "
-operator|+
-name|primaryDbName
-argument_list|)
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// Inject a behavior where REPL LOAD failed when try to load table "t2" and partition "uk".
@@ -8746,18 +8585,6 @@ name|singletonList
 argument_list|(
 literal|"india"
 argument_list|)
-argument_list|)
-expr_stmt|;
-comment|// Retry with different dump should fail.
-name|replica
-operator|.
-name|loadFailure
-argument_list|(
-name|replicatedDbName
-argument_list|,
-name|tuple2
-operator|.
-name|dumpLocation
 argument_list|)
 expr_stmt|;
 comment|// Verify if no create table calls. Add partitions and create function calls expected.
@@ -9012,8 +8839,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|testMoveOptimization
@@ -9093,8 +8918,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -9171,9 +8994,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|testMoveOptimization
@@ -9248,8 +9072,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -9326,9 +9148,10 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuple
+name|Collections
 operator|.
-name|lastReplicationId
+name|emptyList
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|testMoveOptimization
@@ -9733,8 +9556,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 comment|// fail setting ckpt directory property for table t1.

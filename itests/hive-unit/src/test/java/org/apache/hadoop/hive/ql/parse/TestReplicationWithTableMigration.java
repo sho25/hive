@@ -1502,8 +1502,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|fromReplId
 argument_list|)
 decl_stmt|;
 name|assertFalse
@@ -2496,8 +2494,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2562,8 +2558,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2656,8 +2650,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2750,8 +2742,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3054,8 +3044,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3101,10 +3089,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrap
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3154,8 +3138,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3210,10 +3192,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrap
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3299,10 +3277,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incremental
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -3422,8 +3396,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3633,8 +3605,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -3938,10 +3908,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|,
 name|withConfigs
 argument_list|)

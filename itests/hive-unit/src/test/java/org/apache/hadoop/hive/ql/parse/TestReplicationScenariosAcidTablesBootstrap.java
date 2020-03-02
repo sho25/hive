@@ -455,8 +455,6 @@ name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithoutAcidClause
 argument_list|)
 decl_stmt|;
@@ -534,10 +532,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithAcidBootstrapClause
 argument_list|)
@@ -626,10 +620,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incrementalDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -670,8 +660,6 @@ init|=
 name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 name|dumpWithoutAcidClause
 argument_list|)
@@ -749,10 +737,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithAcidBootstrapClause
 argument_list|)
@@ -941,10 +925,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
-argument_list|,
 name|dumpWithAcidBootstrapClause
 argument_list|)
 decl_stmt|;
@@ -1125,8 +1105,6 @@ name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithoutAcidClause
 argument_list|)
 decl_stmt|;
@@ -1169,10 +1147,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
-argument_list|,
 name|dumpWithAcidBootstrapClause
 argument_list|)
 decl_stmt|;
@@ -1193,10 +1167,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithAcidBootstrapClause
 argument_list|)
@@ -1255,8 +1225,6 @@ init|=
 name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 name|dumpWithoutAcidClause
 argument_list|)
@@ -1427,10 +1395,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
-argument_list|,
 name|withConfigs
 argument_list|)
 decl_stmt|;
@@ -1595,8 +1559,6 @@ init|=
 name|prepareDataAndDump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 name|dumpWithoutAcidClause
 argument_list|)
@@ -1827,10 +1789,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
-argument_list|,
 name|dumpWithAcidBootstrapClause
 argument_list|)
 expr_stmt|;
@@ -1914,10 +1872,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|LOG

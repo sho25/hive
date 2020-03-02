@@ -821,8 +821,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithClause
 argument_list|)
 decl_stmt|;
@@ -958,10 +956,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
-argument_list|,
 name|dumpWithClause
 argument_list|)
 expr_stmt|;
@@ -1089,7 +1083,7 @@ argument_list|(
 literal|"insert into table t2 partition(country='france') values ('paris')"
 argument_list|)
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
@@ -1271,17 +1265,11 @@ argument_list|(
 literal|"create external table t4 as select id from t3"
 argument_list|)
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
 name|primaryDbName
-operator|+
-literal|" from "
-operator|+
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 comment|// verify that the external table info is written correctly for incremental
@@ -1388,17 +1376,11 @@ argument_list|(
 literal|"drop table t1"
 argument_list|)
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
 name|primaryDbName
-operator|+
-literal|" from "
-operator|+
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 comment|// verify that the external table info is written correctly for incremental
@@ -1798,8 +1780,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1917,10 +1897,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapTuple
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2013,10 +1989,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incrementalTuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2154,7 +2126,7 @@ argument_list|(
 literal|"insert into t2 partition(country='india') values ('bangalore')"
 argument_list|)
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
@@ -2327,10 +2299,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|assertExternalFileInfo
@@ -2515,10 +2483,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2617,10 +2581,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2738,10 +2698,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2785,7 +2741,7 @@ name|tuple
 init|=
 name|primary
 operator|.
-name|dump
+name|dumpWithCommand
 argument_list|(
 literal|"repl dump "
 operator|+
@@ -2880,10 +2836,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|assertExternalFileInfo
@@ -3138,10 +3090,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|assertExternalFileInfo
@@ -3316,10 +3264,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -3473,8 +3417,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -3649,10 +3591,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -4089,8 +4027,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithClause
 argument_list|)
 decl_stmt|;
@@ -4219,10 +4155,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tupleBootstrapWithoutExternal
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -4392,10 +4324,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tupleIncWithExternalBootstrap
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -4827,8 +4755,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithClause
 argument_list|)
 decl_stmt|;
@@ -4966,10 +4892,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tupleBootstrap
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -5138,8 +5060,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithClause
 argument_list|)
 decl_stmt|;
@@ -5178,10 +5098,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -5256,10 +5172,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incTuple
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -5395,8 +5307,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-literal|null
-argument_list|,
 name|dumpWithClause
 argument_list|)
 decl_stmt|;
@@ -5474,10 +5384,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootstrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 decl_stmt|;
 name|replica
@@ -5552,10 +5458,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|incTuple
-operator|.
-name|lastReplicationId
 argument_list|,
 name|dumpWithClause
 argument_list|)
@@ -5688,8 +5590,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -5822,10 +5722,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica

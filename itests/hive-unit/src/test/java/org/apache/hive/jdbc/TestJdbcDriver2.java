@@ -18169,10 +18169,6 @@ literal|"repl dump "
 operator|+
 name|primaryDb
 operator|+
-literal|" from "
-operator|+
-name|lastReplId
-operator|+
 literal|" with ('hive.repl.rootdir' = '"
 operator|+
 name|replDir

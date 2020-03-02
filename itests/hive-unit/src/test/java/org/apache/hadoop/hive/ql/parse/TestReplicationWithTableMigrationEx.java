@@ -1189,8 +1189,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 return|;
 block|}
@@ -1283,10 +1281,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -1399,10 +1393,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -1477,8 +1467,6 @@ argument_list|(
 name|primaryDbName
 operator|+
 literal|".'t1'"
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1540,10 +1528,6 @@ argument_list|(
 name|primaryDbName
 operator|+
 literal|".'t1'"
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -1737,10 +1721,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2153,10 +2133,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|loadWithFailureInAddNotification
@@ -2235,10 +2211,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2357,10 +2329,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2727,8 +2695,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2760,10 +2726,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica
@@ -2802,8 +2764,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -2871,10 +2831,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|tuple
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|replica

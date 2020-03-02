@@ -1045,9 +1045,6 @@ parameter_list|(
 name|String
 name|primaryDbName
 parameter_list|,
-name|String
-name|fromReplId
-parameter_list|,
 name|List
 argument_list|<
 name|String
@@ -1080,8 +1077,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|fromReplId
 argument_list|,
 name|withClause
 operator|!=

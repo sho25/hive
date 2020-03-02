@@ -1951,8 +1951,6 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|,
-name|lastReplicationId
-argument_list|,
 name|withClauseList
 argument_list|)
 decl_stmt|;

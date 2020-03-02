@@ -840,8 +840,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1547,8 +1545,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-literal|null
 argument_list|)
 decl_stmt|;
 name|replica
@@ -1606,10 +1602,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|primary
@@ -1707,10 +1699,6 @@ operator|.
 name|dump
 argument_list|(
 name|primaryDbName
-argument_list|,
-name|bootStrapDump
-operator|.
-name|lastReplicationId
 argument_list|)
 expr_stmt|;
 name|primary
