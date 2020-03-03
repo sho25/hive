@@ -4692,10 +4692,10 @@ operator|.
 name|updateThreadName
 argument_list|()
 expr_stmt|;
-comment|// Initialize metadata provider class
+comment|// Initialize metadata provider class and trimmer
 name|CalcitePlanner
 operator|.
-name|initializeMetadataProviderClass
+name|warmup
 argument_list|()
 expr_stmt|;
 comment|// Create views registry

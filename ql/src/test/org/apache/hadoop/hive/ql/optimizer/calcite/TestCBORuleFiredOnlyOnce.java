@@ -503,6 +503,8 @@ operator|new
 name|HiveDefaultRelMetadataProvider
 argument_list|(
 name|conf
+argument_list|,
+literal|null
 argument_list|)
 decl_stmt|;
 name|List

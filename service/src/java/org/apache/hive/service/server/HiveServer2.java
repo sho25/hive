@@ -2275,10 +2275,10 @@ name|hiveConf
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Initialize metadata provider class
+comment|// Initialize metadata provider class and trimmer
 name|CalcitePlanner
 operator|.
-name|initializeMetadataProviderClass
+name|warmup
 argument_list|()
 expr_stmt|;
 try|try
