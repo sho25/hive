@@ -246,6 +246,22 @@ name|MILLISECONDS
 argument_list|)
 return|;
 block|}
+specifier|public
+name|int
+name|getNumberOfExecutors
+parameter_list|()
+block|{
+return|return
+name|conf
+operator|.
+name|getIntVar
+argument_list|(
+name|ConfVars
+operator|.
+name|HIVE_SCHEDULED_QUERIES_MAX_EXECUTORS
+argument_list|)
+return|;
+block|}
 block|}
 end_class
 

@@ -49,6 +49,24 @@ name|hadoop
 operator|.
 name|hive
 operator|.
+name|metastore
+operator|.
+name|api
+operator|.
+name|ScheduledQueryMaintenanceRequestType
+import|;
+end_import
+
+begin_import
+import|import
+name|org
+operator|.
+name|apache
+operator|.
+name|hadoop
+operator|.
+name|hive
+operator|.
 name|ql
 operator|.
 name|exec
@@ -231,8 +249,20 @@ argument_list|()
 operator|.
 name|isSetNextExecution
 argument_list|()
+operator|||
+name|request
+operator|.
+name|getType
+argument_list|()
+operator|==
+name|ScheduledQueryMaintenanceRequestType
+operator|.
+name|CREATE
 condition|)
 block|{
+comment|// we might have a scheduled query available for execution; immediately:
+comment|// * in case a schedule is altered to be executed at a specific time
+comment|// * in case we created a new scheduled query - for say run every second
 name|ScheduledQueryExecutionService
 operator|.
 name|forceScheduleCheck

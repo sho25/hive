@@ -135,6 +135,22 @@ annotation|@
 name|Override
 specifier|public
 name|long
+name|initialDelay
+parameter_list|(
+name|TimeUnit
+name|unit
+parameter_list|)
+block|{
+comment|// no delay before the first execution;
+comment|// after an ungracefull shutdown it might take time to notice that in-flight scheduled queries are not running anymore
+return|return
+literal|0
+return|;
+block|}
+annotation|@
+name|Override
+specifier|public
+name|long
 name|runFrequency
 parameter_list|(
 name|TimeUnit

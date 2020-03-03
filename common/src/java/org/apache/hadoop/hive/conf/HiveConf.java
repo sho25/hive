@@ -17906,6 +17906,23 @@ argument_list|,
 literal|"Enable this if the configured authorizer is able to handle scheduled query related calls."
 argument_list|)
 block|,
+name|HIVE_SCHEDULED_QUERIES_MAX_EXECUTORS
+argument_list|(
+literal|"hive.scheduled.queries.max.executors"
+argument_list|,
+literal|4
+argument_list|,
+operator|new
+name|RangeValidator
+argument_list|(
+literal|1
+argument_list|,
+literal|null
+argument_list|)
+argument_list|,
+literal|"Maximal number of scheduled query executors to allow."
+argument_list|)
+block|,
 name|HIVE_QUERY_RESULTS_CACHE_ENABLED
 argument_list|(
 literal|"hive.query.results.cache.enabled"

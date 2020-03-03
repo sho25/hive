@@ -921,11 +921,6 @@ name|ctx
 argument_list|)
 init|)
 block|{
-name|executor
-operator|.
-name|shutdown
-argument_list|()
-expr_stmt|;
 comment|// Wait for the scheduled query to finish. Hopefully 30 seconds should be more than enough.
 name|SessionState
 operator|.
@@ -965,11 +960,6 @@ literal|"Done waiting for query execution!"
 argument_list|)
 expr_stmt|;
 block|}
-name|executor
-operator|.
-name|shutdownNow
-argument_list|()
-expr_stmt|;
 name|assertThat
 argument_list|(
 name|qService

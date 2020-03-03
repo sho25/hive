@@ -78,6 +78,22 @@ name|TimeUnit
 name|unit
 parameter_list|)
 function_decl|;
+comment|/**    * Gets the initial delay before the first execution.    *    * Defaults to {@link #runFrequency(TimeUnit)}    */
+specifier|default
+name|long
+name|initialDelay
+parameter_list|(
+name|TimeUnit
+name|unit
+parameter_list|)
+block|{
+return|return
+name|runFrequency
+argument_list|(
+name|unit
+argument_list|)
+return|;
+block|}
 block|}
 end_interface
 
