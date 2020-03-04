@@ -12675,34 +12675,33 @@ name|isSetId
 argument_list|()
 condition|)
 block|{
-throw|throw
-operator|new
-name|InvalidObjectException
+name|LOG
+operator|.
+name|debug
 argument_list|(
-literal|"Id shouldn't be set but table "
-operator|+
+literal|"Id shouldn't be set but table {}.{} has the Id set to {}. Id is ignored."
+argument_list|,
 name|tbl
 operator|.
 name|getDbName
 argument_list|()
-operator|+
-literal|"."
-operator|+
+argument_list|,
 name|tbl
 operator|.
 name|getTableName
 argument_list|()
-operator|+
-literal|" has the Id set to "
-operator|+
+argument_list|,
 name|tbl
 operator|.
 name|getId
 argument_list|()
-operator|+
-literal|". It's a read-only option"
 argument_list|)
-throw|;
+expr_stmt|;
+name|tbl
+operator|.
+name|unsetId
+argument_list|()
+expr_stmt|;
 block|}
 name|SkewedInfo
 name|skew
