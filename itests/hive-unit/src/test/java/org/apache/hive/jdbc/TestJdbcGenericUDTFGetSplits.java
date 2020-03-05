@@ -440,7 +440,7 @@ argument_list|()
 decl_stmt|;
 name|assertEquals
 argument_list|(
-literal|38
+literal|12
 argument_list|,
 name|type
 operator|.
@@ -450,7 +450,7 @@ argument_list|)
 expr_stmt|;
 name|assertEquals
 argument_list|(
-literal|24
+literal|8
 argument_list|,
 name|type
 operator|.

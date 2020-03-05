@@ -1576,11 +1576,6 @@ name|getTypeFactory
 argument_list|()
 argument_list|,
 name|sum0InputType
-argument_list|,
-name|oldCall
-operator|.
-name|getType
-argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -1851,11 +1846,6 @@ name|getTypeFactory
 argument_list|()
 argument_list|,
 name|avgInputType
-argument_list|,
-name|oldCall
-operator|.
-name|getType
-argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -2084,6 +2074,23 @@ name|avgInputType
 argument_list|)
 argument_list|)
 decl_stmt|;
+if|if
+condition|(
+name|numeratorRef
+operator|.
+name|getType
+argument_list|()
+operator|.
+name|getSqlTypeName
+argument_list|()
+operator|!=
+name|SqlTypeName
+operator|.
+name|DECIMAL
+condition|)
+block|{
+comment|// If type is not decimal, we enforce the same type as the avg to comply with
+comment|// Hive semantics
 name|numeratorRef
 operator|=
 name|rexBuilder
@@ -2100,6 +2107,7 @@ argument_list|,
 literal|true
 argument_list|)
 expr_stmt|;
+block|}
 specifier|final
 name|RexNode
 name|divideRef
@@ -2321,11 +2329,6 @@ name|argRef
 operator|.
 name|getType
 argument_list|()
-argument_list|,
-name|oldCall
-operator|.
-name|getType
-argument_list|()
 argument_list|)
 decl_stmt|;
 specifier|final
@@ -2368,11 +2371,6 @@ name|getTypeFactory
 argument_list|()
 argument_list|,
 name|argSquared
-operator|.
-name|getType
-argument_list|()
-argument_list|,
-name|oldCall
 operator|.
 name|getType
 argument_list|()
@@ -3102,9 +3100,6 @@ name|typeFactory
 parameter_list|,
 name|RelDataType
 name|inputType
-parameter_list|,
-name|RelDataType
-name|originalReturnType
 parameter_list|)
 block|{
 switch|switch
@@ -3169,9 +3164,18 @@ return|;
 case|case
 name|DECIMAL
 case|:
-comment|// We keep precision and scale
 return|return
-name|originalReturnType
+name|typeFactory
+operator|.
+name|getTypeSystem
+argument_list|()
+operator|.
+name|deriveSumType
+argument_list|(
+name|typeFactory
+argument_list|,
+name|inputType
+argument_list|)
 return|;
 block|}
 return|return
