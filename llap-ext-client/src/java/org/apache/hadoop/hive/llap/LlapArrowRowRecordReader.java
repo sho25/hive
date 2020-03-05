@@ -369,6 +369,16 @@ name|rowIndex
 operator|=
 literal|0
 expr_stmt|;
+comment|// since HIVE-22856, a zero length batch doesn't mean that we won't have any more batches
+comment|// we can have more batches with data even after after a zero length batch
+comment|// we should keep trying until we get a batch with some data or reader.next() returns false
+while|while
+condition|(
+name|batchSize
+operator|==
+literal|0
+operator|&&
+operator|(
 name|hasNext
 operator|=
 name|reader
@@ -379,14 +389,8 @@ name|key
 argument_list|,
 name|data
 argument_list|)
-expr_stmt|;
-if|if
-condition|(
-name|hasNext
+operator|)
 condition|)
-block|{
-comment|//There is another batch to buffer
-try|try
 block|{
 name|List
 argument_list|<
@@ -429,6 +433,15 @@ operator|.
 name|getValueCount
 argument_list|()
 expr_stmt|;
+block|}
+if|if
+condition|(
+name|hasNext
+condition|)
+block|{
+comment|//There is another batch to buffer
+try|try
+block|{
 name|ArrowWrapperWritable
 name|wrapper
 init|=
