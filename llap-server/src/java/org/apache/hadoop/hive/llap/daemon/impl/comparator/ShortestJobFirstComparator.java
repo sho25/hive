@@ -129,6 +129,38 @@ argument_list|)
 condition|)
 block|{
 comment|// Same Query
+if|if
+condition|(
+name|fri1
+operator|.
+name|getWithinDagPriority
+argument_list|()
+operator|==
+name|fri2
+operator|.
+name|getWithinDagPriority
+argument_list|()
+condition|)
+block|{
+comment|// task_attempt within same vertex.
+comment|// Choose the attempt that was started earlier
+return|return
+name|Long
+operator|.
+name|compare
+argument_list|(
+name|fri1
+operator|.
+name|getCurrentAttemptStartTime
+argument_list|()
+argument_list|,
+name|fri2
+operator|.
+name|getCurrentAttemptStartTime
+argument_list|()
+argument_list|)
+return|;
+block|}
 comment|// Within dag priority - lower values indicate higher priority.
 return|return
 name|Integer
