@@ -1442,7 +1442,7 @@ name|LogicalTypeAnnotation
 operator|.
 name|TimeUnit
 operator|.
-name|MILLIS
+name|MICROS
 argument_list|)
 argument_list|,
 name|conf

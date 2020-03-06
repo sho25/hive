@@ -7753,7 +7753,7 @@ name|HIVE_PARQUET_TIMESTAMP_TIME_UNIT
 argument_list|(
 literal|"hive.parquet.timestamp.time.unit"
 argument_list|,
-literal|"millis"
+literal|"micros"
 argument_list|,
 operator|new
 name|StringSet
