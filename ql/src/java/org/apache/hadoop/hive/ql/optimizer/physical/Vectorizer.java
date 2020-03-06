@@ -15792,6 +15792,29 @@ return|return
 literal|false
 return|;
 block|}
+comment|//TODO: isGroupingSetsPresent() is returning false, even though
+comment|// ListGroupingSets is present. Need to check if there is hidden bug.
+name|boolean
+name|isGroupingSetsPresent
+init|=
+operator|(
+name|desc
+operator|.
+name|getListGroupingSets
+argument_list|()
+operator|!=
+literal|null
+operator|&&
+operator|!
+name|desc
+operator|.
+name|getListGroupingSets
+argument_list|()
+operator|.
+name|isEmpty
+argument_list|()
+operator|)
+decl_stmt|;
 if|if
 condition|(
 operator|!
@@ -15806,6 +15829,8 @@ name|desc
 operator|.
 name|getMode
 argument_list|()
+argument_list|,
+name|isGroupingSetsPresent
 argument_list|,
 name|hasKeys
 argument_list|)
@@ -17045,6 +17070,9 @@ name|Mode
 name|groupByMode
 parameter_list|,
 name|boolean
+name|isGroupingSetsPresent
+parameter_list|,
+name|boolean
 name|hasKeys
 parameter_list|)
 block|{
@@ -17064,6 +17092,8 @@ argument_list|(
 name|d
 argument_list|,
 name|groupByMode
+argument_list|,
+name|isGroupingSetsPresent
 argument_list|,
 name|hasKeys
 argument_list|)
@@ -17890,6 +17920,9 @@ name|Mode
 name|groupByMode
 parameter_list|,
 name|boolean
+name|isGroupingSetsPresent
+parameter_list|,
+name|boolean
 name|hasKeys
 parameter_list|)
 block|{
@@ -17933,6 +17966,14 @@ block|}
 comment|// The planner seems to pull this one out.
 if|if
 condition|(
+name|groupByMode
+operator|!=
+name|GroupByDesc
+operator|.
+name|Mode
+operator|.
+name|HASH
+operator|&&
 name|aggDesc
 operator|.
 name|getDistinct
@@ -17944,6 +17985,27 @@ argument_list|(
 literal|"Aggregation Function"
 argument_list|,
 literal|"DISTINCT not supported"
+argument_list|)
+expr_stmt|;
+return|return
+literal|false
+return|;
+block|}
+if|if
+condition|(
+name|isGroupingSetsPresent
+operator|&&
+name|aggDesc
+operator|.
+name|getDistinct
+argument_list|()
+condition|)
+block|{
+name|setExpressionIssue
+argument_list|(
+literal|"Aggregation Function"
+argument_list|,
+literal|"DISTINCT with Groupingsets not supported"
 argument_list|)
 expr_stmt|;
 return|return
