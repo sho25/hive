@@ -997,8 +997,6 @@ name|GenericRecord
 argument_list|>
 name|gdr
 parameter_list|)
-throws|throws
-name|IOException
 block|{
 if|if
 condition|(
@@ -1027,7 +1025,7 @@ literal|null
 return|;
 block|}
 try|try
-block|{
+init|(
 name|DataFileReader
 argument_list|<
 name|GenericRecord
@@ -1053,7 +1051,8 @@ argument_list|)
 argument_list|,
 name|gdr
 argument_list|)
-decl_stmt|;
+init|)
+block|{
 if|if
 condition|(
 name|dataFileReader
@@ -1119,6 +1118,18 @@ name|e
 parameter_list|)
 block|{
 comment|// Can't access metadata, carry on.
+name|LOG
+operator|.
+name|debug
+argument_list|(
+name|e
+operator|.
+name|getMessage
+argument_list|()
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
 block|}
 return|return
 literal|null
