@@ -49,23 +49,17 @@ name|java
 operator|.
 name|util
 operator|.
-name|Properties
+name|Base64
 import|;
 end_import
 
 begin_import
 import|import
-name|org
+name|java
 operator|.
-name|apache
+name|util
 operator|.
-name|commons
-operator|.
-name|codec
-operator|.
-name|binary
-operator|.
-name|Base64
+name|Properties
 import|;
 end_import
 
@@ -444,7 +438,10 @@ name|byte
 index|[]
 name|output
 init|=
-name|base64
+name|Base64
+operator|.
+name|getEncoder
+argument_list|()
 operator|.
 name|encode
 argument_list|(
@@ -496,16 +493,6 @@ specifier|private
 name|byte
 index|[]
 name|signature
-decl_stmt|;
-specifier|private
-specifier|final
-name|Base64
-name|base64
-init|=
-name|Base64TextInputFormat
-operator|.
-name|createBase64
-argument_list|()
 decl_stmt|;
 annotation|@
 name|Override
