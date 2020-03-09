@@ -2672,6 +2672,14 @@ operator|.
 name|getNumRows
 argument_list|()
 decl_stmt|;
+name|long
+name|fs
+init|=
+name|basicStats
+operator|.
+name|getTotalFileSize
+argument_list|()
+decl_stmt|;
 name|List
 argument_list|<
 name|ColStatistics
@@ -2783,6 +2791,8 @@ argument_list|(
 name|nr
 argument_list|,
 name|ds
+argument_list|,
+name|fs
 argument_list|,
 name|numErasureCodedFiles
 argument_list|)
@@ -2946,6 +2956,14 @@ operator|.
 name|getDataSize
 argument_list|()
 decl_stmt|;
+name|long
+name|fs
+init|=
+name|bbs
+operator|.
+name|getTotalFileSize
+argument_list|()
+decl_stmt|;
 name|List
 argument_list|<
 name|Long
@@ -2994,6 +3012,8 @@ argument_list|(
 name|nr
 argument_list|,
 name|ds
+argument_list|,
+name|fs
 argument_list|,
 name|numErasureCodedFiles
 argument_list|)

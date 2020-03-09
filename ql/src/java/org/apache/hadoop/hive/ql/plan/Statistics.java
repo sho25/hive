@@ -191,9 +191,15 @@ specifier|private
 name|long
 name|runTimeNumRows
 decl_stmt|;
+comment|// dataSize represents raw data size (estimated in-memory size based on row schema) after decompression and decoding.
 specifier|private
 name|long
 name|dataSize
+decl_stmt|;
+comment|// totalFileSize represents on-disk size.
+specifier|private
+name|long
+name|totalFileSize
 decl_stmt|;
 specifier|private
 name|long
@@ -231,6 +237,8 @@ argument_list|,
 literal|0
 argument_list|,
 literal|0
+argument_list|,
+literal|0
 argument_list|)
 expr_stmt|;
 block|}
@@ -244,6 +252,9 @@ name|long
 name|ds
 parameter_list|,
 name|long
+name|fs
+parameter_list|,
+name|long
 name|numEcFiles
 parameter_list|)
 block|{
@@ -254,6 +265,10 @@ expr_stmt|;
 name|dataSize
 operator|=
 name|ds
+expr_stmt|;
+name|totalFileSize
+operator|=
+name|fs
 expr_stmt|;
 name|numErasureCodedFiles
 operator|=
@@ -277,6 +292,31 @@ expr_stmt|;
 name|updateBasicStatsState
 argument_list|()
 expr_stmt|;
+block|}
+specifier|public
+name|void
+name|setTotalFileSize
+parameter_list|(
+specifier|final
+name|long
+name|totalFileSize
+parameter_list|)
+block|{
+name|this
+operator|.
+name|totalFileSize
+operator|=
+name|totalFileSize
+expr_stmt|;
+block|}
+specifier|public
+name|long
+name|getTotalFileSize
+parameter_list|()
+block|{
+return|return
+name|totalFileSize
+return|;
 block|}
 specifier|public
 name|long
@@ -837,6 +877,8 @@ argument_list|(
 name|numRows
 argument_list|,
 name|dataSize
+argument_list|,
+name|totalFileSize
 argument_list|,
 name|numErasureCodedFiles
 argument_list|)
