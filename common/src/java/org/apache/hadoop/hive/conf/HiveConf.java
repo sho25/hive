@@ -9107,7 +9107,7 @@ name|HIVE_TOPN_EFFICIENCY_THRESHOLD
 argument_list|(
 literal|"hive.optimize.topnkey.efficiency.threshold"
 argument_list|,
-literal|0.6f
+literal|0.8f
 argument_list|,
 literal|"Disable topN key filter if the ratio between forwarded and total rows reaches this limit."
 argument_list|)
@@ -9116,7 +9116,7 @@ name|HIVE_TOPN_EFFICIENCY_CHECK_BATCHES
 argument_list|(
 literal|"hive.optimize.topnkey.efficiency.check.nbatches"
 argument_list|,
-literal|8
+literal|10000
 argument_list|,
 literal|"Check topN key filter efficiency after a specific number of batches."
 argument_list|)

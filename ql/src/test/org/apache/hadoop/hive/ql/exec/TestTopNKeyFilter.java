@@ -1038,6 +1038,8 @@ argument_list|,
 literal|0.6f
 argument_list|,
 name|LOG
+argument_list|,
+literal|1
 argument_list|)
 expr_stmt|;
 name|assertThat

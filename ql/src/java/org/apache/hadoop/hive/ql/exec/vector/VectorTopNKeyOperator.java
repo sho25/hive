@@ -1102,6 +1102,11 @@ name|getEfficiencyThreshold
 argument_list|()
 argument_list|,
 name|LOG
+argument_list|,
+name|conf
+operator|.
+name|getCheckEfficiencyNumRows
+argument_list|()
 argument_list|)
 expr_stmt|;
 block|}
@@ -1130,6 +1135,9 @@ name|efficiencyThreshold
 parameter_list|,
 name|Logger
 name|log
+parameter_list|,
+name|long
+name|checkEfficiencyNumRows
 parameter_list|)
 block|{
 name|Iterator
@@ -1205,6 +1213,13 @@ argument_list|)
 expr_stmt|;
 if|if
 condition|(
+name|filter
+operator|.
+name|getTotal
+argument_list|()
+operator|>=
+name|checkEfficiencyNumRows
+operator|&&
 name|filter
 operator|.
 name|forwardingRatio

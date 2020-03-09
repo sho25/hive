@@ -5901,8 +5901,7 @@ operator|.
 name|getComparators
 argument_list|()
 operator|.
-name|size
-argument_list|()
+name|length
 operator|==
 literal|1
 condition|)
@@ -5913,11 +5912,9 @@ name|comparator
 operator|.
 name|getComparators
 argument_list|()
-operator|.
-name|get
-argument_list|(
+index|[
 literal|0
-argument_list|)
+index|]
 return|;
 block|}
 return|return
