@@ -611,6 +611,24 @@ argument_list|,
 name|acidEnableConf
 argument_list|)
 expr_stmt|;
+name|acidEnableConf
+operator|.
+name|put
+argument_list|(
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|REPLDIR
+operator|.
+name|getHiveName
+argument_list|()
+argument_list|,
+name|primary
+operator|.
+name|repldDir
+argument_list|)
+expr_stmt|;
 name|replica
 operator|=
 operator|new
@@ -732,27 +750,20 @@ parameter_list|()
 throws|throws
 name|Throwable
 block|{
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|bootstrapDump
-init|=
 name|primary
 operator|.
 name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 comment|// Create an ACID table.
@@ -873,27 +884,20 @@ name|commitTransaction
 argument_list|()
 expr_stmt|;
 comment|// Replicate the committed data which should be visible.
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|incrDump
-init|=
 name|primary
 operator|.
 name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -953,8 +957,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Replicate events before committing txn. The uncommitted data shouldn't be seen.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -968,9 +970,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1009,8 +1009,6 @@ name|commitTransaction
 argument_list|()
 expr_stmt|;
 comment|// After commit, the data should be replicated and visible.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1024,9 +1022,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1095,8 +1091,6 @@ name|abortTransaction
 argument_list|()
 expr_stmt|;
 comment|// Aborted data shouldn't be visible.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1110,9 +1104,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1165,27 +1157,20 @@ parameter_list|()
 throws|throws
 name|Throwable
 block|{
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|bootstrapDump
-init|=
 name|primary
 operator|.
 name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 comment|// Create an ACID table.
@@ -1343,27 +1328,20 @@ name|commitTransaction
 argument_list|()
 expr_stmt|;
 comment|// Replicate the committed data which should be visible.
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|incrDump
-init|=
 name|primary
 operator|.
 name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1423,8 +1401,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Replicate events before committing txn. The uncommitted data shouldn't be seen.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1438,9 +1414,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1479,8 +1453,6 @@ name|commitTransaction
 argument_list|()
 expr_stmt|;
 comment|// After commit, the data should be replicated and visible.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1494,9 +1466,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1565,8 +1535,6 @@ name|abortTransaction
 argument_list|()
 expr_stmt|;
 comment|// Aborted data shouldn't be visible.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1580,9 +1548,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1635,27 +1601,20 @@ parameter_list|()
 throws|throws
 name|Throwable
 block|{
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|bootstrapDump
-init|=
 name|primary
 operator|.
 name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 comment|// Create an ACID table.
@@ -1780,27 +1739,20 @@ name|commitTransaction
 argument_list|()
 expr_stmt|;
 comment|// Replicate the committed data which should be visible.
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|incrDump
-init|=
 name|primary
 operator|.
 name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-decl_stmt|;
+expr_stmt|;
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1879,8 +1831,6 @@ argument_list|()
 argument_list|)
 expr_stmt|;
 comment|// Replicate events before committing txn. The uncommitted data shouldn't be seen.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1894,9 +1844,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1933,8 +1881,6 @@ name|commitTransaction
 argument_list|()
 expr_stmt|;
 comment|// After committing the txn, the data should be visible.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -1948,9 +1894,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2036,8 +1980,6 @@ name|abortTransaction
 argument_list|()
 expr_stmt|;
 comment|// Aborted data should not be visible.
-name|incrDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -2051,9 +1993,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run

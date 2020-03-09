@@ -2297,9 +2297,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|dump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|dump
 operator|.
@@ -2394,7 +2392,7 @@ name|String
 name|replDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|sourceDbNameOrPattern
 parameter_list|,
 name|String
 name|lastReplId
@@ -2406,13 +2404,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|sourceDbNameOrPattern
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -3250,9 +3246,7 @@ name|loadAndVerify
 argument_list|(
 name|dbNameReplica
 argument_list|,
-name|dump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|dump
 operator|.
@@ -3314,9 +3308,7 @@ name|loadAndVerify
 argument_list|(
 name|dbNameReplica
 argument_list|,
-name|dump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|dump
 operator|.
@@ -3760,13 +3752,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -4037,11 +4027,11 @@ literal|"REPL LOAD "
 operator|+
 name|dbName
 operator|+
-literal|"_withtable FROM '"
+literal|" INTO "
 operator|+
-name|replDumpLocn
+name|dbName
 operator|+
-literal|"'"
+literal|"_withtable "
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -4103,11 +4093,11 @@ literal|"REPL LOAD "
 operator|+
 name|dbName
 operator|+
-literal|"_withview FROM '"
+literal|" INTO "
 operator|+
-name|replDumpLocn
+name|dbName
 operator|+
-literal|"'"
+literal|"_withview"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -4547,13 +4537,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -4663,13 +4651,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|postDropReplDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 literal|true
 argument_list|,
@@ -5049,13 +5035,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -5209,13 +5193,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|postDropReplDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 literal|true
 argument_list|,
@@ -6743,12 +6725,6 @@ name|incrementalDump
 operator|.
 name|dumpLocation
 decl_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDump
-operator|.
-name|lastReplId
-expr_stmt|;
 comment|// Rename the event directories such a way that the length varies.
 comment|// We will encounter create_table, truncate followed by insert.
 comment|// For the insert, set the event ID longer such that old comparator picks insert before truncate
@@ -6968,13 +6944,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|incrementalDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -8614,13 +8588,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|postDropReplDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -12965,9 +12937,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -13370,9 +13340,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -13588,9 +13556,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -13821,9 +13787,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -13869,9 +13833,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -14574,9 +14536,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -14885,9 +14845,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrementalDump
 operator|.
@@ -17974,13 +17932,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -17990,9 +17946,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|firstInsert
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|firstInsert
 operator|.
@@ -18017,9 +17971,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|secondInsert
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|secondInsert
 operator|.
@@ -18044,9 +17996,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|thirdTrunc
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|thirdTrunc
 operator|.
@@ -18096,6 +18046,8 @@ name|testIncrementalRepeatEventOnExistingObject
 parameter_list|()
 throws|throws
 name|IOException
+throws|,
+name|InterruptedException
 block|{
 name|String
 name|testName
@@ -18242,6 +18194,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
 name|run
 argument_list|(
@@ -18275,6 +18234,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// ADD_PARTITION EVENT to partitioned table
 name|run
 argument_list|(
@@ -18299,6 +18265,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// INSERT EVENT to partitioned table on existing partition
@@ -18334,6 +18307,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// TRUNCATE_PARTITION EVENT on partitioned table
 name|run
 argument_list|(
@@ -18360,6 +18340,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// TRUNCATE_TABLE EVENT on unpartitioned table
 name|run
 argument_list|(
@@ -18384,6 +18371,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// CREATE_TABLE EVENT with multiple partitions
@@ -18416,6 +18410,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// ADD_CONSTRAINT EVENT
 name|run
 argument_list|(
@@ -18442,6 +18443,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// Replicate all the events happened so far
 for|for
 control|(
@@ -18456,9 +18464,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|currDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|currDump
 operator|.
@@ -18541,23 +18547,12 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-comment|// Load each incremental dump from the list. Each dump have only one operation.
-for|for
-control|(
-name|Tuple
-name|currDump
-range|:
-name|incrementalDumpList
-control|)
-block|{
 comment|// Load the incremental dump and ensure it does nothing and lastReplID remains same
 name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|currDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrDump
 operator|.
@@ -18630,7 +18625,6 @@ argument_list|,
 name|driverMirror
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Test
@@ -18777,6 +18771,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
 name|run
 argument_list|(
@@ -18810,6 +18811,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// ADD_PARTITION EVENT to partitioned table
 name|run
 argument_list|(
@@ -18834,6 +18842,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// INSERT EVENT to partitioned table on existing partition
@@ -18869,6 +18884,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// TRUNCATE_PARTITION EVENT on partitioned table
 name|run
 argument_list|(
@@ -18893,6 +18915,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// TRUNCATE_TABLE EVENT on unpartitioned table
@@ -18921,6 +18950,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// CREATE_TABLE EVENT on partitioned table
 name|run
 argument_list|(
@@ -18945,6 +18981,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
@@ -18980,6 +19023,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// INSERT EVENT to partitioned table with dynamic ADD_PARTITION
 name|run
 argument_list|(
@@ -19013,6 +19063,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// DROP_PARTITION EVENT to partitioned table
 name|run
 argument_list|(
@@ -19039,6 +19096,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// RENAME_PARTITION EVENT to partitioned table
 name|run
 argument_list|(
@@ -19063,6 +19127,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// RENAME_TABLE EVENT to unpartitioned table
@@ -19095,6 +19166,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// ADD_CONSTRAINT EVENT
 name|run
 argument_list|(
@@ -19119,6 +19197,13 @@ operator|.
 name|add
 argument_list|(
 name|replDump
+argument_list|)
+expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
 argument_list|)
 expr_stmt|;
 comment|// DROP_TABLE EVENT to partitioned table
@@ -19147,6 +19232,13 @@ argument_list|(
 name|replDump
 argument_list|)
 expr_stmt|;
+name|Thread
+operator|.
+name|sleep
+argument_list|(
+literal|1000
+argument_list|)
+expr_stmt|;
 comment|// Load each incremental dump from the list. Each dump have only one operation.
 for|for
 control|(
@@ -19161,9 +19253,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|currDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|currDump
 operator|.
@@ -19283,22 +19373,12 @@ name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
 comment|// Load each incremental dump from the list. Each dump have only one operation.
-for|for
-control|(
-name|Tuple
-name|currDump
-range|:
-name|incrementalDumpList
-control|)
-block|{
 comment|// Load the current incremental dump and ensure it does nothing and lastReplID remains same
 name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|currDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrDump
 operator|.
@@ -19405,7 +19485,6 @@ argument_list|,
 name|metaStoreClientMirror
 argument_list|)
 expr_stmt|;
-block|}
 block|}
 annotation|@
 name|Test
@@ -20021,15 +20100,11 @@ name|verifyFail
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|incrDump
-operator|.
-name|dumpLocation
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -20075,9 +20150,7 @@ name|loadAndVerify
 argument_list|(
 name|replDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|dbName
 argument_list|,
 name|incrDump
 operator|.
@@ -21820,13 +21893,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -22120,13 +22191,11 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|replDumpLocn
-operator|+
-literal|"'"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -23534,11 +23603,9 @@ literal|"REPL LOAD "
 operator|+
 name|dbName
 operator|+
-literal|" FROM '"
+literal|" INTO "
 operator|+
-name|dumpLocation
-operator|+
-literal|"'"
+name|dbName
 argument_list|)
 expr_stmt|;
 assert|assert
@@ -24596,15 +24663,13 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
 operator|+
-literal|" FROM '"
-operator|+
-name|dump
-operator|.
-name|dumpLocation
-operator|+
-literal|"' with ('hive.repl.enable.move.optimization'='true')"
+literal|" with ('hive.repl.enable.move.optimization'='true')"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -24807,23 +24872,13 @@ name|dbName
 operator|+
 literal|"_replica"
 decl_stmt|;
-name|Tuple
-name|bootstrapDump
-init|=
 name|bootstrapLoadAndVerify
 argument_list|(
 name|dbName
 argument_list|,
 name|replDbName
 argument_list|)
-decl_stmt|;
-name|String
-name|replDumpId
-init|=
-name|bootstrapDump
-operator|.
-name|lastReplId
-decl_stmt|;
+expr_stmt|;
 name|String
 index|[]
 name|unptn_data
@@ -24937,15 +24992,13 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
 operator|+
-literal|" FROM '"
-operator|+
-name|incrementalDump
-operator|.
-name|dumpLocation
-operator|+
-literal|"' with ('hive.repl.enable.move.optimization'='true')"
+literal|" with ('hive.repl.enable.move.optimization'='true')"
 argument_list|,
 name|driverMirror
 argument_list|)
@@ -24962,12 +25015,6 @@ name|lastReplId
 argument_list|,
 name|driverMirror
 argument_list|)
-expr_stmt|;
-name|replDumpId
-operator|=
-name|incrementalDump
-operator|.
-name|lastReplId
 expr_stmt|;
 name|verifyRun
 argument_list|(
@@ -25120,15 +25167,13 @@ name|run
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|dbName
+operator|+
+literal|" INTO "
+operator|+
 name|replDbName
 operator|+
-literal|" FROM '"
-operator|+
-name|incrementalDump
-operator|.
-name|dumpLocation
-operator|+
-literal|"' with ('hive.repl.enable.move.optimization'='true')"
+literal|" with ('hive.repl.enable.move.optimization'='true')"
 argument_list|,
 name|driverMirror
 argument_list|)

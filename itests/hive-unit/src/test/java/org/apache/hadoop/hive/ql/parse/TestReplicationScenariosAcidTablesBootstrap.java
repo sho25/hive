@@ -476,9 +476,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyLoadExecution
@@ -542,9 +540,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyIncLoad
@@ -628,9 +624,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyInc2Load
@@ -682,9 +676,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyLoadExecution
@@ -854,9 +846,7 @@ name|loadFailure
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|callerVerifier
@@ -975,9 +965,7 @@ name|loadFailure
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -1024,9 +1012,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -1070,9 +1056,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -1114,9 +1098,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|prepareIncAcidData
@@ -1177,9 +1159,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 comment|// Re-bootstrapping from different bootstrap dump without clean tables config should fail.
@@ -1189,9 +1169,7 @@ name|loadFailure
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|Collections
 operator|.
@@ -1247,9 +1225,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 comment|// Open concurrent transactions, create data for incremental and take an incremental dump
@@ -1443,9 +1419,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyIncLoad
@@ -1581,9 +1555,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 comment|// Create incremental data for incremental load with bootstrap of ACID
@@ -1831,9 +1803,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyIncLoad
@@ -1896,9 +1866,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyInc2Load

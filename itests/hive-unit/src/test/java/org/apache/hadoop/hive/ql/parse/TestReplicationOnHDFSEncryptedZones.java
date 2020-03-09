@@ -710,6 +710,21 @@ name|getUserName
 argument_list|()
 argument_list|)
 expr_stmt|;
+name|put
+parameter_list|(
+name|HiveConf
+operator|.
+name|ConfVars
+operator|.
+name|REPLDIR
+operator|.
+name|varname
+parameter_list|,
+name|primary
+operator|.
+name|repldDir
+parameter_list|)
+constructor_decl|;
 block|}
 block|}
 argument_list|,
@@ -756,15 +771,13 @@ name|run
 argument_list|(
 literal|"repl load "
 operator|+
+name|primaryDbName
+operator|+
+literal|" into "
+operator|+
 name|replicatedDbName
 operator|+
-literal|" from '"
-operator|+
-name|tuple
-operator|.
-name|dumpLocation
-operator|+
-literal|"' with('hive.repl.add.raw.reserved.namespace'='true', "
+literal|" with('hive.repl.add.raw.reserved.namespace'='true', "
 operator|+
 literal|"'hive.repl.replica.external.table.base.dir'='"
 operator|+
@@ -943,15 +956,13 @@ name|run
 argument_list|(
 literal|"repl load "
 operator|+
+name|primaryDbName
+operator|+
+literal|" into "
+operator|+
 name|replicatedDbName
 operator|+
-literal|" from '"
-operator|+
-name|tuple
-operator|.
-name|dumpLocation
-operator|+
-literal|"' with('hive.repl.add.raw.reserved.namespace'='true')"
+literal|" with('hive.repl.add.raw.reserved.namespace'='true')"
 argument_list|)
 operator|.
 name|run

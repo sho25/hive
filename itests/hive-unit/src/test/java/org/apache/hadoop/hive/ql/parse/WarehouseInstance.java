@@ -2139,22 +2139,51 @@ name|String
 name|replicatedDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|primaryDbName
 parameter_list|)
 throws|throws
 name|Throwable
 block|{
-name|run
+name|StringBuilder
+name|replCommand
+init|=
+operator|new
+name|StringBuilder
 argument_list|(
-literal|"EXPLAIN REPL LOAD "
+literal|"REPL LOAD "
+operator|+
+name|primaryDbName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
+name|replicatedDbName
+argument_list|)
+condition|)
+block|{
+name|replCommand
+operator|.
+name|append
+argument_list|(
+literal|" INTO "
 operator|+
 name|replicatedDbName
+argument_list|)
+expr_stmt|;
+block|}
+name|run
+argument_list|(
+literal|"EXPLAIN "
 operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
+name|replCommand
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 name|printOutput
@@ -2162,15 +2191,10 @@ argument_list|()
 expr_stmt|;
 name|run
 argument_list|(
-literal|"REPL LOAD "
-operator|+
-name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
+name|replCommand
+operator|.
+name|toString
+argument_list|()
 argument_list|)
 expr_stmt|;
 return|return
@@ -2184,22 +2208,51 @@ name|String
 name|replicatedDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|primaryDbName
 parameter_list|)
 throws|throws
 name|Throwable
 block|{
-name|run
+name|StringBuilder
+name|replCommand
+init|=
+operator|new
+name|StringBuilder
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|primaryDbName
+argument_list|)
+decl_stmt|;
+if|if
+condition|(
+operator|!
+name|StringUtils
+operator|.
+name|isEmpty
+argument_list|(
 name|replicatedDbName
+argument_list|)
+condition|)
+block|{
+name|replCommand
+operator|.
+name|append
+argument_list|(
+literal|" INTO "
 operator|+
-literal|" FROM '"
+name|replicatedDbName
+argument_list|)
+expr_stmt|;
+block|}
+name|run
+argument_list|(
+name|replCommand
+operator|.
+name|toString
+argument_list|()
 operator|+
-name|dumpLocation
-operator|+
-literal|"' with ('hive.exec.parallel'='true')"
+literal|" with ('hive.exec.parallel'='true')"
 argument_list|)
 expr_stmt|;
 return|return
@@ -2213,7 +2266,7 @@ name|String
 name|replicatedDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|primaryDbName
 parameter_list|,
 name|List
 argument_list|<
@@ -2229,13 +2282,11 @@ name|replLoadCmd
 init|=
 literal|"REPL LOAD "
 operator|+
+name|primaryDbName
+operator|+
+literal|" INTO "
+operator|+
 name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
 decl_stmt|;
 if|if
 condition|(
@@ -2365,7 +2416,7 @@ name|String
 name|replicatedDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|primaryDbName
 parameter_list|)
 throws|throws
 name|Throwable
@@ -2374,7 +2425,7 @@ name|loadFailure
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 literal|null
 argument_list|)
@@ -2390,7 +2441,7 @@ name|String
 name|replicatedDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|primaryDbName
 parameter_list|,
 name|List
 argument_list|<
@@ -2406,13 +2457,11 @@ name|replLoadCmd
 init|=
 literal|"REPL LOAD "
 operator|+
+name|primaryDbName
+operator|+
+literal|" INTO "
+operator|+
 name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
 decl_stmt|;
 if|if
 condition|(
@@ -2459,7 +2508,7 @@ name|String
 name|replicatedDbName
 parameter_list|,
 name|String
-name|dumpLocation
+name|primaryDbName
 parameter_list|,
 name|List
 argument_list|<
@@ -2478,13 +2527,11 @@ name|replLoadCmd
 init|=
 literal|"REPL LOAD "
 operator|+
+name|primaryDbName
+operator|+
+literal|" INTO "
+operator|+
 name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|dumpLocation
-operator|+
-literal|"'"
 decl_stmt|;
 if|if
 condition|(

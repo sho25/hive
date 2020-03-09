@@ -17983,26 +17983,6 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|String
-name|dumpLocation
-init|=
-name|replDumpRslt
-operator|.
-name|getString
-argument_list|(
-literal|1
-argument_list|)
-decl_stmt|;
-name|String
-name|lastReplId
-init|=
-name|replDumpRslt
-operator|.
-name|getString
-argument_list|(
-literal|2
-argument_list|)
-decl_stmt|;
 name|List
 argument_list|<
 name|String
@@ -18066,13 +18046,17 @@ name|execute
 argument_list|(
 literal|"repl load "
 operator|+
+name|primaryDb
+operator|+
+literal|" into "
+operator|+
 name|replicaDb
 operator|+
-literal|" from '"
+literal|" with ('hive.repl.rootdir' = '"
 operator|+
-name|dumpLocation
+name|replDir
 operator|+
-literal|"'"
+literal|"')"
 argument_list|)
 expr_stmt|;
 name|logs
@@ -18184,24 +18168,6 @@ name|next
 argument_list|()
 argument_list|)
 expr_stmt|;
-name|dumpLocation
-operator|=
-name|replDumpRslt
-operator|.
-name|getString
-argument_list|(
-literal|1
-argument_list|)
-expr_stmt|;
-name|lastReplId
-operator|=
-name|replDumpRslt
-operator|.
-name|getString
-argument_list|(
-literal|2
-argument_list|)
-expr_stmt|;
 name|logs
 operator|=
 name|stmt
@@ -18261,13 +18227,17 @@ name|execute
 argument_list|(
 literal|"repl load "
 operator|+
+name|primaryDb
+operator|+
+literal|" into "
+operator|+
 name|replicaDb
 operator|+
-literal|" from '"
+literal|" with ('hive.repl.rootdir' = '"
 operator|+
-name|dumpLocation
+name|replDir
 operator|+
-literal|"'"
+literal|"')"
 argument_list|)
 expr_stmt|;
 name|logs
@@ -19305,7 +19275,7 @@ name|stmt
 operator|.
 name|execute
 argument_list|(
-literal|"repl load default1 from '/tmp/junk'"
+literal|"repl load default into default1"
 argument_list|)
 expr_stmt|;
 block|}

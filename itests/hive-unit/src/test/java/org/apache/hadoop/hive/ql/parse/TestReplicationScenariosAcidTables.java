@@ -449,6 +449,18 @@ name|SOURCE_OF_REPLICATION
 import|;
 end_import
 
+begin_import
+import|import static
+name|org
+operator|.
+name|junit
+operator|.
+name|Assert
+operator|.
+name|assertEquals
+import|;
+end_import
+
 begin_comment
 comment|/**  * TestReplicationScenariosAcidTables - test replication for ACID tables.  */
 end_comment
@@ -711,6 +723,24 @@ argument_list|,
 name|acidEnableConf
 argument_list|)
 expr_stmt|;
+name|acidEnableConf
+operator|.
+name|put
+argument_list|(
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|REPLDIR
+operator|.
+name|getHiveName
+argument_list|()
+argument_list|,
+name|primary
+operator|.
+name|repldDir
+argument_list|)
+expr_stmt|;
 name|replica
 operator|=
 operator|new
@@ -781,6 +811,24 @@ expr_stmt|;
 block|}
 block|}
 decl_stmt|;
+name|overridesForHiveConf1
+operator|.
+name|put
+argument_list|(
+name|MetastoreConf
+operator|.
+name|ConfVars
+operator|.
+name|REPLDIR
+operator|.
+name|getHiveName
+argument_list|()
+argument_list|,
+name|primary
+operator|.
+name|repldDir
+argument_list|)
+expr_stmt|;
 name|replicaNonAcid
 operator|=
 operator|new
@@ -891,9 +939,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyLoadExecution
@@ -955,9 +1001,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyIncLoad
@@ -1025,9 +1069,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|inc2Dump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|verifyInc2Load
@@ -1067,9 +1109,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|Collections
 operator|.
@@ -1118,9 +1158,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|Collections
 operator|.
@@ -1148,9 +1186,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|Collections
 operator|.
@@ -1379,9 +1415,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1807,9 +1841,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -1867,9 +1899,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2191,9 +2221,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootstrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2265,9 +2293,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2337,9 +2363,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootStrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2457,9 +2481,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2483,9 +2505,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2540,9 +2560,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootStrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2617,9 +2635,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2643,9 +2659,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2698,9 +2712,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|bootStrapDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2790,13 +2802,11 @@ name|runFailure
 argument_list|(
 literal|"REPL LOAD "
 operator|+
+name|primaryDbName
+operator|+
+literal|" INTO "
+operator|+
 name|replicatedDbName
-operator|+
-literal|" FROM '"
-operator|+
-name|incrementalDump
-operator|.
-name|dumpLocation
 operator|+
 literal|"'"
 argument_list|)
@@ -3010,9 +3020,7 @@ name|loadFailure
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|,
 name|withConfigs
 argument_list|)
@@ -3155,9 +3163,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|callerVerifier
@@ -3646,11 +3652,6 @@ name|txnStrCommit
 init|=
 literal|"COMMIT"
 decl_stmt|;
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|incrementalDump
-decl_stmt|;
 name|primary
 operator|.
 name|run
@@ -3658,18 +3659,6 @@ argument_list|(
 literal|"alter database default set dbproperties ('repl.source.for' = '1, 2, 3')"
 argument_list|)
 expr_stmt|;
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|bootStrapDump
-init|=
-name|primary
-operator|.
-name|dump
-argument_list|(
-literal|"`*`"
-argument_list|)
-decl_stmt|;
 name|primary
 operator|.
 name|run
@@ -3961,8 +3950,6 @@ argument_list|(
 name|txnStrCommit
 argument_list|)
 expr_stmt|;
-name|incrementalDump
-operator|=
 name|primary
 operator|.
 name|dump
@@ -4006,116 +3993,35 @@ literal|" cascade"
 argument_list|)
 expr_stmt|;
 comment|//End of additional steps
+try|try
+block|{
 name|replica
 operator|.
 name|loadWithoutExplain
 argument_list|(
 literal|""
 argument_list|,
-name|bootStrapDump
-operator|.
-name|dumpLocation
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"REPL STATUS default"
-argument_list|)
-operator|.
-name|verifyResult
-argument_list|(
-name|bootStrapDump
-operator|.
-name|lastReplicationId
+literal|"`*`"
 argument_list|)
 expr_stmt|;
-name|replica
-operator|.
-name|loadWithoutExplain
+block|}
+catch|catch
+parameter_list|(
+name|SemanticException
+name|e
+parameter_list|)
+block|{
+name|assertEquals
 argument_list|(
-literal|""
+literal|"REPL LOAD * is not supported"
 argument_list|,
-name|incrementalDump
+name|e
 operator|.
-name|dumpLocation
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"REPL STATUS "
-operator|+
-name|dbName1
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"select key from "
-operator|+
-name|dbName1
-operator|+
-literal|"."
-operator|+
-name|tableName
-operator|+
-literal|" order by key"
-argument_list|)
-operator|.
-name|verifyResults
-argument_list|(
-name|resultArray
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"select key from "
-operator|+
-name|dbName2
-operator|+
-literal|"."
-operator|+
-name|tableName
-operator|+
-literal|" order by key"
-argument_list|)
-operator|.
-name|verifyResults
-argument_list|(
-name|resultArray
+name|getMessage
+argument_list|()
 argument_list|)
 expr_stmt|;
-name|replica
-operator|.
-name|run
-argument_list|(
-literal|"drop database "
-operator|+
-name|primaryDbName
-operator|+
-literal|" cascade"
-argument_list|)
-expr_stmt|;
-name|replica
-operator|.
-name|run
-argument_list|(
-literal|"drop database "
-operator|+
-name|dbName1
-operator|+
-literal|" cascade"
-argument_list|)
-expr_stmt|;
-name|replica
-operator|.
-name|run
-argument_list|(
-literal|"drop database "
-operator|+
-name|dbName2
-operator|+
-literal|" cascade"
-argument_list|)
-expr_stmt|;
+block|}
 block|}
 block|}
 end_class

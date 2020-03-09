@@ -2270,9 +2270,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run
@@ -2306,9 +2304,7 @@ name|loadWithoutExplain
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 operator|.
 name|run

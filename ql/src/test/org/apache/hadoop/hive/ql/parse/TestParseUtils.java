@@ -373,7 +373,7 @@ name|DEFAULT
 block|}
 block|,
 block|{
-literal|"REPL LOAD a from './examples/files/kv.txt'"
+literal|"REPL LOAD a INTO a"
 block|,
 name|TxnType
 operator|.

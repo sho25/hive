@@ -1018,9 +1018,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|replPolicy
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -1248,9 +1246,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|replPolicy
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -1928,9 +1924,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tupleBootstrap
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|String
@@ -2068,9 +2062,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tupleBootstrap
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|String
@@ -2333,9 +2325,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tupleBootstrap
-operator|.
-name|dumpLocation
+name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|String
@@ -3205,9 +3195,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|replPolicy
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -3484,9 +3472,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|replPolicy
 argument_list|,
 name|loadWithClause
 argument_list|)
@@ -4539,9 +4525,7 @@ name|load
 argument_list|(
 name|replicatedDbName
 argument_list|,
-name|tuple
-operator|.
-name|dumpLocation
+name|replPolicy
 argument_list|,
 name|loadWithClause
 argument_list|)
