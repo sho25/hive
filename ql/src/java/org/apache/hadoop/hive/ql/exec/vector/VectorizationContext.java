@@ -16016,6 +16016,13 @@ operator|==
 name|DataTypePhysicalVariation
 operator|.
 name|NONE
+operator|||
+name|inputDataTypePhysicalVariations
+index|[
+name|i
+index|]
+operator|==
+literal|null
 condition|)
 block|{
 if|if
@@ -16098,6 +16105,7 @@ control|)
 block|{
 if|if
 condition|(
+operator|(
 name|inputDataTypePhysicalVariations
 index|[
 name|i
@@ -16106,6 +16114,14 @@ operator|==
 name|DataTypePhysicalVariation
 operator|.
 name|NONE
+operator|||
+name|inputDataTypePhysicalVariations
+index|[
+name|i
+index|]
+operator|==
+literal|null
+operator|)
 operator|&&
 name|vectorChildren
 index|[
