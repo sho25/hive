@@ -2413,6 +2413,11 @@ name|unusedGuaranteed
 init|=
 literal|0
 decl_stmt|;
+specifier|private
+specifier|final
+name|boolean
+name|consistentSplits
+decl_stmt|;
 comment|/**    * An internal version to make sure we don't race and overwrite a newer totalGuaranteed count in    * ZK with an older one, without requiring us to make ZK updates under the main writeLock.    * This is updated under writeLock, together with totalGuaranteed.    */
 specifier|private
 name|long
@@ -2630,6 +2635,21 @@ name|lock
 operator|.
 name|writeLock
 argument_list|()
+expr_stmt|;
+name|this
+operator|.
+name|consistentSplits
+operator|=
+name|HiveConf
+operator|.
+name|getBoolVar
+argument_list|(
+name|conf
+argument_list|,
+name|ConfVars
+operator|.
+name|LLAP_CLIENT_CONSISTENT_SPLITS
+argument_list|)
 expr_stmt|;
 if|if
 condition|(
@@ -3271,7 +3291,7 @@ name|info
 argument_list|(
 literal|"Running with configuration: hosts={}, numSchedulableTasksPerNode={}, "
 operator|+
-literal|"nodeBlacklistConf={}, localityConf={}"
+literal|"nodeBlacklistConf={}, localityConf={} consistentSplits={}"
 argument_list|,
 name|hostsString
 argument_list|,
@@ -3280,6 +3300,8 @@ argument_list|,
 name|nodeBlacklistConf
 argument_list|,
 name|localityDelayConf
+argument_list|,
+name|consistentSplits
 argument_list|)
 expr_stmt|;
 name|this
@@ -8309,14 +8331,33 @@ argument_list|<
 name|LlapServiceInstance
 argument_list|>
 name|instances
-init|=
+decl_stmt|;
+if|if
+condition|(
+name|consistentSplits
+condition|)
+block|{
+name|instances
+operator|=
 name|activeInstances
 operator|.
 name|getAllInstancesOrdered
 argument_list|(
 literal|true
 argument_list|)
-decl_stmt|;
+expr_stmt|;
+block|}
+else|else
+block|{
+comment|// if consistent splits are not used we don't need the ordering as there will be no cache benefit anyways
+name|instances
+operator|=
+name|activeInstances
+operator|.
+name|getAll
+argument_list|()
+expr_stmt|;
+block|}
 name|List
 argument_list|<
 name|NodeInfo
