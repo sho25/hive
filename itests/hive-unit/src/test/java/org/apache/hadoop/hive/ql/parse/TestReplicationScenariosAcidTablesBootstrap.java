@@ -263,6 +263,16 @@ begin_import
 import|import
 name|java
 operator|.
+name|io
+operator|.
+name|File
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|Arrays
@@ -553,6 +563,21 @@ name|lastReplicationId
 argument_list|)
 expr_stmt|;
 comment|// Ckpt should be set on bootstrapped tables.
+name|String
+name|hiveDumpLocation
+init|=
+name|incrementalDump
+operator|.
+name|dumpLocation
+operator|+
+name|File
+operator|.
+name|separator
+operator|+
+name|ReplUtils
+operator|.
+name|REPL_HIVE_BASE_DIR
+decl_stmt|;
 name|replica
 operator|.
 name|verifyIfCkptSetForTables
@@ -561,9 +586,7 @@ name|replicatedDbName
 argument_list|,
 name|acidTableNames
 argument_list|,
-name|incrementalDump
-operator|.
-name|dumpLocation
+name|hiveDumpLocation
 argument_list|)
 expr_stmt|;
 comment|// Take a second normal incremental dump after Acid table boostrap

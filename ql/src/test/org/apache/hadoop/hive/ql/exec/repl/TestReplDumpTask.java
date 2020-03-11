@@ -923,6 +923,9 @@ parameter_list|,
 name|Path
 name|dbRoot
 parameter_list|,
+name|Path
+name|replDataDir
+parameter_list|,
 name|long
 name|lastReplId
 parameter_list|,

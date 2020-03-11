@@ -191,6 +191,9 @@ class|class
 name|Context
 block|{
 name|Path
+name|dumpRoot
+decl_stmt|;
+name|Path
 name|eventRoot
 decl_stmt|;
 specifier|final
@@ -231,6 +234,9 @@ name|Path
 name|eventRoot
 parameter_list|,
 name|Path
+name|dumpRoot
+parameter_list|,
+name|Path
 name|cmRoot
 parameter_list|,
 name|Hive
@@ -255,6 +261,12 @@ argument_list|>
 name|tablesForBootstrap
 parameter_list|)
 block|{
+name|this
+operator|.
+name|dumpRoot
+operator|=
+name|dumpRoot
+expr_stmt|;
 name|this
 operator|.
 name|eventRoot
@@ -311,6 +323,14 @@ name|Context
 name|other
 parameter_list|)
 block|{
+name|this
+operator|.
+name|dumpRoot
+operator|=
+name|other
+operator|.
+name|dumpRoot
+expr_stmt|;
 name|this
 operator|.
 name|eventRoot

@@ -1428,7 +1428,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"create table tacidloc (id int) clustered by(id) into 3 buckets stored as orc  LOCATION '/tmp' "
+literal|"create table tacidloc (id int) clustered by(id) into 3 buckets stored as orc  LOCATION '/tmp/fol' "
 argument_list|)
 operator|.
 name|run
@@ -1455,7 +1455,7 @@ argument_list|)
 operator|.
 name|run
 argument_list|(
-literal|"alter table tacidpartloc add partition(country='france') LOCATION '/tmp/part'"
+literal|"alter table tacidpartloc add partition(country='france') LOCATION '/tmp/fol/part'"
 argument_list|)
 operator|.
 name|run
