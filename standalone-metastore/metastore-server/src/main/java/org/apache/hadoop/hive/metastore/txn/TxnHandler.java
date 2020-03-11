@@ -23768,23 +23768,12 @@ parameter_list|)
 throws|throws
 name|NoSuchLockException
 throws|,
-name|NoSuchTxnException
-throws|,
 name|TxnAbortedException
 throws|,
 name|MetaException
 throws|,
 name|SQLException
 block|{
-name|TxnStore
-operator|.
-name|MutexAPI
-operator|.
-name|LockHandle
-name|handle
-init|=
-literal|null
-decl_stmt|;
 name|Statement
 name|stmt
 init|=
@@ -23810,22 +23799,6 @@ literal|true
 decl_stmt|;
 try|try
 block|{
-comment|/**        * checkLock() must be mutex'd against any other checkLock to make sure 2 conflicting locks        * are not granted by parallel checkLock() calls.        */
-name|handle
-operator|=
-name|getMutexAPI
-argument_list|()
-operator|.
-name|acquireLock
-argument_list|(
-name|MUTEX_KEY
-operator|.
-name|CheckLock
-operator|.
-name|name
-argument_list|()
-argument_list|)
-expr_stmt|;
 name|List
 argument_list|<
 name|LockInfo
@@ -23861,14 +23834,6 @@ name|extLockId
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|Savepoint
-name|save
-init|=
-name|dbConn
-operator|.
-name|setSavepoint
-argument_list|()
-decl_stmt|;
 name|StringBuilder
 name|query
 init|=
@@ -24952,14 +24917,6 @@ index|]
 argument_list|)
 condition|)
 block|{
-comment|/*we acquire all locks for a given query atomically; if 1 blocks, all go into (remain) in                 * Waiting state.  wait() will undo any 'acquire()' which may have happened as part of                 * this (metastore db) transaction and then we record which lock blocked the lock                 * we were testing ('info').*/
-name|wait
-argument_list|(
-name|dbConn
-argument_list|,
-name|save
-argument_list|)
-expr_stmt|;
 name|String
 name|sqlText
 init|=
@@ -25139,19 +25096,6 @@ argument_list|,
 literal|null
 argument_list|)
 expr_stmt|;
-if|if
-condition|(
-name|handle
-operator|!=
-literal|null
-condition|)
-block|{
-name|handle
-operator|.
-name|releaseLocks
-argument_list|()
-expr_stmt|;
-block|}
 block|}
 return|return
 name|response
@@ -25634,40 +25578,6 @@ operator|.
 name|extLockId
 operator|)
 return|;
-block|}
-specifier|private
-name|void
-name|wait
-parameter_list|(
-name|Connection
-name|dbConn
-parameter_list|,
-name|Savepoint
-name|save
-parameter_list|)
-throws|throws
-name|SQLException
-block|{
-comment|// Need to rollback because we did a select that acquired locks but we didn't
-comment|// actually update anything.  Also, we may have locked some locks as
-comment|// acquired that we now want to not acquire.  It's ok to rollback because
-comment|// once we see one wait, we're done, we won't look for more.
-comment|// Only rollback to savepoint because we want to commit our heartbeat
-comment|// changes.
-name|LOG
-operator|.
-name|debug
-argument_list|(
-literal|"Going to rollback to savepoint"
-argument_list|)
-expr_stmt|;
-name|dbConn
-operator|.
-name|rollback
-argument_list|(
-name|save
-argument_list|)
-expr_stmt|;
 block|}
 comment|/**    * Heartbeats on the lock table.  This commits, so do not enter it with any state.    * Should not be called on a lock that belongs to transaction.    */
 specifier|private
