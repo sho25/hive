@@ -516,7 +516,7 @@ operator|.
 name|info
 argument_list|(
 literal|"{} created with sourceDirectory={}, testCasePropertyName={}, excludedProvide={}"
-argument_list|,
+operator|+
 literal|"fileListProvider={}, inTest={}"
 argument_list|,
 name|UnitTestPropertiesParser
