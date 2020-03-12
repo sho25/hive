@@ -423,6 +423,16 @@ argument_list|(
 literal|"avro.serde.schema"
 argument_list|)
 block|,
+name|AVRO_SERDE_TYPE
+argument_list|(
+literal|"avro.serde.type"
+argument_list|)
+block|,
+name|AVRO_SERDE_SKIP_BYTES
+argument_list|(
+literal|"avro.serde.skip.bytes"
+argument_list|)
+block|,
 name|SCHEMA_RETRIEVER
 argument_list|(
 literal|"avro.schema.retriever"
