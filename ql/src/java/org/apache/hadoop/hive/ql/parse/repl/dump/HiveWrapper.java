@@ -314,7 +314,7 @@ init|=
 operator|!
 name|Utils
 operator|.
-name|shouldDumpMetaDataOnly
+name|shouldDumpMetaDataOnlyForExternalTables
 argument_list|(
 name|db
 operator|.
@@ -325,6 +325,14 @@ argument_list|,
 name|tableName
 argument_list|)
 argument_list|,
+name|conf
+argument_list|)
+operator|&&
+operator|!
+name|Utils
+operator|.
+name|shouldDumpMetaDataOnly
+argument_list|(
 name|conf
 argument_list|)
 decl_stmt|;

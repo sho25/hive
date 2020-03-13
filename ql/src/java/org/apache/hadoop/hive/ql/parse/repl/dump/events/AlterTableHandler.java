@@ -1178,6 +1178,15 @@ name|Utils
 operator|.
 name|shouldDumpMetaDataOnly
 argument_list|(
+name|withinContext
+operator|.
+name|hiveConf
+argument_list|)
+operator|||
+name|Utils
+operator|.
+name|shouldDumpMetaDataOnlyForExternalTables
+argument_list|(
 name|qlMdTableAfter
 argument_list|,
 name|withinContext

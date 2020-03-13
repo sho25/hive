@@ -653,8 +653,6 @@ name|Utils
 operator|.
 name|shouldDumpMetaDataOnly
 argument_list|(
-name|table
-argument_list|,
 name|withinContext
 operator|.
 name|hiveConf

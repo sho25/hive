@@ -259,6 +259,17 @@ name|replicationSpec
 operator|.
 name|isMetadataOnly
 argument_list|()
+operator|||
+name|Utils
+operator|.
+name|shouldDumpMetaDataOnlyForExternalTables
+argument_list|(
+name|qlMdTable
+argument_list|,
+name|withinContext
+operator|.
+name|hiveConf
+argument_list|)
 condition|)
 block|{
 return|return;

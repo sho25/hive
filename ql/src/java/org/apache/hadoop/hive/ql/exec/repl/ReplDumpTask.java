@@ -4375,10 +4375,6 @@ name|Utils
 operator|.
 name|shouldDumpMetaDataOnly
 argument_list|(
-name|tuple
-operator|.
-name|object
-argument_list|,
 name|conf
 argument_list|)
 condition|)

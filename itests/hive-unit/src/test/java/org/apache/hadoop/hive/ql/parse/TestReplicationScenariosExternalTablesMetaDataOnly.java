@@ -1150,6 +1150,25 @@ name|verifyResult
 argument_list|(
 literal|null
 argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show partitions t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"country=france"
+block|,
+literal|"country=india"
+block|,
+literal|"country=us"
+block|}
+argument_list|)
 expr_stmt|;
 comment|// Ckpt should be set on bootstrapped db.
 name|String
@@ -1817,6 +1836,21 @@ name|verifyReplTargetProperty
 argument_list|(
 name|replicatedDbName
 argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show partitions t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"country=india"
+block|}
+argument_list|)
 expr_stmt|;
 comment|// add new  data externally, to a partition, but under the table level top directory
 name|Path
@@ -1961,6 +1995,23 @@ index|[]
 block|{}
 argument_list|)
 operator|.
+name|run
+argument_list|(
+literal|"show partitions t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"country=australia"
+block|,
+literal|"country=india"
+block|}
+argument_list|)
+operator|.
 name|verifyReplTargetProperty
 argument_list|(
 name|replicatedDbName
@@ -2083,6 +2134,25 @@ operator|new
 name|String
 index|[]
 block|{}
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"show partitions t2"
+argument_list|)
+operator|.
+name|verifyResults
+argument_list|(
+operator|new
+name|String
+index|[]
+block|{
+literal|"country=australia"
+block|,
+literal|"country=france"
+block|,
+literal|"country=india"
+block|}
 argument_list|)
 operator|.
 name|verifyReplTargetProperty
