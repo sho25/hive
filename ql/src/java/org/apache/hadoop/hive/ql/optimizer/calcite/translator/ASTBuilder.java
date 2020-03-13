@@ -1860,6 +1860,9 @@ case|:
 case|case
 name|INTERVAL_YEAR_MONTH
 case|:
+case|case
+name|ROW
+case|:
 if|if
 condition|(
 name|literal
@@ -2434,9 +2437,12 @@ operator|.
 name|TOK_NULL
 expr_stmt|;
 break|break;
-comment|//binary type should not be seen.
+comment|//binary, ROW type should not be seen.
 case|case
 name|BINARY
+case|:
+case|case
+name|ROW
 case|:
 default|default:
 throw|throw

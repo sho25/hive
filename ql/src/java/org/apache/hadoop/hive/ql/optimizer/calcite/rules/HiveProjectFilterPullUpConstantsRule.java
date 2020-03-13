@@ -891,9 +891,6 @@ argument_list|)
 operator|.
 name|getType
 argument_list|()
-operator|.
-name|getSqlTypeName
-argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;

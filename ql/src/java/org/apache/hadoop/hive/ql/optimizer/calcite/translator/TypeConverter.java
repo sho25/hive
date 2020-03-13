@@ -1629,8 +1629,16 @@ argument_list|)
 expr_stmt|;
 break|break;
 block|}
+comment|// hive does not have concept of not nullable types
 return|return
+name|dtFactory
+operator|.
+name|createTypeWithNullability
+argument_list|(
 name|convertedType
+argument_list|,
+literal|true
+argument_list|)
 return|;
 block|}
 specifier|public
