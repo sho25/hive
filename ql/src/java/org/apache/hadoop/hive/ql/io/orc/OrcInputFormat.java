@@ -4523,7 +4523,7 @@ name|conf
 argument_list|,
 name|ConfVars
 operator|.
-name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
+name|HIVE_COMPUTE_SPLITS_NUM_THREADS
 argument_list|)
 decl_stmt|;
 name|boolean

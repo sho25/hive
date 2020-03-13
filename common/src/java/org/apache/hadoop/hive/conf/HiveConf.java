@@ -7975,6 +7975,9 @@ argument_list|,
 literal|"Maximum size of orc splits cached in the client."
 argument_list|)
 block|,
+comment|/**      * @deprecated Use HiveConf.HIVE_COMPUTE_SPLITS_NUM_THREADS      */
+annotation|@
+name|Deprecated
 name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
 argument_list|(
 literal|"hive.orc.compute.splits.num.threads"
@@ -17716,6 +17719,19 @@ argument_list|,
 literal|"Timeout for Running Query in seconds. A nonpositive value means infinite. "
 operator|+
 literal|"If the query timeout is also set by thrift API call, the smaller one will be taken."
+argument_list|)
+block|,
+name|HIVE_COMPUTE_SPLITS_NUM_THREADS
+argument_list|(
+literal|"hive.compute.splits.num.threads"
+argument_list|,
+literal|10
+argument_list|,
+literal|"How many threads Input Format should use to create splits in parallel."
+argument_list|,
+name|HIVE_ORC_COMPUTE_SPLITS_NUM_THREADS
+operator|.
+name|varname
 argument_list|)
 block|,
 name|HIVE_EXEC_INPUT_LISTING_MAX_THREADS
