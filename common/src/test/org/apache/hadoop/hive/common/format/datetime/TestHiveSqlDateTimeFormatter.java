@@ -1556,6 +1556,16 @@ argument_list|,
 literal|"2000-12-31 00:00:00"
 argument_list|)
 expr_stmt|;
+comment|//Leap day, parse day first
+name|checkParseTimestamp
+argument_list|(
+literal|"dd mm yyyy"
+argument_list|,
+literal|"29 02 2000"
+argument_list|,
+literal|"2000-02-29 00:00:00"
+argument_list|)
+expr_stmt|;
 comment|//Test timezone offset parsing without separators
 name|checkParseTimestamp
 argument_list|(
@@ -3380,19 +3390,21 @@ parameter_list|)
 block|{
 name|assertEquals
 argument_list|(
-literal|"Expected IllegalArgumentException, got another exception."
+literal|"Expected IllegalArgumentException, got another exception:"
+operator|+
+name|e
+argument_list|,
+name|IllegalArgumentException
+operator|.
+name|class
+operator|.
+name|getName
+argument_list|()
 argument_list|,
 name|e
 operator|.
 name|getClass
 argument_list|()
-operator|.
-name|getName
-argument_list|()
-argument_list|,
-name|IllegalArgumentException
-operator|.
-name|class
 operator|.
 name|getName
 argument_list|()
