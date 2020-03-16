@@ -14296,7 +14296,7 @@ argument_list|,
 literal|"This flag should be set to true to enable group by vectorization\n"
 operator|+
 literal|"of aggregations that use complex types.\n"
-argument_list|,
+operator|+
 literal|"For example, AVG uses a complex type (STRUCT) for partial aggregation results"
 operator|+
 literal|"The default value is true."
