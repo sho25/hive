@@ -1712,6 +1712,10 @@ name|compactorTxnId
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|compactorTxnId
+operator|=
+name|NOT_SET
+expr_stmt|;
 block|}
 block|}
 catch|catch
@@ -1773,6 +1777,10 @@ argument_list|(
 name|ci
 argument_list|)
 argument_list|)
+expr_stmt|;
+name|compactorTxnId
+operator|=
+name|NOT_SET
 expr_stmt|;
 block|}
 block|}
@@ -1863,10 +1871,14 @@ name|t
 argument_list|)
 argument_list|)
 expr_stmt|;
+name|compactorTxnId
+operator|=
+name|NOT_SET
+expr_stmt|;
 block|}
 finally|finally
 block|{
-name|commitTxn
+name|commitTxnIfSet
 argument_list|(
 name|compactorTxnId
 argument_list|)
@@ -1930,7 +1942,7 @@ do|;
 block|}
 specifier|private
 name|void
-name|commitTxn
+name|commitTxnIfSet
 parameter_list|(
 name|long
 name|compactorTxnId
