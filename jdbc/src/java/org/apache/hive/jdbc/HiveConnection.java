@@ -3714,6 +3714,11 @@ operator|.
 name|custom
 argument_list|()
 operator|.
+name|setDefaultCookieStore
+argument_list|(
+name|cookieStore
+argument_list|)
+operator|.
 name|setServiceUnavailableRetryStrategy
 argument_list|(
 operator|new

@@ -119,22 +119,6 @@ name|apache
 operator|.
 name|http
 operator|.
-name|client
-operator|.
-name|protocol
-operator|.
-name|ClientContext
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|http
-operator|.
 name|protocol
 operator|.
 name|HttpContext
@@ -285,23 +269,6 @@ comment|// If cookie based authentication is allowed, generate ticket only when 
 comment|// The necessary condition is either when there are no server side cookies in the
 comment|// cookiestore which can be send back or when the server returns a 401 error code
 comment|// indicating that the previous cookie has expired.
-if|if
-condition|(
-name|isCookieEnabled
-condition|)
-block|{
-name|httpContext
-operator|.
-name|setAttribute
-argument_list|(
-name|ClientContext
-operator|.
-name|COOKIE_STORE
-argument_list|,
-name|cookieStore
-argument_list|)
-expr_stmt|;
-block|}
 comment|// Generate the kerberos ticket under the following scenarios:
 comment|// 1. Cookie Authentication is disabled OR
 comment|// 2. The first time when the request is sent OR

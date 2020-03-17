@@ -1778,6 +1778,8 @@ name|getValue
 argument_list|()
 expr_stmt|;
 comment|// Validate the value.
+try|try
+block|{
 name|currValue
 operator|=
 name|signer
@@ -1787,6 +1789,36 @@ argument_list|(
 name|currValue
 argument_list|)
 expr_stmt|;
+block|}
+catch|catch
+parameter_list|(
+name|IllegalArgumentException
+name|e
+parameter_list|)
+block|{
+if|if
+condition|(
+name|LOG
+operator|.
+name|isDebugEnabled
+argument_list|()
+condition|)
+block|{
+name|LOG
+operator|.
+name|debug
+argument_list|(
+literal|"Invalid cookie"
+argument_list|,
+name|e
+argument_list|)
+expr_stmt|;
+block|}
+name|currValue
+operator|=
+literal|null
+expr_stmt|;
+block|}
 comment|// Retrieve the user name, do the final validation step.
 if|if
 condition|(
