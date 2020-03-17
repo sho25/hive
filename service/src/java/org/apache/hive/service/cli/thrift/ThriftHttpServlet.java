@@ -199,6 +199,20 @@ name|google
 operator|.
 name|common
 operator|.
+name|annotations
+operator|.
+name|VisibleForTesting
+import|;
+end_import
+
+begin_import
+import|import
+name|com
+operator|.
+name|google
+operator|.
+name|common
+operator|.
 name|io
 operator|.
 name|ByteStreams
@@ -332,26 +346,6 @@ operator|.
 name|security
 operator|.
 name|UserGroupInformation
-import|;
-end_import
-
-begin_import
-import|import
-name|org
-operator|.
-name|apache
-operator|.
-name|hadoop
-operator|.
-name|security
-operator|.
-name|token
-operator|.
-name|delegation
-operator|.
-name|web
-operator|.
-name|DelegationTokenAuthenticator
 import|;
 end_import
 
@@ -1197,9 +1191,6 @@ name|setForwardedAddresses
 argument_list|(
 name|Collections
 operator|.
-expr|<
-name|String
-operator|>
 name|emptyList
 argument_list|()
 argument_list|)
@@ -1407,8 +1398,6 @@ operator|=
 name|doTokenAuth
 argument_list|(
 name|request
-argument_list|,
-name|response
 argument_list|)
 expr_stmt|;
 block|}
@@ -1873,10 +1862,12 @@ index|[]
 name|cookies
 parameter_list|)
 block|{
-name|String
+name|StringBuilder
 name|cookieStr
 init|=
-literal|""
+operator|new
+name|StringBuilder
+argument_list|()
 decl_stmt|;
 for|for
 control|(
@@ -1887,24 +1878,39 @@ name|cookies
 control|)
 block|{
 name|cookieStr
-operator|+=
+operator|.
+name|append
+argument_list|(
 name|c
 operator|.
 name|getName
 argument_list|()
-operator|+
-literal|"="
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
+literal|'='
+argument_list|)
+operator|.
+name|append
+argument_list|(
 name|c
 operator|.
 name|getValue
 argument_list|()
-operator|+
+argument_list|)
+operator|.
+name|append
+argument_list|(
 literal|" ;\n"
+argument_list|)
 expr_stmt|;
 block|}
 return|return
 name|cookieStr
+operator|.
+name|toString
+argument_list|()
 return|;
 block|}
 comment|/**    * Validate the request cookie. This function iterates over the request cookie headers    * and finds a cookie that represents a valid client/server session. If it finds one, it    * returns the client name associated with the session. Else, it returns null.    * @param request The HTTP Servlet Request send by the client    * @return Client Username if the request has valid HS2 cookie, else returns null    */
@@ -2136,7 +2142,7 @@ operator|+
 literal|"; HttpOnly"
 return|;
 block|}
-comment|/**    * Do the LDAP/PAM authentication    * @param request    * @param authType    * @throws HttpAuthenticationException    */
+comment|/**    * Do the LDAP/PAM authentication    * @param request request to authenticate    * @param authType type of authentication    * @throws HttpAuthenticationException on error authenticating end user    */
 specifier|private
 name|String
 name|doPasswdAuth
@@ -2243,9 +2249,6 @@ name|doTokenAuth
 parameter_list|(
 name|HttpServletRequest
 name|request
-parameter_list|,
-name|HttpServletResponse
-name|response
 parameter_list|)
 throws|throws
 name|HttpAuthenticationException
@@ -2286,8 +2289,9 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * Do the GSS-API kerberos authentication.    * We already have a logged in subject in the form of serviceUGI,    * which GSS-API will extract information from.    * In case of a SPNego request we use the httpUGI,    * for the authenticating service tickets.    * @param request    * @return    * @throws HttpAuthenticationException    */
-specifier|private
+comment|/**    * Do the GSS-API kerberos authentication.    * We already have a logged in subject in the form of serviceUGI,    * which GSS-API will extract information from.    * In case of a SPNego request we use the httpUGI,    * for the authenticating service tickets.    * @param request Request to act on    * @return client principal name    * @throws HttpAuthenticationException on error authenticating the user    */
+annotation|@
+name|VisibleForTesting
 name|String
 name|doKerberosAuth
 parameter_list|(
@@ -2297,7 +2301,16 @@ parameter_list|)
 throws|throws
 name|HttpAuthenticationException
 block|{
-comment|// Try authenticating with the http/_HOST principal
+comment|// Each http request must have an Authorization header
+comment|// Check before trying to do kerberos authentication twice
+name|getAuthHeader
+argument_list|(
+name|request
+argument_list|,
+name|authType
+argument_list|)
+expr_stmt|;
+comment|// Try authenticating with the HTTP/_HOST principal
 if|if
 condition|(
 name|httpUGI
@@ -2332,7 +2345,7 @@ name|LOG
 operator|.
 name|info
 argument_list|(
-literal|"Failed to authenticate with http/_HOST kerberos principal, "
+literal|"Failed to authenticate with HTTP/_HOST kerberos principal, "
 operator|+
 literal|"trying with hive/_HOST kerberos principal"
 argument_list|)
@@ -2363,26 +2376,6 @@ name|Exception
 name|e
 parameter_list|)
 block|{
-if|if
-condition|(
-name|e
-operator|.
-name|getCause
-argument_list|()
-operator|instanceof
-name|HttpEmptyAuthenticationException
-condition|)
-block|{
-throw|throw
-operator|(
-name|HttpEmptyAuthenticationException
-operator|)
-name|e
-operator|.
-name|getCause
-argument_list|()
-throw|;
-block|}
 name|LOG
 operator|.
 name|error
@@ -2982,7 +2975,7 @@ return|return
 name|creds
 return|;
 block|}
-comment|/**    * Returns the base64 encoded auth header payload    * @param request    * @param authType    * @return    * @throws HttpAuthenticationException    */
+comment|/**    * Returns the base64 encoded auth header payload    * @param request request to interrogate    * @param authType Either BASIC or NEGOTIATE    * @return base64 encoded auth header payload    * @throws HttpAuthenticationException exception if header is missing or empty    */
 specifier|private
 name|String
 name|getAuthHeader
@@ -3087,10 +3080,6 @@ expr_stmt|;
 comment|// Authorization header must have a payload
 if|if
 condition|(
-name|authHeaderBase64String
-operator|==
-literal|null
-operator|||
 name|authHeaderBase64String
 operator|.
 name|isEmpty
