@@ -1454,11 +1454,15 @@ name|queueName
 argument_list|)
 expr_stmt|;
 block|}
+comment|// have to use table columns since partition SD isn't updated if these are altered
 name|setColumnTypes
 argument_list|(
 name|job
 argument_list|,
-name|sd
+name|t
+operator|.
+name|getSd
+argument_list|()
 operator|.
 name|getCols
 argument_list|()
