@@ -596,6 +596,11 @@ argument_list|)
 expr_stmt|;
 name|addToExpectedRestrictedMap
 argument_list|(
+literal|"hive.query.max.length"
+argument_list|)
+expr_stmt|;
+name|addToExpectedRestrictedMap
+argument_list|(
 literal|"bonecp.test"
 argument_list|)
 expr_stmt|;

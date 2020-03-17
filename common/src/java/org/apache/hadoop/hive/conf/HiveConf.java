@@ -17599,6 +17599,8 @@ literal|"hive.spark.client.rpc.threads,"
 operator|+
 literal|"hive.spark.client.secret.bits,"
 operator|+
+literal|"hive.query.max.length,"
+operator|+
 literal|"hive.spark.client.rpc.server.address,"
 operator|+
 literal|"hive.spark.client.rpc.server.port,"
@@ -17700,6 +17702,21 @@ argument_list|,
 literal|"Comma separated list of variables which are related to remote spark context.\n"
 operator|+
 literal|"Changing these variables will result in re-creating the spark session."
+argument_list|)
+block|,
+name|HIVE_QUERY_MAX_LENGTH
+argument_list|(
+literal|"hive.query.max.length"
+argument_list|,
+literal|"10Mb"
+argument_list|,
+operator|new
+name|SizeValidator
+argument_list|()
+argument_list|,
+literal|"The maximum"
+operator|+
+literal|" size of a query string. Enforced after variable substitutions."
 argument_list|)
 block|,
 name|HIVE_QUERY_TIMEOUT_SECONDS
