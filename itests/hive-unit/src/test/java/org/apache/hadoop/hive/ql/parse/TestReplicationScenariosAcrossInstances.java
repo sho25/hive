@@ -4212,71 +4212,6 @@ name|emptyList
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// Second incremental dump
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|secondIncremental
-init|=
-name|primary
-operator|.
-name|run
-argument_list|(
-literal|"use "
-operator|+
-name|primaryDbName
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"drop table table1"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"drop table table2"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"create table table2 (id int) partitioned by (country string)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"alter table table2 add partition(country='india')"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"alter table table2 drop partition(country='india')"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"insert into table2 partition(country='us') values(2)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"create table table1 (i int)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"insert into table1 values (2)"
-argument_list|)
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
-argument_list|,
-name|Collections
-operator|.
-name|emptyList
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|// First incremental load
 name|replica
 operator|.
@@ -4353,6 +4288,71 @@ literal|"1"
 block|}
 argument_list|)
 expr_stmt|;
+comment|// Second incremental dump
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|secondIncremental
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table2"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table2 (id int) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table table2 add partition(country='india')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"alter table table2 drop partition(country='india')"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table2 partition(country='us') values(2)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table1 (i int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table1 values (2)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+argument_list|)
+decl_stmt|;
 comment|// Second incremental load
 name|replica
 operator|.
@@ -4529,76 +4529,6 @@ name|emptyList
 argument_list|()
 argument_list|)
 decl_stmt|;
-comment|// Second incremental dump
-name|WarehouseInstance
-operator|.
-name|Tuple
-name|secondIncremental
-init|=
-name|primary
-operator|.
-name|run
-argument_list|(
-literal|"use "
-operator|+
-name|primaryDbName
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"drop table table1"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"drop table table2"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"drop table table3"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"create table table1 (id int)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"insert into table1 values (10)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"create table table2 (id int) partitioned by (country string)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"insert into table2 partition(country='india') values(20)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"create table table3 (id int) partitioned by (name string, rank int)"
-argument_list|)
-operator|.
-name|run
-argument_list|(
-literal|"insert into table3 partition(name='adam', rank=100) values(30)"
-argument_list|)
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
-argument_list|,
-name|Collections
-operator|.
-name|emptyList
-argument_list|()
-argument_list|)
-decl_stmt|;
 comment|// First incremental load
 name|replica
 operator|.
@@ -4673,6 +4603,76 @@ literal|"3"
 block|}
 argument_list|)
 expr_stmt|;
+comment|// Second incremental dump
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|secondIncremental
+init|=
+name|primary
+operator|.
+name|run
+argument_list|(
+literal|"use "
+operator|+
+name|primaryDbName
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table1"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table2"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"drop table table3"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table1 (id int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table1 values (10)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table2 (id int) partitioned by (country string)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table2 partition(country='india') values(20)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"create table table3 (id int) partitioned by (name string, rank int)"
+argument_list|)
+operator|.
+name|run
+argument_list|(
+literal|"insert into table3 partition(name='adam', rank=100) values(30)"
+argument_list|)
+operator|.
+name|dump
+argument_list|(
+name|primaryDbName
+argument_list|,
+name|Collections
+operator|.
+name|emptyList
+argument_list|()
+argument_list|)
+decl_stmt|;
 comment|// Second incremental load
 name|replica
 operator|.
@@ -5255,53 +5255,6 @@ argument_list|)
 argument_list|)
 expr_stmt|;
 block|}
-comment|// Bootstrap load from an empty dump directory should return empty load directory error. Since we have repl status
-comment|//check on target
-name|tuple
-operator|=
-name|primary
-operator|.
-name|dump
-argument_list|(
-literal|"someJunkDB"
-argument_list|)
-expr_stmt|;
-try|try
-block|{
-name|replica
-operator|.
-name|runCommand
-argument_list|(
-literal|"REPL LOAD someJunkDB into someJunkDB "
-argument_list|)
-expr_stmt|;
-block|}
-catch|catch
-parameter_list|(
-name|CommandProcessorException
-name|e
-parameter_list|)
-block|{
-name|assertTrue
-argument_list|(
-name|e
-operator|.
-name|getMessage
-argument_list|()
-operator|.
-name|toLowerCase
-argument_list|()
-operator|.
-name|contains
-argument_list|(
-literal|"semanticException no data to load in path"
-operator|.
-name|toLowerCase
-argument_list|()
-argument_list|)
-argument_list|)
-expr_stmt|;
-block|}
 name|primary
 operator|.
 name|run
@@ -5590,9 +5543,9 @@ name|fileStatus
 operator|.
 name|length
 operator|-
-literal|2
+literal|3
 decl_stmt|;
-comment|//one is metadata file and one data dir
+comment|//one is metadata file and one data dir and one is _dump ack
 name|replica
 operator|.
 name|load
@@ -6676,6 +6629,35 @@ argument_list|,
 name|hiveDumpLocation
 argument_list|)
 expr_stmt|;
+comment|// To retry with same dump delete the load ack
+operator|new
+name|Path
+argument_list|(
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|delete
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|hiveDumpLocation
+argument_list|,
+name|ReplUtils
+operator|.
+name|LOAD_ACKNOWLEDGEMENT
+argument_list|)
+argument_list|,
+literal|true
+argument_list|)
+expr_stmt|;
 comment|// Retry with same dump with which it was already loaded also fails.
 name|replica
 operator|.
@@ -6684,6 +6666,35 @@ argument_list|(
 name|replicatedDbName
 argument_list|,
 name|primaryDbName
+argument_list|)
+expr_stmt|;
+comment|// To retry with same dump delete the load ack
+operator|new
+name|Path
+argument_list|(
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|delete
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|hiveDumpLocation
+argument_list|,
+name|ReplUtils
+operator|.
+name|LOAD_ACKNOWLEDGEMENT
+argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 comment|// Retry from same dump when the database is empty is also not allowed.
@@ -8093,6 +8104,8 @@ argument_list|,
 literal|"t2"
 argument_list|,
 literal|"ADD_PARTITION"
+argument_list|,
+name|tuple
 argument_list|)
 expr_stmt|;
 block|}
@@ -8168,6 +8181,49 @@ argument_list|,
 name|primaryDbName
 argument_list|,
 name|withConfigs
+argument_list|)
+expr_stmt|;
+comment|//delete load ack to reuse the dump
+operator|new
+name|Path
+argument_list|(
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|delete
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|tuple
+operator|.
+name|dumpLocation
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|ReplUtils
+operator|.
+name|REPL_HIVE_BASE_DIR
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|ReplUtils
+operator|.
+name|LOAD_ACKNOWLEDGEMENT
+argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|replica
@@ -8246,6 +8302,8 @@ argument_list|,
 literal|"t1"
 argument_list|,
 literal|"ADD_PARTITION"
+argument_list|,
+name|tuple
 argument_list|)
 expr_stmt|;
 block|}
@@ -8278,6 +8336,11 @@ name|replicatedDbName
 operator|+
 literal|"_CM"
 decl_stmt|;
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|bootstrapDump
+init|=
 name|primary
 operator|.
 name|run
@@ -8301,7 +8364,7 @@ name|dump
 argument_list|(
 name|primaryDbName
 argument_list|)
-expr_stmt|;
+decl_stmt|;
 name|replica
 operator|.
 name|load
@@ -8311,6 +8374,49 @@ argument_list|,
 name|primaryDbName
 argument_list|,
 name|withConfigs
+argument_list|)
+expr_stmt|;
+comment|//delete load ack to reuse the dump
+operator|new
+name|Path
+argument_list|(
+name|bootstrapDump
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|delete
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|bootstrapDump
+operator|.
+name|dumpLocation
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|ReplUtils
+operator|.
+name|REPL_HIVE_BASE_DIR
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|ReplUtils
+operator|.
+name|LOAD_ACKNOWLEDGEMENT
+argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|replica
@@ -8392,6 +8498,8 @@ argument_list|,
 literal|"t2"
 argument_list|,
 literal|"INSERT"
+argument_list|,
+name|tuple
 argument_list|)
 expr_stmt|;
 block|}
@@ -8413,6 +8521,11 @@ name|tbl
 parameter_list|,
 name|String
 name|eventType
+parameter_list|,
+name|WarehouseInstance
+operator|.
+name|Tuple
+name|tuple
 parameter_list|)
 throws|throws
 name|Throwable
@@ -8627,6 +8740,49 @@ argument_list|(
 literal|"drop table "
 operator|+
 name|tbl
+argument_list|)
+expr_stmt|;
+comment|//delete load ack to reuse the dump
+operator|new
+name|Path
+argument_list|(
+name|tuple
+operator|.
+name|dumpLocation
+argument_list|)
+operator|.
+name|getFileSystem
+argument_list|(
+name|conf
+argument_list|)
+operator|.
+name|delete
+argument_list|(
+operator|new
+name|Path
+argument_list|(
+name|tuple
+operator|.
+name|dumpLocation
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|ReplUtils
+operator|.
+name|REPL_HIVE_BASE_DIR
+operator|+
+name|Path
+operator|.
+name|SEPARATOR
+operator|+
+name|ReplUtils
+operator|.
+name|LOAD_ACKNOWLEDGEMENT
+argument_list|)
+argument_list|,
+literal|true
 argument_list|)
 expr_stmt|;
 name|InjectableBehaviourObjectStore

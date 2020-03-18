@@ -2120,8 +2120,6 @@ argument_list|()
 argument_list|)
 argument_list|)
 expr_stmt|;
-name|tuple
-operator|=
 name|primary
 operator|.
 name|run
@@ -2212,14 +2210,6 @@ name|equalsIgnoreCase
 argument_list|(
 literal|"dummy_val"
 argument_list|)
-argument_list|)
-expr_stmt|;
-comment|// next incremental dump
-name|primary
-operator|.
-name|dump
-argument_list|(
-name|primaryDbName
 argument_list|)
 expr_stmt|;
 name|replica

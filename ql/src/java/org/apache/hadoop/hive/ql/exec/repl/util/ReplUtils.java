@@ -736,16 +736,6 @@ name|REPL_CURRENT_TBL_WRITE_ID
 init|=
 literal|"hive.repl.current.table.write.id"
 decl_stmt|;
-comment|// Configuration to be received via WITH clause of REPL LOAD to clean tables from any previously failed
-comment|// bootstrap load.
-specifier|public
-specifier|static
-specifier|final
-name|String
-name|REPL_CLEAN_TABLES_FROM_BOOTSTRAP_CONFIG
-init|=
-literal|"hive.repl.clean.tables.from.bootstrap"
-decl_stmt|;
 specifier|public
 specifier|static
 specifier|final
@@ -819,6 +809,24 @@ name|String
 name|REPL_DUMP_INCLUDE_ACID_TABLES
 init|=
 literal|"hive.repl.dump.include.acid.tables"
+decl_stmt|;
+comment|//Acknowledgement for repl dump complete
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|DUMP_ACKNOWLEDGEMENT
+init|=
+literal|"_finished_dump"
+decl_stmt|;
+comment|//Acknowledgement for repl load complete
+specifier|public
+specifier|static
+specifier|final
+name|String
+name|LOAD_ACKNOWLEDGEMENT
+init|=
+literal|"_finished_load"
 decl_stmt|;
 comment|/**    * Bootstrap REPL LOAD operation type on the examined object based on ckpt state.    */
 specifier|public

@@ -155,6 +155,11 @@ name|SCHEDULED_QUERY_MAINT
 argument_list|(
 literal|17
 argument_list|)
+block|,
+name|REPL_LOAD_COMPLETE_ACK
+argument_list|(
+literal|18
+argument_list|)
 block|;
 specifier|private
 specifier|final
