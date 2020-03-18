@@ -33,16 +33,6 @@ name|java
 operator|.
 name|util
 operator|.
-name|Arrays
-import|;
-end_import
-
-begin_import
-import|import
-name|java
-operator|.
-name|util
-operator|.
 name|List
 import|;
 end_import
@@ -1351,13 +1341,6 @@ operator|.
 name|STAGING_DIR_PATH_FILTER
 argument_list|)
 expr_stmt|;
-name|Arrays
-operator|.
-name|sort
-argument_list|(
-name|status
-argument_list|)
-expr_stmt|;
 comment|// There should be 1 delta dir, plus a base dir in the location
 name|Assert
 operator|.
@@ -1434,7 +1417,7 @@ name|assertTrue
 argument_list|(
 name|baseDirs
 index|[
-name|i
+name|h
 index|]
 operator|.
 name|matches
