@@ -1410,6 +1410,472 @@ literal|300000
 argument_list|)
 specifier|public
 name|void
+name|testMultipleBatchesOfComplexTypes
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+specifier|final
+name|String
+name|tableName
+init|=
+literal|"testMultipleBatchesOfComplexTypes"
+decl_stmt|;
+try|try
+init|(
+name|Statement
+name|stmt
+init|=
+name|hs2Conn
+operator|.
+name|createStatement
+argument_list|()
+init|)
+block|{
+name|String
+name|createQuery
+init|=
+literal|"create table "
+operator|+
+name|tableName
+operator|+
+literal|"(c1 array<struct<f1:string,f2:string>>, "
+operator|+
+literal|"c2 int, "
+operator|+
+literal|"c3 array<array<int>>, "
+operator|+
+literal|"c4 array<struct<f1:array<string>>>) STORED AS ORC"
+decl_stmt|;
+comment|// create table
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"DROP TABLE IF EXISTS "
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+name|createQuery
+argument_list|)
+expr_stmt|;
+comment|// load data
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|tableName
+operator|+
+literal|"  VALUES "
+comment|// value 1
+operator|+
+literal|"(ARRAY(NAMED_STRUCT('f1','a1', 'f2','a2'), NAMED_STRUCT('f1','a3', 'f2','a4')), "
+operator|+
+literal|"1, ARRAY(ARRAY(1)), ARRAY(NAMED_STRUCT('f1',ARRAY('aa1')))), "
+comment|// value 2
+operator|+
+literal|"(ARRAY(NAMED_STRUCT('f1','b1', 'f2','b2'), NAMED_STRUCT('f1','b3', 'f2','b4')), 2, "
+operator|+
+literal|"ARRAY(ARRAY(2,2), ARRAY(2,2)), "
+operator|+
+literal|"ARRAY(NAMED_STRUCT('f1',ARRAY('aa2','aa2')), NAMED_STRUCT('f1',ARRAY('aa2','aa2')))), "
+comment|// value 3
+operator|+
+literal|"(ARRAY(NAMED_STRUCT('f1','c1', 'f2','c2'), NAMED_STRUCT('f1','c3', 'f2','c4'), "
+operator|+
+literal|"NAMED_STRUCT('f1','c5', 'f2','c6')), 3, "
+operator|+
+literal|"ARRAY(ARRAY(3,3,3), ARRAY(3,3,3), ARRAY(3,3,3)), "
+operator|+
+literal|"ARRAY(NAMED_STRUCT('f1',ARRAY('aa3','aa3','aa3')), "
+operator|+
+literal|"NAMED_STRUCT('f1',ARRAY('aa3','aa3', 'aa3')), NAMED_STRUCT('f1',ARRAY('aa3','aa3', 'aa3')))), "
+comment|// value 4
+operator|+
+literal|"(ARRAY(NAMED_STRUCT('f1','d1', 'f2','d2'), NAMED_STRUCT('f1','d3', 'f2','d4'),"
+operator|+
+literal|" NAMED_STRUCT('f1','d5', 'f2','d6'), NAMED_STRUCT('f1','d7', 'f2','d8')), 4, "
+operator|+
+literal|"ARRAY(ARRAY(4,4,4,4),ARRAY(4,4,4,4),ARRAY(4,4,4,4),ARRAY(4,4,4,4)), "
+operator|+
+literal|"ARRAY(NAMED_STRUCT('f1',ARRAY('aa4','aa4','aa4', 'aa4')), "
+operator|+
+literal|"NAMED_STRUCT('f1',ARRAY('aa4','aa4','aa4', 'aa4')), NAMED_STRUCT('f1',ARRAY('aa4','aa4','aa4', 'aa4')),"
+operator|+
+literal|" NAMED_STRUCT('f1',ARRAY('aa4','aa4','aa4', 'aa4'))))"
+argument_list|)
+expr_stmt|;
+comment|// generate 4096 rows from above records
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+literal|10
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"insert into %s select * from %s"
+argument_list|,
+name|tableName
+argument_list|,
+name|tableName
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|// validate test table
+name|ResultSet
+name|res
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"SELECT count(*) FROM "
+operator|+
+name|tableName
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|res
+operator|.
+name|next
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|4096
+argument_list|,
+name|res
+operator|.
+name|getInt
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+name|RowCollector
+name|rowCollector
+init|=
+operator|new
+name|RowCollector
+argument_list|()
+decl_stmt|;
+name|String
+name|query
+init|=
+literal|"select * from "
+operator|+
+name|tableName
+decl_stmt|;
+name|int
+name|rowCount
+init|=
+name|processQuery
+argument_list|(
+name|query
+argument_list|,
+literal|1
+argument_list|,
+name|rowCollector
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|4096
+argument_list|,
+name|rowCount
+argument_list|)
+expr_stmt|;
+comment|/*      *      * validate different rows      * [[[a1, a2], [a3, a4]], 1, [[1]], [[[aa1]]]]      * [[[b1, b2], [b3, b4]], 2, [[2, 2], [2, 2]], [[[aa2, aa2]], [[aa2, aa2]]]]      * [[[c1, c2], [c3, c4], [c5, c6]], 3, [[3, 3, 3], [3, 3, 3], [3, 3, 3]], [[[aa3, aa3, aa3]], [[aa3, aa3, aa3]], [[aa3, aa3, aa3]]]]      * [[[d1, d2], [d3, d4], [d5, d6], [d7, d8]], 4, [[4, 4, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4]], [[[aa4, aa4, aa4, aa4]], [[aa4, aa4, aa4, aa4]], [[aa4, aa4, aa4, aa4]], [[aa4, aa4, aa4, aa4]]]]      *      */
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|query
+operator|=
+literal|"select * from "
+operator|+
+name|tableName
+operator|+
+literal|" where c2=1 limit 1"
+expr_stmt|;
+name|rowCount
+operator|=
+name|processQuery
+argument_list|(
+name|query
+argument_list|,
+literal|1
+argument_list|,
+name|rowCollector
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|rowCount
+argument_list|)
+expr_stmt|;
+specifier|final
+name|String
+index|[]
+name|expected1
+init|=
+block|{
+literal|"[[a1, a2], [a3, a4]]"
+block|,
+literal|"1"
+block|,
+literal|"[[1]]"
+block|,
+literal|"[[[aa1]]]"
+block|}
+decl_stmt|;
+name|assertArrayEquals
+argument_list|(
+name|expected1
+argument_list|,
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|query
+operator|=
+literal|"select * from "
+operator|+
+name|tableName
+operator|+
+literal|" where c2=2 limit 1"
+expr_stmt|;
+name|rowCount
+operator|=
+name|processQuery
+argument_list|(
+name|query
+argument_list|,
+literal|1
+argument_list|,
+name|rowCollector
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|rowCount
+argument_list|)
+expr_stmt|;
+specifier|final
+name|String
+index|[]
+name|expected2
+init|=
+block|{
+literal|"[[b1, b2], [b3, b4]]"
+block|,
+literal|"2"
+block|,
+literal|"[[2, 2], [2, 2]]"
+block|,
+literal|"[[[aa2, aa2]], [[aa2, aa2]]]"
+block|}
+decl_stmt|;
+name|assertArrayEquals
+argument_list|(
+name|expected2
+argument_list|,
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|query
+operator|=
+literal|"select * from "
+operator|+
+name|tableName
+operator|+
+literal|" where c2=3 limit 1"
+expr_stmt|;
+name|rowCount
+operator|=
+name|processQuery
+argument_list|(
+name|query
+argument_list|,
+literal|1
+argument_list|,
+name|rowCollector
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|rowCount
+argument_list|)
+expr_stmt|;
+specifier|final
+name|String
+index|[]
+name|expected3
+init|=
+block|{
+literal|"[[c1, c2], [c3, c4], [c5, c6]]"
+block|,
+literal|"3"
+block|,
+literal|"[[3, 3, 3], [3, 3, 3], [3, 3, 3]]"
+block|,
+literal|"[[[aa3, aa3, aa3]], [[aa3, aa3, aa3]], [[aa3, aa3, aa3]]]"
+block|}
+decl_stmt|;
+name|assertArrayEquals
+argument_list|(
+name|expected3
+argument_list|,
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|clear
+argument_list|()
+expr_stmt|;
+name|query
+operator|=
+literal|"select * from "
+operator|+
+name|tableName
+operator|+
+literal|" where c2=4 limit 1"
+expr_stmt|;
+name|rowCount
+operator|=
+name|processQuery
+argument_list|(
+name|query
+argument_list|,
+literal|1
+argument_list|,
+name|rowCollector
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|1
+argument_list|,
+name|rowCount
+argument_list|)
+expr_stmt|;
+specifier|final
+name|String
+index|[]
+name|expected4
+init|=
+block|{
+literal|"[[d1, d2], [d3, d4], [d5, d6], [d7, d8]]"
+block|,
+literal|"4"
+block|,
+literal|"[[4, 4, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4], [4, 4, 4, 4]]"
+block|,
+literal|"[[[aa4, aa4, aa4, aa4]], [[aa4, aa4, aa4, aa4]], [[aa4, aa4, aa4, aa4]], [[aa4, aa4, aa4, aa4]]]"
+block|}
+decl_stmt|;
+name|assertArrayEquals
+argument_list|(
+name|expected4
+argument_list|,
+name|rowCollector
+operator|.
+name|rows
+operator|.
+name|get
+argument_list|(
+literal|0
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|timeout
+operator|=
+literal|300000
+argument_list|)
+specifier|public
+name|void
 name|testLlapInputFormatEndToEndWithMultipleBatches
 parameter_list|()
 throws|throws
