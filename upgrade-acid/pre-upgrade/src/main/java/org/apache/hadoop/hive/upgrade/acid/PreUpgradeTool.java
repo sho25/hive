@@ -119,6 +119,18 @@ begin_import
 import|import
 name|java
 operator|.
+name|nio
+operator|.
+name|charset
+operator|.
+name|StandardCharsets
+import|;
+end_import
+
+begin_import
+import|import
+name|java
+operator|.
 name|util
 operator|.
 name|ArrayList
@@ -1838,7 +1850,7 @@ argument_list|)
 throw|;
 block|}
 block|}
-comment|/**    * todo: change script comments to a preamble instead of a footer    */
+comment|/*    * todo: change script comments to a preamble instead of a footer    */
 specifier|private
 name|void
 name|prepareAcidUpgradeInternal
@@ -2804,7 +2816,7 @@ literal|"java.security.AccessControlException: Permission denied"
 argument_list|)
 return|;
 block|}
-comment|/**    * Generates a set compaction commands to run on pre Hive 3 cluster    */
+comment|/**    * Generates a set compaction commands to run on pre Hive 3 cluster.    */
 specifier|private
 specifier|static
 name|void
@@ -4023,25 +4035,29 @@ specifier|private
 specifier|static
 specifier|final
 name|Charset
-name|utf8
+name|UTF_8
 init|=
-name|Charset
+name|StandardCharsets
 operator|.
-name|forName
-argument_list|(
-literal|"UTF-8"
-argument_list|)
+name|UTF_8
 decl_stmt|;
 specifier|private
 specifier|static
 specifier|final
+name|ThreadLocal
+argument_list|<
 name|CharsetDecoder
-name|utf8Decoder
+argument_list|>
+name|UTF8_DECODER
 init|=
-name|utf8
+name|ThreadLocal
 operator|.
+name|withInitial
+argument_list|(
+name|UTF_8
+operator|::
 name|newDecoder
-argument_list|()
+argument_list|)
 decl_stmt|;
 specifier|private
 specifier|static
@@ -4123,7 +4139,10 @@ decl_stmt|;
 name|String
 name|acidStats
 init|=
-name|utf8Decoder
+name|UTF8_DECODER
+operator|.
+name|get
+argument_list|()
 operator|.
 name|decode
 argument_list|(
@@ -4353,6 +4372,7 @@ literal|","
 argument_list|)
 expr_stmt|;
 block|}
+comment|//replace trailing ','
 name|sb
 operator|.
 name|setCharAt
@@ -4367,7 +4387,6 @@ argument_list|,
 literal|')'
 argument_list|)
 expr_stmt|;
-comment|//replace trailing ','
 block|}
 return|return
 name|sb
@@ -4381,7 +4400,7 @@ name|toString
 argument_list|()
 return|;
 block|}
-comment|/**    * This is copy-pasted from {@link org.apache.hadoop.hive.ql.parse.ColumnStatsSemanticAnalyzer},    * which can't be refactored since this is linked against Hive 2.x    */
+comment|/**    * This is copy-pasted from {@link org.apache.hadoop.hive.ql.parse.ColumnStatsSemanticAnalyzer},    * which can't be refactored since this is linked against Hive 2.x .    */
 specifier|private
 specifier|static
 name|String
@@ -4396,8 +4415,6 @@ parameter_list|)
 block|{
 name|String
 name|returnVal
-init|=
-name|partVal
 decl_stmt|;
 if|if
 condition|(
@@ -4635,10 +4652,6 @@ argument_list|)
 decl_stmt|;
 if|if
 condition|(
-name|transacationalValue
-operator|!=
-literal|null
-operator|&&
 literal|"true"
 operator|.
 name|equalsIgnoreCase
@@ -4739,8 +4752,8 @@ expr_stmt|;
 block|}
 annotation|@
 name|VisibleForTesting
-specifier|static
 specifier|abstract
+specifier|static
 class|class
 name|Callback
 block|{
@@ -4768,7 +4781,7 @@ literal|1000
 operator|*
 literal|30
 decl_stmt|;
-comment|/**    * can set it from tests to test when config needs something other than default values    */
+comment|/**    * can set it from tests to test when config needs something other than default values.    */
 annotation|@
 name|VisibleForTesting
 specifier|static
