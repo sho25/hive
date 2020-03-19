@@ -2001,6 +2001,213 @@ name|Test
 argument_list|(
 name|timeout
 operator|=
+literal|300000
+argument_list|)
+specifier|public
+name|void
+name|testInvalidReferenceCountScenario
+parameter_list|()
+throws|throws
+name|Exception
+block|{
+specifier|final
+name|String
+name|tableName
+init|=
+literal|"testInvalidReferenceCountScenario"
+decl_stmt|;
+try|try
+init|(
+name|Statement
+name|stmt
+init|=
+name|hs2Conn
+operator|.
+name|createStatement
+argument_list|()
+init|)
+block|{
+name|String
+name|createQuery
+init|=
+literal|"create table "
+operator|+
+name|tableName
+operator|+
+literal|"(arr1 array<struct<f1:string,f2:string,arr2:array<struct<f3:string,f4:string,f5:string>>>>, "
+operator|+
+literal|"c2 int) STORED AS ORC"
+decl_stmt|;
+comment|// create table
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"DROP TABLE IF EXISTS "
+operator|+
+name|tableName
+argument_list|)
+expr_stmt|;
+name|stmt
+operator|.
+name|execute
+argument_list|(
+name|createQuery
+argument_list|)
+expr_stmt|;
+comment|// load data
+name|stmt
+operator|.
+name|execute
+argument_list|(
+literal|"INSERT INTO "
+operator|+
+name|tableName
+operator|+
+literal|"  VALUES "
+comment|// value 1
+operator|+
+literal|"(ARRAY(NAMED_STRUCT('f1','a1', "
+operator|+
+literal|"'f2','a2', "
+operator|+
+literal|"'arr2',"
+operator|+
+literal|" ARRAY("
+operator|+
+literal|"NAMED_STRUCT('f3', cast(null as string), 'f4', cast(null as string), 'f5', cast(null as string)))), "
+operator|+
+literal|"NAMED_STRUCT('f1','a1', 'f2','a2', 'arr2', "
+operator|+
+literal|"ARRAY(NAMED_STRUCT('f3', 'fielddddddd3333333', 'f4', 'field4', 'f5', 'field5'))), "
+operator|+
+literal|"NAMED_STRUCT('f1','a1', 'f2','a2', 'arr2', ARRAY(NAMED_STRUCT('f3', cast(null as string), "
+operator|+
+literal|"'f4', cast(null as string), 'f5', cast(null as string)))), "
+operator|+
+literal|"NAMED_STRUCT('f1','a1', 'f2','a2', 'arr2', ARRAY(NAMED_STRUCT('f3', 'fielddddddd3333333', "
+operator|+
+literal|"'f4', 'field4', 'f5', 'field5'))), NAMED_STRUCT('f1','a1', 'f2','a2', 'arr2', "
+operator|+
+literal|"ARRAY(NAMED_STRUCT('f3', cast(null as string), 'f4', cast(null as string), 'f5', cast(null as string)))),"
+operator|+
+literal|" NAMED_STRUCT('f1','a1', 'f2','a2', 'arr2', "
+operator|+
+literal|"ARRAY(NAMED_STRUCT('f3', 'fielddddddd3333333', 'f4', 'field4', 'f5', 'field5')))), 1)"
+argument_list|)
+expr_stmt|;
+comment|// generate 16384 rows from above records
+for|for
+control|(
+name|int
+name|i
+init|=
+literal|0
+init|;
+name|i
+operator|<
+literal|14
+condition|;
+name|i
+operator|++
+control|)
+block|{
+name|stmt
+operator|.
+name|execute
+argument_list|(
+name|String
+operator|.
+name|format
+argument_list|(
+literal|"insert into %s select * from %s"
+argument_list|,
+name|tableName
+argument_list|,
+name|tableName
+argument_list|)
+argument_list|)
+expr_stmt|;
+block|}
+comment|// validate test table
+name|ResultSet
+name|res
+init|=
+name|stmt
+operator|.
+name|executeQuery
+argument_list|(
+literal|"SELECT count(*) FROM "
+operator|+
+name|tableName
+argument_list|)
+decl_stmt|;
+name|assertTrue
+argument_list|(
+name|res
+operator|.
+name|next
+argument_list|()
+argument_list|)
+expr_stmt|;
+name|assertEquals
+argument_list|(
+literal|16384
+argument_list|,
+name|res
+operator|.
+name|getInt
+argument_list|(
+literal|1
+argument_list|)
+argument_list|)
+expr_stmt|;
+name|res
+operator|.
+name|close
+argument_list|()
+expr_stmt|;
+block|}
+comment|// should not throw - IllegalReferenceCountException: refCnt: 0
+name|RowCollector
+name|rowCollector
+init|=
+operator|new
+name|RowCollector
+argument_list|()
+decl_stmt|;
+name|String
+name|query
+init|=
+literal|"select * from "
+operator|+
+name|tableName
+decl_stmt|;
+name|int
+name|rowCount
+init|=
+name|processQuery
+argument_list|(
+name|query
+argument_list|,
+literal|1
+argument_list|,
+name|rowCollector
+argument_list|)
+decl_stmt|;
+name|assertEquals
+argument_list|(
+literal|16384
+argument_list|,
+name|rowCount
+argument_list|)
+expr_stmt|;
+block|}
+annotation|@
+name|Test
+argument_list|(
+name|timeout
+operator|=
 literal|60000
 argument_list|)
 specifier|public
